@@ -18,7 +18,7 @@ netapp service documentation.
 
 :::info[Service Summary]
 
-total resources: __13__  
+total resources: __17__  
 
 :::
 
@@ -26,12 +26,14 @@ total resources: __13__
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/netapp/active_directories/">active_directories</a><br />
+<a href="/services/netapp/backup_configs/">backup_configs</a><br />
 <a href="/services/netapp/backup_policies/">backup_policies</a><br />
 <a href="/services/netapp/backup_vaults/">backup_vaults</a><br />
 <a href="/services/netapp/backups/">backups</a><br />
 <a href="/services/netapp/host_groups/">host_groups</a><br />
 <a href="/services/netapp/kms_configs/">kms_configs</a><br />
-<a href="/services/netapp/locations/">locations</a>
+<a href="/services/netapp/locations/">locations</a><br />
+<a href="/services/netapp/ontap/">ontap</a>
 </div>
 <div class="providerDocColumn">
 <a href="/services/netapp/operations/">operations</a><br />
@@ -39,6 +41,8 @@ total resources: __13__
 <a href="/services/netapp/replications/">replications</a><br />
 <a href="/services/netapp/snapshots/">snapshots</a><br />
 <a href="/services/netapp/storage_pools/">storage_pools</a><br />
-<a href="/services/netapp/volumes/">volumes</a>
+<a href="/services/netapp/storage_pools_backup_config/">storage_pools_backup_config</a><br />
+<a href="/services/netapp/volumes/">volumes</a><br />
+<a href="/services/netapp/volumes_split_status/">volumes_split_status</a>
 </div>
 </div>

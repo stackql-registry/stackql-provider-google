@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>ekm_connections</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>ekm_connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="ekm_connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudkms.ekm_connections" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="keyManagementMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes who can perform control plane operations on the EKM. If unset, this defaults to MANUAL.</td>
+    <td>Optional. Describes who can perform control plane operations on the EKM. If unset, this defaults to MANUAL. (KEY_MANAGEMENT_MODE_UNSPECIFIED, MANUAL, CLOUD_KMS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceResolvers" /></td>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="keyManagementMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes who can perform control plane operations on the EKM. If unset, this defaults to MANUAL.</td>
+    <td>Optional. Describes who can perform control plane operations on the EKM. If unset, this defaults to MANUAL. (KEY_MANAGEMENT_MODE_UNSPECIFIED, MANUAL, CLOUD_KMS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceResolvers" /></td>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists EkmConnections.</td>
 </tr>
 <tr>
@@ -285,10 +286,10 @@ serviceResolvers
 FROM google.cloudkms.ekm_connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -310,18 +311,18 @@ Creates a new EkmConnection in a given Project and Location.
 
 ```sql
 INSERT INTO google.cloudkms.ekm_connections (
+data__etag,
 data__keyManagementMode,
 data__cryptoSpacePath,
-data__etag,
 data__serviceResolvers,
 projectsId,
 locationsId,
 ekmConnectionId
 )
 SELECT 
+'{{ etag }}',
 '{{ keyManagementMode }}',
 '{{ cryptoSpacePath }}',
-'{{ etag }}',
 '{{ serviceResolvers }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -338,40 +339,40 @@ serviceResolvers
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: ekm_connections
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the ekm_connections resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the ekm_connections resource.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Etag of the currently stored EkmConnection.
     - name: keyManagementMode
-      value: string
-      description: >
+      value: "{{ keyManagementMode }}"
+      description: |
         Optional. Describes who can perform control plane operations on the EKM. If unset, this defaults to MANUAL.
-        
       valid_values: ['KEY_MANAGEMENT_MODE_UNSPECIFIED', 'MANUAL', 'CLOUD_KMS']
     - name: cryptoSpacePath
-      value: string
-      description: >
+      value: "{{ cryptoSpacePath }}"
+      description: |
         Optional. Identifies the EKM Crypto Space that this EkmConnection maps to. Note: This field is required if KeyManagementMode is CLOUD_KMS.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. Etag of the currently stored EkmConnection.
-        
     - name: serviceResolvers
-      value: array
-      description: >
+      description: |
         Optional. A list of ServiceResolvers where the EKM can be reached. There should be one ServiceResolver per EKM replica. Currently, only a single ServiceResolver is supported.
-        
+      value:
+        - serverCertificates: "{{ serverCertificates }}"
+          serviceDirectoryService: "{{ serviceDirectoryService }}"
+          hostname: "{{ hostname }}"
+          endpointFilter: "{{ endpointFilter }}"
     - name: ekmConnectionId
-      value: string
-```
+      value: "{{ ekmConnectionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -391,9 +392,9 @@ Updates an EkmConnection's metadata.
 ```sql
 UPDATE google.cloudkms.ekm_connections
 SET 
+data__etag = '{{ etag }}',
 data__keyManagementMode = '{{ keyManagementMode }}',
 data__cryptoSpacePath = '{{ cryptoSpacePath }}',
-data__etag = '{{ etag }}',
 data__serviceResolvers = '{{ serviceResolvers }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

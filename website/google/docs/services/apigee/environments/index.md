@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>environments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>environments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="environments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.environments" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="apiProxyType" /></td>
     <td><code>string</code></td>
-    <td>Optional. API Proxy type supported by the environment. The type can be set when creating the Environment and cannot be changed.</td>
+    <td>Optional. API Proxy type supported by the environment. The type can be set when creating the Environment and cannot be changed. (API_PROXY_TYPE_UNSPECIFIED, PROGRAMMABLE, CONFIGURABLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientIpResolutionConfig" /></td>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deploymentType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Deployment type supported by the environment. The deployment type can be set when creating the environment and cannot be changed. When you enable archive deployment, you will be **prevented from performing** a [subset of actions](https://cloud.google.com/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment, including: * Managing the deployment of API proxy or shared flow revisions * Creating, updating, or deleting resource files * Creating, updating, or deleting target servers</td>
+    <td>Optional. Deployment type supported by the environment. The deployment type can be set when creating the environment and cannot be changed. When you enable archive deployment, you will be **prevented from performing** a [subset of actions](https://cloud.google.com/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment, including: * Managing the deployment of API proxy or shared flow revisions * Creating, updating, or deleting resource files * Creating, updating, or deleting target servers (DEPLOYMENT_TYPE_UNSPECIFIED, PROXY, ARCHIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -111,12 +112,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the environment. Values other than ACTIVE means the resource is not ready to use.</td>
+    <td>Output only. State of the environment. Values other than ACTIVE means the resource is not ready to use. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Optional. EnvironmentType selected for the environment.</td>
+    <td>Optional. EnvironmentType selected for the environment. (ENVIRONMENT_TYPE_UNSPECIFIED, BASE, INTERMEDIATE, COMPREHENSIVE)</td>
 </tr>
 </tbody>
 </table>
@@ -188,6 +189,13 @@ The following methods are available for this resource:
     <td>Deletes an environment from an organization. **Warning: You must delete all key value maps and key value entries before you delete an environment.** Otherwise, if you re-create the environment the key value map entry operations will encounter encryption/decryption discrepancies.</td>
 </tr>
 <tr>
+    <td><a href="#organizations_security_profiles_environments_compute_environment_scores"><CopyableCode code="organizations_security_profiles_environments_compute_environment_scores" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>ComputeEnvironmentScores calculates scores for requested time range for the specified security profile and environment.</td>
+</tr>
+<tr>
     <td><a href="#organizations_environments_modify_environment"><CopyableCode code="organizations_environments_modify_environment" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
@@ -207,13 +215,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td></td>
     <td>Deletes a subscription for the environment's Pub/Sub topic.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_security_profiles_environments_compute_environment_scores"><CopyableCode code="organizations_security_profiles_environments_compute_environment_scores" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>ComputeEnvironmentScores calculates scores for requested time range for the specified security profile and environment.</td>
 </tr>
 </tbody>
 </table>
@@ -335,32 +336,32 @@ Creates an environment in an organization.
 
 ```sql
 INSERT INTO google.apigee.environments (
-data__apiProxyType,
-data__description,
-data__hasAttachedFlowHooks,
-data__forwardProxyUri,
-data__nodeConfig,
-data__properties,
-data__clientIpResolutionConfig,
-data__displayName,
-data__type,
-data__name,
 data__deploymentType,
+data__name,
+data__description,
+data__properties,
+data__apiProxyType,
+data__forwardProxyUri,
+data__type,
+data__hasAttachedFlowHooks,
+data__nodeConfig,
+data__displayName,
+data__clientIpResolutionConfig,
 organizationsId,
 name
 )
 SELECT 
-'{{ apiProxyType }}',
-'{{ description }}',
-{{ hasAttachedFlowHooks }},
-'{{ forwardProxyUri }}',
-'{{ nodeConfig }}',
-'{{ properties }}',
-'{{ clientIpResolutionConfig }}',
-'{{ displayName }}',
-'{{ type }}',
-'{{ name }}',
 '{{ deploymentType }}',
+'{{ name }}',
+'{{ description }}',
+'{{ properties }}',
+'{{ apiProxyType }}',
+'{{ forwardProxyUri }}',
+'{{ type }}',
+{{ hasAttachedFlowHooks }},
+'{{ nodeConfig }}',
+'{{ displayName }}',
+'{{ clientIpResolutionConfig }}',
 '{{ organizationsId }}',
 '{{ name }}'
 RETURNING
@@ -374,79 +375,77 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: environments
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the environments resource.
     - name: securityProfilesId
-      value: string
+      value: "{{ securityProfilesId }}"
       description: Required parameter for the environments resource.
     - name: name
-      value: string
-      description: >
-        Required. Name of the environment. Values must match the regular expression `^[.\\p{Alnum}-_]{1,255}$`
-        
+      value: "{{ name }}"
+      description: |
+        Required. Name of the environment. Values must match the regular expression \`^[.\\p{Alnum}-_]{1,255}$\`
     - name: securityProfileRevisionId
-      value: string
-      description: >
+      value: "{{ securityProfileRevisionId }}"
+      description: |
         DEPRECATED: DO NOT USE Revision ID of the security profile.
-        
-    - name: apiProxyType
-      value: string
-      description: >
-        Optional. API Proxy type supported by the environment. The type can be set when creating the Environment and cannot be changed.
-        
-      valid_values: ['API_PROXY_TYPE_UNSPECIFIED', 'PROGRAMMABLE', 'CONFIGURABLE']
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the environment.
-        
-    - name: hasAttachedFlowHooks
-      value: boolean
-    - name: forwardProxyUri
-      value: string
-      description: >
-        Optional. URI of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that the only supported scheme is "http". The port must be supplied. To remove a forward proxy setting, update the field to an empty value. Note: At this time, PUT operations to add forwardProxyUri to an existing environment fail if the environment has nodeConfig set up. To successfully add the forwardProxyUri setting in this case, include the NodeConfig details with the request.
-        
-    - name: nodeConfig
-      value: object
-      description: >
-        Optional. NodeConfig of the environment.
-        
-    - name: properties
-      value: object
-      description: >
-        Optional. Key-value pairs that may be used for customizing the environment.
-        
-    - name: clientIpResolutionConfig
-      value: object
-      description: >
-        Optional. The algorithm to resolve IP. This will affect Analytics, API Security, and other features that use the client ip. To remove a client ip resolution config, update the field to an empty value. Example: '{ "clientIpResolutionConfig" = {} }' For more information, see: https://cloud.google.com/apigee/docs/api-platform/system-administration/client-ip-resolution.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Display name for this environment.
-        
-    - name: type
-      value: string
-      description: >
-        Optional. EnvironmentType selected for the environment.
-        
-      valid_values: ['ENVIRONMENT_TYPE_UNSPECIFIED', 'BASE', 'INTERMEDIATE', 'COMPREHENSIVE']
     - name: deploymentType
-      value: string
-      description: >
+      value: "{{ deploymentType }}"
+      description: |
         Optional. Deployment type supported by the environment. The deployment type can be set when creating the environment and cannot be changed. When you enable archive deployment, you will be **prevented from performing** a [subset of actions](https://cloud.google.com/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment, including: * Managing the deployment of API proxy or shared flow revisions * Creating, updating, or deleting resource files * Creating, updating, or deleting target servers
-        
       valid_values: ['DEPLOYMENT_TYPE_UNSPECIFIED', 'PROXY', 'ARCHIVE']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the environment.
+    - name: properties
+      description: |
+        Optional. Key-value pairs that may be used for customizing the environment.
+      value:
+        property:
+          - name: "{{ name }}"
+            value: "{{ value }}"
+    - name: apiProxyType
+      value: "{{ apiProxyType }}"
+      description: |
+        Optional. API Proxy type supported by the environment. The type can be set when creating the Environment and cannot be changed.
+      valid_values: ['API_PROXY_TYPE_UNSPECIFIED', 'PROGRAMMABLE', 'CONFIGURABLE']
+    - name: forwardProxyUri
+      value: "{{ forwardProxyUri }}"
+      description: |
+        Optional. URI of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that the only supported scheme is "http". The port must be supplied. To remove a forward proxy setting, update the field to an empty value. Note: At this time, PUT operations to add forwardProxyUri to an existing environment fail if the environment has nodeConfig set up. To successfully add the forwardProxyUri setting in this case, include the NodeConfig details with the request.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Optional. EnvironmentType selected for the environment.
+      valid_values: ['ENVIRONMENT_TYPE_UNSPECIFIED', 'BASE', 'INTERMEDIATE', 'COMPREHENSIVE']
+    - name: hasAttachedFlowHooks
+      value: {{ hasAttachedFlowHooks }}
+    - name: nodeConfig
+      description: |
+        Optional. NodeConfig of the environment.
+      value:
+        currentAggregateNodeCount: "{{ currentAggregateNodeCount }}"
+        maxNodeCount: "{{ maxNodeCount }}"
+        minNodeCount: "{{ minNodeCount }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Display name for this environment.
+    - name: clientIpResolutionConfig
+      description: |
+        Optional. The algorithm to resolve IP. This will affect Analytics, API Security, and other features that use the client ip. To remove a client ip resolution config, update the field to an empty value. Example: '{ "clientIpResolutionConfig" = {} }' For more information, see: https://cloud.google.com/apigee/docs/api-platform/system-administration/client-ip-resolution.
+      value:
+        headerIndexAlgorithm:
+          ipHeaderName: "{{ ipHeaderName }}"
+          ipHeaderIndex: {{ ipHeaderIndex }}
     - name: name
-      value: string
-```
+      value: "{{ name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -466,17 +465,17 @@ Updates an existing environment. When updating properties, you must pass all exi
 ```sql
 UPDATE google.apigee.environments
 SET 
-data__apiProxyType = '{{ apiProxyType }}',
-data__description = '{{ description }}',
-data__hasAttachedFlowHooks = {{ hasAttachedFlowHooks }},
-data__forwardProxyUri = '{{ forwardProxyUri }}',
-data__nodeConfig = '{{ nodeConfig }}',
-data__properties = '{{ properties }}',
-data__clientIpResolutionConfig = '{{ clientIpResolutionConfig }}',
-data__displayName = '{{ displayName }}',
-data__type = '{{ type }}',
+data__deploymentType = '{{ deploymentType }}',
 data__name = '{{ name }}',
-data__deploymentType = '{{ deploymentType }}'
+data__description = '{{ description }}',
+data__properties = '{{ properties }}',
+data__apiProxyType = '{{ apiProxyType }}',
+data__forwardProxyUri = '{{ forwardProxyUri }}',
+data__type = '{{ type }}',
+data__hasAttachedFlowHooks = {{ hasAttachedFlowHooks }},
+data__nodeConfig = '{{ nodeConfig }}',
+data__displayName = '{{ displayName }}',
+data__clientIpResolutionConfig = '{{ clientIpResolutionConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -515,17 +514,17 @@ Updates an existing environment. When updating properties, you must pass all exi
 ```sql
 REPLACE google.apigee.environments
 SET 
-data__apiProxyType = '{{ apiProxyType }}',
-data__description = '{{ description }}',
-data__hasAttachedFlowHooks = {{ hasAttachedFlowHooks }},
-data__forwardProxyUri = '{{ forwardProxyUri }}',
-data__nodeConfig = '{{ nodeConfig }}',
-data__properties = '{{ properties }}',
-data__clientIpResolutionConfig = '{{ clientIpResolutionConfig }}',
-data__displayName = '{{ displayName }}',
-data__type = '{{ type }}',
+data__deploymentType = '{{ deploymentType }}',
 data__name = '{{ name }}',
-data__deploymentType = '{{ deploymentType }}'
+data__description = '{{ description }}',
+data__properties = '{{ properties }}',
+data__apiProxyType = '{{ apiProxyType }}',
+data__forwardProxyUri = '{{ forwardProxyUri }}',
+data__type = '{{ type }}',
+data__hasAttachedFlowHooks = {{ hasAttachedFlowHooks }},
+data__nodeConfig = '{{ nodeConfig }}',
+data__displayName = '{{ displayName }}',
+data__clientIpResolutionConfig = '{{ clientIpResolutionConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -587,14 +586,33 @@ AND environmentsId = '{{ environmentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_environments_modify_environment"
+    defaultValue="organizations_security_profiles_environments_compute_environment_scores"
     values={[
+        { label: 'organizations_security_profiles_environments_compute_environment_scores', value: 'organizations_security_profiles_environments_compute_environment_scores' },
         { label: 'organizations_environments_modify_environment', value: 'organizations_environments_modify_environment' },
         { label: 'organizations_environments_subscribe', value: 'organizations_environments_subscribe' },
-        { label: 'organizations_environments_unsubscribe', value: 'organizations_environments_unsubscribe' },
-        { label: 'organizations_security_profiles_environments_compute_environment_scores', value: 'organizations_security_profiles_environments_compute_environment_scores' }
+        { label: 'organizations_environments_unsubscribe', value: 'organizations_environments_unsubscribe' }
     ]}
 >
+<TabItem value="organizations_security_profiles_environments_compute_environment_scores">
+
+ComputeEnvironmentScores calculates scores for requested time range for the specified security profile and environment.
+
+```sql
+EXEC google.apigee.environments.organizations_security_profiles_environments_compute_environment_scores 
+@organizationsId='{{ organizationsId }}' --required, 
+@securityProfilesId='{{ securityProfilesId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required 
+@@json=
+'{
+"filters": "{{ filters }}", 
+"pageSize": {{ pageSize }}, 
+"timeRange": "{{ timeRange }}", 
+"pageToken": "{{ pageToken }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="organizations_environments_modify_environment">
 
 Updates properties for an Apigee environment with patch semantics using a field mask. **Note:** Not supported for Apigee hybrid.
@@ -606,17 +624,17 @@ EXEC google.apigee.environments.organizations_environments_modify_environment
 @updateMask='{{ updateMask }}' 
 @@json=
 '{
-"apiProxyType": "{{ apiProxyType }}", 
-"description": "{{ description }}", 
-"hasAttachedFlowHooks": {{ hasAttachedFlowHooks }}, 
-"forwardProxyUri": "{{ forwardProxyUri }}", 
-"nodeConfig": "{{ nodeConfig }}", 
-"properties": "{{ properties }}", 
-"clientIpResolutionConfig": "{{ clientIpResolutionConfig }}", 
-"displayName": "{{ displayName }}", 
-"type": "{{ type }}", 
+"deploymentType": "{{ deploymentType }}", 
 "name": "{{ name }}", 
-"deploymentType": "{{ deploymentType }}"
+"description": "{{ description }}", 
+"properties": "{{ properties }}", 
+"apiProxyType": "{{ apiProxyType }}", 
+"forwardProxyUri": "{{ forwardProxyUri }}", 
+"type": "{{ type }}", 
+"hasAttachedFlowHooks": {{ hasAttachedFlowHooks }}, 
+"nodeConfig": "{{ nodeConfig }}", 
+"displayName": "{{ displayName }}", 
+"clientIpResolutionConfig": "{{ clientIpResolutionConfig }}"
 }'
 ;
 ```
@@ -643,25 +661,6 @@ EXEC google.apigee.environments.organizations_environments_unsubscribe
 @@json=
 '{
 "name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="organizations_security_profiles_environments_compute_environment_scores">
-
-ComputeEnvironmentScores calculates scores for requested time range for the specified security profile and environment.
-
-```sql
-EXEC google.apigee.environments.organizations_security_profiles_environments_compute_environment_scores 
-@organizationsId='{{ organizationsId }}' --required, 
-@securityProfilesId='{{ securityProfilesId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required 
-@@json=
-'{
-"timeRange": "{{ timeRange }}", 
-"filters": "{{ filters }}", 
-"pageToken": "{{ pageToken }}", 
-"pageSize": {{ pageSize }}
 }'
 ;
 ```

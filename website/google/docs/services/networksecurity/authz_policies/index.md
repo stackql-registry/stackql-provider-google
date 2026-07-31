@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>authz_policies</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>authz_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="authz_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.authz_policies" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action is `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`, only requests matching the policy will be allowed. When the action is `DENY`, only requests matching the policy will be denied. When a request arrives, the policies are evaluated in the following order: 1. If there is a `CUSTOM` policy that matches the request, the `CUSTOM` policy is evaluated using the custom authorization providers and the request is denied if the provider rejects the request. 2. If there are any `DENY` policies that match the request, the request is denied. 3. If there are no `ALLOW` policies for the resource or if any of the `ALLOW` policies match the request, the request is allowed. 4. Else the request is denied by default if none of the configured AuthzPolicies with `ALLOW` action match the request.</td>
+    <td>Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action is `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`, only requests matching the policy will be allowed. When the action is `DENY`, only requests matching the policy will be denied. When a request arrives, the policies are evaluated in the following order: 1. If there is a `CUSTOM` policy that matches the request, the `CUSTOM` policy is evaluated using the custom authorization providers and the request is denied if the provider rejects the request. 2. If there are any `DENY` policies that match the request, the request is denied. 3. If there are no `ALLOW` policies for the resource or if any of the `ALLOW` policies match the request, the request is allowed. 4. Else the request is denied by default if none of the configured AuthzPolicies with `ALLOW` action match the request. (AUTHZ_ACTION_UNSPECIFIED, ALLOW, DENY, CUSTOM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -83,6 +84,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. Set of labels associated with the `AuthzPolicy` resource. The format must comply with [the following requirements](https://cloud.google.com/compute/docs/labeling-resources#requirements).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="networkRules" /></td>
+    <td><code>array</code></td>
+    <td>Optional. A list of authorization network rules to match against the incoming request. A policy match occurs when at least one network rule matches the request. At least one network rule is required for Allow or Deny Action if no HTTP rules are provided. Network rules are mutually exclusive with HTTP rules. Limited to 5 rules.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="policyProfile" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. Defines the type of authorization being performed. If not specified, `REQUEST_AUTHZ` is applied. This field cannot be changed once AuthzPolicy is created. (POLICY_PROFILE_UNSPECIFIED, REQUEST_AUTHZ, CONTENT_AUTHZ)</td>
 </tr>
 <tr>
     <td><CopyableCode code="target" /></td>
@@ -116,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action is `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`, only requests matching the policy will be allowed. When the action is `DENY`, only requests matching the policy will be denied. When a request arrives, the policies are evaluated in the following order: 1. If there is a `CUSTOM` policy that matches the request, the `CUSTOM` policy is evaluated using the custom authorization providers and the request is denied if the provider rejects the request. 2. If there are any `DENY` policies that match the request, the request is denied. 3. If there are no `ALLOW` policies for the resource or if any of the `ALLOW` policies match the request, the request is allowed. 4. Else the request is denied by default if none of the configured AuthzPolicies with `ALLOW` action match the request.</td>
+    <td>Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action is `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`, only requests matching the policy will be allowed. When the action is `DENY`, only requests matching the policy will be denied. When a request arrives, the policies are evaluated in the following order: 1. If there is a `CUSTOM` policy that matches the request, the `CUSTOM` policy is evaluated using the custom authorization providers and the request is denied if the provider rejects the request. 2. If there are any `DENY` policies that match the request, the request is denied. 3. If there are no `ALLOW` policies for the resource or if any of the `ALLOW` policies match the request, the request is allowed. 4. Else the request is denied by default if none of the configured AuthzPolicies with `ALLOW` action match the request. (AUTHZ_ACTION_UNSPECIFIED, ALLOW, DENY, CUSTOM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -142,6 +153,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. Set of labels associated with the `AuthzPolicy` resource. The format must comply with [the following requirements](https://cloud.google.com/compute/docs/labeling-resources#requirements).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="networkRules" /></td>
+    <td><code>array</code></td>
+    <td>Optional. A list of authorization network rules to match against the incoming request. A policy match occurs when at least one network rule matches the request. At least one network rule is required for Allow or Deny Action if no HTTP rules are provided. Network rules are mutually exclusive with HTTP rules. Limited to 5 rules.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="policyProfile" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. Defines the type of authorization being performed. If not specified, `REQUEST_AUTHZ` is applied. This field cannot be changed once AuthzPolicy is created. (POLICY_PROFILE_UNSPECIFIED, REQUEST_AUTHZ, CONTENT_AUTHZ)</td>
 </tr>
 <tr>
     <td><CopyableCode code="target" /></td>
@@ -184,21 +205,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_authz_policies_list"><CopyableCode code="projects_locations_authz_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists AuthzPolicies in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_authz_policies_create"><CopyableCode code="projects_locations_authz_policies_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-authzPolicyId"><code>authzPolicyId</code></a></td>
+    <td><a href="#parameter-authzPolicyId"><code>authzPolicyId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new AuthzPolicy in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_authz_policies_patch"><CopyableCode code="projects_locations_authz_policies_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authzPoliciesId"><code>authzPoliciesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single AuthzPolicy.</td>
 </tr>
 <tr>
@@ -299,6 +320,8 @@ customProvider,
 description,
 httpRules,
 labels,
+networkRules,
+policyProfile,
 target,
 updateTime
 FROM google.networksecurity.authz_policies
@@ -321,15 +344,17 @@ customProvider,
 description,
 httpRules,
 labels,
+networkRules,
+policyProfile,
 target,
 updateTime
 FROM google.networksecurity.authz_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -351,30 +376,34 @@ Creates a new AuthzPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.authz_policies (
-data__target,
-data__name,
-data__httpRules,
-data__customProvider,
-data__labels,
-data__action,
 data__description,
+data__name,
+data__labels,
+data__target,
+data__networkRules,
+data__customProvider,
+data__httpRules,
+data__action,
+data__policyProfile,
 projectsId,
 locationsId,
-requestId,
-authzPolicyId
+authzPolicyId,
+requestId
 )
 SELECT 
-'{{ target }}',
-'{{ name }}',
-'{{ httpRules }}',
-'{{ customProvider }}',
-'{{ labels }}',
-'{{ action }}',
 '{{ description }}',
+'{{ name }}',
+'{{ labels }}',
+'{{ target }}',
+'{{ networkRules }}',
+'{{ customProvider }}',
+'{{ httpRules }}',
+'{{ action }}',
+'{{ policyProfile }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ authzPolicyId }}'
+'{{ authzPolicyId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -386,57 +415,164 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: authz_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the authz_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the authz_policies resource.
-    - name: target
-      value: object
-      description: >
-        Required. Specifies the set of resources to which this policy should be applied to.
-        
-    - name: name
-      value: string
-      description: >
-        Required. Identifier. Name of the `AuthzPolicy` resource in the following format: `projects/{project}/locations/{location}/authzPolicies/{authz_policy}`.
-        
-    - name: httpRules
-      value: array
-      description: >
-        Optional. A list of authorization HTTP rules to match against the incoming request. A policy match occurs when at least one HTTP rule matches the request or when no HTTP rules are specified in the policy. At least one HTTP Rule is required for Allow or Deny Action. Limited to 5 rules.
-        
-    - name: customProvider
-      value: object
-      description: >
-        Optional. Required if the action is `CUSTOM`. Allows delegating authorization decisions to Cloud IAP or to Service Extensions. One of `cloudIap` or `authzExtension` must be specified.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of labels associated with the `AuthzPolicy` resource. The format must comply with [the following requirements](https://cloud.google.com/compute/docs/labeling-resources#requirements).
-        
-    - name: action
-      value: string
-      description: >
-        Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action is `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`, only requests matching the policy will be allowed. When the action is `DENY`, only requests matching the policy will be denied. When a request arrives, the policies are evaluated in the following order: 1. If there is a `CUSTOM` policy that matches the request, the `CUSTOM` policy is evaluated using the custom authorization providers and the request is denied if the provider rejects the request. 2. If there are any `DENY` policies that match the request, the request is denied. 3. If there are no `ALLOW` policies for the resource or if any of the `ALLOW` policies match the request, the request is allowed. 4. Else the request is denied by default if none of the configured AuthzPolicies with `ALLOW` action match the request.
-        
-      valid_values: ['AUTHZ_ACTION_UNSPECIFIED', 'ALLOW', 'DENY', 'CUSTOM']
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A human-readable description of the resource.
-        
-    - name: requestId
-      value: string
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. Name of the \`AuthzPolicy\` resource in the following format: \`projects/{project}/locations/{location}/authzPolicies/{authz_policy}\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of labels associated with the \`AuthzPolicy\` resource. The format must comply with [the following requirements](https://cloud.google.com/compute/docs/labeling-resources#requirements).
+    - name: target
+      description: |
+        Required. Specifies the set of resources to which this policy should be applied to.
+      value:
+        loadBalancingScheme: "{{ loadBalancingScheme }}"
+        resources:
+          - "{{ resources }}"
+    - name: networkRules
+      description: |
+        Optional. A list of authorization network rules to match against the incoming request. A policy match occurs when at least one network rule matches the request. At least one network rule is required for Allow or Deny Action if no HTTP rules are provided. Network rules are mutually exclusive with HTTP rules. Limited to 5 rules.
+      value:
+        - when: "{{ when }}"
+          to:
+            notOperations:
+              - paths: "{{ paths }}"
+                methods: "{{ methods }}"
+                snis: "{{ snis }}"
+                headerSet:
+                  headers:
+                    - name: "{{ name }}"
+                      value:
+                        ignoreCase: {{ ignoreCase }}
+                        suffix: "{{ suffix }}"
+                        exact: "{{ exact }}"
+                        prefix: "{{ prefix }}"
+                        contains: "{{ contains }}"
+                hosts: "{{ hosts }}"
+                mcp:
+                  methods:
+                    - name: "{{ name }}"
+                      params: "{{ params }}"
+                  baseProtocolMethodsOption: "{{ baseProtocolMethodsOption }}"
+            operations:
+              - paths: "{{ paths }}"
+                methods: "{{ methods }}"
+                snis: "{{ snis }}"
+                headerSet:
+                  headers:
+                    - name: "{{ name }}"
+                      value:
+                        ignoreCase: {{ ignoreCase }}
+                        suffix: "{{ suffix }}"
+                        exact: "{{ exact }}"
+                        prefix: "{{ prefix }}"
+                        contains: "{{ contains }}"
+                hosts: "{{ hosts }}"
+                mcp:
+                  methods:
+                    - name: "{{ name }}"
+                      params: "{{ params }}"
+                  baseProtocolMethodsOption: "{{ baseProtocolMethodsOption }}"
+          from:
+            sources:
+              - principals: "{{ principals }}"
+                resources: "{{ resources }}"
+                ipBlocks: "{{ ipBlocks }}"
+            notSources:
+              - principals: "{{ principals }}"
+                resources: "{{ resources }}"
+                ipBlocks: "{{ ipBlocks }}"
+    - name: customProvider
+      description: |
+        Optional. Required if the action is \`CUSTOM\`. Allows delegating authorization decisions to Cloud IAP or to Service Extensions. One of \`cloudIap\` or \`authzExtension\` must be specified.
+      value:
+        cloudIap: "{{ cloudIap }}"
+        authzExtension:
+          resources:
+            - "{{ resources }}"
+    - name: httpRules
+      description: |
+        Optional. A list of authorization HTTP rules to match against the incoming request. A policy match occurs when at least one HTTP rule matches the request or when no HTTP rules are specified in the policy. At least one HTTP Rule is required for Allow or Deny Action. Limited to 5 rules.
+      value:
+        - when: "{{ when }}"
+          to:
+            notOperations:
+              - paths: "{{ paths }}"
+                methods: "{{ methods }}"
+                snis: "{{ snis }}"
+                headerSet:
+                  headers:
+                    - name: "{{ name }}"
+                      value:
+                        ignoreCase: {{ ignoreCase }}
+                        suffix: "{{ suffix }}"
+                        exact: "{{ exact }}"
+                        prefix: "{{ prefix }}"
+                        contains: "{{ contains }}"
+                hosts: "{{ hosts }}"
+                mcp:
+                  methods:
+                    - name: "{{ name }}"
+                      params: "{{ params }}"
+                  baseProtocolMethodsOption: "{{ baseProtocolMethodsOption }}"
+            operations:
+              - paths: "{{ paths }}"
+                methods: "{{ methods }}"
+                snis: "{{ snis }}"
+                headerSet:
+                  headers:
+                    - name: "{{ name }}"
+                      value:
+                        ignoreCase: {{ ignoreCase }}
+                        suffix: "{{ suffix }}"
+                        exact: "{{ exact }}"
+                        prefix: "{{ prefix }}"
+                        contains: "{{ contains }}"
+                hosts: "{{ hosts }}"
+                mcp:
+                  methods:
+                    - name: "{{ name }}"
+                      params: "{{ params }}"
+                  baseProtocolMethodsOption: "{{ baseProtocolMethodsOption }}"
+          from:
+            sources:
+              - principals: "{{ principals }}"
+                resources: "{{ resources }}"
+                ipBlocks: "{{ ipBlocks }}"
+            notSources:
+              - principals: "{{ principals }}"
+                resources: "{{ resources }}"
+                ipBlocks: "{{ ipBlocks }}"
+    - name: action
+      value: "{{ action }}"
+      description: |
+        Required. Can be one of \`ALLOW\`, \`DENY\`, \`CUSTOM\`. When the action is \`CUSTOM\`, \`customProvider\` must be specified. When the action is \`ALLOW\`, only requests matching the policy will be allowed. When the action is \`DENY\`, only requests matching the policy will be denied. When a request arrives, the policies are evaluated in the following order: 1. If there is a \`CUSTOM\` policy that matches the request, the \`CUSTOM\` policy is evaluated using the custom authorization providers and the request is denied if the provider rejects the request. 2. If there are any \`DENY\` policies that match the request, the request is denied. 3. If there are no \`ALLOW\` policies for the resource or if any of the \`ALLOW\` policies match the request, the request is allowed. 4. Else the request is denied by default if none of the configured AuthzPolicies with \`ALLOW\` action match the request.
+      valid_values: ['AUTHZ_ACTION_UNSPECIFIED', 'ALLOW', 'DENY', 'CUSTOM']
+    - name: policyProfile
+      value: "{{ policyProfile }}"
+      description: |
+        Optional. Immutable. Defines the type of authorization being performed. If not specified, \`REQUEST_AUTHZ\` is applied. This field cannot be changed once AuthzPolicy is created.
+      valid_values: ['POLICY_PROFILE_UNSPECIFIED', 'REQUEST_AUTHZ', 'CONTENT_AUTHZ']
     - name: authzPolicyId
-      value: string
-```
+      value: "{{ authzPolicyId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -456,19 +592,21 @@ Updates the parameters of a single AuthzPolicy.
 ```sql
 UPDATE google.networksecurity.authz_policies
 SET 
-data__target = '{{ target }}',
+data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__httpRules = '{{ httpRules }}',
-data__customProvider = '{{ customProvider }}',
 data__labels = '{{ labels }}',
+data__target = '{{ target }}',
+data__networkRules = '{{ networkRules }}',
+data__customProvider = '{{ customProvider }}',
+data__httpRules = '{{ httpRules }}',
 data__action = '{{ action }}',
-data__description = '{{ description }}'
+data__policyProfile = '{{ policyProfile }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND authzPoliciesId = '{{ authzPoliciesId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

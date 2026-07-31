@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entries</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.entries" /></td></tr>
 </tbody></table>
@@ -167,15 +168,15 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_entry_groups_entries_get"><CopyableCode code="projects_locations_entry_groups_entries_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-entryGroupsId"><code>entryGroupsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-paths"><code>paths</code></a></td>
-    <td>Gets an Entry. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is changing. For more information, see Changes to metadata stored in Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).</td>
+    <td><a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-paths"><code>paths</code></a></td>
+    <td>Gets an Entry.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_entry_groups_entries_list"><CopyableCode code="projects_locations_entry_groups_entries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-entryGroupsId"><code>entryGroupsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists Entries within an EntryGroup. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is changing. For more information, see Changes to metadata stored in Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists Entries within an EntryGroup.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_entry_groups_entries_create"><CopyableCode code="projects_locations_entry_groups_entries_create" /></a></td>
@@ -188,7 +189,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_entry_groups_entries_patch"><CopyableCode code="projects_locations_entry_groups_entries_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-entryGroupsId"><code>entryGroupsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-deleteMissingAspects"><code>deleteMissingAspects</code></a>, <a href="#parameter-aspectKeys"><code>aspectKeys</code></a></td>
+    <td><a href="#parameter-deleteMissingAspects"><code>deleteMissingAspects</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-aspectKeys"><code>aspectKeys</code></a></td>
     <td>Updates an Entry.</td>
 </tr>
 <tr>
@@ -303,7 +304,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_entry_groups_entries_get">
 
-Gets an Entry. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is changing. For more information, see Changes to metadata stored in Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).
+Gets an Entry.
 
 ```sql
 SELECT
@@ -320,15 +321,15 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND entryGroupsId = '{{ entryGroupsId }}' -- required
 AND entriesId = '{{ entriesId }}' -- required
-AND view = '{{ view }}'
 AND aspectTypes = '{{ aspectTypes }}'
+AND view = '{{ view }}'
 AND paths = '{{ paths }}'
 ;
 ```
 </TabItem>
 <TabItem value="projects_locations_entry_groups_entries_list">
 
-Lists Entries within an EntryGroup. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is changing. For more information, see Changes to metadata stored in Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).
+Lists Entries within an EntryGroup.
 
 ```sql
 SELECT
@@ -344,9 +345,9 @@ FROM google.dataplex.entries
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND entryGroupsId = '{{ entryGroupsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -368,11 +369,11 @@ Creates an Entry.
 
 ```sql
 INSERT INTO google.dataplex.entries (
+data__fullyQualifiedName,
 data__name,
+data__parentEntry,
 data__entryType,
 data__aspects,
-data__parentEntry,
-data__fullyQualifiedName,
 data__entrySource,
 projectsId,
 locationsId,
@@ -380,11 +381,11 @@ entryGroupsId,
 entryId
 )
 SELECT 
+'{{ fullyQualifiedName }}',
 '{{ name }}',
+'{{ parentEntry }}',
 '{{ entryType }}',
 '{{ aspects }}',
-'{{ parentEntry }}',
-'{{ fullyQualifiedName }}',
 '{{ entrySource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -404,52 +405,58 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: entries
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the entries resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the entries resource.
     - name: entryGroupsId
-      value: string
+      value: "{{ entryGroupsId }}"
       description: Required parameter for the entries resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The relative resource name of the entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}.
-        
-    - name: entryType
-      value: string
-      description: >
-        Required. Immutable. The relative resource name of the entry type that was used to create this entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryTypes/{entry_type_id}.
-        
-    - name: aspects
-      value: object
-      description: >
-        Optional. The aspects that are attached to the entry. Depending on how the aspect is attached to the entry, the format of the aspect key can be one of the following: If the aspect is attached directly to the entry: {project_id_or_number}.{location_id}.{aspect_type_id} If the aspect is attached to an entry's path: {project_id_or_number}.{location_id}.{aspect_type_id}@{path}
-        
-    - name: parentEntry
-      value: string
-      description: >
-        Optional. Immutable. The resource name of the parent entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}.
-        
     - name: fullyQualifiedName
-      value: string
-      description: >
+      value: "{{ fullyQualifiedName }}"
+      description: |
         Optional. A name for the entry that can be referenced by an external system. For more information, see Fully qualified names (https://cloud.google.com/data-catalog/docs/fully-qualified-names). The maximum size of the field is 4000 characters.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The relative resource name of the entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}.
+    - name: parentEntry
+      value: "{{ parentEntry }}"
+      description: |
+        Optional. Immutable. The resource name of the parent entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}.
+    - name: entryType
+      value: "{{ entryType }}"
+      description: |
+        Required. Immutable. The relative resource name of the entry type that was used to create this entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryTypes/{entry_type_id}.
+    - name: aspects
+      value: "{{ aspects }}"
+      description: |
+        Optional. The aspects that are attached to the entry. Depending on how the aspect is attached to the entry, the format of the aspect key can be one of the following: If the aspect is attached directly to the entry: {project_id_or_number}.{location_id}.{aspect_type_id} If the aspect is attached to an entry's path: {project_id_or_number}.{location_id}.{aspect_type_id}@{path}
     - name: entrySource
-      value: object
-      description: >
+      description: |
         Optional. Information related to the source system of the data resource that is represented by the entry.
-        
+      value:
+        displayName: "{{ displayName }}"
+        system: "{{ system }}"
+        createTime: "{{ createTime }}"
+        labels: "{{ labels }}"
+        ancestors:
+          - name: "{{ name }}"
+            type: "{{ type }}"
+        description: "{{ description }}"
+        updateTime: "{{ updateTime }}"
+        resource: "{{ resource }}"
+        platform: "{{ platform }}"
+        location: "{{ location }}"
     - name: entryId
-      value: string
-```
+      value: "{{ entryId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -469,20 +476,20 @@ Updates an Entry.
 ```sql
 UPDATE google.dataplex.entries
 SET 
+data__fullyQualifiedName = '{{ fullyQualifiedName }}',
 data__name = '{{ name }}',
+data__parentEntry = '{{ parentEntry }}',
 data__entryType = '{{ entryType }}',
 data__aspects = '{{ aspects }}',
-data__parentEntry = '{{ parentEntry }}',
-data__fullyQualifiedName = '{{ fullyQualifiedName }}',
 data__entrySource = '{{ entrySource }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND entryGroupsId = '{{ entryGroupsId }}' --required
 AND entriesId = '{{ entriesId }}' --required
+AND deleteMissingAspects = {{ deleteMissingAspects}}
 AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
-AND deleteMissingAspects = {{ deleteMissingAspects}}
 AND aspectKeys = '{{ aspectKeys}}'
 RETURNING
 name,

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connections</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.developerconnect.connections" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gitProxyConfig" /></td>
     <td><code>object</code></td>
-    <td>Optional. Configuration for the git proxy feature. Enabling the git proxy allows clients to perform git operations on the repositories linked in the connection. (id: GitProxyConfig)</td>
+    <td>Optional. Configuration for the git proxy feature. Enabling the git proxy allows clients to perform git operations on the repositories linked in the connection. [Learn more](https://docs.cloud.google.com/developer-connect/docs/configure-git-proxy). (id: GitProxyConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="githubConfig" /></td>
@@ -120,6 +121,11 @@ The following fields are returned by `SELECT` queries:
     <td>Configuration for connections to an instance of GitLab Enterprise. (id: GitLabEnterpriseConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="httpConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for connections to an HTTP service provider. (id: GenericHTTPEndpointConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="installationState" /></td>
     <td><code>object</code></td>
     <td>Output only. Installation state of the Connection. (id: InstallationState)</td>
@@ -133,6 +139,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="reconciling" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Set to true when the connection is being set up or updated in the background.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="secureSourceManagerInstanceConfig" /></td>
+    <td><code>object</code></td>
+    <td>Configuration for connections to an instance of Secure Source Manager. (id: SecureSourceManagerInstanceConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -189,21 +200,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Connections in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-connectionId"><code>connectionId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-connectionId"><code>connectionId</code></a></td>
     <td>Creates a new Connection in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single Connection.</td>
 </tr>
 <tr>
@@ -333,9 +344,11 @@ githubConfig,
 githubEnterpriseConfig,
 gitlabConfig,
 gitlabEnterpriseConfig,
+httpConfig,
 installationState,
 labels,
 reconciling,
+secureSourceManagerInstanceConfig,
 uid,
 updateTime
 FROM google.developerconnect.connections
@@ -355,10 +368,10 @@ SELECT
 FROM google.developerconnect.connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -380,44 +393,48 @@ Creates a new Connection in a given project and location.
 
 ```sql
 INSERT INTO google.developerconnect.connections (
-data__name,
-data__annotations,
-data__githubEnterpriseConfig,
-data__bitbucketCloudConfig,
-data__githubConfig,
-data__gitProxyConfig,
-data__gitlabEnterpriseConfig,
-data__bitbucketDataCenterConfig,
-data__cryptoKeyConfig,
-data__etag,
-data__labels,
 data__disabled,
+data__gitProxyConfig,
+data__githubEnterpriseConfig,
+data__httpConfig,
+data__githubConfig,
+data__secureSourceManagerInstanceConfig,
+data__cryptoKeyConfig,
+data__gitlabEnterpriseConfig,
+data__bitbucketCloudConfig,
+data__name,
+data__labels,
+data__etag,
 data__gitlabConfig,
+data__bitbucketDataCenterConfig,
+data__annotations,
 projectsId,
 locationsId,
+validateOnly,
 requestId,
-connectionId,
-validateOnly
+connectionId
 )
 SELECT 
-'{{ name }}',
-'{{ annotations }}',
-'{{ githubEnterpriseConfig }}',
-'{{ bitbucketCloudConfig }}',
-'{{ githubConfig }}',
-'{{ gitProxyConfig }}',
-'{{ gitlabEnterpriseConfig }}',
-'{{ bitbucketDataCenterConfig }}',
-'{{ cryptoKeyConfig }}',
-'{{ etag }}',
-'{{ labels }}',
 {{ disabled }},
+'{{ gitProxyConfig }}',
+'{{ githubEnterpriseConfig }}',
+'{{ httpConfig }}',
+'{{ githubConfig }}',
+'{{ secureSourceManagerInstanceConfig }}',
+'{{ cryptoKeyConfig }}',
+'{{ gitlabEnterpriseConfig }}',
+'{{ bitbucketCloudConfig }}',
+'{{ name }}',
+'{{ labels }}',
+'{{ etag }}',
 '{{ gitlabConfig }}',
+'{{ bitbucketDataCenterConfig }}',
+'{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ validateOnly }}',
 '{{ requestId }}',
-'{{ connectionId }}',
-'{{ validateOnly }}'
+'{{ connectionId }}'
 RETURNING
 name,
 done,
@@ -429,88 +446,153 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connections
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the connections resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the connections resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the connection, in the format `projects/{project}/locations/{location}/connections/{connection_id}`.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Allows clients to store small amounts of arbitrary data.
-        
-    - name: githubEnterpriseConfig
-      value: object
-      description: >
-        Configuration for connections to an instance of GitHub Enterprise.
-        
-    - name: bitbucketCloudConfig
-      value: object
-      description: >
-        Configuration for connections to an instance of Bitbucket Clouds.
-        
-    - name: githubConfig
-      value: object
-      description: >
-        Configuration for connections to github.com.
-        
-    - name: gitProxyConfig
-      value: object
-      description: >
-        Optional. Configuration for the git proxy feature. Enabling the git proxy allows clients to perform git operations on the repositories linked in the connection.
-        
-    - name: gitlabEnterpriseConfig
-      value: object
-      description: >
-        Configuration for connections to an instance of GitLab Enterprise.
-        
-    - name: bitbucketDataCenterConfig
-      value: object
-      description: >
-        Configuration for connections to an instance of Bitbucket Data Center.
-        
-    - name: cryptoKeyConfig
-      value: object
-      description: >
-        Optional. The crypto key configuration. This field is used by the Customer-Managed Encryption Keys (CMEK) feature.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs
-        
     - name: disabled
-      value: boolean
-      description: >
+      value: {{ disabled }}
+      description: |
         Optional. If disabled is set to true, functionality is disabled for this connection. Repository based API methods and webhooks processing for repositories in this connection will be disabled.
-        
+    - name: gitProxyConfig
+      description: |
+        Optional. Configuration for the git proxy feature. Enabling the git proxy allows clients to perform git operations on the repositories linked in the connection. [Learn more](https://docs.cloud.google.com/developer-connect/docs/configure-git-proxy).
+      value:
+        httpProxyBaseUri: "{{ httpProxyBaseUri }}"
+        enabled: {{ enabled }}
+    - name: githubEnterpriseConfig
+      description: |
+        Configuration for connections to an instance of GitHub Enterprise.
+      value:
+        installationUri: "{{ installationUri }}"
+        appSlug: "{{ appSlug }}"
+        serverVersion: "{{ serverVersion }}"
+        sslCaCertificate: "{{ sslCaCertificate }}"
+        appId: "{{ appId }}"
+        privateKeySecretVersion: "{{ privateKeySecretVersion }}"
+        organization: "{{ organization }}"
+        hostUri: "{{ hostUri }}"
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        appInstallationId: "{{ appInstallationId }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+    - name: httpConfig
+      description: |
+        Optional. Configuration for connections to an HTTP service provider.
+      value:
+        hostUri: "{{ hostUri }}"
+        basicAuthentication:
+          username: "{{ username }}"
+          passwordSecretVersion: "{{ passwordSecretVersion }}"
+        bearerTokenAuthentication:
+          tokenSecretVersion: "{{ tokenSecretVersion }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+        sslCaCertificate: "{{ sslCaCertificate }}"
+    - name: githubConfig
+      description: |
+        Configuration for connections to github.com.
+      value:
+        appInstallationId: "{{ appInstallationId }}"
+        installationUri: "{{ installationUri }}"
+        githubApp: "{{ githubApp }}"
+        authorizerCredential:
+          username: "{{ username }}"
+          oauthTokenSecretVersion: "{{ oauthTokenSecretVersion }}"
+    - name: secureSourceManagerInstanceConfig
+      description: |
+        Configuration for connections to an instance of Secure Source Manager.
+      value:
+        instance: "{{ instance }}"
+    - name: cryptoKeyConfig
+      description: |
+        Optional. The crypto key configuration. This field is used by the Customer-Managed Encryption Keys (CMEK) feature.
+      value:
+        keyReference: "{{ keyReference }}"
+    - name: gitlabEnterpriseConfig
+      description: |
+        Configuration for connections to an instance of GitLab Enterprise.
+      value:
+        sslCaCertificate: "{{ sslCaCertificate }}"
+        serverVersion: "{{ serverVersion }}"
+        authorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+        hostUri: "{{ hostUri }}"
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        readAuthorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+    - name: bitbucketCloudConfig
+      description: |
+        Configuration for connections to an instance of Bitbucket Clouds.
+      value:
+        workspace: "{{ workspace }}"
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        readAuthorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        authorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the connection, in the format \`projects/{project}/locations/{location}/connections/{connection_id}\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: gitlabConfig
-      value: object
-      description: >
+      description: |
         Configuration for connections to gitlab.com.
-        
-    - name: requestId
-      value: string
-    - name: connectionId
-      value: string
+      value:
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        readAuthorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        authorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+    - name: bitbucketDataCenterConfig
+      description: |
+        Configuration for connections to an instance of Bitbucket Data Center.
+      value:
+        authorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+        sslCaCertificate: "{{ sslCaCertificate }}"
+        serverVersion: "{{ serverVersion }}"
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        readAuthorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        hostUri: "{{ hostUri }}"
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Allows clients to store small amounts of arbitrary data.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: requestId
+      value: "{{ requestId }}"
+    - name: connectionId
+      value: "{{ connectionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -530,25 +612,27 @@ Updates the parameters of a single Connection.
 ```sql
 UPDATE google.developerconnect.connections
 SET 
-data__name = '{{ name }}',
-data__annotations = '{{ annotations }}',
-data__githubEnterpriseConfig = '{{ githubEnterpriseConfig }}',
-data__bitbucketCloudConfig = '{{ bitbucketCloudConfig }}',
-data__githubConfig = '{{ githubConfig }}',
-data__gitProxyConfig = '{{ gitProxyConfig }}',
-data__gitlabEnterpriseConfig = '{{ gitlabEnterpriseConfig }}',
-data__bitbucketDataCenterConfig = '{{ bitbucketDataCenterConfig }}',
-data__cryptoKeyConfig = '{{ cryptoKeyConfig }}',
-data__etag = '{{ etag }}',
-data__labels = '{{ labels }}',
 data__disabled = {{ disabled }},
-data__gitlabConfig = '{{ gitlabConfig }}'
+data__gitProxyConfig = '{{ gitProxyConfig }}',
+data__githubEnterpriseConfig = '{{ githubEnterpriseConfig }}',
+data__httpConfig = '{{ httpConfig }}',
+data__githubConfig = '{{ githubConfig }}',
+data__secureSourceManagerInstanceConfig = '{{ secureSourceManagerInstanceConfig }}',
+data__cryptoKeyConfig = '{{ cryptoKeyConfig }}',
+data__gitlabEnterpriseConfig = '{{ gitlabEnterpriseConfig }}',
+data__bitbucketCloudConfig = '{{ bitbucketCloudConfig }}',
+data__name = '{{ name }}',
+data__labels = '{{ labels }}',
+data__etag = '{{ etag }}',
+data__gitlabConfig = '{{ gitlabConfig }}',
+data__bitbucketDataCenterConfig = '{{ bitbucketDataCenterConfig }}',
+data__annotations = '{{ annotations }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
+AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
 RETURNING

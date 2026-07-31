@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>aspect_types</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>aspect_types</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="aspect_types" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.aspect_types" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataClassification" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Stores data classification of the aspect.</td>
+    <td>Optional. Immutable. Stores data classification of the aspect. (DATA_CLASSIFICATION_UNSPECIFIED, METADATA_AND_DATA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="transferStatus" /></td>
     <td><code>string</code></td>
-    <td>Output only. Denotes the transfer status of the Aspect Type. It is unspecified for Aspect Types created from Dataplex API.</td>
+    <td>Output only. Denotes the transfer status of the Aspect Type. It is unspecified for Aspect Types created from Dataplex API. (TRANSFER_STATUS_UNSPECIFIED, TRANSFER_STATUS_MIGRATED, TRANSFER_STATUS_TRANSFERRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -123,66 +124,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The relative resource name of the AspectType, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/aspectTypes/&#123;aspect_type_id&#125;.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="authorization" /></td>
-    <td><code>object</code></td>
-    <td>Immutable. Defines the Authorization for this type. (id: GoogleCloudDataplexV1AspectTypeAuthorization)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the AspectType was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dataClassification" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Immutable. Stores data classification of the aspect.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Description of the AspectType.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. User friendly display name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>The service computes this checksum. The client may send it on update and delete requests to ensure it has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. User-defined labels for the AspectType.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadataTemplate" /></td>
-    <td><code>object</code></td>
-    <td>Required. MetadataTemplate of the aspect. (id: GoogleCloudDataplexV1AspectTypeMetadataTemplate)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="transferStatus" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Denotes the transfer status of the Aspect Type. It is unspecified for Aspect Types created from Dataplex API.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System generated globally unique ID for the AspectType. If you delete and recreate the AspectType with the same name, then this ID will be different.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the AspectType was last updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -214,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_aspect_types_list"><CopyableCode code="projects_locations_aspect_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists AspectType resources in a project and location.</td>
 </tr>
 <tr>
@@ -352,25 +293,14 @@ Lists AspectType resources in a project and location.
 
 ```sql
 SELECT
-name,
-authorization,
-createTime,
-dataClassification,
-description,
-displayName,
-etag,
-labels,
-metadataTemplate,
-transferStatus,
-uid,
-updateTime
+*
 FROM google.dataplex.aspect_types
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -392,26 +322,26 @@ Creates an AspectType.
 
 ```sql
 INSERT INTO google.dataplex.aspect_types (
-data__description,
-data__displayName,
-data__labels,
-data__etag,
 data__dataClassification,
-data__authorization,
+data__labels,
 data__metadataTemplate,
+data__displayName,
+data__etag,
+data__authorization,
+data__description,
 projectsId,
 locationsId,
 aspectTypeId,
 validateOnly
 )
 SELECT 
-'{{ description }}',
-'{{ displayName }}',
-'{{ labels }}',
-'{{ etag }}',
 '{{ dataClassification }}',
-'{{ authorization }}',
+'{{ labels }}',
 '{{ metadataTemplate }}',
+'{{ displayName }}',
+'{{ etag }}',
+'{{ authorization }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ aspectTypeId }}',
@@ -427,57 +357,1874 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: aspect_types
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the aspect_types resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the aspect_types resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the AspectType.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly display name.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels for the AspectType.
-        
-    - name: etag
-      value: string
-      description: >
-        The service computes this checksum. The client may send it on update and delete requests to ensure it has an up-to-date value before proceeding.
-        
     - name: dataClassification
-      value: string
-      description: >
+      value: "{{ dataClassification }}"
+      description: |
         Optional. Immutable. Stores data classification of the aspect.
-        
       valid_values: ['DATA_CLASSIFICATION_UNSPECIFIED', 'METADATA_AND_DATA']
-    - name: authorization
-      value: object
-      description: >
-        Immutable. Defines the Authorization for this type.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the AspectType.
     - name: metadataTemplate
-      value: object
-      description: >
+      description: |
         Required. MetadataTemplate of the aspect.
-        
+      value:
+        type: "{{ type }}"
+        typeId: "{{ typeId }}"
+        constraints:
+          required: {{ required }}
+        index: {{ index }}
+        name: "{{ name }}"
+        mapItems:
+          type: "{{ type }}"
+          typeId: "{{ typeId }}"
+          constraints:
+            required: {{ required }}
+          index: {{ index }}
+          name: "{{ name }}"
+          mapItems:
+            type: "{{ type }}"
+            typeId: "{{ typeId }}"
+            constraints:
+              required: {{ required }}
+            index: {{ index }}
+            name: "{{ name }}"
+            mapItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues: "{{ stringValues }}"
+            typeRef: "{{ typeRef }}"
+            enumValues:
+              - name: "{{ name }}"
+                deprecated: "{{ deprecated }}"
+                index: {{ index }}
+            arrayItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues: "{{ stringValues }}"
+            recordFields:
+              - type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields: "{{ recordFields }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+            annotations:
+              deprecated: "{{ deprecated }}"
+              description: "{{ description }}"
+              stringType: "{{ stringType }}"
+              displayOrder: {{ displayOrder }}
+              displayName: "{{ displayName }}"
+              stringValues:
+                - "{{ stringValues }}"
+          typeRef: "{{ typeRef }}"
+          enumValues:
+            - name: "{{ name }}"
+              deprecated: "{{ deprecated }}"
+              index: {{ index }}
+          arrayItems:
+            type: "{{ type }}"
+            typeId: "{{ typeId }}"
+            constraints:
+              required: {{ required }}
+            index: {{ index }}
+            name: "{{ name }}"
+            mapItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues: "{{ stringValues }}"
+            typeRef: "{{ typeRef }}"
+            enumValues:
+              - name: "{{ name }}"
+                deprecated: "{{ deprecated }}"
+                index: {{ index }}
+            arrayItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues: "{{ stringValues }}"
+            recordFields:
+              - type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields: "{{ recordFields }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+            annotations:
+              deprecated: "{{ deprecated }}"
+              description: "{{ description }}"
+              stringType: "{{ stringType }}"
+              displayOrder: {{ displayOrder }}
+              displayName: "{{ displayName }}"
+              stringValues:
+                - "{{ stringValues }}"
+          recordFields:
+            - type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues:
+                  - name: "{{ name }}"
+                    deprecated: "{{ deprecated }}"
+                    index: {{ index }}
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields:
+                  - type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints:
+                      required: {{ required }}
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations:
+                      deprecated: "{{ deprecated }}"
+                      description: "{{ description }}"
+                      stringType: "{{ stringType }}"
+                      displayOrder: {{ displayOrder }}
+                      displayName: "{{ displayName }}"
+                      stringValues: "{{ stringValues }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+              typeRef: "{{ typeRef }}"
+              enumValues: "{{ enumValues }}"
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues:
+                  - name: "{{ name }}"
+                    deprecated: "{{ deprecated }}"
+                    index: {{ index }}
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields:
+                  - type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints:
+                      required: {{ required }}
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations:
+                      deprecated: "{{ deprecated }}"
+                      description: "{{ description }}"
+                      stringType: "{{ stringType }}"
+                      displayOrder: {{ displayOrder }}
+                      displayName: "{{ displayName }}"
+                      stringValues: "{{ stringValues }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+              recordFields: "{{ recordFields }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues:
+                  - "{{ stringValues }}"
+          annotations:
+            deprecated: "{{ deprecated }}"
+            description: "{{ description }}"
+            stringType: "{{ stringType }}"
+            displayOrder: {{ displayOrder }}
+            displayName: "{{ displayName }}"
+            stringValues:
+              - "{{ stringValues }}"
+        typeRef: "{{ typeRef }}"
+        enumValues:
+          - name: "{{ name }}"
+            deprecated: "{{ deprecated }}"
+            index: {{ index }}
+        arrayItems:
+          type: "{{ type }}"
+          typeId: "{{ typeId }}"
+          constraints:
+            required: {{ required }}
+          index: {{ index }}
+          name: "{{ name }}"
+          mapItems:
+            type: "{{ type }}"
+            typeId: "{{ typeId }}"
+            constraints:
+              required: {{ required }}
+            index: {{ index }}
+            name: "{{ name }}"
+            mapItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues: "{{ stringValues }}"
+            typeRef: "{{ typeRef }}"
+            enumValues:
+              - name: "{{ name }}"
+                deprecated: "{{ deprecated }}"
+                index: {{ index }}
+            arrayItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues: "{{ stringValues }}"
+            recordFields:
+              - type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields: "{{ recordFields }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+            annotations:
+              deprecated: "{{ deprecated }}"
+              description: "{{ description }}"
+              stringType: "{{ stringType }}"
+              displayOrder: {{ displayOrder }}
+              displayName: "{{ displayName }}"
+              stringValues:
+                - "{{ stringValues }}"
+          typeRef: "{{ typeRef }}"
+          enumValues:
+            - name: "{{ name }}"
+              deprecated: "{{ deprecated }}"
+              index: {{ index }}
+          arrayItems:
+            type: "{{ type }}"
+            typeId: "{{ typeId }}"
+            constraints:
+              required: {{ required }}
+            index: {{ index }}
+            name: "{{ name }}"
+            mapItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues: "{{ stringValues }}"
+            typeRef: "{{ typeRef }}"
+            enumValues:
+              - name: "{{ name }}"
+                deprecated: "{{ deprecated }}"
+                index: {{ index }}
+            arrayItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints: "{{ constraints }}"
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems: "{{ mapItems }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems: "{{ arrayItems }}"
+                recordFields: "{{ recordFields }}"
+                annotations: "{{ annotations }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues: "{{ stringValues }}"
+            recordFields:
+              - type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues: "{{ enumValues }}"
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields: "{{ recordFields }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+            annotations:
+              deprecated: "{{ deprecated }}"
+              description: "{{ description }}"
+              stringType: "{{ stringType }}"
+              displayOrder: {{ displayOrder }}
+              displayName: "{{ displayName }}"
+              stringValues:
+                - "{{ stringValues }}"
+          recordFields:
+            - type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues:
+                  - name: "{{ name }}"
+                    deprecated: "{{ deprecated }}"
+                    index: {{ index }}
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields:
+                  - type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints:
+                      required: {{ required }}
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations:
+                      deprecated: "{{ deprecated }}"
+                      description: "{{ description }}"
+                      stringType: "{{ stringType }}"
+                      displayOrder: {{ displayOrder }}
+                      displayName: "{{ displayName }}"
+                      stringValues: "{{ stringValues }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+              typeRef: "{{ typeRef }}"
+              enumValues: "{{ enumValues }}"
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues:
+                  - name: "{{ name }}"
+                    deprecated: "{{ deprecated }}"
+                    index: {{ index }}
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields:
+                  - type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints:
+                      required: {{ required }}
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations:
+                      deprecated: "{{ deprecated }}"
+                      description: "{{ description }}"
+                      stringType: "{{ stringType }}"
+                      displayOrder: {{ displayOrder }}
+                      displayName: "{{ displayName }}"
+                      stringValues: "{{ stringValues }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+              recordFields: "{{ recordFields }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues:
+                  - "{{ stringValues }}"
+          annotations:
+            deprecated: "{{ deprecated }}"
+            description: "{{ description }}"
+            stringType: "{{ stringType }}"
+            displayOrder: {{ displayOrder }}
+            displayName: "{{ displayName }}"
+            stringValues:
+              - "{{ stringValues }}"
+        recordFields:
+          - type: "{{ type }}"
+            typeId: "{{ typeId }}"
+            constraints:
+              required: {{ required }}
+            index: {{ index }}
+            name: "{{ name }}"
+            mapItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues:
+                  - name: "{{ name }}"
+                    deprecated: "{{ deprecated }}"
+                    index: {{ index }}
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields:
+                  - type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints:
+                      required: {{ required }}
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations:
+                      deprecated: "{{ deprecated }}"
+                      description: "{{ description }}"
+                      stringType: "{{ stringType }}"
+                      displayOrder: {{ displayOrder }}
+                      displayName: "{{ displayName }}"
+                      stringValues: "{{ stringValues }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues:
+                  - name: "{{ name }}"
+                    deprecated: "{{ deprecated }}"
+                    index: {{ index }}
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields:
+                  - type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints:
+                      required: {{ required }}
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations:
+                      deprecated: "{{ deprecated }}"
+                      description: "{{ description }}"
+                      stringType: "{{ stringType }}"
+                      displayOrder: {{ displayOrder }}
+                      displayName: "{{ displayName }}"
+                      stringValues: "{{ stringValues }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues:
+                  - "{{ stringValues }}"
+            typeRef: "{{ typeRef }}"
+            enumValues: "{{ enumValues }}"
+            arrayItems:
+              type: "{{ type }}"
+              typeId: "{{ typeId }}"
+              constraints:
+                required: {{ required }}
+              index: {{ index }}
+              name: "{{ name }}"
+              mapItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues:
+                  - name: "{{ name }}"
+                    deprecated: "{{ deprecated }}"
+                    index: {{ index }}
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields:
+                  - type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints:
+                      required: {{ required }}
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations:
+                      deprecated: "{{ deprecated }}"
+                      description: "{{ description }}"
+                      stringType: "{{ stringType }}"
+                      displayOrder: {{ displayOrder }}
+                      displayName: "{{ displayName }}"
+                      stringValues: "{{ stringValues }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+              typeRef: "{{ typeRef }}"
+              enumValues:
+                - name: "{{ name }}"
+                  deprecated: "{{ deprecated }}"
+                  index: {{ index }}
+              arrayItems:
+                type: "{{ type }}"
+                typeId: "{{ typeId }}"
+                constraints:
+                  required: {{ required }}
+                index: {{ index }}
+                name: "{{ name }}"
+                mapItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                typeRef: "{{ typeRef }}"
+                enumValues:
+                  - name: "{{ name }}"
+                    deprecated: "{{ deprecated }}"
+                    index: {{ index }}
+                arrayItems:
+                  type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints: "{{ constraints }}"
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems: "{{ mapItems }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems: "{{ arrayItems }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations: "{{ annotations }}"
+                recordFields:
+                  - type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints:
+                      required: {{ required }}
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems:
+                      type: "{{ type }}"
+                      typeId: "{{ typeId }}"
+                      constraints: "{{ constraints }}"
+                      index: {{ index }}
+                      name: "{{ name }}"
+                      mapItems: "{{ mapItems }}"
+                      typeRef: "{{ typeRef }}"
+                      enumValues: "{{ enumValues }}"
+                      arrayItems: "{{ arrayItems }}"
+                      recordFields: "{{ recordFields }}"
+                      annotations: "{{ annotations }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations:
+                      deprecated: "{{ deprecated }}"
+                      description: "{{ description }}"
+                      stringType: "{{ stringType }}"
+                      displayOrder: {{ displayOrder }}
+                      displayName: "{{ displayName }}"
+                      stringValues: "{{ stringValues }}"
+                annotations:
+                  deprecated: "{{ deprecated }}"
+                  description: "{{ description }}"
+                  stringType: "{{ stringType }}"
+                  displayOrder: {{ displayOrder }}
+                  displayName: "{{ displayName }}"
+                  stringValues: "{{ stringValues }}"
+              recordFields:
+                - type: "{{ type }}"
+                  typeId: "{{ typeId }}"
+                  constraints:
+                    required: {{ required }}
+                  index: {{ index }}
+                  name: "{{ name }}"
+                  mapItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  typeRef: "{{ typeRef }}"
+                  enumValues: "{{ enumValues }}"
+                  arrayItems:
+                    type: "{{ type }}"
+                    typeId: "{{ typeId }}"
+                    constraints: "{{ constraints }}"
+                    index: {{ index }}
+                    name: "{{ name }}"
+                    mapItems: "{{ mapItems }}"
+                    typeRef: "{{ typeRef }}"
+                    enumValues: "{{ enumValues }}"
+                    arrayItems: "{{ arrayItems }}"
+                    recordFields: "{{ recordFields }}"
+                    annotations: "{{ annotations }}"
+                  recordFields: "{{ recordFields }}"
+                  annotations:
+                    deprecated: "{{ deprecated }}"
+                    description: "{{ description }}"
+                    stringType: "{{ stringType }}"
+                    displayOrder: {{ displayOrder }}
+                    displayName: "{{ displayName }}"
+                    stringValues: "{{ stringValues }}"
+              annotations:
+                deprecated: "{{ deprecated }}"
+                description: "{{ description }}"
+                stringType: "{{ stringType }}"
+                displayOrder: {{ displayOrder }}
+                displayName: "{{ displayName }}"
+                stringValues:
+                  - "{{ stringValues }}"
+            recordFields: "{{ recordFields }}"
+            annotations:
+              deprecated: "{{ deprecated }}"
+              description: "{{ description }}"
+              stringType: "{{ stringType }}"
+              displayOrder: {{ displayOrder }}
+              displayName: "{{ displayName }}"
+              stringValues:
+                - "{{ stringValues }}"
+        annotations:
+          deprecated: "{{ deprecated }}"
+          description: "{{ description }}"
+          stringType: "{{ stringType }}"
+          displayOrder: {{ displayOrder }}
+          displayName: "{{ displayName }}"
+          stringValues:
+            - "{{ stringValues }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        The service computes this checksum. The client may send it on update and delete requests to ensure it has an up-to-date value before proceeding.
+    - name: authorization
+      description: |
+        Immutable. Defines the Authorization for this type.
+      value:
+        alternateUsePermission: "{{ alternateUsePermission }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the AspectType.
     - name: aspectTypeId
-      value: string
+      value: "{{ aspectTypeId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -497,13 +2244,13 @@ Updates an AspectType.
 ```sql
 UPDATE google.dataplex.aspect_types
 SET 
-data__description = '{{ description }}',
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
-data__etag = '{{ etag }}',
 data__dataClassification = '{{ dataClassification }}',
+data__labels = '{{ labels }}',
+data__metadataTemplate = '{{ metadataTemplate }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
 data__authorization = '{{ authorization }}',
-data__metadataTemplate = '{{ metadataTemplate }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

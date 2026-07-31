@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>custom_classes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>custom_classes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="custom_classes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.speech.custom_classes" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The CustomClass lifecycle state. This field is not used.</td>
+    <td>Output only. The CustomClass lifecycle state. This field is not used. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The CustomClass lifecycle state. This field is not used.</td>
+    <td>Output only. The CustomClass lifecycle state. This field is not used. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List custom classes.</td>
 </tr>
 <tr>
@@ -354,8 +355,8 @@ uid
 FROM google.speech.custom_classes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -377,14 +378,14 @@ Create a custom class.
 
 ```sql
 INSERT INTO google.speech.custom_classes (
-data__customClassId,
 data__customClass,
+data__customClassId,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ customClassId }}',
 '{{ customClass }}',
+'{{ customClassId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -406,27 +407,39 @@ uid
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: custom_classes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the custom_classes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the custom_classes resource.
-    - name: customClassId
-      value: string
-      description: >
-        Required. The ID to use for the custom class, which will become the final component of the custom class' resource name. This value should restrict to letters, numbers, and hyphens, with the first character a letter, the last a letter or a number, and be 4-63 characters.
-        
     - name: customClass
-      value: object
-      description: >
-        Required. The custom class to create.
-        
-```
+      description: |
+        A set of words or phrases that represents a common concept likely to appear in your audio, for example a list of passenger ship names. CustomClass items can be substituted into placeholders that you set in PhraseSet phrases.
+      value:
+        uid: "{{ uid }}"
+        expireTime: "{{ expireTime }}"
+        reconciling: {{ reconciling }}
+        items:
+          - value: "{{ value }}"
+        displayName: "{{ displayName }}"
+        state: "{{ state }}"
+        etag: "{{ etag }}"
+        kmsKeyVersionName: "{{ kmsKeyVersionName }}"
+        kmsKeyName: "{{ kmsKeyName }}"
+        annotations: "{{ annotations }}"
+        customClassId: "{{ customClassId }}"
+        deleteTime: "{{ deleteTime }}"
+        name: "{{ name }}"
+    - name: customClassId
+      value: "{{ customClassId }}"
+      description: |
+        Required. The ID to use for the custom class, which will become the final component of the custom class' resource name. This value should restrict to letters, numbers, and hyphens, with the first character a letter, the last a letter or a number, and be 4-63 characters.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -446,9 +459,9 @@ Update a custom class.
 ```sql
 UPDATE google.speech.custom_classes
 SET 
-data__name = '{{ name }}',
+data__items = '{{ items }}',
 data__customClassId = '{{ customClassId }}',
-data__items = '{{ items }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>databases_ddl</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>databases_ddl</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="databases_ddl" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.spanner.databases_ddl" /></td></tr>
 </tbody></table>
@@ -167,8 +168,8 @@ Updates the schema of a Cloud Spanner database by creating/altering/dropping tab
 ```sql
 UPDATE google.spanner.databases_ddl
 SET 
-data__operationId = '{{ operationId }}',
 data__statements = '{{ statements }}',
+data__operationId = '{{ operationId }}',
 data__protoDescriptors = '{{ protoDescriptors }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

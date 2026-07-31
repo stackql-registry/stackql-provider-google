@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.locations" /></td></tr>
 </tbody></table>
@@ -144,15 +145,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
-</tr>
-<tr>
-    <td><a href="#search_resources"><CopyableCode code="search_resources" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Search across API-Hub resources.</td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 <tr>
     <td><a href="#collect_api_data"><CopyableCode code="collect_api_data" /></a></td>
@@ -167,6 +161,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Look up a runtime project attachment. This API can be called in the context of any project.</td>
+</tr>
+<tr>
+    <td><a href="#search_resources"><CopyableCode code="search_resources" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Search across API-Hub resources.</td>
 </tr>
 </tbody>
 </table>
@@ -245,7 +246,7 @@ AND locationsId = '{{ locationsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists information about the supported locations for this service.
+Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
 
 ```sql
 SELECT
@@ -256,10 +257,10 @@ locationId,
 metadata
 FROM google.apihub.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -269,31 +270,13 @@ AND extraLocationTypes = '{{ extraLocationTypes }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search_resources"
+    defaultValue="collect_api_data"
     values={[
-        { label: 'search_resources', value: 'search_resources' },
         { label: 'collect_api_data', value: 'collect_api_data' },
-        { label: 'lookup_runtime_project_attachment', value: 'lookup_runtime_project_attachment' }
+        { label: 'lookup_runtime_project_attachment', value: 'lookup_runtime_project_attachment' },
+        { label: 'search_resources', value: 'search_resources' }
     ]}
 >
-<TabItem value="search_resources">
-
-Search across API-Hub resources.
-
-```sql
-EXEC google.apihub.locations.search_resources 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"query": "{{ query }}", 
-"filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="collect_api_data">
 
 Collect API data from a source and push it to Hub's collect layer.
@@ -304,10 +287,10 @@ EXEC google.apihub.locations.collect_api_data
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"collectionType": "{{ collectionType }}", 
 "pluginInstance": "{{ pluginInstance }}", 
-"actionId": "{{ actionId }}", 
-"apiData": "{{ apiData }}"
+"apiData": "{{ apiData }}", 
+"collectionType": "{{ collectionType }}", 
+"actionId": "{{ actionId }}"
 }'
 ;
 ```
@@ -320,6 +303,24 @@ Look up a runtime project attachment. This API can be called in the context of a
 EXEC google.apihub.locations.lookup_runtime_project_attachment 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="search_resources">
+
+Search across API-Hub resources.
+
+```sql
+EXEC google.apihub.locations.search_resources 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
+"query": "{{ query }}", 
+"pageToken": "{{ pageToken }}"
+}'
 ;
 ```
 </TabItem>

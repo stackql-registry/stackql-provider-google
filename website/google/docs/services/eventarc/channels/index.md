@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>channels</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>channels</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="channels" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.eventarc.channels" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of a Channel.</td>
+    <td>Output only. The state of a Channel. (STATE_UNSPECIFIED, PENDING, ACTIVE, INACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of a Channel.</td>
+    <td>Output only. The state of a Channel. (STATE_UNSPECIFIED, PENDING, ACTIVE, INACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -211,7 +212,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-channelId"><code>channelId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-channelId"><code>channelId</code></a></td>
     <td>Create a new channel in a particular project and location.</td>
 </tr>
 <tr>
@@ -369,24 +370,24 @@ Create a new channel in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.channels (
-data__name,
-data__provider,
-data__cryptoKeyName,
 data__labels,
+data__cryptoKeyName,
+data__provider,
+data__name,
 projectsId,
 locationsId,
-channelId,
-validateOnly
+validateOnly,
+channelId
 )
 SELECT 
-'{{ name }}',
-'{{ provider }}',
-'{{ cryptoKeyName }}',
 '{{ labels }}',
+'{{ cryptoKeyName }}',
+'{{ provider }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ channelId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ channelId }}'
 RETURNING
 name,
 done,
@@ -398,41 +399,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: channels
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the channels resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the channels resource.
-    - name: name
-      value: string
-      description: >
-        Required. The resource name of the channel. Must be unique within the location on the project and must be in `projects/{project}/locations/{location}/channels/{channel_id}` format.
-        
-    - name: provider
-      value: string
-      description: >
-        The name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: `projects/{project}/locations/{location}/providers/{provider_id}`.
-        
-    - name: cryptoKeyName
-      value: string
-      description: >
-        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Resource labels.
-        
-    - name: channelId
-      value: string
+    - name: cryptoKeyName
+      value: "{{ cryptoKeyName }}"
+      description: |
+        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`.
+    - name: provider
+      value: "{{ provider }}"
+      description: |
+        The name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: \`projects/{project}/locations/{location}/providers/{provider_id}\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The resource name of the channel. Must be unique within the location on the project and must be in \`projects/{project}/locations/{location}/channels/{channel_id}\` format.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: channelId
+      value: "{{ channelId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -452,10 +449,10 @@ Update a single channel.
 ```sql
 UPDATE google.eventarc.channels
 SET 
-data__name = '{{ name }}',
-data__provider = '{{ provider }}',
+data__labels = '{{ labels }}',
 data__cryptoKeyName = '{{ cryptoKeyName }}',
-data__labels = '{{ labels }}'
+data__provider = '{{ provider }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

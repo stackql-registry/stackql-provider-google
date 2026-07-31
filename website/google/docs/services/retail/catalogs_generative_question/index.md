@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>catalogs_generative_question</c
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>catalogs_generative_question</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="catalogs_generative_question" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.catalogs_generative_question" /></td></tr>
 </tbody></table>
@@ -110,10 +111,10 @@ Allows management of individual questions.
 ```sql
 UPDATE google.retail.catalogs_generative_question
 SET 
+data__catalog = '{{ catalog }}',
 data__finalQuestion = '{{ finalQuestion }}',
 data__facet = '{{ facet }}',
-data__allowedInConversation = {{ allowedInConversation }},
-data__catalog = '{{ catalog }}'
+data__allowedInConversation = {{ allowedInConversation }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

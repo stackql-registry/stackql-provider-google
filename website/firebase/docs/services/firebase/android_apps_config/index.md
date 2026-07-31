@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>android_apps_config</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>android_apps_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="android_apps_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.firebase.android_apps_config" /></td></tr>
 </tbody></table>

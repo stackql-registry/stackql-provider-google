@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>messages</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>messages</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="messages" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataflow.messages" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="messageImportance" /></td>
     <td><code>string</code></td>
-    <td>Importance level of the message.</td>
+    <td>Importance level of the message. (JOB_MESSAGE_IMPORTANCE_UNKNOWN, JOB_MESSAGE_DEBUG, JOB_MESSAGE_DETAILED, JOB_MESSAGE_BASIC, JOB_MESSAGE_WARNING, JOB_MESSAGE_ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="messageText" /></td>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="messageImportance" /></td>
     <td><code>string</code></td>
-    <td>Importance level of the message.</td>
+    <td>Importance level of the message. (JOB_MESSAGE_IMPORTANCE_UNKNOWN, JOB_MESSAGE_DEBUG, JOB_MESSAGE_DETAILED, JOB_MESSAGE_BASIC, JOB_MESSAGE_WARNING, JOB_MESSAGE_ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="messageText" /></td>
@@ -127,14 +128,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_jobs_messages_list"><CopyableCode code="projects_locations_jobs_messages_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
-    <td><a href="#parameter-minimumImportance"><code>minimumImportance</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-endTime"><code>endTime</code></a></td>
+    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-minimumImportance"><code>minimumImportance</code></a></td>
     <td>Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`.</td>
 </tr>
 <tr>
     <td><a href="#projects_jobs_messages_list"><CopyableCode code="projects_jobs_messages_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
-    <td><a href="#parameter-minimumImportance"><code>minimumImportance</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-location"><code>location</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-minimumImportance"><code>minimumImportance</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-endTime"><code>endTime</code></a></td>
     <td>Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`.</td>
 </tr>
 </tbody>
@@ -224,11 +225,11 @@ FROM google.dataflow.messages
 WHERE projectId = '{{ projectId }}' -- required
 AND location = '{{ location }}' -- required
 AND jobId = '{{ jobId }}' -- required
-AND minimumImportance = '{{ minimumImportance }}'
-AND pageSize = '{{ pageSize }}'
+AND endTime = '{{ endTime }}'
 AND pageToken = '{{ pageToken }}'
 AND startTime = '{{ startTime }}'
-AND endTime = '{{ endTime }}'
+AND pageSize = '{{ pageSize }}'
+AND minimumImportance = '{{ minimumImportance }}'
 ;
 ```
 </TabItem>
@@ -245,12 +246,12 @@ time
 FROM google.dataflow.messages
 WHERE projectId = '{{ projectId }}' -- required
 AND jobId = '{{ jobId }}' -- required
-AND minimumImportance = '{{ minimumImportance }}'
 AND pageSize = '{{ pageSize }}'
+AND minimumImportance = '{{ minimumImportance }}'
 AND pageToken = '{{ pageToken }}'
+AND location = '{{ location }}'
 AND startTime = '{{ startTime }}'
 AND endTime = '{{ endTime }}'
-AND location = '{{ location }}'
 ;
 ```
 </TabItem>

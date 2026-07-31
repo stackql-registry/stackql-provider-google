@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>models</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>models</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="models" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.models" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataset" /></td>
     <td><code>string</code></td>
-    <td>The dataset from which the model is trained, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;`</td>
+    <td>Required. The dataset from which the model is trained, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataset" /></td>
     <td><code>string</code></td>
-    <td>The dataset from which the model is trained, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;`</td>
+    <td>Required. The dataset from which the model is trained, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -335,15 +336,15 @@ Creates a Model.
 
 ```sql
 INSERT INTO google.translate.models (
-data__name,
 data__displayName,
+data__name,
 data__dataset,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ dataset }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -358,32 +359,29 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: models
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the models resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the models resource.
-    - name: name
-      value: string
-      description: >
-        The resource name of the model, in form of `projects/{project-number-or-id}/locations/{location_id}/models/{model_id}`
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         The name of the model to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the model, in form of \`projects/{project-number-or-id}/locations/{location_id}/models/{model_id}\`
     - name: dataset
-      value: string
-      description: >
-        The dataset from which the model is trained, in form of `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}`
-        
-```
+      value: "{{ dataset }}"
+      description: |
+        Required. The dataset from which the model is trained, in form of \`projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

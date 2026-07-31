@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>app_connections</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>app_connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="app_connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.beyondcorp.app_connections" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="connectors" /></td>
     <td><code>array</code></td>
-    <td>Optional. List of [google.cloud.beyondcorp.v1main.Connector.name] that are authorised to be associated with this AppConnection.</td>
+    <td>Optional. List of [google.cloud.beyondcorp.v1main.Connector.name] that are authorized to be associated with this AppConnection.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -97,12 +98,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the AppConnection.</td>
+    <td>Output only. The current state of the AppConnection. (STATE_UNSPECIFIED, CREATING, CREATED, UPDATING, DELETING, DOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of network connectivity used by the AppConnection.</td>
+    <td>Required. The type of network connectivity used by the AppConnection. (TYPE_UNSPECIFIED, TCP_PROXY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="connectors" /></td>
     <td><code>array</code></td>
-    <td>Optional. List of [google.cloud.beyondcorp.v1main.Connector.name] that are authorised to be associated with this AppConnection.</td>
+    <td>Optional. List of [google.cloud.beyondcorp.v1main.Connector.name] that are authorized to be associated with this AppConnection.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -176,12 +177,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the AppConnection.</td>
+    <td>Output only. The current state of the AppConnection. (STATE_UNSPECIFIED, CREATING, CREATED, UPDATING, DELETING, DOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of network connectivity used by the AppConnection.</td>
+    <td>Required. The type of network connectivity used by the AppConnection. (TYPE_UNSPECIFIED, TCP_PROXY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -224,21 +225,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_app_connections_list"><CopyableCode code="projects_locations_app_connections_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists AppConnections in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_connections_create"><CopyableCode code="projects_locations_app_connections_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-appConnectionId"><code>appConnectionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-appConnectionId"><code>appConnectionId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new AppConnection in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_connections_patch"><CopyableCode code="projects_locations_app_connections_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appConnectionsId"><code>appConnectionsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single AppConnection.</td>
 </tr>
 <tr>
@@ -252,7 +253,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_app_connections_resolve"><CopyableCode code="projects_locations_app_connections_resolve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-appConnectorId"><code>appConnectorId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-appConnectorId"><code>appConnectorId</code></a></td>
     <td>Resolves AppConnections details for a given AppConnector. An internal method called by a connector to find AppConnections to connect to.</td>
 </tr>
 </tbody>
@@ -396,10 +397,10 @@ updateTime
 FROM google.beyondcorp.app_connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -421,32 +422,32 @@ Creates a new AppConnection in a given project and location.
 
 ```sql
 INSERT INTO google.beyondcorp.app_connections (
-data__labels,
 data__connectors,
-data__type,
 data__applicationEndpoint,
+data__type,
+data__labels,
 data__name,
-data__gateway,
 data__displayName,
+data__gateway,
 projectsId,
 locationsId,
-validateOnly,
+requestId,
 appConnectionId,
-requestId
+validateOnly
 )
 SELECT 
-'{{ labels }}',
 '{{ connectors }}',
-'{{ type }}',
 '{{ applicationEndpoint }}',
+'{{ type }}',
+'{{ labels }}',
 '{{ name }}',
-'{{ gateway }}',
 '{{ displayName }}',
+'{{ gateway }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
+'{{ requestId }}',
 '{{ appConnectionId }}',
-'{{ requestId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -458,59 +459,60 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: app_connections
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the app_connections resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the app_connections resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels to represent user provided metadata.
-        
     - name: connectors
-      value: array
-      description: >
-        Optional. List of [google.cloud.beyondcorp.v1main.Connector.name] that are authorised to be associated with this AppConnection.
-        
-    - name: type
-      value: string
-      description: >
-        Required. The type of network connectivity used by the AppConnection.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'TCP_PROXY']
+      value:
+        - "{{ connectors }}"
+      description: |
+        Optional. List of [google.cloud.beyondcorp.v1main.Connector.name] that are authorized to be associated with this AppConnection.
     - name: applicationEndpoint
-      value: object
-      description: >
+      description: |
         Required. Address of the remote application endpoint for the BeyondCorp AppConnection.
-        
+      value:
+        host: "{{ host }}"
+        port: {{ port }}
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The type of network connectivity used by the AppConnection.
+      valid_values: ['TYPE_UNSPECIFIED', 'TCP_PROXY']
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels to represent user provided metadata.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Required. Unique resource name of the AppConnection. The name is ignored when creating a AppConnection.
-        
-    - name: gateway
-      value: object
-      description: >
-        Optional. Gateway used by the AppConnection.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. An arbitrary user-provided name for the AppConnection. Cannot exceed 64 characters.
-        
-    - name: validateOnly
-      value: boolean
-    - name: appConnectionId
-      value: string
+    - name: gateway
+      description: |
+        Optional. Gateway used by the AppConnection.
+      value:
+        l7psc: "{{ l7psc }}"
+        ingressPort: {{ ingressPort }}
+        appGateway: "{{ appGateway }}"
+        uri: "{{ uri }}"
+        type: "{{ type }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: appConnectionId
+      value: "{{ appConnectionId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -530,21 +532,21 @@ Updates the parameters of a single AppConnection.
 ```sql
 UPDATE google.beyondcorp.app_connections
 SET 
-data__labels = '{{ labels }}',
 data__connectors = '{{ connectors }}',
-data__type = '{{ type }}',
 data__applicationEndpoint = '{{ applicationEndpoint }}',
+data__type = '{{ type }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__gateway = '{{ gateway }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__gateway = '{{ gateway }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND appConnectionsId = '{{ appConnectionsId }}' --required
-AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
 AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -598,8 +600,8 @@ EXEC google.beyondcorp.app_connections.projects_locations_app_connections_resolv
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @pageToken='{{ pageToken }}', 
-@appConnectorId='{{ appConnectorId }}', 
-@pageSize='{{ pageSize }}'
+@pageSize='{{ pageSize }}', 
+@appConnectorId='{{ appConnectorId }}'
 ;
 ```
 </TabItem>

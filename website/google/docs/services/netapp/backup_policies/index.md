@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backup_policies</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backup_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backup_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.netapp.backup_policies" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The backup policy state.</td>
+    <td>Output only. The backup policy state. (STATE_UNSPECIFIED, CREATING, READY, DELETING, ERROR, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="weeklyBackupLimit" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The backup policy state.</td>
+    <td>Output only. The backup policy state. (STATE_UNSPECIFIED, CREATING, READY, DELETING, ERROR, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="weeklyBackupLimit" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Returns list of all available backup policies.</td>
 </tr>
 <tr>
@@ -334,9 +335,9 @@ FROM google.netapp.backup_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -358,25 +359,25 @@ Creates new backup policy
 
 ```sql
 INSERT INTO google.netapp.backup_policies (
-data__name,
-data__enabled,
 data__weeklyBackupLimit,
-data__dailyBackupLimit,
 data__description,
-data__labels,
 data__monthlyBackupLimit,
+data__enabled,
+data__labels,
+data__name,
+data__dailyBackupLimit,
 projectsId,
 locationsId,
 backupPolicyId
 )
 SELECT 
-'{{ name }}',
-{{ enabled }},
 {{ weeklyBackupLimit }},
-{{ dailyBackupLimit }},
 '{{ description }}',
-'{{ labels }}',
 {{ monthlyBackupLimit }},
+{{ enabled }},
+'{{ labels }}',
+'{{ name }}',
+{{ dailyBackupLimit }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupPolicyId }}'
@@ -391,54 +392,47 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backup_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backup_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backup_policies resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the backup policy. Format: `projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}`.
-        
-    - name: enabled
-      value: boolean
-      description: >
-        If enabled, make backups automatically according to the schedules. This will be applied to all volumes that have this policy attached and enforced on volume level. If not specified, default is true.
-        
     - name: weeklyBackupLimit
-      value: integer
-      description: >
+      value: {{ weeklyBackupLimit }}
+      description: |
         Number of weekly backups to keep. Note that the sum of daily, weekly and monthly backups should be greater than 1.
-        
-    - name: dailyBackupLimit
-      value: integer
-      description: >
-        Number of daily backups to keep. Note that the minimum daily backup limit is 2.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Description of the backup policy.
-        
-    - name: labels
-      value: object
-      description: >
-        Resource labels to represent user provided metadata.
-        
     - name: monthlyBackupLimit
-      value: integer
-      description: >
+      value: {{ monthlyBackupLimit }}
+      description: |
         Number of monthly backups to keep. Note that the sum of daily, weekly and monthly backups should be greater than 1.
-        
+    - name: enabled
+      value: {{ enabled }}
+      description: |
+        If enabled, make backups automatically according to the schedules. This will be applied to all volumes that have this policy attached and enforced on volume level. If not specified, default is true.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user provided metadata.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the backup policy. Format: \`projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}\`.
+    - name: dailyBackupLimit
+      value: {{ dailyBackupLimit }}
+      description: |
+        Number of daily backups to keep. Note that the minimum daily backup limit is 2.
     - name: backupPolicyId
-      value: string
-```
+      value: "{{ backupPolicyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -458,13 +452,13 @@ Updates settings of a specific backup policy.
 ```sql
 UPDATE google.netapp.backup_policies
 SET 
-data__name = '{{ name }}',
-data__enabled = {{ enabled }},
 data__weeklyBackupLimit = {{ weeklyBackupLimit }},
-data__dailyBackupLimit = {{ dailyBackupLimit }},
 data__description = '{{ description }}',
+data__monthlyBackupLimit = {{ monthlyBackupLimit }},
+data__enabled = {{ enabled }},
 data__labels = '{{ labels }}',
-data__monthlyBackupLimit = {{ monthlyBackupLimit }}
+data__name = '{{ name }}',
+data__dailyBackupLimit = {{ dailyBackupLimit }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

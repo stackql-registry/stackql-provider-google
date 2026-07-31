@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>attack_paths</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>attack_paths</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="attack_paths" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.attack_paths" /></td></tr>
 </tbody></table>
@@ -54,17 +55,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The attack path name, for example, `organizations/12/simulation/34/valuedResources/56/attackPaths/78`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="edges" /></td>
     <td><code>array</code></td>
-    <td>A list of the edges between nodes in this attack path.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pathNodes" /></td>
     <td><code>array</code></td>
-    <td>A list of nodes that exist in this attack path.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -83,17 +84,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The attack path name, for example, `organizations/12/simulation/34/valuedResources/56/attackPaths/78`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="edges" /></td>
     <td><code>array</code></td>
-    <td>A list of the edges between nodes in this attack path.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pathNodes" /></td>
     <td><code>array</code></td>
-    <td>A list of nodes that exist in this attack path.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -112,17 +113,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The attack path name, for example, `organizations/12/simulation/34/valuedResources/56/attackPaths/78`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="edges" /></td>
     <td><code>array</code></td>
-    <td>A list of the edges between nodes in this attack path.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pathNodes" /></td>
     <td><code>array</code></td>
-    <td>A list of nodes that exist in this attack path.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -141,17 +142,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The attack path name, for example, `organizations/12/simulation/34/valuedResources/56/attackPaths/78`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="edges" /></td>
     <td><code>array</code></td>
-    <td>A list of the edges between nodes in this attack path.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pathNodes" /></td>
     <td><code>array</code></td>
-    <td>A list of nodes that exist in this attack path.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -177,29 +178,29 @@ The following methods are available for this resource:
     <td><a href="#organizations_simulations_valued_resources_attack_paths_list"><CopyableCode code="organizations_simulations_valued_resources_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-valuedResourcesId"><code>valuedResourcesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists the attack paths for a set of simulation results or valued resources and filter.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_simulations_attack_exposure_results_attack_paths_list"><CopyableCode code="organizations_simulations_attack_exposure_results_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-attackExposureResultsId"><code>attackExposureResultsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists the attack paths for a set of simulation results or valued resources and filter.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_simulations_attack_paths_list"><CopyableCode code="organizations_simulations_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists the attack paths for a set of simulation results or valued resources and filter.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_attack_paths_list"><CopyableCode code="organizations_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists the attack paths for a set of simulation results or valued resources and filter.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -268,7 +269,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="organizations_simulations_valued_resources_attack_paths_list">
 
-Lists the attack paths for a set of simulation results or valued resources and filter.
+Successful response
 
 ```sql
 SELECT
@@ -279,15 +280,15 @@ FROM google.securitycenter.attack_paths
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
 AND valuedResourcesId = '{{ valuedResourcesId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_simulations_attack_exposure_results_attack_paths_list">
 
-Lists the attack paths for a set of simulation results or valued resources and filter.
+Successful response
 
 ```sql
 SELECT
@@ -298,15 +299,15 @@ FROM google.securitycenter.attack_paths
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
 AND attackExposureResultsId = '{{ attackExposureResultsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_simulations_attack_paths_list">
 
-Lists the attack paths for a set of simulation results or valued resources and filter.
+Successful response
 
 ```sql
 SELECT
@@ -324,7 +325,7 @@ AND filter = '{{ filter }}'
 </TabItem>
 <TabItem value="organizations_attack_paths_list">
 
-Lists the attack paths for a set of simulation results or valued resources and filter.
+Successful response
 
 ```sql
 SELECT
@@ -333,8 +334,8 @@ edges,
 pathNodes
 FROM google.securitycenter.attack_paths
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>topics</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>topics</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="topics" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsublite.topics" /></td></tr>
 </tbody></table>
@@ -149,7 +150,7 @@ The following methods are available for this resource:
     <td><a href="#admin_projects_locations_reservations_topics_list"><CopyableCode code="admin_projects_locations_reservations_topics_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reservationsId"><code>reservationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the topics attached to the specified reservation.</td>
 </tr>
 <tr>
@@ -181,13 +182,6 @@ The following methods are available for this resource:
     <td>Deletes the specified topic.</td>
 </tr>
 <tr>
-    <td><a href="#topic_stats_projects_locations_topics_compute_message_stats"><CopyableCode code="topic_stats_projects_locations_topics_compute_message_stats" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
-    <td></td>
-    <td>Compute statistics about a range of messages in a given topic and partition.</td>
-</tr>
-<tr>
     <td><a href="#topic_stats_projects_locations_topics_compute_head_cursor"><CopyableCode code="topic_stats_projects_locations_topics_compute_head_cursor" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
@@ -200,6 +194,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
     <td></td>
     <td>Compute the corresponding cursor for a publish or event time in a topic partition.</td>
+</tr>
+<tr>
+    <td><a href="#topic_stats_projects_locations_topics_compute_message_stats"><CopyableCode code="topic_stats_projects_locations_topics_compute_message_stats" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
+    <td></td>
+    <td>Compute statistics about a range of messages in a given topic and partition.</td>
 </tr>
 </tbody>
 </table>
@@ -298,8 +299,8 @@ FROM google.pubsublite.topics
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND reservationsId = '{{ reservationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -365,39 +366,43 @@ retentionConfig
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: topics
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the topics resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the topics resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the topic. Structured like: projects/{project_number}/locations/{location}/topics/{topic_id}
-        
     - name: partitionConfig
-      value: object
-      description: >
+      description: |
         The settings for this topic's partitions.
-        
+      value:
+        count: "{{ count }}"
+        capacity:
+          publishMibPerSec: {{ publishMibPerSec }}
+          subscribeMibPerSec: {{ subscribeMibPerSec }}
+        scale: {{ scale }}
     - name: retentionConfig
-      value: object
-      description: >
+      description: |
         The settings for this topic's message retention.
-        
+      value:
+        perPartitionBytes: "{{ perPartitionBytes }}"
+        period: "{{ period }}"
     - name: reservationConfig
-      value: object
-      description: >
+      description: |
         The settings for this topic's Reservation usage.
-        
+      value:
+        throughputReservation: "{{ throughputReservation }}"
     - name: topicId
-      value: string
-```
+      value: "{{ topicId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -462,31 +467,13 @@ AND topicsId = '{{ topicsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="topic_stats_projects_locations_topics_compute_message_stats"
+    defaultValue="topic_stats_projects_locations_topics_compute_head_cursor"
     values={[
-        { label: 'topic_stats_projects_locations_topics_compute_message_stats', value: 'topic_stats_projects_locations_topics_compute_message_stats' },
         { label: 'topic_stats_projects_locations_topics_compute_head_cursor', value: 'topic_stats_projects_locations_topics_compute_head_cursor' },
-        { label: 'topic_stats_projects_locations_topics_compute_time_cursor', value: 'topic_stats_projects_locations_topics_compute_time_cursor' }
+        { label: 'topic_stats_projects_locations_topics_compute_time_cursor', value: 'topic_stats_projects_locations_topics_compute_time_cursor' },
+        { label: 'topic_stats_projects_locations_topics_compute_message_stats', value: 'topic_stats_projects_locations_topics_compute_message_stats' }
     ]}
 >
-<TabItem value="topic_stats_projects_locations_topics_compute_message_stats">
-
-Compute statistics about a range of messages in a given topic and partition.
-
-```sql
-EXEC google.pubsublite.topics.topic_stats_projects_locations_topics_compute_message_stats 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@topicsId='{{ topicsId }}' --required 
-@@json=
-'{
-"partition": "{{ partition }}", 
-"startCursor": "{{ startCursor }}", 
-"endCursor": "{{ endCursor }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="topic_stats_projects_locations_topics_compute_head_cursor">
 
 Compute the head cursor for the partition. The head cursor's offset is guaranteed to be less than or equal to all messages which have not yet been acknowledged as published, and greater than the offset of any message whose publish has already been acknowledged. It is zero if there have never been messages in the partition.
@@ -516,6 +503,24 @@ EXEC google.pubsublite.topics.topic_stats_projects_locations_topics_compute_time
 '{
 "partition": "{{ partition }}", 
 "target": "{{ target }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="topic_stats_projects_locations_topics_compute_message_stats">
+
+Compute statistics about a range of messages in a given topic and partition.
+
+```sql
+EXEC google.pubsublite.topics.topic_stats_projects_locations_topics_compute_message_stats 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@topicsId='{{ topicsId }}' --required 
+@@json=
+'{
+"partition": "{{ partition }}", 
+"startCursor": "{{ startCursor }}", 
+"endCursor": "{{ endCursor }}"
 }'
 ;
 ```

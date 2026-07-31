@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>versions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>versions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="versions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.versions" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="accreditation" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The accreditations associated with the API version. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-accreditation` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="apiOperations" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="accreditation" /></td>
     <td><code>object</code></td>
-    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>Optional. The accreditations associated with the API version. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-accreditation` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="apiOperations" /></td>
@@ -254,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List API versions of an API resource in the API hub.</td>
 </tr>
 <tr>
@@ -412,9 +413,9 @@ FROM google.apihub.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -436,32 +437,32 @@ Create an API version for an API resource in the API hub.
 
 ```sql
 INSERT INTO google.apihub.versions (
-data__name,
 data__displayName,
-data__description,
-data__documentation,
-data__deployments,
-data__lifecycle,
-data__compliance,
 data__accreditation,
 data__attributes,
+data__name,
+data__description,
+data__lifecycle,
+data__documentation,
+data__deployments,
 data__selectedDeployment,
+data__compliance,
 projectsId,
 locationsId,
 apisId,
 versionId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
-'{{ description }}',
-'{{ documentation }}',
-'{{ deployments }}',
-'{{ lifecycle }}',
-'{{ compliance }}',
 '{{ accreditation }}',
 '{{ attributes }}',
+'{{ name }}',
+'{{ description }}',
+'{{ lifecycle }}',
+'{{ documentation }}',
+'{{ deployments }}',
 '{{ selectedDeployment }}',
+'{{ compliance }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -488,72 +489,112 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: versions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the versions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the versions resource.
     - name: apisId
-      value: string
+      value: "{{ apisId }}"
       description: Required parameter for the versions resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the version. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}`
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The display name of the version.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the version.
-        
-    - name: documentation
-      value: object
-      description: >
-        Optional. The documentation of the version.
-        
-    - name: deployments
-      value: array
-      description: >
-        Optional. The deployments linked to this API version. Note: A particular API version could be deployed to multiple deployments (for dev deployment, UAT deployment, etc) Format is `projects/{project}/locations/{location}/deployments/{deployment}`
-        
-    - name: lifecycle
-      value: object
-      description: >
-        The attribute values associated with resource.
-        
-    - name: compliance
-      value: object
-      description: >
-        The attribute values associated with resource.
-        
     - name: accreditation
-      value: object
-      description: >
-        The attribute values associated with resource.
-        
+      description: |
+        Optional. The accreditations associated with the API version. This maps to the following system defined attribute: \`projects/{project}/locations/{location}/attributes/system-accreditation\` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
     - name: attributes
-      value: object
-      description: >
-        Optional. The list of user defined attributes associated with the Version resource. The key is the attribute name. It will be of the format: `projects/{project}/locations/{location}/attributes/{attribute}`. The value is the attribute values associated with the resource.
-        
+      value: "{{ attributes }}"
+      description: |
+        Optional. The list of user defined attributes associated with the Version resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the version. Format: \`projects/{project}/locations/{location}/apis/{api}/versions/{version}\`
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the version.
+    - name: lifecycle
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: documentation
+      description: |
+        Optional. The documentation of the version.
+      value:
+        externalUri: "{{ externalUri }}"
+    - name: deployments
+      value:
+        - "{{ deployments }}"
+      description: |
+        Optional. The deployments linked to this API version. Note: A particular API version could be deployed to multiple deployments (for dev deployment, UAT deployment, etc) Format is \`projects/{project}/locations/{location}/deployments/{deployment}\`
     - name: selectedDeployment
-      value: string
-      description: >
-        Optional. The selected deployment for a Version resource. This can be used when special handling is needed on client side for a particular deployment linked to the version. Format is `projects/{project}/locations/{location}/deployments/{deployment}`
-        
+      value: "{{ selectedDeployment }}"
+      description: |
+        Optional. The selected deployment for a Version resource. This can be used when special handling is needed on client side for a particular deployment linked to the version. Format is \`projects/{project}/locations/{location}/deployments/{deployment}\`
+    - name: compliance
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
     - name: versionId
-      value: string
-```
+      value: "{{ versionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -573,16 +614,16 @@ Update API version. The following fields in the version can be updated currently
 ```sql
 UPDATE google.apihub.versions
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__documentation = '{{ documentation }}',
-data__deployments = '{{ deployments }}',
-data__lifecycle = '{{ lifecycle }}',
-data__compliance = '{{ compliance }}',
 data__accreditation = '{{ accreditation }}',
 data__attributes = '{{ attributes }}',
-data__selectedDeployment = '{{ selectedDeployment }}'
+data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__lifecycle = '{{ lifecycle }}',
+data__documentation = '{{ documentation }}',
+data__deployments = '{{ deployments }}',
+data__selectedDeployment = '{{ selectedDeployment }}',
+data__compliance = '{{ compliance }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

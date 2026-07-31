@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>test_environment_catalog</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>test_environment_catalog</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="test_environment_catalog" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.testing.test_environment_catalog" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-environmentType"><code>environmentType</code></a></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-includeViewableModels"><code>includeViewableModels</code></a></td>
+    <td><a href="#parameter-includeViewableModels"><code>includeViewableModels</code></a>, <a href="#parameter-projectId"><code>projectId</code></a></td>
     <td>Gets the catalog of supported test environments. May return any of the following canonical error codes: - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the environment type does not exist - INTERNAL - if an internal error occurred</td>
 </tr>
 </tbody>
@@ -155,8 +156,8 @@ networkConfigurationCatalog,
 softwareCatalog
 FROM firebase.testing.test_environment_catalog
 WHERE environmentType = '{{ environmentType }}' -- required
-AND projectId = '{{ projectId }}'
 AND includeViewableModels = '{{ includeViewableModels }}'
+AND projectId = '{{ projectId }}'
 ;
 ```
 </TabItem>

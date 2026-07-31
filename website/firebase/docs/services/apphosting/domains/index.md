@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>domains</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>domains</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="domains" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.apphosting.domains" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the domain.</td>
+    <td>Output only. The type of the domain. (TYPE_UNSPECIFIED, DEFAULT, CUSTOM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -133,76 +134,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The resource name of the domain, e.g. `/projects/p/locations/l/backends/b/domains/foo.com`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Annotations as key value pairs.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the domain was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="customDomainStatus" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Represents the state and configuration of a `CUSTOM` type domain. It is only present on Domains of that type. (id: CustomDomainStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deleteTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the domain was deleted.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="disabled" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. Whether the domain is disabled. Defaults to false.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Mutable human-readable name for the domain. 63 character limit. e.g. `prod domain`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-computed checksum based on other values; may be sent on update or delete to ensure operation is done on expected resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="reconciling" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. A field that, if true, indicates that the build has an ongoing LRO.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serve" /></td>
-    <td><code>object</code></td>
-    <td>Optional. The serving behavior of the domain. If specified, the domain will serve content other than its backend's live content. (id: ServingBehavior)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The type of the domain.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System-assigned, unique identifier.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the domain was last updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -234,21 +165,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backendsId"><code>backendsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists domains of a backend.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backendsId"><code>backendsId</code></a></td>
-    <td><a href="#parameter-domainId"><code>domainId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-domainId"><code>domainId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Links a new domain to a backend.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backendsId"><code>backendsId</code></a>, <a href="#parameter-domainsId"><code>domainsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the information for a single domain.</td>
 </tr>
 <tr>
@@ -395,29 +326,16 @@ Lists domains of a backend.
 
 ```sql
 SELECT
-name,
-annotations,
-createTime,
-customDomainStatus,
-deleteTime,
-disabled,
-displayName,
-etag,
-labels,
-reconciling,
-serve,
-type,
-uid,
-updateTime
+*
 FROM firebase.apphosting.domains
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backendsId = '{{ backendsId }}' -- required
+AND filter = '{{ filter }}'
+AND showDeleted = '{{ showDeleted }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -439,32 +357,32 @@ Links a new domain to a backend.
 
 ```sql
 INSERT INTO firebase.apphosting.domains (
+data__labels,
+data__disabled,
 data__name,
 data__displayName,
-data__disabled,
 data__serve,
-data__labels,
 data__annotations,
 projectsId,
 locationsId,
 backendsId,
 domainId,
-requestId,
-validateOnly
+validateOnly,
+requestId
 )
 SELECT 
+'{{ labels }}',
+{{ disabled }},
 '{{ name }}',
 '{{ displayName }}',
-{{ disabled }},
 '{{ serve }}',
-'{{ labels }}',
 '{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backendsId }}',
 '{{ domainId }}',
-'{{ requestId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -476,56 +394,53 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: domains
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the domains resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the domains resource.
     - name: backendsId
-      value: string
+      value: "{{ backendsId }}"
       description: Required parameter for the domains resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the domain, e.g. `/projects/p/locations/l/backends/b/domains/foo.com`
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Mutable human-readable name for the domain. 63 character limit. e.g. `prod domain`.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Whether the domain is disabled. Defaults to false.
-        
-    - name: serve
-      value: object
-      description: >
-        Optional. The serving behavior of the domain. If specified, the domain will serve content other than its backend's live content.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels as key value pairs.
-        
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Whether the domain is disabled. Defaults to false.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the domain, e.g. \`/projects/p/locations/l/backends/b/domains/foo.com\`
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Mutable human-readable name for the domain. 63 character limit. e.g. \`prod domain\`.
+    - name: serve
+      description: |
+        Optional. The serving behavior of the domain. If specified, the domain will serve content other than its backend's live content.
+      value:
+        redirect:
+          status: "{{ status }}"
+          uri: "{{ uri }}"
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Annotations as key value pairs.
-        
     - name: domainId
-      value: string
-    - name: requestId
-      value: string
+      value: "{{ domainId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -545,21 +460,21 @@ Updates the information for a single domain.
 ```sql
 UPDATE firebase.apphosting.domains
 SET 
+data__labels = '{{ labels }}',
+data__disabled = {{ disabled }},
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__disabled = {{ disabled }},
 data__serve = '{{ serve }}',
-data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backendsId = '{{ backendsId }}' --required
 AND domainsId = '{{ domainsId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
+AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

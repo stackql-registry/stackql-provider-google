@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>app_connectors</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>app_connectors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="app_connectors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.beyondcorp.app_connectors" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the AppConnector.</td>
+    <td>Output only. The current state of the AppConnector. (STATE_UNSPECIFIED, CREATING, CREATED, UPDATING, DELETING, DOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the AppConnector.</td>
+    <td>Output only. The current state of the AppConnector. (STATE_UNSPECIFIED, CREATING, CREATED, UPDATING, DELETING, DOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -184,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_app_connectors_list"><CopyableCode code="projects_locations_app_connectors_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists AppConnectors in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_connectors_create"><CopyableCode code="projects_locations_app_connectors_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-appConnectorId"><code>appConnectorId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-appConnectorId"><code>appConnectorId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new AppConnector in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_connectors_patch"><CopyableCode code="projects_locations_app_connectors_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appConnectorsId"><code>appConnectorsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single AppConnector.</td>
 </tr>
 <tr>
@@ -345,10 +346,10 @@ updateTime
 FROM google.beyondcorp.app_connectors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -370,27 +371,27 @@ Creates a new AppConnector in a given project and location.
 
 ```sql
 INSERT INTO google.beyondcorp.app_connectors (
-data__displayName,
+data__labels,
 data__resourceInfo,
 data__name,
-data__labels,
+data__displayName,
 data__principalInfo,
 projectsId,
 locationsId,
-appConnectorId,
 validateOnly,
+appConnectorId,
 requestId
 )
 SELECT 
-'{{ displayName }}',
+'{{ labels }}',
 '{{ resourceInfo }}',
 '{{ name }}',
-'{{ labels }}',
+'{{ displayName }}',
 '{{ principalInfo }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ appConnectorId }}',
 '{{ validateOnly }}',
+'{{ appConnectorId }}',
 '{{ requestId }}'
 RETURNING
 name,
@@ -403,48 +404,55 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: app_connectors
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the app_connectors resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the app_connectors resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. An arbitrary user-provided name for the AppConnector. Cannot exceed 64 characters.
-        
-    - name: resourceInfo
-      value: object
-      description: >
-        Optional. Resource info of the connector.
-        
-    - name: name
-      value: string
-      description: >
-        Required. Unique resource name of the AppConnector. The name is ignored when creating a AppConnector.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Resource labels to represent user provided metadata.
-        
+    - name: resourceInfo
+      description: |
+        Optional. Resource info of the connector.
+      value:
+        sub:
+          - sub: "{{ sub }}"
+            id: "{{ id }}"
+            time: "{{ time }}"
+            status: "{{ status }}"
+            resource: "{{ resource }}"
+        id: "{{ id }}"
+        time: "{{ time }}"
+        status: "{{ status }}"
+        resource: "{{ resource }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Unique resource name of the AppConnector. The name is ignored when creating a AppConnector.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. An arbitrary user-provided name for the AppConnector. Cannot exceed 64 characters.
     - name: principalInfo
-      value: object
-      description: >
+      description: |
         Required. Principal information about the Identity of the AppConnector.
-        
-    - name: appConnectorId
-      value: string
+      value:
+        serviceAccount:
+          email: "{{ email }}"
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
+    - name: appConnectorId
+      value: "{{ appConnectorId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -464,18 +472,18 @@ Updates the parameters of a single AppConnector.
 ```sql
 UPDATE google.beyondcorp.app_connectors
 SET 
-data__displayName = '{{ displayName }}',
+data__labels = '{{ labels }}',
 data__resourceInfo = '{{ resourceInfo }}',
 data__name = '{{ name }}',
-data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}',
 data__principalInfo = '{{ principalInfo }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND appConnectorsId = '{{ appConnectorsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,
@@ -532,9 +540,9 @@ EXEC google.beyondcorp.app_connectors.projects_locations_app_connectors_report_s
 @appConnectorsId='{{ appConnectorsId }}' --required 
 @@json=
 '{
-"validateOnly": {{ validateOnly }}, 
+"requestId": "{{ requestId }}", 
 "resourceInfo": "{{ resourceInfo }}", 
-"requestId": "{{ requestId }}"
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```

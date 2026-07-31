@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>hyperparameter_tuning_jobs</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>hyperparameter_tuning_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="hyperparameter_tuning_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.hyperparameter_tuning_jobs" /></td></tr>
 </tbody></table>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the job.</td>
+    <td>Output only. The detailed state of the job. (JOB_STATE_UNSPECIFIED, JOB_STATE_QUEUED, JOB_STATE_PENDING, JOB_STATE_RUNNING, JOB_STATE_SUCCEEDED, JOB_STATE_FAILED, JOB_STATE_CANCELLING, JOB_STATE_CANCELLED, JOB_STATE_PAUSED, JOB_STATE_EXPIRED, JOB_STATE_UPDATING, JOB_STATE_PARTIALLY_SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="studySpec" /></td>
@@ -221,7 +222,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the job.</td>
+    <td>Output only. The detailed state of the job. (JOB_STATE_UNSPECIFIED, JOB_STATE_QUEUED, JOB_STATE_PENDING, JOB_STATE_RUNNING, JOB_STATE_SUCCEEDED, JOB_STATE_FAILED, JOB_STATE_CANCELLING, JOB_STATE_CANCELLED, JOB_STATE_PAUSED, JOB_STATE_EXPIRED, JOB_STATE_UPDATING, JOB_STATE_PARTIALLY_SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="studySpec" /></td>
@@ -274,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists HyperparameterTuningJobs in a Location.</td>
 </tr>
 <tr>
@@ -419,9 +420,9 @@ updateTime
 FROM google.aiplatform.hyperparameter_tuning_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -444,26 +445,26 @@ Creates a HyperparameterTuningJob
 
 ```sql
 INSERT INTO google.aiplatform.hyperparameter_tuning_jobs (
-data__studySpec,
-data__trialJobSpec,
-data__labels,
 data__maxTrialCount,
-data__parallelTrialCount,
-data__maxFailedTrialCount,
+data__studySpec,
 data__encryptionSpec,
+data__maxFailedTrialCount,
+data__labels,
 data__displayName,
+data__trialJobSpec,
+data__parallelTrialCount,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ studySpec }}',
-'{{ trialJobSpec }}',
-'{{ labels }}',
 {{ maxTrialCount }},
-{{ parallelTrialCount }},
-{{ maxFailedTrialCount }},
+'{{ studySpec }}',
 '{{ encryptionSpec }}',
+{{ maxFailedTrialCount }},
+'{{ labels }}',
 '{{ displayName }}',
+'{{ trialJobSpec }}',
+{{ parallelTrialCount }},
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -490,57 +491,166 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: hyperparameter_tuning_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the hyperparameter_tuning_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the hyperparameter_tuning_jobs resource.
-    - name: studySpec
-      value: object
-      description: >
-        Required. Study configuration of the HyperparameterTuningJob.
-        
-    - name: trialJobSpec
-      value: object
-      description: >
-        Required. The spec of a trial job. The same spec applies to the CustomJobs created in all the trials.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize HyperparameterTuningJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
     - name: maxTrialCount
-      value: integer
-      description: >
+      value: {{ maxTrialCount }}
+      description: |
         Required. The desired total number of Trials.
-        
-    - name: parallelTrialCount
-      value: integer
-      description: >
-        Required. The desired number of Trials to run in parallel.
-        
-    - name: maxFailedTrialCount
-      value: integer
-      description: >
-        The number of failed Trials that need to be seen before failing the HyperparameterTuningJob. If set to 0, Vertex AI decides how many Trials must fail before the whole job fails.
-        
+    - name: studySpec
+      description: |
+        Required. Study configuration of the HyperparameterTuningJob.
+      value:
+        convexAutomatedStoppingSpec:
+          minStepCount: "{{ minStepCount }}"
+          updateAllStoppedTrials: {{ updateAllStoppedTrials }}
+          useElapsedDuration: {{ useElapsedDuration }}
+          minMeasurementCount: "{{ minMeasurementCount }}"
+          learningRateParameterName: "{{ learningRateParameterName }}"
+          maxStepCount: "{{ maxStepCount }}"
+        medianAutomatedStoppingSpec:
+          useElapsedDuration: {{ useElapsedDuration }}
+        measurementSelectionType: "{{ measurementSelectionType }}"
+        algorithm: "{{ algorithm }}"
+        metrics:
+          - safetyConfig:
+              safetyThreshold: {{ safetyThreshold }}
+              desiredMinSafeTrialsFraction: {{ desiredMinSafeTrialsFraction }}
+            goal: "{{ goal }}"
+            metricId: "{{ metricId }}"
+        studyStoppingConfig:
+          minNumTrials: {{ minNumTrials }}
+          shouldStopAsap: {{ shouldStopAsap }}
+          maxNumTrialsNoProgress: {{ maxNumTrialsNoProgress }}
+          minimumRuntimeConstraint:
+            maxDuration: "{{ maxDuration }}"
+            endTime: "{{ endTime }}"
+          maxNumTrials: {{ maxNumTrials }}
+          maxDurationNoProgress: "{{ maxDurationNoProgress }}"
+          maximumRuntimeConstraint:
+            maxDuration: "{{ maxDuration }}"
+            endTime: "{{ endTime }}"
+        decayCurveStoppingSpec:
+          useElapsedDuration: {{ useElapsedDuration }}
+        observationNoise: "{{ observationNoise }}"
+        parameters:
+          - doubleValueSpec:
+              defaultValue: {{ defaultValue }}
+              minValue: {{ minValue }}
+              maxValue: {{ maxValue }}
+            categoricalValueSpec:
+              values:
+                - "{{ values }}"
+              defaultValue: "{{ defaultValue }}"
+            scaleType: "{{ scaleType }}"
+            discreteValueSpec:
+              values:
+                - {{ values }}
+              defaultValue: {{ defaultValue }}
+            parameterId: "{{ parameterId }}"
+            integerValueSpec:
+              defaultValue: "{{ defaultValue }}"
+              minValue: "{{ minValue }}"
+              maxValue: "{{ maxValue }}"
+            conditionalParameterSpecs: "{{ conditionalParameterSpecs }}"
     - name: encryptionSpec
-      value: object
-      description: >
+      description: |
         Customer-managed encryption key options for a HyperparameterTuningJob. If this is set, then all resources created by the HyperparameterTuningJob will be encrypted with the provided encryption key.
-        
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: maxFailedTrialCount
+      value: {{ maxFailedTrialCount }}
+      description: |
+        The number of failed Trials that need to be seen before failing the HyperparameterTuningJob. If set to 0, Vertex AI decides how many Trials must fail before the whole job fails.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize HyperparameterTuningJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The display name of the HyperparameterTuningJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-```
+    - name: trialJobSpec
+      description: |
+        Required. The spec of a trial job. The same spec applies to the CustomJobs created in all the trials.
+      value:
+        pscInterfaceConfig:
+          networkAttachment: "{{ networkAttachment }}"
+          dnsPeeringConfigs:
+            - targetNetwork: "{{ targetNetwork }}"
+              domain: "{{ domain }}"
+              targetProject: "{{ targetProject }}"
+        persistentResourceId: "{{ persistentResourceId }}"
+        enableWebAccess: {{ enableWebAccess }}
+        tensorboard: "{{ tensorboard }}"
+        enableDashboardAccess: {{ enableDashboardAccess }}
+        reservedIpRanges:
+          - "{{ reservedIpRanges }}"
+        models:
+          - "{{ models }}"
+        protectedArtifactLocationId: "{{ protectedArtifactLocationId }}"
+        experiment: "{{ experiment }}"
+        baseOutputDirectory:
+          outputUriPrefix: "{{ outputUriPrefix }}"
+        scheduling:
+          timeout: "{{ timeout }}"
+          restartJobOnWorkerRestart: {{ restartJobOnWorkerRestart }}
+          disableRetries: {{ disableRetries }}
+          maxWaitDuration: "{{ maxWaitDuration }}"
+          strategy: "{{ strategy }}"
+        network: "{{ network }}"
+        workerPoolSpecs:
+          - containerSpec:
+              imageUri: "{{ imageUri }}"
+              command:
+                - "{{ command }}"
+              args:
+                - "{{ args }}"
+              env:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+            lustreMounts: "{{ lustreMounts }}"
+            machineSpec:
+              machineType: "{{ machineType }}"
+              tpuTopology: "{{ tpuTopology }}"
+              reservationAffinity:
+                reservationAffinityType: "{{ reservationAffinityType }}"
+                key: "{{ key }}"
+                values:
+                  - "{{ values }}"
+              acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+              gpuPartitionSize: "{{ gpuPartitionSize }}"
+            nfsMounts: "{{ nfsMounts }}"
+            pythonPackageSpec:
+              executorImageUri: "{{ executorImageUri }}"
+              args:
+                - "{{ args }}"
+              env:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              pythonModule: "{{ pythonModule }}"
+              packageUris:
+                - "{{ packageUris }}"
+            diskSpec:
+              bootDiskType: "{{ bootDiskType }}"
+              bootDiskSizeGb: {{ bootDiskSizeGb }}
+            replicaCount: "{{ replicaCount }}"
+        experimentRun: "{{ experimentRun }}"
+        serviceAccount: "{{ serviceAccount }}"
+    - name: parallelTrialCount
+      value: {{ parallelTrialCount }}
+      description: |
+        Required. The desired number of Trials to run in parallel.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

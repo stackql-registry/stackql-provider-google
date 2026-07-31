@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>catalogs_completion_config</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>catalogs_completion_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="catalogs_completion_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.catalogs_completion_config" /></td></tr>
 </tbody></table>
@@ -226,11 +227,11 @@ Updates the CompletionConfigs.
 ```sql
 UPDATE google.retail.catalogs_completion_config
 SET 
-data__maxSuggestions = {{ maxSuggestions }},
-data__minPrefixLength = {{ minPrefixLength }},
-data__matchingOrder = '{{ matchingOrder }}',
 data__name = '{{ name }}',
-data__autoLearning = {{ autoLearning }}
+data__minPrefixLength = {{ minPrefixLength }},
+data__autoLearning = {{ autoLearning }},
+data__maxSuggestions = {{ maxSuggestions }},
+data__matchingOrder = '{{ matchingOrder }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

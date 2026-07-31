@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>authorized_certificates</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>authorized_certificates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="authorized_certificates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.appengine.authorized_certificates" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all SSL certificates the user is authorized to administer.</td>
 </tr>
 <tr>
@@ -320,8 +321,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND applicationsId = '{{ applicationsId }}' -- required
 AND view = '{{ view }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -343,21 +344,21 @@ Uploads the specified SSL certificate.
 
 ```sql
 INSERT INTO google.appengine.authorized_certificates (
-data__displayName,
-data__expireTime,
-data__certificateRawData,
 data__managedCertificate,
 data__domainMappingsCount,
+data__certificateRawData,
+data__expireTime,
+data__displayName,
 projectsId,
 locationsId,
 applicationsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ expireTime }}',
-'{{ certificateRawData }}',
 '{{ managedCertificate }}',
 {{ domainMappingsCount }},
+'{{ certificateRawData }}',
+'{{ expireTime }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ applicationsId }}'
@@ -376,45 +377,44 @@ visibleDomainMappings
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: authorized_certificates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the authorized_certificates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the authorized_certificates resource.
     - name: applicationsId
-      value: string
+      value: "{{ applicationsId }}"
       description: Required parameter for the authorized_certificates resource.
-    - name: displayName
-      value: string
-      description: >
-        The user-specified display name of the certificate. This is not guaranteed to be unique. Example: My Certificate.
-        
-    - name: expireTime
-      value: string
-      description: >
-        The time when this certificate expires. To update the renewal time on this certificate, upload an SSL certificate with a different expiration time using AuthorizedCertificates.UpdateAuthorizedCertificate.@OutputOnly
-        
-    - name: certificateRawData
-      value: object
-      description: >
-        The SSL certificate serving the AuthorizedCertificate resource. This must be obtained independently from a certificate authority.
-        
     - name: managedCertificate
-      value: object
-      description: >
+      description: |
         Only applicable if this certificate is managed by App Engine. Managed certificates are tied to the lifecycle of a DomainMapping and cannot be updated or deleted via the AuthorizedCertificates API. If this certificate is manually administered by the user, this field will be empty.@OutputOnly
-        
+      value:
+        lastRenewalTime: "{{ lastRenewalTime }}"
+        status: "{{ status }}"
     - name: domainMappingsCount
-      value: integer
-      description: >
+      value: {{ domainMappingsCount }}
+      description: |
         Aggregate count of the domain mappings with this certificate mapped. This count includes domain mappings on applications for which the user does not have VIEWER permissions.Only returned by GET or LIST requests when specifically requested by the view=FULL_CERTIFICATE option.@OutputOnly
-        
-```
+    - name: certificateRawData
+      description: |
+        The SSL certificate serving the AuthorizedCertificate resource. This must be obtained independently from a certificate authority.
+      value:
+        publicCertificate: "{{ publicCertificate }}"
+        privateKey: "{{ privateKey }}"
+    - name: expireTime
+      value: "{{ expireTime }}"
+      description: |
+        The time when this certificate expires. To update the renewal time on this certificate, upload an SSL certificate with a different expiration time using AuthorizedCertificates.UpdateAuthorizedCertificate.@OutputOnly
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The user-specified display name of the certificate. This is not guaranteed to be unique. Example: My Certificate.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -434,11 +434,11 @@ Updates the specified SSL certificate. To renew a certificate and maintain its e
 ```sql
 UPDATE google.appengine.authorized_certificates
 SET 
-data__displayName = '{{ displayName }}',
-data__expireTime = '{{ expireTime }}',
-data__certificateRawData = '{{ certificateRawData }}',
 data__managedCertificate = '{{ managedCertificate }}',
-data__domainMappingsCount = {{ domainMappingsCount }}
+data__domainMappingsCount = {{ domainMappingsCount }},
+data__certificateRawData = '{{ certificateRawData }}',
+data__expireTime = '{{ expireTime }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

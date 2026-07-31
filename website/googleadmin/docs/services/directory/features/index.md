@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>features</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>features</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="features" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.features" /></td></tr>
 </tbody></table>
@@ -264,15 +265,15 @@ Inserts a feature.
 
 ```sql
 INSERT INTO googleadmin.directory.features (
-data__etags,
-data__kind,
 data__name,
+data__kind,
+data__etags,
 customer
 )
 SELECT 
-'{{ etags }}',
-'{{ kind }}',
 '{{ name }}',
+'{{ kind }}',
+'{{ etags }}',
 '{{ customer }}'
 RETURNING
 name,
@@ -283,30 +284,27 @@ kind
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: features
   props:
     - name: customer
-      value: string
+      value: "{{ customer }}"
       description: Required parameter for the features resource.
-    - name: etags
-      value: string
-      description: >
-        ETag of the resource.
-        
-    - name: kind
-      value: string
-      description: >
-        Kind of resource this is.
-        
-      default: admin#directory#resources#features#Feature
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the feature.
-        
-```
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Kind of resource this is.
+      default: admin#directory#resources#features#Feature
+    - name: etags
+      value: "{{ etags }}"
+      description: |
+        ETag of the resource.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -326,9 +324,9 @@ Patches a feature.
 ```sql
 UPDATE googleadmin.directory.features
 SET 
-data__etags = '{{ etags }}',
+data__name = '{{ name }}',
 data__kind = '{{ kind }}',
-data__name = '{{ name }}'
+data__etags = '{{ etags }}'
 WHERE 
 customer = '{{ customer }}' --required
 AND featureKey = '{{ featureKey }}' --required
@@ -356,9 +354,9 @@ Updates a feature.
 ```sql
 REPLACE googleadmin.directory.features
 SET 
-data__etags = '{{ etags }}',
+data__name = '{{ name }}',
 data__kind = '{{ kind }}',
-data__name = '{{ name }}'
+data__etags = '{{ etags }}'
 WHERE 
 customer = '{{ customer }}' --required
 AND featureKey = '{{ featureKey }}' --required

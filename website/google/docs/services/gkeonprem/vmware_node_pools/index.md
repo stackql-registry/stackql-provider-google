@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>vmware_node_pools</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>vmware_node_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="vmware_node_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkeonprem.vmware_node_pools" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the node pool.</td>
+    <td>Output only. The current state of the node pool. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the node pool.</td>
+    <td>Output only. The current state of the node pool. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -241,7 +242,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_vmware_clusters_vmware_node_pools_create"><CopyableCode code="projects_locations_vmware_clusters_vmware_node_pools_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-vmwareNodePoolId"><code>vmwareNodePoolId</code></a></td>
+    <td><a href="#parameter-vmwareNodePoolId"><code>vmwareNodePoolId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new VMware node pool in a given project, location and VMWare cluster.</td>
 </tr>
 <tr>
@@ -255,8 +256,15 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_vmware_clusters_vmware_node_pools_delete"><CopyableCode code="projects_locations_vmware_clusters_vmware_node_pools_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a>, <a href="#parameter-vmwareNodePoolsId"><code>vmwareNodePoolsId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a></td>
     <td>Deletes a single VMware node pool.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_vmware_clusters_vmware_node_pools_unenroll"><CopyableCode code="projects_locations_vmware_clusters_vmware_node_pools_unenroll" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a>, <a href="#parameter-vmwareNodePoolsId"><code>vmwareNodePoolsId</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td>Unenrolls a VMware node pool to Anthos On-Prem API</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_vmware_clusters_vmware_node_pools_enroll"><CopyableCode code="projects_locations_vmware_clusters_vmware_node_pools_enroll" /></a></td>
@@ -264,13 +272,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a></td>
     <td></td>
     <td>Enrolls a VMware node pool to Anthos On-Prem API</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_vmware_clusters_vmware_node_pools_unenroll"><CopyableCode code="projects_locations_vmware_clusters_vmware_node_pools_unenroll" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a>, <a href="#parameter-vmwareNodePoolsId"><code>vmwareNodePoolsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
-    <td>Unenrolls a VMware node pool to Anthos On-Prem API</td>
 </tr>
 </tbody>
 </table>
@@ -442,32 +443,32 @@ Creates a new VMware node pool in a given project, location and VMWare cluster.
 
 ```sql
 INSERT INTO google.gkeonprem.vmware_node_pools (
+data__name,
 data__displayName,
-data__nodePoolAutoscaling,
-data__etag,
 data__config,
 data__annotations,
+data__etag,
 data__onPremVersion,
-data__name,
+data__nodePoolAutoscaling,
 projectsId,
 locationsId,
 vmwareClustersId,
-validateOnly,
-vmwareNodePoolId
+vmwareNodePoolId,
+validateOnly
 )
 SELECT 
+'{{ name }}',
 '{{ displayName }}',
-'{{ nodePoolAutoscaling }}',
-'{{ etag }}',
 '{{ config }}',
 '{{ annotations }}',
+'{{ etag }}',
 '{{ onPremVersion }}',
-'{{ name }}',
+'{{ nodePoolAutoscaling }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ vmwareClustersId }}',
-'{{ validateOnly }}',
-'{{ vmwareNodePoolId }}'
+'{{ vmwareNodePoolId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -479,59 +480,73 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: vmware_node_pools
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the vmware_node_pools resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the vmware_node_pools resource.
     - name: vmwareClustersId
-      value: string
+      value: "{{ vmwareClustersId }}"
       description: Required parameter for the vmware_node_pools resource.
-    - name: displayName
-      value: string
-      description: >
-        The display name for the node pool.
-        
-    - name: nodePoolAutoscaling
-      value: object
-      description: >
-        Node pool autoscaling config for the node pool.
-        
-    - name: etag
-      value: string
-      description: >
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
-        
-    - name: config
-      value: object
-      description: >
-        Required. The node configuration of the node pool.
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations on the node pool. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
-        
-    - name: onPremVersion
-      value: string
-      description: >
-        Anthos version for the node pool. Defaults to the user cluster version.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. The resource name of this node pool.
-        
-    - name: validateOnly
-      value: boolean
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The display name for the node pool.
+    - name: config
+      description: |
+        Required. The node configuration of the node pool.
+      value:
+        bootDiskSizeGb: "{{ bootDiskSizeGb }}"
+        image: "{{ image }}"
+        memoryMb: "{{ memoryMb }}"
+        enableLoadBalancer: {{ enableLoadBalancer }}
+        cpus: "{{ cpus }}"
+        labels: "{{ labels }}"
+        vsphereConfig:
+          hostGroups:
+            - "{{ hostGroups }}"
+          datastore: "{{ datastore }}"
+          tags:
+            - category: "{{ category }}"
+              tag: "{{ tag }}"
+        imageType: "{{ imageType }}"
+        replicas: "{{ replicas }}"
+        taints:
+          - key: "{{ key }}"
+            value: "{{ value }}"
+            effect: "{{ effect }}"
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations on the node pool. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
+    - name: onPremVersion
+      value: "{{ onPremVersion }}"
+      description: |
+        Anthos version for the node pool. Defaults to the user cluster version.
+    - name: nodePoolAutoscaling
+      description: |
+        Node pool autoscaling config for the node pool.
+      value:
+        minReplicas: {{ minReplicas }}
+        maxReplicas: {{ maxReplicas }}
     - name: vmwareNodePoolId
-      value: string
-```
+      value: "{{ vmwareNodePoolId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -551,13 +566,13 @@ Updates the parameters of a single VMware node pool.
 ```sql
 UPDATE google.gkeonprem.vmware_node_pools
 SET 
+data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__nodePoolAutoscaling = '{{ nodePoolAutoscaling }}',
-data__etag = '{{ etag }}',
 data__config = '{{ config }}',
 data__annotations = '{{ annotations }}',
+data__etag = '{{ etag }}',
 data__onPremVersion = '{{ onPremVersion }}',
-data__name = '{{ name }}'
+data__nodePoolAutoscaling = '{{ nodePoolAutoscaling }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -596,8 +611,8 @@ AND vmwareClustersId = '{{ vmwareClustersId }}' --required
 AND vmwareNodePoolsId = '{{ vmwareNodePoolsId }}' --required
 AND allowMissing = '{{ allowMissing }}'
 AND etag = '{{ etag }}'
-AND ignoreErrors = '{{ ignoreErrors }}'
 AND validateOnly = '{{ validateOnly }}'
+AND ignoreErrors = '{{ ignoreErrors }}'
 ;
 ```
 </TabItem>
@@ -607,12 +622,28 @@ AND validateOnly = '{{ validateOnly }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_vmware_clusters_vmware_node_pools_enroll"
+    defaultValue="projects_locations_vmware_clusters_vmware_node_pools_unenroll"
     values={[
-        { label: 'projects_locations_vmware_clusters_vmware_node_pools_enroll', value: 'projects_locations_vmware_clusters_vmware_node_pools_enroll' },
-        { label: 'projects_locations_vmware_clusters_vmware_node_pools_unenroll', value: 'projects_locations_vmware_clusters_vmware_node_pools_unenroll' }
+        { label: 'projects_locations_vmware_clusters_vmware_node_pools_unenroll', value: 'projects_locations_vmware_clusters_vmware_node_pools_unenroll' },
+        { label: 'projects_locations_vmware_clusters_vmware_node_pools_enroll', value: 'projects_locations_vmware_clusters_vmware_node_pools_enroll' }
     ]}
 >
+<TabItem value="projects_locations_vmware_clusters_vmware_node_pools_unenroll">
+
+Unenrolls a VMware node pool to Anthos On-Prem API
+
+```sql
+EXEC google.gkeonprem.vmware_node_pools.projects_locations_vmware_clusters_vmware_node_pools_unenroll 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@vmwareClustersId='{{ vmwareClustersId }}' --required, 
+@vmwareNodePoolsId='{{ vmwareNodePoolsId }}' --required, 
+@allowMissing={{ allowMissing }}, 
+@etag='{{ etag }}', 
+@validateOnly={{ validateOnly }}
+;
+```
+</TabItem>
 <TabItem value="projects_locations_vmware_clusters_vmware_node_pools_enroll">
 
 Enrolls a VMware node pool to Anthos On-Prem API
@@ -626,22 +657,6 @@ EXEC google.gkeonprem.vmware_node_pools.projects_locations_vmware_clusters_vmwar
 '{
 "vmwareNodePoolId": "{{ vmwareNodePoolId }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_vmware_clusters_vmware_node_pools_unenroll">
-
-Unenrolls a VMware node pool to Anthos On-Prem API
-
-```sql
-EXEC google.gkeonprem.vmware_node_pools.projects_locations_vmware_clusters_vmware_node_pools_unenroll 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@vmwareClustersId='{{ vmwareClustersId }}' --required, 
-@vmwareNodePoolsId='{{ vmwareNodePoolsId }}' --required, 
-@validateOnly={{ validateOnly }}, 
-@allowMissing={{ allowMissing }}, 
-@etag='{{ etag }}'
 ;
 ```
 </TabItem>

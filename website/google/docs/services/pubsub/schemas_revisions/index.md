@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schemas_revisions</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schemas_revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schemas_revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsub.schemas_revisions" /></td></tr>
 </tbody></table>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of the schema definition.</td>
+    <td>The type of the schema definition. (TYPE_UNSPECIFIED, PROTOCOL_BUFFER, AVRO)</td>
 </tr>
 </tbody>
 </table>
@@ -97,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#projects_schemas_list_revisions"><CopyableCode code="projects_schemas_list_revisions" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists all schema revisions for the named schema.</td>
 </tr>
 </tbody>
@@ -166,9 +167,9 @@ type
 FROM google.pubsub.schemas_revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND schemasId = '{{ schemasId }}' -- required
-AND view = '{{ view }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>

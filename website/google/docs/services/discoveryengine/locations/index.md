@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.locations" /></td></tr>
 </tbody></table>
@@ -50,17 +51,17 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#projects_locations_set_up_data_connector_v2"><CopyableCode code="projects_locations_set_up_data_connector_v2" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-collectionDisplayName"><code>collectionDisplayName</code></a>, <a href="#parameter-collectionId"><code>collectionId</code></a></td>
+    <td>Creates a Collection and sets up the DataConnector for it. To stop a DataConnector after setup, use the CollectionService.DeleteCollection method.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_set_up_data_connector"><CopyableCode code="projects_locations_set_up_data_connector" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a Collection and sets up the DataConnector for it. To stop a DataConnector after setup, use the CollectionService.DeleteCollection method.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_set_up_data_connector_v2"><CopyableCode code="projects_locations_set_up_data_connector_v2" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-collectionId"><code>collectionId</code></a>, <a href="#parameter-collectionDisplayName"><code>collectionDisplayName</code></a></td>
     <td>Creates a Collection and sets up the DataConnector for it. To stop a DataConnector after setup, use the CollectionService.DeleteCollection method.</td>
 </tr>
 </tbody>
@@ -105,12 +106,59 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_set_up_data_connector"
+    defaultValue="projects_locations_set_up_data_connector_v2"
     values={[
-        { label: 'projects_locations_set_up_data_connector', value: 'projects_locations_set_up_data_connector' },
-        { label: 'projects_locations_set_up_data_connector_v2', value: 'projects_locations_set_up_data_connector_v2' }
+        { label: 'projects_locations_set_up_data_connector_v2', value: 'projects_locations_set_up_data_connector_v2' },
+        { label: 'projects_locations_set_up_data_connector', value: 'projects_locations_set_up_data_connector' }
     ]}
 >
+<TabItem value="projects_locations_set_up_data_connector_v2">
+
+Creates a Collection and sets up the DataConnector for it. To stop a DataConnector after setup, use the CollectionService.DeleteCollection method.
+
+```sql
+EXEC google.discoveryengine.locations.projects_locations_set_up_data_connector_v2 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionDisplayName='{{ collectionDisplayName }}', 
+@collectionId='{{ collectionId }}' 
+@@json=
+'{
+"jsonParams": "{{ jsonParams }}", 
+"syncMode": "{{ syncMode }}", 
+"actionConfig": "{{ actionConfig }}", 
+"tag": "{{ tag }}", 
+"identityRefreshInterval": "{{ identityRefreshInterval }}", 
+"incrementalSyncDisabled": {{ incrementalSyncDisabled }}, 
+"realtimeSyncConfig": "{{ realtimeSyncConfig }}", 
+"metadata": "{{ metadata }}", 
+"autoRunDisabled": {{ autoRunDisabled }}, 
+"bapConfig": "{{ bapConfig }}", 
+"hybridIngestionDisabled": {{ hybridIngestionDisabled }}, 
+"cliConfig": "{{ cliConfig }}", 
+"kmsKeyName": "{{ kmsKeyName }}", 
+"federatedConfig": "{{ federatedConfig }}", 
+"endUserConfig": "{{ endUserConfig }}", 
+"aclEnabled": {{ aclEnabled }}, 
+"alertPolicyConfigs": "{{ alertPolicyConfigs }}", 
+"destinationConfigs": "{{ destinationConfigs }}", 
+"staticIpEnabled": {{ staticIpEnabled }}, 
+"dataSource": "{{ dataSource }}", 
+"nextSyncTime": "{{ nextSyncTime }}", 
+"entities": "{{ entities }}", 
+"refreshInterval": "{{ refreshInterval }}", 
+"identityScheduleConfig": "{{ identityScheduleConfig }}", 
+"createEuaSaas": {{ createEuaSaas }}, 
+"connectorSourceId": "{{ connectorSourceId }}", 
+"connectorModes": "{{ connectorModes }}", 
+"params": "{{ params }}", 
+"incrementalRefreshInterval": "{{ incrementalRefreshInterval }}", 
+"removeParamKeys": "{{ removeParamKeys }}", 
+"name": "{{ name }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_set_up_data_connector">
 
 Creates a Collection and sets up the DataConnector for it. To stop a DataConnector after setup, use the CollectionService.DeleteCollection method.
@@ -121,51 +169,9 @@ EXEC google.discoveryengine.locations.projects_locations_set_up_data_connector
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"dataConnector": "{{ dataConnector }}", 
 "collectionId": "{{ collectionId }}", 
-"collectionDisplayName": "{{ collectionDisplayName }}", 
-"dataConnector": "{{ dataConnector }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_set_up_data_connector_v2">
-
-Creates a Collection and sets up the DataConnector for it. To stop a DataConnector after setup, use the CollectionService.DeleteCollection method.
-
-```sql
-EXEC google.discoveryengine.locations.projects_locations_set_up_data_connector_v2 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionId='{{ collectionId }}', 
-@collectionDisplayName='{{ collectionDisplayName }}' 
-@@json=
-'{
-"incrementalSyncDisabled": {{ incrementalSyncDisabled }}, 
-"kmsKeyName": "{{ kmsKeyName }}", 
-"staticIpEnabled": {{ staticIpEnabled }}, 
-"endUserConfig": "{{ endUserConfig }}", 
-"aclEnabled": {{ aclEnabled }}, 
-"incrementalRefreshInterval": "{{ incrementalRefreshInterval }}", 
-"connectorModes": "{{ connectorModes }}", 
-"syncMode": "{{ syncMode }}", 
-"nextSyncTime": "{{ nextSyncTime }}", 
-"alertPolicyConfigs": "{{ alertPolicyConfigs }}", 
-"realtimeSyncConfig": "{{ realtimeSyncConfig }}", 
-"identityRefreshInterval": "{{ identityRefreshInterval }}", 
-"dataSource": "{{ dataSource }}", 
-"entities": "{{ entities }}", 
-"jsonParams": "{{ jsonParams }}", 
-"hybridIngestionDisabled": {{ hybridIngestionDisabled }}, 
-"bapConfig": "{{ bapConfig }}", 
-"autoRunDisabled": {{ autoRunDisabled }}, 
-"destinationConfigs": "{{ destinationConfigs }}", 
-"removeParamKeys": "{{ removeParamKeys }}", 
-"createEuaSaas": {{ createEuaSaas }}, 
-"federatedConfig": "{{ federatedConfig }}", 
-"refreshInterval": "{{ refreshInterval }}", 
-"params": "{{ params }}", 
-"actionConfig": "{{ actionConfig }}", 
-"identityScheduleConfig": "{{ identityScheduleConfig }}"
+"collectionDisplayName": "{{ collectionDisplayName }}"
 }'
 ;
 ```

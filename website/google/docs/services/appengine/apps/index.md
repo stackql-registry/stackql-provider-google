@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apps</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apps</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apps" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.appengine.apps" /></td></tr>
 </tbody></table>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="databaseType" /></td>
     <td><code>string</code></td>
-    <td>The type of the Cloud Firestore or Cloud Datastore database associated with this application.</td>
+    <td>The type of the Cloud Firestore or Cloud Datastore database associated with this application. (DATABASE_TYPE_UNSPECIFIED, CLOUD_DATASTORE, CLOUD_FIRESTORE, CLOUD_DATASTORE_COMPATIBILITY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultBucket" /></td>
@@ -126,12 +127,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="servingStatus" /></td>
     <td><code>string</code></td>
-    <td>Serving status of this application.</td>
+    <td>Serving status of this application. (UNSPECIFIED, SERVING, USER_DISABLED, SYSTEM_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sslPolicy" /></td>
     <td><code>string</code></td>
-    <td>The SSL policy that will be applied to the application. If set to Modern it will restrict traffic with TLS &lt; 1.2 and allow only Modern Ciphers suite</td>
+    <td>The SSL policy that will be applied to the application. If set to Modern it will restrict traffic with TLS &lt; 1.2 and allow only Modern Ciphers suite (SSL_POLICY_UNSPECIFIED, DEFAULT, MODERN)</td>
 </tr>
 </tbody>
 </table>
@@ -285,32 +286,32 @@ Creates an App Engine application for a Google Cloud Platform project. Required 
 
 ```sql
 INSERT INTO google.appengine.apps (
-data__id,
-data__dispatchRules,
 data__authDomain,
-data__locationId,
 data__defaultCookieExpiration,
-data__servingStatus,
-data__serviceAccount,
 data__iap,
-data__databaseType,
-data__featureSettings,
 data__generatedCustomerMetadata,
-data__sslPolicy
+data__sslPolicy,
+data__dispatchRules,
+data__databaseType,
+data__locationId,
+data__serviceAccount,
+data__id,
+data__servingStatus,
+data__featureSettings
 )
 SELECT 
-'{{ id }}',
-'{{ dispatchRules }}',
 '{{ authDomain }}',
-'{{ locationId }}',
 '{{ defaultCookieExpiration }}',
-'{{ servingStatus }}',
-'{{ serviceAccount }}',
 '{{ iap }}',
-'{{ databaseType }}',
-'{{ featureSettings }}',
 '{{ generatedCustomerMetadata }}',
-'{{ sslPolicy }}'
+'{{ sslPolicy }}',
+'{{ dispatchRules }}',
+'{{ databaseType }}',
+'{{ locationId }}',
+'{{ serviceAccount }}',
+'{{ id }}',
+'{{ servingStatus }}',
+'{{ featureSettings }}'
 RETURNING
 name,
 done,
@@ -322,74 +323,71 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: apps
   props:
-    - name: id
-      value: string
-      description: >
-        Identifier of the Application resource. This identifier is equivalent to the project ID of the Google Cloud Platform project where you want to deploy your application. Example: myapp.
-        
-    - name: dispatchRules
-      value: array
-      description: >
-        HTTP path dispatch rules for requests to the application that do not explicitly target a service or version. Rules are order-dependent. Up to 20 dispatch rules can be supported.
-        
     - name: authDomain
-      value: string
-      description: >
+      value: "{{ authDomain }}"
+      description: |
         Google Apps authentication domain that controls which users can access this application.Defaults to open access for any Google Account.
-        
-    - name: locationId
-      value: string
-      description: >
-        Location from which this application runs. Application instances run out of the data centers in the specified location, which is also where all of the application's end user content is stored.Defaults to us-central.View the list of supported locations (https://cloud.google.com/appengine/docs/locations).
-        
     - name: defaultCookieExpiration
-      value: string
-      description: >
+      value: "{{ defaultCookieExpiration }}"
+      description: |
         Cookie expiration policy for this application.
-        
-    - name: servingStatus
-      value: string
-      description: >
-        Serving status of this application.
-        
-      valid_values: ['UNSPECIFIED', 'SERVING', 'USER_DISABLED', 'SYSTEM_DISABLED']
-    - name: serviceAccount
-      value: string
-      description: >
-        The service account associated with the application. This is the app-level default identity. If no identity provided during create version, Admin API will fallback to this one.
-        
     - name: iap
-      value: object
-      description: >
+      description: |
         Identity-Aware Proxy
-        
-    - name: databaseType
-      value: string
-      description: >
-        The type of the Cloud Firestore or Cloud Datastore database associated with this application.
-        
-      valid_values: ['DATABASE_TYPE_UNSPECIFIED', 'CLOUD_DATASTORE', 'CLOUD_FIRESTORE', 'CLOUD_DATASTORE_COMPATIBILITY']
-    - name: featureSettings
-      value: object
-      description: >
-        The feature specific settings to be used in the application.
-        
+      value:
+        enabled: {{ enabled }}
+        oauth2ClientId: "{{ oauth2ClientId }}"
+        oauth2ClientSecret: "{{ oauth2ClientSecret }}"
+        oauth2ClientSecretSha256: "{{ oauth2ClientSecretSha256 }}"
     - name: generatedCustomerMetadata
-      value: object
-      description: >
+      value: "{{ generatedCustomerMetadata }}"
+      description: |
         Additional Google Generated Customer Metadata, this field won't be provided by default and can be requested by setting the IncludeExtraData field in GetApplicationRequest
-        
     - name: sslPolicy
-      value: string
-      description: >
+      value: "{{ sslPolicy }}"
+      description: |
         The SSL policy that will be applied to the application. If set to Modern it will restrict traffic with TLS < 1.2 and allow only Modern Ciphers suite
-        
       valid_values: ['SSL_POLICY_UNSPECIFIED', 'DEFAULT', 'MODERN']
-```
+    - name: dispatchRules
+      description: |
+        HTTP path dispatch rules for requests to the application that do not explicitly target a service or version. Rules are order-dependent. Up to 20 dispatch rules can be supported.
+      value:
+        - service: "{{ service }}"
+          domain: "{{ domain }}"
+          path: "{{ path }}"
+    - name: databaseType
+      value: "{{ databaseType }}"
+      description: |
+        The type of the Cloud Firestore or Cloud Datastore database associated with this application.
+      valid_values: ['DATABASE_TYPE_UNSPECIFIED', 'CLOUD_DATASTORE', 'CLOUD_FIRESTORE', 'CLOUD_DATASTORE_COMPATIBILITY']
+    - name: locationId
+      value: "{{ locationId }}"
+      description: |
+        Location from which this application runs. Application instances run out of the data centers in the specified location, which is also where all of the application's end user content is stored.Defaults to us-central.View the list of supported locations (https://cloud.google.com/appengine/docs/locations).
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        The service account associated with the application. This is the app-level default identity. If no identity provided during create version, Admin API will fallback to this one.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Identifier of the Application resource. This identifier is equivalent to the project ID of the Google Cloud Platform project where you want to deploy your application. Example: myapp.
+    - name: servingStatus
+      value: "{{ servingStatus }}"
+      description: |
+        Serving status of this application.
+      valid_values: ['UNSPECIFIED', 'SERVING', 'USER_DISABLED', 'SYSTEM_DISABLED']
+    - name: featureSettings
+      description: |
+        The feature specific settings to be used in the application.
+      value:
+        splitHealthChecks: {{ splitHealthChecks }}
+        useContainerOptimizedOs: {{ useContainerOptimizedOs }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -409,18 +407,18 @@ Updates the specified Application resource. You can update the following fields:
 ```sql
 UPDATE google.appengine.apps
 SET 
-data__id = '{{ id }}',
-data__dispatchRules = '{{ dispatchRules }}',
 data__authDomain = '{{ authDomain }}',
-data__locationId = '{{ locationId }}',
 data__defaultCookieExpiration = '{{ defaultCookieExpiration }}',
-data__servingStatus = '{{ servingStatus }}',
-data__serviceAccount = '{{ serviceAccount }}',
 data__iap = '{{ iap }}',
-data__databaseType = '{{ databaseType }}',
-data__featureSettings = '{{ featureSettings }}',
 data__generatedCustomerMetadata = '{{ generatedCustomerMetadata }}',
-data__sslPolicy = '{{ sslPolicy }}'
+data__sslPolicy = '{{ sslPolicy }}',
+data__dispatchRules = '{{ dispatchRules }}',
+data__databaseType = '{{ databaseType }}',
+data__locationId = '{{ locationId }}',
+data__serviceAccount = '{{ serviceAccount }}',
+data__id = '{{ id }}',
+data__servingStatus = '{{ servingStatus }}',
+data__featureSettings = '{{ featureSettings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>deployments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>deployments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="deployments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigeeregistry.deployments" /></td></tr>
 </tbody></table>
@@ -234,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_deployments_list"><CopyableCode code="projects_locations_apis_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns matching deployments.</td>
 </tr>
 <tr>
@@ -248,7 +249,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_deployments_patch"><CopyableCode code="projects_locations_apis_deployments_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Used to modify a specified deployment.</td>
 </tr>
 <tr>
@@ -412,10 +413,10 @@ FROM google.apigeeregistry.deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -437,32 +438,32 @@ Creates a specified deployment.
 
 ```sql
 INSERT INTO google.apigeeregistry.deployments (
+data__intendedAudience,
 data__name,
-data__endpointUri,
 data__labels,
-data__accessGuidance,
 data__annotations,
 data__description,
-data__externalChannelUri,
-data__intendedAudience,
-data__apiSpecRevision,
+data__endpointUri,
 data__displayName,
+data__accessGuidance,
+data__apiSpecRevision,
+data__externalChannelUri,
 projectsId,
 locationsId,
 apisId,
 apiDeploymentId
 )
 SELECT 
+'{{ intendedAudience }}',
 '{{ name }}',
-'{{ endpointUri }}',
 '{{ labels }}',
-'{{ accessGuidance }}',
 '{{ annotations }}',
 '{{ description }}',
-'{{ externalChannelUri }}',
-'{{ intendedAudience }}',
-'{{ apiSpecRevision }}',
+'{{ endpointUri }}',
 '{{ displayName }}',
+'{{ accessGuidance }}',
+'{{ apiSpecRevision }}',
+'{{ externalChannelUri }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -487,72 +488,62 @@ revisionUpdateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: deployments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the deployments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the deployments resource.
     - name: apisId
-      value: string
+      value: "{{ apisId }}"
       description: Required parameter for the deployments resource.
-    - name: name
-      value: string
-      description: >
-        Resource name.
-        
-    - name: endpointUri
-      value: string
-      description: >
-        The address where the deployment is serving. Changes to this value will update the revision.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `apigeeregistry.googleapis.com/` and cannot be changed.
-        
-    - name: accessGuidance
-      value: string
-      description: >
-        Text briefly describing how to access the endpoint. Changes to this value will not affect the revision.
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
-        
-    - name: description
-      value: string
-      description: >
-        A detailed description.
-        
-    - name: externalChannelUri
-      value: string
-      description: >
-        The address of the external channel of the API (e.g., the Developer Portal). Changes to this value will not affect the revision.
-        
     - name: intendedAudience
-      value: string
-      description: >
+      value: "{{ intendedAudience }}"
+      description: |
         Text briefly identifying the intended audience of the API. Changes to this value will not affect the revision.
-        
-    - name: apiSpecRevision
-      value: string
-      description: >
-        The full resource name (including revision ID) of the spec of the API being served by the deployment. Changes to this value will update the revision. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec@revision}`
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Resource name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \`apigeeregistry.googleapis.com/\` and cannot be changed.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A detailed description.
+    - name: endpointUri
+      value: "{{ endpointUri }}"
+      description: |
+        The address where the deployment is serving. Changes to this value will update the revision.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Human-meaningful name.
-        
+    - name: accessGuidance
+      value: "{{ accessGuidance }}"
+      description: |
+        Text briefly describing how to access the endpoint. Changes to this value will not affect the revision.
+    - name: apiSpecRevision
+      value: "{{ apiSpecRevision }}"
+      description: |
+        The full resource name (including revision ID) of the spec of the API being served by the deployment. Changes to this value will update the revision. Format: \`projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec@revision}\`
+    - name: externalChannelUri
+      value: "{{ externalChannelUri }}"
+      description: |
+        The address of the external channel of the API (e.g., the Developer Portal). Changes to this value will not affect the revision.
     - name: apiDeploymentId
-      value: string
-```
+      value: "{{ apiDeploymentId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -572,23 +563,23 @@ Used to modify a specified deployment.
 ```sql
 UPDATE google.apigeeregistry.deployments
 SET 
+data__intendedAudience = '{{ intendedAudience }}',
 data__name = '{{ name }}',
-data__endpointUri = '{{ endpointUri }}',
 data__labels = '{{ labels }}',
-data__accessGuidance = '{{ accessGuidance }}',
 data__annotations = '{{ annotations }}',
 data__description = '{{ description }}',
-data__externalChannelUri = '{{ externalChannelUri }}',
-data__intendedAudience = '{{ intendedAudience }}',
+data__endpointUri = '{{ endpointUri }}',
+data__displayName = '{{ displayName }}',
+data__accessGuidance = '{{ accessGuidance }}',
 data__apiSpecRevision = '{{ apiSpecRevision }}',
-data__displayName = '{{ displayName }}'
+data__externalChannelUri = '{{ externalChannelUri }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND apisId = '{{ apisId }}' --required
 AND deploymentsId = '{{ deploymentsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 accessGuidance,

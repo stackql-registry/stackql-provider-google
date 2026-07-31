@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>node_groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>node_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="node_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.node_groups" /></td></tr>
 </tbody></table>
@@ -53,12 +54,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
+    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
 </tr>
 <tr>
     <td><CopyableCode code="autoscalingPolicy" /></td>
@@ -68,7 +69,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -83,7 +84,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The type of the resource. Always compute#nodeGroup for node group. (default: compute#nodeGroup)</td>
+    <td>Output only. [Output Only] The type of the resource. Alwayscompute#nodeGroup for node group. (default: compute#nodeGroup)</td>
 </tr>
 <tr>
     <td><CopyableCode code="locationHint" /></td>
@@ -93,12 +94,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="maintenanceInterval" /></td>
     <td><code>string</code></td>
-    <td>Specifies the frequency of planned maintenance events. The accepted values are: `AS_NEEDED` and `RECURRENT`.</td>
+    <td>Specifies the frequency of planned maintenance events. The accepted values are: `AS_NEEDED` and `RECURRENT`. (AS_NEEDED, RECURRENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="maintenancePolicy" /></td>
     <td><code>string</code></td>
-    <td>Specifies how to handle instances when a node in the group undergoes maintenance. Set to one of: DEFAULT, RESTART_IN_PLACE, or MIGRATE_WITHIN_NODE_GROUP. The default value is DEFAULT. For more information, see Maintenance policies.</td>
+    <td>Specifies how to handle instances when a node in the group undergoes maintenance. Set to one of: DEFAULT,RESTART_IN_PLACE, or MIGRATE_WITHIN_NODE_GROUP. The default value is DEFAULT. For more information, see Maintenance policies. (DEFAULT, MAINTENANCE_POLICY_UNSPECIFIED, MIGRATE_WITHIN_NODE_GROUP, RESTART_IN_PLACE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="maintenanceWindow" /></td>
@@ -113,7 +114,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="shareSettings" /></td>
@@ -123,17 +124,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="size" /></td>
     <td><code>integer (int32)</code></td>
-    <td>[Output Only] The total number of nodes in the node group.</td>
+    <td>Output only. [Output Only] The total number of nodes in the node group.</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td> (CREATING, DELETING, INVALID, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The name of the zone where the node group resides, such as us-central1-a.</td>
+    <td>Output only. [Output Only] The name of the zone where the node group resides, such as us-central1-a.</td>
 </tr>
 </tbody>
 </table>
@@ -162,17 +163,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource.Always compute#nodeGroupList for lists of node groups. (default: compute#nodeGroupList)</td>
+    <td>Output only. [Output Only] Type of resource.Always compute#nodeGroupList for lists of node groups. (default: compute#nodeGroupList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -196,12 +197,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
+    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
 </tr>
 <tr>
     <td><CopyableCode code="autoscalingPolicy" /></td>
@@ -211,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -226,7 +227,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The type of the resource. Always compute#nodeGroup for node group. (default: compute#nodeGroup)</td>
+    <td>Output only. [Output Only] The type of the resource. Alwayscompute#nodeGroup for node group. (default: compute#nodeGroup)</td>
 </tr>
 <tr>
     <td><CopyableCode code="locationHint" /></td>
@@ -236,12 +237,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="maintenanceInterval" /></td>
     <td><code>string</code></td>
-    <td>Specifies the frequency of planned maintenance events. The accepted values are: `AS_NEEDED` and `RECURRENT`.</td>
+    <td>Specifies the frequency of planned maintenance events. The accepted values are: `AS_NEEDED` and `RECURRENT`. (AS_NEEDED, RECURRENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="maintenancePolicy" /></td>
     <td><code>string</code></td>
-    <td>Specifies how to handle instances when a node in the group undergoes maintenance. Set to one of: DEFAULT, RESTART_IN_PLACE, or MIGRATE_WITHIN_NODE_GROUP. The default value is DEFAULT. For more information, see Maintenance policies.</td>
+    <td>Specifies how to handle instances when a node in the group undergoes maintenance. Set to one of: DEFAULT,RESTART_IN_PLACE, or MIGRATE_WITHIN_NODE_GROUP. The default value is DEFAULT. For more information, see Maintenance policies. (DEFAULT, MAINTENANCE_POLICY_UNSPECIFIED, MIGRATE_WITHIN_NODE_GROUP, RESTART_IN_PLACE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="maintenanceWindow" /></td>
@@ -256,7 +257,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="shareSettings" /></td>
@@ -266,17 +267,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="size" /></td>
     <td><code>integer (int32)</code></td>
-    <td>[Output Only] The total number of nodes in the node group.</td>
+    <td>Output only. [Output Only] The total number of nodes in the node group.</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td> (CREATING, DELETING, INVALID, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The name of the zone where the node group resides, such as us-central1-a.</td>
+    <td>Output only. [Output Only] The name of the zone where the node group resides, such as us-central1-a.</td>
 </tr>
 </tbody>
 </table>
@@ -303,28 +304,28 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-nodeGroup"><code>nodeGroup</code></a></td>
     <td></td>
-    <td>Returns the specified NodeGroup. Get a list of available NodeGroups by making a list() request. Note: the "nodes" field should not be used. Use nodeGroups.listNodes instead.</td>
+    <td>Returns the specified NodeGroup. Get a list of available NodeGroups<br />by making a list() request.<br />Note: the "nodes" field should not be used. Use nodeGroups.listNodes<br />instead.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of node groups available to the specified project. Note: use nodeGroups.listNodes for more details about each group.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Retrieves a list of node groups available to the specified project.<br />Note: use nodeGroups.listNodes for more details about each group.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves an aggregated list of node groups. Note: use nodeGroups.listNodes for more details about each group. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves an aggregated list of node groups.<br />Note: use nodeGroups.listNodes for more details about each group.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-initialNodeCount"><code>initialNodeCount</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a NodeGroup resource in the specified project using the data included in the request.</td>
+    <td>Creates a NodeGroup resource in the specified project using the data<br />included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
@@ -348,18 +349,18 @@ The following methods are available for this resource:
     <td>Updates the node template of the node group.</td>
 </tr>
 <tr>
-    <td><a href="#simulate_maintenance_event"><CopyableCode code="simulate_maintenance_event" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-nodeGroup"><code>nodeGroup</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Simulates maintenance event on specified nodes from the node group.</td>
-</tr>
-<tr>
     <td><a href="#perform_maintenance"><CopyableCode code="perform_maintenance" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-nodeGroup"><code>nodeGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Perform maintenance on a subset of nodes in the node group.</td>
+</tr>
+<tr>
+    <td><a href="#simulate_maintenance_event"><CopyableCode code="simulate_maintenance_event" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-nodeGroup"><code>nodeGroup</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Simulates maintenance event on specified nodes from the node group.</td>
 </tr>
 </tbody>
 </table>
@@ -452,7 +453,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Returns the specified NodeGroup. Get a list of available NodeGroups by making a list() request. Note: the "nodes" field should not be used. Use nodeGroups.listNodes instead.
+Returns the specified NodeGroup. Get a list of available NodeGroups<br />by making a list() request.<br />Note: the "nodes" field should not be used. Use nodeGroups.listNodes<br />instead.
 
 ```sql
 SELECT
@@ -482,7 +483,7 @@ AND nodeGroup = '{{ nodeGroup }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of node groups available to the specified project. Note: use nodeGroups.listNodes for more details about each group.
+Retrieves a list of node groups available to the specified project.<br />Note: use nodeGroups.listNodes for more details about each group.
 
 ```sql
 SELECT
@@ -495,17 +496,17 @@ warning
 FROM google.compute.node_groups
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND orderBy = '{{ orderBy }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves an aggregated list of node groups. Note: use nodeGroups.listNodes for more details about each group. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves an aggregated list of node groups.<br />Note: use nodeGroups.listNodes for more details about each group.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -528,13 +529,13 @@ status,
 zone
 FROM google.compute.node_groups
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND filter = '{{ filter }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -552,50 +553,36 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates a NodeGroup resource in the specified project using the data included in the request.
+Creates a NodeGroup resource in the specified project using the data<br />included in the request.
 
 ```sql
 INSERT INTO google.compute.node_groups (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__nodeTemplate,
-data__zone,
-data__selfLink,
-data__status,
-data__size,
-data__autoscalingPolicy,
-data__maintenancePolicy,
 data__locationHint,
 data__fingerprint,
+data__maintenancePolicy,
 data__maintenanceWindow,
-data__shareSettings,
 data__maintenanceInterval,
+data__name,
+data__autoscalingPolicy,
+data__shareSettings,
+data__description,
+data__nodeTemplate,
 project,
 zone,
 initialNodeCount,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ nodeTemplate }}',
-'{{ zone }}',
-'{{ selfLink }}',
-'{{ status }}',
-{{ size }},
-'{{ autoscalingPolicy }}',
-'{{ maintenancePolicy }}',
 '{{ locationHint }}',
 '{{ fingerprint }}',
+'{{ maintenancePolicy }}',
 '{{ maintenanceWindow }}',
-'{{ shareSettings }}',
 '{{ maintenanceInterval }}',
+'{{ name }}',
+'{{ autoscalingPolicy }}',
+'{{ shareSettings }}',
+'{{ description }}',
+'{{ nodeTemplate }}',
 '{{ project }}',
 '{{ zone }}',
 '{{ initialNodeCount }}',
@@ -608,6 +595,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -632,105 +620,88 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: node_groups
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the node_groups resource.
     - name: zone
-      value: string
+      value: "{{ zone }}"
       description: Required parameter for the node_groups resource.
     - name: initialNodeCount
-      value: integer (int32)
+      value: "{{ initialNodeCount }}"
       description: Required parameter for the node_groups resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] The type of the resource. Always compute#nodeGroup for node group.
-        
-      default: compute#nodeGroup
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: nodeTemplate
-      value: string
-      description: >
-        URL of the node template to create the node group from.
-        
-    - name: zone
-      value: string
-      description: >
-        [Output Only] The name of the zone where the node group resides, such as us-central1-a.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: status
-      value: string
-      valid_values: ['CREATING', 'DELETING', 'INVALID', 'READY']
-    - name: size
-      value: integer
-      description: >
-        [Output Only] The total number of nodes in the node group.
-        
-    - name: autoscalingPolicy
-      value: object
-      description: >
-        Specifies how autoscaling should behave.
-        
-    - name: maintenancePolicy
-      value: string
-      description: >
-        Specifies how to handle instances when a node in the group undergoes maintenance. Set to one of: DEFAULT, RESTART_IN_PLACE, or MIGRATE_WITHIN_NODE_GROUP. The default value is DEFAULT. For more information, see Maintenance policies.
-        
-      valid_values: ['DEFAULT', 'MAINTENANCE_POLICY_UNSPECIFIED', 'MIGRATE_WITHIN_NODE_GROUP', 'RESTART_IN_PLACE']
     - name: locationHint
-      value: string
-      description: >
-        An opaque location hint used to place the Node close to other resources. This field is for use by internal tools that use the public API. The location hint here on the NodeGroup overrides any location_hint present in the NodeTemplate.
-        
+      value: "{{ locationHint }}"
+      description: |
+        An opaque location hint used to place the Node close to other
+        resources.
+        This field is for use by internal tools that use the public API.
+        The location hint here on the NodeGroup overrides any location_hint
+        present in the NodeTemplate.
     - name: fingerprint
-      value: string
+      value: "{{ fingerprint }}"
+    - name: maintenancePolicy
+      value: "{{ maintenancePolicy }}"
+      description: |
+        Specifies how to handle instances when a node in the group undergoes
+        maintenance. Set to one of: DEFAULT,RESTART_IN_PLACE, or MIGRATE_WITHIN_NODE_GROUP.
+        The default value is DEFAULT. For more information, see
+        Maintenance policies.
+      valid_values: ['DEFAULT', 'MAINTENANCE_POLICY_UNSPECIFIED', 'MIGRATE_WITHIN_NODE_GROUP', 'RESTART_IN_PLACE']
     - name: maintenanceWindow
-      value: object
-      description: >
-        Time window specified for daily maintenance operations. GCE's internal maintenance will be performed within this window.
-        
-    - name: shareSettings
-      value: object
-      description: >
-        Share-settings for the node group
-        
+      description: |
+        Time window specified for daily maintenance operations. GCE's internal
+        maintenance will be performed within this window.
+      value:
+        startTime: "{{ startTime }}"
+        maintenanceDuration:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
     - name: maintenanceInterval
-      value: string
-      description: >
-        Specifies the frequency of planned maintenance events. The accepted values are: `AS_NEEDED` and `RECURRENT`.
-        
+      value: "{{ maintenanceInterval }}"
+      description: |
+        Specifies the frequency of planned maintenance events. The accepted values
+        are: \`AS_NEEDED\` and \`RECURRENT\`.
       valid_values: ['AS_NEEDED', 'RECURRENT']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the resource, provided by the client when initially creating
+        the resource. The resource name must be 1-63 characters long, and comply
+        withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: autoscalingPolicy
+      description: |
+        Specifies how autoscaling should behave.
+      value:
+        minNodes: {{ minNodes }}
+        mode: "{{ mode }}"
+        maxNodes: {{ maxNodes }}
+    - name: shareSettings
+      description: |
+        Share-settings for the node group
+      value:
+        shareType: "{{ shareType }}"
+        projectMap: "{{ projectMap }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: nodeTemplate
+      value: "{{ nodeTemplate }}"
+      description: |
+        URL of the node template to create the node group from.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -750,23 +721,16 @@ Updates the specified node group.
 ```sql
 UPDATE google.compute.node_groups
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__nodeTemplate = '{{ nodeTemplate }}',
-data__zone = '{{ zone }}',
-data__selfLink = '{{ selfLink }}',
-data__status = '{{ status }}',
-data__size = {{ size }},
-data__autoscalingPolicy = '{{ autoscalingPolicy }}',
-data__maintenancePolicy = '{{ maintenancePolicy }}',
 data__locationHint = '{{ locationHint }}',
 data__fingerprint = '{{ fingerprint }}',
+data__maintenancePolicy = '{{ maintenancePolicy }}',
 data__maintenanceWindow = '{{ maintenanceWindow }}',
+data__maintenanceInterval = '{{ maintenanceInterval }}',
+data__name = '{{ name }}',
+data__autoscalingPolicy = '{{ autoscalingPolicy }}',
 data__shareSettings = '{{ shareSettings }}',
-data__maintenanceInterval = '{{ maintenanceInterval }}'
+data__description = '{{ description }}',
+data__nodeTemplate = '{{ nodeTemplate }}'
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required
@@ -780,6 +744,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -834,8 +799,8 @@ AND requestId = '{{ requestId }}'
     defaultValue="set_node_template"
     values={[
         { label: 'set_node_template', value: 'set_node_template' },
-        { label: 'simulate_maintenance_event', value: 'simulate_maintenance_event' },
-        { label: 'perform_maintenance', value: 'perform_maintenance' }
+        { label: 'perform_maintenance', value: 'perform_maintenance' },
+        { label: 'simulate_maintenance_event', value: 'simulate_maintenance_event' }
     ]}
 >
 <TabItem value="set_node_template">
@@ -855,23 +820,6 @@ EXEC google.compute.node_groups.set_node_template
 ;
 ```
 </TabItem>
-<TabItem value="simulate_maintenance_event">
-
-Simulates maintenance event on specified nodes from the node group.
-
-```sql
-EXEC google.compute.node_groups.simulate_maintenance_event 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@nodeGroup='{{ nodeGroup }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"nodes": "{{ nodes }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="perform_maintenance">
 
 Perform maintenance on a subset of nodes in the node group.
@@ -886,6 +834,23 @@ EXEC google.compute.node_groups.perform_maintenance
 '{
 "nodes": "{{ nodes }}", 
 "startTime": "{{ startTime }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="simulate_maintenance_event">
+
+Simulates maintenance event on specified nodes from the node group.
+
+```sql
+EXEC google.compute.node_groups.simulate_maintenance_event 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@nodeGroup='{{ nodeGroup }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"nodes": "{{ nodes }}"
 }'
 ;
 ```

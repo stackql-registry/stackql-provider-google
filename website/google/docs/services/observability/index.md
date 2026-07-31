@@ -18,18 +18,23 @@ observability service documentation.
 
 :::info[Service Summary]
 
-total resources: __4__  
+total resources: __9__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/observability/buckets/">buckets</a><br />
+<a href="/services/observability/datasets/">datasets</a><br />
+<a href="/services/observability/links/">links</a><br />
 <a href="/services/observability/locations/">locations</a><br />
 <a href="/services/observability/operations/">operations</a>
 </div>
 <div class="providerDocColumn">
 <a href="/services/observability/scopes/">scopes</a><br />
-<a href="/services/observability/trace_scopes/">trace_scopes</a>
+<a href="/services/observability/settings/">settings</a><br />
+<a href="/services/observability/trace_scopes/">trace_scopes</a><br />
+<a href="/services/observability/views/">views</a>
 </div>
 </div>

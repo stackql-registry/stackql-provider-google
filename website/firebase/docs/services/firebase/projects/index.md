@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>projects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>projects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="projects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.firebase.projects" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The lifecycle state of the Project.</td>
+    <td>Output only. The lifecycle state of the Project. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The lifecycle state of the Project.</td>
+    <td>Output only. The lifecycle state of the Project. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -188,7 +189,7 @@ The following methods are available for this resource:
     <td><a href="#search_apps"><CopyableCode code="search_apps" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all available Apps for the specified FirebaseProject. This is a convenience method. Typically, interaction with an App should be done using the platform-specific service, but some tool use-cases require a summary of all known Apps (such as for App selector interfaces).</td>
 </tr>
 </tbody>
@@ -343,10 +344,10 @@ Lists all available Apps for the specified FirebaseProject. This is a convenienc
 ```sql
 EXEC firebase.firebase.projects.search_apps 
 @projectsId='{{ projectsId }}' --required, 
-@pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}', 
+@showDeleted={{ showDeleted }}, 
 @filter='{{ filter }}', 
-@showDeleted={{ showDeleted }}
+@pageToken='{{ pageToken }}', 
+@pageSize='{{ pageSize }}'
 ;
 ```
 </TabItem>

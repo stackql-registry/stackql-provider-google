@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>routes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>routes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="routes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.routes" /></td></tr>
 </tbody></table>
@@ -117,12 +118,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current lifecycle state of the route.</td>
+    <td>Output only. The current lifecycle state of the route. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ACCEPTING, REJECTING, UPDATING, INACTIVE, OBSOLETE, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The route's type. Its type is determined by the properties of its IP address range.</td>
+    <td>Output only. The route's type. Its type is determined by the properties of its IP address range. (ROUTE_TYPE_UNSPECIFIED, VPC_PRIMARY_SUBNET, VPC_SECONDARY_SUBNET, DYNAMIC_ROUTE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -216,12 +217,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current lifecycle state of the route.</td>
+    <td>Output only. The current lifecycle state of the route. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ACCEPTING, REJECTING, UPDATING, INACTIVE, OBSOLETE, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The route's type. Its type is determined by the properties of its IP address range.</td>
+    <td>Output only. The route's type. Its type is determined by the properties of its IP address range. (ROUTE_TYPE_UNSPECIFIED, VPC_PRIMARY_SUBNET, VPC_SECONDARY_SUBNET, DYNAMIC_ROUTE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>

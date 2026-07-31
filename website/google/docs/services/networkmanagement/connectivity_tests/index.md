@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connectivity_tests</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connectivity_tests</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connectivity_tests" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkmanagement.connectivity_tests" /></td></tr>
 </tbody></table>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists all Connectivity Tests owned by a project.</td>
 </tr>
 <tr>
@@ -393,10 +394,10 @@ source,
 updateTime
 FROM google.networkmanagement.connectivity_tests
 WHERE projectsId = '{{ projectsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -418,28 +419,28 @@ Creates a new Connectivity Test. After you create a test, the reachability analy
 
 ```sql
 INSERT INTO google.networkmanagement.connectivity_tests (
-data__description,
-data__source,
-data__bypassFirewallChecks,
-data__roundTrip,
 data__protocol,
 data__labels,
-data__relatedProjects,
+data__description,
 data__destination,
 data__name,
+data__relatedProjects,
+data__bypassFirewallChecks,
+data__roundTrip,
+data__source,
 projectsId,
 testId
 )
 SELECT 
-'{{ description }}',
-'{{ source }}',
-{{ bypassFirewallChecks }},
-{{ roundTrip }},
 '{{ protocol }}',
 '{{ labels }}',
-'{{ relatedProjects }}',
+'{{ description }}',
 '{{ destination }}',
 '{{ name }}',
+'{{ relatedProjects }}',
+{{ bypassFirewallChecks }},
+{{ roundTrip }},
+'{{ source }}',
 '{{ projectsId }}',
 '{{ testId }}'
 RETURNING
@@ -453,61 +454,103 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connectivity_tests
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the connectivity_tests resource.
-    - name: description
-      value: string
-      description: >
-        The user-supplied description of the Connectivity Test. Maximum of 512 characters.
-        
-    - name: source
-      value: object
-      description: >
-        Required. Source specification of the Connectivity Test. You can use a combination of source IP address, URI of a supported endpoint, project ID, or VPC network to identify the source location. Reachability analysis might proceed even if the source location is ambiguous. However, the test result might include endpoints or use a source that you don't intend to test.
-        
-    - name: bypassFirewallChecks
-      value: boolean
-      description: >
-        Whether the analysis should skip firewall checking. Default value is false.
-        
-    - name: roundTrip
-      value: boolean
-      description: >
-        Whether run analysis for the return path from destination to source. Default value is false.
-        
     - name: protocol
-      value: string
-      description: >
+      value: "{{ protocol }}"
+      description: |
         IP Protocol of the test. When not provided, "TCP" is assumed.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Resource labels to represent user-provided metadata.
-        
-    - name: relatedProjects
-      value: array
-      description: >
-        Other projects that may be relevant for reachability analysis. This is applicable to scenarios where a test can cross project boundaries.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The user-supplied description of the Connectivity Test. Maximum of 512 characters.
     - name: destination
-      value: object
-      description: >
+      description: |
         Required. Destination specification of the Connectivity Test. You can use a combination of destination IP address, URI of a supported endpoint, project ID, or VPC network to identify the destination location. Reachability analysis proceeds even if the destination location is ambiguous. However, the test result might include endpoints or use a destination that you don't intend to test.
-        
+      value:
+        dmsPrivateConnection: "{{ dmsPrivateConnection }}"
+        networkType: "{{ networkType }}"
+        cloudRunRevision:
+          uri: "{{ uri }}"
+          serviceUri: "{{ serviceUri }}"
+        instance: "{{ instance }}"
+        gkeMasterCluster: "{{ gkeMasterCluster }}"
+        appEngineVersion:
+          uri: "{{ uri }}"
+        cloudSqlInstance: "{{ cloudSqlInstance }}"
+        cloudFunction:
+          uri: "{{ uri }}"
+        port: {{ port }}
+        gkePod: "{{ gkePod }}"
+        network: "{{ network }}"
+        forwardingRule: "{{ forwardingRule }}"
+        ipAddress: "{{ ipAddress }}"
+        loadBalancerId: "{{ loadBalancerId }}"
+        redisCluster: "{{ redisCluster }}"
+        loadBalancerType: "{{ loadBalancerType }}"
+        redisInstance: "{{ redisInstance }}"
+        forwardingRuleTarget: "{{ forwardingRuleTarget }}"
+        fqdn: "{{ fqdn }}"
+        cloudRunJob: "{{ cloudRunJob }}"
+        projectId: "{{ projectId }}"
     - name: name
-      value: string
-      description: >
-        Identifier. Unique name of the resource using the form: `projects/{project_id}/locations/global/connectivityTests/{test_id}`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Unique name of the resource using the form: \`projects/{project_id}/locations/global/connectivityTests/{test_id}\`
+    - name: relatedProjects
+      value:
+        - "{{ relatedProjects }}"
+      description: |
+        Other projects that may be relevant for reachability analysis. This is applicable to scenarios where a test can cross project boundaries.
+    - name: bypassFirewallChecks
+      value: {{ bypassFirewallChecks }}
+      description: |
+        Whether the analysis should skip firewall checking. Default value is false.
+    - name: roundTrip
+      value: {{ roundTrip }}
+      description: |
+        Whether run analysis for the return path from destination to source. Default value is false.
+    - name: source
+      description: |
+        Required. Source specification of the Connectivity Test. You can use a combination of source IP address, URI of a supported endpoint, project ID, or VPC network to identify the source location. Reachability analysis might proceed even if the source location is ambiguous. However, the test result might include endpoints or use a source that you don't intend to test.
+      value:
+        dmsPrivateConnection: "{{ dmsPrivateConnection }}"
+        networkType: "{{ networkType }}"
+        cloudRunRevision:
+          uri: "{{ uri }}"
+          serviceUri: "{{ serviceUri }}"
+        instance: "{{ instance }}"
+        gkeMasterCluster: "{{ gkeMasterCluster }}"
+        appEngineVersion:
+          uri: "{{ uri }}"
+        cloudSqlInstance: "{{ cloudSqlInstance }}"
+        cloudFunction:
+          uri: "{{ uri }}"
+        port: {{ port }}
+        gkePod: "{{ gkePod }}"
+        network: "{{ network }}"
+        forwardingRule: "{{ forwardingRule }}"
+        ipAddress: "{{ ipAddress }}"
+        loadBalancerId: "{{ loadBalancerId }}"
+        redisCluster: "{{ redisCluster }}"
+        loadBalancerType: "{{ loadBalancerType }}"
+        redisInstance: "{{ redisInstance }}"
+        forwardingRuleTarget: "{{ forwardingRuleTarget }}"
+        fqdn: "{{ fqdn }}"
+        cloudRunJob: "{{ cloudRunJob }}"
+        projectId: "{{ projectId }}"
     - name: testId
-      value: string
-```
+      value: "{{ testId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -527,15 +570,15 @@ Updates the configuration of an existing `ConnectivityTest`. After you update a 
 ```sql
 UPDATE google.networkmanagement.connectivity_tests
 SET 
-data__description = '{{ description }}',
-data__source = '{{ source }}',
-data__bypassFirewallChecks = {{ bypassFirewallChecks }},
-data__roundTrip = {{ roundTrip }},
 data__protocol = '{{ protocol }}',
 data__labels = '{{ labels }}',
-data__relatedProjects = '{{ relatedProjects }}',
+data__description = '{{ description }}',
 data__destination = '{{ destination }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__relatedProjects = '{{ relatedProjects }}',
+data__bypassFirewallChecks = {{ bypassFirewallChecks }},
+data__roundTrip = {{ roundTrip }},
+data__source = '{{ source }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND connectivityTestsId = '{{ connectivityTestsId }}' --required

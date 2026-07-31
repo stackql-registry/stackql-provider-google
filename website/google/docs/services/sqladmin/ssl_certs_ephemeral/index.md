@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>ssl_certs_ephemeral</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>ssl_certs_ephemeral</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="ssl_certs_ephemeral" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sqladmin.ssl_certs_ephemeral" /></td></tr>
 </tbody></table>
@@ -100,14 +101,14 @@ Generates a short-lived X509 certificate containing the provided public key and 
 
 ```sql
 INSERT INTO google.sqladmin.ssl_certs_ephemeral (
-data__access_token,
 data__public_key,
+data__access_token,
 project,
 instance
 )
 SELECT 
-'{{ access_token }}',
 '{{ public_key }}',
+'{{ access_token }}',
 '{{ project }}',
 '{{ instance }}'
 RETURNING
@@ -125,26 +126,24 @@ sha1Fingerprint
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: ssl_certs_ephemeral
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the ssl_certs_ephemeral resource.
     - name: instance
-      value: string
+      value: "{{ instance }}"
       description: Required parameter for the ssl_certs_ephemeral resource.
-    - name: access_token
-      value: string
-      description: >
-        Access token to include in the signed certificate.
-        
     - name: public_key
-      value: string
-      description: >
+      value: "{{ public_key }}"
+      description: |
         PEM encoded public key to include in the signed certificate.
-        
-```
+    - name: access_token
+      value: "{{ access_token }}"
+      description: |
+        Access token to include in the signed certificate.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

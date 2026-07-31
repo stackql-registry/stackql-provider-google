@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>permissions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>permissions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="permissions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivelabelsv2beta.permissions" /></td></tr>
 </tbody></table>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="role" /></td>
     <td><code>string</code></td>
-    <td>The role the principal should have.</td>
+    <td>The role the principal should have. (LABEL_ROLE_UNSPECIFIED, READER, APPLIER, ORGANIZER, EDITOR)</td>
 </tr>
 </tbody>
 </table>
@@ -102,7 +103,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-labelsId"><code>labelsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td><a href="#parameter-useAdminAccess"><code>useAdminAccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-useAdminAccess"><code>useAdminAccess</code></a></td>
     <td>Lists a label's permissions.</td>
 </tr>
 <tr>
@@ -205,9 +206,9 @@ role
 FROM googleworkspace.drivelabelsv2beta.permissions
 WHERE labelsId = '{{ labelsId }}' -- required
 AND revisionsId = '{{ revisionsId }}' -- required
-AND useAdminAccess = '{{ useAdminAccess }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND useAdminAccess = '{{ useAdminAccess }}'
 ;
 ```
 </TabItem>
@@ -229,23 +230,23 @@ Updates a label's permissions. If a permission for the indicated principal doesn
 
 ```sql
 INSERT INTO googleworkspace.drivelabelsv2beta.permissions (
-data__person,
-data__group,
-data__audience,
-data__name,
-data__email,
 data__role,
+data__name,
+data__person,
+data__audience,
+data__email,
+data__group,
 labelsId,
 revisionsId,
 useAdminAccess
 )
 SELECT 
-'{{ person }}',
-'{{ group }}',
-'{{ audience }}',
-'{{ name }}',
-'{{ email }}',
 '{{ role }}',
+'{{ name }}',
+'{{ person }}',
+'{{ audience }}',
+'{{ email }}',
+'{{ group }}',
 '{{ labelsId }}',
 '{{ revisionsId }}',
 '{{ useAdminAccess }}'
@@ -261,50 +262,44 @@ role
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: permissions
   props:
     - name: labelsId
-      value: string
+      value: "{{ labelsId }}"
       description: Required parameter for the permissions resource.
     - name: revisionsId
-      value: string
+      value: "{{ revisionsId }}"
       description: Required parameter for the permissions resource.
-    - name: person
-      value: string
-      description: >
-        Person resource name.
-        
-    - name: group
-      value: string
-      description: >
-        Group resource name.
-        
-    - name: audience
-      value: string
-      description: >
-        Audience to grant a role to. The magic value of `audiences/default` may be used to apply the role to the default audience in the context of the organization that owns the label.
-        
-    - name: name
-      value: string
-      description: >
-        Resource name of this permission.
-        
-    - name: email
-      value: string
-      description: >
-        Specifies the email address for a user or group principal. Not populated for audience principals. User and group permissions may only be inserted using an email address. On update requests, if email address is specified, no principal should be specified.
-        
     - name: role
-      value: string
-      description: >
+      value: "{{ role }}"
+      description: |
         The role the principal should have.
-        
       valid_values: ['LABEL_ROLE_UNSPECIFIED', 'READER', 'APPLIER', 'ORGANIZER', 'EDITOR']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Resource name of this permission.
+    - name: person
+      value: "{{ person }}"
+      description: |
+        Person resource name.
+    - name: audience
+      value: "{{ audience }}"
+      description: |
+        Audience to grant a role to. The magic value of \`audiences/default\` may be used to apply the role to the default audience in the context of the organization that owns the label.
+    - name: email
+      value: "{{ email }}"
+      description: |
+        Specifies the email address for a user or group principal. Not populated for audience principals. User and group permissions may only be inserted using an email address. On update requests, if email address is specified, no principal should be specified.
+    - name: group
+      value: "{{ group }}"
+      description: |
+        Group resource name.
     - name: useAdminAccess
-      value: boolean
-```
+      value: {{ useAdminAccess }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tags</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tags</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tags" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.artifactregistry.tags" /></td></tr>
 </tbody></table>
@@ -114,7 +115,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-packagesId"><code>packagesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists tags.</td>
 </tr>
 <tr>
@@ -246,9 +247,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND packagesId = '{{ packagesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -270,8 +271,8 @@ Creates a tag.
 
 ```sql
 INSERT INTO google.artifactregistry.tags (
-data__version,
 data__name,
+data__version,
 projectsId,
 locationsId,
 repositoriesId,
@@ -279,8 +280,8 @@ packagesId,
 tagId
 )
 SELECT 
-'{{ version }}',
 '{{ name }}',
+'{{ version }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -294,35 +295,33 @@ version
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tags
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tags resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tags resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the tags resource.
     - name: packagesId
-      value: string
+      value: "{{ packagesId }}"
       description: Required parameter for the tags resource.
-    - name: version
-      value: string
-      description: >
-        The name of the version the tag refers to, for example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/sha256:5243811` If the package or version ID parts contain slashes, the slashes are escaped.
-        
     - name: name
-      value: string
-      description: >
-        The name of the tag, for example: "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1". If the package part contains slashes, the slashes are escaped. The tag part can only have characters in [a-zA-Z0-9\-._~:@], anything else must be URL encoded.
-        
+      value: "{{ name }}"
+      description: |
+        The name of the tag, for example: "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1". If the package part contains slashes, the slashes are escaped. The tag part can only have characters in [a-zA-Z0-9-._~:@], anything else must be URL encoded.
+    - name: version
+      value: "{{ version }}"
+      description: |
+        The name of the version the tag refers to, for example: \`projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/sha256:5243811\` If the package or version ID parts contain slashes, the slashes are escaped.
     - name: tagId
-      value: string
-```
+      value: "{{ tagId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -342,8 +341,8 @@ Updates a tag.
 ```sql
 UPDATE google.artifactregistry.tags
 SET 
-data__version = '{{ version }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__version = '{{ version }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

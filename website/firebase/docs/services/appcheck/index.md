@@ -18,7 +18,7 @@ appcheck service documentation.
 
 :::info[Service Summary]
 
-total resources: __12__  
+total resources: __11__  
 
 :::
 
@@ -37,7 +37,6 @@ total resources: __12__
 <a href="/services/appcheck/recaptcha_enterprise_config/">recaptcha_enterprise_config</a><br />
 <a href="/services/appcheck/recaptcha_v3_config/">recaptcha_v3_config</a><br />
 <a href="/services/appcheck/resource_policies/">resource_policies</a><br />
-<a href="/services/appcheck/safety_net_config/">safety_net_config</a><br />
 <a href="/services/appcheck/services/">services</a>
 </div>
 </div>

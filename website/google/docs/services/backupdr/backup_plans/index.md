@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backup_plans</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backup_plans</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backup_plans" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.backupdr.backup_plans" /></td></tr>
 </tbody></table>
@@ -67,7 +68,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupVaultServiceAccount" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Google Cloud Platform Service Account to be used by the BackupVault for taking backups. Specify the email address of the Backup Vault Service Account.</td>
+    <td>Output only. The Google Cloud service account to be used by the BackupVault for taking backups. Specify the email address of the Backup Vault Service Account.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="computeInstanceBackupPlanProperties" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Defines optional properties specific to backups of compute instance-based resources, such as Compute Engine. This includes settings like whether to perform a guest flush. (id: ComputeInstanceBackupPlanProperties)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -78,6 +84,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
     <td>Optional. The description of the `BackupPlan` resource. The description allows for additional details about `BackupPlan` and its use cases to be provided. An example description is the following: "This is a backup plan that performs a daily backup at 6pm and retains data for 3 months". The description must be at most 2048 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="diskBackupPlanProperties" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Defines optional properties specific to backups of disk-based resources, such as Compute Engine Persistent Disks. This includes settings like whether to perform a guest flush. (id: DiskBackupPlanProperties)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -92,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="logRetentionDays" /></td>
     <td><code>string (int64)</code></td>
-    <td>Optional. Applicable only for CloudSQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.</td>
+    <td>Optional. Applicable only for Cloud SQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.</td>
 </tr>
 <tr>
     <td><CopyableCode code="maxCustomOnDemandRetentionDays" /></td>
@@ -117,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The `State` for the `BackupPlan`.</td>
+    <td>Output only. The `State` for the `BackupPlan`. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supportedResourceTypes" /></td>
@@ -161,7 +172,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupVaultServiceAccount" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Google Cloud Platform Service Account to be used by the BackupVault for taking backups. Specify the email address of the Backup Vault Service Account.</td>
+    <td>Output only. The Google Cloud service account to be used by the BackupVault for taking backups. Specify the email address of the Backup Vault Service Account.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="computeInstanceBackupPlanProperties" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Defines optional properties specific to backups of compute instance-based resources, such as Compute Engine. This includes settings like whether to perform a guest flush. (id: ComputeInstanceBackupPlanProperties)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -172,6 +188,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
     <td>Optional. The description of the `BackupPlan` resource. The description allows for additional details about `BackupPlan` and its use cases to be provided. An example description is the following: "This is a backup plan that performs a daily backup at 6pm and retains data for 3 months". The description must be at most 2048 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="diskBackupPlanProperties" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Defines optional properties specific to backups of disk-based resources, such as Compute Engine Persistent Disks. This includes settings like whether to perform a guest flush. (id: DiskBackupPlanProperties)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -186,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="logRetentionDays" /></td>
     <td><code>string (int64)</code></td>
-    <td>Optional. Applicable only for CloudSQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.</td>
+    <td>Optional. Applicable only for Cloud SQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.</td>
 </tr>
 <tr>
     <td><CopyableCode code="maxCustomOnDemandRetentionDays" /></td>
@@ -211,7 +232,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The `State` for the `BackupPlan`.</td>
+    <td>Output only. The `State` for the `BackupPlan`. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supportedResourceTypes" /></td>
@@ -254,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists BackupPlans in a given project and location.</td>
 </tr>
 <tr>
@@ -366,8 +387,10 @@ name,
 backupRules,
 backupVault,
 backupVaultServiceAccount,
+computeInstanceBackupPlanProperties,
 createTime,
 description,
+diskBackupPlanProperties,
 etag,
 labels,
 logRetentionDays,
@@ -395,8 +418,10 @@ name,
 backupRules,
 backupVault,
 backupVaultServiceAccount,
+computeInstanceBackupPlanProperties,
 createTime,
 description,
+diskBackupPlanProperties,
 etag,
 labels,
 logRetentionDays,
@@ -410,10 +435,10 @@ updateTime
 FROM google.backupdr.backup_plans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -435,28 +460,32 @@ Create a BackupPlan
 
 ```sql
 INSERT INTO google.backupdr.backup_plans (
+data__etag,
+data__logRetentionDays,
 data__description,
-data__labels,
+data__backupVault,
 data__backupRules,
+data__labels,
 data__maxCustomOnDemandRetentionDays,
 data__resourceType,
-data__etag,
-data__backupVault,
-data__logRetentionDays,
+data__diskBackupPlanProperties,
+data__computeInstanceBackupPlanProperties,
 projectsId,
 locationsId,
 backupPlanId,
 requestId
 )
 SELECT 
+'{{ etag }}',
+'{{ logRetentionDays }}',
 '{{ description }}',
-'{{ labels }}',
+'{{ backupVault }}',
 '{{ backupRules }}',
+'{{ labels }}',
 {{ maxCustomOnDemandRetentionDays }},
 '{{ resourceType }}',
-'{{ etag }}',
-'{{ backupVault }}',
-'{{ logRetentionDays }}',
+'{{ diskBackupPlanProperties }}',
+'{{ computeInstanceBackupPlanProperties }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupPlanId }}',
@@ -472,61 +501,81 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backup_plans
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backup_plans resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backup_plans resource.
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the `BackupPlan` resource. The description allows for additional details about `BackupPlan` and its use cases to be provided. An example description is the following: "This is a backup plan that performs a daily backup at 6pm and retains data for 3 months". The description must be at most 2048 characters.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. This collection of key/value pairs allows for custom labels to be supplied by the user. Example, {"tag": "Weekly"}.
-        
-    - name: backupRules
-      value: array
-      description: >
-        Optional. The backup rules for this `BackupPlan`.
-        
-    - name: maxCustomOnDemandRetentionDays
-      value: integer
-      description: >
-        Optional. Optional field to configure the maximum number of days for which a backup can be retained. This field is only applicable for on-demand backups taken with custom retention value.
-        
-    - name: resourceType
-      value: string
-      description: >
-        Required. The resource type to which the `BackupPlan` will be applied. Examples include, "compute.googleapis.com/Instance", "sqladmin.googleapis.com/Instance", "alloydb.googleapis.com/Cluster", "compute.googleapis.com/Disk".
-        
     - name: etag
-      value: string
-      description: >
-        Optional. `etag` is returned from the service in the response. As a user of the service, you may provide an etag value in this field to prevent stale resources.
-        
-    - name: backupVault
-      value: string
-      description: >
-        Required. Resource name of backup vault which will be used as storage location for backups. Format: projects/{project}/locations/{location}/backupVaults/{backupvault}
-        
+      value: "{{ etag }}"
+      description: |
+        Optional. \`etag\` is returned from the service in the response. As a user of the service, you may provide an etag value in this field to prevent stale resources.
     - name: logRetentionDays
-      value: string
-      description: >
-        Optional. Applicable only for CloudSQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.
-        
+      value: "{{ logRetentionDays }}"
+      description: |
+        Optional. Applicable only for Cloud SQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the \`BackupPlan\` resource. The description allows for additional details about \`BackupPlan\` and its use cases to be provided. An example description is the following: "This is a backup plan that performs a daily backup at 6pm and retains data for 3 months". The description must be at most 2048 characters.
+    - name: backupVault
+      value: "{{ backupVault }}"
+      description: |
+        Required. Resource name of backup vault which will be used as storage location for backups. Format: projects/{project}/locations/{location}/backupVaults/{backupvault}
+    - name: backupRules
+      description: |
+        Optional. The backup rules for this \`BackupPlan\`.
+      value:
+        - ruleId: "{{ ruleId }}"
+          backupRetentionDays: {{ backupRetentionDays }}
+          standardSchedule:
+            backupWindow:
+              startHourOfDay: {{ startHourOfDay }}
+              endHourOfDay: {{ endHourOfDay }}
+            timeZone: "{{ timeZone }}"
+            weekDayOfMonth:
+              weekOfMonth: "{{ weekOfMonth }}"
+              dayOfWeek: "{{ dayOfWeek }}"
+            recurrenceType: "{{ recurrenceType }}"
+            daysOfWeek:
+              - "{{ daysOfWeek }}"
+            hourlyFrequency: {{ hourlyFrequency }}
+            months:
+              - "{{ months }}"
+            daysOfMonth:
+              - {{ daysOfMonth }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. This collection of key/value pairs allows for custom labels to be supplied by the user. Example, {"tag": "Weekly"}.
+    - name: maxCustomOnDemandRetentionDays
+      value: {{ maxCustomOnDemandRetentionDays }}
+      description: |
+        Optional. Optional field to configure the maximum number of days for which a backup can be retained. This field is only applicable for on-demand backups taken with custom retention value.
+    - name: resourceType
+      value: "{{ resourceType }}"
+      description: |
+        Required. The resource type to which the \`BackupPlan\` will be applied. Examples include, "compute.googleapis.com/Instance", "sqladmin.googleapis.com/Instance", "alloydb.googleapis.com/Cluster", "compute.googleapis.com/Disk".
+    - name: diskBackupPlanProperties
+      description: |
+        Optional. Defines optional properties specific to backups of disk-based resources, such as Compute Engine Persistent Disks. This includes settings like whether to perform a guest flush.
+      value:
+        guestFlush: {{ guestFlush }}
+    - name: computeInstanceBackupPlanProperties
+      description: |
+        Optional. Defines optional properties specific to backups of compute instance-based resources, such as Compute Engine. This includes settings like whether to perform a guest flush.
+      value:
+        guestFlush: {{ guestFlush }}
     - name: backupPlanId
-      value: string
+      value: "{{ backupPlanId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -546,14 +595,16 @@ Update a BackupPlan.
 ```sql
 UPDATE google.backupdr.backup_plans
 SET 
+data__etag = '{{ etag }}',
+data__logRetentionDays = '{{ logRetentionDays }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}',
+data__backupVault = '{{ backupVault }}',
 data__backupRules = '{{ backupRules }}',
+data__labels = '{{ labels }}',
 data__maxCustomOnDemandRetentionDays = {{ maxCustomOnDemandRetentionDays }},
 data__resourceType = '{{ resourceType }}',
-data__etag = '{{ etag }}',
-data__backupVault = '{{ backupVault }}',
-data__logRetentionDays = '{{ logRetentionDays }}'
+data__diskBackupPlanProperties = '{{ diskBackupPlanProperties }}',
+data__computeInstanceBackupPlanProperties = '{{ computeInstanceBackupPlanProperties }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

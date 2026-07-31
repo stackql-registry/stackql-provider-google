@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>perf_sample_series</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>perf_sample_series</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="perf_sample_series" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.toolresults.perf_sample_series" /></td></tr>
 </tbody></table>
@@ -252,24 +253,24 @@ Creates a PerfSampleSeries. May return any of the following error code(s): - ALR
 
 ```sql
 INSERT INTO firebase.toolresults.perf_sample_series (
-data__projectId,
 data__historyId,
+data__projectId,
 data__executionId,
 data__stepId,
-data__sampleSeriesId,
 data__basicPerfSampleSeries,
+data__sampleSeriesId,
 projectId,
 historyId,
 executionId,
 stepId
 )
 SELECT 
-'{{ projectId }}',
 '{{ historyId }}',
+'{{ projectId }}',
 '{{ executionId }}',
 '{{ stepId }}',
-'{{ sampleSeriesId }}',
 '{{ basicPerfSampleSeries }}',
+'{{ sampleSeriesId }}',
 '{{ projectId }}',
 '{{ historyId }}',
 '{{ executionId }}',
@@ -286,52 +287,49 @@ stepId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: perf_sample_series
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the perf_sample_series resource.
     - name: historyId
-      value: string
+      value: "{{ historyId }}"
       description: Required parameter for the perf_sample_series resource.
     - name: executionId
-      value: string
+      value: "{{ executionId }}"
       description: Required parameter for the perf_sample_series resource.
     - name: stepId
-      value: string
+      value: "{{ stepId }}"
       description: Required parameter for the perf_sample_series resource.
-    - name: projectId
-      value: string
-      description: >
-        The cloud project @OutputOnly
-        
     - name: historyId
-      value: string
-      description: >
+      value: "{{ historyId }}"
+      description: |
         A tool results history ID. @OutputOnly
-        
+    - name: projectId
+      value: "{{ projectId }}"
+      description: |
+        The cloud project @OutputOnly
     - name: executionId
-      value: string
-      description: >
+      value: "{{ executionId }}"
+      description: |
         A tool results execution ID. @OutputOnly
-        
     - name: stepId
-      value: string
-      description: >
+      value: "{{ stepId }}"
+      description: |
         A tool results step ID. @OutputOnly
-        
-    - name: sampleSeriesId
-      value: string
-      description: >
-        A sample series id @OutputOnly
-        
     - name: basicPerfSampleSeries
-      value: object
-      description: >
+      description: |
         Basic series represented by a line chart
-        
-```
+      value:
+        perfMetricType: "{{ perfMetricType }}"
+        perfUnit: "{{ perfUnit }}"
+        sampleSeriesLabel: "{{ sampleSeriesLabel }}"
+    - name: sampleSeriesId
+      value: "{{ sampleSeriesId }}"
+      description: |
+        A sample series id @OutputOnly
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>devices</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>devices</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="devices" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.devices" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="compromisedState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Represents whether the Device is compromised.</td>
+    <td>Output only. Represents whether the Device is compromised. (COMPROMISED_STATE_UNSPECIFIED, COMPROMISED, UNCOMPROMISED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deviceType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of device.</td>
+    <td>Output only. Type of device. (DEVICE_TYPE_UNSPECIFIED, ANDROID, IOS, GOOGLE_SYNC, WINDOWS, MAC_OS, LINUX, CHROME_OS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="enabledDeveloperOptions" /></td>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Device encryption state.</td>
+    <td>Output only. Device encryption state. (ENCRYPTION_STATE_UNSPECIFIED, UNSUPPORTED_BY_DEVICE, ENCRYPTED, NOT_ENCRYPTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="endpointVerificationSpecificAttributes" /></td>
@@ -147,7 +148,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managementState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Management state of the device</td>
+    <td>Output only. Management state of the device (MANAGEMENT_STATE_UNSPECIFIED, APPROVED, BLOCKED, PENDING, UNPROVISIONED, WIPING, WIPED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="manufacturer" /></td>
@@ -182,7 +183,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ownerType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Whether the device is owned by the company or an individual</td>
+    <td>Output only. Whether the device is owned by the company or an individual (DEVICE_OWNERSHIP_UNSPECIFIED, COMPANY, BYOD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="releaseVersion" /></td>
@@ -261,7 +262,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="compromisedState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Represents whether the Device is compromised.</td>
+    <td>Output only. Represents whether the Device is compromised. (COMPROMISED_STATE_UNSPECIFIED, COMPROMISED, UNCOMPROMISED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -276,7 +277,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deviceType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of device.</td>
+    <td>Output only. Type of device. (DEVICE_TYPE_UNSPECIFIED, ANDROID, IOS, GOOGLE_SYNC, WINDOWS, MAC_OS, LINUX, CHROME_OS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="enabledDeveloperOptions" /></td>
@@ -291,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Device encryption state.</td>
+    <td>Output only. Device encryption state. (ENCRYPTION_STATE_UNSPECIFIED, UNSUPPORTED_BY_DEVICE, ENCRYPTED, NOT_ENCRYPTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="endpointVerificationSpecificAttributes" /></td>
@@ -321,7 +322,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managementState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Management state of the device</td>
+    <td>Output only. Management state of the device (MANAGEMENT_STATE_UNSPECIFIED, APPROVED, BLOCKED, PENDING, UNPROVISIONED, WIPING, WIPED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="manufacturer" /></td>
@@ -356,7 +357,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ownerType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Whether the device is owned by the company or an individual</td>
+    <td>Output only. Whether the device is owned by the company or an individual (DEVICE_OWNERSHIP_UNSPECIFIED, COMPANY, BYOD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="releaseVersion" /></td>
@@ -414,7 +415,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-customer"><code>customer</code></a></td>
+    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists/Searches devices.</td>
 </tr>
 <tr>
@@ -591,12 +592,12 @@ serialNumber,
 unifiedDeviceId,
 wifiMacAddresses
 FROM google.cloudidentity.devices
-WHERE view = '{{ view }}'
-AND orderBy = '{{ orderBy }}'
+WHERE customer = '{{ customer }}'
 AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND customer = '{{ customer }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -618,20 +619,20 @@ Creates a device. Only company-owned device may be created. **Note**: This metho
 
 ```sql
 INSERT INTO google.cloudidentity.devices (
-data__hostname,
-data__serialNumber,
-data__lastSyncTime,
 data__deviceId,
+data__serialNumber,
 data__assetTag,
+data__lastSyncTime,
+data__hostname,
 data__wifiMacAddresses,
 customer
 )
 SELECT 
-'{{ hostname }}',
-'{{ serialNumber }}',
-'{{ lastSyncTime }}',
 '{{ deviceId }}',
+'{{ serialNumber }}',
 '{{ assetTag }}',
+'{{ lastSyncTime }}',
+'{{ hostname }}',
 '{{ wifiMacAddresses }}',
 '{{ customer }}'
 RETURNING
@@ -645,43 +646,38 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: devices
   props:
-    - name: hostname
-      value: string
-      description: >
-        Host name of the device.
-        
-    - name: serialNumber
-      value: string
-      description: >
-        Serial Number of device. Example: HT82V1A01076.
-        
-    - name: lastSyncTime
-      value: string
-      description: >
-        Most recent time when device synced with this service.
-        
     - name: deviceId
-      value: string
-      description: >
+      value: "{{ deviceId }}"
+      description: |
         Unique identifier for the device.
-        
+    - name: serialNumber
+      value: "{{ serialNumber }}"
+      description: |
+        Serial Number of device. Example: HT82V1A01076.
     - name: assetTag
-      value: string
-      description: >
+      value: "{{ assetTag }}"
+      description: |
         Asset tag of the device.
-        
+    - name: lastSyncTime
+      value: "{{ lastSyncTime }}"
+      description: |
+        Most recent time when device synced with this service.
+    - name: hostname
+      value: "{{ hostname }}"
+      description: |
+        Host name of the device.
     - name: wifiMacAddresses
-      value: array
-      description: >
+      value:
+        - "{{ wifiMacAddresses }}"
+      description: |
         WiFi MAC addresses of device.
-        
     - name: customer
-      value: string
-```
+      value: "{{ customer }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

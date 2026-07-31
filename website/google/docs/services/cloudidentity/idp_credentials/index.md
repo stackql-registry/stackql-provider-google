@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>idp_credentials</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>idp_credentials</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="idp_credentials" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.idp_credentials" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-inboundSamlSsoProfilesId"><code>inboundSamlSsoProfilesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns a list of IdpCredentials in an InboundSamlSsoProfile.</td>
 </tr>
 <tr>
@@ -227,8 +228,8 @@ rsaKeyInfo,
 updateTime
 FROM google.cloudidentity.idp_credentials
 WHERE inboundSamlSsoProfilesId = '{{ inboundSamlSsoProfilesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -267,19 +268,18 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: idp_credentials
   props:
     - name: inboundSamlSsoProfilesId
-      value: string
+      value: "{{ inboundSamlSsoProfilesId }}"
       description: Required parameter for the idp_credentials resource.
     - name: pemData
-      value: string
-      description: >
+      value: "{{ pemData }}"
+      description: |
         PEM encoded x509 certificate containing the public key for verifying IdP signatures.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

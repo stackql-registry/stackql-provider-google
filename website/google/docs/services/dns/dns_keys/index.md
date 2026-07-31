@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dns_keys</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dns_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dns_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dns.dns_keys" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="algorithm" /></td>
     <td><code>string</code></td>
-    <td>String mnemonic specifying the DNSSEC algorithm of this key. Immutable after creation time.</td>
+    <td>String mnemonic specifying the DNSSEC algorithm of this key. Immutable after creation time. (rsasha1, rsasha256, rsasha512, ecdsap256sha256, ecdsap384sha384)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTime" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>One of "KEY_SIGNING" or "ZONE_SIGNING". Keys of type KEY_SIGNING have the Secure Entry Point flag set and, when active, are used to sign only resource record sets of type DNSKEY. Otherwise, the Secure Entry Point flag is cleared, and this key is used to sign only resource record sets of other types. Immutable after creation time.</td>
+    <td>One of "KEY_SIGNING" or "ZONE_SIGNING". Keys of type KEY_SIGNING have the Secure Entry Point flag set and, when active, are used to sign only resource record sets of type DNSKEY. Otherwise, the Secure Entry Point flag is cleared, and this key is used to sign only resource record sets of other types. Immutable after creation time. (keySigning, zoneSigning)</td>
 </tr>
 </tbody>
 </table>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="algorithm" /></td>
     <td><code>string</code></td>
-    <td>String mnemonic specifying the DNSSEC algorithm of this key. Immutable after creation time.</td>
+    <td>String mnemonic specifying the DNSSEC algorithm of this key. Immutable after creation time. (rsasha1, rsasha256, rsasha512, ecdsap256sha256, ecdsap384sha384)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTime" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>One of "KEY_SIGNING" or "ZONE_SIGNING". Keys of type KEY_SIGNING have the Secure Entry Point flag set and, when active, are used to sign only resource record sets of type DNSKEY. Otherwise, the Secure Entry Point flag is cleared, and this key is used to sign only resource record sets of other types. Immutable after creation time.</td>
+    <td>One of "KEY_SIGNING" or "ZONE_SIGNING". Keys of type KEY_SIGNING have the Secure Entry Point flag set and, when active, are used to sign only resource record sets of type DNSKEY. Otherwise, the Secure Entry Point flag is cleared, and this key is used to sign only resource record sets of other types. Immutable after creation time. (keySigning, zoneSigning)</td>
 </tr>
 </tbody>
 </table>

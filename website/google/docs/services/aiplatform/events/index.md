@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>events</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>events</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="events" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.events" /></td></tr>
 </tbody></table>
@@ -89,6 +90,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. The invocation id of the event, multiple events can have the same invocation id.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="rawEvent" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Weakly typed raw event data in proto struct format.</td>
+</tr>
+<tr>
     <td><CopyableCode code="timestamp" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Required. Timestamp when the event was created on client side.</td>
@@ -117,7 +123,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Events in a given session.</td>
 </tr>
 </tbody>
@@ -201,16 +207,17 @@ errorCode,
 errorMessage,
 eventMetadata,
 invocationId,
+rawEvent,
 timestamp
 FROM google.aiplatform.events
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 AND sessionsId = '{{ sessionsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>

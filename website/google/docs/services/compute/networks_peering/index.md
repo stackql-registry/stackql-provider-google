@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>networks_peering</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>networks_peering</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="networks_peering" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.networks_peering" /></td></tr>
 </tbody></table>
@@ -61,7 +62,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-network"><code>network</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates the specified network peering with the data included in the request. You can only modify the NetworkPeering.export_custom_routes field and the NetworkPeering.import_custom_routes field.</td>
+    <td>Updates the specified network peering with the data included in the<br />request. You can only modify the NetworkPeering.export_custom_routes field<br />and the NetworkPeering.import_custom_routes field.</td>
 </tr>
 <tr>
     <td><a href="#remove_peering"><CopyableCode code="remove_peering" /></a></td>
@@ -119,19 +120,19 @@ Adds a peering to the specified network.
 
 ```sql
 INSERT INTO google.compute.networks_peering (
-data__name,
 data__peerNetwork,
-data__autoCreateRoutes,
 data__networkPeering,
+data__name,
+data__autoCreateRoutes,
 project,
 network,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ peerNetwork }}',
-{{ autoCreateRoutes }},
 '{{ networkPeering }}',
+'{{ name }}',
+{{ autoCreateRoutes }},
 '{{ project }}',
 '{{ network }}',
 '{{ requestId }}'
@@ -143,6 +144,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -167,39 +169,69 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: networks_peering
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the networks_peering resource.
     - name: network
-      value: string
+      value: "{{ network }}"
       description: Required parameter for the networks_peering resource.
-    - name: name
-      value: string
-      description: >
-        Name of the peering, which should conform to RFC1035.
-        
     - name: peerNetwork
-      value: string
-      description: >
-        URL of the peer network. It can be either full URL or partial URL. The peer network may belong to a different project. If the partial URL does not contain project, it is assumed that the peer network is in the same project as the current network.
-        
-    - name: autoCreateRoutes
-      value: boolean
-      description: >
-        This field will be deprecated soon. Use exchange_subnet_routes in network_peering instead. Indicates whether full mesh connectivity is created and managed automatically between peered networks. Currently this field should always be true since Google Compute Engine will automatically create and manage subnetwork routes between two networks when peering state is ACTIVE.
-        
+      value: "{{ peerNetwork }}"
+      description: |
+        URL of the peer network.  It can be either full URL or partial URL. The
+        peer network may belong to a different project. If the partial URL does not
+        contain project, it is assumed that the peer network is in the same project
+        as the current network.
     - name: networkPeering
-      value: object
-      description: >
-        A network peering attached to a network resource. The message includes the peering name, peer network, peering state, and a flag indicating whether Google Compute Engine should automatically create routes for the peering.
-        
+      description: |
+        A network peering attached to a network resource. The message includes the
+        peering name, peer network, peering state, and a flag indicating whether
+        Google Compute Engine should automatically create routes for the peering.
+      value:
+        exchangeSubnetRoutes: {{ exchangeSubnetRoutes }}
+        exportSubnetRoutesWithPublicIp: {{ exportSubnetRoutesWithPublicIp }}
+        state: "{{ state }}"
+        updateStrategy: "{{ updateStrategy }}"
+        autoCreateRoutes: {{ autoCreateRoutes }}
+        importSubnetRoutesWithPublicIp: {{ importSubnetRoutesWithPublicIp }}
+        name: "{{ name }}"
+        exportCustomRoutes: {{ exportCustomRoutes }}
+        stateDetails: "{{ stateDetails }}"
+        network: "{{ network }}"
+        stackType: "{{ stackType }}"
+        importCustomRoutes: {{ importCustomRoutes }}
+        connectionStatus:
+          trafficConfiguration:
+            exportCustomRoutesToPeer: {{ exportCustomRoutesToPeer }}
+            importSubnetRoutesWithPublicIpFromPeer: {{ importSubnetRoutesWithPublicIpFromPeer }}
+            importCustomRoutesFromPeer: {{ importCustomRoutesFromPeer }}
+            stackType: "{{ stackType }}"
+            exportSubnetRoutesWithPublicIpToPeer: {{ exportSubnetRoutesWithPublicIpToPeer }}
+          consensusState:
+            deleteStatus: "{{ deleteStatus }}"
+            updateStatus: "{{ updateStatus }}"
+          updateStrategy: "{{ updateStrategy }}"
+        peerMtu: {{ peerMtu }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the peering, which should conform to RFC1035.
+    - name: autoCreateRoutes
+      value: {{ autoCreateRoutes }}
+      description: |
+        This field will be deprecated soon. Useexchange_subnet_routes in network_peering
+        instead.
+        Indicates whether full mesh connectivity is created and managed
+        automatically between peered networks. Currently this field should always
+        be true since Google Compute Engine will automatically create and manage
+        subnetwork routes between two networks when peering state isACTIVE.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -214,7 +246,7 @@ zone
 >
 <TabItem value="update_peering">
 
-Updates the specified network peering with the data included in the request. You can only modify the NetworkPeering.export_custom_routes field and the NetworkPeering.import_custom_routes field.
+Updates the specified network peering with the data included in the<br />request. You can only modify the NetworkPeering.export_custom_routes field<br />and the NetworkPeering.import_custom_routes field.
 
 ```sql
 UPDATE google.compute.networks_peering
@@ -232,6 +264,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,

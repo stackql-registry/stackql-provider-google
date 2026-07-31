@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>datacollectors</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>datacollectors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="datacollectors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.datacollectors" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The type of data this data collector will collect.</td>
+    <td>Immutable. The type of data this data collector will collect. (TYPE_UNSPECIFIED, INTEGER, FLOAT, STRING, BOOLEAN, DATETIME)</td>
 </tr>
 </tbody>
 </table>
@@ -111,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The type of data this data collector will collect.</td>
+    <td>Immutable. The type of data this data collector will collect. (TYPE_UNSPECIFIED, INTEGER, FLOAT, STRING, BOOLEAN, DATETIME)</td>
 </tr>
 </tbody>
 </table>
@@ -302,32 +303,29 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: datacollectors
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the datacollectors resource.
     - name: name
-      value: string
-      description: >
-        ID of the data collector. Must begin with `dc_`.
-        
+      value: "{{ name }}"
+      description: |
+        ID of the data collector. Must begin with \`dc_\`.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         A description of the data collector.
-        
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Immutable. The type of data this data collector will collect.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'INTEGER', 'FLOAT', 'STRING', 'BOOLEAN', 'DATETIME']
     - name: dataCollectorId
-      value: string
-```
+      value: "{{ dataCollectorId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

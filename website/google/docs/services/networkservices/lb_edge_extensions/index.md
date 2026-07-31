@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>lb_edge_extensions</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>lb_edge_extensions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="lb_edge_extensions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkservices.lb_edge_extensions" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="loadBalancingScheme" /></td>
     <td><code>string</code></td>
-    <td>Required. All forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `EXTERNAL_MANAGED`.</td>
+    <td>Required. All forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `EXTERNAL_MANAGED`. (LOAD_BALANCING_SCHEME_UNSPECIFIED, INTERNAL_MANAGED, EXTERNAL_MANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="loadBalancingScheme" /></td>
     <td><code>string</code></td>
-    <td>Required. All forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `EXTERNAL_MANAGED`.</td>
+    <td>Required. All forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `EXTERNAL_MANAGED`. (LOAD_BALANCING_SCHEME_UNSPECIFIED, INTERNAL_MANAGED, EXTERNAL_MANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists `LbEdgeExtension` resources in a given project and location.</td>
 </tr>
 <tr>
@@ -314,8 +315,8 @@ updateTime
 FROM google.networkservices.lb_edge_extensions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
@@ -339,24 +340,24 @@ Creates a new `LbEdgeExtension` resource in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.lb_edge_extensions (
-data__loadBalancingScheme,
-data__extensionChains,
+data__name,
+data__description,
 data__labels,
 data__forwardingRules,
-data__description,
-data__name,
+data__extensionChains,
+data__loadBalancingScheme,
 projectsId,
 locationsId,
 lbEdgeExtensionId,
 requestId
 )
 SELECT 
-'{{ loadBalancingScheme }}',
-'{{ extensionChains }}',
+'{{ name }}',
+'{{ description }}',
 '{{ labels }}',
 '{{ forwardingRules }}',
-'{{ description }}',
-'{{ name }}',
+'{{ extensionChains }}',
+'{{ loadBalancingScheme }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lbEdgeExtensionId }}',
@@ -372,52 +373,51 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: lb_edge_extensions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the lb_edge_extensions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the lb_edge_extensions resource.
-    - name: loadBalancingScheme
-      value: string
-      description: >
-        Required. All forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `EXTERNAL_MANAGED`.
-        
-      valid_values: ['LOAD_BALANCING_SCHEME_UNSPECIFIED', 'INTERNAL_MANAGED', 'EXTERNAL_MANAGED']
-    - name: extensionChains
-      value: array
-      description: >
-        Required. A set of ordered extension chains that contain the match conditions and extensions to execute. Match conditions for each extension chain are evaluated in sequence for a given request. The first extension chain that has a condition that matches the request is executed. Any subsequent extension chains do not execute. Limited to 5 extension chains per resource.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of labels associated with the `LbEdgeExtension` resource. The format must comply with [the requirements for labels](https://cloud.google.com/compute/docs/labeling-resources#requirements) for Google Cloud resources.
-        
-    - name: forwardingRules
-      value: array
-      description: >
-        Required. A list of references to the forwarding rules to which this service extension is attached. At least one forwarding rule is required. Only one `LbEdgeExtension` resource can be associated with a forwarding rule.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A human-readable description of the resource.
-        
     - name: name
-      value: string
-      description: >
-        Required. Identifier. Name of the `LbEdgeExtension` resource in the following format: `projects/{project}/locations/{location}/lbEdgeExtensions/{lb_edge_extension}`.
-        
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. Name of the \`LbEdgeExtension\` resource in the following format: \`projects/{project}/locations/{location}/lbEdgeExtensions/{lb_edge_extension}\`.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A human-readable description of the resource.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of labels associated with the \`LbEdgeExtension\` resource. The format must comply with [the requirements for labels](https://cloud.google.com/compute/docs/labeling-resources#requirements) for Google Cloud resources.
+    - name: forwardingRules
+      value:
+        - "{{ forwardingRules }}"
+      description: |
+        Required. A list of references to the forwarding rules to which this service extension is attached. At least one forwarding rule is required. Only one \`LbEdgeExtension\` resource can be associated with a forwarding rule.
+    - name: extensionChains
+      description: |
+        Required. A set of ordered extension chains that contain the match conditions and extensions to execute. Match conditions for each extension chain are evaluated in sequence for a given request. The first extension chain that has a condition that matches the request is executed. Any subsequent extension chains do not execute. Limited to 5 extension chains per resource.
+      value:
+        - name: "{{ name }}"
+          matchCondition:
+            celExpression: "{{ celExpression }}"
+          extensions: "{{ extensions }}"
+    - name: loadBalancingScheme
+      value: "{{ loadBalancingScheme }}"
+      description: |
+        Required. All forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: \`EXTERNAL_MANAGED\`.
+      valid_values: ['LOAD_BALANCING_SCHEME_UNSPECIFIED', 'INTERNAL_MANAGED', 'EXTERNAL_MANAGED']
     - name: lbEdgeExtensionId
-      value: string
+      value: "{{ lbEdgeExtensionId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -437,12 +437,12 @@ Updates the parameters of the specified `LbEdgeExtension` resource.
 ```sql
 UPDATE google.networkservices.lb_edge_extensions
 SET 
-data__loadBalancingScheme = '{{ loadBalancingScheme }}',
-data__extensionChains = '{{ extensionChains }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
 data__forwardingRules = '{{ forwardingRules }}',
-data__description = '{{ description }}',
-data__name = '{{ name }}'
+data__extensionChains = '{{ extensionChains }}',
+data__loadBalancingScheme = '{{ loadBalancingScheme }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

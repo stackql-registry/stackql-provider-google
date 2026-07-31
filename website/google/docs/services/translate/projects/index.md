@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>projects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>projects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="projects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.projects" /></td></tr>
 </tbody></table>
@@ -57,18 +58,18 @@ The following methods are available for this resource:
     <td>Translates input text and returns translated text.</td>
 </tr>
 <tr>
-    <td><a href="#projects_romanize_text"><CopyableCode code="projects_romanize_text" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Romanize input text written in non-Latin scripts to Latin text.</td>
-</tr>
-<tr>
     <td><a href="#projects_detect_language"><CopyableCode code="projects_detect_language" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Detects the language of text within a request.</td>
+</tr>
+<tr>
+    <td><a href="#projects_romanize_text"><CopyableCode code="projects_romanize_text" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Romanize input text written in non-Latin scripts to Latin text.</td>
 </tr>
 </tbody>
 </table>
@@ -100,8 +101,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_translate_text"
     values={[
         { label: 'projects_translate_text', value: 'projects_translate_text' },
-        { label: 'projects_romanize_text', value: 'projects_romanize_text' },
-        { label: 'projects_detect_language', value: 'projects_detect_language' }
+        { label: 'projects_detect_language', value: 'projects_detect_language' },
+        { label: 'projects_romanize_text', value: 'projects_romanize_text' }
     ]}
 >
 <TabItem value="projects_translate_text">
@@ -113,29 +114,14 @@ EXEC google.translate.projects.projects_translate_text
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"contents": "{{ contents }}", 
-"mimeType": "{{ mimeType }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"targetLanguageCode": "{{ targetLanguageCode }}", 
 "model": "{{ model }}", 
-"glossaryConfig": "{{ glossaryConfig }}", 
 "transliterationConfig": "{{ transliterationConfig }}", 
-"labels": "{{ labels }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_romanize_text">
-
-Romanize input text written in non-Latin scripts to Latin text.
-
-```sql
-EXEC google.translate.projects.projects_romanize_text 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
+"glossaryConfig": "{{ glossaryConfig }}", 
+"mimeType": "{{ mimeType }}", 
+"labels": "{{ labels }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
 "contents": "{{ contents }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}"
+"targetLanguageCode": "{{ targetLanguageCode }}"
 }'
 ;
 ```
@@ -149,10 +135,26 @@ EXEC google.translate.projects.projects_detect_language
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
+"mimeType": "{{ mimeType }}", 
+"labels": "{{ labels }}", 
 "model": "{{ model }}", 
 "content": "{{ content }}", 
-"mimeType": "{{ mimeType }}", 
-"labels": "{{ labels }}"
+"documentInputConfig": "{{ documentInputConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_romanize_text">
+
+Romanize input text written in non-Latin scripts to Latin text.
+
+```sql
+EXEC google.translate.projects.projects_romanize_text 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"contents": "{{ contents }}"
 }'
 ;
 ```

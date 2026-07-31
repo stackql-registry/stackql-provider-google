@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>approval_requests</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>approval_requests</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="approval_requests" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.accessapproval.approval_requests" /></td></tr>
 </tbody></table>
@@ -32,17 +33,17 @@ Creates, updates, deletes, gets or lists an <code>approval_requests</code> resou
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_approval_requests_get"
+    defaultValue="projects_approval_requests_get"
     values={[
-        { label: 'organizations_approval_requests_get', value: 'organizations_approval_requests_get' },
         { label: 'projects_approval_requests_get', value: 'projects_approval_requests_get' },
+        { label: 'organizations_approval_requests_get', value: 'organizations_approval_requests_get' },
         { label: 'folders_approval_requests_get', value: 'folders_approval_requests_get' },
-        { label: 'organizations_approval_requests_list', value: 'organizations_approval_requests_list' },
         { label: 'projects_approval_requests_list', value: 'projects_approval_requests_list' },
+        { label: 'organizations_approval_requests_list', value: 'organizations_approval_requests_list' },
         { label: 'folders_approval_requests_list', value: 'folders_approval_requests_list' }
     ]}
 >
-<TabItem value="organizations_approval_requests_get">
+<TabItem value="projects_approval_requests_get">
 
 <table>
 <thead>
@@ -111,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_approval_requests_get">
+<TabItem value="organizations_approval_requests_get">
 
 <table>
 <thead>
@@ -249,7 +250,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_approval_requests_list">
+<TabItem value="projects_approval_requests_list">
 
 <table>
 <thead>
@@ -318,7 +319,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_approval_requests_list">
+<TabItem value="organizations_approval_requests_list">
 
 <table>
 <thead>
@@ -474,16 +475,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_approval_requests_get"><CopyableCode code="organizations_approval_requests_get" /></a></td>
+    <td><a href="#projects_approval_requests_get"><CopyableCode code="projects_approval_requests_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
     <td></td>
     <td>Gets an approval request. Returns NOT_FOUND if the request does not exist.</td>
 </tr>
 <tr>
-    <td><a href="#projects_approval_requests_get"><CopyableCode code="projects_approval_requests_get" /></a></td>
+    <td><a href="#organizations_approval_requests_get"><CopyableCode code="organizations_approval_requests_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
     <td></td>
     <td>Gets an approval request. Returns NOT_FOUND if the request does not exist.</td>
 </tr>
@@ -495,13 +496,6 @@ The following methods are available for this resource:
     <td>Gets an approval request. Returns NOT_FOUND if the request does not exist.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_approval_requests_list"><CopyableCode code="organizations_approval_requests_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.</td>
-</tr>
-<tr>
     <td><a href="#projects_approval_requests_list"><CopyableCode code="projects_approval_requests_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
@@ -509,11 +503,46 @@ The following methods are available for this resource:
     <td>Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.</td>
 </tr>
 <tr>
+    <td><a href="#organizations_approval_requests_list"><CopyableCode code="organizations_approval_requests_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.</td>
+</tr>
+<tr>
     <td><a href="#folders_approval_requests_list"><CopyableCode code="folders_approval_requests_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.</td>
+</tr>
+<tr>
+    <td><a href="#projects_approval_requests_approve"><CopyableCode code="projects_approval_requests_approve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
+    <td></td>
+    <td>Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.</td>
+</tr>
+<tr>
+    <td><a href="#projects_approval_requests_invalidate"><CopyableCode code="projects_approval_requests_invalidate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
+    <td></td>
+    <td>Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This action revokes Google access based on this approval request. If the resource has other active approvals, access will remain granted. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.</td>
+</tr>
+<tr>
+    <td><a href="#projects_approval_requests_dismiss"><CopyableCode code="projects_approval_requests_dismiss" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
+    <td></td>
+    <td>Dismisses a request. Returns the updated ApprovalRequest. NOTE: When a request is dismissed, it is considered ignored. Dismissing a request does not prevent access granted by other Access Approval requests. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_approval_requests_approve"><CopyableCode code="organizations_approval_requests_approve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
+    <td></td>
+    <td>Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.</td>
 </tr>
 <tr>
     <td><a href="#organizations_approval_requests_dismiss"><CopyableCode code="organizations_approval_requests_dismiss" /></a></td>
@@ -530,30 +559,9 @@ The following methods are available for this resource:
     <td>Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This action revokes Google access based on this approval request. If the resource has other active approvals, access will remain granted. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_approval_requests_approve"><CopyableCode code="organizations_approval_requests_approve" /></a></td>
+    <td><a href="#folders_approval_requests_invalidate"><CopyableCode code="folders_approval_requests_invalidate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
-    <td></td>
-    <td>Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.</td>
-</tr>
-<tr>
-    <td><a href="#projects_approval_requests_approve"><CopyableCode code="projects_approval_requests_approve" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
-    <td></td>
-    <td>Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.</td>
-</tr>
-<tr>
-    <td><a href="#projects_approval_requests_dismiss"><CopyableCode code="projects_approval_requests_dismiss" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
-    <td></td>
-    <td>Dismisses a request. Returns the updated ApprovalRequest. NOTE: When a request is dismissed, it is considered ignored. Dismissing a request does not prevent access granted by other Access Approval requests. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.</td>
-</tr>
-<tr>
-    <td><a href="#projects_approval_requests_invalidate"><CopyableCode code="projects_approval_requests_invalidate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
     <td></td>
     <td>Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This action revokes Google access based on this approval request. If the resource has other active approvals, access will remain granted. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.</td>
 </tr>
@@ -570,13 +578,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
     <td></td>
     <td>Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.</td>
-</tr>
-<tr>
-    <td><a href="#folders_approval_requests_invalidate"><CopyableCode code="folders_approval_requests_invalidate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-approvalRequestsId"><code>approvalRequestsId</code></a></td>
-    <td></td>
-    <td>Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This action revokes Google access based on this approval request. If the resource has other active approvals, access will remain granted. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.</td>
 </tr>
 </tbody>
 </table>
@@ -635,39 +636,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_approval_requests_get"
+    defaultValue="projects_approval_requests_get"
     values={[
-        { label: 'organizations_approval_requests_get', value: 'organizations_approval_requests_get' },
         { label: 'projects_approval_requests_get', value: 'projects_approval_requests_get' },
+        { label: 'organizations_approval_requests_get', value: 'organizations_approval_requests_get' },
         { label: 'folders_approval_requests_get', value: 'folders_approval_requests_get' },
-        { label: 'organizations_approval_requests_list', value: 'organizations_approval_requests_list' },
         { label: 'projects_approval_requests_list', value: 'projects_approval_requests_list' },
+        { label: 'organizations_approval_requests_list', value: 'organizations_approval_requests_list' },
         { label: 'folders_approval_requests_list', value: 'folders_approval_requests_list' }
     ]}
 >
-<TabItem value="organizations_approval_requests_get">
-
-Gets an approval request. Returns NOT_FOUND if the request does not exist.
-
-```sql
-SELECT
-name,
-approve,
-dismiss,
-requestTime,
-requestedAugmentedInfo,
-requestedDuration,
-requestedExpiration,
-requestedLocations,
-requestedReason,
-requestedResourceName,
-requestedResourceProperties
-FROM google.accessapproval.approval_requests
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND approvalRequestsId = '{{ approvalRequestsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_approval_requests_get">
 
 Gets an approval request. Returns NOT_FOUND if the request does not exist.
@@ -687,6 +665,29 @@ requestedResourceName,
 requestedResourceProperties
 FROM google.accessapproval.approval_requests
 WHERE projectsId = '{{ projectsId }}' -- required
+AND approvalRequestsId = '{{ approvalRequestsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_approval_requests_get">
+
+Gets an approval request. Returns NOT_FOUND if the request does not exist.
+
+```sql
+SELECT
+name,
+approve,
+dismiss,
+requestTime,
+requestedAugmentedInfo,
+requestedDuration,
+requestedExpiration,
+requestedLocations,
+requestedReason,
+requestedResourceName,
+requestedResourceProperties
+FROM google.accessapproval.approval_requests
+WHERE organizationsId = '{{ organizationsId }}' -- required
 AND approvalRequestsId = '{{ approvalRequestsId }}' -- required
 ;
 ```
@@ -711,31 +712,6 @@ requestedResourceProperties
 FROM google.accessapproval.approval_requests
 WHERE foldersId = '{{ foldersId }}' -- required
 AND approvalRequestsId = '{{ approvalRequestsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="organizations_approval_requests_list">
-
-Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.
-
-```sql
-SELECT
-name,
-approve,
-dismiss,
-requestTime,
-requestedAugmentedInfo,
-requestedDuration,
-requestedExpiration,
-requestedLocations,
-requestedReason,
-requestedResourceName,
-requestedResourceProperties
-FROM google.accessapproval.approval_requests
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -764,6 +740,31 @@ AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
+<TabItem value="organizations_approval_requests_list">
+
+Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.
+
+```sql
+SELECT
+name,
+approve,
+dismiss,
+requestTime,
+requestedAugmentedInfo,
+requestedDuration,
+requestedExpiration,
+requestedLocations,
+requestedReason,
+requestedResourceName,
+requestedResourceProperties
+FROM google.accessapproval.approval_requests
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
 <TabItem value="folders_approval_requests_list">
 
 Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.
@@ -783,8 +784,8 @@ requestedResourceName,
 requestedResourceProperties
 FROM google.accessapproval.approval_requests
 WHERE foldersId = '{{ foldersId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -795,19 +796,71 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_approval_requests_dismiss"
+    defaultValue="projects_approval_requests_approve"
     values={[
+        { label: 'projects_approval_requests_approve', value: 'projects_approval_requests_approve' },
+        { label: 'projects_approval_requests_invalidate', value: 'projects_approval_requests_invalidate' },
+        { label: 'projects_approval_requests_dismiss', value: 'projects_approval_requests_dismiss' },
+        { label: 'organizations_approval_requests_approve', value: 'organizations_approval_requests_approve' },
         { label: 'organizations_approval_requests_dismiss', value: 'organizations_approval_requests_dismiss' },
         { label: 'organizations_approval_requests_invalidate', value: 'organizations_approval_requests_invalidate' },
-        { label: 'organizations_approval_requests_approve', value: 'organizations_approval_requests_approve' },
-        { label: 'projects_approval_requests_approve', value: 'projects_approval_requests_approve' },
-        { label: 'projects_approval_requests_dismiss', value: 'projects_approval_requests_dismiss' },
-        { label: 'projects_approval_requests_invalidate', value: 'projects_approval_requests_invalidate' },
+        { label: 'folders_approval_requests_invalidate', value: 'folders_approval_requests_invalidate' },
         { label: 'folders_approval_requests_dismiss', value: 'folders_approval_requests_dismiss' },
-        { label: 'folders_approval_requests_approve', value: 'folders_approval_requests_approve' },
-        { label: 'folders_approval_requests_invalidate', value: 'folders_approval_requests_invalidate' }
+        { label: 'folders_approval_requests_approve', value: 'folders_approval_requests_approve' }
     ]}
 >
+<TabItem value="projects_approval_requests_approve">
+
+Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.
+
+```sql
+EXEC google.accessapproval.approval_requests.projects_approval_requests_approve 
+@projectsId='{{ projectsId }}' --required, 
+@approvalRequestsId='{{ approvalRequestsId }}' --required 
+@@json=
+'{
+"expireTime": "{{ expireTime }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_approval_requests_invalidate">
+
+Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This action revokes Google access based on this approval request. If the resource has other active approvals, access will remain granted. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.
+
+```sql
+EXEC google.accessapproval.approval_requests.projects_approval_requests_invalidate 
+@projectsId='{{ projectsId }}' --required, 
+@approvalRequestsId='{{ approvalRequestsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_approval_requests_dismiss">
+
+Dismisses a request. Returns the updated ApprovalRequest. NOTE: When a request is dismissed, it is considered ignored. Dismissing a request does not prevent access granted by other Access Approval requests. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.
+
+```sql
+EXEC google.accessapproval.approval_requests.projects_approval_requests_dismiss 
+@projectsId='{{ projectsId }}' --required, 
+@approvalRequestsId='{{ approvalRequestsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="organizations_approval_requests_approve">
+
+Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.
+
+```sql
+EXEC google.accessapproval.approval_requests.organizations_approval_requests_approve 
+@organizationsId='{{ organizationsId }}' --required, 
+@approvalRequestsId='{{ approvalRequestsId }}' --required 
+@@json=
+'{
+"expireTime": "{{ expireTime }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="organizations_approval_requests_dismiss">
 
 Dismisses a request. Returns the updated ApprovalRequest. NOTE: When a request is dismissed, it is considered ignored. Dismissing a request does not prevent access granted by other Access Approval requests. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.
@@ -830,54 +883,13 @@ EXEC google.accessapproval.approval_requests.organizations_approval_requests_inv
 ;
 ```
 </TabItem>
-<TabItem value="organizations_approval_requests_approve">
-
-Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.
-
-```sql
-EXEC google.accessapproval.approval_requests.organizations_approval_requests_approve 
-@organizationsId='{{ organizationsId }}' --required, 
-@approvalRequestsId='{{ approvalRequestsId }}' --required 
-@@json=
-'{
-"expireTime": "{{ expireTime }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_approval_requests_approve">
-
-Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.
-
-```sql
-EXEC google.accessapproval.approval_requests.projects_approval_requests_approve 
-@projectsId='{{ projectsId }}' --required, 
-@approvalRequestsId='{{ approvalRequestsId }}' --required 
-@@json=
-'{
-"expireTime": "{{ expireTime }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_approval_requests_dismiss">
-
-Dismisses a request. Returns the updated ApprovalRequest. NOTE: When a request is dismissed, it is considered ignored. Dismissing a request does not prevent access granted by other Access Approval requests. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.
-
-```sql
-EXEC google.accessapproval.approval_requests.projects_approval_requests_dismiss 
-@projectsId='{{ projectsId }}' --required, 
-@approvalRequestsId='{{ approvalRequestsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="projects_approval_requests_invalidate">
+<TabItem value="folders_approval_requests_invalidate">
 
 Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This action revokes Google access based on this approval request. If the resource has other active approvals, access will remain granted. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.
 
 ```sql
-EXEC google.accessapproval.approval_requests.projects_approval_requests_invalidate 
-@projectsId='{{ projectsId }}' --required, 
+EXEC google.accessapproval.approval_requests.folders_approval_requests_invalidate 
+@foldersId='{{ foldersId }}' --required, 
 @approvalRequestsId='{{ approvalRequestsId }}' --required
 ;
 ```
@@ -905,17 +917,6 @@ EXEC google.accessapproval.approval_requests.folders_approval_requests_approve
 '{
 "expireTime": "{{ expireTime }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="folders_approval_requests_invalidate">
-
-Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This action revokes Google access based on this approval request. If the resource has other active approvals, access will remain granted. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.
-
-```sql
-EXEC google.accessapproval.approval_requests.folders_approval_requests_invalidate 
-@foldersId='{{ foldersId }}' --required, 
-@approvalRequestsId='{{ approvalRequestsId }}' --required
 ;
 ```
 </TabItem>

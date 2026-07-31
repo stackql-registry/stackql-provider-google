@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>user_stores</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>user_stores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="user_stores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.user_stores" /></td></tr>
 </tbody></table>
@@ -101,20 +102,6 @@ The following methods are available for this resource:
     <td>Gets the User Store.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_user_stores_create"><CopyableCode code="projects_locations_user_stores_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-userStoreId"><code>userStoreId</code></a></td>
-    <td>Creates a new User Store.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_user_stores_patch"><CopyableCode code="projects_locations_user_stores_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-userStoresId"><code>userStoresId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the User Store.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_user_stores_batch_update_user_licenses"><CopyableCode code="projects_locations_user_stores_batch_update_user_licenses" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-userStoresId"><code>userStoresId</code></a></td>
@@ -122,11 +109,11 @@ The following methods are available for this resource:
     <td>Updates the User License. This method is used for batch assign/unassign licenses to users.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_user_stores_delete"><CopyableCode code="projects_locations_user_stores_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_locations_user_stores_patch"><CopyableCode code="projects_locations_user_stores_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-userStoresId"><code>userStoresId</code></a></td>
-    <td></td>
-    <td>Deletes the User Store.</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates the User Store.</td>
 </tr>
 </tbody>
 </table>
@@ -164,11 +151,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (google-fieldmask)</code></td>
     <td></td>
 </tr>
-<tr id="parameter-userStoreId">
-    <td><CopyableCode code="userStoreId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 </tbody>
 </table>
 
@@ -201,126 +183,15 @@ AND userStoresId = '{{ userStoresId }}' -- required
 </Tabs>
 
 
-## `INSERT` examples
-
-<Tabs
-    defaultValue="projects_locations_user_stores_create"
-    values={[
-        { label: 'projects_locations_user_stores_create', value: 'projects_locations_user_stores_create' },
-        { label: 'Manifest', value: 'manifest' }
-    ]}
->
-<TabItem value="projects_locations_user_stores_create">
-
-Creates a new User Store.
-
-```sql
-INSERT INTO google.discoveryengine.user_stores (
-data__displayName,
-data__defaultLicenseConfig,
-data__enableLicenseAutoRegister,
-data__enableExpiredLicenseAutoUpdate,
-data__name,
-projectsId,
-locationsId,
-userStoreId
-)
-SELECT 
-'{{ displayName }}',
-'{{ defaultLicenseConfig }}',
-{{ enableLicenseAutoRegister }},
-{{ enableExpiredLicenseAutoUpdate }},
-'{{ name }}',
-'{{ projectsId }}',
-'{{ locationsId }}',
-'{{ userStoreId }}'
-RETURNING
-name,
-defaultLicenseConfig,
-displayName,
-enableExpiredLicenseAutoUpdate,
-enableLicenseAutoRegister
-;
-```
-</TabItem>
-<TabItem value="manifest">
-
-```yaml
-# Description fields are for documentation purposes
-- name: user_stores
-  props:
-    - name: projectsId
-      value: string
-      description: Required parameter for the user_stores resource.
-    - name: locationsId
-      value: string
-      description: Required parameter for the user_stores resource.
-    - name: displayName
-      value: string
-      description: >
-        The display name of the User Store.
-        
-    - name: defaultLicenseConfig
-      value: string
-      description: >
-        Optional. The default subscription LicenseConfig for the UserStore, if UserStore.enable_license_auto_register is true, new users will automatically register under the default subscription. If default LicenseConfig doesn't have remaining license seats left, new users will not be assigned with license and will be blocked for Vertex AI Search features. This is used if `license_assignment_tier_rules` is not configured.
-        
-    - name: enableLicenseAutoRegister
-      value: boolean
-      description: >
-        Optional. Whether to enable license auto register for users in this User Store. If true, new users will automatically register under the default license config as long as the default license config has seats left.
-        
-    - name: enableExpiredLicenseAutoUpdate
-      value: boolean
-      description: >
-        Optional. Whether to enable license auto update for users in this User Store. If true, users with expired licenses will automatically be updated to use the default license config as long as the default license config has seats left.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The full resource name of the User Store, in the format of `projects/{project}/locations/{location}/userStores/{user_store}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
-        
-    - name: userStoreId
-      value: string
-```
-</TabItem>
-</Tabs>
-
-
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_user_stores_patch"
+    defaultValue="projects_locations_user_stores_batch_update_user_licenses"
     values={[
-        { label: 'projects_locations_user_stores_patch', value: 'projects_locations_user_stores_patch' },
-        { label: 'projects_locations_user_stores_batch_update_user_licenses', value: 'projects_locations_user_stores_batch_update_user_licenses' }
+        { label: 'projects_locations_user_stores_batch_update_user_licenses', value: 'projects_locations_user_stores_batch_update_user_licenses' },
+        { label: 'projects_locations_user_stores_patch', value: 'projects_locations_user_stores_patch' }
     ]}
 >
-<TabItem value="projects_locations_user_stores_patch">
-
-Updates the User Store.
-
-```sql
-UPDATE google.discoveryengine.user_stores
-SET 
-data__displayName = '{{ displayName }}',
-data__defaultLicenseConfig = '{{ defaultLicenseConfig }}',
-data__enableLicenseAutoRegister = {{ enableLicenseAutoRegister }},
-data__enableExpiredLicenseAutoUpdate = {{ enableExpiredLicenseAutoUpdate }},
-data__name = '{{ name }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND userStoresId = '{{ userStoresId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-defaultLicenseConfig,
-displayName,
-enableExpiredLicenseAutoUpdate,
-enableLicenseAutoRegister;
-```
-</TabItem>
 <TabItem value="projects_locations_user_stores_batch_update_user_licenses">
 
 Updates the User License. This method is used for batch assign/unassign licenses to users.
@@ -328,8 +199,8 @@ Updates the User License. This method is used for batch assign/unassign licenses
 ```sql
 UPDATE google.discoveryengine.user_stores
 SET 
-data__inlineSource = '{{ inlineSource }}',
-data__deleteUnassignedUserLicenses = {{ deleteUnassignedUserLicenses }}
+data__deleteUnassignedUserLicenses = {{ deleteUnassignedUserLicenses }},
+data__inlineSource = '{{ inlineSource }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -342,27 +213,29 @@ metadata,
 response;
 ```
 </TabItem>
-</Tabs>
+<TabItem value="projects_locations_user_stores_patch">
 
-
-## `DELETE` examples
-
-<Tabs
-    defaultValue="projects_locations_user_stores_delete"
-    values={[
-        { label: 'projects_locations_user_stores_delete', value: 'projects_locations_user_stores_delete' }
-    ]}
->
-<TabItem value="projects_locations_user_stores_delete">
-
-Deletes the User Store.
+Updates the User Store.
 
 ```sql
-DELETE FROM google.discoveryengine.user_stores
-WHERE projectsId = '{{ projectsId }}' --required
+UPDATE google.discoveryengine.user_stores
+SET 
+data__enableExpiredLicenseAutoUpdate = {{ enableExpiredLicenseAutoUpdate }},
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
+data__defaultLicenseConfig = '{{ defaultLicenseConfig }}',
+data__enableLicenseAutoRegister = {{ enableLicenseAutoRegister }}
+WHERE 
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND userStoresId = '{{ userStoresId }}' --required
-;
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+defaultLicenseConfig,
+displayName,
+enableExpiredLicenseAutoUpdate,
+enableLicenseAutoRegister;
 ```
 </TabItem>
 </Tabs>

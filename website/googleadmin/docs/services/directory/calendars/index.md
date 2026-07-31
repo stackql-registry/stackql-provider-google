@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>calendars</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>calendars</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="calendars" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.calendars" /></td></tr>
 </tbody></table>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customer"><code>customer</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Retrieves a list of calendar resources for an account.</td>
 </tr>
 <tr>
@@ -383,10 +384,10 @@ resourceType,
 userVisibleDescription
 FROM googleadmin.directory.calendars
 WHERE customer = '{{ customer }}' -- required
-AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND query = '{{ query }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -408,39 +409,39 @@ Inserts a calendar resource.
 
 ```sql
 INSERT INTO googleadmin.directory.calendars (
-data__kind,
-data__etags,
-data__resourceName,
-data__resourceDescription,
-data__resourceType,
-data__resourceEmail,
-data__resourceCategory,
-data__userVisibleDescription,
-data__generatedResourceName,
-data__featureInstances,
-data__resourceId,
-data__capacity,
-data__floorName,
 data__buildingId,
+data__kind,
+data__generatedResourceName,
+data__resourceId,
 data__floorSection,
+data__resourceName,
+data__resourceType,
+data__floorName,
+data__resourceCategory,
+data__featureInstances,
+data__resourceDescription,
+data__capacity,
+data__etags,
+data__resourceEmail,
+data__userVisibleDescription,
 customer
 )
 SELECT 
-'{{ kind }}',
-'{{ etags }}',
-'{{ resourceName }}',
-'{{ resourceDescription }}',
-'{{ resourceType }}',
-'{{ resourceEmail }}',
-'{{ resourceCategory }}',
-'{{ userVisibleDescription }}',
-'{{ generatedResourceName }}',
-'{{ featureInstances }}',
-'{{ resourceId }}',
-{{ capacity }},
-'{{ floorName }}',
 '{{ buildingId }}',
+'{{ kind }}',
+'{{ generatedResourceName }}',
+'{{ resourceId }}',
 '{{ floorSection }}',
+'{{ resourceName }}',
+'{{ resourceType }}',
+'{{ floorName }}',
+'{{ resourceCategory }}',
+'{{ featureInstances }}',
+'{{ resourceDescription }}',
+{{ capacity }},
+'{{ etags }}',
+'{{ resourceEmail }}',
+'{{ userVisibleDescription }}',
 '{{ customer }}'
 RETURNING
 buildingId,
@@ -463,90 +464,75 @@ userVisibleDescription
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: calendars
   props:
     - name: customer
-      value: string
+      value: "{{ customer }}"
       description: Required parameter for the calendars resource.
-    - name: kind
-      value: string
-      description: >
-        The type of the resource. For calendar resources, the value is `admin#directory#resources#calendars#CalendarResource`.
-        
-      default: admin#directory#resources#calendars#CalendarResource
-    - name: etags
-      value: string
-      description: >
-        ETag of the resource.
-        
-    - name: resourceName
-      value: string
-      description: >
-        The name of the calendar resource. For example, "Training Room 1A".
-        
-    - name: resourceDescription
-      value: string
-      description: >
-        Description of the resource, visible only to admins.
-        
-    - name: resourceType
-      value: string
-      description: >
-        The type of the calendar resource, intended for non-room resources.
-        
-    - name: resourceEmail
-      value: string
-      description: >
-        The read-only email for the calendar resource. Generated as part of creating a new calendar resource.
-        
-    - name: resourceCategory
-      value: string
-      description: >
-        The category of the calendar resource. Either CONFERENCE_ROOM or OTHER. Legacy data is set to CATEGORY_UNKNOWN.
-        
-    - name: userVisibleDescription
-      value: string
-      description: >
-        Description of the resource, visible to users and admins.
-        
-    - name: generatedResourceName
-      value: string
-      description: >
-        The read-only auto-generated name of the calendar resource which includes metadata about the resource such as building name, floor, capacity, etc. For example, "NYC-2-Training Room 1A (16)".
-        
-    - name: featureInstances
-      value: any
-      description: >
-        Instances of features for the calendar resource.
-        
-    - name: resourceId
-      value: string
-      description: >
-        The unique ID for the calendar resource.
-        
-    - name: capacity
-      value: integer
-      description: >
-        Capacity of a resource, number of seats in a room.
-        
-    - name: floorName
-      value: string
-      description: >
-        Name of the floor a resource is located on.
-        
     - name: buildingId
-      value: string
-      description: >
+      value: "{{ buildingId }}"
+      description: |
         Unique ID for the building a resource is located in.
-        
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        The type of the resource. For calendar resources, the value is \`admin#directory#resources#calendars#CalendarResource\`.
+      default: admin#directory#resources#calendars#CalendarResource
+    - name: generatedResourceName
+      value: "{{ generatedResourceName }}"
+      description: |
+        The read-only auto-generated name of the calendar resource which includes metadata about the resource such as building name, floor, capacity, etc. For example, "NYC-2-Training Room 1A (16)".
+    - name: resourceId
+      value: "{{ resourceId }}"
+      description: |
+        The unique ID for the calendar resource.
     - name: floorSection
-      value: string
-      description: >
+      value: "{{ floorSection }}"
+      description: |
         Name of the section within a floor a resource is located in.
-        
-```
+    - name: resourceName
+      value: "{{ resourceName }}"
+      description: |
+        The name of the calendar resource. For example, "Training Room 1A".
+    - name: resourceType
+      value: "{{ resourceType }}"
+      description: |
+        The type of the calendar resource, intended for non-room resources.
+    - name: floorName
+      value: "{{ floorName }}"
+      description: |
+        Name of the floor a resource is located on.
+    - name: resourceCategory
+      value: "{{ resourceCategory }}"
+      description: |
+        The category of the calendar resource. Either CONFERENCE_ROOM or OTHER. Legacy data is set to CATEGORY_UNKNOWN.
+    - name: featureInstances
+      value: "{{ featureInstances }}"
+      description: |
+        Instances of features for the calendar resource.
+    - name: resourceDescription
+      value: "{{ resourceDescription }}"
+      description: |
+        Description of the resource, visible only to admins.
+    - name: capacity
+      value: {{ capacity }}
+      description: |
+        Capacity of a resource, number of seats in a room.
+    - name: etags
+      value: "{{ etags }}"
+      description: |
+        ETag of the resource.
+    - name: resourceEmail
+      value: "{{ resourceEmail }}"
+      description: |
+        The read-only email for the calendar resource. Generated as part of creating a new calendar resource.
+    - name: userVisibleDescription
+      value: "{{ userVisibleDescription }}"
+      description: |
+        Description of the resource, visible to users and admins.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -566,21 +552,21 @@ Patches a calendar resource.
 ```sql
 UPDATE googleadmin.directory.calendars
 SET 
-data__kind = '{{ kind }}',
-data__etags = '{{ etags }}',
-data__resourceName = '{{ resourceName }}',
-data__resourceDescription = '{{ resourceDescription }}',
-data__resourceType = '{{ resourceType }}',
-data__resourceEmail = '{{ resourceEmail }}',
-data__resourceCategory = '{{ resourceCategory }}',
-data__userVisibleDescription = '{{ userVisibleDescription }}',
-data__generatedResourceName = '{{ generatedResourceName }}',
-data__featureInstances = '{{ featureInstances }}',
-data__resourceId = '{{ resourceId }}',
-data__capacity = {{ capacity }},
-data__floorName = '{{ floorName }}',
 data__buildingId = '{{ buildingId }}',
-data__floorSection = '{{ floorSection }}'
+data__kind = '{{ kind }}',
+data__generatedResourceName = '{{ generatedResourceName }}',
+data__resourceId = '{{ resourceId }}',
+data__floorSection = '{{ floorSection }}',
+data__resourceName = '{{ resourceName }}',
+data__resourceType = '{{ resourceType }}',
+data__floorName = '{{ floorName }}',
+data__resourceCategory = '{{ resourceCategory }}',
+data__featureInstances = '{{ featureInstances }}',
+data__resourceDescription = '{{ resourceDescription }}',
+data__capacity = {{ capacity }},
+data__etags = '{{ etags }}',
+data__resourceEmail = '{{ resourceEmail }}',
+data__userVisibleDescription = '{{ userVisibleDescription }}'
 WHERE 
 customer = '{{ customer }}' --required
 AND calendarResourceId = '{{ calendarResourceId }}' --required
@@ -620,21 +606,21 @@ Updates a calendar resource. This method supports patch semantics, meaning you o
 ```sql
 REPLACE googleadmin.directory.calendars
 SET 
-data__kind = '{{ kind }}',
-data__etags = '{{ etags }}',
-data__resourceName = '{{ resourceName }}',
-data__resourceDescription = '{{ resourceDescription }}',
-data__resourceType = '{{ resourceType }}',
-data__resourceEmail = '{{ resourceEmail }}',
-data__resourceCategory = '{{ resourceCategory }}',
-data__userVisibleDescription = '{{ userVisibleDescription }}',
-data__generatedResourceName = '{{ generatedResourceName }}',
-data__featureInstances = '{{ featureInstances }}',
-data__resourceId = '{{ resourceId }}',
-data__capacity = {{ capacity }},
-data__floorName = '{{ floorName }}',
 data__buildingId = '{{ buildingId }}',
-data__floorSection = '{{ floorSection }}'
+data__kind = '{{ kind }}',
+data__generatedResourceName = '{{ generatedResourceName }}',
+data__resourceId = '{{ resourceId }}',
+data__floorSection = '{{ floorSection }}',
+data__resourceName = '{{ resourceName }}',
+data__resourceType = '{{ resourceType }}',
+data__floorName = '{{ floorName }}',
+data__resourceCategory = '{{ resourceCategory }}',
+data__featureInstances = '{{ featureInstances }}',
+data__resourceDescription = '{{ resourceDescription }}',
+data__capacity = {{ capacity }},
+data__etags = '{{ etags }}',
+data__resourceEmail = '{{ resourceEmail }}',
+data__userVisibleDescription = '{{ userVisibleDescription }}'
 WHERE 
 customer = '{{ customer }}' --required
 AND calendarResourceId = '{{ calendarResourceId }}' --required

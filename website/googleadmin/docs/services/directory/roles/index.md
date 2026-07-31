@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>roles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>roles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="roles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.roles" /></td></tr>
 </tbody></table>
@@ -312,25 +313,25 @@ Creates a role.
 
 ```sql
 INSERT INTO googleadmin.directory.roles (
+data__etag,
+data__isSuperAdminRole,
+data__kind,
+data__isSystemRole,
+data__rolePrivileges,
 data__roleId,
 data__roleName,
 data__roleDescription,
-data__rolePrivileges,
-data__isSystemRole,
-data__isSuperAdminRole,
-data__kind,
-data__etag,
 customer
 )
 SELECT 
+'{{ etag }}',
+{{ isSuperAdminRole }},
+'{{ kind }}',
+{{ isSystemRole }},
+'{{ rolePrivileges }}',
 '{{ roleId }}',
 '{{ roleName }}',
 '{{ roleDescription }}',
-'{{ rolePrivileges }}',
-{{ isSystemRole }},
-{{ isSuperAdminRole }},
-'{{ kind }}',
-'{{ etag }}',
 '{{ customer }}'
 RETURNING
 etag,
@@ -346,55 +347,49 @@ rolePrivileges
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: roles
   props:
     - name: customer
-      value: string
+      value: "{{ customer }}"
       description: Required parameter for the roles resource.
-    - name: roleId
-      value: string
-      description: >
-        ID of the role.
-        
-    - name: roleName
-      value: string
-      description: >
-        Name of the role.
-        
-    - name: roleDescription
-      value: string
-      description: >
-        A short description of the role.
-        
-    - name: rolePrivileges
-      value: array
-      description: >
-        The set of privileges that are granted to this role.
-        
-    - name: isSystemRole
-      value: boolean
-      description: >
-        Returns `true` if this is a pre-defined system role.
-        
-    - name: isSuperAdminRole
-      value: boolean
-      description: >
-        Returns `true` if the role is a super admin role.
-        
-    - name: kind
-      value: string
-      description: >
-        The type of the API resource. This is always `admin#directory#role`.
-        
-      default: admin#directory#role
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         ETag of the resource.
-        
-```
+    - name: isSuperAdminRole
+      value: {{ isSuperAdminRole }}
+      description: |
+        Returns \`true\` if the role is a super admin role.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        The type of the API resource. This is always \`admin#directory#role\`.
+      default: admin#directory#role
+    - name: isSystemRole
+      value: {{ isSystemRole }}
+      description: |
+        Returns \`true\` if this is a pre-defined system role.
+    - name: rolePrivileges
+      description: |
+        The set of privileges that are granted to this role.
+      value:
+        - serviceId: "{{ serviceId }}"
+          privilegeName: "{{ privilegeName }}"
+    - name: roleId
+      value: "{{ roleId }}"
+      description: |
+        ID of the role.
+    - name: roleName
+      value: "{{ roleName }}"
+      description: |
+        Name of the role.
+    - name: roleDescription
+      value: "{{ roleDescription }}"
+      description: |
+        A short description of the role.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -414,14 +409,14 @@ Patches a role.
 ```sql
 UPDATE googleadmin.directory.roles
 SET 
-data__roleId = '{{ roleId }}',
-data__roleName = '{{ roleName }}',
-data__roleDescription = '{{ roleDescription }}',
-data__rolePrivileges = '{{ rolePrivileges }}',
-data__isSystemRole = {{ isSystemRole }},
+data__etag = '{{ etag }}',
 data__isSuperAdminRole = {{ isSuperAdminRole }},
 data__kind = '{{ kind }}',
-data__etag = '{{ etag }}'
+data__isSystemRole = {{ isSystemRole }},
+data__rolePrivileges = '{{ rolePrivileges }}',
+data__roleId = '{{ roleId }}',
+data__roleName = '{{ roleName }}',
+data__roleDescription = '{{ roleDescription }}'
 WHERE 
 customer = '{{ customer }}' --required
 AND roleId = '{{ roleId }}' --required
@@ -454,14 +449,14 @@ Updates a role.
 ```sql
 REPLACE googleadmin.directory.roles
 SET 
-data__roleId = '{{ roleId }}',
-data__roleName = '{{ roleName }}',
-data__roleDescription = '{{ roleDescription }}',
-data__rolePrivileges = '{{ rolePrivileges }}',
-data__isSystemRole = {{ isSystemRole }},
+data__etag = '{{ etag }}',
 data__isSuperAdminRole = {{ isSuperAdminRole }},
 data__kind = '{{ kind }}',
-data__etag = '{{ etag }}'
+data__isSystemRole = {{ isSystemRole }},
+data__rolePrivileges = '{{ rolePrivileges }}',
+data__roleId = '{{ roleId }}',
+data__roleName = '{{ roleName }}',
+data__roleDescription = '{{ roleDescription }}'
 WHERE 
 customer = '{{ customer }}' --required
 AND roleId = '{{ roleId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>external_addresses</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>external_addresses</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="external_addresses" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.external_addresses" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the resource.</td>
+    <td>Output only. The state of the resource. (STATE_UNSPECIFIED, ACTIVE, CREATING, UPDATING, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -103,6 +104,46 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Identifier. The resource name of this external IP address. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/externalAddresses/my-address`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Creation time of this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>User-provided description for this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="externalIp" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The external IP address of a workload VM.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="internalIp" /></td>
+    <td><code>string</code></td>
+    <td>The internal IP address of a workload VM.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The state of the resource. (STATE_UNSPECIFIED, ACTIVE, CREATING, UPDATING, DELETING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. System-generated unique identifier for the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Last update time of this resource.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -134,21 +175,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists external IP addresses assigned to VMware workload VMs in a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-externalAddressId"><code>externalAddressId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-externalAddressId"><code>externalAddressId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new `ExternalAddress` resource in a given private cloud. The network policy that corresponds to the private cloud must have the external IP address network service enabled (`NetworkPolicy.external_ip`).</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-externalAddressesId"><code>externalAddressesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single external IP address. Only fields specified in `update_mask` are applied. During operation processing, the resource is temporarily in the `ACTIVE` state before the operation fully completes. For that period of time, you can't update the resource. Use the operation status to determine when the processing fully completes.</td>
 </tr>
 <tr>
@@ -229,6 +270,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (google-fieldmask)</code></td>
     <td></td>
 </tr>
+<tr id="parameter-validateOnly">
+    <td><CopyableCode code="validateOnly" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -269,15 +315,22 @@ Lists external IP addresses assigned to VMware workload VMs in a given private c
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+externalIp,
+internalIp,
+state,
+uid,
+updateTime
 FROM google.vmwareengine.external_addresses
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -305,7 +358,8 @@ projectsId,
 locationsId,
 privateCloudsId,
 requestId,
-externalAddressId
+externalAddressId,
+validateOnly
 )
 SELECT 
 '{{ internalIp }}',
@@ -314,7 +368,8 @@ SELECT
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
 '{{ requestId }}',
-'{{ externalAddressId }}'
+'{{ externalAddressId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -326,34 +381,34 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: external_addresses
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the external_addresses resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the external_addresses resource.
     - name: privateCloudsId
-      value: string
+      value: "{{ privateCloudsId }}"
       description: Required parameter for the external_addresses resource.
     - name: internalIp
-      value: string
-      description: >
+      value: "{{ internalIp }}"
+      description: |
         The internal IP address of a workload VM.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         User-provided description for this resource.
-        
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: externalAddressId
-      value: string
-```
+      value: "{{ externalAddressId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -380,8 +435,9 @@ projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
 AND externalAddressesId = '{{ externalAddressesId }}' --required
-AND requestId = '{{ requestId}}'
+AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

@@ -18,7 +18,7 @@ biglake service documentation.
 
 :::info[Service Summary]
 
-total resources: __5__  
+total resources: __6__  
 
 :::
 
@@ -31,6 +31,7 @@ total resources: __5__
 </div>
 <div class="providerDocColumn">
 <a href="/services/biglake/namespaces_iam_policies/">namespaces_iam_policies</a><br />
-<a href="/services/biglake/tables/">tables</a>
+<a href="/services/biglake/tables/">tables</a><br />
+<a href="/services/biglake/tables_iam_policies/">tables_iam_policies</a>
 </div>
 </div>

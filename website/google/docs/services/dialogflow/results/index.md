@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>results</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>results</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="results" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.results" /></td></tr>
 </tbody></table>
@@ -52,27 +53,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The resource name for the test case result. Format: `projects//locations//agents//testCases//results/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="conversationTurns" /></td>
     <td><code>array</code></td>
-    <td>The conversation turns uttered during the test case replay in chronological order.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="environment" /></td>
     <td><code>string</code></td>
-    <td>Environment where the test was run. If not set, it indicates the draft environment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="testResult" /></td>
     <td><code>string</code></td>
-    <td>Whether the test case passed in the agent environment.</td>
+    <td> (TEST_RESULT_UNSPECIFIED, PASSED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="testTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>The time that the test was run.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -91,27 +92,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The resource name for the test case result. Format: `projects//locations//agents//testCases//results/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="conversationTurns" /></td>
     <td><code>array</code></td>
-    <td>The conversation turns uttered during the test case replay in chronological order.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="environment" /></td>
     <td><code>string</code></td>
-    <td>Environment where the test was run. If not set, it indicates the draft environment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="testResult" /></td>
     <td><code>string</code></td>
-    <td>Whether the test case passed in the agent environment.</td>
+    <td> (TEST_RESULT_UNSPECIFIED, PASSED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="testTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>The time that the test was run.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -138,14 +139,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a>, <a href="#parameter-resultsId"><code>resultsId</code></a></td>
     <td></td>
-    <td>Gets a test case result.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_test_cases_results_list"><CopyableCode code="projects_locations_agents_test_cases_results_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Fetches the list of run results for the given test case. A maximum of 100 results are kept for each test case.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -217,7 +218,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_test_cases_results_get">
 
-Gets a test case result.
+Successful response
 
 ```sql
 SELECT
@@ -237,7 +238,7 @@ AND resultsId = '{{ resultsId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_test_cases_results_list">
 
-Fetches the list of run results for the given test case. A maximum of 100 results are kept for each test case.
+Successful response
 
 ```sql
 SELECT
@@ -252,8 +253,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND testCasesId = '{{ testCasesId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

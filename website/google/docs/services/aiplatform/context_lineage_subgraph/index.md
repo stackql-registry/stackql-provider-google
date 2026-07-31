@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>context_lineage_subgraph</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>context_lineage_subgraph</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="context_lineage_subgraph" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.context_lineage_subgraph" /></td></tr>
 </tbody></table>

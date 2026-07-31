@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>recaptcha_enterprise_config</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>recaptcha_enterprise_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="recaptcha_enterprise_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appcheck.recaptcha_enterprise_config" /></td></tr>
 </tbody></table>
@@ -53,6 +54,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Required. The relative resource name of the reCAPTCHA Enterprise configuration object, in the format: ``` projects/&#123;project_number&#125;/apps/&#123;app_id&#125;/recaptchaEnterpriseConfig ```</td>
+</tr>
+<tr>
+    <td><CopyableCode code="riskAnalysis" /></td>
+    <td><code>object</code></td>
+    <td>Specifies risk tolerance and requirements for your application. These settings correspond to requirements on the [**`riskAnalysis`**](https://cloud.google.com/recaptcha/docs/interpret-assessment-website#interpret_assessment) tuple in the assessment obtained from reCAPTCHA Enterprise. The default values for these settings work for most apps, and are recommended. (id: GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfigRiskAnalysis)</td>
 </tr>
 <tr>
     <td><CopyableCode code="siteKey" /></td>
@@ -179,6 +185,7 @@ Gets the RecaptchaEnterpriseConfig for the specified app.
 ```sql
 SELECT
 name,
+riskAnalysis,
 siteKey,
 tokenTtl
 FROM firebase.appcheck.recaptcha_enterprise_config
@@ -218,15 +225,17 @@ Updates the RecaptchaEnterpriseConfig for the specified app. While this configur
 ```sql
 UPDATE firebase.appcheck.recaptcha_enterprise_config
 SET 
-data__name = '{{ name }}',
 data__tokenTtl = '{{ tokenTtl }}',
-data__siteKey = '{{ siteKey }}'
+data__siteKey = '{{ siteKey }}',
+data__riskAnalysis = '{{ riskAnalysis }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND appsId = '{{ appsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+riskAnalysis,
 siteKey,
 tokenTtl;
 ```

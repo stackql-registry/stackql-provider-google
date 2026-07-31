@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.logging.locations" /></td></tr>
 </tbody></table>
@@ -32,98 +33,20 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_locations_get"
+    defaultValue="billing_accounts_locations_get"
     values={[
-        { label: 'organizations_locations_get', value: 'organizations_locations_get' },
         { label: 'billing_accounts_locations_get', value: 'billing_accounts_locations_get' },
-        { label: 'projects_locations_get', value: 'projects_locations_get' },
         { label: 'folders_locations_get', value: 'folders_locations_get' },
-        { label: 'organizations_locations_list', value: 'organizations_locations_list' },
+        { label: 'projects_locations_get', value: 'projects_locations_get' },
+        { label: 'organizations_locations_get', value: 'organizations_locations_get' },
         { label: 'billing_accounts_locations_list', value: 'billing_accounts_locations_list' },
-        { label: 'projects_locations_list', value: 'projects_locations_list' },
         { label: 'folders_locations_list', value: 'folders_locations_list' },
-        { label: 'locations_list', value: 'locations_list' }
+        { label: 'projects_locations_list', value: 'projects_locations_list' },
+        { label: 'locations_list', value: 'locations_list' },
+        { label: 'organizations_locations_list', value: 'organizations_locations_list' }
     ]}
 >
-<TabItem value="organizations_locations_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Resource name for the location, which may vary between implementations. For example: "projects/example-project/locations/us-east1"</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The friendly name for this location, typically a nearby city name. For example, "Tokyo".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Cross-service attributes for the location. For example &#123;"cloud.googleapis.com/region": "us-east1"&#125; </td>
-</tr>
-<tr>
-    <td><CopyableCode code="locationId" /></td>
-    <td><code>string</code></td>
-    <td>The canonical id for this location. For example: "us-east1".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata. For example the available capacity at the given location.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="billing_accounts_locations_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Resource name for the location, which may vary between implementations. For example: "projects/example-project/locations/us-east1"</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The friendly name for this location, typically a nearby city name. For example, "Tokyo".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Cross-service attributes for the location. For example &#123;"cloud.googleapis.com/region": "us-east1"&#125; </td>
-</tr>
-<tr>
-    <td><CopyableCode code="locationId" /></td>
-    <td><code>string</code></td>
-    <td>The canonical id for this location. For example: "us-east1".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata. For example the available capacity at the given location.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_get">
 
 <table>
 <thead>
@@ -201,7 +124,46 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_locations_list">
+<TabItem value="projects_locations_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Resource name for the location, which may vary between implementations. For example: "projects/example-project/locations/us-east1"</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The friendly name for this location, typically a nearby city name. For example, "Tokyo".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Cross-service attributes for the location. For example &#123;"cloud.googleapis.com/region": "us-east1"&#125; </td>
+</tr>
+<tr>
+    <td><CopyableCode code="locationId" /></td>
+    <td><code>string</code></td>
+    <td>The canonical id for this location. For example: "us-east1".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Service-specific metadata. For example the available capacity at the given location.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_locations_get">
 
 <table>
 <thead>
@@ -279,7 +241,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_list">
+<TabItem value="folders_locations_list">
 
 <table>
 <thead>
@@ -318,7 +280,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_locations_list">
+<TabItem value="projects_locations_list">
 
 <table>
 <thead>
@@ -396,6 +358,45 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="organizations_locations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Resource name for the location, which may vary between implementations. For example: "projects/example-project/locations/us-east1"</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The friendly name for this location, typically a nearby city name. For example, "Tokyo".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Cross-service attributes for the location. For example &#123;"cloud.googleapis.com/region": "us-east1"&#125; </td>
+</tr>
+<tr>
+    <td><CopyableCode code="locationId" /></td>
+    <td><code>string</code></td>
+    <td>The canonical id for this location. For example: "us-east1".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Service-specific metadata. For example the available capacity at the given location.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 </Tabs>
 
 ## Methods
@@ -414,23 +415,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_locations_get"><CopyableCode code="organizations_locations_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Gets information about a location.</td>
-</tr>
-<tr>
     <td><a href="#billing_accounts_locations_get"><CopyableCode code="billing_accounts_locations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Gets information about a location.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_get"><CopyableCode code="projects_locations_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Gets information about a location.</td>
 </tr>
@@ -442,39 +429,53 @@ The following methods are available for this resource:
     <td>Gets information about a location.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_list"><CopyableCode code="organizations_locations_list" /></a></td>
+    <td><a href="#projects_locations_get"><CopyableCode code="projects_locations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Gets information about a location.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_locations_get"><CopyableCode code="organizations_locations_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Gets information about a location.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_locations_list"><CopyableCode code="billing_accounts_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 <tr>
     <td><a href="#folders_locations_list"><CopyableCode code="folders_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 <tr>
     <td><a href="#locations_list"><CopyableCode code="locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-name"><code>name</code></a></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
+    <td>Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_locations_list"><CopyableCode code="organizations_locations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 </tbody>
 </table>
@@ -548,36 +549,19 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_locations_get"
+    defaultValue="billing_accounts_locations_get"
     values={[
-        { label: 'organizations_locations_get', value: 'organizations_locations_get' },
         { label: 'billing_accounts_locations_get', value: 'billing_accounts_locations_get' },
-        { label: 'projects_locations_get', value: 'projects_locations_get' },
         { label: 'folders_locations_get', value: 'folders_locations_get' },
-        { label: 'organizations_locations_list', value: 'organizations_locations_list' },
+        { label: 'projects_locations_get', value: 'projects_locations_get' },
+        { label: 'organizations_locations_get', value: 'organizations_locations_get' },
         { label: 'billing_accounts_locations_list', value: 'billing_accounts_locations_list' },
-        { label: 'projects_locations_list', value: 'projects_locations_list' },
         { label: 'folders_locations_list', value: 'folders_locations_list' },
-        { label: 'locations_list', value: 'locations_list' }
+        { label: 'projects_locations_list', value: 'projects_locations_list' },
+        { label: 'locations_list', value: 'locations_list' },
+        { label: 'organizations_locations_list', value: 'organizations_locations_list' }
     ]}
 >
-<TabItem value="organizations_locations_get">
-
-Gets information about a location.
-
-```sql
-SELECT
-name,
-displayName,
-labels,
-locationId,
-metadata
-FROM google.logging.locations
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="billing_accounts_locations_get">
 
 Gets information about a location.
@@ -591,23 +575,6 @@ locationId,
 metadata
 FROM google.logging.locations
 WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_get">
-
-Gets information about a location.
-
-```sql
-SELECT
-name,
-displayName,
-labels,
-locationId,
-metadata
-FROM google.logging.locations
-WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 ;
 ```
@@ -629,49 +596,9 @@ AND locationsId = '{{ locationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_locations_list">
+<TabItem value="projects_locations_get">
 
-Lists information about the supported locations for this service.
-
-```sql
-SELECT
-name,
-displayName,
-labels,
-locationId,
-metadata
-FROM google.logging.locations
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND filter = '{{ filter }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="billing_accounts_locations_list">
-
-Lists information about the supported locations for this service.
-
-```sql
-SELECT
-name,
-displayName,
-labels,
-locationId,
-metadata
-FROM google.logging.locations
-WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_list">
-
-Lists information about the supported locations for this service.
+Gets information about a location.
 
 ```sql
 SELECT
@@ -682,16 +609,50 @@ locationId,
 metadata
 FROM google.logging.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND extraLocationTypes = '{{ extraLocationTypes }}'
-AND pageToken = '{{ pageToken }}'
+AND locationsId = '{{ locationsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_locations_get">
+
+Gets information about a location.
+
+```sql
+SELECT
+name,
+displayName,
+labels,
+locationId,
+metadata
+FROM google.logging.locations
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="billing_accounts_locations_list">
+
+Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
+
+```sql
+SELECT
+name,
+displayName,
+labels,
+locationId,
+metadata
+FROM google.logging.locations
+WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
 AND filter = '{{ filter }}'
+AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
 <TabItem value="folders_locations_list">
 
-Lists information about the supported locations for this service.
+Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
 
 ```sql
 SELECT
@@ -702,16 +663,36 @@ locationId,
 metadata
 FROM google.logging.locations
 WHERE foldersId = '{{ foldersId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_list">
+
+Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
+
+```sql
+SELECT
+name,
+displayName,
+labels,
+locationId,
+metadata
+FROM google.logging.locations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND filter = '{{ filter }}'
+AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
 <TabItem value="locations_list">
 
-Lists information about the supported locations for this service.
+Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
 
 ```sql
 SELECT
@@ -726,6 +707,26 @@ AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="organizations_locations_list">
+
+Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
+
+```sql
+SELECT
+name,
+displayName,
+labels,
+locationId,
+metadata
+FROM google.logging.locations
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

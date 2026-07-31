@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>destinations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>destinations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="destinations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.destinations" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists the `Destination` resources in a specified project and location.</td>
 </tr>
 <tr>
@@ -158,7 +159,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a>, <a href="#parameter-destinationsId"><code>destinationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates a `Destination` resource in a specified project and location.</td>
 </tr>
 <tr>
@@ -296,11 +297,11 @@ FROM google.networkconnectivity.destinations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND multicloudDataTransferConfigsId = '{{ multicloudDataTransferConfigsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -322,12 +323,12 @@ Creates a `Destination` resource in a specified project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.destinations (
-data__endpoints,
 data__description,
-data__ipPrefix,
 data__name,
-data__labels,
 data__etag,
+data__ipPrefix,
+data__endpoints,
+data__labels,
 projectsId,
 locationsId,
 multicloudDataTransferConfigsId,
@@ -335,12 +336,12 @@ requestId,
 destinationId
 )
 SELECT 
-'{{ endpoints }}',
 '{{ description }}',
-'{{ ipPrefix }}',
 '{{ name }}',
-'{{ labels }}',
 '{{ etag }}',
+'{{ ipPrefix }}',
+'{{ endpoints }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ multicloudDataTransferConfigsId }}',
@@ -357,54 +358,52 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: destinations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the destinations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the destinations resource.
     - name: multicloudDataTransferConfigsId
-      value: string
+      value: "{{ multicloudDataTransferConfigsId }}"
       description: Required parameter for the destinations resource.
-    - name: endpoints
-      value: array
-      description: >
-        Required. Unordered list. The list of `DestinationEndpoint` resources configured for the IP prefix.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A description of this resource.
-        
-    - name: ipPrefix
-      value: string
-      description: >
-        Required. Immutable. The IP prefix that represents your workload on another CSP.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. The name of the `Destination` resource. Format: `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}/destinations/{destination}`.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the \`Destination\` resource. Format: \`projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}/destinations/{destination}\`.
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         The etag is computed by the server, and might be sent with update and delete requests so that the client has an up-to-date value before proceeding.
-        
+    - name: ipPrefix
+      value: "{{ ipPrefix }}"
+      description: |
+        Required. Immutable. The IP prefix that represents your workload on another CSP.
+    - name: endpoints
+      description: |
+        Required. Unordered list. The list of \`DestinationEndpoint\` resources configured for the IP prefix.
+      value:
+        - asn: "{{ asn }}"
+          state: "{{ state }}"
+          csp: "{{ csp }}"
+          updateTime: "{{ updateTime }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels.
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: destinationId
-      value: string
-```
+      value: "{{ destinationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -424,19 +423,19 @@ Updates a `Destination` resource in a specified project and location.
 ```sql
 UPDATE google.networkconnectivity.destinations
 SET 
-data__endpoints = '{{ endpoints }}',
 data__description = '{{ description }}',
-data__ipPrefix = '{{ ipPrefix }}',
 data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__ipPrefix = '{{ ipPrefix }}',
+data__endpoints = '{{ endpoints }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND multicloudDataTransferConfigsId = '{{ multicloudDataTransferConfigsId }}' --required
 AND destinationsId = '{{ destinationsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

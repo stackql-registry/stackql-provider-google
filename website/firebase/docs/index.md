@@ -20,8 +20,8 @@ Application development platform for creating mobile and web applications.
 
 :::info[Provider Summary] 
 
-total services: __14__  
-total resources: __91__  
+total services: __15__  
+total resources: __96__  
 
 :::
 
@@ -90,6 +90,66 @@ $Auth = "{ 'google': { 'type': 'interactive' }}"
 stackql.exe shell --auth=$Auth
 ```
 
+## Firebase projects
+
+All Firebase projects visible to the authenticated principal:
+
+```sql
+SELECT
+  projectId,
+  displayName,
+  state
+FROM firebase.firebase.projects;
+```
+
+## Apps by platform
+
+Android, iOS and web apps registered in a project:
+
+```sql
+SELECT appId, displayName, state
+FROM firebase.firebase.android_apps
+WHERE projectsId = 'my-project';
+
+SELECT appId, displayName, state
+FROM firebase.firebase.ios_apps
+WHERE projectsId = 'my-project';
+
+SELECT appId, displayName, state
+FROM firebase.firebase.web_apps
+WHERE projectsId = 'my-project';
+```
+
+## Web app config
+
+The client config (API key, auth domain, storage bucket) for a registered web app:
+
+```sql
+SELECT
+  appId,
+  apiKey,
+  authDomain,
+  storageBucket
+FROM firebase.firebase.web_apps_config
+WHERE projectsId = 'my-project'
+AND webAppsId = 'my-web-app-id';
+```
+
+## Test results
+
+Test executions from Test Lab, most recent first:
+
+```sql
+SELECT
+  executionId,
+  state,
+  testExecutionMatrixId
+FROM firebase.toolresults.executions
+WHERE projectId = 'my-project' AND historyId = 'my-history-id'
+ORDER BY executionId DESC;
+```
+
+
 ## Services
 <div class="row">
 <div class="providerDocColumn">
@@ -100,9 +160,10 @@ stackql.exe shell --auth=$Auth
 <a href="/services/dataconnect/">dataconnect</a><br />
 <a href="/services/fcm/">fcm</a><br />
 <a href="/services/fcmdata/">fcmdata</a><br />
+<a href="/services/firebase/">firebase</a><br />
 </div>
 <div class="providerDocColumn">
-<a href="/services/firebase/">firebase</a><br />
+<a href="/services/firebasecrashlytics/">firebasecrashlytics</a><br />
 <a href="/services/hosting/">hosting</a><br />
 <a href="/services/ml/">ml</a><br />
 <a href="/services/rules/">rules</a><br />

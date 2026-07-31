@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reports</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reports</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reports" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.reports" /></td></tr>
 </tbody></table>
@@ -341,43 +342,43 @@ Creates a Custom Report for an Organization. A Custom Report provides Apigee Cus
 
 ```sql
 INSERT INTO google.apigee.reports (
-data__filter,
-data__toTime,
-data__name,
-data__properties,
-data__metrics,
-data__topk,
 data__comments,
-data__limit,
+data__metrics,
+data__filter,
 data__displayName,
-data__sortByCols,
-data__chartType,
-data__timeUnit,
 data__fromTime,
-data__offset,
 data__dimensions,
+data__toTime,
+data__offset,
+data__timeUnit,
+data__chartType,
+data__properties,
 data__tags,
 data__sortOrder,
+data__sortByCols,
+data__name,
+data__limit,
+data__topk,
 organizationsId
 )
 SELECT 
-'{{ filter }}',
-'{{ toTime }}',
-'{{ name }}',
-'{{ properties }}',
-'{{ metrics }}',
-'{{ topk }}',
 '{{ comments }}',
-'{{ limit }}',
+'{{ metrics }}',
+'{{ filter }}',
 '{{ displayName }}',
-'{{ sortByCols }}',
-'{{ chartType }}',
-'{{ timeUnit }}',
 '{{ fromTime }}',
-'{{ offset }}',
 '{{ dimensions }}',
+'{{ toTime }}',
+'{{ offset }}',
+'{{ timeUnit }}',
+'{{ chartType }}',
+'{{ properties }}',
 '{{ tags }}',
 '{{ sortOrder }}',
+'{{ sortByCols }}',
+'{{ name }}',
+'{{ limit }}',
+'{{ topk }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -407,99 +408,90 @@ topk
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reports
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the reports resource.
-    - name: filter
-      value: string
-      description: >
-        This field contains the filter expression
-        
-    - name: toTime
-      value: string
-      description: >
-        Legacy field: not used. Contains the end time for the report
-        
-    - name: name
-      value: string
-      description: >
-        Required. Unique identifier for the report T his is a legacy field used to encode custom report unique id
-        
-    - name: properties
-      value: array
-      description: >
-        This field contains report properties such as ui metadata etc.
-        
-    - name: metrics
-      value: array
-      description: >
-        Required. This contains the list of metrics
-        
-    - name: topk
-      value: string
-      description: >
-        Legacy field: not used. This field contains the top k parameter value for restricting the result
-        
     - name: comments
-      value: array
-      description: >
+      value:
+        - "{{ comments }}"
+      description: |
         Legacy field: not used. This field contains a list of comments associated with custom report
-        
-    - name: limit
-      value: string
-      description: >
-        Legacy field: not used This field contains the limit for the result retrieved
-        
+    - name: metrics
+      description: |
+        Required. This contains the list of metrics
+      value:
+        - name: "{{ name }}"
+          function: "{{ function }}"
+    - name: filter
+      value: "{{ filter }}"
+      description: |
+        This field contains the filter expression
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         This is the display name for the report
-        
-    - name: sortByCols
-      value: array
-      description: >
-        Legacy field: not used much. Contains the list of sort by columns
-        
-    - name: chartType
-      value: string
-      description: >
-        This field contains the chart type for the report
-        
-    - name: timeUnit
-      value: string
-      description: >
-        This field contains the time unit of aggregation for the report
-        
     - name: fromTime
-      value: string
-      description: >
+      value: "{{ fromTime }}"
+      description: |
         Legacy field: not used. Contains the from time for the report
-        
-    - name: offset
-      value: string
-      description: >
-        Legacy field: not used. This field contains the offset for the data
-        
     - name: dimensions
-      value: array
-      description: >
+      value:
+        - "{{ dimensions }}"
+      description: |
         This contains the list of dimensions for the report
-        
+    - name: toTime
+      value: "{{ toTime }}"
+      description: |
+        Legacy field: not used. Contains the end time for the report
+    - name: offset
+      value: "{{ offset }}"
+      description: |
+        Legacy field: not used. This field contains the offset for the data
+    - name: timeUnit
+      value: "{{ timeUnit }}"
+      description: |
+        This field contains the time unit of aggregation for the report
+    - name: chartType
+      value: "{{ chartType }}"
+      description: |
+        This field contains the chart type for the report
+    - name: properties
+      description: |
+        This field contains report properties such as ui metadata etc.
+      value:
+        - property: "{{ property }}"
+          value: "{{ value }}"
     - name: tags
-      value: array
-      description: >
+      value:
+        - "{{ tags }}"
+      description: |
         Legacy field: not used. This field contains a list of tags associated with custom report
-        
     - name: sortOrder
-      value: string
-      description: >
+      value: "{{ sortOrder }}"
+      description: |
         Legacy field: not used much. Contains the sort order for the sort columns
-        
-```
+    - name: sortByCols
+      value:
+        - "{{ sortByCols }}"
+      description: |
+        Legacy field: not used much. Contains the list of sort by columns
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Unique identifier for the report T his is a legacy field used to encode custom report unique id
+    - name: limit
+      value: "{{ limit }}"
+      description: |
+        Legacy field: not used This field contains the limit for the result retrieved
+    - name: topk
+      value: "{{ topk }}"
+      description: |
+        Legacy field: not used. This field contains the top k parameter value for restricting the result
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -519,23 +511,23 @@ Update an existing custom report definition
 ```sql
 REPLACE google.apigee.reports
 SET 
-data__filter = '{{ filter }}',
-data__toTime = '{{ toTime }}',
-data__name = '{{ name }}',
-data__properties = '{{ properties }}',
-data__metrics = '{{ metrics }}',
-data__topk = '{{ topk }}',
 data__comments = '{{ comments }}',
-data__limit = '{{ limit }}',
+data__metrics = '{{ metrics }}',
+data__filter = '{{ filter }}',
 data__displayName = '{{ displayName }}',
-data__sortByCols = '{{ sortByCols }}',
-data__chartType = '{{ chartType }}',
-data__timeUnit = '{{ timeUnit }}',
 data__fromTime = '{{ fromTime }}',
-data__offset = '{{ offset }}',
 data__dimensions = '{{ dimensions }}',
+data__toTime = '{{ toTime }}',
+data__offset = '{{ offset }}',
+data__timeUnit = '{{ timeUnit }}',
+data__chartType = '{{ chartType }}',
+data__properties = '{{ properties }}',
 data__tags = '{{ tags }}',
-data__sortOrder = '{{ sortOrder }}'
+data__sortOrder = '{{ sortOrder }}',
+data__sortByCols = '{{ sortByCols }}',
+data__name = '{{ name }}',
+data__limit = '{{ limit }}',
+data__topk = '{{ topk }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND reportsId = '{{ reportsId }}' --required

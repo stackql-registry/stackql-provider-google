@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>revisions_permissions</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>revisions_permissions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="revisions_permissions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivelabelsv2.revisions_permissions" /></td></tr>
 </tbody></table>
@@ -105,12 +106,12 @@ Updates a label's permissions. If a permission for the indicated principal doesn
 ```sql
 UPDATE googleworkspace.drivelabelsv2.revisions_permissions
 SET 
-data__person = '{{ person }}',
 data__group = '{{ group }}',
+data__role = '{{ role }}',
+data__person = '{{ person }}',
 data__audience = '{{ audience }}',
 data__name = '{{ name }}',
-data__email = '{{ email }}',
-data__role = '{{ role }}'
+data__email = '{{ email }}'
 WHERE 
 labelsId = '{{ labelsId }}' --required
 AND revisionsId = '{{ revisionsId }}' --required

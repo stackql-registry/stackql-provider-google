@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>labels</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>labels</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="labels" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivelabelsv2beta.labels" /></td></tr>
 </tbody></table>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="labelType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of label.</td>
+    <td>Required. The type of label. (LABEL_TYPE_UNSPECIFIED, SHARED, ADMIN, GOOGLE_APP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="learnMoreUri" /></td>
@@ -241,7 +242,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="labelType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of label.</td>
+    <td>Required. The type of label. (LABEL_TYPE_UNSPECIFIED, SHARED, ADMIN, GOOGLE_APP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="learnMoreUri" /></td>
@@ -324,7 +325,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-useAdminAccess"><code>useAdminAccess</code></a>, <a href="#parameter-minimumRole"><code>minimumRole</code></a>, <a href="#parameter-publishedOnly"><code>publishedOnly</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-minimumRole"><code>minimumRole</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-useAdminAccess"><code>useAdminAccess</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-publishedOnly"><code>publishedOnly</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List labels. For more information, see [Search for labels](https://developers.google.com/workspace/drive/labels/guides/search-label).</td>
 </tr>
 <tr>
@@ -338,22 +339,8 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-labelsId"><code>labelsId</code></a></td>
-    <td><a href="#parameter-useAdminAccess"><code>useAdminAccess</code></a>, <a href="#parameter-writeControl.requiredRevisionId"><code>writeControl.requiredRevisionId</code></a></td>
+    <td><a href="#parameter-writeControl.requiredRevisionId"><code>writeControl.requiredRevisionId</code></a>, <a href="#parameter-useAdminAccess"><code>useAdminAccess</code></a></td>
     <td>Permanently deletes a label and related metadata on Drive items. For more information, see [Disable, enable, and delete a label](https://developers.google.com/workspace/drive/labels/guides/disable-delete-label). Once deleted, the label and related Drive item metadata will be deleted. Only draft labels and disabled labels may be deleted.</td>
-</tr>
-<tr>
-    <td><a href="#delta"><CopyableCode code="delta" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-labelsId"><code>labelsId</code></a></td>
-    <td></td>
-    <td>Updates a single label by applying a set of update requests resulting in a new draft revision. For more information, see [Update a label](https://developers.google.com/workspace/drive/labels/guides/update-label). The batch update is all-or-nothing: If any of the update requests are invalid, no changes are applied. The resulting draft revision must be published before the changes may be used with Drive items.</td>
-</tr>
-<tr>
-    <td><a href="#publish"><CopyableCode code="publish" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-labelsId"><code>labelsId</code></a></td>
-    <td></td>
-    <td>Publish all draft changes to the label. Once published, the label may not return to its draft state. For more information, see [Create and publish a label](https://developers.google.com/workspace/drive/labels/guides/create-label). Publishing a label will result in a new published revision. All previous draft revisions will be deleted. Previous published revisions will be kept but are subject to automated deletion as needed. For more information, see [Label lifecycle](https://developers.google.com/workspace/drive/labels/guides/label-lifecycle). Once published, some changes are no longer permitted. Generally, any change that would invalidate or cause new restrictions on existing metadata related to the label will be rejected. For example, the following changes to a label will be rejected after the label is published: * The label cannot be directly deleted. It must be disabled first, then deleted. * `Field.FieldType` cannot be changed. * Changes to field validation options cannot reject something that was previously accepted. * Reducing the maximum entries.</td>
 </tr>
 <tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
@@ -363,11 +350,25 @@ The following methods are available for this resource:
     <td>Disable a published label. For more information, see [Disable, enable, and delete a label](https://developers.google.com/workspace/drive/labels/guides/disable-delete-label). Disabling a label will result in a new disabled published revision based on the current published revision. If there's a draft revision, a new disabled draft revision will be created based on the latest draft revision. Older draft revisions will be deleted. Once disabled, a label may be deleted with `DeleteLabel`.</td>
 </tr>
 <tr>
+    <td><a href="#publish"><CopyableCode code="publish" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-labelsId"><code>labelsId</code></a></td>
+    <td></td>
+    <td>Publish all draft changes to the label. Once published, the label may not return to its draft state. For more information, see [Create and publish a label](https://developers.google.com/workspace/drive/labels/guides/create-label). Publishing a label will result in a new published revision. All previous draft revisions will be deleted. Previous published revisions will be kept but are subject to automated deletion as needed. For more information, see [Label lifecycle](https://developers.google.com/workspace/drive/labels/guides/label-lifecycle). Once published, some changes are no longer permitted. Generally, any change that would invalidate or cause new restrictions on existing metadata related to the label will be rejected. For example, the following changes to a label will be rejected after the label is published: * The label cannot be directly deleted. It must be disabled first, then deleted. * `Field.FieldType` cannot be changed. * Changes to field validation options cannot reject something that was previously accepted. * Reducing the maximum entries.</td>
+</tr>
+<tr>
     <td><a href="#enable"><CopyableCode code="enable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-labelsId"><code>labelsId</code></a></td>
     <td></td>
     <td>Enable a disabled label and restore it to its published state. For more information, see [Disable, enable, and delete a label](https://developers.google.com/workspace/drive/labels/guides/disable-delete-label). This will result in a new published revision based on the current disabled published revision. If there's an existing disabled draft revision, a new revision will be created based on that draft and will be enabled.</td>
+</tr>
+<tr>
+    <td><a href="#delta"><CopyableCode code="delta" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-labelsId"><code>labelsId</code></a></td>
+    <td></td>
+    <td>Updates a single label by applying a set of update requests resulting in a new draft revision. For more information, see [Update a label](https://developers.google.com/workspace/drive/labels/guides/update-label). The batch update is all-or-nothing: If any of the update requests are invalid, no changes are applied. The resulting draft revision must be published before the changes may be used with Drive items.</td>
 </tr>
 </tbody>
 </table>
@@ -514,14 +515,14 @@ revisionCreator,
 revisionId,
 schemaCapabilities
 FROM googleworkspace.drivelabelsv2beta.labels
-WHERE useAdminAccess = '{{ useAdminAccess }}'
-AND minimumRole = '{{ minimumRole }}'
-AND publishedOnly = '{{ publishedOnly }}'
+WHERE minimumRole = '{{ minimumRole }}'
 AND customer = '{{ customer }}'
+AND view = '{{ view }}'
+AND useAdminAccess = '{{ useAdminAccess }}'
 AND languageCode = '{{ languageCode }}'
+AND publishedOnly = '{{ publishedOnly }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -588,41 +589,153 @@ schemaCapabilities
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: labels
   props:
     - name: labelType
-      value: string
-      description: >
+      value: "{{ labelType }}"
+      description: |
         Required. The type of label.
-        
       valid_values: ['LABEL_TYPE_UNSPECIFIED', 'SHARED', 'ADMIN', 'GOOGLE_APP']
     - name: properties
-      value: object
-      description: >
+      description: |
         Required. The basic properties of the label.
-        
+      value:
+        title: "{{ title }}"
+        description: "{{ description }}"
     - name: fields
-      value: array
-      description: >
+      description: |
         List of fields in descending priority order.
-        
+      value:
+        - selectionOptions:
+            choices:
+              - lockStatus:
+                  locked: {{ locked }}
+                displayHints:
+                  disabled: {{ disabled }}
+                  shownInApply: {{ shownInApply }}
+                  badgeColors:
+                    soloColor: "{{ soloColor }}"
+                    backgroundColor: "{{ backgroundColor }}"
+                    foregroundColor: "{{ foregroundColor }}"
+                  darkBadgeColors:
+                    soloColor: "{{ soloColor }}"
+                    backgroundColor: "{{ backgroundColor }}"
+                    foregroundColor: "{{ foregroundColor }}"
+                  hiddenInSearch: {{ hiddenInSearch }}
+                  badgePriority: "{{ badgePriority }}"
+                schemaCapabilities:
+                  canUpdate: {{ canUpdate }}
+                  canEnable: {{ canEnable }}
+                  canDelete: {{ canDelete }}
+                  canDisable: {{ canDisable }}
+                appliedCapabilities:
+                  canRead: {{ canRead }}
+                  canSearch: {{ canSearch }}
+                  canSelect: {{ canSelect }}
+                id: "{{ id }}"
+                publishTime: "{{ publishTime }}"
+                disabler:
+                  person: "{{ person }}"
+                lifecycle:
+                  state: "{{ state }}"
+                  hasUnpublishedChanges: {{ hasUnpublishedChanges }}
+                  disabledPolicy:
+                    showInApply: {{ showInApply }}
+                    hideInSearch: {{ hideInSearch }}
+                disableTime: "{{ disableTime }}"
+                updater:
+                  person: "{{ person }}"
+                creator:
+                  person: "{{ person }}"
+                updateTime: "{{ updateTime }}"
+                createTime: "{{ createTime }}"
+                properties:
+                  description: "{{ description }}"
+                  badgeConfig:
+                    color: "{{ color }}"
+                    priorityOverride: "{{ priorityOverride }}"
+                  insertBeforeChoice: "{{ insertBeforeChoice }}"
+                  displayName: "{{ displayName }}"
+                publisher:
+                  person: "{{ person }}"
+            listOptions:
+              maxEntries: {{ maxEntries }}
+          appliedCapabilities:
+            canRead: {{ canRead }}
+            canSearch: {{ canSearch }}
+            canWrite: {{ canWrite }}
+          schemaCapabilities:
+            canDelete: {{ canDelete }}
+            canDisable: {{ canDisable }}
+            canEnable: {{ canEnable }}
+            canUpdate: {{ canUpdate }}
+          displayHints:
+            disabled: {{ disabled }}
+            hiddenInSearch: {{ hiddenInSearch }}
+            shownInApply: {{ shownInApply }}
+            required: {{ required }}
+          lockStatus:
+            locked: {{ locked }}
+          dateOptions:
+            dateFormat: "{{ dateFormat }}"
+            maxValue:
+              year: {{ year }}
+              day: {{ day }}
+              month: {{ month }}
+            dateFormatType: "{{ dateFormatType }}"
+            minValue:
+              year: {{ year }}
+              day: {{ day }}
+              month: {{ month }}
+          lifecycle:
+            state: "{{ state }}"
+            hasUnpublishedChanges: {{ hasUnpublishedChanges }}
+            disabledPolicy:
+              showInApply: {{ showInApply }}
+              hideInSearch: {{ hideInSearch }}
+          disableTime: "{{ disableTime }}"
+          disabler:
+            person: "{{ person }}"
+          id: "{{ id }}"
+          updateTime: "{{ updateTime }}"
+          userOptions:
+            listOptions:
+              maxEntries: {{ maxEntries }}
+          creator:
+            person: "{{ person }}"
+          updater:
+            person: "{{ person }}"
+          textOptions:
+            minLength: {{ minLength }}
+            maxLength: {{ maxLength }}
+          queryKey: "{{ queryKey }}"
+          publisher:
+            person: "{{ person }}"
+          integerOptions:
+            minValue: "{{ minValue }}"
+            maxValue: "{{ maxValue }}"
+          properties:
+            insertBeforeField: "{{ insertBeforeField }}"
+            displayName: "{{ displayName }}"
+            required: {{ required }}
+          createTime: "{{ createTime }}"
     - name: learnMoreUri
-      value: string
-      description: >
+      value: "{{ learnMoreUri }}"
+      description: |
         Custom URL to present to users to allow them to learn more about this label and how it should be used.
-        
     - name: enabledAppSettings
-      value: object
-      description: >
-        Optional. The `EnabledAppSettings` for this Label.
-        
+      description: |
+        Optional. The \`EnabledAppSettings\` for this Label.
+      value:
+        enabledApps:
+          - app: "{{ app }}"
     - name: useAdminAccess
-      value: boolean
+      value: {{ useAdminAccess }}
     - name: languageCode
-      value: string
-```
+      value: "{{ languageCode }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -642,8 +755,8 @@ Permanently deletes a label and related metadata on Drive items. For more inform
 ```sql
 DELETE FROM googleworkspace.drivelabelsv2beta.labels
 WHERE labelsId = '{{ labelsId }}' --required
-AND useAdminAccess = '{{ useAdminAccess }}'
 AND writeControl.requiredRevisionId = '{{ writeControl.requiredRevisionId }}'
+AND useAdminAccess = '{{ useAdminAccess }}'
 ;
 ```
 </TabItem>
@@ -653,27 +766,27 @@ AND writeControl.requiredRevisionId = '{{ writeControl.requiredRevisionId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="delta"
+    defaultValue="disable"
     values={[
-        { label: 'delta', value: 'delta' },
-        { label: 'publish', value: 'publish' },
         { label: 'disable', value: 'disable' },
-        { label: 'enable', value: 'enable' }
+        { label: 'publish', value: 'publish' },
+        { label: 'enable', value: 'enable' },
+        { label: 'delta', value: 'delta' }
     ]}
 >
-<TabItem value="delta">
+<TabItem value="disable">
 
-Updates a single label by applying a set of update requests resulting in a new draft revision. For more information, see [Update a label](https://developers.google.com/workspace/drive/labels/guides/update-label). The batch update is all-or-nothing: If any of the update requests are invalid, no changes are applied. The resulting draft revision must be published before the changes may be used with Drive items.
+Disable a published label. For more information, see [Disable, enable, and delete a label](https://developers.google.com/workspace/drive/labels/guides/disable-delete-label). Disabling a label will result in a new disabled published revision based on the current published revision. If there's a draft revision, a new disabled draft revision will be created based on the latest draft revision. Older draft revisions will be deleted. Once disabled, a label may be deleted with `DeleteLabel`.
 
 ```sql
-EXEC googleworkspace.drivelabelsv2beta.labels.delta 
+EXEC googleworkspace.drivelabelsv2beta.labels.disable 
 @labelsId='{{ labelsId }}' --required 
 @@json=
 '{
 "writeControl": "{{ writeControl }}", 
-"requests": "{{ requests }}", 
+"updateMask": "{{ updateMask }}", 
+"disabledPolicy": "{{ disabledPolicy }}", 
 "useAdminAccess": {{ useAdminAccess }}, 
-"view": "{{ view }}", 
 "languageCode": "{{ languageCode }}"
 }'
 ;
@@ -689,26 +802,8 @@ EXEC googleworkspace.drivelabelsv2beta.labels.publish
 @@json=
 '{
 "useAdminAccess": {{ useAdminAccess }}, 
-"writeControl": "{{ writeControl }}", 
-"languageCode": "{{ languageCode }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="disable">
-
-Disable a published label. For more information, see [Disable, enable, and delete a label](https://developers.google.com/workspace/drive/labels/guides/disable-delete-label). Disabling a label will result in a new disabled published revision based on the current published revision. If there's a draft revision, a new disabled draft revision will be created based on the latest draft revision. Older draft revisions will be deleted. Once disabled, a label may be deleted with `DeleteLabel`.
-
-```sql
-EXEC googleworkspace.drivelabelsv2beta.labels.disable 
-@labelsId='{{ labelsId }}' --required 
-@@json=
-'{
-"updateMask": "{{ updateMask }}", 
-"useAdminAccess": {{ useAdminAccess }}, 
-"writeControl": "{{ writeControl }}", 
-"disabledPolicy": "{{ disabledPolicy }}", 
-"languageCode": "{{ languageCode }}"
+"languageCode": "{{ languageCode }}", 
+"writeControl": "{{ writeControl }}"
 }'
 ;
 ```
@@ -723,8 +818,26 @@ EXEC googleworkspace.drivelabelsv2beta.labels.enable
 @@json=
 '{
 "useAdminAccess": {{ useAdminAccess }}, 
-"writeControl": "{{ writeControl }}", 
-"languageCode": "{{ languageCode }}"
+"languageCode": "{{ languageCode }}", 
+"writeControl": "{{ writeControl }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="delta">
+
+Updates a single label by applying a set of update requests resulting in a new draft revision. For more information, see [Update a label](https://developers.google.com/workspace/drive/labels/guides/update-label). The batch update is all-or-nothing: If any of the update requests are invalid, no changes are applied. The resulting draft revision must be published before the changes may be used with Drive items.
+
+```sql
+EXEC googleworkspace.drivelabelsv2beta.labels.delta 
+@labelsId='{{ labelsId }}' --required 
+@@json=
+'{
+"view": "{{ view }}", 
+"requests": "{{ requests }}", 
+"useAdminAccess": {{ useAdminAccess }}, 
+"languageCode": "{{ languageCode }}", 
+"writeControl": "{{ writeControl }}"
 }'
 ;
 ```

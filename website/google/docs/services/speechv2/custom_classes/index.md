@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>custom_classes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>custom_classes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="custom_classes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.speechv2.custom_classes" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The CustomClass lifecycle state.</td>
+    <td>Output only. The CustomClass lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -191,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The CustomClass lifecycle state.</td>
+    <td>Output only. The CustomClass lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -234,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CustomClasses.</td>
 </tr>
 <tr>
@@ -255,7 +256,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-customClassesId"><code>customClassesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Deletes the CustomClass.</td>
 </tr>
 <tr>
@@ -399,8 +400,8 @@ FROM google.speechv2.custom_classes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -449,36 +450,34 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: custom_classes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the custom_classes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the custom_classes resource.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. User-settable, human-readable name for the CustomClass. Must be 63 characters or less.
-        
     - name: items
-      value: array
-      description: >
+      description: |
         A collection of class items.
-        
+      value:
+        - value: "{{ value }}"
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Allows users to store small amounts of arbitrary data. Both the key and the value must be 63 characters or less each. At most 100 annotations.
-        
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
     - name: customClassId
-      value: string
-```
+      value: "{{ customClassId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -535,9 +534,9 @@ DELETE FROM google.speechv2.custom_classes
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND customClassesId = '{{ customClassesId }}' --required
+AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'
 AND allowMissing = '{{ allowMissing }}'
-AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>
@@ -563,9 +562,9 @@ EXEC google.speechv2.custom_classes.undelete
 @customClassesId='{{ customClassesId }}' --required 
 @@json=
 '{
+"etag": "{{ etag }}", 
 "name": "{{ name }}", 
-"validateOnly": {{ validateOnly }}, 
-"etag": "{{ etag }}"
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```

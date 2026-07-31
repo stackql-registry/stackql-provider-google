@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reasoning_engines</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reasoning_engines</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reasoning_engines" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.reasoning_engines" /></td></tr>
 </tbody></table>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists reasoning engines in a location.</td>
 </tr>
 <tr>
@@ -217,6 +218,27 @@ The following methods are available for this resource:
     <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes a reasoning engine.</td>
+</tr>
+<tr>
+    <td><a href="#cancel_async_query"><CopyableCode code="cancel_async_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td></td>
+    <td>Cancels an AsyncQueryReasoningEngine operation.</td>
+</tr>
+<tr>
+    <td><a href="#async_query"><CopyableCode code="async_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td></td>
+    <td>Async query using a reasoning engine.</td>
+</tr>
+<tr>
+    <td><a href="#execute_code"><CopyableCode code="execute_code" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td></td>
+    <td>Executes code statelessly.</td>
 </tr>
 <tr>
     <td><a href="#query"><CopyableCode code="query" /></a></td>
@@ -333,10 +355,10 @@ labels,
 spec,
 updateTime
 FROM google.aiplatform.reasoning_engines
-WHERE pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+WHERE pageSize = '{{ pageSize }}'
 AND parent = '{{ parent }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -358,25 +380,25 @@ Creates a reasoning engine.
 
 ```sql
 INSERT INTO google.aiplatform.reasoning_engines (
-data__contextSpec,
-data__description,
 data__labels,
-data__encryptionSpec,
 data__name,
+data__description,
+data__spec,
+data__contextSpec,
+data__encryptionSpec,
 data__displayName,
 data__etag,
-data__spec,
 parent
 )
 SELECT 
-'{{ contextSpec }}',
-'{{ description }}',
 '{{ labels }}',
-'{{ encryptionSpec }}',
 '{{ name }}',
+'{{ description }}',
+'{{ spec }}',
+'{{ contextSpec }}',
+'{{ encryptionSpec }}',
 '{{ displayName }}',
 '{{ etag }}',
-'{{ spec }}',
 '{{ parent }}'
 RETURNING
 name,
@@ -389,53 +411,138 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reasoning_engines
   props:
-    - name: contextSpec
-      value: object
-      description: >
-        Optional. Configuration for how Agent Engine sub-resources should manage context.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the ReasoningEngine.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Labels for the ReasoningEngine.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key spec for a ReasoningEngine. If set, this ReasoningEngine and all sub-resources of this ReasoningEngine will be secured by this key.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the ReasoningEngine. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the ReasoningEngine.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the ReasoningEngine. Format: \`projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}\`
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the ReasoningEngine.
     - name: spec
-      value: object
-      description: >
+      description: |
         Optional. Configurations of the ReasoningEngine
-        
+      value:
+        containerSpec:
+          imageUri: "{{ imageUri }}"
+          port: {{ port }}
+        agentFramework: "{{ agentFramework }}"
+        buildSpec:
+          workerPool: "{{ workerPool }}"
+          serviceAccount: "{{ serviceAccount }}"
+        packageSpec:
+          requirementsGcsUri: "{{ requirementsGcsUri }}"
+          dependencyFilesGcsUri: "{{ dependencyFilesGcsUri }}"
+          pickleObjectGcsUri: "{{ pickleObjectGcsUri }}"
+          pythonVersion: "{{ pythonVersion }}"
+        deploymentSpec:
+          pscInterfaceConfig:
+            networkAttachment: "{{ networkAttachment }}"
+            dnsPeeringConfigs:
+              - targetNetwork: "{{ targetNetwork }}"
+                domain: "{{ domain }}"
+                targetProject: "{{ targetProject }}"
+          resourceLimits: "{{ resourceLimits }}"
+          agentGatewayConfig:
+            clientToAgentConfig:
+              agentGateway: "{{ agentGateway }}"
+            agentToAnywhereConfig:
+              agentGateway: "{{ agentGateway }}"
+          containerConcurrency: {{ containerConcurrency }}
+          env:
+            - name: "{{ name }}"
+              value: "{{ value }}"
+          maxInstances: {{ maxInstances }}
+          secretEnv:
+            - name: "{{ name }}"
+              secretRef:
+                secret: "{{ secret }}"
+                version: "{{ version }}"
+          minInstances: {{ minInstances }}
+          keepAliveProbe:
+            httpGet:
+              path: "{{ path }}"
+              port: {{ port }}
+            maxSeconds: {{ maxSeconds }}
+        classMethods: "{{ classMethods }}"
+        serviceAccount: "{{ serviceAccount }}"
+        sourceCodeSpec:
+          pythonSpec:
+            version: "{{ version }}"
+            entrypointObject: "{{ entrypointObject }}"
+            requirementsFile: "{{ requirementsFile }}"
+            entrypointModule: "{{ entrypointModule }}"
+          developerConnectSource:
+            config:
+              dir: "{{ dir }}"
+              gitRepositoryLink: "{{ gitRepositoryLink }}"
+              revision: "{{ revision }}"
+          imageSpec:
+            buildArgs: "{{ buildArgs }}"
+          agentConfigSource:
+            inlineSource:
+              sourceArchive: "{{ sourceArchive }}"
+            adkConfig:
+              jsonConfig: "{{ jsonConfig }}"
+          inlineSource:
+            sourceArchive: "{{ sourceArchive }}"
+        identityType: "{{ identityType }}"
+        effectiveIdentity: "{{ effectiveIdentity }}"
+    - name: contextSpec
+      description: |
+        Optional. Configuration for how Agent Engine sub-resources should manage context.
+      value:
+        memoryBankConfig:
+          disableMemoryRevisions: {{ disableMemoryRevisions }}
+          similaritySearchConfig:
+            embeddingModel: "{{ embeddingModel }}"
+          ttlConfig:
+            granularTtlConfig:
+              generateUpdatedTtl: "{{ generateUpdatedTtl }}"
+              createTtl: "{{ createTtl }}"
+              generateCreatedTtl: "{{ generateCreatedTtl }}"
+            defaultTtl: "{{ defaultTtl }}"
+            memoryRevisionDefaultTtl: "{{ memoryRevisionDefaultTtl }}"
+          customizationConfigs:
+            - consolidationConfig:
+                revisionsPerCandidateCount: {{ revisionsPerCandidateCount }}
+              generateMemoriesExamples: "{{ generateMemoriesExamples }}"
+              scopeKeys: "{{ scopeKeys }}"
+              enableThirdPersonMemories: {{ enableThirdPersonMemories }}
+              disableNaturalLanguageMemories: {{ disableNaturalLanguageMemories }}
+              memoryTopics: "{{ memoryTopics }}"
+          generationConfig:
+            model: "{{ model }}"
+            generationTriggerConfig:
+              generationRule:
+                idleDuration: "{{ idleDuration }}"
+                eventCount: {{ eventCount }}
+                fixedInterval: "{{ fixedInterval }}"
+                overlapEventCount: {{ overlapEventCount }}
+    - name: encryptionSpec
+      description: |
+        Customer-managed encryption key spec for a ReasoningEngine. If set, this ReasoningEngine and all sub-resources of this ReasoningEngine will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the ReasoningEngine.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: parent
-      value: string
-```
+      value: "{{ parent }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -455,14 +562,14 @@ Updates a reasoning engine.
 ```sql
 UPDATE google.aiplatform.reasoning_engines
 SET 
-data__contextSpec = '{{ contextSpec }}',
-data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__encryptionSpec = '{{ encryptionSpec }}',
 data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__spec = '{{ spec }}',
+data__contextSpec = '{{ contextSpec }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__displayName = '{{ displayName }}',
-data__etag = '{{ etag }}',
-data__spec = '{{ spec }}'
+data__etag = '{{ etag }}'
 WHERE 
 reasoningEnginesId = '{{ reasoningEnginesId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -502,12 +609,58 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="query"
+    defaultValue="cancel_async_query"
     values={[
+        { label: 'cancel_async_query', value: 'cancel_async_query' },
+        { label: 'async_query', value: 'async_query' },
+        { label: 'execute_code', value: 'execute_code' },
         { label: 'query', value: 'query' },
         { label: 'stream_query', value: 'stream_query' }
     ]}
 >
+<TabItem value="cancel_async_query">
+
+Cancels an AsyncQueryReasoningEngine operation.
+
+```sql
+EXEC google.aiplatform.reasoning_engines.cancel_async_query 
+@reasoningEnginesId='{{ reasoningEnginesId }}' --required 
+@@json=
+'{
+"operationName": "{{ operationName }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="async_query">
+
+Async query using a reasoning engine.
+
+```sql
+EXEC google.aiplatform.reasoning_engines.async_query 
+@reasoningEnginesId='{{ reasoningEnginesId }}' --required 
+@@json=
+'{
+"inputGcsUri": "{{ inputGcsUri }}", 
+"outputGcsUri": "{{ outputGcsUri }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="execute_code">
+
+Executes code statelessly.
+
+```sql
+EXEC google.aiplatform.reasoning_engines.execute_code 
+@reasoningEnginesId='{{ reasoningEnginesId }}' --required 
+@@json=
+'{
+"inputs": "{{ inputs }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="query">
 
 Queries using a reasoning engine.
@@ -517,8 +670,8 @@ EXEC google.aiplatform.reasoning_engines.query
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required 
 @@json=
 '{
-"classMethod": "{{ classMethod }}", 
-"input": "{{ input }}"
+"input": "{{ input }}", 
+"classMethod": "{{ classMethod }}"
 }'
 ;
 ```
@@ -532,8 +685,8 @@ EXEC google.aiplatform.reasoning_engines.stream_query
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required 
 @@json=
 '{
-"input": "{{ input }}", 
-"classMethod": "{{ classMethod }}"
+"classMethod": "{{ classMethod }}", 
+"input": "{{ input }}"
 }'
 ;
 ```

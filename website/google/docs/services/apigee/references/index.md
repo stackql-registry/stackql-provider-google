@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>references</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>references</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="references" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.references" /></td></tr>
 </tbody></table>
@@ -193,18 +194,18 @@ Creates a Reference in the specified environment.
 
 ```sql
 INSERT INTO google.apigee.references (
-data__resourceType,
-data__description,
 data__name,
 data__refers,
+data__description,
+data__resourceType,
 organizationsId,
 environmentsId
 )
 SELECT 
-'{{ resourceType }}',
-'{{ description }}',
 '{{ name }}',
 '{{ refers }}',
+'{{ description }}',
+'{{ resourceType }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -217,38 +218,33 @@ resourceType
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: references
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the references resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the references resource.
-    - name: resourceType
-      value: string
-      description: >
-        The type of resource referred to by this reference. Valid values are 'KeyStore' or 'TrustStore'.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A human-readable description of this reference.
-        
     - name: name
-      value: string
-      description: >
-        Required. The resource id of this reference. Values must match the regular expression [\w
-        \-.]+.
-        
+      value: "{{ name }}"
+      description: |
+        Required. The resource id of this reference. Values must match the regular expression [ws-.]+.
     - name: refers
-      value: string
-      description: >
+      value: "{{ refers }}"
+      description: |
         Required. The id of the resource to which this reference refers. Must be the id of a resource that exists in the parent environment and is of the given resource_type.
-        
-```
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A human-readable description of this reference.
+    - name: resourceType
+      value: "{{ resourceType }}"
+      description: |
+        The type of resource referred to by this reference. Valid values are 'KeyStore' or 'TrustStore'.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -268,10 +264,10 @@ Updates an existing Reference. Note that this operation has PUT semantics; it wi
 ```sql
 REPLACE google.apigee.references
 SET 
-data__resourceType = '{{ resourceType }}',
-data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__refers = '{{ refers }}'
+data__refers = '{{ refers }}',
+data__description = '{{ description }}',
+data__resourceType = '{{ resourceType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

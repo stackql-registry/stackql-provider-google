@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>target_ssl_proxies</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>target_ssl_proxies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="target_ssl_proxies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.target_ssl_proxies" /></td></tr>
 </tbody></table>
@@ -57,17 +58,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="certificateMap" /></td>
     <td><code>string</code></td>
-    <td>URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for global target proxies. If set, sslCertificates will be ignored. Accepted format is //certificatemanager.googleapis.com/projects/&#123;project &#125;/locations/&#123;location&#125;/certificateMaps/&#123;resourceName&#125;.</td>
+    <td>URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for global target proxies. If set, sslCertificates will be ignored.   Accepted format is//certificatemanager.googleapis.com/projects/&#123;project&#125;/locations/&#123;location&#125;/certificateMaps/&#123;resourceName&#125;.</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -77,12 +78,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#targetSslProxy for target SSL proxies. (default: compute#targetSslProxy)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#targetSslProxy for target SSL proxies. (default: compute#targetSslProxy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="proxyHeader" /></td>
     <td><code>string</code></td>
-    <td>Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.</td>
+    <td>Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE. (NONE, PROXY_V1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -131,17 +132,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of resource. (default: compute#targetSslProxyList)</td>
+    <td>Output only. Type of resource. (default: compute#targetSslProxyList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -179,15 +180,15 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves the list of TargetSslProxy resources available to the specified project.</td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of TargetSslProxy resources<br />available to the specified project.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a TargetSslProxy resource in the specified project using the data included in the request.</td>
+    <td>Creates a TargetSslProxy resource in the specified project using<br />the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -197,13 +198,6 @@ The following methods are available for this resource:
     <td>Deletes the specified TargetSslProxy resource.</td>
 </tr>
 <tr>
-    <td><a href="#set_backend_service"><CopyableCode code="set_backend_service" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetSslProxy"><code>targetSslProxy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Changes the BackendService for TargetSslProxy.</td>
-</tr>
-<tr>
     <td><a href="#set_ssl_certificates"><CopyableCode code="set_ssl_certificates" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetSslProxy"><code>targetSslProxy</code></a></td>
@@ -211,11 +205,11 @@ The following methods are available for this resource:
     <td>Changes SslCertificates for TargetSslProxy.</td>
 </tr>
 <tr>
-    <td><a href="#set_certificate_map"><CopyableCode code="set_certificate_map" /></a></td>
+    <td><a href="#set_backend_service"><CopyableCode code="set_backend_service" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetSslProxy"><code>targetSslProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Changes the Certificate Map for TargetSslProxy.</td>
+    <td>Changes the BackendService for TargetSslProxy.</td>
 </tr>
 <tr>
     <td><a href="#set_proxy_header"><CopyableCode code="set_proxy_header" /></a></td>
@@ -229,7 +223,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetSslProxy"><code>targetSslProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the SSL policy for TargetSslProxy. The SSL policy specifies the server-side support for SSL features. This affects connections between clients and the load balancer. They do not affect the connection between the load balancer and the backends.</td>
+    <td>Sets the SSL policy for TargetSslProxy. The SSL policy specifies the<br />server-side support for SSL features. This affects connections between<br />clients and the load balancer. They do not affect the<br />connection between the load balancer and the backends.</td>
+</tr>
+<tr>
+    <td><a href="#set_certificate_map"><CopyableCode code="set_certificate_map" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetSslProxy"><code>targetSslProxy</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Changes the Certificate Map for TargetSslProxy.</td>
 </tr>
 </tbody>
 </table>
@@ -324,7 +325,7 @@ AND targetSslProxy = '{{ targetSslProxy }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of TargetSslProxy resources available to the specified project.
+Retrieves the list of TargetSslProxy resources<br />available to the specified project.
 
 ```sql
 SELECT
@@ -336,10 +337,10 @@ selfLink,
 warning
 FROM google.compute.target_ssl_proxies
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -358,36 +359,32 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="insert">
 
-Creates a TargetSslProxy resource in the specified project using the data included in the request.
+Creates a TargetSslProxy resource in the specified project using<br />the data included in the request.
 
 ```sql
 INSERT INTO google.compute.target_ssl_proxies (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__selfLink,
-data__service,
 data__sslCertificates,
+data__id,
+data__selfLink,
+data__description,
 data__certificateMap,
 data__proxyHeader,
+data__name,
 data__sslPolicy,
+data__service,
 project,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ selfLink }}',
-'{{ service }}',
 '{{ sslCertificates }}',
+'{{ id }}',
+'{{ selfLink }}',
+'{{ description }}',
 '{{ certificateMap }}',
 '{{ proxyHeader }}',
+'{{ name }}',
 '{{ sslPolicy }}',
+'{{ service }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -398,6 +395,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -422,73 +420,74 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: target_ssl_proxies
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the target_ssl_proxies resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#targetSslProxy for target SSL proxies.
-        
-      default: compute#targetSslProxy
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: service
-      value: string
-      description: >
-        URL to the BackendService resource.
-        
     - name: sslCertificates
-      value: array
-      description: >
-        URLs to SslCertificate resources that are used to authenticate connections to Backends. At least one SSL certificate must be specified. Currently, you may specify up to 15 SSL certificates. sslCertificates do not apply when the load balancing scheme is set to INTERNAL_SELF_MANAGED.
-        
+      value:
+        - "{{ sslCertificates }}"
+      description: |
+        URLs to SslCertificate resources that are used to
+        authenticate connections to Backends. At least one SSL certificate
+        must be specified. Currently, you may specify up to 15 SSL certificates.
+        sslCertificates do not apply when the load balancing scheme is set to
+        INTERNAL_SELF_MANAGED.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: certificateMap
-      value: string
-      description: >
-        URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for global target proxies. If set, sslCertificates will be ignored. Accepted format is //certificatemanager.googleapis.com/projects/{project }/locations/{location}/certificateMaps/{resourceName}.
-        
+      value: "{{ certificateMap }}"
+      description: |
+        URL of a certificate map that identifies a certificate map associated with
+        the given target proxy.
+        This field can only be set for global target proxies.
+        If set, sslCertificates will be ignored.
+        Accepted format is//certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificateMaps/{resourceName}.
     - name: proxyHeader
-      value: string
-      description: >
-        Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.
-        
+      value: "{{ proxyHeader }}"
+      description: |
+        Specifies the type of proxy header to append before sending data to the
+        backend, either NONE or PROXY_V1. The default
+        is NONE.
       valid_values: ['NONE', 'PROXY_V1']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: sslPolicy
-      value: string
-      description: >
-        URL of SslPolicy resource that will be associated with the TargetSslProxy resource. If not set, the TargetSslProxy resource will not have any SSL policy configured.
-        
+      value: "{{ sslPolicy }}"
+      description: |
+        URL of SslPolicy resource that will be associated with the TargetSslProxy
+        resource. If not set, the TargetSslProxy resource will not have any
+        SSL policy configured.
+    - name: service
+      value: "{{ service }}"
+      description: |
+        URL to the BackendService resource.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -519,31 +518,15 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_backend_service"
+    defaultValue="set_ssl_certificates"
     values={[
-        { label: 'set_backend_service', value: 'set_backend_service' },
         { label: 'set_ssl_certificates', value: 'set_ssl_certificates' },
-        { label: 'set_certificate_map', value: 'set_certificate_map' },
+        { label: 'set_backend_service', value: 'set_backend_service' },
         { label: 'set_proxy_header', value: 'set_proxy_header' },
-        { label: 'set_ssl_policy', value: 'set_ssl_policy' }
+        { label: 'set_ssl_policy', value: 'set_ssl_policy' },
+        { label: 'set_certificate_map', value: 'set_certificate_map' }
     ]}
 >
-<TabItem value="set_backend_service">
-
-Changes the BackendService for TargetSslProxy.
-
-```sql
-EXEC google.compute.target_ssl_proxies.set_backend_service 
-@project='{{ project }}' --required, 
-@targetSslProxy='{{ targetSslProxy }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"service": "{{ service }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="set_ssl_certificates">
 
 Changes SslCertificates for TargetSslProxy.
@@ -560,18 +543,18 @@ EXEC google.compute.target_ssl_proxies.set_ssl_certificates
 ;
 ```
 </TabItem>
-<TabItem value="set_certificate_map">
+<TabItem value="set_backend_service">
 
-Changes the Certificate Map for TargetSslProxy.
+Changes the BackendService for TargetSslProxy.
 
 ```sql
-EXEC google.compute.target_ssl_proxies.set_certificate_map 
+EXEC google.compute.target_ssl_proxies.set_backend_service 
 @project='{{ project }}' --required, 
 @targetSslProxy='{{ targetSslProxy }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"certificateMap": "{{ certificateMap }}"
+"service": "{{ service }}"
 }'
 ;
 ```
@@ -594,7 +577,7 @@ EXEC google.compute.target_ssl_proxies.set_proxy_header
 </TabItem>
 <TabItem value="set_ssl_policy">
 
-Sets the SSL policy for TargetSslProxy. The SSL policy specifies the server-side support for SSL features. This affects connections between clients and the load balancer. They do not affect the connection between the load balancer and the backends.
+Sets the SSL policy for TargetSslProxy. The SSL policy specifies the<br />server-side support for SSL features. This affects connections between<br />clients and the load balancer. They do not affect the<br />connection between the load balancer and the backends.
 
 ```sql
 EXEC google.compute.target_ssl_proxies.set_ssl_policy 
@@ -604,6 +587,22 @@ EXEC google.compute.target_ssl_proxies.set_ssl_policy
 @@json=
 '{
 "sslPolicy": "{{ sslPolicy }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_certificate_map">
+
+Changes the Certificate Map for TargetSslProxy.
+
+```sql
+EXEC google.compute.target_ssl_proxies.set_certificate_map 
+@project='{{ project }}' --required, 
+@targetSslProxy='{{ targetSslProxy }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"certificateMap": "{{ certificateMap }}"
 }'
 ;
 ```

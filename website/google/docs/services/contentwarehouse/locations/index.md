@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contentwarehouse.locations" /></td></tr>
 </tbody></table>
@@ -50,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#initialize"><CopyableCode code="initialize" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Provisions resources for given tenant project. Returns a long running operation.</td>
-</tr>
-<tr>
     <td><a href="#run_pipeline"><CopyableCode code="run_pipeline" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Run a predefined pipeline.</td>
+</tr>
+<tr>
+    <td><a href="#initialize"><CopyableCode code="initialize" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Provisions resources for given tenant project. Returns a long running operation.</td>
 </tr>
 </tbody>
 </table>
@@ -95,31 +96,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="initialize"
+    defaultValue="run_pipeline"
     values={[
-        { label: 'initialize', value: 'initialize' },
-        { label: 'run_pipeline', value: 'run_pipeline' }
+        { label: 'run_pipeline', value: 'run_pipeline' },
+        { label: 'initialize', value: 'initialize' }
     ]}
 >
-<TabItem value="initialize">
-
-Provisions resources for given tenant project. Returns a long running operation.
-
-```sql
-EXEC google.contentwarehouse.locations.initialize 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"enableCalUserEmailLogging": {{ enableCalUserEmailLogging }}, 
-"accessControlMode": "{{ accessControlMode }}", 
-"kmsKey": "{{ kmsKey }}", 
-"databaseType": "{{ databaseType }}", 
-"documentCreatorDefaultRole": "{{ documentCreatorDefaultRole }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="run_pipeline">
 
 Run a predefined pipeline.
@@ -130,11 +112,30 @@ EXEC google.contentwarehouse.locations.run_pipeline
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"gcsIngestPipeline": "{{ gcsIngestPipeline }}", 
-"exportCdwPipeline": "{{ exportCdwPipeline }}", 
-"processWithDocAiPipeline": "{{ processWithDocAiPipeline }}", 
 "requestMetadata": "{{ requestMetadata }}", 
-"gcsIngestWithDocAiProcessorsPipeline": "{{ gcsIngestWithDocAiProcessorsPipeline }}"
+"gcsIngestWithDocAiProcessorsPipeline": "{{ gcsIngestWithDocAiProcessorsPipeline }}", 
+"gcsIngestPipeline": "{{ gcsIngestPipeline }}", 
+"processWithDocAiPipeline": "{{ processWithDocAiPipeline }}", 
+"exportCdwPipeline": "{{ exportCdwPipeline }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="initialize">
+
+Provisions resources for given tenant project. Returns a long running operation.
+
+```sql
+EXEC google.contentwarehouse.locations.initialize 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"documentCreatorDefaultRole": "{{ documentCreatorDefaultRole }}", 
+"kmsKey": "{{ kmsKey }}", 
+"accessControlMode": "{{ accessControlMode }}", 
+"enableCalUserEmailLogging": {{ enableCalUserEmailLogging }}, 
+"databaseType": "{{ databaseType }}"
 }'
 ;
 ```

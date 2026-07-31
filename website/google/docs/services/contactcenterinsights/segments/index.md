@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>segments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>segments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="segments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.segments" /></td></tr>
 </tbody></table>
@@ -109,9 +110,10 @@ EXEC google.contactcenterinsights.segments.bulk_analyze
 @conversationsId='{{ conversationsId }}' --required 
 @@json=
 '{
-"filter": "{{ filter }}", 
-"analysisPercentage": {{ analysisPercentage }}, 
+"relabel": {{ relabel }}, 
 "parent": "{{ parent }}", 
+"analysisPercentage": {{ analysisPercentage }}, 
+"filter": "{{ filter }}", 
 "annotatorSelector": "{{ annotatorSelector }}"
 }'
 ;

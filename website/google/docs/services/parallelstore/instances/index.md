@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.parallelstore.instances" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deploymentType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. The deployment type of the instance. Allowed values are: * `SCRATCH`: the instance is a scratch instance. * `PERSISTENT`: the instance is a persistent instance.</td>
+    <td>Optional. Immutable. The deployment type of the instance. Allowed values are: * `SCRATCH`: the instance is a scratch instance. * `PERSISTENT`: the instance is a persistent instance. (DEPLOYMENT_TYPE_UNSPECIFIED, SCRATCH, PERSISTENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="directoryStripeLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Stripe level for directories. Allowed values are: * `DIRECTORY_STRIPE_LEVEL_MIN`: recommended when directories contain a small number of files. * `DIRECTORY_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large directories. * `DIRECTORY_STRIPE_LEVEL_MAX`: recommended for directories with a large number of files.</td>
+    <td>Optional. Immutable. Stripe level for directories. Allowed values are: * `DIRECTORY_STRIPE_LEVEL_MIN`: recommended when directories contain a small number of files. * `DIRECTORY_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large directories. * `DIRECTORY_STRIPE_LEVEL_MAX`: recommended for directories with a large number of files. (DIRECTORY_STRIPE_LEVEL_UNSPECIFIED, DIRECTORY_STRIPE_LEVEL_MIN, DIRECTORY_STRIPE_LEVEL_BALANCED, DIRECTORY_STRIPE_LEVEL_MAX)</td>
 </tr>
 <tr>
     <td><CopyableCode code="effectiveReservedIpRange" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="fileStripeLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Stripe level for files. Allowed values are: * `FILE_STRIPE_LEVEL_MIN`: offers the best performance for small size files. * `FILE_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large files. * `FILE_STRIPE_LEVEL_MAX`: higher throughput performance for larger files.</td>
+    <td>Optional. Immutable. Stripe level for files. Allowed values are: * `FILE_STRIPE_LEVEL_MIN`: offers the best performance for small size files. * `FILE_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large files. * `FILE_STRIPE_LEVEL_MAX`: higher throughput performance for larger files. (FILE_STRIPE_LEVEL_UNSPECIFIED, FILE_STRIPE_LEVEL_MIN, FILE_STRIPE_LEVEL_BALANCED, FILE_STRIPE_LEVEL_MAX)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The instance state.</td>
+    <td>Output only. The instance state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, FAILED, UPGRADING, REPAIRING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deploymentType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. The deployment type of the instance. Allowed values are: * `SCRATCH`: the instance is a scratch instance. * `PERSISTENT`: the instance is a persistent instance.</td>
+    <td>Optional. Immutable. The deployment type of the instance. Allowed values are: * `SCRATCH`: the instance is a scratch instance. * `PERSISTENT`: the instance is a persistent instance. (DEPLOYMENT_TYPE_UNSPECIFIED, SCRATCH, PERSISTENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="directoryStripeLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Stripe level for directories. Allowed values are: * `DIRECTORY_STRIPE_LEVEL_MIN`: recommended when directories contain a small number of files. * `DIRECTORY_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large directories. * `DIRECTORY_STRIPE_LEVEL_MAX`: recommended for directories with a large number of files.</td>
+    <td>Optional. Immutable. Stripe level for directories. Allowed values are: * `DIRECTORY_STRIPE_LEVEL_MIN`: recommended when directories contain a small number of files. * `DIRECTORY_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large directories. * `DIRECTORY_STRIPE_LEVEL_MAX`: recommended for directories with a large number of files. (DIRECTORY_STRIPE_LEVEL_UNSPECIFIED, DIRECTORY_STRIPE_LEVEL_MIN, DIRECTORY_STRIPE_LEVEL_BALANCED, DIRECTORY_STRIPE_LEVEL_MAX)</td>
 </tr>
 <tr>
     <td><CopyableCode code="effectiveReservedIpRange" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="fileStripeLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Stripe level for files. Allowed values are: * `FILE_STRIPE_LEVEL_MIN`: offers the best performance for small size files. * `FILE_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large files. * `FILE_STRIPE_LEVEL_MAX`: higher throughput performance for larger files.</td>
+    <td>Optional. Immutable. Stripe level for files. Allowed values are: * `FILE_STRIPE_LEVEL_MIN`: offers the best performance for small size files. * `FILE_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large files. * `FILE_STRIPE_LEVEL_MAX`: higher throughput performance for larger files. (FILE_STRIPE_LEVEL_UNSPECIFIED, FILE_STRIPE_LEVEL_MIN, FILE_STRIPE_LEVEL_BALANCED, FILE_STRIPE_LEVEL_MAX)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -206,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The instance state.</td>
+    <td>Output only. The instance state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, FAILED, UPGRADING, REPAIRING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all instances in a given project and location.</td>
 </tr>
 <tr>
@@ -258,7 +259,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single instance.</td>
 </tr>
 <tr>
@@ -413,9 +414,9 @@ FROM google.parallelstore.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -437,30 +438,30 @@ Creates a Parallelstore instance in a given project and location.
 
 ```sql
 INSERT INTO google.parallelstore.instances (
+data__network,
+data__capacityGib,
+data__deploymentType,
+data__directoryStripeLevel,
 data__name,
+data__fileStripeLevel,
+data__reservedIpRange,
 data__description,
 data__labels,
-data__capacityGib,
-data__network,
-data__reservedIpRange,
-data__fileStripeLevel,
-data__directoryStripeLevel,
-data__deploymentType,
 projectsId,
 locationsId,
 instanceId,
 requestId
 )
 SELECT 
+'{{ network }}',
+'{{ capacityGib }}',
+'{{ deploymentType }}',
+'{{ directoryStripeLevel }}',
 '{{ name }}',
+'{{ fileStripeLevel }}',
+'{{ reservedIpRange }}',
 '{{ description }}',
 '{{ labels }}',
-'{{ capacityGib }}',
-'{{ network }}',
-'{{ reservedIpRange }}',
-'{{ fileStripeLevel }}',
-'{{ directoryStripeLevel }}',
-'{{ deploymentType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}',
@@ -476,69 +477,60 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the instance, in the format `projects/{project}/locations/{location}/instances/{instance_id}`.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the instance. 2048 characters or less.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Cloud Labels are a flexible and lightweight mechanism for organizing cloud resources into groups that reflect a customer's organizational needs and deployment strategies. See https://cloud.google.com/resource-manager/docs/labels-overview for details.
-        
-    - name: capacityGib
-      value: string
-      description: >
-        Required. Immutable. The instance's storage capacity in Gibibytes (GiB). Allowed values are between 12000 and 100000, in multiples of 4000; e.g., 12000, 16000, 20000, ...
-        
     - name: network
-      value: string
-      description: >
+      value: "{{ network }}"
+      description: |
         Optional. Immutable. The name of the Compute Engine [VPC network](https://cloud.google.com/vpc/docs/vpc) to which the instance is connected.
-        
-    - name: reservedIpRange
-      value: string
-      description: >
-        Optional. Immutable. The ID of the IP address range being used by the instance's VPC network. See [Configure a VPC network](https://cloud.google.com/parallelstore/docs/vpc#create_and_configure_the_vpc). If no ID is provided, all ranges are considered.
-        
-    - name: fileStripeLevel
-      value: string
-      description: >
-        Optional. Immutable. Stripe level for files. Allowed values are: * `FILE_STRIPE_LEVEL_MIN`: offers the best performance for small size files. * `FILE_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large files. * `FILE_STRIPE_LEVEL_MAX`: higher throughput performance for larger files.
-        
-      valid_values: ['FILE_STRIPE_LEVEL_UNSPECIFIED', 'FILE_STRIPE_LEVEL_MIN', 'FILE_STRIPE_LEVEL_BALANCED', 'FILE_STRIPE_LEVEL_MAX']
-    - name: directoryStripeLevel
-      value: string
-      description: >
-        Optional. Immutable. Stripe level for directories. Allowed values are: * `DIRECTORY_STRIPE_LEVEL_MIN`: recommended when directories contain a small number of files. * `DIRECTORY_STRIPE_LEVEL_BALANCED`: balances performance for workloads involving a mix of small and large directories. * `DIRECTORY_STRIPE_LEVEL_MAX`: recommended for directories with a large number of files.
-        
-      valid_values: ['DIRECTORY_STRIPE_LEVEL_UNSPECIFIED', 'DIRECTORY_STRIPE_LEVEL_MIN', 'DIRECTORY_STRIPE_LEVEL_BALANCED', 'DIRECTORY_STRIPE_LEVEL_MAX']
+    - name: capacityGib
+      value: "{{ capacityGib }}"
+      description: |
+        Required. Immutable. The instance's storage capacity in Gibibytes (GiB). Allowed values are between 12000 and 100000, in multiples of 4000; e.g., 12000, 16000, 20000, ...
     - name: deploymentType
-      value: string
-      description: >
-        Optional. Immutable. The deployment type of the instance. Allowed values are: * `SCRATCH`: the instance is a scratch instance. * `PERSISTENT`: the instance is a persistent instance.
-        
+      value: "{{ deploymentType }}"
+      description: |
+        Optional. Immutable. The deployment type of the instance. Allowed values are: * \`SCRATCH\`: the instance is a scratch instance. * \`PERSISTENT\`: the instance is a persistent instance.
       valid_values: ['DEPLOYMENT_TYPE_UNSPECIFIED', 'SCRATCH', 'PERSISTENT']
+    - name: directoryStripeLevel
+      value: "{{ directoryStripeLevel }}"
+      description: |
+        Optional. Immutable. Stripe level for directories. Allowed values are: * \`DIRECTORY_STRIPE_LEVEL_MIN\`: recommended when directories contain a small number of files. * \`DIRECTORY_STRIPE_LEVEL_BALANCED\`: balances performance for workloads involving a mix of small and large directories. * \`DIRECTORY_STRIPE_LEVEL_MAX\`: recommended for directories with a large number of files.
+      valid_values: ['DIRECTORY_STRIPE_LEVEL_UNSPECIFIED', 'DIRECTORY_STRIPE_LEVEL_MIN', 'DIRECTORY_STRIPE_LEVEL_BALANCED', 'DIRECTORY_STRIPE_LEVEL_MAX']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the instance, in the format \`projects/{project}/locations/{location}/instances/{instance_id}\`.
+    - name: fileStripeLevel
+      value: "{{ fileStripeLevel }}"
+      description: |
+        Optional. Immutable. Stripe level for files. Allowed values are: * \`FILE_STRIPE_LEVEL_MIN\`: offers the best performance for small size files. * \`FILE_STRIPE_LEVEL_BALANCED\`: balances performance for workloads involving a mix of small and large files. * \`FILE_STRIPE_LEVEL_MAX\`: higher throughput performance for larger files.
+      valid_values: ['FILE_STRIPE_LEVEL_UNSPECIFIED', 'FILE_STRIPE_LEVEL_MIN', 'FILE_STRIPE_LEVEL_BALANCED', 'FILE_STRIPE_LEVEL_MAX']
+    - name: reservedIpRange
+      value: "{{ reservedIpRange }}"
+      description: |
+        Optional. Immutable. The ID of the IP address range being used by the instance's VPC network. See [Configure a VPC network](https://cloud.google.com/parallelstore/docs/vpc#create_and_configure_the_vpc). If no ID is provided, all ranges are considered.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the instance. 2048 characters or less.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Cloud Labels are a flexible and lightweight mechanism for organizing cloud resources into groups that reflect a customer's organizational needs and deployment strategies. See https://cloud.google.com/resource-manager/docs/labels-overview for details.
     - name: instanceId
-      value: string
+      value: "{{ instanceId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -558,21 +550,21 @@ Updates the parameters of a single instance.
 ```sql
 UPDATE google.parallelstore.instances
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__capacityGib = '{{ capacityGib }}',
 data__network = '{{ network }}',
-data__reservedIpRange = '{{ reservedIpRange }}',
-data__fileStripeLevel = '{{ fileStripeLevel }}',
+data__capacityGib = '{{ capacityGib }}',
+data__deploymentType = '{{ deploymentType }}',
 data__directoryStripeLevel = '{{ directoryStripeLevel }}',
-data__deploymentType = '{{ deploymentType }}'
+data__name = '{{ name }}',
+data__fileStripeLevel = '{{ fileStripeLevel }}',
+data__reservedIpRange = '{{ reservedIpRange }}',
+data__description = '{{ description }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -629,10 +621,10 @@ EXEC google.parallelstore.instances.import_data
 @@json=
 '{
 "sourceGcsBucket": "{{ sourceGcsBucket }}", 
+"metadataOptions": "{{ metadataOptions }}", 
 "destinationParallelstore": "{{ destinationParallelstore }}", 
 "requestId": "{{ requestId }}", 
-"serviceAccount": "{{ serviceAccount }}", 
-"metadataOptions": "{{ metadataOptions }}"
+"serviceAccount": "{{ serviceAccount }}"
 }'
 ;
 ```
@@ -650,8 +642,8 @@ EXEC google.parallelstore.instances.export_data
 '{
 "sourceParallelstore": "{{ sourceParallelstore }}", 
 "destinationGcsBucket": "{{ destinationGcsBucket }}", 
-"requestId": "{{ requestId }}", 
 "serviceAccount": "{{ serviceAccount }}", 
+"requestId": "{{ requestId }}", 
 "metadataOptions": "{{ metadataOptions }}"
 }'
 ;

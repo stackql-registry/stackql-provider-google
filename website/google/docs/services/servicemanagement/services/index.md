@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>services</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>services</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="services" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicemanagement.services" /></td></tr>
 </tbody></table>
@@ -114,7 +115,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-producerProjectId"><code>producerProjectId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-consumerId"><code>consumerId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-producerProjectId"><code>producerProjectId</code></a>, <a href="#parameter-consumerId"><code>consumerId</code></a></td>
     <td>Lists managed services. Returns all public services. For authenticated users, also returns all services the calling user has "servicemanagement.services.get" permission for.</td>
 </tr>
 <tr>
@@ -220,9 +221,9 @@ SELECT
 producerProjectId,
 serviceName
 FROM google.servicemanagement.services
-WHERE producerProjectId = '{{ producerProjectId }}'
-AND pageSize = '{{ pageSize }}'
+WHERE pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND producerProjectId = '{{ producerProjectId }}'
 AND consumerId = '{{ consumerId }}'
 ;
 ```
@@ -245,12 +246,12 @@ Creates a new managed service. A managed service is immutable, and is subject to
 
 ```sql
 INSERT INTO google.servicemanagement.services (
-data__serviceName,
-data__producerProjectId
+data__producerProjectId,
+data__serviceName
 )
 SELECT 
-'{{ serviceName }}',
-'{{ producerProjectId }}'
+'{{ producerProjectId }}',
+'{{ serviceName }}'
 RETURNING
 name,
 done,
@@ -262,21 +263,19 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: services
   props:
-    - name: serviceName
-      value: string
-      description: >
-        The name of the service. See the [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.
-        
     - name: producerProjectId
-      value: string
-      description: >
+      value: "{{ producerProjectId }}"
+      description: |
         ID of the project that produces and owns this service.
-        
-```
+    - name: serviceName
+      value: "{{ serviceName }}"
+      description: |
+        The name of the service. See the [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connect</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connect</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connect" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sqladmin.connect" /></td></tr>
 </tbody></table>
@@ -51,7 +52,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backendType" /></td>
     <td><code>string</code></td>
-    <td>`SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A database server that is not managed by Google. This property is read-only; use the `tier` property in the `settings` object to determine the database type.</td>
+    <td>`SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A database server that is not managed by Google. This property is read-only; use the `tier` property in the `settings` object to determine the database type. (SQL_BACKEND_TYPE_UNSPECIFIED, FIRST_GEN, SECOND_GEN, EXTERNAL)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="connectionName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Output only. Connection name of the Cloud SQL instance used in connection strings, in the format project:region:instance.</td>
 </tr>
 <tr>
     <td><CopyableCode code="customSubjectAlternativeNames" /></td>
@@ -61,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="databaseVersion" /></td>
     <td><code>string</code></td>
-    <td>The database engine type and version. The `databaseVersion` field cannot be changed after instance creation. MySQL instances: `MYSQL_8_0`, `MYSQL_5_7` (default), or `MYSQL_5_6`. PostgreSQL instances: `POSTGRES_9_6`, `POSTGRES_10`, `POSTGRES_11`, `POSTGRES_12` (default), `POSTGRES_13`, or `POSTGRES_14`. SQL Server instances: `SQLSERVER_2017_STANDARD` (default), `SQLSERVER_2017_ENTERPRISE`, `SQLSERVER_2017_EXPRESS`, `SQLSERVER_2017_WEB`, `SQLSERVER_2019_STANDARD`, `SQLSERVER_2019_ENTERPRISE`, `SQLSERVER_2019_EXPRESS`, or `SQLSERVER_2019_WEB`.</td>
+    <td>The database engine type and version. The `databaseVersion` field cannot be changed after instance creation. MySQL instances: `MYSQL_8_0`, `MYSQL_5_7` (default), or `MYSQL_5_6`. PostgreSQL instances: `POSTGRES_9_6`, `POSTGRES_10`, `POSTGRES_11`, `POSTGRES_12` (default), `POSTGRES_13`, or `POSTGRES_14`. SQL Server instances: `SQLSERVER_2017_STANDARD` (default), `SQLSERVER_2017_ENTERPRISE`, `SQLSERVER_2017_EXPRESS`, `SQLSERVER_2017_WEB`, `SQLSERVER_2019_STANDARD`, `SQLSERVER_2019_ENTERPRISE`, `SQLSERVER_2019_EXPRESS`, or `SQLSERVER_2019_WEB`. (SQL_DATABASE_VERSION_UNSPECIFIED, MYSQL_5_1, MYSQL_5_5, MYSQL_5_6, MYSQL_5_7, MYSQL_8_0, MYSQL_8_0_18, MYSQL_8_0_26, MYSQL_8_0_27, MYSQL_8_0_28, MYSQL_8_0_29, MYSQL_8_0_30, MYSQL_8_0_31, MYSQL_8_0_32, MYSQL_8_0_33, MYSQL_8_0_34, MYSQL_8_0_35, MYSQL_8_0_36, MYSQL_8_0_37, MYSQL_8_0_39, MYSQL_8_0_40, MYSQL_8_0_41, MYSQL_8_0_42, MYSQL_8_0_43, MYSQL_8_0_44, MYSQL_8_0_45, MYSQL_8_0_46, MYSQL_8_4, MYSQL_9_7, SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, SQLSERVER_2017_WEB, POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12, POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17, POSTGRES_18, POSTGRES_19, POSTGRES_20, SQLSERVER_2019_STANDARD, SQLSERVER_2019_ENTERPRISE, SQLSERVER_2019_EXPRESS, SQLSERVER_2019_WEB, SQLSERVER_2022_STANDARD, SQLSERVER_2022_ENTERPRISE, SQLSERVER_2022_EXPRESS, SQLSERVER_2022_WEB, SQLSERVER_2025_STANDARD, SQLSERVER_2025_ENTERPRISE, SQLSERVER_2025_EXPRESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dnsName" /></td>
@@ -116,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serverCaMode" /></td>
     <td><code>string</code></td>
-    <td>Specify what type of CA is used for the server certificate.</td>
+    <td>Specify what type of CA is used for the server certificate. (CA_MODE_UNSPECIFIED, GOOGLE_MANAGED_INTERNAL_CA, GOOGLE_MANAGED_CAS_CA, CUSTOMER_MANAGED_CAS_CA)</td>
 </tr>
 </tbody>
 </table>
@@ -146,6 +152,13 @@ The following methods are available for this resource:
     <td>Retrieves connect settings about a Cloud SQL instance.</td>
 </tr>
 <tr>
+    <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-location"><code>location</code></a>, <a href="#parameter-dnsName"><code>dnsName</code></a></td>
+    <td></td>
+    <td>Retrieves connect settings about a Cloud SQL instance using the instance DNS name.</td>
+</tr>
+<tr>
     <td><a href="#generate_ephemeral"><CopyableCode code="generate_ephemeral" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
@@ -168,8 +181,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-dnsName">
+    <td><CopyableCode code="dnsName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-instance">
     <td><CopyableCode code="instance" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-location">
+    <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -201,6 +224,7 @@ Retrieves connect settings about a Cloud SQL instance.
 ```sql
 SELECT
 backendType,
+connectionName,
 customSubjectAlternativeNames,
 databaseVersion,
 dnsName,
@@ -227,11 +251,23 @@ AND readTime = '{{ readTime }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="generate_ephemeral"
+    defaultValue="resolve"
     values={[
+        { label: 'resolve', value: 'resolve' },
         { label: 'generate_ephemeral', value: 'generate_ephemeral' }
     ]}
 >
+<TabItem value="resolve">
+
+Retrieves connect settings about a Cloud SQL instance using the instance DNS name.
+
+```sql
+EXEC google.sqladmin.connect.resolve 
+@location='{{ location }}' --required, 
+@dnsName='{{ dnsName }}' --required
+;
+```
+</TabItem>
 <TabItem value="generate_ephemeral">
 
 Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.
@@ -242,10 +278,10 @@ EXEC google.sqladmin.connect.generate_ephemeral
 @instance='{{ instance }}' --required 
 @@json=
 '{
-"readTime": "{{ readTime }}", 
-"access_token": "{{ access_token }}", 
+"validDuration": "{{ validDuration }}", 
 "public_key": "{{ public_key }}", 
-"validDuration": "{{ validDuration }}"
+"access_token": "{{ access_token }}", 
+"readTime": "{{ readTime }}"
 }'
 ;
 ```

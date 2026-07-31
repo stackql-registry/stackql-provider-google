@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances_parameters</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances_parameters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances_parameters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.memcache.instances_parameters" /></td></tr>
 </tbody></table>
@@ -105,8 +106,8 @@ Updates the defined Memcached parameters for an existing instance. This method o
 ```sql
 UPDATE google.memcache.instances_parameters
 SET 
-data__updateMask = '{{ updateMask }}',
-data__parameters = '{{ parameters }}'
+data__parameters = '{{ parameters }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

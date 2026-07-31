@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>peering_routes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>peering_routes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="peering_routes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.peering_routes" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="direction" /></td>
     <td><code>string</code></td>
-    <td>Output only. Direction of the routes exchanged with the peer network, from the VMware Engine network perspective: * Routes of direction `INCOMING` are imported from the peer network. * Routes of direction `OUTGOING` are exported from the intranet VPC network of the VMware Engine network.</td>
+    <td>Output only. Direction of the routes exchanged with the peer network, from the VMware Engine network perspective: * Routes of direction `INCOMING` are imported from the peer network. * Routes of direction `OUTGOING` are exported from the intranet VPC network of the VMware Engine network. (DIRECTION_UNSPECIFIED, INCOMING, OUTGOING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="imported" /></td>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the route in the peer VPC network.</td>
+    <td>Output only. Type of the route in the peer VPC network. (TYPE_UNSPECIFIED, DYNAMIC_PEERING_ROUTE, STATIC_PEERING_ROUTE, SUBNET_PEERING_ROUTE)</td>
 </tr>
 </tbody>
 </table>
@@ -101,9 +102,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkPeeringsId"><code>networkPeeringsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists the network peering routes exchanged over a peering connection. NetworkPeering is a global resource and location can only be global.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateConnectionsId"><code>privateConnectionsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the private connection routes exchanged over a peering connection.</td>
 </tr>
 </tbody>
 </table>
@@ -126,18 +127,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-networkPeeringsId">
-    <td><CopyableCode code="networkPeeringsId" /></td>
+<tr id="parameter-privateConnectionsId">
+    <td><CopyableCode code="privateConnectionsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-filter">
-    <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -164,7 +160,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list">
 
-Lists the network peering routes exchanged over a peering connection. NetworkPeering is a global resource and location can only be global.
+Lists the private connection routes exchanged over a peering connection.
 
 ```sql
 SELECT
@@ -177,10 +173,9 @@ type
 FROM google.vmwareengine.peering_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND networkPeeringsId = '{{ networkPeeringsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND privateConnectionsId = '{{ privateConnectionsId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

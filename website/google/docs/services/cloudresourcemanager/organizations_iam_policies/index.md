@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>organizations_iam_policies</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>organizations_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="organizations_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.organizations_iam_policies" /></td></tr>
 </tbody></table>
@@ -168,8 +169,8 @@ Sets the access control policy on an organization resource. Replaces any existin
 ```sql
 REPLACE google.cloudresourcemanager.organizations_iam_policies
 SET 
-data__updateMask = '{{ updateMask }}',
-data__policy = '{{ policy }}'
+data__policy = '{{ policy }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 RETURNING

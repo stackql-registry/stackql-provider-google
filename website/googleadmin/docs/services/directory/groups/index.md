@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.groups" /></td></tr>
 </tbody></table>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-domain"><code>domain</code></a></td>
-    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-userKey"><code>userKey</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-userKey"><code>userKey</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a></td>
     <td>Retrieves all groups of a domain or of a user given a userKey (paginated).</td>
 </tr>
 <tr>
@@ -337,13 +338,13 @@ kind,
 nonEditableAliases
 FROM googleadmin.directory.groups
 WHERE domain = '{{ domain }}' -- required
-AND customer = '{{ customer }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
+AND customer = '{{ customer }}'
 AND query = '{{ query }}'
-AND sortOrder = '{{ sortOrder }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND userKey = '{{ userKey }}'
+AND sortOrder = '{{ sortOrder }}'
 ;
 ```
 </TabItem>
@@ -365,28 +366,28 @@ Creates a group.
 
 ```sql
 INSERT INTO googleadmin.directory.groups (
-data__id,
 data__email,
+data__nonEditableAliases,
 data__name,
+data__id,
 data__description,
-data__adminCreated,
-data__directMembersCount,
 data__kind,
-data__etag,
 data__aliases,
-data__nonEditableAliases
+data__etag,
+data__directMembersCount,
+data__adminCreated
 )
 SELECT 
-'{{ id }}',
 '{{ email }}',
+'{{ nonEditableAliases }}',
 '{{ name }}',
+'{{ id }}',
 '{{ description }}',
-{{ adminCreated }},
-'{{ directMembersCount }}',
 '{{ kind }}',
-'{{ etag }}',
 '{{ aliases }}',
-'{{ nonEditableAliases }}'
+'{{ etag }}',
+'{{ directMembersCount }}',
+{{ adminCreated }}
 RETURNING
 id,
 name,
@@ -403,62 +404,54 @@ nonEditableAliases
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups
   props:
-    - name: id
-      value: string
-      description: >
-        Read-only. The unique ID of a group. A group `id` can be used as a group request URI's `groupKey`.
-        
     - name: email
-      value: string
-      description: >
-        The group's email address. If your account has multiple domains, select the appropriate domain for the email address. The `email` must be unique. This property is required when creating a group. Group email addresses are subject to the same character usage rules as usernames, see the [help center](https://support.google.com/a/answer/9193374) for details.
-        
-    - name: name
-      value: string
-      description: >
-        The group's display name.
-        
-    - name: description
-      value: string
-      description: >
-        An extended description to help users determine the purpose of a group. For example, you can include information about who should join the group, the types of messages to send to the group, links to FAQs about the group, or related groups. Maximum length is `4,096` characters.
-        
-    - name: adminCreated
-      value: boolean
-      description: >
-        Read-only. Value is `true` if this group was created by an administrator rather than a user.
-        
-    - name: directMembersCount
-      value: string
-      description: >
-        The number of users that are direct members of the group. If a group is a member (child) of this group (the parent), members of the child group are not counted in the `directMembersCount` property of the parent group.
-        
-    - name: kind
-      value: string
-      description: >
-        The type of the API resource. For Groups resources, the value is `admin#directory#group`.
-        
-      default: admin#directory#group
-    - name: etag
-      value: string
-      description: >
-        ETag of the resource.
-        
-    - name: aliases
-      value: array
-      description: >
-        Read-only. The list of a group's alias email addresses. To add, update, or remove a group's aliases, use the `groups.aliases` methods. If edited in a group's POST or PUT request, the edit is ignored.
-        
+      value: "{{ email }}"
+      description: |
+        The group's email address. If your account has multiple domains, select the appropriate domain for the email address. The \`email\` must be unique. This property is required when creating a group. Group email addresses are subject to the same character usage rules as usernames, see the [help center](https://support.google.com/a/answer/9193374) for details.
     - name: nonEditableAliases
-      value: array
-      description: >
+      value:
+        - "{{ nonEditableAliases }}"
+      description: |
         Read-only. The list of the group's non-editable alias email addresses that are outside of the account's primary domain or subdomains. These are functioning email addresses used by the group. This is a read-only property returned in the API's response for a group. If edited in a group's POST or PUT request, the edit is ignored.
-        
-```
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The group's display name.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Read-only. The unique ID of a group. A group \`id\` can be used as a group request URI's \`groupKey\`.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An extended description to help users determine the purpose of a group. For example, you can include information about who should join the group, the types of messages to send to the group, links to FAQs about the group, or related groups. Maximum length is \`4,096\` characters.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        The type of the API resource. For Groups resources, the value is \`admin#directory#group\`.
+      default: admin#directory#group
+    - name: aliases
+      value:
+        - "{{ aliases }}"
+      description: |
+        Read-only. The list of a group's alias email addresses. To add, update, or remove a group's aliases, use the \`groups.aliases\` methods. If edited in a group's POST or PUT request, the edit is ignored.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        ETag of the resource.
+    - name: directMembersCount
+      value: "{{ directMembersCount }}"
+      description: |
+        The number of users that are direct members of the group. If a group is a member (child) of this group (the parent), members of the child group are not counted in the \`directMembersCount\` property of the parent group.
+    - name: adminCreated
+      value: {{ adminCreated }}
+      description: |
+        Read-only. Value is \`true\` if this group was created by an administrator rather than a user.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -478,16 +471,16 @@ Updates a group's properties. This method supports [patch semantics](https://dev
 ```sql
 UPDATE googleadmin.directory.groups
 SET 
-data__id = '{{ id }}',
 data__email = '{{ email }}',
+data__nonEditableAliases = '{{ nonEditableAliases }}',
 data__name = '{{ name }}',
+data__id = '{{ id }}',
 data__description = '{{ description }}',
-data__adminCreated = {{ adminCreated }},
-data__directMembersCount = '{{ directMembersCount }}',
 data__kind = '{{ kind }}',
-data__etag = '{{ etag }}',
 data__aliases = '{{ aliases }}',
-data__nonEditableAliases = '{{ nonEditableAliases }}'
+data__etag = '{{ etag }}',
+data__directMembersCount = '{{ directMembersCount }}',
+data__adminCreated = {{ adminCreated }}
 WHERE 
 groupKey = '{{ groupKey }}' --required
 RETURNING
@@ -521,16 +514,16 @@ Updates a group's properties.
 ```sql
 REPLACE googleadmin.directory.groups
 SET 
-data__id = '{{ id }}',
 data__email = '{{ email }}',
+data__nonEditableAliases = '{{ nonEditableAliases }}',
 data__name = '{{ name }}',
+data__id = '{{ id }}',
 data__description = '{{ description }}',
-data__adminCreated = {{ adminCreated }},
-data__directMembersCount = '{{ directMembersCount }}',
 data__kind = '{{ kind }}',
-data__etag = '{{ etag }}',
 data__aliases = '{{ aliases }}',
-data__nonEditableAliases = '{{ nonEditableAliases }}'
+data__etag = '{{ etag }}',
+data__directMembersCount = '{{ directMembersCount }}',
+data__adminCreated = {{ adminCreated }}
 WHERE 
 groupKey = '{{ groupKey }}' --required
 RETURNING

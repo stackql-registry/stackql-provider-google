@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>address_groups_items</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>address_groups_items</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="address_groups_items" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.address_groups_items" /></td></tr>
 </tbody></table>
@@ -182,33 +183,32 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: address_groups_items
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the address_groups_items resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the address_groups_items resource.
     - name: addressGroupsId
-      value: string
+      value: "{{ addressGroupsId }}"
       description: Required parameter for the address_groups_items resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the address_groups_items resource.
     - name: requestId
-      value: string
-      description: >
+      value: "{{ requestId }}"
+      description: |
         Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
-        
     - name: items
-      value: array
-      description: >
+      value:
+        - "{{ items }}"
+      description: |
         Required. List of items to add.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

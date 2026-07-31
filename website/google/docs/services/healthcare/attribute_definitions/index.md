@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>attribute_definitions</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>attribute_definitions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="attribute_definitions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.healthcare.attribute_definitions" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="category" /></td>
     <td><code>string</code></td>
-    <td>Required. The category of the attribute. The value of this field cannot be changed after creation.</td>
+    <td>Required. The category of the attribute. The value of this field cannot be changed after creation. (CATEGORY_UNSPECIFIED, RESOURCE, REQUEST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="consentDefaultValues" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="category" /></td>
     <td><code>string</code></td>
-    <td>Required. The category of the attribute. The value of this field cannot be changed after creation.</td>
+    <td>Required. The category of the attribute. The value of this field cannot be changed after creation. (CATEGORY_UNSPECIFIED, RESOURCE, REQUEST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="consentDefaultValues" /></td>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Attribute definitions in the specified consent store.</td>
 </tr>
 <tr>
@@ -294,9 +295,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND consentStoresId = '{{ consentStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -321,9 +322,9 @@ INSERT INTO google.healthcare.attribute_definitions (
 data__name,
 data__dataMappingDefaultValue,
 data__allowedValues,
+data__category,
 data__consentDefaultValues,
 data__description,
-data__category,
 projectsId,
 locationsId,
 datasetsId,
@@ -334,9 +335,9 @@ SELECT
 '{{ name }}',
 '{{ dataMappingDefaultValue }}',
 '{{ allowedValues }}',
+'{{ category }}',
 '{{ consentDefaultValues }}',
 '{{ description }}',
-'{{ category }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -354,56 +355,52 @@ description
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: attribute_definitions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the attribute_definitions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the attribute_definitions resource.
     - name: datasetsId
-      value: string
+      value: "{{ datasetsId }}"
       description: Required parameter for the attribute_definitions resource.
     - name: consentStoresId
-      value: string
+      value: "{{ consentStoresId }}"
       description: Required parameter for the attribute_definitions resource.
     - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the Attribute definition, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}\`. Cannot be changed after creation.
     - name: dataMappingDefaultValue
-      value: string
-      description: >
-        Optional. Default value of the attribute in User data mappings. If no default value is specified, it defaults to an empty value. This field is only applicable to attributes of the category `RESOURCE`.
-        
+      value: "{{ dataMappingDefaultValue }}"
+      description: |
+        Optional. Default value of the attribute in User data mappings. If no default value is specified, it defaults to an empty value. This field is only applicable to attributes of the category \`RESOURCE\`.
     - name: allowedValues
-      value: array
-      description: >
+      value:
+        - "{{ allowedValues }}"
+      description: |
         Required. Possible values for the attribute. The number of allowed values must not exceed 500. An empty list is invalid. The list can only be expanded after creation.
-        
-    - name: consentDefaultValues
-      value: array
-      description: >
-        Optional. Default values of the attribute in Consents. If no default values are specified, it defaults to an empty value.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A description of the attribute.
-        
     - name: category
-      value: string
-      description: >
+      value: "{{ category }}"
+      description: |
         Required. The category of the attribute. The value of this field cannot be changed after creation.
-        
       valid_values: ['CATEGORY_UNSPECIFIED', 'RESOURCE', 'REQUEST']
+    - name: consentDefaultValues
+      value:
+        - "{{ consentDefaultValues }}"
+      description: |
+        Optional. Default values of the attribute in Consents. If no default values are specified, it defaults to an empty value.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of the attribute.
     - name: attributeDefinitionId
-      value: string
-```
+      value: "{{ attributeDefinitionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -426,9 +423,9 @@ SET
 data__name = '{{ name }}',
 data__dataMappingDefaultValue = '{{ dataMappingDefaultValue }}',
 data__allowedValues = '{{ allowedValues }}',
+data__category = '{{ category }}',
 data__consentDefaultValues = '{{ consentDefaultValues }}',
-data__description = '{{ description }}',
-data__category = '{{ category }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

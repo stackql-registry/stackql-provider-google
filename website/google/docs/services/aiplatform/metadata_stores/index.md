@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>metadata_stores</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>metadata_stores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="metadata_stores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.metadata_stores" /></td></tr>
 </tbody></table>
@@ -328,34 +329,33 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: metadata_stores
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the metadata_stores resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the metadata_stores resource.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Description of the MetadataStore.
-        
     - name: dataplexConfig
-      value: object
-      description: >
+      description: |
         Optional. Dataplex integration settings.
-        
+      value:
+        enabledPipelinesLineage: {{ enabledPipelinesLineage }}
     - name: encryptionSpec
-      value: object
-      description: >
+      description: |
         Customer-managed encryption key spec for a Metadata Store. If set, this Metadata Store and all sub-resources of this Metadata Store are secured using this key.
-        
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: metadataStoreId
-      value: string
-```
+      value: "{{ metadataStoreId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

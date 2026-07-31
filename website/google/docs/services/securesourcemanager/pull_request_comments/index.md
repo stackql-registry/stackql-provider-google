@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>pull_request_comments</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>pull_request_comments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="pull_request_comments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securesourcemanager.pull_request_comments" /></td></tr>
 </tbody></table>
@@ -158,18 +159,18 @@ The following methods are available for this resource:
     <td>Lists pull request comments.</td>
 </tr>
 <tr>
-    <td><a href="#create"><CopyableCode code="create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
-    <td></td>
-    <td>Creates a pull request comment. This function is used to create a single PullRequestComment of type Comment, or a single PullRequestComment of type Code that's replying to another PullRequestComment of type Code. Use BatchCreatePullRequestComments to create multiple PullRequestComments for code reviews.</td>
-</tr>
-<tr>
     <td><a href="#batch_create"><CopyableCode code="batch_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
     <td></td>
     <td>Batch creates pull request comments. This function is used to create multiple PullRequestComments for code review. There needs to be exactly one PullRequestComment of type Review, and at most 100 PullRequestComments of type Code per request. The Position of the code comments must be unique within the request.</td>
+</tr>
+<tr>
+    <td><a href="#create"><CopyableCode code="create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
+    <td></td>
+    <td>Creates a pull request comment. This function is used to create a single PullRequestComment of type Comment, or a single PullRequestComment of type Code that's replying to another PullRequestComment of type Code. Use BatchCreatePullRequestComments to create multiple PullRequestComments for code reviews.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
@@ -186,18 +187,18 @@ The following methods are available for this resource:
     <td>Deletes a pull request comment.</td>
 </tr>
 <tr>
-    <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
-    <td></td>
-    <td>Resolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be resolved.</td>
-</tr>
-<tr>
     <td><a href="#unresolve"><CopyableCode code="unresolve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
     <td></td>
     <td>Unresolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be unresolved.</td>
+</tr>
+<tr>
+    <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
+    <td></td>
+    <td>Resolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be resolved.</td>
 </tr>
 </tbody>
 </table>
@@ -316,46 +317,13 @@ AND pageSize = '{{ pageSize }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="create"
+    defaultValue="batch_create"
     values={[
-        { label: 'create', value: 'create' },
         { label: 'batch_create', value: 'batch_create' },
+        { label: 'create', value: 'create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="create">
-
-Creates a pull request comment. This function is used to create a single PullRequestComment of type Comment, or a single PullRequestComment of type Code that's replying to another PullRequestComment of type Code. Use BatchCreatePullRequestComments to create multiple PullRequestComments for code reviews.
-
-```sql
-INSERT INTO google.securesourcemanager.pull_request_comments (
-data__review,
-data__name,
-data__code,
-data__comment,
-projectsId,
-locationsId,
-repositoriesId,
-pullRequestsId
-)
-SELECT 
-'{{ review }}',
-'{{ name }}',
-'{{ code }}',
-'{{ comment }}',
-'{{ projectsId }}',
-'{{ locationsId }}',
-'{{ repositoriesId }}',
-'{{ pullRequestsId }}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response
-;
-```
-</TabItem>
 <TabItem value="batch_create">
 
 Batch creates pull request comments. This function is used to create multiple PullRequestComments for code review. There needs to be exactly one PullRequestComment of type Review, and at most 100 PullRequestComments of type Code per request. The Position of the code comments must be unique within the request.
@@ -383,50 +351,110 @@ response
 ;
 ```
 </TabItem>
+<TabItem value="create">
+
+Creates a pull request comment. This function is used to create a single PullRequestComment of type Comment, or a single PullRequestComment of type Code that's replying to another PullRequestComment of type Code. Use BatchCreatePullRequestComments to create multiple PullRequestComments for code reviews.
+
+```sql
+INSERT INTO google.securesourcemanager.pull_request_comments (
+data__name,
+data__comment,
+data__code,
+data__review,
+projectsId,
+locationsId,
+repositoriesId,
+pullRequestsId
+)
+SELECT 
+'{{ name }}',
+'{{ comment }}',
+'{{ code }}',
+'{{ review }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
+'{{ repositoriesId }}',
+'{{ pullRequestsId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: pull_request_comments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the pull_request_comments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the pull_request_comments resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the pull_request_comments resource.
     - name: pullRequestsId
-      value: string
+      value: "{{ pullRequestsId }}"
       description: Required parameter for the pull_request_comments resource.
-    - name: review
-      value: object
-      description: >
-        Optional. The review summary comment.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Unique identifier for the pull request comment. The comment id is generated by the server. Format: `projects/{project}/locations/{location}/repositories/{repository}/pullRequests/{pull_request}/pullRequestComments/{comment_id}`
-        
-    - name: code
-      value: object
-      description: >
-        Optional. The comment on a code line.
-        
-    - name: comment
-      value: object
-      description: >
-        Optional. The general pull request comment.
-        
     - name: requests
-      value: array
-      description: >
+      description: |
         Required. The request message specifying the resources to create. There should be exactly one CreatePullRequestCommentRequest with CommentDetail being REVIEW in the list, and no more than 100 CreatePullRequestCommentRequests with CommentDetail being CODE in the list
-        
-```
+      value:
+        - parent: "{{ parent }}"
+          pullRequestComment:
+            name: "{{ name }}"
+            createTime: "{{ createTime }}"
+            updateTime: "{{ updateTime }}"
+            comment:
+              body: "{{ body }}"
+            code:
+              body: "{{ body }}"
+              effectiveRootComment: "{{ effectiveRootComment }}"
+              resolved: {{ resolved }}
+              effectiveCommitSha: "{{ effectiveCommitSha }}"
+              reply: "{{ reply }}"
+              position:
+                path: "{{ path }}"
+                line: "{{ line }}"
+            review:
+              effectiveCommitSha: "{{ effectiveCommitSha }}"
+              body: "{{ body }}"
+              actionType: "{{ actionType }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Unique identifier for the pull request comment. The comment id is generated by the server. Format: \`projects/{project}/locations/{location}/repositories/{repository}/pullRequests/{pull_request}/pullRequestComments/{comment_id}\`
+    - name: comment
+      description: |
+        Optional. The general pull request comment.
+      value:
+        body: "{{ body }}"
+    - name: code
+      description: |
+        Optional. The comment on a code line.
+      value:
+        body: "{{ body }}"
+        effectiveRootComment: "{{ effectiveRootComment }}"
+        resolved: {{ resolved }}
+        effectiveCommitSha: "{{ effectiveCommitSha }}"
+        reply: "{{ reply }}"
+        position:
+          path: "{{ path }}"
+          line: "{{ line }}"
+    - name: review
+      description: |
+        Optional. The review summary comment.
+      value:
+        effectiveCommitSha: "{{ effectiveCommitSha }}"
+        body: "{{ body }}"
+        actionType: "{{ actionType }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -446,10 +474,10 @@ Updates a pull request comment.
 ```sql
 UPDATE google.securesourcemanager.pull_request_comments
 SET 
-data__review = '{{ review }}',
 data__name = '{{ name }}',
+data__comment = '{{ comment }}',
 data__code = '{{ code }}',
-data__comment = '{{ comment }}'
+data__review = '{{ review }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -496,30 +524,12 @@ AND pullRequestCommentsId = '{{ pullRequestCommentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="resolve"
+    defaultValue="unresolve"
     values={[
-        { label: 'resolve', value: 'resolve' },
-        { label: 'unresolve', value: 'unresolve' }
+        { label: 'unresolve', value: 'unresolve' },
+        { label: 'resolve', value: 'resolve' }
     ]}
 >
-<TabItem value="resolve">
-
-Resolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be resolved.
-
-```sql
-EXEC google.securesourcemanager.pull_request_comments.resolve 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@pullRequestsId='{{ pullRequestsId }}' --required 
-@@json=
-'{
-"names": "{{ names }}", 
-"autoFill": {{ autoFill }}
-}'
-;
-```
-</TabItem>
 <TabItem value="unresolve">
 
 Unresolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be unresolved.
@@ -532,8 +542,26 @@ EXEC google.securesourcemanager.pull_request_comments.unresolve
 @pullRequestsId='{{ pullRequestsId }}' --required 
 @@json=
 '{
-"names": "{{ names }}", 
-"autoFill": {{ autoFill }}
+"autoFill": {{ autoFill }}, 
+"names": "{{ names }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="resolve">
+
+Resolves pull request comments. A list of PullRequestComment names must be provided. The PullRequestComment names must be in the same conversation thread. If auto_fill is set, all comments in the conversation thread will be resolved.
+
+```sql
+EXEC google.securesourcemanager.pull_request_comments.resolve 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@pullRequestsId='{{ pullRequestsId }}' --required 
+@@json=
+'{
+"autoFill": {{ autoFill }}, 
+"names": "{{ names }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>transfer_configs</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>transfer_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="transfer_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquerydatatransfer.transfer_configs" /></td></tr>
 </tbody></table>
@@ -104,7 +105,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managedTableType" /></td>
     <td><code>string</code></td>
-    <td>The classification of the destination table.</td>
+    <td>The classification of the destination table. (MANAGED_TABLE_TYPE_UNSPECIFIED, NATIVE, BIGLAKE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadataDestination" /></td>
+    <td><code>object</code></td>
+    <td>The metadata destination of the transfer config. (id: MetadataDestination)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextRunTime" /></td>
@@ -144,7 +150,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the most recently updated transfer run.</td>
+    <td>Output only. State of the most recently updated transfer run. (TRANSFER_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -223,7 +229,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managedTableType" /></td>
     <td><code>string</code></td>
-    <td>The classification of the destination table.</td>
+    <td>The classification of the destination table. (MANAGED_TABLE_TYPE_UNSPECIFIED, NATIVE, BIGLAKE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadataDestination" /></td>
+    <td><code>object</code></td>
+    <td>The metadata destination of the transfer config. (id: MetadataDestination)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextRunTime" /></td>
@@ -263,7 +274,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the most recently updated transfer run.</td>
+    <td>Output only. State of the most recently updated transfer run. (TRANSFER_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -342,7 +353,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managedTableType" /></td>
     <td><code>string</code></td>
-    <td>The classification of the destination table.</td>
+    <td>The classification of the destination table. (MANAGED_TABLE_TYPE_UNSPECIFIED, NATIVE, BIGLAKE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadataDestination" /></td>
+    <td><code>object</code></td>
+    <td>The metadata destination of the transfer config. (id: MetadataDestination)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextRunTime" /></td>
@@ -382,7 +398,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the most recently updated transfer run.</td>
+    <td>Output only. State of the most recently updated transfer run. (TRANSFER_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -461,7 +477,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managedTableType" /></td>
     <td><code>string</code></td>
-    <td>The classification of the destination table.</td>
+    <td>The classification of the destination table. (MANAGED_TABLE_TYPE_UNSPECIFIED, NATIVE, BIGLAKE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadataDestination" /></td>
+    <td><code>object</code></td>
+    <td>The metadata destination of the transfer config. (id: MetadataDestination)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextRunTime" /></td>
@@ -501,7 +522,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the most recently updated transfer run.</td>
+    <td>Output only. State of the most recently updated transfer run. (TRANSFER_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -551,21 +572,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_transfer_configs_list"><CopyableCode code="projects_locations_transfer_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-dataSourceIds"><code>dataSourceIds</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-dataSourceIds"><code>dataSourceIds</code></a></td>
     <td>Returns information about all transfer configs owned by a project in the specified location.</td>
 </tr>
 <tr>
     <td><a href="#projects_transfer_configs_list"><CopyableCode code="projects_transfer_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-dataSourceIds"><code>dataSourceIds</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-dataSourceIds"><code>dataSourceIds</code></a></td>
     <td>Returns information about all transfer configs owned by a project in the specified location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_transfer_configs_create"><CopyableCode code="projects_locations_transfer_configs_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a>, <a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a></td>
+    <td><a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a></td>
     <td>Creates a new data transfer configuration.</td>
 </tr>
 <tr>
@@ -579,14 +600,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_transfer_configs_patch"><CopyableCode code="projects_locations_transfer_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a>, <a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a></td>
+    <td><a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a data transfer configuration. All fields must be set, even if they are not updated.</td>
 </tr>
 <tr>
     <td><a href="#projects_transfer_configs_patch"><CopyableCode code="projects_transfer_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a>, <a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a></td>
+    <td><a href="#parameter-serviceAccountName"><code>serviceAccountName</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-authorizationCode"><code>authorizationCode</code></a>, <a href="#parameter-versionInfo"><code>versionInfo</code></a></td>
     <td>Updates a data transfer configuration. All fields must be set, even if they are not updated.</td>
 </tr>
 <tr>
@@ -728,6 +749,7 @@ emailPreferences,
 encryptionConfiguration,
 error,
 managedTableType,
+metadataDestination,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -762,6 +784,7 @@ emailPreferences,
 encryptionConfiguration,
 error,
 managedTableType,
+metadataDestination,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -795,6 +818,7 @@ emailPreferences,
 encryptionConfiguration,
 error,
 managedTableType,
+metadataDestination,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -808,9 +832,9 @@ userId
 FROM google.bigquerydatatransfer.transfer_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND dataSourceIds = '{{ dataSourceIds }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND dataSourceIds = '{{ dataSourceIds }}'
 ;
 ```
 </TabItem>
@@ -831,6 +855,7 @@ emailPreferences,
 encryptionConfiguration,
 error,
 managedTableType,
+metadataDestination,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -843,9 +868,9 @@ updateTime,
 userId
 FROM google.bigquerydatatransfer.transfer_configs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND dataSourceIds = '{{ dataSourceIds }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND dataSourceIds = '{{ dataSourceIds }}'
 ;
 ```
 </TabItem>
@@ -868,48 +893,50 @@ Creates a new data transfer configuration.
 
 ```sql
 INSERT INTO google.bigquerydatatransfer.transfer_configs (
+data__userId,
+data__scheduleOptions,
+data__emailPreferences,
 data__name,
+data__schedule,
+data__disabled,
+data__encryptionConfiguration,
+data__metadataDestination,
+data__notificationPubsubTopic,
+data__managedTableType,
 data__destinationDatasetId,
+data__params,
 data__displayName,
 data__dataSourceId,
-data__params,
-data__schedule,
-data__scheduleOptions,
-data__scheduleOptionsV2,
 data__dataRefreshWindowDays,
-data__disabled,
-data__userId,
-data__notificationPubsubTopic,
-data__emailPreferences,
-data__encryptionConfiguration,
-data__managedTableType,
+data__scheduleOptionsV2,
 projectsId,
 locationsId,
+serviceAccountName,
 authorizationCode,
-versionInfo,
-serviceAccountName
+versionInfo
 )
 SELECT 
+'{{ userId }}',
+'{{ scheduleOptions }}',
+'{{ emailPreferences }}',
 '{{ name }}',
+'{{ schedule }}',
+{{ disabled }},
+'{{ encryptionConfiguration }}',
+'{{ metadataDestination }}',
+'{{ notificationPubsubTopic }}',
+'{{ managedTableType }}',
 '{{ destinationDatasetId }}',
+'{{ params }}',
 '{{ displayName }}',
 '{{ dataSourceId }}',
-'{{ params }}',
-'{{ schedule }}',
-'{{ scheduleOptions }}',
-'{{ scheduleOptionsV2 }}',
 {{ dataRefreshWindowDays }},
-{{ disabled }},
-'{{ userId }}',
-'{{ notificationPubsubTopic }}',
-'{{ emailPreferences }}',
-'{{ encryptionConfiguration }}',
-'{{ managedTableType }}',
+'{{ scheduleOptionsV2 }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ serviceAccountName }}',
 '{{ authorizationCode }}',
-'{{ versionInfo }}',
-'{{ serviceAccountName }}'
+'{{ versionInfo }}'
 RETURNING
 name,
 dataRefreshWindowDays,
@@ -922,6 +949,7 @@ emailPreferences,
 encryptionConfiguration,
 error,
 managedTableType,
+metadataDestination,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -941,42 +969,44 @@ Creates a new data transfer configuration.
 
 ```sql
 INSERT INTO google.bigquerydatatransfer.transfer_configs (
+data__userId,
+data__scheduleOptions,
+data__emailPreferences,
 data__name,
+data__schedule,
+data__disabled,
+data__encryptionConfiguration,
+data__metadataDestination,
+data__notificationPubsubTopic,
+data__managedTableType,
 data__destinationDatasetId,
+data__params,
 data__displayName,
 data__dataSourceId,
-data__params,
-data__schedule,
-data__scheduleOptions,
-data__scheduleOptionsV2,
 data__dataRefreshWindowDays,
-data__disabled,
-data__userId,
-data__notificationPubsubTopic,
-data__emailPreferences,
-data__encryptionConfiguration,
-data__managedTableType,
+data__scheduleOptionsV2,
 projectsId,
 authorizationCode,
 versionInfo,
 serviceAccountName
 )
 SELECT 
+'{{ userId }}',
+'{{ scheduleOptions }}',
+'{{ emailPreferences }}',
 '{{ name }}',
+'{{ schedule }}',
+{{ disabled }},
+'{{ encryptionConfiguration }}',
+'{{ metadataDestination }}',
+'{{ notificationPubsubTopic }}',
+'{{ managedTableType }}',
 '{{ destinationDatasetId }}',
+'{{ params }}',
 '{{ displayName }}',
 '{{ dataSourceId }}',
-'{{ params }}',
-'{{ schedule }}',
-'{{ scheduleOptions }}',
-'{{ scheduleOptionsV2 }}',
 {{ dataRefreshWindowDays }},
-{{ disabled }},
-'{{ userId }}',
-'{{ notificationPubsubTopic }}',
-'{{ emailPreferences }}',
-'{{ encryptionConfiguration }}',
-'{{ managedTableType }}',
+'{{ scheduleOptionsV2 }}',
 '{{ projectsId }}',
 '{{ authorizationCode }}',
 '{{ versionInfo }}',
@@ -993,6 +1023,7 @@ emailPreferences,
 encryptionConfiguration,
 error,
 managedTableType,
+metadataDestination,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -1008,99 +1039,102 @@ userId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: transfer_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the transfer_configs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the transfer_configs resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.
-        
-    - name: destinationDatasetId
-      value: string
-      description: >
-        The BigQuery target dataset id.
-        
-    - name: displayName
-      value: string
-      description: >
-        User specified display name for the data transfer.
-        
-    - name: dataSourceId
-      value: string
-      description: >
-        Data source ID. This cannot be changed once data transfer is created. The full list of available data source IDs can be returned through an API call: https://cloud.google.com/bigquery-transfer/docs/reference/datatransfer/rest/v1/projects.locations.dataSources/list
-        
-    - name: params
-      value: object
-      description: >
-        Parameters specific to each data source. For more information see the bq tab in the 'Setting up a data transfer' section for each data source. For example the parameters for Cloud Storage transfers are listed here: https://cloud.google.com/bigquery-transfer/docs/cloud-storage-transfer#bq
-        
-    - name: schedule
-      value: string
-      description: >
-        Data transfer schedule. If the data source does not support a custom schedule, this should be empty. If it is empty, the default value for the data source will be used. The specified times are in UTC. Examples of valid format: `1st,3rd monday of month 15:30`, `every wed,fri of jan,jun 13:15`, and `first sunday of quarter 00:00`. See more explanation about the format here: https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format NOTE: The minimum interval time between recurring transfers depends on the data source; refer to the documentation for your data source.
-        
-    - name: scheduleOptions
-      value: object
-      description: >
-        Options customizing the data transfer schedule.
-        
-    - name: scheduleOptionsV2
-      value: object
-      description: >
-        Options customizing different types of data transfer schedule. This field replaces "schedule" and "schedule_options" fields. ScheduleOptionsV2 cannot be used together with ScheduleOptions/Schedule.
-        
-    - name: dataRefreshWindowDays
-      value: integer
-      description: >
-        The number of days to look back to automatically refresh the data. For example, if `data_refresh_window_days = 10`, then every day BigQuery reingests data for [today-10, today-1], rather than ingesting data for just [today-1]. Only valid if the data source supports the feature. Set the value to 0 to use the default value.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Is this config disabled. When set to true, no runs will be scheduled for this transfer config.
-        
     - name: userId
-      value: string
-      description: >
+      value: "{{ userId }}"
+      description: |
         Deprecated. Unique ID of the user on whose behalf transfer is done.
-        
-    - name: notificationPubsubTopic
-      value: string
-      description: >
-        Pub/Sub topic where notifications will be sent after transfer runs associated with this transfer config finish. The format for specifying a pubsub topic is: `projects/{project_id}/topics/{topic_id}`
-        
+    - name: scheduleOptions
+      description: |
+        Options customizing the data transfer schedule.
+      value:
+        startTime: "{{ startTime }}"
+        endTime: "{{ endTime }}"
+        disableAutoScheduling: {{ disableAutoScheduling }}
     - name: emailPreferences
-      value: object
-      description: >
+      description: |
         Email notifications will be sent according to these preferences to the email address of the user who owns this transfer config.
-        
+      value:
+        enableFailureEmail: {{ enableFailureEmail }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the transfer config. Transfer config names have the form either \`projects/{project_id}/locations/{region}/transferConfigs/{config_id}\` or \`projects/{project_id}/transferConfigs/{config_id}\`, where \`config_id\` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.
+    - name: schedule
+      value: "{{ schedule }}"
+      description: |
+        Data transfer schedule. If the data source does not support a custom schedule, this should be empty. If it is empty, the default value for the data source will be used. The specified times are in UTC. Examples of valid format: \`1st,3rd monday of month 15:30\`, \`every wed,fri of jan,jun 13:15\`, and \`first sunday of quarter 00:00\`. See more explanation about the format here: https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format NOTE: The minimum interval time between recurring transfers depends on the data source; refer to the documentation for your data source.
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Is this config disabled. When set to true, no runs will be scheduled for this transfer config.
     - name: encryptionConfiguration
-      value: object
-      description: >
+      description: |
         The encryption configuration part. Currently, it is only used for the optional KMS key name. The BigQuery service account of your project must be granted permissions to use the key. Read methods will return the key name applied in effect. Write methods will apply the key if it is present, or otherwise try to apply project default keys if it is absent.
-        
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: metadataDestination
+      description: |
+        The metadata destination of the transfer config.
+      value:
+        dataplexConfiguration:
+          entryGroup: "{{ entryGroup }}"
+    - name: notificationPubsubTopic
+      value: "{{ notificationPubsubTopic }}"
+      description: |
+        Pub/Sub topic where notifications will be sent after transfer runs associated with this transfer config finish. The format for specifying a pubsub topic is: \`projects/{project_id}/topics/{topic_id}\`
     - name: managedTableType
-      value: string
-      description: >
+      value: "{{ managedTableType }}"
+      description: |
         The classification of the destination table.
-        
       valid_values: ['MANAGED_TABLE_TYPE_UNSPECIFIED', 'NATIVE', 'BIGLAKE']
-    - name: authorizationCode
-      value: string
-    - name: versionInfo
-      value: string
+    - name: destinationDatasetId
+      value: "{{ destinationDatasetId }}"
+      description: |
+        The BigQuery target dataset id.
+    - name: params
+      value: "{{ params }}"
+      description: |
+        Parameters specific to each data source. For more information see the bq tab in the 'Setting up a data transfer' section for each data source. For example the parameters for Cloud Storage transfers are listed here: https://cloud.google.com/bigquery-transfer/docs/cloud-storage-transfer#bq
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User specified display name for the data transfer.
+    - name: dataSourceId
+      value: "{{ dataSourceId }}"
+      description: |
+        Data source ID. This cannot be changed once data transfer is created. The full list of available data source IDs can be returned through an API call: https://cloud.google.com/bigquery-transfer/docs/reference/datatransfer/rest/v1/projects.locations.dataSources/list
+    - name: dataRefreshWindowDays
+      value: {{ dataRefreshWindowDays }}
+      description: |
+        The number of days to look back to automatically refresh the data. For example, if \`data_refresh_window_days = 10\`, then every day BigQuery reingests data for [today-10, today-1], rather than ingesting data for just [today-1]. Only valid if the data source supports the feature. Set the value to 0 to use the default value.
+    - name: scheduleOptionsV2
+      description: |
+        Options customizing different types of data transfer schedule. This field replaces "schedule" and "schedule_options" fields. ScheduleOptionsV2 cannot be used together with ScheduleOptions/Schedule.
+      value:
+        eventDrivenSchedule:
+          pubsubSubscription: "{{ pubsubSubscription }}"
+        manualSchedule: "{{ manualSchedule }}"
+        timeBasedSchedule:
+          endTime: "{{ endTime }}"
+          schedule: "{{ schedule }}"
+          startTime: "{{ startTime }}"
     - name: serviceAccountName
-      value: string
-```
+      value: "{{ serviceAccountName }}"
+    - name: authorizationCode
+      value: "{{ authorizationCode }}"
+    - name: versionInfo
+      value: "{{ versionInfo }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1121,29 +1155,30 @@ Updates a data transfer configuration. All fields must be set, even if they are 
 ```sql
 UPDATE google.bigquerydatatransfer.transfer_configs
 SET 
+data__userId = '{{ userId }}',
+data__scheduleOptions = '{{ scheduleOptions }}',
+data__emailPreferences = '{{ emailPreferences }}',
 data__name = '{{ name }}',
+data__schedule = '{{ schedule }}',
+data__disabled = {{ disabled }},
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
+data__metadataDestination = '{{ metadataDestination }}',
+data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__managedTableType = '{{ managedTableType }}',
 data__destinationDatasetId = '{{ destinationDatasetId }}',
+data__params = '{{ params }}',
 data__displayName = '{{ displayName }}',
 data__dataSourceId = '{{ dataSourceId }}',
-data__params = '{{ params }}',
-data__schedule = '{{ schedule }}',
-data__scheduleOptions = '{{ scheduleOptions }}',
-data__scheduleOptionsV2 = '{{ scheduleOptionsV2 }}',
 data__dataRefreshWindowDays = {{ dataRefreshWindowDays }},
-data__disabled = {{ disabled }},
-data__userId = '{{ userId }}',
-data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
-data__emailPreferences = '{{ emailPreferences }}',
-data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__managedTableType = '{{ managedTableType }}'
+data__scheduleOptionsV2 = '{{ scheduleOptionsV2 }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND transferConfigsId = '{{ transferConfigsId }}' --required
-AND authorizationCode = '{{ authorizationCode}}'
-AND updateMask = '{{ updateMask}}'
-AND versionInfo = '{{ versionInfo}}'
 AND serviceAccountName = '{{ serviceAccountName}}'
+AND authorizationCode = '{{ authorizationCode}}'
+AND versionInfo = '{{ versionInfo}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 dataRefreshWindowDays,
@@ -1156,6 +1191,7 @@ emailPreferences,
 encryptionConfiguration,
 error,
 managedTableType,
+metadataDestination,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -1175,28 +1211,29 @@ Updates a data transfer configuration. All fields must be set, even if they are 
 ```sql
 UPDATE google.bigquerydatatransfer.transfer_configs
 SET 
+data__userId = '{{ userId }}',
+data__scheduleOptions = '{{ scheduleOptions }}',
+data__emailPreferences = '{{ emailPreferences }}',
 data__name = '{{ name }}',
+data__schedule = '{{ schedule }}',
+data__disabled = {{ disabled }},
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
+data__metadataDestination = '{{ metadataDestination }}',
+data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
+data__managedTableType = '{{ managedTableType }}',
 data__destinationDatasetId = '{{ destinationDatasetId }}',
+data__params = '{{ params }}',
 data__displayName = '{{ displayName }}',
 data__dataSourceId = '{{ dataSourceId }}',
-data__params = '{{ params }}',
-data__schedule = '{{ schedule }}',
-data__scheduleOptions = '{{ scheduleOptions }}',
-data__scheduleOptionsV2 = '{{ scheduleOptionsV2 }}',
 data__dataRefreshWindowDays = {{ dataRefreshWindowDays }},
-data__disabled = {{ disabled }},
-data__userId = '{{ userId }}',
-data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
-data__emailPreferences = '{{ emailPreferences }}',
-data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__managedTableType = '{{ managedTableType }}'
+data__scheduleOptionsV2 = '{{ scheduleOptionsV2 }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND transferConfigsId = '{{ transferConfigsId }}' --required
-AND authorizationCode = '{{ authorizationCode}}'
-AND updateMask = '{{ updateMask}}'
-AND versionInfo = '{{ versionInfo}}'
 AND serviceAccountName = '{{ serviceAccountName}}'
+AND updateMask = '{{ updateMask}}'
+AND authorizationCode = '{{ authorizationCode}}'
+AND versionInfo = '{{ versionInfo}}'
 RETURNING
 name,
 dataRefreshWindowDays,
@@ -1209,6 +1246,7 @@ emailPreferences,
 encryptionConfiguration,
 error,
 managedTableType,
+metadataDestination,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -1280,8 +1318,8 @@ EXEC google.bigquerydatatransfer.transfer_configs.projects_transfer_configs_sche
 @transferConfigsId='{{ transferConfigsId }}' --required 
 @@json=
 '{
-"startTime": "{{ startTime }}", 
-"endTime": "{{ endTime }}"
+"endTime": "{{ endTime }}", 
+"startTime": "{{ startTime }}"
 }'
 ;
 ```
@@ -1313,8 +1351,8 @@ EXEC google.bigquerydatatransfer.transfer_configs.projects_locations_transfer_co
 @transferConfigsId='{{ transferConfigsId }}' --required 
 @@json=
 '{
-"startTime": "{{ startTime }}", 
-"endTime": "{{ endTime }}"
+"endTime": "{{ endTime }}", 
+"startTime": "{{ startTime }}"
 }'
 ;
 ```

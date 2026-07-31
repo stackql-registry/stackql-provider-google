@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>glossaries</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>glossaries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="glossaries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.glossaries" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The resource name of the glossary. Glossary names have the form `projects/&#123;project-number-or-id&#125;/locations/&#123;location-id&#125;/glossaries/&#123;glossary-id&#125;`.</td>
+    <td>Identifier. The resource name of the glossary. Glossary names have the form `projects/&#123;project-number-or-id&#125;/locations/&#123;location-id&#125;/glossaries/&#123;glossary-id&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The resource name of the glossary. Glossary names have the form `projects/&#123;project-number-or-id&#125;/locations/&#123;location-id&#125;/glossaries/&#123;glossary-id&#125;`.</td>
+    <td>Identifier. The resource name of the glossary. Glossary names have the form `projects/&#123;project-number-or-id&#125;/locations/&#123;location-id&#125;/glossaries/&#123;glossary-id&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_glossaries_list"><CopyableCode code="projects_locations_glossaries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists glossaries in a project. Returns NOT_FOUND, if the project doesn't exist.</td>
 </tr>
 <tr>
@@ -299,9 +300,9 @@ submitTime
 FROM google.translate.glossaries
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -324,18 +325,18 @@ Creates a glossary and returns the long-running operation. Returns NOT_FOUND, if
 ```sql
 INSERT INTO google.translate.glossaries (
 data__name,
+data__inputConfig,
 data__languagePair,
 data__languageCodesSet,
-data__inputConfig,
 data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ name }}',
+'{{ inputConfig }}',
 '{{ languagePair }}',
 '{{ languageCodesSet }}',
-'{{ inputConfig }}',
 '{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -350,42 +351,43 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: glossaries
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the glossaries resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the glossaries resource.
     - name: name
-      value: string
-      description: >
-        Required. The resource name of the glossary. Glossary names have the form `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary-id}`.
-        
-    - name: languagePair
-      value: object
-      description: >
-        Used with unidirectional glossaries.
-        
-    - name: languageCodesSet
-      value: object
-      description: >
-        Used with equivalent term set glossaries.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the glossary. Glossary names have the form \`projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary-id}\`.
     - name: inputConfig
-      value: object
-      description: >
+      description: |
         Required. Provides examples to build the glossary from. Total glossary must not exceed 10M Unicode codepoints.
-        
+      value:
+        gcsSource:
+          inputUri: "{{ inputUri }}"
+    - name: languagePair
+      description: |
+        Used with unidirectional glossaries.
+      value:
+        sourceLanguageCode: "{{ sourceLanguageCode }}"
+        targetLanguageCode: "{{ targetLanguageCode }}"
+    - name: languageCodesSet
+      description: |
+        Used with equivalent term set glossaries.
+      value:
+        languageCodes:
+          - "{{ languageCodes }}"
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. The display name of the glossary.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -406,9 +408,9 @@ Updates a glossary. A LRO is used since the update can be async if the glossary'
 UPDATE google.translate.glossaries
 SET 
 data__name = '{{ name }}',
+data__inputConfig = '{{ inputConfig }}',
 data__languagePair = '{{ languagePair }}',
 data__languageCodesSet = '{{ languageCodesSet }}',
-data__inputConfig = '{{ inputConfig }}',
 data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

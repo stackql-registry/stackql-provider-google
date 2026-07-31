@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workload_identity_pools</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workload_identity_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workload_identity_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.workload_identity_pools" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the pool.</td>
+    <td>Identifier. The resource name of the pool.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -87,12 +88,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mode" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The mode the pool is operating in.</td>
+    <td>Immutable. The mode the pool is operating in. (MODE_UNSPECIFIED, FEDERATION_ONLY, TRUST_DOMAIN, SYSTEM_TRUST_DOMAIN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the pool.</td>
+    <td>Output only. The state of the pool. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -111,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the pool.</td>
+    <td>Identifier. The resource name of the pool.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -146,12 +147,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mode" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The mode the pool is operating in.</td>
+    <td>Immutable. The mode the pool is operating in. (MODE_UNSPECIFIED, FEDERATION_ONLY, TRUST_DOMAIN, SYSTEM_TRUST_DOMAIN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the pool.</td>
+    <td>Output only. The state of the pool. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -214,6 +215,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
     <td></td>
     <td>Undeletes a WorkloadIdentityPool, as long as it was deleted fewer than 30 days ago.</td>
+</tr>
+<tr>
+    <td><a href="#set_attestation_rules"><CopyableCode code="set_attestation_rules" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
+    <td></td>
+    <td>Set all AttestationRule on a WorkloadIdentityPoolManagedIdentity. A maximum of 50 AttestationRules can be set.</td>
 </tr>
 </tbody>
 </table>
@@ -347,23 +355,25 @@ Creates a new WorkloadIdentityPool. You cannot reuse the name of a deleted pool 
 
 ```sql
 INSERT INTO google.iam.workload_identity_pools (
-data__displayName,
-data__description,
-data__disabled,
-data__mode,
 data__inlineCertificateIssuanceConfig,
+data__disabled,
+data__description,
+data__name,
+data__displayName,
 data__inlineTrustConfig,
+data__mode,
 projectsId,
 locationsId,
 workloadIdentityPoolId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
-{{ disabled }},
-'{{ mode }}',
 '{{ inlineCertificateIssuanceConfig }}',
+{{ disabled }},
+'{{ description }}',
+'{{ name }}',
+'{{ displayName }}',
 '{{ inlineTrustConfig }}',
+'{{ mode }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workloadIdentityPoolId }}'
@@ -378,50 +388,54 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workload_identity_pools
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the workload_identity_pools resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workload_identity_pools resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. A display name for the pool. Cannot exceed 32 characters.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A description of the pool. Cannot exceed 256 characters.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Whether the pool is disabled. You cannot use a disabled pool to exchange tokens, or use existing tokens to access resources. If the pool is re-enabled, existing tokens grant access again.
-        
-    - name: mode
-      value: string
-      description: >
-        Immutable. The mode the pool is operating in.
-        
-      valid_values: ['MODE_UNSPECIFIED', 'FEDERATION_ONLY', 'TRUST_DOMAIN']
     - name: inlineCertificateIssuanceConfig
-      value: object
-      description: >
+      description: |
         Optional. Defines the Certificate Authority (CA) pool resources and configurations required for issuance and rotation of mTLS workload certificates.
-        
+      value:
+        lifetime: "{{ lifetime }}"
+        keyAlgorithm: "{{ keyAlgorithm }}"
+        caPools: "{{ caPools }}"
+        rotationWindowPercentage: {{ rotationWindowPercentage }}
+        useDefaultSharedCa: {{ useDefaultSharedCa }}
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Whether the pool is disabled. You cannot use a disabled pool to exchange tokens, or use existing tokens to access resources. If the pool is re-enabled, existing tokens grant access again.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of the pool. Cannot exceed 256 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the pool.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. A display name for the pool. Cannot exceed 32 characters.
     - name: inlineTrustConfig
-      value: object
-      description: >
+      description: |
         Optional. Represents config to add additional trusted trust domains.
-        
+      value:
+        additionalTrustBundles: "{{ additionalTrustBundles }}"
+    - name: mode
+      value: "{{ mode }}"
+      description: |
+        Immutable. The mode the pool is operating in.
+      valid_values: ['MODE_UNSPECIFIED', 'FEDERATION_ONLY', 'TRUST_DOMAIN', 'SYSTEM_TRUST_DOMAIN']
     - name: workloadIdentityPoolId
-      value: string
-```
+      value: "{{ workloadIdentityPoolId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -441,12 +455,13 @@ Updates an existing WorkloadIdentityPool.
 ```sql
 UPDATE google.iam.workload_identity_pools
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__disabled = {{ disabled }},
-data__mode = '{{ mode }}',
 data__inlineCertificateIssuanceConfig = '{{ inlineCertificateIssuanceConfig }}',
-data__inlineTrustConfig = '{{ inlineTrustConfig }}'
+data__disabled = {{ disabled }},
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
+data__inlineTrustConfig = '{{ inlineTrustConfig }}',
+data__mode = '{{ mode }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -491,7 +506,8 @@ AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' --required
 <Tabs
     defaultValue="undelete"
     values={[
-        { label: 'undelete', value: 'undelete' }
+        { label: 'undelete', value: 'undelete' },
+        { label: 'set_attestation_rules', value: 'set_attestation_rules' }
     ]}
 >
 <TabItem value="undelete">
@@ -503,6 +519,22 @@ EXEC google.iam.workload_identity_pools.undelete
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @workloadIdentityPoolsId='{{ workloadIdentityPoolsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="set_attestation_rules">
+
+Set all AttestationRule on a WorkloadIdentityPoolManagedIdentity. A maximum of 50 AttestationRules can be set.
+
+```sql
+EXEC google.iam.workload_identity_pools.set_attestation_rules 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@workloadIdentityPoolsId='{{ workloadIdentityPoolsId }}' --required 
+@@json=
+'{
+"attestationRules": "{{ attestationRules }}"
+}'
 ;
 ```
 </TabItem>

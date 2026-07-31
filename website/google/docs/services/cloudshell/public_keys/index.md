@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>public_keys</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>public_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="public_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudshell.public_keys" /></td></tr>
 </tbody></table>
@@ -126,22 +127,21 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: public_keys
   props:
     - name: usersId
-      value: string
+      value: "{{ usersId }}"
       description: Required parameter for the public_keys resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the public_keys resource.
     - name: key
-      value: string
-      description: >
-        Key that should be added to the environment. Supported formats are `ssh-dss` (see RFC4253), `ssh-rsa` (see RFC4253), `ecdsa-sha2-nistp256` (see RFC5656), `ecdsa-sha2-nistp384` (see RFC5656) and `ecdsa-sha2-nistp521` (see RFC5656). It should be structured as <format> <content>, where <content> part is encoded with Base64.
-        
-```
+      value: "{{ key }}"
+      description: |
+        Key that should be added to the environment. Supported formats are \`ssh-dss\` (see RFC4253), \`ssh-rsa\` (see RFC4253), \`ecdsa-sha2-nistp256\` (see RFC5656), \`ecdsa-sha2-nistp384\` (see RFC5656) and \`ecdsa-sha2-nistp521\` (see RFC5656). It should be structured as <format> <content>, where <content> part is encoded with Base64.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

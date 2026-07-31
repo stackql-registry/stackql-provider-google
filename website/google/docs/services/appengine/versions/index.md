@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>versions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>versions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="versions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.appengine.versions" /></td></tr>
 </tbody></table>
@@ -68,6 +69,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="appEngineApis" /></td>
     <td><code>boolean</code></td>
     <td>Allows App Engine second generation runtimes to access the legacy bundled services.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="appEngineBundledServices" /></td>
+    <td><code>array</code></td>
+    <td>List of specific App Engine Bundled Services that are enabled for this Version.</td>
 </tr>
 <tr>
     <td><CopyableCode code="automaticScaling" /></td>
@@ -232,7 +238,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="servingStatus" /></td>
     <td><code>string</code></td>
-    <td>Current serving status of this version. Only the versions with a SERVING status create instances and can be billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to SERVING.</td>
+    <td>Current serving status of this version. Only the versions with a SERVING status create instances and can be billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to SERVING. (SERVING_STATUS_UNSPECIFIED, SERVING, STOPPED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="threadsafe" /></td>
@@ -294,6 +300,11 @@ The following fields are returned by `SELECT` queries:
     <td>Allows App Engine second generation runtimes to access the legacy bundled services.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="appEngineBundledServices" /></td>
+    <td><code>array</code></td>
+    <td>List of specific App Engine Bundled Services that are enabled for this Version.</td>
+</tr>
+<tr>
     <td><CopyableCode code="automaticScaling" /></td>
     <td><code>object</code></td>
     <td>Automatic scaling is based on request rate, response latencies, and other application metrics. Instances are dynamically created and destroyed as needed in order to handle traffic. (id: AutomaticScaling)</td>
@@ -456,7 +467,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="servingStatus" /></td>
     <td><code>string</code></td>
-    <td>Current serving status of this version. Only the versions with a SERVING status create instances and can be billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to SERVING.</td>
+    <td>Current serving status of this version. Only the versions with a SERVING status create instances and can be billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to SERVING. (SERVING_STATUS_UNSPECIFIED, SERVING, STOPPED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="threadsafe" /></td>
@@ -514,7 +525,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the versions of a service.</td>
 </tr>
 <tr>
@@ -537,6 +548,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td></td>
     <td>Deletes an existing Version resource.</td>
+</tr>
+<tr>
+    <td><a href="#export_app_image"><CopyableCode code="export_app_image" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td></td>
+    <td>Exports a user image to Artifact Registry.</td>
 </tr>
 </tbody>
 </table>
@@ -626,6 +644,7 @@ id,
 name,
 apiConfig,
 appEngineApis,
+appEngineBundledServices,
 automaticScaling,
 basicScaling,
 betaSettings,
@@ -682,6 +701,7 @@ id,
 name,
 apiConfig,
 appEngineApis,
+appEngineBundledServices,
 automaticScaling,
 basicScaling,
 betaSettings,
@@ -723,9 +743,9 @@ zones
 FROM google.appengine.versions
 WHERE appsId = '{{ appsId }}' -- required
 AND servicesId = '{{ servicesId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -747,86 +767,88 @@ Deploys code and resource files to a new version.
 
 ```sql
 INSERT INTO google.appengine.versions (
-data__id,
 data__automaticScaling,
-data__basicScaling,
-data__manualScaling,
-data__inboundServices,
-data__instanceClass,
-data__network,
-data__zones,
-data__resources,
-data__runtime,
-data__runtimeChannel,
-data__threadsafe,
-data__vm,
-data__flexibleRuntimeSettings,
-data__appEngineApis,
-data__betaSettings,
-data__env,
-data__servingStatus,
-data__createTime,
-data__runtimeApiVersion,
-data__runtimeMainExecutablePath,
-data__serviceAccount,
-data__handlers,
-data__errorHandlers,
-data__libraries,
-data__apiConfig,
 data__envVariables,
 data__buildEnvVariables,
-data__defaultExpiration,
-data__healthCheck,
 data__readinessCheck,
-data__livenessCheck,
-data__nobuildFilesRegex,
-data__deployment,
+data__errorHandlers,
+data__libraries,
+data__defaultExpiration,
+data__runtime,
+data__runtimeApiVersion,
 data__endpointsApiService,
-data__entrypoint,
+data__network,
+data__env,
+data__nobuildFilesRegex,
 data__vpcAccessConnector,
+data__resources,
+data__betaSettings,
+data__instanceClass,
+data__servingStatus,
+data__livenessCheck,
+data__basicScaling,
+data__flexibleRuntimeSettings,
+data__createTime,
+data__inboundServices,
+data__threadsafe,
 data__generatedCustomerMetadata,
+data__runtimeChannel,
+data__id,
+data__serviceAccount,
+data__entrypoint,
+data__manualScaling,
+data__appEngineBundledServices,
+data__appEngineApis,
+data__zones,
+data__handlers,
+data__deployment,
+data__apiConfig,
+data__vm,
+data__runtimeMainExecutablePath,
+data__healthCheck,
 appsId,
 servicesId
 )
 SELECT 
-'{{ id }}',
 '{{ automaticScaling }}',
-'{{ basicScaling }}',
-'{{ manualScaling }}',
-'{{ inboundServices }}',
-'{{ instanceClass }}',
-'{{ network }}',
-'{{ zones }}',
-'{{ resources }}',
-'{{ runtime }}',
-'{{ runtimeChannel }}',
-{{ threadsafe }},
-{{ vm }},
-'{{ flexibleRuntimeSettings }}',
-{{ appEngineApis }},
-'{{ betaSettings }}',
-'{{ env }}',
-'{{ servingStatus }}',
-'{{ createTime }}',
-'{{ runtimeApiVersion }}',
-'{{ runtimeMainExecutablePath }}',
-'{{ serviceAccount }}',
-'{{ handlers }}',
-'{{ errorHandlers }}',
-'{{ libraries }}',
-'{{ apiConfig }}',
 '{{ envVariables }}',
 '{{ buildEnvVariables }}',
-'{{ defaultExpiration }}',
-'{{ healthCheck }}',
 '{{ readinessCheck }}',
-'{{ livenessCheck }}',
-'{{ nobuildFilesRegex }}',
-'{{ deployment }}',
+'{{ errorHandlers }}',
+'{{ libraries }}',
+'{{ defaultExpiration }}',
+'{{ runtime }}',
+'{{ runtimeApiVersion }}',
 '{{ endpointsApiService }}',
-'{{ entrypoint }}',
+'{{ network }}',
+'{{ env }}',
+'{{ nobuildFilesRegex }}',
 '{{ vpcAccessConnector }}',
+'{{ resources }}',
+'{{ betaSettings }}',
+'{{ instanceClass }}',
+'{{ servingStatus }}',
+'{{ livenessCheck }}',
+'{{ basicScaling }}',
+'{{ flexibleRuntimeSettings }}',
+'{{ createTime }}',
+'{{ inboundServices }}',
+{{ threadsafe }},
 '{{ generatedCustomerMetadata }}',
+'{{ runtimeChannel }}',
+'{{ id }}',
+'{{ serviceAccount }}',
+'{{ entrypoint }}',
+'{{ manualScaling }}',
+'{{ appEngineBundledServices }}',
+{{ appEngineApis }},
+'{{ zones }}',
+'{{ handlers }}',
+'{{ deployment }}',
+'{{ apiConfig }}',
+{{ vm }},
+'{{ runtimeMainExecutablePath }}',
+'{{ healthCheck }}',
 '{{ appsId }}',
 '{{ servicesId }}'
 RETURNING
@@ -840,208 +862,290 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: versions
   props:
     - name: appsId
-      value: string
+      value: "{{ appsId }}"
       description: Required parameter for the versions resource.
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the versions resource.
-    - name: id
-      value: string
-      description: >
-        Relative name of the version within the service. Example: v1. Version names can contain only lowercase letters, numbers, or hyphens. Reserved names: "default", "latest", and any name with the prefix "ah-".
-        
     - name: automaticScaling
-      value: object
-      description: >
+      description: |
         Automatic scaling is based on request rate, response latencies, and other application metrics. Instances are dynamically created and destroyed as needed in order to handle traffic.
-        
-    - name: basicScaling
-      value: object
-      description: >
-        A service with basic scaling will create an instance when the application receives a request. The instance will be turned down when the app becomes idle. Basic scaling is ideal for work that is intermittent or driven by user activity.
-        
-    - name: manualScaling
-      value: object
-      description: >
-        A service with manual scaling runs continuously, allowing you to perform complex initialization and rely on the state of its memory over time. Manually scaled versions are sometimes referred to as "backends".
-        
-    - name: inboundServices
-      value: array
-      description: >
-        Before an application can receive email or XMPP messages, the application must be configured to enable the service.
-        
-    - name: instanceClass
-      value: string
-      description: >
-        Instance class that is used to run this version. Valid values are: AutomaticScaling: F1, F2, F4, F4_1G ManualScaling or BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1 for AutomaticScaling and B1 for ManualScaling or BasicScaling.
-        
-    - name: network
-      value: object
-      description: >
-        Extra network settings. Only applicable in the App Engine flexible environment.
-        
-    - name: zones
-      value: array
-      description: >
-        The Google Compute Engine zones that are supported by this version in the App Engine flexible environment. Deprecated.
-        
-    - name: resources
-      value: object
-      description: >
-        Machine resources for this version. Only applicable in the App Engine flexible environment.
-        
-    - name: runtime
-      value: string
-      description: >
-        Desired runtime. Example: python27.
-        
-    - name: runtimeChannel
-      value: string
-      description: >
-        The channel of the runtime to use. Only available for some runtimes. Defaults to the default channel.
-        
-    - name: threadsafe
-      value: boolean
-      description: >
-        Whether multiple requests can be dispatched to this version at once.
-        
-    - name: vm
-      value: boolean
-      description: >
-        Whether to deploy this version in a container on a virtual machine.
-        
-    - name: flexibleRuntimeSettings
-      value: object
-      description: >
-        Settings for App Engine flexible runtimes.
-        
-    - name: appEngineApis
-      value: boolean
-      description: >
-        Allows App Engine second generation runtimes to access the legacy bundled services.
-        
-    - name: betaSettings
-      value: object
-      description: >
-        Metadata settings that are supplied to this version to enable beta runtime features.
-        
-    - name: env
-      value: string
-      description: >
-        App Engine execution environment for this version.Defaults to standard.
-        
-    - name: servingStatus
-      value: string
-      description: >
-        Current serving status of this version. Only the versions with a SERVING status create instances and can be billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to SERVING.
-        
-      valid_values: ['SERVING_STATUS_UNSPECIFIED', 'SERVING', 'STOPPED']
-    - name: createTime
-      value: string
-      description: >
-        Time that this version was created.@OutputOnly
-        
-    - name: runtimeApiVersion
-      value: string
-      description: >
-        The version of the API in the given runtime environment. Please see the app.yaml reference for valid values at https://cloud.google.com/appengine/docs/standard//config/appref
-        
-    - name: runtimeMainExecutablePath
-      value: string
-      description: >
-        The path or name of the app's main executable.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        The identity that the deployed version will run as. Admin API will use the App Engine Appspot service account as default if this field is neither provided in app.yaml file nor through CLI flag.
-        
-    - name: handlers
-      value: array
-      description: >
-        An ordered list of URL-matching patterns that should be applied to incoming requests. The first matching URL handles the request and other request handlers are not attempted.Only returned in GET requests if view=FULL is set.
-        
-    - name: errorHandlers
-      value: array
-      description: >
-        Custom static error pages. Limited to 10KB per page.Only returned in GET requests if view=FULL is set.
-        
-    - name: libraries
-      value: array
-      description: >
-        Configuration for third-party Python runtime libraries that are required by the application.Only returned in GET requests if view=FULL is set.
-        
-    - name: apiConfig
-      value: object
-      description: >
-        Serving configuration for Google Cloud Endpoints (https://cloud.google.com/endpoints).Only returned in GET requests if view=FULL is set.
-        
+      value:
+        standardSchedulerSettings:
+          maxInstances: {{ maxInstances }}
+          targetCpuUtilization: {{ targetCpuUtilization }}
+          minInstances: {{ minInstances }}
+          targetThroughputUtilization: {{ targetThroughputUtilization }}
+        minIdleInstances: {{ minIdleInstances }}
+        requestUtilization:
+          targetRequestCountPerSecond: {{ targetRequestCountPerSecond }}
+          targetConcurrentRequests: {{ targetConcurrentRequests }}
+        coolDownPeriod: "{{ coolDownPeriod }}"
+        maxIdleInstances: {{ maxIdleInstances }}
+        minTotalInstances: {{ minTotalInstances }}
+        maxTotalInstances: {{ maxTotalInstances }}
+        minPendingLatency: "{{ minPendingLatency }}"
+        diskUtilization:
+          targetWriteBytesPerSecond: {{ targetWriteBytesPerSecond }}
+          targetReadBytesPerSecond: {{ targetReadBytesPerSecond }}
+          targetReadOpsPerSecond: {{ targetReadOpsPerSecond }}
+          targetWriteOpsPerSecond: {{ targetWriteOpsPerSecond }}
+        cpuUtilization:
+          aggregationWindowLength: "{{ aggregationWindowLength }}"
+          targetUtilization: {{ targetUtilization }}
+        maxConcurrentRequests: {{ maxConcurrentRequests }}
+        maxPendingLatency: "{{ maxPendingLatency }}"
+        networkUtilization:
+          targetReceivedBytesPerSecond: {{ targetReceivedBytesPerSecond }}
+          targetSentBytesPerSecond: {{ targetSentBytesPerSecond }}
+          targetReceivedPacketsPerSecond: {{ targetReceivedPacketsPerSecond }}
+          targetSentPacketsPerSecond: {{ targetSentPacketsPerSecond }}
     - name: envVariables
-      value: object
-      description: >
+      value: "{{ envVariables }}"
+      description: |
         Environment variables available to the application.Only returned in GET requests if view=FULL is set.
-        
     - name: buildEnvVariables
-      value: object
-      description: >
+      value: "{{ buildEnvVariables }}"
+      description: |
         Environment variables available to the build environment.Only returned in GET requests if view=FULL is set.
-        
-    - name: defaultExpiration
-      value: string
-      description: >
-        Duration that static files should be cached by web proxies and browsers. Only applicable if the corresponding StaticFilesHandler (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#StaticFilesHandler) does not specify its own expiration time.Only returned in GET requests if view=FULL is set.
-        
-    - name: healthCheck
-      value: object
-      description: >
-        Configures health checking for instances. Unhealthy instances are stopped and replaced with new instances. Only applicable in the App Engine flexible environment.
-        
     - name: readinessCheck
-      value: object
-      description: >
+      description: |
         Configures readiness health checking for instances. Unhealthy instances are not put into the backend traffic rotation.
-        
-    - name: livenessCheck
-      value: object
-      description: >
-        Configures liveness health checking for instances. Unhealthy instances are stopped and replaced with new instances
-        
-    - name: nobuildFilesRegex
-      value: string
-      description: >
-        Files that match this pattern will not be built into this version. Only applicable for Go runtimes.Only returned in GET requests if view=FULL is set.
-        
-    - name: deployment
-      value: object
-      description: >
-        Code and application artifacts that make up this version.Only returned in GET requests if view=FULL is set.
-        
+      value:
+        successThreshold: {{ successThreshold }}
+        checkInterval: "{{ checkInterval }}"
+        failureThreshold: {{ failureThreshold }}
+        timeout: "{{ timeout }}"
+        path: "{{ path }}"
+        host: "{{ host }}"
+        appStartTimeout: "{{ appStartTimeout }}"
+    - name: errorHandlers
+      description: |
+        Custom static error pages. Limited to 10KB per page.Only returned in GET requests if view=FULL is set.
+      value:
+        - mimeType: "{{ mimeType }}"
+          staticFile: "{{ staticFile }}"
+          errorCode: "{{ errorCode }}"
+    - name: libraries
+      description: |
+        Configuration for third-party Python runtime libraries that are required by the application.Only returned in GET requests if view=FULL is set.
+      value:
+        - version: "{{ version }}"
+          name: "{{ name }}"
+    - name: defaultExpiration
+      value: "{{ defaultExpiration }}"
+      description: |
+        Duration that static files should be cached by web proxies and browsers. Only applicable if the corresponding StaticFilesHandler (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#StaticFilesHandler) does not specify its own expiration time.Only returned in GET requests if view=FULL is set.
+    - name: runtime
+      value: "{{ runtime }}"
+      description: |
+        Desired runtime. Example: python27.
+    - name: runtimeApiVersion
+      value: "{{ runtimeApiVersion }}"
+      description: |
+        The version of the API in the given runtime environment. Please see the app.yaml reference for valid values at https://cloud.google.com/appengine/docs/standard//config/appref
     - name: endpointsApiService
-      value: object
-      description: >
+      description: |
         Cloud Endpoints configuration.If endpoints_api_service is set, the Cloud Endpoints Extensible Service Proxy will be provided to serve the API implemented by the app.
-        
-    - name: entrypoint
-      value: object
-      description: >
-        The entrypoint for the application.
-        
+      value:
+        configId: "{{ configId }}"
+        name: "{{ name }}"
+        disableTraceSampling: {{ disableTraceSampling }}
+        rolloutStrategy: "{{ rolloutStrategy }}"
+    - name: network
+      description: |
+        Extra network settings. Only applicable in the App Engine flexible environment.
+      value:
+        forwardedPorts:
+          - "{{ forwardedPorts }}"
+        sessionAffinity: {{ sessionAffinity }}
+        instanceTag: "{{ instanceTag }}"
+        instanceIpMode: "{{ instanceIpMode }}"
+        name: "{{ name }}"
+        subnetworkName: "{{ subnetworkName }}"
+    - name: env
+      value: "{{ env }}"
+      description: |
+        App Engine execution environment for this version.Defaults to standard.
+    - name: nobuildFilesRegex
+      value: "{{ nobuildFilesRegex }}"
+      description: |
+        Files that match this pattern will not be built into this version. Only applicable for Go runtimes.Only returned in GET requests if view=FULL is set.
     - name: vpcAccessConnector
-      value: object
-      description: >
+      description: |
         Enables VPC connectivity for standard apps.
-        
+      value:
+        egressSetting: "{{ egressSetting }}"
+        name: "{{ name }}"
+    - name: resources
+      description: |
+        Machine resources for this version. Only applicable in the App Engine flexible environment.
+      value:
+        diskGb: {{ diskGb }}
+        memoryGb: {{ memoryGb }}
+        cpu: {{ cpu }}
+        kmsKeyReference: "{{ kmsKeyReference }}"
+        volumes:
+          - name: "{{ name }}"
+            volumeType: "{{ volumeType }}"
+            sizeGb: {{ sizeGb }}
+    - name: betaSettings
+      value: "{{ betaSettings }}"
+      description: |
+        Metadata settings that are supplied to this version to enable beta runtime features.
+    - name: instanceClass
+      value: "{{ instanceClass }}"
+      description: |
+        Instance class that is used to run this version. Valid values are: AutomaticScaling: F1, F2, F4, F4_1G ManualScaling or BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1 for AutomaticScaling and B1 for ManualScaling or BasicScaling.
+    - name: servingStatus
+      value: "{{ servingStatus }}"
+      description: |
+        Current serving status of this version. Only the versions with a SERVING status create instances and can be billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to SERVING.
+      valid_values: ['SERVING_STATUS_UNSPECIFIED', 'SERVING', 'STOPPED']
+    - name: livenessCheck
+      description: |
+        Configures liveness health checking for instances. Unhealthy instances are stopped and replaced with new instances
+      value:
+        timeout: "{{ timeout }}"
+        path: "{{ path }}"
+        host: "{{ host }}"
+        checkInterval: "{{ checkInterval }}"
+        failureThreshold: {{ failureThreshold }}
+        initialDelay: "{{ initialDelay }}"
+        successThreshold: {{ successThreshold }}
+    - name: basicScaling
+      description: |
+        A service with basic scaling will create an instance when the application receives a request. The instance will be turned down when the app becomes idle. Basic scaling is ideal for work that is intermittent or driven by user activity.
+      value:
+        maxInstances: {{ maxInstances }}
+        idleTimeout: "{{ idleTimeout }}"
+    - name: flexibleRuntimeSettings
+      description: |
+        Settings for App Engine flexible runtimes.
+      value:
+        operatingSystem: "{{ operatingSystem }}"
+        runtimeVersion: "{{ runtimeVersion }}"
+    - name: createTime
+      value: "{{ createTime }}"
+      description: |
+        Time that this version was created.@OutputOnly
+    - name: inboundServices
+      value:
+        - "{{ inboundServices }}"
+      description: |
+        Before an application can receive email or XMPP messages, the application must be configured to enable the service.
+    - name: threadsafe
+      value: {{ threadsafe }}
+      description: |
+        Whether multiple requests can be dispatched to this version at once.
     - name: generatedCustomerMetadata
-      value: object
-      description: >
+      value: "{{ generatedCustomerMetadata }}"
+      description: |
         Additional Google Generated Customer Metadata, this field won't be provided by default and can be requested by setting the IncludeExtraData field in GetVersionRequest
-        
-```
+    - name: runtimeChannel
+      value: "{{ runtimeChannel }}"
+      description: |
+        The channel of the runtime to use. Only available for some runtimes. Defaults to the default channel.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Relative name of the version within the service. Example: v1. Version names can contain only lowercase letters, numbers, or hyphens. Reserved names: "default", "latest", and any name with the prefix "ah-".
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        The identity that the deployed version will run as. Admin API will use the App Engine Appspot service account as default if this field is neither provided in app.yaml file nor through CLI flag.
+    - name: entrypoint
+      description: |
+        The entrypoint for the application.
+      value:
+        shell: "{{ shell }}"
+    - name: manualScaling
+      description: |
+        A service with manual scaling runs continuously, allowing you to perform complex initialization and rely on the state of its memory over time. Manually scaled versions are sometimes referred to as "backends".
+      value:
+        instances: {{ instances }}
+    - name: appEngineBundledServices
+      value:
+        - "{{ appEngineBundledServices }}"
+      description: |
+        List of specific App Engine Bundled Services that are enabled for this Version.
+    - name: appEngineApis
+      value: {{ appEngineApis }}
+      description: |
+        Allows App Engine second generation runtimes to access the legacy bundled services.
+    - name: zones
+      value:
+        - "{{ zones }}"
+      description: |
+        The Google Compute Engine zones that are supported by this version in the App Engine flexible environment. Deprecated.
+    - name: handlers
+      description: |
+        An ordered list of URL-matching patterns that should be applied to incoming requests. The first matching URL handles the request and other request handlers are not attempted.Only returned in GET requests if view=FULL is set.
+      value:
+        - script:
+            scriptPath: "{{ scriptPath }}"
+          apiEndpoint:
+            scriptPath: "{{ scriptPath }}"
+          authFailAction: "{{ authFailAction }}"
+          urlRegex: "{{ urlRegex }}"
+          redirectHttpResponseCode: "{{ redirectHttpResponseCode }}"
+          securityLevel: "{{ securityLevel }}"
+          login: "{{ login }}"
+          staticFiles:
+            applicationReadable: {{ applicationReadable }}
+            path: "{{ path }}"
+            expiration: "{{ expiration }}"
+            uploadPathRegex: "{{ uploadPathRegex }}"
+            requireMatchingFile: {{ requireMatchingFile }}
+            httpHeaders: "{{ httpHeaders }}"
+            mimeType: "{{ mimeType }}"
+    - name: deployment
+      description: |
+        Code and application artifacts that make up this version.Only returned in GET requests if view=FULL is set.
+      value:
+        zip:
+          sourceUrl: "{{ sourceUrl }}"
+          filesCount: {{ filesCount }}
+        files: "{{ files }}"
+        container:
+          image: "{{ image }}"
+        cloudBuildOptions:
+          cloudBuildTimeout: "{{ cloudBuildTimeout }}"
+          appYamlPath: "{{ appYamlPath }}"
+    - name: apiConfig
+      description: |
+        Serving configuration for Google Cloud Endpoints (https://cloud.google.com/endpoints).Only returned in GET requests if view=FULL is set.
+      value:
+        authFailAction: "{{ authFailAction }}"
+        script: "{{ script }}"
+        url: "{{ url }}"
+        login: "{{ login }}"
+        securityLevel: "{{ securityLevel }}"
+    - name: vm
+      value: {{ vm }}
+      description: |
+        Whether to deploy this version in a container on a virtual machine.
+    - name: runtimeMainExecutablePath
+      value: "{{ runtimeMainExecutablePath }}"
+      description: |
+        The path or name of the app's main executable.
+    - name: healthCheck
+      description: |
+        Configures health checking for instances. Unhealthy instances are stopped and replaced with new instances. Only applicable in the App Engine flexible environment.
+      value:
+        timeout: "{{ timeout }}"
+        host: "{{ host }}"
+        checkInterval: "{{ checkInterval }}"
+        healthyThreshold: {{ healthyThreshold }}
+        unhealthyThreshold: {{ unhealthyThreshold }}
+        disableHealthCheck: {{ disableHealthCheck }}
+        restartThreshold: {{ restartThreshold }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1061,44 +1165,45 @@ Updates the specified Version resource. You can specify the following fields dep
 ```sql
 UPDATE google.appengine.versions
 SET 
-data__id = '{{ id }}',
 data__automaticScaling = '{{ automaticScaling }}',
-data__basicScaling = '{{ basicScaling }}',
-data__manualScaling = '{{ manualScaling }}',
-data__inboundServices = '{{ inboundServices }}',
-data__instanceClass = '{{ instanceClass }}',
-data__network = '{{ network }}',
-data__zones = '{{ zones }}',
-data__resources = '{{ resources }}',
-data__runtime = '{{ runtime }}',
-data__runtimeChannel = '{{ runtimeChannel }}',
-data__threadsafe = {{ threadsafe }},
-data__vm = {{ vm }},
-data__flexibleRuntimeSettings = '{{ flexibleRuntimeSettings }}',
-data__appEngineApis = {{ appEngineApis }},
-data__betaSettings = '{{ betaSettings }}',
-data__env = '{{ env }}',
-data__servingStatus = '{{ servingStatus }}',
-data__createTime = '{{ createTime }}',
-data__runtimeApiVersion = '{{ runtimeApiVersion }}',
-data__runtimeMainExecutablePath = '{{ runtimeMainExecutablePath }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__handlers = '{{ handlers }}',
-data__errorHandlers = '{{ errorHandlers }}',
-data__libraries = '{{ libraries }}',
-data__apiConfig = '{{ apiConfig }}',
 data__envVariables = '{{ envVariables }}',
 data__buildEnvVariables = '{{ buildEnvVariables }}',
-data__defaultExpiration = '{{ defaultExpiration }}',
-data__healthCheck = '{{ healthCheck }}',
 data__readinessCheck = '{{ readinessCheck }}',
-data__livenessCheck = '{{ livenessCheck }}',
-data__nobuildFilesRegex = '{{ nobuildFilesRegex }}',
-data__deployment = '{{ deployment }}',
+data__errorHandlers = '{{ errorHandlers }}',
+data__libraries = '{{ libraries }}',
+data__defaultExpiration = '{{ defaultExpiration }}',
+data__runtime = '{{ runtime }}',
+data__runtimeApiVersion = '{{ runtimeApiVersion }}',
 data__endpointsApiService = '{{ endpointsApiService }}',
-data__entrypoint = '{{ entrypoint }}',
+data__network = '{{ network }}',
+data__env = '{{ env }}',
+data__nobuildFilesRegex = '{{ nobuildFilesRegex }}',
 data__vpcAccessConnector = '{{ vpcAccessConnector }}',
-data__generatedCustomerMetadata = '{{ generatedCustomerMetadata }}'
+data__resources = '{{ resources }}',
+data__betaSettings = '{{ betaSettings }}',
+data__instanceClass = '{{ instanceClass }}',
+data__servingStatus = '{{ servingStatus }}',
+data__livenessCheck = '{{ livenessCheck }}',
+data__basicScaling = '{{ basicScaling }}',
+data__flexibleRuntimeSettings = '{{ flexibleRuntimeSettings }}',
+data__createTime = '{{ createTime }}',
+data__inboundServices = '{{ inboundServices }}',
+data__threadsafe = {{ threadsafe }},
+data__generatedCustomerMetadata = '{{ generatedCustomerMetadata }}',
+data__runtimeChannel = '{{ runtimeChannel }}',
+data__id = '{{ id }}',
+data__serviceAccount = '{{ serviceAccount }}',
+data__entrypoint = '{{ entrypoint }}',
+data__manualScaling = '{{ manualScaling }}',
+data__appEngineBundledServices = '{{ appEngineBundledServices }}',
+data__appEngineApis = {{ appEngineApis }},
+data__zones = '{{ zones }}',
+data__handlers = '{{ handlers }}',
+data__deployment = '{{ deployment }}',
+data__apiConfig = '{{ apiConfig }}',
+data__vm = {{ vm }},
+data__runtimeMainExecutablePath = '{{ runtimeMainExecutablePath }}',
+data__healthCheck = '{{ healthCheck }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1136,6 +1241,35 @@ AND locationsId = '{{ locationsId }}' --required
 AND applicationsId = '{{ applicationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
 AND versionsId = '{{ versionsId }}' --required
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="export_app_image"
+    values={[
+        { label: 'export_app_image', value: 'export_app_image' }
+    ]}
+>
+<TabItem value="export_app_image">
+
+Exports a user image to Artifact Registry.
+
+```sql
+EXEC google.appengine.versions.export_app_image 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@applicationsId='{{ applicationsId }}' --required, 
+@servicesId='{{ servicesId }}' --required, 
+@versionsId='{{ versionsId }}' --required 
+@@json=
+'{
+"destinationRepository": "{{ destinationRepository }}"
+}'
 ;
 ```
 </TabItem>

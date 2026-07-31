@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resources</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.config.resources" /></td></tr>
 </tbody></table>
@@ -62,12 +63,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="intent" /></td>
     <td><code>string</code></td>
-    <td>Output only. Intent of the resource.</td>
+    <td>Output only. Intent of the resource. (INTENT_UNSPECIFIED, CREATE, UPDATE, DELETE, RECREATE, UNCHANGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the resource.</td>
+    <td>Output only. Current state of the resource. (STATE_UNSPECIFIED, PLANNED, IN_PROGRESS, RECONCILED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="terraformInfo" /></td>
@@ -101,12 +102,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="intent" /></td>
     <td><code>string</code></td>
-    <td>Output only. Intent of the resource.</td>
+    <td>Output only. Intent of the resource. (INTENT_UNSPECIFIED, CREATE, UPDATE, DELETE, RECREATE, UNCHANGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the resource.</td>
+    <td>Output only. Current state of the resource. (STATE_UNSPECIFIED, PLANNED, IN_PROGRESS, RECONCILED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="terraformInfo" /></td>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Resources in a given revision.</td>
 </tr>
 </tbody>
@@ -258,8 +259,8 @@ AND deploymentsId = '{{ deploymentsId }}' -- required
 AND revisionsId = '{{ revisionsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

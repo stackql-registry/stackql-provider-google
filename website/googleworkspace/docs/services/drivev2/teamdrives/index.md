@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>teamdrives</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>teamdrives</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="teamdrives" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.teamdrives" /></td></tr>
 </tbody></table>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-q"><code>q</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-q"><code>q</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a></td>
     <td>Deprecated: Use `drives.list` instead.</td>
 </tr>
 <tr>
@@ -327,9 +328,9 @@ orgUnitId,
 restrictions,
 themeId
 FROM googleworkspace.drivev2.teamdrives
-WHERE maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
+WHERE pageToken = '{{ pageToken }}'
 AND q = '{{ q }}'
+AND maxResults = '{{ maxResults }}'
 AND useDomainAdminAccess = '{{ useDomainAdminAccess }}'
 ;
 ```
@@ -352,31 +353,31 @@ Deprecated: Use `drives.insert` instead.
 
 ```sql
 INSERT INTO googleworkspace.drivev2.teamdrives (
-data__id,
-data__name,
 data__colorRgb,
-data__kind,
+data__createdDate,
 data__backgroundImageLink,
+data__backgroundImageFile,
+data__kind,
+data__restrictions,
+data__id,
+data__orgUnitId,
 data__capabilities,
 data__themeId,
-data__backgroundImageFile,
-data__createdDate,
-data__restrictions,
-data__orgUnitId,
+data__name,
 requestId
 )
 SELECT 
-'{{ id }}',
-'{{ name }}',
 '{{ colorRgb }}',
-'{{ kind }}',
+'{{ createdDate }}',
 '{{ backgroundImageLink }}',
+'{{ backgroundImageFile }}',
+'{{ kind }}',
+'{{ restrictions }}',
+'{{ id }}',
+'{{ orgUnitId }}',
 '{{ capabilities }}',
 '{{ themeId }}',
-'{{ backgroundImageFile }}',
-'{{ createdDate }}',
-'{{ restrictions }}',
-'{{ orgUnitId }}',
+'{{ name }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -395,70 +396,89 @@ themeId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: teamdrives
   props:
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
       description: Required parameter for the teamdrives resource.
-    - name: id
-      value: string
-      description: >
-        The ID of this Team Drive which is also the ID of the top level folder of this Team Drive.
-        
-    - name: name
-      value: string
-      description: >
-        The name of this Team Drive.
-        
     - name: colorRgb
-      value: string
-      description: >
-        The color of this Team Drive as an RGB hex string. It can only be set on a `drive.teamdrives.update` request that does not set `themeId`.
-        
-    - name: kind
-      value: string
-      description: >
-        This is always `drive#teamDrive`
-        
-      default: drive#teamDrive
-    - name: backgroundImageLink
-      value: string
-      description: >
-        A short-lived link to this Team Drive's background image.
-        
-    - name: capabilities
-      value: object
-      description: >
-        Capabilities the current user has on this Team Drive.
-        
-    - name: themeId
-      value: string
-      description: >
-        The ID of the theme from which the background image and color will be set. The set of possible `teamDriveThemes` can be retrieved from a `drive.about.get` response. When not specified on a `drive.teamdrives.insert` request, a random theme is chosen from which the background image and color are set. This is a write-only field; it can only be set on requests that don't set `colorRgb` or `backgroundImageFile`.
-        
-    - name: backgroundImageFile
-      value: object
-      description: >
-        An image file and cropping parameters from which a background image for this Team Drive is set. This is a write only field; it can only be set on `drive.teamdrives.update` requests that don't set `themeId`. When specified, all fields of the `backgroundImageFile` must be set.
-        
+      value: "{{ colorRgb }}"
+      description: |
+        The color of this Team Drive as an RGB hex string. It can only be set on a \`drive.teamdrives.update\` request that does not set \`themeId\`.
     - name: createdDate
-      value: string
-      description: >
+      value: "{{ createdDate }}"
+      description: |
         The time at which the Team Drive was created (RFC 3339 date-time).
-        
+    - name: backgroundImageLink
+      value: "{{ backgroundImageLink }}"
+      description: |
+        A short-lived link to this Team Drive's background image.
+    - name: backgroundImageFile
+      description: |
+        An image file and cropping parameters from which a background image for this Team Drive is set. This is a write only field; it can only be set on \`drive.teamdrives.update\` requests that don't set \`themeId\`. When specified, all fields of the \`backgroundImageFile\` must be set.
+      value:
+        id: "{{ id }}"
+        width: {{ width }}
+        xCoordinate: {{ xCoordinate }}
+        yCoordinate: {{ yCoordinate }}
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        This is always \`drive#teamDrive\`
+      default: drive#teamDrive
     - name: restrictions
-      value: object
-      description: >
+      description: |
         A set of restrictions that apply to this Team Drive or items inside this Team Drive.
-        
+      value:
+        teamMembersOnly: {{ teamMembersOnly }}
+        copyRequiresWriterPermission: {{ copyRequiresWriterPermission }}
+        adminManagedRestrictions: {{ adminManagedRestrictions }}
+        sharingFoldersRequiresOrganizerPermission: {{ sharingFoldersRequiresOrganizerPermission }}
+        domainUsersOnly: {{ domainUsersOnly }}
+    - name: id
+      value: "{{ id }}"
+      description: |
+        The ID of this Team Drive which is also the ID of the top level folder of this Team Drive.
     - name: orgUnitId
-      value: string
-      description: >
-        The organizational unit of this shared drive. This field is only populated on `drives.list` responses when the `useDomainAdminAccess` parameter is set to `true`.
-        
-```
+      value: "{{ orgUnitId }}"
+      description: |
+        The organizational unit of this shared drive. This field is only populated on \`drives.list\` responses when the \`useDomainAdminAccess\` parameter is set to \`true\`.
+    - name: capabilities
+      description: |
+        Capabilities the current user has on this Team Drive.
+      value:
+        canComment: {{ canComment }}
+        canEdit: {{ canEdit }}
+        canRenameTeamDrive: {{ canRenameTeamDrive }}
+        canDeleteChildren: {{ canDeleteChildren }}
+        canDeleteTeamDrive: {{ canDeleteTeamDrive }}
+        canChangeTeamDriveBackground: {{ canChangeTeamDriveBackground }}
+        canShare: {{ canShare }}
+        canAddChildren: {{ canAddChildren }}
+        canChangeTeamMembersOnlyRestriction: {{ canChangeTeamMembersOnlyRestriction }}
+        canResetTeamDriveRestrictions: {{ canResetTeamDriveRestrictions }}
+        canReadRevisions: {{ canReadRevisions }}
+        canRemoveChildren: {{ canRemoveChildren }}
+        canChangeCopyRequiresWriterPermissionRestriction: {{ canChangeCopyRequiresWriterPermissionRestriction }}
+        canDownload: {{ canDownload }}
+        canChangeSharingFoldersRequiresOrganizerPermissionRestriction: {{ canChangeSharingFoldersRequiresOrganizerPermissionRestriction }}
+        canTrashChildren: {{ canTrashChildren }}
+        canManageMembers: {{ canManageMembers }}
+        canChangeDomainUsersOnlyRestriction: {{ canChangeDomainUsersOnlyRestriction }}
+        canCopy: {{ canCopy }}
+        canListChildren: {{ canListChildren }}
+        canRename: {{ canRename }}
+    - name: themeId
+      value: "{{ themeId }}"
+      description: |
+        The ID of the theme from which the background image and color will be set. The set of possible \`teamDriveThemes\` can be retrieved from a \`drive.about.get\` response. When not specified on a \`drive.teamdrives.insert\` request, a random theme is chosen from which the background image and color are set. This is a write-only field; it can only be set on requests that don't set \`colorRgb\` or \`backgroundImageFile\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of this Team Drive.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -478,17 +498,17 @@ Deprecated: Use `drives.update` instead.
 ```sql
 REPLACE googleworkspace.drivev2.teamdrives
 SET 
-data__id = '{{ id }}',
-data__name = '{{ name }}',
 data__colorRgb = '{{ colorRgb }}',
-data__kind = '{{ kind }}',
+data__createdDate = '{{ createdDate }}',
 data__backgroundImageLink = '{{ backgroundImageLink }}',
+data__backgroundImageFile = '{{ backgroundImageFile }}',
+data__kind = '{{ kind }}',
+data__restrictions = '{{ restrictions }}',
+data__id = '{{ id }}',
+data__orgUnitId = '{{ orgUnitId }}',
 data__capabilities = '{{ capabilities }}',
 data__themeId = '{{ themeId }}',
-data__backgroundImageFile = '{{ backgroundImageFile }}',
-data__createdDate = '{{ createdDate }}',
-data__restrictions = '{{ restrictions }}',
-data__orgUnitId = '{{ orgUnitId }}'
+data__name = '{{ name }}'
 WHERE 
 teamDriveId = '{{ teamDriveId }}' --required
 AND useDomainAdminAccess = {{ useDomainAdminAccess}}

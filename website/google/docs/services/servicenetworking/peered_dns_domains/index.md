@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>peered_dns_domains</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>peered_dns_domains</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="peered_dns_domains" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicenetworking.peered_dns_domains" /></td></tr>
 </tbody></table>
@@ -196,30 +197,28 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: peered_dns_domains
   props:
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the peered_dns_domains resource.
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the peered_dns_domains resource.
     - name: networksId
-      value: string
+      value: "{{ networksId }}"
       description: Required parameter for the peered_dns_domains resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Required. User assigned name for this resource. Must be unique within the consumer network. The name must be 1-63 characters long, must begin with a letter, end with a letter or digit, and only contain lowercase letters, digits or dashes.
-        
     - name: dnsSuffix
-      value: string
-      description: >
-        The DNS domain name suffix e.g. `example.com.`. Cloud DNS requires that a DNS suffix ends with a trailing dot.
-        
-```
+      value: "{{ dnsSuffix }}"
+      description: |
+        The DNS domain name suffix e.g. \`example.com.\`. Cloud DNS requires that a DNS suffix ends with a trailing dot.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

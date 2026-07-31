@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workforce_pool_provider_keys</c
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workforce_pool_provider_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workforce_pool_provider_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.workforce_pool_provider_keys" /></td></tr>
 </tbody></table>
@@ -67,12 +68,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the key.</td>
+    <td>Output only. The state of the key. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="use" /></td>
     <td><code>string</code></td>
-    <td>Required. The purpose of the key.</td>
+    <td>Required. The purpose of the key. (KEY_USE_UNSPECIFIED, ENCRYPTION)</td>
 </tr>
 </tbody>
 </table>
@@ -106,12 +107,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the key.</td>
+    <td>Output only. The state of the key. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="use" /></td>
     <td><code>string</code></td>
-    <td>Required. The purpose of the key.</td>
+    <td>Required. The purpose of the key. (KEY_USE_UNSPECIFIED, ENCRYPTION)</td>
 </tr>
 </tbody>
 </table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all non-deleted WorkforcePoolProviderKeys in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted keys are also listed.</td>
 </tr>
 <tr>
@@ -270,9 +271,9 @@ FROM google.iam.workforce_pool_provider_keys
 WHERE locationsId = '{{ locationsId }}' -- required
 AND workforcePoolsId = '{{ workforcePoolsId }}' -- required
 AND providersId = '{{ providersId }}' -- required
+AND showDeleted = '{{ showDeleted }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -321,38 +322,40 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workforce_pool_provider_keys
   props:
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workforce_pool_provider_keys resource.
     - name: workforcePoolsId
-      value: string
+      value: "{{ workforcePoolsId }}"
       description: Required parameter for the workforce_pool_provider_keys resource.
     - name: providersId
-      value: string
+      value: "{{ providersId }}"
       description: Required parameter for the workforce_pool_provider_keys resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the key. Format: `locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_id}/keys/{key_id}`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the key. Format: \`locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_id}/keys/{key_id}\`
     - name: keyData
-      value: object
-      description: >
+      description: |
         Immutable. Public half of the asymmetric key.
-        
+      value:
+        format: "{{ format }}"
+        key: "{{ key }}"
+        keySpec: "{{ keySpec }}"
+        notBeforeTime: "{{ notBeforeTime }}"
+        notAfterTime: "{{ notAfterTime }}"
     - name: use
-      value: string
-      description: >
+      value: "{{ use }}"
+      description: |
         Required. The purpose of the key.
-        
       valid_values: ['KEY_USE_UNSPECIFIED', 'ENCRYPTION']
     - name: workforcePoolProviderKeyId
-      value: string
-```
+      value: "{{ workforcePoolProviderKeyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

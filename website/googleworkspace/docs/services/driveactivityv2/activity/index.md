@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>activity</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>activity</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="activity" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.driveactivityv2.activity" /></td></tr>
 </tbody></table>
@@ -91,12 +92,12 @@ Query past activity in Google Drive.
 EXEC googleworkspace.driveactivityv2.activity.query 
 @@json=
 '{
-"itemName": "{{ itemName }}", 
+"filter": "{{ filter }}", 
 "ancestorName": "{{ ancestorName }}", 
 "consolidationStrategy": "{{ consolidationStrategy }}", 
-"pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}"
+"itemName": "{{ itemName }}", 
+"pageSize": {{ pageSize }}
 }'
 ;
 ```

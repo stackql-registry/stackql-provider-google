@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>metrics</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>metrics</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="metrics" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.logging.metrics" /></td></tr>
 </tbody></table>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="version" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. The API version that created or updated this metric. The v2 format is used by default and cannot be changed.</td>
+    <td>Deprecated. The API version that created or updated this metric. The v2 format is used by default and cannot be changed. (V2, V1)</td>
 </tr>
 </tbody>
 </table>
@@ -191,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="version" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. The API version that created or updated this metric. The v2 format is used by default and cannot be changed.</td>
+    <td>Deprecated. The API version that created or updated this metric. The v2 format is used by default and cannot be changed. (V2, V1)</td>
 </tr>
 </tbody>
 </table>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_metrics_list"><CopyableCode code="projects_metrics_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists logs-based metrics.</td>
 </tr>
 <tr>
@@ -342,8 +343,8 @@ valueExtractor,
 version
 FROM google.logging.metrics
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -365,29 +366,29 @@ Creates a logs-based metric.
 
 ```sql
 INSERT INTO google.logging.metrics (
-data__bucketOptions,
-data__disabled,
-data__name,
-data__version,
-data__bucketName,
-data__valueExtractor,
 data__labelExtractors,
-data__filter,
 data__description,
+data__valueExtractor,
+data__filter,
+data__bucketName,
+data__bucketOptions,
+data__version,
+data__name,
 data__metricDescriptor,
+data__disabled,
 projectsId
 )
 SELECT 
-'{{ bucketOptions }}',
-{{ disabled }},
-'{{ name }}',
-'{{ version }}',
-'{{ bucketName }}',
-'{{ valueExtractor }}',
 '{{ labelExtractors }}',
-'{{ filter }}',
 '{{ description }}',
+'{{ valueExtractor }}',
+'{{ filter }}',
+'{{ bucketName }}',
+'{{ bucketOptions }}',
+'{{ version }}',
+'{{ name }}',
 '{{ metricDescriptor }}',
+{{ disabled }},
 '{{ projectsId }}'
 RETURNING
 name,
@@ -408,65 +409,86 @@ version
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: metrics
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the metrics resource.
-    - name: bucketOptions
-      value: object
-      description: >
-        Optional. The bucket_options are required when the logs-based metric is using a DISTRIBUTION value type and it describes the bucket boundaries used to create a histogram of the extracted values.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. If set to True, then this metric is disabled and it does not generate any points.
-        
-    - name: name
-      value: string
-      description: >
-        Required. The client-assigned metric identifier. Examples: "error_count", "nginx/requests".Metric identifiers are limited to 100 characters and can include only the following characters: A-Z, a-z, 0-9, and the special characters _-.,+!*',()%/. The forward-slash character (/) denotes a hierarchy of name pieces, and it cannot be the first character of the name.This field is the [METRIC_ID] part of a metric resource name in the format "projects/PROJECT_ID/metrics/METRIC_ID". Example: If the resource name of a metric is "projects/my-project/metrics/nginx%2Frequests", this field's value is "nginx/requests".
-        
-    - name: version
-      value: string
-      description: >
-        Deprecated. The API version that created or updated this metric. The v2 format is used by default and cannot be changed.
-        
-      valid_values: ['V2', 'V1']
-    - name: bucketName
-      value: string
-      description: >
-        Optional. The resource name of the Log Bucket that owns the Log Metric. Only Log Buckets in projects are supported. The bucket has to be in the same project as the metric.For example:projects/my-project/locations/global/buckets/my-bucketIf empty, then the Log Metric is considered a non-Bucket Log Metric.
-        
-    - name: valueExtractor
-      value: string
-      description: >
-        Optional. A value_extractor is required when using a distribution logs-based metric to extract the values to record from a log entry. Two functions are supported for value extraction: EXTRACT(field) or REGEXP_EXTRACT(field, regex). The arguments are: field: The name of the log entry field from which the value is to be extracted. regex: A regular expression using the Google RE2 syntax (https://github.com/google/re2/wiki/Syntax) with a single capture group to extract data from the specified log entry field. The value of the field is converted to a string before applying the regex. It is an error to specify a regex that does not include exactly one capture group.The result of the extraction must be convertible to a double type, as the distribution always records double values. If either the extraction or the conversion to double fails, then those values are not recorded in the distribution.Example: REGEXP_EXTRACT(jsonPayload.request, ".*quantity=(\d+).*")
-        
     - name: labelExtractors
-      value: object
-      description: >
+      value: "{{ labelExtractors }}"
+      description: |
         Optional. A map from a label key string to an extractor expression which is used to extract data from a log entry field and assign as the label value. Each label key specified in the LabelDescriptor must have an associated extractor expression in this map. The syntax of the extractor expression is the same as for the value_extractor field.The extracted value is converted to the type defined in the label descriptor. If either the extraction or the type conversion fails, the label will have a default value. The default value for a string label is an empty string, for an integer label its 0, and for a boolean label its false.Note that there are upper bounds on the maximum number of labels and the number of active time series that are allowed in a project.
-        
-    - name: filter
-      value: string
-      description: >
-        Required. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced_filters) which is used to match log entries. Example: "resource.type=gae_app AND severity>=ERROR" The maximum length of the filter is 20000 characters.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A description of this metric, which is used in documentation. The maximum length of the description is 8000 characters.
-        
+    - name: valueExtractor
+      value: "{{ valueExtractor }}"
+      description: |
+        Optional. A value_extractor is required when using a distribution logs-based metric to extract the values to record from a log entry. Two functions are supported for value extraction: EXTRACT(field) or REGEXP_EXTRACT(field, regex). The arguments are: field: The name of the log entry field from which the value is to be extracted. regex: A regular expression using the Google RE2 syntax (https://github.com/google/re2/wiki/Syntax) with a single capture group to extract data from the specified log entry field. The value of the field is converted to a string before applying the regex. It is an error to specify a regex that does not include exactly one capture group.The result of the extraction must be convertible to a double type, as the distribution always records double values. If either the extraction or the conversion to double fails, then those values are not recorded in the distribution.Example: REGEXP_EXTRACT(jsonPayload.request, ".*quantity=(d+).*")
+    - name: filter
+      value: "{{ filter }}"
+      description: |
+        Required. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced_filters) which is used to match log entries. Example: "resource.type=gae_app AND severity>=ERROR" The maximum length of the filter is 20000 characters.
+    - name: bucketName
+      value: "{{ bucketName }}"
+      description: |
+        Optional. The resource name of the Log Bucket that owns the Log Metric. Only Log Buckets in projects are supported. The bucket has to be in the same project as the metric.For example:projects/my-project/locations/global/buckets/my-bucketIf empty, then the Log Metric is considered a non-Bucket Log Metric.
+    - name: bucketOptions
+      description: |
+        Optional. The bucket_options are required when the logs-based metric is using a DISTRIBUTION value type and it describes the bucket boundaries used to create a histogram of the extracted values.
+      value:
+        linearBuckets:
+          width: {{ width }}
+          numFiniteBuckets: {{ numFiniteBuckets }}
+          offset: {{ offset }}
+        explicitBuckets:
+          bounds:
+            - {{ bounds }}
+        exponentialBuckets:
+          growthFactor: {{ growthFactor }}
+          scale: {{ scale }}
+          numFiniteBuckets: {{ numFiniteBuckets }}
+    - name: version
+      value: "{{ version }}"
+      description: |
+        Deprecated. The API version that created or updated this metric. The v2 format is used by default and cannot be changed.
+      valid_values: ['V2', 'V1']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The client-assigned metric identifier. Examples: "error_count", "nginx/requests".Metric identifiers are limited to 100 characters and can include only the following characters: A-Z, a-z, 0-9, and the special characters _-.,+!*',()%/. The forward-slash character (/) denotes a hierarchy of name pieces, and it cannot be the first character of the name.This field is the [METRIC_ID] part of a metric resource name in the format "projects/PROJECT_ID/metrics/METRIC_ID". Example: If the resource name of a metric is "projects/my-project/metrics/nginx%2Frequests", this field's value is "nginx/requests".
     - name: metricDescriptor
-      value: object
-      description: >
+      description: |
         Optional. The metric descriptor associated with the logs-based metric. If unspecified, it uses a default metric descriptor with a DELTA metric kind, INT64 value type, with no labels and a unit of "1". Such a metric counts the number of log entries matching the filter expression.The name, type, and description fields in the metric_descriptor are output only, and is constructed using the name and description field in the LogMetric.To create a logs-based metric that records a distribution of log values, a DELTA metric kind with a DISTRIBUTION value type must be used along with a value_extractor expression in the LogMetric.Each label in the metric descriptor must have a matching label name as the key and an extractor expression as the value in the label_extractors map.The metric_kind and value_type fields in the metric_descriptor cannot be updated once initially configured. New labels can be added in the metric_descriptor, but existing labels cannot be modified except for their description.
-        
-```
+      value:
+        metricKind: "{{ metricKind }}"
+        displayName: "{{ displayName }}"
+        description: "{{ description }}"
+        metadata:
+          ingestDelay: "{{ ingestDelay }}"
+          launchStage: "{{ launchStage }}"
+          samplePeriod: "{{ samplePeriod }}"
+          timeSeriesResourceHierarchyLevel:
+            - "{{ timeSeriesResourceHierarchyLevel }}"
+        type: "{{ type }}"
+        monitoredResourceTypes:
+          - "{{ monitoredResourceTypes }}"
+        labels:
+          - description: "{{ description }}"
+            key: "{{ key }}"
+            valueType: "{{ valueType }}"
+        unit: "{{ unit }}"
+        name: "{{ name }}"
+        valueType: "{{ valueType }}"
+        launchStage: "{{ launchStage }}"
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. If set to True, then this metric is disabled and it does not generate any points.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -486,16 +508,16 @@ Creates or updates a logs-based metric.
 ```sql
 REPLACE google.logging.metrics
 SET 
-data__bucketOptions = '{{ bucketOptions }}',
-data__disabled = {{ disabled }},
-data__name = '{{ name }}',
-data__version = '{{ version }}',
-data__bucketName = '{{ bucketName }}',
-data__valueExtractor = '{{ valueExtractor }}',
 data__labelExtractors = '{{ labelExtractors }}',
-data__filter = '{{ filter }}',
 data__description = '{{ description }}',
-data__metricDescriptor = '{{ metricDescriptor }}'
+data__valueExtractor = '{{ valueExtractor }}',
+data__filter = '{{ filter }}',
+data__bucketName = '{{ bucketName }}',
+data__bucketOptions = '{{ bucketOptions }}',
+data__version = '{{ version }}',
+data__name = '{{ name }}',
+data__metricDescriptor = '{{ metricDescriptor }}',
+data__disabled = {{ disabled }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND metricsId = '{{ metricsId }}' --required

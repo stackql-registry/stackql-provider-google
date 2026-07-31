@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>analyses</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>analyses</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="analyses" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.analyses" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists analyses.</td>
 </tr>
 <tr>
@@ -259,8 +260,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -282,15 +283,15 @@ Creates an analysis. The long running operation is done when the analysis has co
 
 ```sql
 INSERT INTO google.contactcenterinsights.analyses (
-data__annotatorSelector,
 data__name,
+data__annotatorSelector,
 projectsId,
 locationsId,
 conversationsId
 )
 SELECT 
-'{{ annotatorSelector }}',
 '{{ name }}',
+'{{ annotatorSelector }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ conversationsId }}'
@@ -305,30 +306,50 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: analyses
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the analyses resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the analyses resource.
     - name: conversationsId
-      value: string
+      value: "{{ conversationsId }}"
       description: Required parameter for the analyses resource.
-    - name: annotatorSelector
-      value: object
-      description: >
-        To select the annotators to run and the phrase matchers to use (if any). If not specified, all annotators will be run.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. The resource name of the analysis. Format: projects/{project}/locations/{location}/conversations/{conversation}/analyses/{analysis}
-        
-```
+    - name: annotatorSelector
+      description: |
+        To select the annotators to run and the phrase matchers to use (if any). If not specified, all annotators will be run.
+      value:
+        runPhraseMatcherAnnotator: {{ runPhraseMatcherAnnotator }}
+        summarizationConfig:
+          summarizationModel: "{{ summarizationModel }}"
+          generator: "{{ generator }}"
+          conversationProfile: "{{ conversationProfile }}"
+        runEntityAnnotator: {{ runEntityAnnotator }}
+        runSummarizationAnnotator: {{ runSummarizationAnnotator }}
+        runInterruptionAnnotator: {{ runInterruptionAnnotator }}
+        phraseMatchers:
+          - "{{ phraseMatchers }}"
+        runSentimentAnnotator: {{ runSentimentAnnotator }}
+        runQaAnnotator: {{ runQaAnnotator }}
+        runIssueModelAnnotator: {{ runIssueModelAnnotator }}
+        runSilenceAnnotator: {{ runSilenceAnnotator }}
+        runAutoLabelingAnnotator: {{ runAutoLabelingAnnotator }}
+        qaConfig:
+          scorecardList:
+            qaScorecardRevisions:
+              - "{{ qaScorecardRevisions }}"
+        issueModels:
+          - "{{ issueModels }}"
+        runIntentAnnotator: {{ runIntentAnnotator }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

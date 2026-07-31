@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>applications</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>applications</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="applications" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apphub.applications" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Application state.</td>
+    <td>Output only. Application state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Application state.</td>
+    <td>Output only. Application state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -184,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Applications in a host project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-applicationId"><code>applicationId</code></a></td>
+    <td><a href="#parameter-applicationId"><code>applicationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates an Application in a host project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates an Application in a host project and location.</td>
 </tr>
 <tr>
@@ -326,10 +327,10 @@ updateTime
 FROM google.apphub.applications
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -351,26 +352,26 @@ Creates an Application in a host project and location.
 
 ```sql
 INSERT INTO google.apphub.applications (
-data__name,
-data__displayName,
 data__attributes,
+data__displayName,
 data__scope,
+data__name,
 data__description,
 projectsId,
 locationsId,
-requestId,
-applicationId
+applicationId,
+requestId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ attributes }}',
+'{{ displayName }}',
 '{{ scope }}',
+'{{ name }}',
 '{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ applicationId }}'
+'{{ applicationId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -382,46 +383,55 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: applications
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the applications resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the applications resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of an Application. Format: `"projects/{host-project-id}/locations/{location}/applications/{application-id}"`
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. User-defined name for the Application. Can have a maximum length of 63 characters.
-        
     - name: attributes
-      value: object
-      description: >
+      description: |
         Optional. Consumer provided attributes.
-        
+      value:
+        environment:
+          type: "{{ type }}"
+        developerOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+        criticality:
+          type: "{{ type }}"
+        businessOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+        operatorOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User-defined name for the Application. Can have a maximum length of 63 characters.
     - name: scope
-      value: object
-      description: >
+      description: |
         Required. Immutable. Defines what data can be included into this Application. Limits which Services and Workloads can be registered.
-        
+      value:
+        type: "{{ type }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of an Application. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}"\`
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User-defined description of an Application. Can have a maximum length of 2048 characters.
-        
-    - name: requestId
-      value: string
     - name: applicationId
-      value: string
-```
+      value: "{{ applicationId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -441,17 +451,17 @@ Updates an Application in a host project and location.
 ```sql
 UPDATE google.apphub.applications
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__attributes = '{{ attributes }}',
+data__displayName = '{{ displayName }}',
 data__scope = '{{ scope }}',
+data__name = '{{ name }}',
 data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND applicationsId = '{{ applicationsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

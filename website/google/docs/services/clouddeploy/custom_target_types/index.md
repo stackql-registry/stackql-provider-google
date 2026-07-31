@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>custom_target_types</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>custom_target_types</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="custom_target_types" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouddeploy.custom_target_types" /></td></tr>
 </tbody></table>
@@ -90,6 +91,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="tasks" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configures render and deploy for the `CustomTargetType` using tasks. (id: CustomTargetTasks)</td>
+</tr>
+<tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
     <td>Output only. Unique identifier of the `CustomTargetType`.</td>
@@ -154,6 +160,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="tasks" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configures render and deploy for the `CustomTargetType` using tasks. (id: CustomTargetTasks)</td>
+</tr>
+<tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
     <td>Output only. Unique identifier of the `CustomTargetType`.</td>
@@ -208,7 +219,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-customTargetTypesId"><code>customTargetTypesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates a single CustomTargetType.</td>
 </tr>
 <tr>
@@ -325,6 +336,7 @@ customTargetTypeId,
 description,
 etag,
 labels,
+tasks,
 uid,
 updateTime
 FROM google.clouddeploy.custom_target_types
@@ -348,6 +360,7 @@ customTargetTypeId,
 description,
 etag,
 labels,
+tasks,
 uid,
 updateTime
 FROM google.clouddeploy.custom_target_types
@@ -378,12 +391,13 @@ Creates a new CustomTargetType in a given project and location.
 
 ```sql
 INSERT INTO google.clouddeploy.custom_target_types (
-data__etag,
-data__customActions,
-data__name,
-data__labels,
 data__description,
+data__etag,
 data__annotations,
+data__customActions,
+data__labels,
+data__name,
+data__tasks,
 projectsId,
 locationsId,
 requestId,
@@ -391,12 +405,13 @@ validateOnly,
 customTargetTypeId
 )
 SELECT 
-'{{ etag }}',
-'{{ customActions }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ etag }}',
 '{{ annotations }}',
+'{{ customActions }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ tasks }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
@@ -413,53 +428,82 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: custom_target_types
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the custom_target_types resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the custom_target_types resource.
-    - name: etag
-      value: string
-      description: >
-        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
-    - name: customActions
-      value: object
-      description: >
-        Optional. Configures render and deploy for the `CustomTargetType` using Skaffold custom actions.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the `CustomTargetType`. Format is `projects/{project}/locations/{location}/customTargetTypes/{customTargetType}`. The `customTargetType` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
-        
     - name: description
-      value: string
-      description: >
-        Optional. Description of the `CustomTargetType`. Max length is 255 characters.
-        
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the \`CustomTargetType\`. Max length is 255 characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
-        
+    - name: customActions
+      description: |
+        Optional. Configures render and deploy for the \`CustomTargetType\` using Skaffold custom actions.
+      value:
+        renderAction: "{{ renderAction }}"
+        deployAction: "{{ deployAction }}"
+        includeSkaffoldModules:
+          - googleCloudStorage:
+              path: "{{ path }}"
+              source: "{{ source }}"
+            configs: "{{ configs }}"
+            git:
+              repo: "{{ repo }}"
+              ref: "{{ ref }}"
+              path: "{{ path }}"
+            googleCloudBuildRepo:
+              ref: "{{ ref }}"
+              path: "{{ path }}"
+              repository: "{{ repository }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the \`CustomTargetType\`. Format is \`projects/{project}/locations/{location}/customTargetTypes/{customTargetType}\`. The \`customTargetType\` component must match \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`
+    - name: tasks
+      description: |
+        Optional. Configures render and deploy for the \`CustomTargetType\` using tasks.
+      value:
+        render:
+          container:
+            image: "{{ image }}"
+            command:
+              - "{{ command }}"
+            env: "{{ env }}"
+            args:
+              - "{{ args }}"
+        deploy:
+          container:
+            image: "{{ image }}"
+            command:
+              - "{{ command }}"
+            env: "{{ env }}"
+            args:
+              - "{{ args }}"
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
     - name: customTargetTypeId
-      value: string
-```
+      value: "{{ customTargetTypeId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -479,20 +523,21 @@ Updates a single CustomTargetType.
 ```sql
 UPDATE google.clouddeploy.custom_target_types
 SET 
-data__etag = '{{ etag }}',
-data__customActions = '{{ customActions }}',
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__annotations = '{{ annotations }}'
+data__etag = '{{ etag }}',
+data__annotations = '{{ annotations }}',
+data__customActions = '{{ customActions }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__tasks = '{{ tasks }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND customTargetTypesId = '{{ customTargetTypesId }}' --required
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
 AND requestId = '{{ requestId}}'
-AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.memcache.instances" /></td></tr>
 </tbody></table>
@@ -60,6 +61,11 @@ The following fields are returned by `SELECT` queries:
     <td>The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the instance is connected. If left unspecified, the `default` network will be used.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="availableMaintenanceVersions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The available maintenance versions that can be applied to the instance.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time the instance was created.</td>
@@ -73,6 +79,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
     <td>User provided name for the instance, which is only used for display purposes. Cannot be more than 80 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="effectiveMaintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The effective maintenance version of the instance.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceMessages" /></td>
@@ -95,6 +106,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Published maintenance schedule. (id: MaintenanceSchedule)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="maintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Last self service update maintenance version triggered by the customer. If it is empty, it means that the maintenance version is not set by the user.</td>
+</tr>
+<tr>
     <td><CopyableCode code="memcacheFullVersion" /></td>
     <td><code>string</code></td>
     <td>Output only. The full version of memcached server running on this instance. System automatically determines the full memcached version for an instance based on the input MemcacheVersion. The full version format will be "memcached-1.5.16".</td>
@@ -107,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="memcacheVersion" /></td>
     <td><code>string</code></td>
-    <td>The major version of Memcached software. If not provided, latest supported version will be used. Currently the latest supported major version is `MEMCACHE_1_5`. The minor version will be automatically determined by our system based on the latest supported minor version.</td>
+    <td>The major version of Memcached software. If not provided, latest supported version will be used. Currently the latest supported major version is `MEMCACHE_1_5`. The minor version will be automatically determined by our system based on the latest supported minor version. (MEMCACHE_VERSION_UNSPECIFIED, MEMCACHE_1_5, MEMCACHE_1_6_15)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nodeConfig" /></td>
@@ -142,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of this Memcached instance.</td>
+    <td>Output only. The state of this Memcached instance. (STATE_UNSPECIFIED, CREATING, READY, UPDATING, DELETING, PERFORMING_MAINTENANCE, MEMCACHE_VERSION_UPGRADING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -179,6 +195,11 @@ The following fields are returned by `SELECT` queries:
     <td>The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the instance is connected. If left unspecified, the `default` network will be used.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="availableMaintenanceVersions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The available maintenance versions that can be applied to the instance.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time the instance was created.</td>
@@ -192,6 +213,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
     <td>User provided name for the instance, which is only used for display purposes. Cannot be more than 80 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="effectiveMaintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The effective maintenance version of the instance.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceMessages" /></td>
@@ -214,6 +240,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Published maintenance schedule. (id: MaintenanceSchedule)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="maintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Last self service update maintenance version triggered by the customer. If it is empty, it means that the maintenance version is not set by the user.</td>
+</tr>
+<tr>
     <td><CopyableCode code="memcacheFullVersion" /></td>
     <td><code>string</code></td>
     <td>Output only. The full version of memcached server running on this instance. System automatically determines the full memcached version for an instance based on the input MemcacheVersion. The full version format will be "memcached-1.5.16".</td>
@@ -226,7 +257,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="memcacheVersion" /></td>
     <td><code>string</code></td>
-    <td>The major version of Memcached software. If not provided, latest supported version will be used. Currently the latest supported major version is `MEMCACHE_1_5`. The minor version will be automatically determined by our system based on the latest supported minor version.</td>
+    <td>The major version of Memcached software. If not provided, latest supported version will be used. Currently the latest supported major version is `MEMCACHE_1_5`. The minor version will be automatically determined by our system based on the latest supported minor version. (MEMCACHE_VERSION_UNSPECIFIED, MEMCACHE_1_5, MEMCACHE_1_6_15)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nodeConfig" /></td>
@@ -261,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of this Memcached instance.</td>
+    <td>Output only. The state of this Memcached instance. (STATE_UNSPECIFIED, CREATING, READY, UPDATING, DELETING, PERFORMING_MAINTENANCE, MEMCACHE_VERSION_UPGRADING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -304,7 +335,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Instances in a given location.</td>
 </tr>
 <tr>
@@ -329,11 +360,11 @@ The following methods are available for this resource:
     <td>Deletes a single Instance.</td>
 </tr>
 <tr>
-    <td><a href="#apply_parameters"><CopyableCode code="apply_parameters" /></a></td>
+    <td><a href="#set_tags"><CopyableCode code="set_tags" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.</td>
+    <td>Updates tags directly bound to a GCP resource.</td>
 </tr>
 <tr>
     <td><a href="#reschedule_maintenance"><CopyableCode code="reschedule_maintenance" /></a></td>
@@ -348,6 +379,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Upgrades the Memcache instance to a newer memcached engine version specified in the request.</td>
+</tr>
+<tr>
+    <td><a href="#apply_parameters"><CopyableCode code="apply_parameters" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.</td>
 </tr>
 </tbody>
 </table>
@@ -430,13 +468,16 @@ Gets details of a single Instance.
 SELECT
 name,
 authorizedNetwork,
+availableMaintenanceVersions,
 createTime,
 discoveryEndpoint,
 displayName,
+effectiveMaintenanceVersion,
 instanceMessages,
 labels,
 maintenancePolicy,
 maintenanceSchedule,
+maintenanceVersion,
 memcacheFullVersion,
 memcacheNodes,
 memcacheVersion,
@@ -464,13 +505,16 @@ Lists Instances in a given location.
 SELECT
 name,
 authorizedNetwork,
+availableMaintenanceVersions,
 createTime,
 discoveryEndpoint,
 displayName,
+effectiveMaintenanceVersion,
 instanceMessages,
 labels,
 maintenancePolicy,
 maintenanceSchedule,
+maintenanceVersion,
 memcacheFullVersion,
 memcacheNodes,
 memcacheVersion,
@@ -486,10 +530,10 @@ zones
 FROM google.memcache.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -511,35 +555,37 @@ Creates a new Instance in a given location.
 
 ```sql
 INSERT INTO google.memcache.instances (
-data__name,
-data__displayName,
-data__labels,
-data__authorizedNetwork,
-data__zones,
-data__nodeCount,
-data__nodeConfig,
 data__memcacheVersion,
-data__parameters,
-data__instanceMessages,
-data__maintenancePolicy,
+data__maintenanceVersion,
 data__reservedIpRangeId,
+data__displayName,
+data__nodeCount,
+data__instanceMessages,
+data__parameters,
+data__labels,
+data__nodeConfig,
+data__name,
+data__zones,
+data__maintenancePolicy,
+data__authorizedNetwork,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ labels }}',
-'{{ authorizedNetwork }}',
-'{{ zones }}',
-{{ nodeCount }},
-'{{ nodeConfig }}',
 '{{ memcacheVersion }}',
-'{{ parameters }}',
-'{{ instanceMessages }}',
-'{{ maintenancePolicy }}',
+'{{ maintenanceVersion }}',
 '{{ reservedIpRangeId }}',
+'{{ displayName }}',
+{{ nodeCount }},
+'{{ instanceMessages }}',
+'{{ parameters }}',
+'{{ labels }}',
+'{{ nodeConfig }}',
+'{{ name }}',
+'{{ zones }}',
+'{{ maintenancePolicy }}',
+'{{ authorizedNetwork }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -554,80 +600,91 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: name
-      value: string
-      description: >
-        Required. Unique name of the resource in this scope including project and location using the form: `projects/{project_id}/locations/{location_id}/instances/{instance_id}` Note: Memcached instances are managed and addressed at the regional level so `location_id` here refers to a Google Cloud region; however, users may choose which zones Memcached nodes should be provisioned in within an instance. Refer to zones field for more details.
-        
-    - name: displayName
-      value: string
-      description: >
-        User provided name for the instance, which is only used for display purposes. Cannot be more than 80 characters.
-        
-    - name: labels
-      value: object
-      description: >
-        Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
-        
-    - name: authorizedNetwork
-      value: string
-      description: >
-        The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the instance is connected. If left unspecified, the `default` network will be used.
-        
-    - name: zones
-      value: array
-      description: >
-        Zones in which Memcached nodes should be provisioned. Memcached nodes will be equally distributed across these zones. If not provided, the service will by default create nodes in all zones in the region for the instance.
-        
-    - name: nodeCount
-      value: integer
-      description: >
-        Required. Number of nodes in the Memcached instance.
-        
-    - name: nodeConfig
-      value: object
-      description: >
-        Required. Configuration for Memcached nodes.
-        
     - name: memcacheVersion
-      value: string
-      description: >
-        The major version of Memcached software. If not provided, latest supported version will be used. Currently the latest supported major version is `MEMCACHE_1_5`. The minor version will be automatically determined by our system based on the latest supported minor version.
-        
+      value: "{{ memcacheVersion }}"
+      description: |
+        The major version of Memcached software. If not provided, latest supported version will be used. Currently the latest supported major version is \`MEMCACHE_1_5\`. The minor version will be automatically determined by our system based on the latest supported minor version.
       valid_values: ['MEMCACHE_VERSION_UNSPECIFIED', 'MEMCACHE_1_5', 'MEMCACHE_1_6_15']
-    - name: parameters
-      value: object
-      description: >
-        User defined parameters to apply to the memcached process on each node.
-        
-    - name: instanceMessages
-      value: array
-      description: >
-        List of messages that describe the current state of the Memcached instance.
-        
-    - name: maintenancePolicy
-      value: object
-      description: >
-        The maintenance policy for the instance. If not provided, the maintenance event will be performed based on Memorystore internal rollout schedule.
-        
+    - name: maintenanceVersion
+      value: "{{ maintenanceVersion }}"
+      description: |
+        Optional. Last self service update maintenance version triggered by the customer. If it is empty, it means that the maintenance version is not set by the user.
     - name: reservedIpRangeId
-      value: array
-      description: >
+      value:
+        - "{{ reservedIpRangeId }}"
+      description: |
         Optional. Contains the id of allocated IP address ranges associated with the private service access connection for example, "test-default" associated with IP range 10.0.0.0/29.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User provided name for the instance, which is only used for display purposes. Cannot be more than 80 characters.
+    - name: nodeCount
+      value: {{ nodeCount }}
+      description: |
+        Required. Number of nodes in the Memcached instance.
+    - name: instanceMessages
+      description: |
+        List of messages that describe the current state of the Memcached instance.
+      value:
+        - code: "{{ code }}"
+          message: "{{ message }}"
+    - name: parameters
+      description: |
+        User defined parameters to apply to the memcached process on each node.
+      value:
+        id: "{{ id }}"
+        params: "{{ params }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
+    - name: nodeConfig
+      description: |
+        Required. Configuration for Memcached nodes.
+      value:
+        cpuCount: {{ cpuCount }}
+        memorySizeMb: {{ memorySizeMb }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Unique name of the resource in this scope including project and location using the form: \`projects/{project_id}/locations/{location_id}/instances/{instance_id}\` Note: Memcached instances are managed and addressed at the regional level so \`location_id\` here refers to a Google Cloud region; however, users may choose which zones Memcached nodes should be provisioned in within an instance. Refer to zones field for more details.
+    - name: zones
+      value:
+        - "{{ zones }}"
+      description: |
+        Zones in which Memcached nodes should be provisioned. Memcached nodes will be equally distributed across these zones. If not provided, the service will by default create nodes in all zones in the region for the instance.
+    - name: maintenancePolicy
+      description: |
+        The maintenance policy for the instance. If not provided, the maintenance event will be performed based on Memorystore internal rollout schedule.
+      value:
+        createTime: "{{ createTime }}"
+        updateTime: "{{ updateTime }}"
+        weeklyMaintenanceWindow:
+          - startTime:
+              seconds: {{ seconds }}
+              hours: {{ hours }}
+              nanos: {{ nanos }}
+              minutes: {{ minutes }}
+            duration: "{{ duration }}"
+            day: "{{ day }}"
+        description: "{{ description }}"
+    - name: authorizedNetwork
+      value: "{{ authorizedNetwork }}"
+      description: |
+        The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the instance is connected. If left unspecified, the \`default\` network will be used.
     - name: instanceId
-      value: string
-```
+      value: "{{ instanceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -647,18 +704,19 @@ Updates an existing Instance in a given project and location.
 ```sql
 UPDATE google.memcache.instances
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
-data__authorizedNetwork = '{{ authorizedNetwork }}',
-data__zones = '{{ zones }}',
-data__nodeCount = {{ nodeCount }},
-data__nodeConfig = '{{ nodeConfig }}',
 data__memcacheVersion = '{{ memcacheVersion }}',
-data__parameters = '{{ parameters }}',
+data__maintenanceVersion = '{{ maintenanceVersion }}',
+data__reservedIpRangeId = '{{ reservedIpRangeId }}',
+data__displayName = '{{ displayName }}',
+data__nodeCount = {{ nodeCount }},
 data__instanceMessages = '{{ instanceMessages }}',
+data__parameters = '{{ parameters }}',
+data__labels = '{{ labels }}',
+data__nodeConfig = '{{ nodeConfig }}',
+data__name = '{{ name }}',
+data__zones = '{{ zones }}',
 data__maintenancePolicy = '{{ maintenancePolicy }}',
-data__reservedIpRangeId = '{{ reservedIpRangeId }}'
+data__authorizedNetwork = '{{ authorizedNetwork }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -701,26 +759,29 @@ AND instancesId = '{{ instancesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="apply_parameters"
+    defaultValue="set_tags"
     values={[
-        { label: 'apply_parameters', value: 'apply_parameters' },
+        { label: 'set_tags', value: 'set_tags' },
         { label: 'reschedule_maintenance', value: 'reschedule_maintenance' },
-        { label: 'upgrade', value: 'upgrade' }
+        { label: 'upgrade', value: 'upgrade' },
+        { label: 'apply_parameters', value: 'apply_parameters' }
     ]}
 >
-<TabItem value="apply_parameters">
+<TabItem value="set_tags">
 
-`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.
+Updates tags directly bound to a GCP resource.
 
 ```sql
-EXEC google.memcache.instances.apply_parameters 
+EXEC google.memcache.instances.set_tags 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required 
 @@json=
 '{
-"nodeIds": "{{ nodeIds }}", 
-"applyAll": {{ applyAll }}
+"name": "{{ name }}", 
+"etag": "{{ etag }}", 
+"tags": "{{ tags }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```
@@ -754,6 +815,23 @@ EXEC google.memcache.instances.upgrade
 @@json=
 '{
 "memcacheVersion": "{{ memcacheVersion }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="apply_parameters">
+
+`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.
+
+```sql
+EXEC google.memcache.instances.apply_parameters 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"nodeIds": "{{ nodeIds }}", 
+"applyAll": {{ applyAll }}
 }'
 ;
 ```

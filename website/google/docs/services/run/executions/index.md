@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>executions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>executions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="executions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.run.executions" /></td></tr>
 </tbody></table>
@@ -63,6 +64,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="cancelledCount" /></td>
     <td><code>integer (int32)</code></td>
     <td>Output only. The number of tasks which reached phase Cancelled.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="client" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Arbitrary identifier for the API client.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clientVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Arbitrary version identifier for the API client.</td>
 </tr>
 <tr>
     <td><CopyableCode code="completionTime" /></td>
@@ -122,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are were, this field will be BETA.</td>
+    <td>The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are used, this field will be BETA. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="logUri" /></td>
@@ -219,6 +230,16 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The number of tasks which reached phase Cancelled.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="client" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Arbitrary identifier for the API client.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clientVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Arbitrary version identifier for the API client.</td>
+</tr>
+<tr>
     <td><CopyableCode code="completionTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Represents time when the execution was completed. It is not guaranteed to be set in happens-before order across separate operations.</td>
@@ -276,7 +297,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are were, this field will be BETA.</td>
+    <td>The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are used, this field will be BETA. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="logUri" /></td>
@@ -374,7 +395,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists Executions from a Job. Results are sorted by creation time, descending.</td>
 </tr>
 <tr>
@@ -485,6 +506,8 @@ SELECT
 name,
 annotations,
 cancelledCount,
+client,
+clientVersion,
 completionTime,
 conditions,
 createTime,
@@ -527,6 +550,8 @@ SELECT
 name,
 annotations,
 cancelledCount,
+client,
+clientVersion,
 completionTime,
 conditions,
 createTime,
@@ -556,9 +581,9 @@ FROM google.run.executions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND jobsId = '{{ jobsId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>

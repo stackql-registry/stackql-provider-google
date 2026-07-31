@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>budgets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>budgets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="budgets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.billingbudgets.budgets" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ownershipScope" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td> (OWNERSHIP_SCOPE_UNSPECIFIED, ALL_USERS, BILLING_ACCOUNT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="thresholdRules" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ownershipScope" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td> (OWNERSHIP_SCOPE_UNSPECIFIED, ALL_USERS, BILLING_ACCOUNT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="thresholdRules" /></td>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a></td>
-    <td><a href="#parameter-scope"><code>scope</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-scope"><code>scope</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns a list of budgets for a billing account. WARNING: There are some fields exposed on the Google Cloud Console that aren't available on this API. When reading from the API, you will not see these fields in the return value, though they may have been set in the Cloud Console.</td>
 </tr>
 <tr>
@@ -292,9 +293,9 @@ ownershipScope,
 thresholdRules
 FROM google.billingbudgets.budgets
 WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND scope = '{{ scope }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -316,22 +317,22 @@ Creates a new budget. See [Quotas and limits](https://cloud.google.com/billing/q
 
 ```sql
 INSERT INTO google.billingbudgets.budgets (
-data__displayName,
-data__budgetFilter,
 data__amount,
-data__thresholdRules,
 data__notificationsRule,
 data__etag,
+data__displayName,
+data__thresholdRules,
+data__budgetFilter,
 data__ownershipScope,
 billingAccountsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ budgetFilter }}',
 '{{ amount }}',
-'{{ thresholdRules }}',
 '{{ notificationsRule }}',
 '{{ etag }}',
+'{{ displayName }}',
+'{{ thresholdRules }}',
+'{{ budgetFilter }}',
 '{{ ownershipScope }}',
 '{{ billingAccountsId }}'
 RETURNING
@@ -348,47 +349,76 @@ thresholdRules
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: budgets
   props:
     - name: billingAccountsId
-      value: string
+      value: "{{ billingAccountsId }}"
       description: Required parameter for the budgets resource.
-    - name: displayName
-      value: string
-      description: >
-        User data for display name in UI. The name must be less than or equal to 60 characters.
-        
-    - name: budgetFilter
-      value: object
-      description: >
-        Optional. Filters that define which resources are used to compute the actual spend against the budget amount, such as projects, services, and the budget's time period, as well as other filters.
-        
     - name: amount
-      value: object
-      description: >
+      description: |
         Required. Budgeted amount.
-        
-    - name: thresholdRules
-      value: array
-      description: >
-        Optional. Rules that trigger alerts (notifications of thresholds being crossed) when spend exceeds the specified percentages of the budget. Optional for `pubsubTopic` notifications. Required if using email notifications.
-        
+      value:
+        specifiedAmount:
+          currencyCode: "{{ currencyCode }}"
+          units: "{{ units }}"
+          nanos: {{ nanos }}
+        lastPeriodAmount: "{{ lastPeriodAmount }}"
     - name: notificationsRule
-      value: object
-      description: >
+      description: |
         Optional. Rules to apply to notifications sent based on budget spend and thresholds.
-        
+      value:
+        pubsubTopic: "{{ pubsubTopic }}"
+        monitoringNotificationChannels:
+          - "{{ monitoringNotificationChannels }}"
+        enableProjectLevelRecipients: {{ enableProjectLevelRecipients }}
+        schemaVersion: "{{ schemaVersion }}"
+        disableDefaultIamRecipients: {{ disableDefaultIamRecipients }}
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Optional. Etag to validate that the object is unchanged for a read-modify-write operation. An empty etag causes an update to overwrite other changes.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User data for display name in UI. The name must be less than or equal to 60 characters.
+    - name: thresholdRules
+      description: |
+        Optional. Rules that trigger alerts (notifications of thresholds being crossed) when spend exceeds the specified percentages of the budget. Optional for \`pubsubTopic\` notifications. Required if using email notifications.
+      value:
+        - thresholdPercent: {{ thresholdPercent }}
+          spendBasis: "{{ spendBasis }}"
+    - name: budgetFilter
+      description: |
+        Optional. Filters that define which resources are used to compute the actual spend against the budget amount, such as projects, services, and the budget's time period, as well as other filters.
+      value:
+        projects:
+          - "{{ projects }}"
+        labels: "{{ labels }}"
+        services:
+          - "{{ services }}"
+        subaccounts:
+          - "{{ subaccounts }}"
+        creditTypes:
+          - "{{ creditTypes }}"
+        creditTypesTreatment: "{{ creditTypesTreatment }}"
+        customPeriod:
+          startDate:
+            year: {{ year }}
+            day: {{ day }}
+            month: {{ month }}
+          endDate:
+            year: {{ year }}
+            day: {{ day }}
+            month: {{ month }}
+        calendarPeriod: "{{ calendarPeriod }}"
+        resourceAncestors:
+          - "{{ resourceAncestors }}"
     - name: ownershipScope
-      value: string
+      value: "{{ ownershipScope }}"
       valid_values: ['OWNERSHIP_SCOPE_UNSPECIFIED', 'ALL_USERS', 'BILLING_ACCOUNT']
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -408,12 +438,12 @@ Updates a budget and returns the updated budget. WARNING: There are some fields 
 ```sql
 UPDATE google.billingbudgets.budgets
 SET 
-data__displayName = '{{ displayName }}',
-data__budgetFilter = '{{ budgetFilter }}',
 data__amount = '{{ amount }}',
-data__thresholdRules = '{{ thresholdRules }}',
 data__notificationsRule = '{{ notificationsRule }}',
 data__etag = '{{ etag }}',
+data__displayName = '{{ displayName }}',
+data__thresholdRules = '{{ thresholdRules }}',
+data__budgetFilter = '{{ budgetFilter }}',
 data__ownershipScope = '{{ ownershipScope }}'
 WHERE 
 billingAccountsId = '{{ billingAccountsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dns_zones</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dns_zones</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dns_zones" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.dns_zones" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the DNS Peering. Values other than `ACTIVE` mean the resource is not ready to use.</td>
+    <td>Output only. State of the DNS Peering. Values other than `ACTIVE` mean the resource is not ready to use. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the DNS Peering. Values other than `ACTIVE` mean the resource is not ready to use.</td>
+    <td>Output only. State of the DNS Peering. Values other than `ACTIVE` mean the resource is not ready to use. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -291,18 +292,18 @@ Creates a new DNS zone.
 
 ```sql
 INSERT INTO google.apigee.dns_zones (
-data__peeringConfig,
-data__description,
-data__domain,
 data__name,
+data__peeringConfig,
+data__domain,
+data__description,
 organizationsId,
 dnsZoneId
 )
 SELECT 
-'{{ peeringConfig }}',
-'{{ description }}',
-'{{ domain }}',
 '{{ name }}',
+'{{ peeringConfig }}',
+'{{ domain }}',
+'{{ description }}',
 '{{ organizationsId }}',
 '{{ dnsZoneId }}'
 RETURNING
@@ -316,36 +317,34 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dns_zones
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the dns_zones resource.
-    - name: peeringConfig
-      value: object
-      description: >
-        DNS PEERING zone configuration.
-        
-    - name: description
-      value: string
-      description: >
-        Required. Description of the resource. String of at most 1024 characters associated with this resource for the user's convenience.
-        
-    - name: domain
-      value: string
-      description: >
-        Required. The domain name for hosts in this private zone, for instance "example.com.".
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. Unique name for the resource. Defined by the server Format: "organizations/{organization}/dnsZones/{dns_zone}".
-        
+    - name: peeringConfig
+      description: |
+        DNS PEERING zone configuration.
+      value:
+        targetProjectId: "{{ targetProjectId }}"
+        targetNetworkId: "{{ targetNetworkId }}"
+    - name: domain
+      value: "{{ domain }}"
+      description: |
+        Required. The domain name for hosts in this private zone, for instance "example.com.".
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Required. Description of the resource. String of at most 1024 characters associated with this resource for the user's convenience.
     - name: dnsZoneId
-      value: string
-```
+      value: "{{ dnsZoneId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

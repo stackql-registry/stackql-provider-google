@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>upgrades</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>upgrades</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="upgrades" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.upgrades" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the upgrade.</td>
+    <td>Output only. The current state of the upgrade. (STATE_UNSPECIFIED, SCHEDULED, ONGOING, SUCCEEDED, PAUSED, FAILED, CANCELLING, CANCELLED, RESCHEDULING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetVersion" /></td>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. Output Only. The type of upgrade.</td>
+    <td>Output only. Output Only. The type of upgrade. (TYPE_UNSPECIFIED, VSPHERE_UPGRADE, VSPHERE_PATCH, WORKAROUND, FIRMWARE_UPGRADE, SWITCH_UPGRADE, OTHER, INFRASTRUCTURE_UPGRADE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -138,81 +139,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Identifier. The resource name of the private cloud `Upgrade`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/upgrades/my-upgrade`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="componentUpgrades" /></td>
-    <td><code>array</code></td>
-    <td>Output only. Output Only. The list of component upgrades.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Output Only. Creation time of this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Output Only. The description of the upgrade. This is used to provide additional information about the private cloud upgrade, such as the upgrade's purpose, the changes included in the upgrade, or any other relevant information about the upgrade.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="endTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Output Only. End time of the upgrade.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="estimatedDuration" /></td>
-    <td><code>string (google-duration)</code></td>
-    <td>Output only. Output Only. The estimated total duration of the upgrade. This information can be used to plan or schedule upgrades to minimize disruptions. Please note that the estimated duration is only an estimate. The actual upgrade duration may vary.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>The etag for the upgrade resource. If this is provided on update, it must match the server's etag.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="schedule" /></td>
-    <td><code>object</code></td>
-    <td>Schedule details for the upgrade. (id: Schedule)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="startVersion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Output Only. The start version</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The current state of the upgrade.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="targetVersion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Output Only. The target version</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Output Only. The type of upgrade.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System-generated unique identifier for the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Output Only. Last update time of this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="version" /></td>
-    <td><code>string</code></td>
-    <td>Output only. </td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -244,14 +170,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists past, ongoing and upcoming `Upgrades` for the given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-upgradesId"><code>upgradesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Update the private cloud `Upgrade` resource. Only `schedule` field can updated. The schedule can only be updated when the upgrade has not started and schedule edit window is open. Only fields specified in `update_mask` are considered.</td>
 </tr>
 </tbody>
@@ -367,28 +293,14 @@ Lists past, ongoing and upcoming `Upgrades` for the given private cloud.
 
 ```sql
 SELECT
-name,
-componentUpgrades,
-createTime,
-description,
-endTime,
-estimatedDuration,
-etag,
-schedule,
-startVersion,
-state,
-targetVersion,
-type,
-uid,
-updateTime,
-version
+*
 FROM google.vmwareengine.upgrades
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```
@@ -418,8 +330,8 @@ projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
 AND upgradesId = '{{ upgradesId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

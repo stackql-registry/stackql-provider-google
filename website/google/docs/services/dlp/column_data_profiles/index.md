@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>column_data_profiles</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>column_data_profiles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="column_data_profiles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dlp.column_data_profiles" /></td></tr>
 </tbody></table>
@@ -64,12 +65,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
     <td><code>string</code></td>
-    <td>The data type of a given column.</td>
+    <td>The data type of a given column. (COLUMN_DATA_TYPE_UNSPECIFIED, TYPE_INT64, TYPE_BOOL, TYPE_FLOAT64, TYPE_STRING, TYPE_BYTES, TYPE_TIMESTAMP, TYPE_DATE, TYPE_TIME, TYPE_DATETIME, TYPE_GEOGRAPHY, TYPE_NUMERIC, TYPE_RECORD, TYPE_BIGNUMERIC, TYPE_JSON, TYPE_INTERVAL, TYPE_RANGE_DATE, TYPE_RANGE_DATETIME, TYPE_RANGE_TIMESTAMP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataRiskLevel" /></td>
@@ -84,7 +85,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="datasetLocation" /></td>
     <td><code>string</code></td>
-    <td>If supported, the location where the dataset's data is stored. See https://cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
+    <td>If supported, the location where the dataset's data is stored. See https://docs.cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
 </tr>
 <tr>
     <td><CopyableCode code="datasetProjectId" /></td>
@@ -94,12 +95,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="estimatedNullPercentage" /></td>
     <td><code>string</code></td>
-    <td>Approximate percentage of entries being null in the column.</td>
+    <td>Approximate percentage of entries being null in the column. (NULL_PERCENTAGE_LEVEL_UNSPECIFIED, NULL_PERCENTAGE_VERY_LOW, NULL_PERCENTAGE_LOW, NULL_PERCENTAGE_MEDIUM, NULL_PERCENTAGE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="estimatedUniquenessScore" /></td>
     <td><code>string</code></td>
-    <td>Approximate uniqueness of the column.</td>
+    <td>Approximate uniqueness of the column. (UNIQUENESS_SCORE_LEVEL_UNSPECIFIED, UNIQUENESS_SCORE_LOW, UNIQUENESS_SCORE_MEDIUM, UNIQUENESS_SCORE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="freeTextScore" /></td>
@@ -114,7 +115,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="policyState" /></td>
     <td><code>string</code></td>
-    <td>Indicates if a policy tag has been applied to the column.</td>
+    <td>Indicates if a policy tag has been applied to the column. (COLUMN_POLICY_STATE_UNSPECIFIED, COLUMN_POLICY_TAGGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="profileLastGenerated" /></td>
@@ -134,7 +135,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of a profile.</td>
+    <td>State of a profile. (STATE_UNSPECIFIED, RUNNING, DONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tableDataProfile" /></td>
@@ -178,12 +179,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
     <td><code>string</code></td>
-    <td>The data type of a given column.</td>
+    <td>The data type of a given column. (COLUMN_DATA_TYPE_UNSPECIFIED, TYPE_INT64, TYPE_BOOL, TYPE_FLOAT64, TYPE_STRING, TYPE_BYTES, TYPE_TIMESTAMP, TYPE_DATE, TYPE_TIME, TYPE_DATETIME, TYPE_GEOGRAPHY, TYPE_NUMERIC, TYPE_RECORD, TYPE_BIGNUMERIC, TYPE_JSON, TYPE_INTERVAL, TYPE_RANGE_DATE, TYPE_RANGE_DATETIME, TYPE_RANGE_TIMESTAMP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataRiskLevel" /></td>
@@ -198,7 +199,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="datasetLocation" /></td>
     <td><code>string</code></td>
-    <td>If supported, the location where the dataset's data is stored. See https://cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
+    <td>If supported, the location where the dataset's data is stored. See https://docs.cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
 </tr>
 <tr>
     <td><CopyableCode code="datasetProjectId" /></td>
@@ -208,12 +209,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="estimatedNullPercentage" /></td>
     <td><code>string</code></td>
-    <td>Approximate percentage of entries being null in the column.</td>
+    <td>Approximate percentage of entries being null in the column. (NULL_PERCENTAGE_LEVEL_UNSPECIFIED, NULL_PERCENTAGE_VERY_LOW, NULL_PERCENTAGE_LOW, NULL_PERCENTAGE_MEDIUM, NULL_PERCENTAGE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="estimatedUniquenessScore" /></td>
     <td><code>string</code></td>
-    <td>Approximate uniqueness of the column.</td>
+    <td>Approximate uniqueness of the column. (UNIQUENESS_SCORE_LEVEL_UNSPECIFIED, UNIQUENESS_SCORE_LOW, UNIQUENESS_SCORE_MEDIUM, UNIQUENESS_SCORE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="freeTextScore" /></td>
@@ -228,7 +229,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="policyState" /></td>
     <td><code>string</code></td>
-    <td>Indicates if a policy tag has been applied to the column.</td>
+    <td>Indicates if a policy tag has been applied to the column. (COLUMN_POLICY_STATE_UNSPECIFIED, COLUMN_POLICY_TAGGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="profileLastGenerated" /></td>
@@ -248,7 +249,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of a profile.</td>
+    <td>State of a profile. (STATE_UNSPECIFIED, RUNNING, DONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tableDataProfile" /></td>
@@ -292,12 +293,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
     <td><code>string</code></td>
-    <td>The data type of a given column.</td>
+    <td>The data type of a given column. (COLUMN_DATA_TYPE_UNSPECIFIED, TYPE_INT64, TYPE_BOOL, TYPE_FLOAT64, TYPE_STRING, TYPE_BYTES, TYPE_TIMESTAMP, TYPE_DATE, TYPE_TIME, TYPE_DATETIME, TYPE_GEOGRAPHY, TYPE_NUMERIC, TYPE_RECORD, TYPE_BIGNUMERIC, TYPE_JSON, TYPE_INTERVAL, TYPE_RANGE_DATE, TYPE_RANGE_DATETIME, TYPE_RANGE_TIMESTAMP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataRiskLevel" /></td>
@@ -312,7 +313,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="datasetLocation" /></td>
     <td><code>string</code></td>
-    <td>If supported, the location where the dataset's data is stored. See https://cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
+    <td>If supported, the location where the dataset's data is stored. See https://docs.cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
 </tr>
 <tr>
     <td><CopyableCode code="datasetProjectId" /></td>
@@ -322,12 +323,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="estimatedNullPercentage" /></td>
     <td><code>string</code></td>
-    <td>Approximate percentage of entries being null in the column.</td>
+    <td>Approximate percentage of entries being null in the column. (NULL_PERCENTAGE_LEVEL_UNSPECIFIED, NULL_PERCENTAGE_VERY_LOW, NULL_PERCENTAGE_LOW, NULL_PERCENTAGE_MEDIUM, NULL_PERCENTAGE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="estimatedUniquenessScore" /></td>
     <td><code>string</code></td>
-    <td>Approximate uniqueness of the column.</td>
+    <td>Approximate uniqueness of the column. (UNIQUENESS_SCORE_LEVEL_UNSPECIFIED, UNIQUENESS_SCORE_LOW, UNIQUENESS_SCORE_MEDIUM, UNIQUENESS_SCORE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="freeTextScore" /></td>
@@ -342,7 +343,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="policyState" /></td>
     <td><code>string</code></td>
-    <td>Indicates if a policy tag has been applied to the column.</td>
+    <td>Indicates if a policy tag has been applied to the column. (COLUMN_POLICY_STATE_UNSPECIFIED, COLUMN_POLICY_TAGGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="profileLastGenerated" /></td>
@@ -362,7 +363,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of a profile.</td>
+    <td>State of a profile. (STATE_UNSPECIFIED, RUNNING, DONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tableDataProfile" /></td>
@@ -406,12 +407,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
     <td><code>string</code></td>
-    <td>The data type of a given column.</td>
+    <td>The data type of a given column. (COLUMN_DATA_TYPE_UNSPECIFIED, TYPE_INT64, TYPE_BOOL, TYPE_FLOAT64, TYPE_STRING, TYPE_BYTES, TYPE_TIMESTAMP, TYPE_DATE, TYPE_TIME, TYPE_DATETIME, TYPE_GEOGRAPHY, TYPE_NUMERIC, TYPE_RECORD, TYPE_BIGNUMERIC, TYPE_JSON, TYPE_INTERVAL, TYPE_RANGE_DATE, TYPE_RANGE_DATETIME, TYPE_RANGE_TIMESTAMP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataRiskLevel" /></td>
@@ -426,7 +427,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="datasetLocation" /></td>
     <td><code>string</code></td>
-    <td>If supported, the location where the dataset's data is stored. See https://cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
+    <td>If supported, the location where the dataset's data is stored. See https://docs.cloud.google.com/bigquery/docs/locations for supported BigQuery locations.</td>
 </tr>
 <tr>
     <td><CopyableCode code="datasetProjectId" /></td>
@@ -436,12 +437,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="estimatedNullPercentage" /></td>
     <td><code>string</code></td>
-    <td>Approximate percentage of entries being null in the column.</td>
+    <td>Approximate percentage of entries being null in the column. (NULL_PERCENTAGE_LEVEL_UNSPECIFIED, NULL_PERCENTAGE_VERY_LOW, NULL_PERCENTAGE_LOW, NULL_PERCENTAGE_MEDIUM, NULL_PERCENTAGE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="estimatedUniquenessScore" /></td>
     <td><code>string</code></td>
-    <td>Approximate uniqueness of the column.</td>
+    <td>Approximate uniqueness of the column. (UNIQUENESS_SCORE_LEVEL_UNSPECIFIED, UNIQUENESS_SCORE_LOW, UNIQUENESS_SCORE_MEDIUM, UNIQUENESS_SCORE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="freeTextScore" /></td>
@@ -456,7 +457,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="policyState" /></td>
     <td><code>string</code></td>
-    <td>Indicates if a policy tag has been applied to the column.</td>
+    <td>Indicates if a policy tag has been applied to the column. (COLUMN_POLICY_STATE_UNSPECIFIED, COLUMN_POLICY_TAGGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="profileLastGenerated" /></td>
@@ -476,7 +477,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of a profile.</td>
+    <td>State of a profile. (STATE_UNSPECIFIED, RUNNING, DONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tableDataProfile" /></td>
@@ -538,7 +539,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_column_data_profiles_list"><CopyableCode code="organizations_locations_column_data_profiles_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists column data profiles for an organization.</td>
 </tr>
 </tbody>
@@ -742,9 +743,9 @@ tableId
 FROM google.dlp.column_data_profiles
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 ;
 ```

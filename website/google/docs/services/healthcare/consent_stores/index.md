@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>consent_stores</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>consent_stores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="consent_stores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.healthcare.consent_stores" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the consent stores in the specified dataset.</td>
 </tr>
 <tr>
@@ -284,9 +285,9 @@ FROM google.healthcare.consent_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -308,20 +309,20 @@ Creates a new consent store in the parent dataset. Attempting to create a consen
 
 ```sql
 INSERT INTO google.healthcare.consent_stores (
-data__enableConsentCreateOnUpdate,
 data__defaultConsentTtl,
-data__labels,
 data__name,
+data__labels,
+data__enableConsentCreateOnUpdate,
 projectsId,
 locationsId,
 datasetsId,
 consentStoreId
 )
 SELECT 
-{{ enableConsentCreateOnUpdate }},
 '{{ defaultConsentTtl }}',
-'{{ labels }}',
 '{{ name }}',
+'{{ labels }}',
+{{ enableConsentCreateOnUpdate }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -336,42 +337,38 @@ labels
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: consent_stores
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the consent_stores resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the consent_stores resource.
     - name: datasetsId
-      value: string
+      value: "{{ datasetsId }}"
       description: Required parameter for the consent_stores resource.
-    - name: enableConsentCreateOnUpdate
-      value: boolean
-      description: >
-        Optional. If `true`, UpdateConsent creates the Consent if it does not already exist. If unspecified, defaults to `false`.
-        
     - name: defaultConsentTtl
-      value: string
-      description: >
+      value: "{{ defaultConsentTtl }}"
+      description: |
         Optional. Default time to live for Consents created in this store. Must be at least 24 hours. Updating this field will not affect the expiration time of existing consents.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User-supplied key-value pairs used to organize consent stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \p{Ll}\p{Lo}{0,62}. Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63}. No more than 64 labels can be associated with a given store. For more information: https://cloud.google.com/healthcare/docs/how-tos/labeling-resources
-        
     - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the consent store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. Cannot be changed after creation.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the consent store, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}\`. Cannot be changed after creation.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-supplied key-value pairs used to organize consent stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: p{Ll}p{Lo}{0,62}. Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [p{Ll}p{Lo}p{N}_-]{0,63}. No more than 64 labels can be associated with a given store. For more information: https://cloud.google.com/healthcare/docs/how-tos/labeling-resources
+    - name: enableConsentCreateOnUpdate
+      value: {{ enableConsentCreateOnUpdate }}
+      description: |
+        Optional. If \`true\`, UpdateConsent creates the Consent if it does not already exist. If unspecified, defaults to \`false\`.
     - name: consentStoreId
-      value: string
-```
+      value: "{{ consentStoreId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -391,10 +388,10 @@ Updates the specified consent store.
 ```sql
 UPDATE google.healthcare.consent_stores
 SET 
-data__enableConsentCreateOnUpdate = {{ enableConsentCreateOnUpdate }},
 data__defaultConsentTtl = '{{ defaultConsentTtl }}',
+data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}'
+data__enableConsentCreateOnUpdate = {{ enableConsentCreateOnUpdate }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -457,9 +454,9 @@ EXEC google.healthcare.consent_stores.query_accessible_data
 @consentStoresId='{{ consentStoresId }}' --required 
 @@json=
 '{
+"requestAttributes": "{{ requestAttributes }}", 
 "gcsDestination": "{{ gcsDestination }}", 
-"resourceAttributes": "{{ resourceAttributes }}", 
-"requestAttributes": "{{ requestAttributes }}"
+"resourceAttributes": "{{ resourceAttributes }}"
 }'
 ;
 ```
@@ -476,10 +473,10 @@ EXEC google.healthcare.consent_stores.check_data_access
 @consentStoresId='{{ consentStoresId }}' --required 
 @@json=
 '{
-"responseView": "{{ responseView }}", 
 "requestAttributes": "{{ requestAttributes }}", 
 "dataId": "{{ dataId }}", 
-"consentList": "{{ consentList }}"
+"consentList": "{{ consentList }}", 
+"responseView": "{{ responseView }}"
 }'
 ;
 ```
@@ -496,13 +493,13 @@ EXEC google.healthcare.consent_stores.evaluate_user_consents
 @consentStoresId='{{ consentStoresId }}' --required 
 @@json=
 '{
-"responseView": "{{ responseView }}", 
-"pageSize": {{ pageSize }}, 
-"userId": "{{ userId }}", 
-"consentList": "{{ consentList }}", 
 "resourceAttributes": "{{ resourceAttributes }}", 
+"userId": "{{ userId }}", 
 "requestAttributes": "{{ requestAttributes }}", 
-"pageToken": "{{ pageToken }}"
+"pageToken": "{{ pageToken }}", 
+"consentList": "{{ consentList }}", 
+"pageSize": {{ pageSize }}, 
+"responseView": "{{ responseView }}"
 }'
 ;
 ```

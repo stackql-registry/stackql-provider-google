@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>building_insights</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>building_insights</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="building_insights" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.solar.building_insights" /></td></tr>
 </tbody></table>
@@ -53,7 +54,7 @@ The following methods are available for this resource:
     <td><a href="#find_closest"><CopyableCode code="find_closest" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-requiredQuality"><code>requiredQuality</code></a>, <a href="#parameter-exactQualityRequired"><code>exactQualityRequired</code></a>, <a href="#parameter-experiments"><code>experiments</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a></td>
+    <td><a href="#parameter-location.longitude"><code>location.longitude</code></a>, <a href="#parameter-experiments"><code>experiments</code></a>, <a href="#parameter-exactQualityRequired"><code>exactQualityRequired</code></a>, <a href="#parameter-additionalInsights"><code>additionalInsights</code></a>, <a href="#parameter-requiredQuality"><code>requiredQuality</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a></td>
     <td>Locates the building whose centroid is closest to a query point. Returns an error with code `NOT_FOUND` if there are no buildings within approximately 50m of the query point.</td>
 </tr>
 </tbody>
@@ -72,6 +73,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-additionalInsights">
+    <td><CopyableCode code="additionalInsights" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-exactQualityRequired">
     <td><CopyableCode code="exactQualityRequired" /></td>
     <td><code>boolean</code></td>
@@ -114,11 +120,12 @@ Locates the building whose centroid is closest to a query point. Returns an erro
 
 ```sql
 EXEC google.solar.building_insights.find_closest 
-@requiredQuality='{{ requiredQuality }}', 
-@exactQualityRequired={{ exactQualityRequired }}, 
+@location.longitude='{{ location.longitude }}', 
 @experiments='{{ experiments }}', 
-@location.latitude='{{ location.latitude }}', 
-@location.longitude='{{ location.longitude }}'
+@exactQualityRequired={{ exactQualityRequired }}, 
+@additionalInsights='{{ additionalInsights }}', 
+@requiredQuality='{{ requiredQuality }}', 
+@location.latitude='{{ location.latitude }}'
 ;
 ```
 </TabItem>

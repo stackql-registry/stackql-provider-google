@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connectors</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connectors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connectors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vpcaccess.connectors" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the VPC access connector.</td>
+    <td>Output only. State of the VPC access connector. (STATE_UNSPECIFIED, READY, CREATING, DELETING, ERROR, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subnet" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the VPC access connector.</td>
+    <td>Output only. State of the VPC access connector. (STATE_UNSPECIFIED, READY, CREATING, DELETING, ERROR, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subnet" /></td>
@@ -358,29 +359,29 @@ Creates a Serverless VPC Access connector, returns an operation.
 
 ```sql
 INSERT INTO google.vpcaccess.connectors (
-data__minThroughput,
-data__ipCidrRange,
-data__maxInstances,
-data__name,
-data__minInstances,
 data__network,
-data__machineType,
-data__maxThroughput,
+data__ipCidrRange,
+data__minInstances,
 data__subnet,
+data__machineType,
+data__name,
+data__minThroughput,
+data__maxInstances,
+data__maxThroughput,
 projectsId,
 locationsId,
 connectorId
 )
 SELECT 
-{{ minThroughput }},
-'{{ ipCidrRange }}',
-{{ maxInstances }},
-'{{ name }}',
-{{ minInstances }},
 '{{ network }}',
-'{{ machineType }}',
-{{ maxThroughput }},
+'{{ ipCidrRange }}',
+{{ minInstances }},
 '{{ subnet }}',
+'{{ machineType }}',
+'{{ name }}',
+{{ minThroughput }},
+{{ maxInstances }},
+{{ maxThroughput }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectorId }}'
@@ -395,64 +396,57 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connectors
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the connectors resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the connectors resource.
-    - name: minThroughput
-      value: integer
-      description: >
-        Minimum throughput of the connector in Mbps. Refers to the expected throughput when using an `e2-micro` machine type. Value must be a multiple of 100 from 200 through 900. Must be lower than the value specified by --max-throughput. If both min-throughput and min-instances are provided, min-instances takes precedence over min-throughput. The use of `min-throughput` is discouraged in favor of `min-instances`.
-        
-    - name: ipCidrRange
-      value: string
-      description: >
-        Optional. The range of internal addresses that follows RFC 4632 notation. Example: `10.132.0.0/28`.
-        
-    - name: maxInstances
-      value: integer
-      description: >
-        Maximum value of instances in autoscaling group underlying the connector.
-        
-    - name: name
-      value: string
-      description: >
-        The resource name in the format `projects/*/locations/*/connectors/*`.
-        
-    - name: minInstances
-      value: integer
-      description: >
-        Minimum value of instances in autoscaling group underlying the connector.
-        
     - name: network
-      value: string
-      description: >
+      value: "{{ network }}"
+      description: |
         Optional. Name of a VPC network.
-        
-    - name: machineType
-      value: string
-      description: >
-        Machine type of VM Instance underlying connector. Default is e2-micro
-        
-    - name: maxThroughput
-      value: integer
-      description: >
-        Maximum throughput of the connector in Mbps. Refers to the expected throughput when using an `e2-micro` machine type. Value must be a multiple of 100 from 300 through 1000. Must be higher than the value specified by --min-throughput. If both max-throughput and max-instances are provided, max-instances takes precedence over max-throughput. The use of `max-throughput` is discouraged in favor of `max-instances`.
-        
+    - name: ipCidrRange
+      value: "{{ ipCidrRange }}"
+      description: |
+        Optional. The range of internal addresses that follows RFC 4632 notation. Example: \`10.132.0.0/28\`.
+    - name: minInstances
+      value: {{ minInstances }}
+      description: |
+        Minimum value of instances in autoscaling group underlying the connector.
     - name: subnet
-      value: object
-      description: >
+      description: |
         Optional. The subnet in which to house the VPC Access Connector.
-        
+      value:
+        name: "{{ name }}"
+        projectId: "{{ projectId }}"
+    - name: machineType
+      value: "{{ machineType }}"
+      description: |
+        Machine type of VM Instance underlying connector. Default is e2-micro
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name in the format \`projects/*/locations/*/connectors/*\`.
+    - name: minThroughput
+      value: {{ minThroughput }}
+      description: |
+        Minimum throughput of the connector in Mbps. Refers to the expected throughput when using an \`e2-micro\` machine type. Value must be a multiple of 100 from 200 through 900. Must be lower than the value specified by --max-throughput. If both min-throughput and min-instances are provided, min-instances takes precedence over min-throughput. The use of \`min-throughput\` is discouraged in favor of \`min-instances\`.
+    - name: maxInstances
+      value: {{ maxInstances }}
+      description: |
+        Maximum value of instances in autoscaling group underlying the connector.
+    - name: maxThroughput
+      value: {{ maxThroughput }}
+      description: |
+        Maximum throughput of the connector in Mbps. Refers to the expected throughput when using an \`e2-micro\` machine type. Value must be a multiple of 100 from 300 through 1000. Must be higher than the value specified by --min-throughput. If both max-throughput and max-instances are provided, max-instances takes precedence over max-throughput. The use of \`max-throughput\` is discouraged in favor of \`max-instances\`.
     - name: connectorId
-      value: string
-```
+      value: "{{ connectorId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -472,15 +466,15 @@ Updates a Serverless VPC Access connector, returns an operation.
 ```sql
 UPDATE google.vpcaccess.connectors
 SET 
-data__minThroughput = {{ minThroughput }},
-data__ipCidrRange = '{{ ipCidrRange }}',
-data__maxInstances = {{ maxInstances }},
-data__name = '{{ name }}',
-data__minInstances = {{ minInstances }},
 data__network = '{{ network }}',
+data__ipCidrRange = '{{ ipCidrRange }}',
+data__minInstances = {{ minInstances }},
+data__subnet = '{{ subnet }}',
 data__machineType = '{{ machineType }}',
-data__maxThroughput = {{ maxThroughput }},
-data__subnet = '{{ subnet }}'
+data__name = '{{ name }}',
+data__minThroughput = {{ minThroughput }},
+data__maxInstances = {{ maxInstances }},
+data__maxThroughput = {{ maxThroughput }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

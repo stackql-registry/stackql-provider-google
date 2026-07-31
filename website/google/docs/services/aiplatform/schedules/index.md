@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schedules</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schedules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schedules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.schedules" /></td></tr>
 </tbody></table>
@@ -110,6 +111,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Response of the last scheduled run. This is the response for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable). Unset if no run has been scheduled yet. (id: GoogleCloudAiplatformV1ScheduleRunResponse)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="maxConcurrentActiveRunCount" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Optional. Specifies the maximum number of active runs that can be executed concurrently for this Schedule. This limits the number of runs that can be in a non-terminal state at the same time. Currently, this field is only supported for requests of type CreatePipelineJobRequest.</td>
+</tr>
+<tr>
     <td><CopyableCode code="maxConcurrentRunCount" /></td>
     <td><code>string (int64)</code></td>
     <td>Required. Maximum number of runs that can be started concurrently for this Schedule. This is the limit for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable).</td>
@@ -137,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of this Schedule.</td>
+    <td>Output only. The state of this Schedule. (STATE_UNSPECIFIED, ACTIVE, PAUSED, COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -219,6 +225,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Response of the last scheduled run. This is the response for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable). Unset if no run has been scheduled yet. (id: GoogleCloudAiplatformV1ScheduleRunResponse)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="maxConcurrentActiveRunCount" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Optional. Specifies the maximum number of active runs that can be executed concurrently for this Schedule. This limits the number of runs that can be in a non-terminal state at the same time. Currently, this field is only supported for requests of type CreatePipelineJobRequest.</td>
+</tr>
+<tr>
     <td><CopyableCode code="maxConcurrentRunCount" /></td>
     <td><code>string (int64)</code></td>
     <td>Required. Maximum number of runs that can be started concurrently for this Schedule. This is the limit for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable).</td>
@@ -246,7 +257,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of this Schedule.</td>
+    <td>Output only. The state of this Schedule. (STATE_UNSPECIFIED, ACTIVE, PAUSED, COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -284,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Schedules in a Location.</td>
 </tr>
 <tr>
@@ -408,6 +419,7 @@ endTime,
 lastPauseTime,
 lastResumeTime,
 lastScheduledRunResponse,
+maxConcurrentActiveRunCount,
 maxConcurrentRunCount,
 maxRunCount,
 nextRunTime,
@@ -440,6 +452,7 @@ endTime,
 lastPauseTime,
 lastResumeTime,
 lastScheduledRunResponse,
+maxConcurrentActiveRunCount,
 maxConcurrentRunCount,
 maxRunCount,
 nextRunTime,
@@ -451,9 +464,9 @@ FROM google.aiplatform.schedules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -475,30 +488,32 @@ Creates a Schedule.
 
 ```sql
 INSERT INTO google.aiplatform.schedules (
-data__cron,
-data__maxRunCount,
-data__createNotebookExecutionJobRequest,
-data__endTime,
-data__name,
-data__startTime,
-data__maxConcurrentRunCount,
 data__allowQueueing,
-data__displayName,
+data__maxRunCount,
+data__maxConcurrentRunCount,
+data__endTime,
 data__createPipelineJobRequest,
+data__displayName,
+data__name,
+data__cron,
+data__startTime,
+data__maxConcurrentActiveRunCount,
+data__createNotebookExecutionJobRequest,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ cron }}',
-'{{ maxRunCount }}',
-'{{ createNotebookExecutionJobRequest }}',
-'{{ endTime }}',
-'{{ name }}',
-'{{ startTime }}',
-'{{ maxConcurrentRunCount }}',
 {{ allowQueueing }},
-'{{ displayName }}',
+'{{ maxRunCount }}',
+'{{ maxConcurrentRunCount }}',
+'{{ endTime }}',
 '{{ createPipelineJobRequest }}',
+'{{ displayName }}',
+'{{ name }}',
+'{{ cron }}',
+'{{ startTime }}',
+'{{ maxConcurrentActiveRunCount }}',
+'{{ createNotebookExecutionJobRequest }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -514,6 +529,7 @@ endTime,
 lastPauseTime,
 lastResumeTime,
 lastScheduledRunResponse,
+maxConcurrentActiveRunCount,
 maxConcurrentRunCount,
 maxRunCount,
 nextRunTime,
@@ -526,67 +542,218 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: schedules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the schedules resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the schedules resource.
-    - name: cron
-      value: string
-      description: >
-        Cron schedule (https://en.wikipedia.org/wiki/Cron) to launch scheduled runs. To explicitly set a timezone to the cron tab, apply a prefix in the cron tab: "CRON_TZ=${IANA_TIME_ZONE}" or "TZ=${IANA_TIME_ZONE}". The ${IANA_TIME_ZONE} may only be a valid string from IANA time zone database. For example, "CRON_TZ=America/New_York 1 * * * *", or "TZ=America/New_York 1 * * * *".
-        
-    - name: maxRunCount
-      value: string
-      description: >
-        Optional. Maximum run count of the schedule. If specified, The schedule will be completed when either started_run_count >= max_run_count or when end_time is reached. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
-        
-    - name: createNotebookExecutionJobRequest
-      value: object
-      description: >
-        Request for NotebookService.CreateNotebookExecutionJob.
-        
-    - name: endTime
-      value: string
-      description: >
-        Optional. Timestamp after which no new runs can be scheduled. If specified, The schedule will be completed when either end_time is reached or when scheduled_run_count >= max_run_count. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the Schedule.
-        
-    - name: startTime
-      value: string
-      description: >
-        Optional. Timestamp after which the first run can be scheduled. Default to Schedule create time if not specified.
-        
-    - name: maxConcurrentRunCount
-      value: string
-      description: >
-        Required. Maximum number of runs that can be started concurrently for this Schedule. This is the limit for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable).
-        
     - name: allowQueueing
-      value: boolean
-      description: >
+      value: {{ allowQueueing }}
+      description: |
         Optional. Whether new scheduled runs can be queued when max_concurrent_runs limit is reached. If set to true, new runs will be queued instead of skipped. Default to false.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. User provided name of the Schedule. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
+    - name: maxRunCount
+      value: "{{ maxRunCount }}"
+      description: |
+        Optional. Maximum run count of the schedule. If specified, The schedule will be completed when either started_run_count >= max_run_count or when end_time is reached. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
+    - name: maxConcurrentRunCount
+      value: "{{ maxConcurrentRunCount }}"
+      description: |
+        Required. Maximum number of runs that can be started concurrently for this Schedule. This is the limit for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable).
+    - name: endTime
+      value: "{{ endTime }}"
+      description: |
+        Optional. Timestamp after which no new runs can be scheduled. If specified, The schedule will be completed when either end_time is reached or when scheduled_run_count >= max_run_count. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
     - name: createPipelineJobRequest
-      value: object
-      description: >
+      description: |
         Request for PipelineService.CreatePipelineJob. CreatePipelineJobRequest.parent field is required (format: projects/{project}/locations/{location}).
-        
-```
+      value:
+        pipelineJobId: "{{ pipelineJobId }}"
+        parent: "{{ parent }}"
+        pipelineJob:
+          displayName: "{{ displayName }}"
+          endTime: "{{ endTime }}"
+          templateMetadata:
+            version: "{{ version }}"
+          updateTime: "{{ updateTime }}"
+          pipelineSpec: "{{ pipelineSpec }}"
+          reservedIpRanges:
+            - "{{ reservedIpRanges }}"
+          state: "{{ state }}"
+          pscInterfaceConfig:
+            networkAttachment: "{{ networkAttachment }}"
+            dnsPeeringConfigs:
+              - targetNetwork: "{{ targetNetwork }}"
+                domain: "{{ domain }}"
+                targetProject: "{{ targetProject }}"
+          network: "{{ network }}"
+          scheduleName: "{{ scheduleName }}"
+          serviceAccount: "{{ serviceAccount }}"
+          createTime: "{{ createTime }}"
+          jobDetail:
+            pipelineContext:
+              displayName: "{{ displayName }}"
+              etag: "{{ etag }}"
+              updateTime: "{{ updateTime }}"
+              schemaTitle: "{{ schemaTitle }}"
+              createTime: "{{ createTime }}"
+              schemaVersion: "{{ schemaVersion }}"
+              metadata: "{{ metadata }}"
+              labels: "{{ labels }}"
+              parentContexts:
+                - "{{ parentContexts }}"
+              description: "{{ description }}"
+              name: "{{ name }}"
+            taskDetails:
+              - executorDetail:
+                  customJobDetail: "{{ customJobDetail }}"
+                  containerDetail: "{{ containerDetail }}"
+                pipelineTaskStatus: "{{ pipelineTaskStatus }}"
+                execution:
+                  name: "{{ name }}"
+                  description: "{{ description }}"
+                  state: "{{ state }}"
+                  metadata: "{{ metadata }}"
+                  labels: "{{ labels }}"
+                  createTime: "{{ createTime }}"
+                  schemaVersion: "{{ schemaVersion }}"
+                  updateTime: "{{ updateTime }}"
+                  schemaTitle: "{{ schemaTitle }}"
+                  displayName: "{{ displayName }}"
+                  etag: "{{ etag }}"
+                taskUniqueName: "{{ taskUniqueName }}"
+                state: "{{ state }}"
+                endTime: "{{ endTime }}"
+                parentTaskId: "{{ parentTaskId }}"
+                outputs: "{{ outputs }}"
+                startTime: "{{ startTime }}"
+                taskId: "{{ taskId }}"
+                taskName: "{{ taskName }}"
+                error:
+                  message: "{{ message }}"
+                  details: "{{ details }}"
+                  code: {{ code }}
+                inputs: "{{ inputs }}"
+                createTime: "{{ createTime }}"
+            pipelineRunContext:
+              displayName: "{{ displayName }}"
+              etag: "{{ etag }}"
+              updateTime: "{{ updateTime }}"
+              schemaTitle: "{{ schemaTitle }}"
+              createTime: "{{ createTime }}"
+              schemaVersion: "{{ schemaVersion }}"
+              metadata: "{{ metadata }}"
+              labels: "{{ labels }}"
+              parentContexts:
+                - "{{ parentContexts }}"
+              description: "{{ description }}"
+              name: "{{ name }}"
+          labels: "{{ labels }}"
+          startTime: "{{ startTime }}"
+          runtimeConfig:
+            gcsOutputDirectory: "{{ gcsOutputDirectory }}"
+            parameterValues: "{{ parameterValues }}"
+            inputArtifacts: "{{ inputArtifacts }}"
+            failurePolicy: "{{ failurePolicy }}"
+            parameters: "{{ parameters }}"
+          preflightValidations: {{ preflightValidations }}
+          encryptionSpec:
+            kmsKeyName: "{{ kmsKeyName }}"
+          name: "{{ name }}"
+          error:
+            message: "{{ message }}"
+            details: "{{ details }}"
+            code: {{ code }}
+          templateUri: "{{ templateUri }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. User provided name of the Schedule. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the Schedule.
+    - name: cron
+      value: "{{ cron }}"
+      description: |
+        Cron schedule (https://en.wikipedia.org/wiki/Cron) to launch scheduled runs. To explicitly set a timezone to the cron tab, apply a prefix in the cron tab: "CRON_TZ=\${IANA_TIME_ZONE}" or "TZ=\${IANA_TIME_ZONE}". The \${IANA_TIME_ZONE} may only be a valid string from IANA time zone database. For example, "CRON_TZ=America/New_York 1 * * * *", or "TZ=America/New_York 1 * * * *".
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Optional. Timestamp after which the first run can be scheduled. Default to Schedule create time if not specified.
+    - name: maxConcurrentActiveRunCount
+      value: "{{ maxConcurrentActiveRunCount }}"
+      description: |
+        Optional. Specifies the maximum number of active runs that can be executed concurrently for this Schedule. This limits the number of runs that can be in a non-terminal state at the same time. Currently, this field is only supported for requests of type CreatePipelineJobRequest.
+    - name: createNotebookExecutionJobRequest
+      description: |
+        Request for NotebookService.CreateNotebookExecutionJob.
+      value:
+        notebookExecutionJob:
+          notebookRuntimeTemplateResourceName: "{{ notebookRuntimeTemplateResourceName }}"
+          jobState: "{{ jobState }}"
+          directNotebookSource:
+            content: "{{ content }}"
+          customEnvironmentSpec:
+            networkSpec:
+              network: "{{ network }}"
+              enableInternetAccess: {{ enableInternetAccess }}
+              subnetwork: "{{ subnetwork }}"
+            machineSpec:
+              machineType: "{{ machineType }}"
+              tpuTopology: "{{ tpuTopology }}"
+              reservationAffinity:
+                reservationAffinityType: "{{ reservationAffinityType }}"
+                key: "{{ key }}"
+                values: "{{ values }}"
+              acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+              gpuPartitionSize: "{{ gpuPartitionSize }}"
+            persistentDiskSpec:
+              diskType: "{{ diskType }}"
+              diskSizeGb: "{{ diskSizeGb }}"
+            shieldedInstanceConfig:
+              enableVtpm: {{ enableVtpm }}
+              enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+              enableSecureBoot: {{ enableSecureBoot }}
+          workbenchRuntime:
+            vmImage:
+              family: "{{ family }}"
+              project: "{{ project }}"
+              name: "{{ name }}"
+            customContainerImage:
+              repository: "{{ repository }}"
+              tag: "{{ tag }}"
+          updateTime: "{{ updateTime }}"
+          executionUser: "{{ executionUser }}"
+          displayName: "{{ displayName }}"
+          name: "{{ name }}"
+          encryptionSpec:
+            kmsKeyName: "{{ kmsKeyName }}"
+          gcsOutputUri: "{{ gcsOutputUri }}"
+          executionTimeout: "{{ executionTimeout }}"
+          labels: "{{ labels }}"
+          dataformRepositorySource:
+            dataformRepositoryResourceName: "{{ dataformRepositoryResourceName }}"
+            commitSha: "{{ commitSha }}"
+          kernelName: "{{ kernelName }}"
+          scheduleResourceName: "{{ scheduleResourceName }}"
+          createTime: "{{ createTime }}"
+          gcsNotebookSource:
+            uri: "{{ uri }}"
+            generation: "{{ generation }}"
+          serviceAccount: "{{ serviceAccount }}"
+          status:
+            message: "{{ message }}"
+            details: "{{ details }}"
+            code: {{ code }}
+        notebookExecutionJobId: "{{ notebookExecutionJobId }}"
+        parent: "{{ parent }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -606,16 +773,17 @@ Updates an active or paused Schedule. When the Schedule is updated, new runs wil
 ```sql
 UPDATE google.aiplatform.schedules
 SET 
-data__cron = '{{ cron }}',
-data__maxRunCount = '{{ maxRunCount }}',
-data__createNotebookExecutionJobRequest = '{{ createNotebookExecutionJobRequest }}',
-data__endTime = '{{ endTime }}',
-data__name = '{{ name }}',
-data__startTime = '{{ startTime }}',
-data__maxConcurrentRunCount = '{{ maxConcurrentRunCount }}',
 data__allowQueueing = {{ allowQueueing }},
+data__maxRunCount = '{{ maxRunCount }}',
+data__maxConcurrentRunCount = '{{ maxConcurrentRunCount }}',
+data__endTime = '{{ endTime }}',
+data__createPipelineJobRequest = '{{ createPipelineJobRequest }}',
 data__displayName = '{{ displayName }}',
-data__createPipelineJobRequest = '{{ createPipelineJobRequest }}'
+data__name = '{{ name }}',
+data__cron = '{{ cron }}',
+data__startTime = '{{ startTime }}',
+data__maxConcurrentActiveRunCount = '{{ maxConcurrentActiveRunCount }}',
+data__createNotebookExecutionJobRequest = '{{ createNotebookExecutionJobRequest }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -634,6 +802,7 @@ endTime,
 lastPauseTime,
 lastResumeTime,
 lastScheduledRunResponse,
+maxConcurrentActiveRunCount,
 maxConcurrentRunCount,
 maxRunCount,
 nextRunTime,

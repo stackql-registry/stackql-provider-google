@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>snapshots</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>snapshots</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="snapshots" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.file.snapshots" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The snapshot state.</td>
+    <td>Output only. The snapshot state. (STATE_UNSPECIFIED, CREATING, READY, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -98,41 +99,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the snapshot, in the format `projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;/snapshots/&#123;snapshot_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the snapshot was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filesystemUsedBytes" /></td>
-    <td><code>string (int64)</code></td>
-    <td>Output only. The amount of bytes needed to allocate a full copy of the snapshot content</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Resource labels to represent user provided metadata.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The snapshot state.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tags" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: "123456789012/environment" : "production", "123456789013/costCenter" : "marketing" See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -164,7 +130,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all snapshots in a project for either a specified location or for all locations.</td>
 </tr>
 <tr>
@@ -298,22 +264,16 @@ Lists all snapshots in a project for either a specified location or for all loca
 
 ```sql
 SELECT
-name,
-createTime,
-description,
-filesystemUsedBytes,
-labels,
-state,
-tags
+*
 FROM google.file.snapshots
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -335,18 +295,18 @@ Creates a snapshot.
 
 ```sql
 INSERT INTO google.file.snapshots (
-data__description,
 data__labels,
 data__tags,
+data__description,
 projectsId,
 locationsId,
 instancesId,
 snapshotId
 )
 SELECT 
-'{{ description }}',
 '{{ labels }}',
 '{{ tags }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instancesId }}',
@@ -362,37 +322,34 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: snapshots
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the snapshots resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the snapshots resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the snapshots resource.
-    - name: description
-      value: string
-      description: >
-        A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Resource labels to represent user provided metadata.
-        
     - name: tags
-      value: object
-      description: >
+      value: "{{ tags }}"
+      description: |
         Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: "123456789012/environment" : "production", "123456789013/costCenter" : "marketing" See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
     - name: snapshotId
-      value: string
-```
+      value: "{{ snapshotId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -412,9 +369,9 @@ Updates the settings of a specific snapshot.
 ```sql
 UPDATE google.file.snapshots
 SET 
-data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__tags = '{{ tags }}'
+data__tags = '{{ tags }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

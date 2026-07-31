@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reports_ia_cvalidation_report</
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reports_ia_cvalidation_report</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reports_ia_cvalidation_report" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securityposture.reports_ia_cvalidation_report" /></td></tr>
 </tbody></table>
@@ -119,21 +120,21 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reports_ia_cvalidation_report
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the reports_ia_cvalidation_report resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the reports_ia_cvalidation_report resource.
     - name: iac
-      value: object
-      description: >
+      description: |
         Required. The infrastructure-as-code (IaC) configuration to validate.
-        
-```
+      value:
+        tfPlan: "{{ tfPlan }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

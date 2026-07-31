@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sitemaps</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sitemaps</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sitemaps" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.sitemaps" /></td></tr>
 </tbody></table>
@@ -291,28 +292,27 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sitemaps
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the sitemaps resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the sitemaps resource.
     - name: collectionsId
-      value: string
+      value: "{{ collectionsId }}"
       description: Required parameter for the sitemaps resource.
     - name: dataStoresId
-      value: string
+      value: "{{ dataStoresId }}"
       description: Required parameter for the sitemaps resource.
     - name: uri
-      value: string
-      description: >
-        Public URI for the sitemap, e.g. `www.example.com/sitemap.xml`.
-        
-```
+      value: "{{ uri }}"
+      description: |
+        Public URI for the sitemap, e.g. \`www.example.com/sitemap.xml\`.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

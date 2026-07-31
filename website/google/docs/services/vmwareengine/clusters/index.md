@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>clusters</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>clusters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="clusters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.clusters" /></td></tr>
 </tbody></table>
@@ -65,6 +66,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Creation time of this resource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="datastoreMountConfig" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Configuration of a mounted datastore.</td>
+</tr>
+<tr>
     <td><CopyableCode code="management" /></td>
     <td><code>boolean</code></td>
     <td>Output only. True if the cluster is a management cluster; false otherwise. There can only be one management cluster in a private cloud and it has to be the first one.</td>
@@ -77,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the resource.</td>
+    <td>Output only. State of the resource. (STATE_UNSPECIFIED, ACTIVE, CREATING, UPDATING, DELETING, REPAIRING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stretchedClusterConfig" /></td>
@@ -124,6 +130,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Creation time of this resource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="datastoreMountConfig" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Configuration of a mounted datastore.</td>
+</tr>
+<tr>
     <td><CopyableCode code="management" /></td>
     <td><code>boolean</code></td>
     <td>Output only. True if the cluster is a management cluster; false otherwise. There can only be one management cluster in a private cloud and it has to be the first one.</td>
@@ -136,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the resource.</td>
+    <td>Output only. State of the resource. (STATE_UNSPECIFIED, ACTIVE, CREATING, UPDATING, DELETING, REPAIRING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stretchedClusterConfig" /></td>
@@ -184,21 +195,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists `Cluster` resources in a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new cluster in a given private cloud. Creating a new cluster provides additional nodes for use in the parent private cloud and requires sufficient [node quota](https://cloud.google.com/vmware-engine/quotas).</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Modifies a `Cluster` resource. Only fields specified in `updateMask` are applied. During operation processing, the resource is temporarily in the `ACTIVE` state before the operation fully completes. For that period of time, you can't update the resource. Use the operation status to determine when the processing fully completes.</td>
 </tr>
 <tr>
@@ -207,6 +218,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a `Cluster` resource. To avoid unintended data loss, migrate or gracefully shut down any workloads running on the cluster before deletion. You cannot delete the management cluster of a private cloud using this method.</td>
+</tr>
+<tr>
+    <td><a href="#unmount_datastore"><CopyableCode code="unmount_datastore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Unmounts a `Datastore` on a cluster resource</td>
+</tr>
+<tr>
+    <td><a href="#mount_datastore"><CopyableCode code="mount_datastore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Mounts a `Datastore` on a cluster resource</td>
 </tr>
 </tbody>
 </table>
@@ -305,6 +330,7 @@ SELECT
 name,
 autoscalingSettings,
 createTime,
+datastoreMountConfig,
 management,
 nodeTypeConfigs,
 state,
@@ -328,6 +354,7 @@ SELECT
 name,
 autoscalingSettings,
 createTime,
+datastoreMountConfig,
 management,
 nodeTypeConfigs,
 state,
@@ -338,10 +365,10 @@ FROM google.vmwareengine.clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -369,8 +396,8 @@ data__stretchedClusterConfig,
 projectsId,
 locationsId,
 privateCloudsId,
-clusterId,
 validateOnly,
+clusterId,
 requestId
 )
 SELECT 
@@ -380,8 +407,8 @@ SELECT
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
-'{{ clusterId }}',
 '{{ validateOnly }}',
+'{{ clusterId }}',
 '{{ requestId }}'
 RETURNING
 name,
@@ -394,41 +421,44 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: clusters
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the clusters resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the clusters resource.
     - name: privateCloudsId
-      value: string
+      value: "{{ privateCloudsId }}"
       description: Required parameter for the clusters resource.
     - name: autoscalingSettings
-      value: object
-      description: >
+      description: |
         Optional. Configuration of the autoscaling applied to this cluster.
-        
+      value:
+        coolDownPeriod: "{{ coolDownPeriod }}"
+        autoscalingPolicies: "{{ autoscalingPolicies }}"
+        minClusterNodeCount: {{ minClusterNodeCount }}
+        maxClusterNodeCount: {{ maxClusterNodeCount }}
     - name: nodeTypeConfigs
-      value: object
-      description: >
-        Required. The map of cluster node types in this cluster, where the key is canonical identifier of the node type (corresponds to the `NodeType`).
-        
+      value: "{{ nodeTypeConfigs }}"
+      description: |
+        Required. The map of cluster node types in this cluster, where the key is canonical identifier of the node type (corresponds to the \`NodeType\`).
     - name: stretchedClusterConfig
-      value: object
-      description: >
+      description: |
         Optional. Configuration of a stretched cluster. Required for clusters that belong to a STRETCHED private cloud.
-        
-    - name: clusterId
-      value: string
+      value:
+        preferredLocation: "{{ preferredLocation }}"
+        secondaryLocation: "{{ secondaryLocation }}"
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
+    - name: clusterId
+      value: "{{ clusterId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -456,9 +486,9 @@ projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
-AND requestId = '{{ requestId}}'
 AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,
@@ -489,6 +519,57 @@ AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
 AND requestId = '{{ requestId }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="unmount_datastore"
+    values={[
+        { label: 'unmount_datastore', value: 'unmount_datastore' },
+        { label: 'mount_datastore', value: 'mount_datastore' }
+    ]}
+>
+<TabItem value="unmount_datastore">
+
+Unmounts a `Datastore` on a cluster resource
+
+```sql
+EXEC google.vmwareengine.clusters.unmount_datastore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@privateCloudsId='{{ privateCloudsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"datastore": "{{ datastore }}", 
+"validateOnly": {{ validateOnly }}
+}'
+;
+```
+</TabItem>
+<TabItem value="mount_datastore">
+
+Mounts a `Datastore` on a cluster resource
+
+```sql
+EXEC google.vmwareengine.clusters.mount_datastore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@privateCloudsId='{{ privateCloudsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"ignoreColocation": {{ ignoreColocation }}, 
+"datastoreMountConfig": "{{ datastoreMountConfig }}", 
+"validateOnly": {{ validateOnly }}
+}'
 ;
 ```
 </TabItem>

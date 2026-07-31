@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>repositories</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>repositories</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="repositories" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudbuild.repositories" /></td></tr>
 </tbody></table>
@@ -98,41 +99,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Resource name of the repository, in the format `projects/*/locations/*/connections/*/repositories/*`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Allows clients to store small amounts of arbitrary data.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Server assigned timestamp for when the connection was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="remoteUri" /></td>
-    <td><code>string</code></td>
-    <td>Required. Git Clone HTTPS URI.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Server assigned timestamp for when the connection was updated.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="webhookId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. External ID of the webhook created for the repository.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -164,7 +130,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_connections_repositories_list"><CopyableCode code="projects_locations_connections_repositories_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Repositories in a given connection.</td>
 </tr>
 <tr>
@@ -189,18 +155,18 @@ The following methods are available for this resource:
     <td>Deletes a single repository.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_connections_repositories_access_read_write_token"><CopyableCode code="projects_locations_connections_repositories_access_read_write_token" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td></td>
-    <td>Fetches read/write token of a given repository.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_connections_repositories_access_read_token"><CopyableCode code="projects_locations_connections_repositories_access_read_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
     <td></td>
     <td>Fetches read token of a given repository.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_connections_repositories_access_read_write_token"><CopyableCode code="projects_locations_connections_repositories_access_read_write_token" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td></td>
+    <td>Fetches read/write token of a given repository.</td>
 </tr>
 </tbody>
 </table>
@@ -312,21 +278,15 @@ Lists Repositories in a given connection.
 
 ```sql
 SELECT
-name,
-annotations,
-createTime,
-etag,
-remoteUri,
-updateTime,
-webhookId
+*
 FROM google.cloudbuild.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -349,9 +309,9 @@ Creates a Repository.
 
 ```sql
 INSERT INTO google.cloudbuild.repositories (
-data__etag,
-data__name,
 data__remoteUri,
+data__name,
+data__etag,
 data__annotations,
 projectsId,
 locationsId,
@@ -359,9 +319,9 @@ connectionsId,
 repositoryId
 )
 SELECT 
-'{{ etag }}',
-'{{ name }}',
 '{{ remoteUri }}',
+'{{ name }}',
+'{{ etag }}',
 '{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -403,47 +363,52 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: repositories
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the repositories resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the repositories resource.
     - name: connectionsId
-      value: string
+      value: "{{ connectionsId }}"
       description: Required parameter for the repositories resource.
-    - name: etag
-      value: string
-      description: >
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. Resource name of the repository, in the format `projects/*/locations/*/connections/*/repositories/*`.
-        
     - name: remoteUri
-      value: string
-      description: >
+      value: "{{ remoteUri }}"
+      description: |
         Required. Git Clone HTTPS URI.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Resource name of the repository, in the format \`projects/*/locations/*/connections/*/repositories/*\`.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Allows clients to store small amounts of arbitrary data.
-        
     - name: requests
-      value: array
-      description: >
+      description: |
         Required. The request messages specifying the repositories to create.
-        
+      value:
+        - repository:
+            remoteUri: "{{ remoteUri }}"
+            name: "{{ name }}"
+            webhookId: "{{ webhookId }}"
+            createTime: "{{ createTime }}"
+            etag: "{{ etag }}"
+            updateTime: "{{ updateTime }}"
+            annotations: "{{ annotations }}"
+          repositoryId: "{{ repositoryId }}"
+          parent: "{{ parent }}"
     - name: repositoryId
-      value: string
-```
+      value: "{{ repositoryId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -477,18 +442,18 @@ AND validateOnly = '{{ validateOnly }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_connections_repositories_access_read_write_token"
+    defaultValue="projects_locations_connections_repositories_access_read_token"
     values={[
-        { label: 'projects_locations_connections_repositories_access_read_write_token', value: 'projects_locations_connections_repositories_access_read_write_token' },
-        { label: 'projects_locations_connections_repositories_access_read_token', value: 'projects_locations_connections_repositories_access_read_token' }
+        { label: 'projects_locations_connections_repositories_access_read_token', value: 'projects_locations_connections_repositories_access_read_token' },
+        { label: 'projects_locations_connections_repositories_access_read_write_token', value: 'projects_locations_connections_repositories_access_read_write_token' }
     ]}
 >
-<TabItem value="projects_locations_connections_repositories_access_read_write_token">
+<TabItem value="projects_locations_connections_repositories_access_read_token">
 
-Fetches read/write token of a given repository.
+Fetches read token of a given repository.
 
 ```sql
-EXEC google.cloudbuild.repositories.projects_locations_connections_repositories_access_read_write_token 
+EXEC google.cloudbuild.repositories.projects_locations_connections_repositories_access_read_token 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required, 
@@ -496,12 +461,12 @@ EXEC google.cloudbuild.repositories.projects_locations_connections_repositories_
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_connections_repositories_access_read_token">
+<TabItem value="projects_locations_connections_repositories_access_read_write_token">
 
-Fetches read token of a given repository.
+Fetches read/write token of a given repository.
 
 ```sql
-EXEC google.cloudbuild.repositories.projects_locations_connections_repositories_access_read_token 
+EXEC google.cloudbuild.repositories.projects_locations_connections_repositories_access_read_write_token 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required, 

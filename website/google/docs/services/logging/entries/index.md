@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entries</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.logging.entries" /></td></tr>
 </tbody></table>
@@ -83,7 +84,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td></td>
     <td></td>
-    <td>Lists log entries. Use this method to retrieve log entries that originated from a project/folder/organization/billing account. For ways to export log entries, see Exporting Logs (https://cloud.google.com/logging/docs/export).</td>
+    <td>Lists log entries. Use this method to retrieve log entries that originated from a project/folder/organization/billing account. For ways to export log entries, see Routing overview (https://docs.cloud.google.com/logging/docs/routing/overview).</td>
 </tr>
 <tr>
     <td><a href="#entries_write"><CopyableCode code="entries_write" /></a></td>
@@ -93,18 +94,18 @@ The following methods are available for this resource:
     <td>Writes log entries to Logging. This API method is the only way to send log entries to Logging. This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging libraries configured to use Logging. A single request may contain log entries for a maximum of 1000 different resource names (projects, organizations, billing accounts or folders), where the resource name for a log entry is determined from its logName field.</td>
 </tr>
 <tr>
-    <td><a href="#entries_copy"><CopyableCode code="entries_copy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Copies a set of log entries from a log bucket to a Cloud Storage bucket.</td>
-</tr>
-<tr>
     <td><a href="#entries_tail"><CopyableCode code="entries_tail" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Streaming read of log entries as they are received. Until the stream is terminated, it will continue reading logs.</td>
+</tr>
+<tr>
+    <td><a href="#entries_copy"><CopyableCode code="entries_copy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Copies a set of log entries from a log bucket to a Cloud Storage bucket.</td>
 </tr>
 </tbody>
 </table>
@@ -135,7 +136,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="entries_list">
 
-Lists log entries. Use this method to retrieve log entries that originated from a project/folder/organization/billing account. For ways to export log entries, see Exporting Logs (https://cloud.google.com/logging/docs/export).
+Lists log entries. Use this method to retrieve log entries that originated from a project/folder/organization/billing account. For ways to export log entries, see Routing overview (https://docs.cloud.google.com/logging/docs/routing/overview).
 
 ```sql
 SELECT
@@ -154,8 +155,8 @@ FROM google.logging.entries
     defaultValue="entries_write"
     values={[
         { label: 'entries_write', value: 'entries_write' },
-        { label: 'entries_copy', value: 'entries_copy' },
-        { label: 'entries_tail', value: 'entries_tail' }
+        { label: 'entries_tail', value: 'entries_tail' },
+        { label: 'entries_copy', value: 'entries_copy' }
     ]}
 >
 <TabItem value="entries_write">
@@ -166,12 +167,27 @@ Writes log entries to Logging. This API method is the only way to send log entri
 EXEC google.logging.entries.entries_write 
 @@json=
 '{
-"entries": "{{ entries }}", 
 "resource": "{{ resource }}", 
-"logName": "{{ logName }}", 
 "labels": "{{ labels }}", 
 "partialSuccess": {{ partialSuccess }}, 
+"logName": "{{ logName }}", 
+"entries": "{{ entries }}", 
 "dryRun": {{ dryRun }}
+}'
+;
+```
+</TabItem>
+<TabItem value="entries_tail">
+
+Streaming read of log entries as they are received. Until the stream is terminated, it will continue reading logs.
+
+```sql
+EXEC google.logging.entries.entries_tail 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"resourceNames": "{{ resourceNames }}", 
+"bufferWindow": "{{ bufferWindow }}"
 }'
 ;
 ```
@@ -185,23 +201,8 @@ EXEC google.logging.entries.entries_copy
 @@json=
 '{
 "name": "{{ name }}", 
-"destination": "{{ destination }}", 
-"filter": "{{ filter }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="entries_tail">
-
-Streaming read of log entries as they are received. Until the stream is terminated, it will continue reading logs.
-
-```sql
-EXEC google.logging.entries.entries_tail 
-@@json=
-'{
-"resourceNames": "{{ resourceNames }}", 
-"bufferWindow": "{{ bufferWindow }}", 
-"filter": "{{ filter }}"
+"filter": "{{ filter }}", 
+"destination": "{{ destination }}"
 }'
 ;
 ```

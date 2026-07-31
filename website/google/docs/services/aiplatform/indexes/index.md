@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>indexes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>indexes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="indexes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.indexes" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="indexUpdateMethod" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The update method to use with this Index. If not set, BATCH_UPDATE will be used by default.</td>
+    <td>Immutable. The update method to use with this Index. If not set, BATCH_UPDATE will be used by default. (INDEX_UPDATE_METHOD_UNSPECIFIED, BATCH_UPDATE, STREAM_UPDATE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="indexUpdateMethod" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The update method to use with this Index. If not set, BATCH_UPDATE will be used by default.</td>
+    <td>Immutable. The update method to use with this Index. If not set, BATCH_UPDATE will be used by default. (INDEX_UPDATE_METHOD_UNSPECIFIED, BATCH_UPDATE, STREAM_UPDATE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Indexes in a Location.</td>
 </tr>
 <tr>
@@ -402,10 +403,10 @@ updateTime
 FROM google.aiplatform.indexes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -427,26 +428,26 @@ Creates an Index.
 
 ```sql
 INSERT INTO google.aiplatform.indexes (
-data__description,
-data__encryptionSpec,
-data__etag,
-data__metadataSchemaUri,
-data__labels,
-data__metadata,
-data__indexUpdateMethod,
 data__displayName,
+data__etag,
+data__description,
+data__metadataSchemaUri,
+data__encryptionSpec,
+data__labels,
+data__indexUpdateMethod,
+data__metadata,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ description }}',
-'{{ encryptionSpec }}',
-'{{ etag }}',
-'{{ metadataSchemaUri }}',
-'{{ labels }}',
-'{{ metadata }}',
-'{{ indexUpdateMethod }}',
 '{{ displayName }}',
+'{{ etag }}',
+'{{ description }}',
+'{{ metadataSchemaUri }}',
+'{{ encryptionSpec }}',
+'{{ labels }}',
+'{{ indexUpdateMethod }}',
+'{{ metadata }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -460,58 +461,51 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: indexes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the indexes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the indexes resource.
-    - name: description
-      value: string
-      description: >
-        The description of the Index.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Immutable. Customer-managed encryption key spec for an Index. If set, this Index and all sub-resources of this Index will be secured by this key.
-        
-    - name: etag
-      value: string
-      description: >
-        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: metadataSchemaUri
-      value: string
-      description: >
-        Immutable. Points to a YAML file stored on Google Cloud Storage describing additional information about the Index, that is specific to it. Unset if the Index does not have any additional information. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize your Indexes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
-    - name: metadata
-      value: any
-      description: >
-        An additional information about the Index; the schema of the metadata can be found in metadata_schema.
-        
-    - name: indexUpdateMethod
-      value: string
-      description: >
-        Immutable. The update method to use with this Index. If not set, BATCH_UPDATE will be used by default.
-        
-      valid_values: ['INDEX_UPDATE_METHOD_UNSPECIFIED', 'BATCH_UPDATE', 'STREAM_UPDATE']
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The display name of the Index. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-```
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The description of the Index.
+    - name: metadataSchemaUri
+      value: "{{ metadataSchemaUri }}"
+      description: |
+        Immutable. Points to a YAML file stored on Google Cloud Storage describing additional information about the Index, that is specific to it. Unset if the Index does not have any additional information. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+    - name: encryptionSpec
+      description: |
+        Immutable. Customer-managed encryption key spec for an Index. If set, this Index and all sub-resources of this Index will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your Indexes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+    - name: indexUpdateMethod
+      value: "{{ indexUpdateMethod }}"
+      description: |
+        Immutable. The update method to use with this Index. If not set, BATCH_UPDATE will be used by default.
+      valid_values: ['INDEX_UPDATE_METHOD_UNSPECIFIED', 'BATCH_UPDATE', 'STREAM_UPDATE']
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        An additional information about the Index; the schema of the metadata can be found in metadata_schema.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -531,14 +525,14 @@ Updates an Index.
 ```sql
 UPDATE google.aiplatform.indexes
 SET 
-data__description = '{{ description }}',
-data__encryptionSpec = '{{ encryptionSpec }}',
+data__displayName = '{{ displayName }}',
 data__etag = '{{ etag }}',
+data__description = '{{ description }}',
 data__metadataSchemaUri = '{{ metadataSchemaUri }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__labels = '{{ labels }}',
-data__metadata = '{{ metadata }}',
 data__indexUpdateMethod = '{{ indexUpdateMethod }}',
-data__displayName = '{{ displayName }}'
+data__metadata = '{{ metadata }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -614,8 +608,8 @@ EXEC google.aiplatform.indexes.upsert_datapoints
 @indexesId='{{ indexesId }}' --required 
 @@json=
 '{
-"updateMask": "{{ updateMask }}", 
-"datapoints": "{{ datapoints }}"
+"datapoints": "{{ datapoints }}", 
+"updateMask": "{{ updateMask }}"
 }'
 ;
 ```

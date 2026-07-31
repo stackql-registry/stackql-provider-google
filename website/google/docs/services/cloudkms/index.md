@@ -18,7 +18,7 @@ cloudkms service documentation.
 
 :::info[Service Summary]
 
-total resources: __18__  
+total resources: __22__  
 
 :::
 
@@ -33,10 +33,11 @@ total resources: __18__
 <a href="/services/cloudkms/ekm_config/">ekm_config</a><br />
 <a href="/services/cloudkms/ekm_config_iam_policies/">ekm_config_iam_policies</a><br />
 <a href="/services/cloudkms/ekm_connections/">ekm_connections</a><br />
-<a href="/services/cloudkms/ekm_connections_iam_policies/">ekm_connections_iam_policies</a>
+<a href="/services/cloudkms/ekm_connections_iam_policies/">ekm_connections_iam_policies</a><br />
+<a href="/services/cloudkms/folders/">folders</a><br />
+<a href="/services/cloudkms/import_jobs/">import_jobs</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/cloudkms/import_jobs/">import_jobs</a><br />
 <a href="/services/cloudkms/import_jobs_iam_policies/">import_jobs_iam_policies</a><br />
 <a href="/services/cloudkms/kaj_policy_config/">kaj_policy_config</a><br />
 <a href="/services/cloudkms/key_handles/">key_handles</a><br />
@@ -44,6 +45,9 @@ total resources: __18__
 <a href="/services/cloudkms/key_rings_iam_policies/">key_rings_iam_policies</a><br />
 <a href="/services/cloudkms/locations/">locations</a><br />
 <a href="/services/cloudkms/operations/">operations</a><br />
-<a href="/services/cloudkms/projects/">projects</a>
+<a href="/services/cloudkms/projects/">projects</a><br />
+<a href="/services/cloudkms/proposals/">proposals</a><br />
+<a href="/services/cloudkms/retired_resources/">retired_resources</a><br />
+<a href="/services/cloudkms/single_tenant_hsm_instances/">single_tenant_hsm_instances</a>
 </div>
 </div>

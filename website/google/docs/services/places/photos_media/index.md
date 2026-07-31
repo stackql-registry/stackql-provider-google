@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>photos_media</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>photos_media</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="photos_media" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.places.photos_media" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#get_media"><CopyableCode code="get_media" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-placesId"><code>placesId</code></a>, <a href="#parameter-photosId"><code>photosId</code></a></td>
-    <td><a href="#parameter-maxHeightPx"><code>maxHeightPx</code></a>, <a href="#parameter-maxWidthPx"><code>maxWidthPx</code></a>, <a href="#parameter-skipHttpRedirect"><code>skipHttpRedirect</code></a></td>
+    <td><a href="#parameter-skipHttpRedirect"><code>skipHttpRedirect</code></a>, <a href="#parameter-maxWidthPx"><code>maxWidthPx</code></a>, <a href="#parameter-maxHeightPx"><code>maxHeightPx</code></a></td>
     <td>Get a photo media with a photo reference string.</td>
 </tr>
 </tbody>
@@ -148,9 +149,9 @@ photoUri
 FROM google.places.photos_media
 WHERE placesId = '{{ placesId }}' -- required
 AND photosId = '{{ photosId }}' -- required
-AND maxHeightPx = '{{ maxHeightPx }}'
-AND maxWidthPx = '{{ maxWidthPx }}'
 AND skipHttpRedirect = '{{ skipHttpRedirect }}'
+AND maxWidthPx = '{{ maxWidthPx }}'
+AND maxHeightPx = '{{ maxHeightPx }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>services</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>services</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="services" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appcheck.services" /></td></tr>
 </tbody></table>
@@ -52,12 +53,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The relative resource name of the service configuration object, in the format: ``` projects/&#123;project_number&#125;/services/&#123;service_id&#125; ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) * `oauth2.googleapis.com` (Google Identity for iOS)</td>
+    <td>Required. The relative resource name of the service configuration object, in the format: ``` projects/&#123;project_number&#125;/services/&#123;service_id&#125; ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported. Firebase and Google Cloud services: * `identitytoolkit.googleapis.com` (Firebase Authentication) * `firebasedataconnect.googleapis.com` (Firebase SQL Connect) * `firestore.googleapis.com` (Cloud Firestore) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform services: * `maps-backend.googleapis.com` (Maps JavaScript API) * `places.googleapis.com` (Places API (New)) Other supported Google services: * `oauth2.googleapis.com` (Google Identity for iOS) Note: While all the supported `service_id`s may appear to be subdomains of `googleapis.com`, the `service_id` has no semantic meaning beyond identifying the service to App Check. It is not intended to represent the actual domain to which your apps send traffic, nor is it necessarily the API that should be enabled to use the service. For information on using these Google services, consult their documentation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="enforcementMode" /></td>
     <td><code>string</code></td>
-    <td>Required. The App Check enforcement mode for this service.</td>
+    <td>Required. The baseline protection EnforcementMode for this service. (OFF, UNENFORCED, ENFORCED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. This etag is strongly validated as defined by RFC 7232.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="replayProtection" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The replay protection EnforcementMode for this service. Note that this field cannot be set to a level higher than that of baseline protection. For example, if the enforcement mode for baseline protection is set to `UNENFORCED`, this field cannot be set to `ENFORCED`. In order to enforce replay protection, you must first enforce App Check's baseline protection. An HTTP 400 error will be returned in this case. By default, this field is set to `OFF`. Setting this field to `UNENFORCED` or `ENFORCED` is considered opting into replay protection. Opting in can impact your requests by adding some latency and sometimes cost (depending on your attestation provider). To opt out of replay protection after opting in, set this field to `OFF`. (OFF, UNENFORCED, ENFORCED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp when this service configuration object was most recently updated.</td>
 </tr>
 </tbody>
 </table>
@@ -76,12 +92,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The relative resource name of the service configuration object, in the format: ``` projects/&#123;project_number&#125;/services/&#123;service_id&#125; ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) * `oauth2.googleapis.com` (Google Identity for iOS)</td>
+    <td>Required. The relative resource name of the service configuration object, in the format: ``` projects/&#123;project_number&#125;/services/&#123;service_id&#125; ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported. Firebase and Google Cloud services: * `identitytoolkit.googleapis.com` (Firebase Authentication) * `firebasedataconnect.googleapis.com` (Firebase SQL Connect) * `firestore.googleapis.com` (Cloud Firestore) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform services: * `maps-backend.googleapis.com` (Maps JavaScript API) * `places.googleapis.com` (Places API (New)) Other supported Google services: * `oauth2.googleapis.com` (Google Identity for iOS) Note: While all the supported `service_id`s may appear to be subdomains of `googleapis.com`, the `service_id` has no semantic meaning beyond identifying the service to App Check. It is not intended to represent the actual domain to which your apps send traffic, nor is it necessarily the API that should be enabled to use the service. For information on using these Google services, consult their documentation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="enforcementMode" /></td>
     <td><code>string</code></td>
-    <td>Required. The App Check enforcement mode for this service.</td>
+    <td>Required. The baseline protection EnforcementMode for this service. (OFF, UNENFORCED, ENFORCED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. This etag is strongly validated as defined by RFC 7232.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="replayProtection" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The replay protection EnforcementMode for this service. Note that this field cannot be set to a level higher than that of baseline protection. For example, if the enforcement mode for baseline protection is set to `UNENFORCED`, this field cannot be set to `ENFORCED`. In order to enforce replay protection, you must first enforce App Check's baseline protection. An HTTP 400 error will be returned in this case. By default, this field is set to `OFF`. Setting this field to `UNENFORCED` or `ENFORCED` is considered opting into replay protection. Opting in can impact your requests by adding some latency and sometimes cost (depending on your attestation provider). To opt out of replay protection after opting in, set this field to `OFF`. (OFF, UNENFORCED, ENFORCED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp when this service configuration object was most recently updated.</td>
 </tr>
 </tbody>
 </table>
@@ -191,7 +222,10 @@ Gets the Service configuration for the specified service name.
 ```sql
 SELECT
 name,
-enforcementMode
+enforcementMode,
+etag,
+replayProtection,
+updateTime
 FROM firebase.appcheck.services
 WHERE projectsId = '{{ projectsId }}' -- required
 AND servicesId = '{{ servicesId }}' -- required
@@ -205,7 +239,10 @@ Lists all Service configurations for the specified project. Only Services which 
 ```sql
 SELECT
 name,
-enforcementMode
+enforcementMode,
+etag,
+replayProtection,
+updateTime
 FROM firebase.appcheck.services
 WHERE projectsId = '{{ projectsId }}' -- required
 AND pageSize = '{{ pageSize }}'
@@ -232,15 +269,20 @@ Updates the specified Service configuration.
 ```sql
 UPDATE firebase.appcheck.services
 SET 
+data__etag = '{{ etag }}',
+data__enforcementMode = '{{ enforcementMode }}',
 data__name = '{{ name }}',
-data__enforcementMode = '{{ enforcementMode }}'
+data__replayProtection = '{{ replayProtection }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
-enforcementMode;
+enforcementMode,
+etag,
+replayProtection,
+updateTime;
 ```
 </TabItem>
 <TabItem value="batch_update">

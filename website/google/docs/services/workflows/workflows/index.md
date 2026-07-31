@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workflows</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workflows</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workflows" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.workflows.workflows" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="callLogLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence.</td>
+    <td>Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence. (CALL_LOG_LEVEL_UNSPECIFIED, LOG_ALL_CALLS, LOG_ERRORS_ONLY, LOG_NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionHistoryLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes the execution history level to apply to this workflow.</td>
+    <td>Optional. Describes the execution history level to apply to this workflow. (EXECUTION_HISTORY_LEVEL_UNSPECIFIED, EXECUTION_HISTORY_BASIC, EXECUTION_HISTORY_DETAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the workflow deployment.</td>
+    <td>Output only. State of the workflow deployment. (STATE_UNSPECIFIED, ACTIVE, UNAVAILABLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateError" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="callLogLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence.</td>
+    <td>Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence. (CALL_LOG_LEVEL_UNSPECIFIED, LOG_ALL_CALLS, LOG_ERRORS_ONLY, LOG_NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -201,7 +202,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionHistoryLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes the execution history level to apply to this workflow.</td>
+    <td>Optional. Describes the execution history level to apply to this workflow. (EXECUTION_HISTORY_LEVEL_UNSPECIFIED, EXECUTION_HISTORY_BASIC, EXECUTION_HISTORY_DETAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -231,7 +232,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the workflow deployment.</td>
+    <td>Output only. State of the workflow deployment. (STATE_UNSPECIFIED, ACTIVE, UNAVAILABLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateError" /></td>
@@ -472,31 +473,31 @@ Creates a new workflow. If a workflow with the specified name already exists in 
 
 ```sql
 INSERT INTO google.workflows.workflows (
-data__tags,
-data__userEnvVars,
-data__description,
-data__serviceAccount,
-data__executionHistoryLevel,
-data__cryptoKeyName,
-data__callLogLevel,
-data__sourceContents,
-data__labels,
 data__name,
+data__executionHistoryLevel,
+data__sourceContents,
+data__userEnvVars,
+data__serviceAccount,
+data__cryptoKeyName,
+data__labels,
+data__description,
+data__tags,
+data__callLogLevel,
 projectsId,
 locationsId,
 workflowId
 )
 SELECT 
-'{{ tags }}',
-'{{ userEnvVars }}',
-'{{ description }}',
-'{{ serviceAccount }}',
-'{{ executionHistoryLevel }}',
-'{{ cryptoKeyName }}',
-'{{ callLogLevel }}',
-'{{ sourceContents }}',
-'{{ labels }}',
 '{{ name }}',
+'{{ executionHistoryLevel }}',
+'{{ sourceContents }}',
+'{{ userEnvVars }}',
+'{{ serviceAccount }}',
+'{{ cryptoKeyName }}',
+'{{ labels }}',
+'{{ description }}',
+'{{ tags }}',
+'{{ callLogLevel }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workflowId }}'
@@ -511,71 +512,61 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workflows
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the workflows resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workflows resource.
-    - name: tags
-      value: object
-      description: >
-        Optional. Input only. Immutable. Tags associated with this workflow.
-        
-    - name: userEnvVars
-      value: object
-      description: >
-        Optional. User-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 4KiB. Keys cannot be empty strings and cannot start with "GOOGLE" or "WORKFLOWS".
-        
-    - name: description
-      value: string
-      description: >
-        Description of the workflow provided by the user. Must be at most 1000 Unicode characters long. This is a workflow-wide field and is not tied to a specific revision.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        The service account associated with the latest workflow version. This service account represents the identity of the workflow and determines what permissions the workflow has. Format: projects/{project}/serviceAccounts/{account} or {account} Using `-` as a wildcard for the `{project}` or not providing one at all will infer the project from the account. The `{account}` value can be the `email` address or the `unique_id` of the service account. If not provided, workflow will use the project's default service account. Modifying this field for an existing workflow results in a new workflow revision.
-        
-    - name: executionHistoryLevel
-      value: string
-      description: >
-        Optional. Describes the execution history level to apply to this workflow.
-        
-      valid_values: ['EXECUTION_HISTORY_LEVEL_UNSPECIFIED', 'EXECUTION_HISTORY_BASIC', 'EXECUTION_HISTORY_DETAILED']
-    - name: cryptoKeyName
-      value: string
-      description: >
-        Optional. The resource name of a KMS crypto key used to encrypt or decrypt the data associated with the workflow. Format: projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{cryptoKey} Using `-` as a wildcard for the `{project}` or not providing one at all will infer the project from the account. If not provided, data associated with the workflow will not be CMEK-encrypted.
-        
-    - name: callLogLevel
-      value: string
-      description: >
-        Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence.
-        
-      valid_values: ['CALL_LOG_LEVEL_UNSPECIFIED', 'LOG_ALL_CALLS', 'LOG_ERRORS_ONLY', 'LOG_NONE']
-    - name: sourceContents
-      value: string
-      description: >
-        Workflow code to be executed. The size limit is 128KB.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels associated with this workflow. Labels can contain at most 64 entries. Keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores, and dashes. Label keys must start with a letter. International characters are allowed. This is a workflow-wide field and is not tied to a specific revision.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The resource name of the workflow. Format: projects/{project}/locations/{location}/workflows/{workflow}. This is a workflow-wide field and is not tied to a specific revision.
-        
+    - name: executionHistoryLevel
+      value: "{{ executionHistoryLevel }}"
+      description: |
+        Optional. Describes the execution history level to apply to this workflow.
+      valid_values: ['EXECUTION_HISTORY_LEVEL_UNSPECIFIED', 'EXECUTION_HISTORY_BASIC', 'EXECUTION_HISTORY_DETAILED']
+    - name: sourceContents
+      value: "{{ sourceContents }}"
+      description: |
+        Workflow code to be executed. The size limit is 128KB.
+    - name: userEnvVars
+      value: "{{ userEnvVars }}"
+      description: |
+        Optional. User-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 4KiB. Keys cannot be empty strings and cannot start with "GOOGLE" or "WORKFLOWS".
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        The service account associated with the latest workflow version. This service account represents the identity of the workflow and determines what permissions the workflow has. Format: projects/{project}/serviceAccounts/{account} or {account} Using \`-\` as a wildcard for the \`{project}\` or not providing one at all will infer the project from the account. The \`{account}\` value can be the \`email\` address or the \`unique_id\` of the service account. If not provided, workflow will use the project's default service account. Modifying this field for an existing workflow results in a new workflow revision.
+    - name: cryptoKeyName
+      value: "{{ cryptoKeyName }}"
+      description: |
+        Optional. The resource name of a KMS crypto key used to encrypt or decrypt the data associated with the workflow. Format: projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{cryptoKey} Using \`-\` as a wildcard for the \`{project}\` or not providing one at all will infer the project from the account. If not provided, data associated with the workflow will not be CMEK-encrypted.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels associated with this workflow. Labels can contain at most 64 entries. Keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores, and dashes. Label keys must start with a letter. International characters are allowed. This is a workflow-wide field and is not tied to a specific revision.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the workflow provided by the user. Must be at most 1000 Unicode characters long. This is a workflow-wide field and is not tied to a specific revision.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tags associated with this workflow.
+    - name: callLogLevel
+      value: "{{ callLogLevel }}"
+      description: |
+        Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence.
+      valid_values: ['CALL_LOG_LEVEL_UNSPECIFIED', 'LOG_ALL_CALLS', 'LOG_ERRORS_ONLY', 'LOG_NONE']
     - name: workflowId
-      value: string
-```
+      value: "{{ workflowId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -595,16 +586,16 @@ Updates an existing workflow. Running this method has no impact on already runni
 ```sql
 UPDATE google.workflows.workflows
 SET 
-data__tags = '{{ tags }}',
-data__userEnvVars = '{{ userEnvVars }}',
-data__description = '{{ description }}',
-data__serviceAccount = '{{ serviceAccount }}',
+data__name = '{{ name }}',
 data__executionHistoryLevel = '{{ executionHistoryLevel }}',
-data__cryptoKeyName = '{{ cryptoKeyName }}',
-data__callLogLevel = '{{ callLogLevel }}',
 data__sourceContents = '{{ sourceContents }}',
+data__userEnvVars = '{{ userEnvVars }}',
+data__serviceAccount = '{{ serviceAccount }}',
+data__cryptoKeyName = '{{ cryptoKeyName }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}'
+data__description = '{{ description }}',
+data__tags = '{{ tags }}',
+data__callLogLevel = '{{ callLogLevel }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

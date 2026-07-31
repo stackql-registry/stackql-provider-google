@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>access_levels_iam_policies</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>access_levels_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="access_levels_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.accesscontextmanager.access_levels_iam_policies" /></td></tr>
 </tbody></table>
@@ -54,7 +55,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-accessPoliciesId"><code>accessPoliciesId</code></a>, <a href="#parameter-accessLevelsId"><code>accessLevelsId</code></a></td>
     <td></td>
-    <td>Returns the IAM permissions that the caller has on the specified Access Context Manager resource. The resource can be an AccessPolicy, AccessLevel, or ServicePerimeter. This method does not support other resources.</td>
+    <td>Returns the IAM permissions that the caller has on the specified Access Context Manager resource. The resource can be an AccessPolicy, AccessLevel, or ServicePerimeter. This method does not support other resources. **IAM Permissions**: No specific IAM permission is required to call this method. It returns the subset of the requested permissions that the caller possesses.</td>
 </tr>
 </tbody>
 </table>
@@ -95,7 +96,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="test_iam_permissions">
 
-Returns the IAM permissions that the caller has on the specified Access Context Manager resource. The resource can be an AccessPolicy, AccessLevel, or ServicePerimeter. This method does not support other resources.
+Returns the IAM permissions that the caller has on the specified Access Context Manager resource. The resource can be an AccessPolicy, AccessLevel, or ServicePerimeter. This method does not support other resources. **IAM Permissions**: No specific IAM permission is required to call this method. It returns the subset of the requested permissions that the caller possesses.
 
 ```sql
 EXEC google.accesscontextmanager.access_levels_iam_policies.test_iam_permissions 

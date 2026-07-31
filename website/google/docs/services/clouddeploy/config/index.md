@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>config</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouddeploy.config" /></td></tr>
 </tbody></table>
@@ -57,6 +58,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="defaultSkaffoldVersion" /></td>
     <td><code>string</code></td>
     <td>Default Skaffold version that is assigned when a Release is created without specifying a Skaffold version.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="defaultToolVersions" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Default tool versions. These tool versions are assigned when a Release is created without specifying tool versions. (id: ToolVersions)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supportedVersions" /></td>
@@ -135,6 +141,7 @@ Gets the configuration for a location.
 SELECT
 name,
 defaultSkaffoldVersion,
+defaultToolVersions,
 supportedVersions
 FROM google.clouddeploy.config
 WHERE projectsId = '{{ projectsId }}' -- required

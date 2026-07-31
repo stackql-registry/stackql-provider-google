@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>processor_types</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>processor_types</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="processor_types" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.documentai.processor_types" /></td></tr>
 </tbody></table>
@@ -73,7 +74,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>Launch stage of the processor type</td>
+    <td>Launch stage of the processor type (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sampleDocumentUris" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>Launch stage of the processor type</td>
+    <td>Launch stage of the processor type (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sampleDocumentUris" /></td>
@@ -191,7 +192,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_processor_types_list"><CopyableCode code="projects_locations_processor_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the processor types that exist.</td>
 </tr>
 </tbody>
@@ -297,8 +298,8 @@ type
 FROM google.documentai.processor_types
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

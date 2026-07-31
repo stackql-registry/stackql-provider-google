@@ -1,0 +1,355 @@
+--- 
+title: preview_features
+hide_title: false
+hide_table_of_contents: false
+keywords:
+  - preview_features
+  - compute
+  - google
+  - infrastructure-as-code
+  - configuration-as-data
+  - cloud inventory
+description: Query, deploy and manage google resources using SQL
+custom_edit_url: null
+image: /img/stackql-google-provider-featured-image.png
+---
+
+import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Creates, updates, deletes, gets or lists a <code>preview_features</code> resource.
+
+## Overview
+<table><tbody>
+<tr><td><b>Name</b></td><td><CopyableCode code="preview_features" /></td></tr>
+<tr><td><b>Type</b></td><td>Resource</td></tr>
+<tr><td><b>Id</b></td><td><CopyableCode code="google.compute.preview_features" /></td></tr>
+</tbody></table>
+
+## Fields
+
+The following fields are returned by `SELECT` queries:
+
+<Tabs
+    defaultValue="get"
+    values={[
+        { label: 'get', value: 'get' },
+        { label: 'list', value: 'list' }
+    ]}
+>
+<TabItem value="get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string (uint64)</code></td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the feature.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="activationStatus" /></td>
+    <td><code>string</code></td>
+    <td>Specifies whether the feature is enabled or disabled. (ACTIVATION_STATE_UNSPECIFIED, DISABLED, ENABLED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="creationTimestamp" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Description of the feature.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output only] The type of the feature. Always "compute#previewFeature" for preview features. (default: compute#previewFeature)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="rolloutOperation" /></td>
+    <td><code>object</code></td>
+    <td>Rollout operation of the feature. (id: PreviewFeatureRolloutOperation)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="status" /></td>
+    <td><code>object</code></td>
+    <td>Output only. [Output only] Status of the feature. (id: PreviewFeatureStatus)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] Unique identifier for the resource; defined by the server.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="items" /></td>
+    <td><code>array</code></td>
+    <td>A list of PreviewFeature resources.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unreachables" /></td>
+    <td><code>array</code></td>
+    <td>Output only. [Output Only] Unreachable resources. end_interface: MixerListResponseWithEtagBuilder</td>
+</tr>
+<tr>
+    <td><CopyableCode code="warning" /></td>
+    <td><code>object</code></td>
+    <td>[Output Only] Informational warning message.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+</Tabs>
+
+## Methods
+
+The following methods are available for this resource:
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Accessible by</th>
+    <th>Required Params</th>
+    <th>Optional Params</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><a href="#get"><CopyableCode code="get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-previewFeature"><code>previewFeature</code></a></td>
+    <td></td>
+    <td>Returns the details of the given PreviewFeature.</td>
+</tr>
+<tr>
+    <td><a href="#list"><CopyableCode code="list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Returns the details of the given PreviewFeature.</td>
+</tr>
+<tr>
+    <td><a href="#update"><CopyableCode code="update" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-previewFeature"><code>previewFeature</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Patches the given PreviewFeature. This method is used to enable or disable<br />a PreviewFeature.</td>
+</tr>
+</tbody>
+</table>
+
+## Parameters
+
+Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#methods) section to see which parameters are required or optional for each operation.
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr id="parameter-previewFeature">
+    <td><CopyableCode code="previewFeature" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-project">
+    <td><CopyableCode code="project" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-filter">
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-maxResults">
+    <td><CopyableCode code="maxResults" /></td>
+    <td><code>integer (uint32)</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-orderBy">
+    <td><CopyableCode code="orderBy" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-pageToken">
+    <td><CopyableCode code="pageToken" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-requestId">
+    <td><CopyableCode code="requestId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-returnPartialSuccess">
+    <td><CopyableCode code="returnPartialSuccess" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+
+## `SELECT` examples
+
+<Tabs
+    defaultValue="get"
+    values={[
+        { label: 'get', value: 'get' },
+        { label: 'list', value: 'list' }
+    ]}
+>
+<TabItem value="get">
+
+Returns the details of the given PreviewFeature.
+
+```sql
+SELECT
+id,
+name,
+activationStatus,
+creationTimestamp,
+description,
+kind,
+rolloutOperation,
+selfLink,
+status
+FROM google.compute.preview_features
+WHERE project = '{{ project }}' -- required
+AND previewFeature = '{{ previewFeature }}' -- required
+;
+```
+</TabItem>
+<TabItem value="list">
+
+Returns the details of the given PreviewFeature.
+
+```sql
+SELECT
+id,
+etag,
+items,
+nextPageToken,
+selfLink,
+unreachables,
+warning
+FROM google.compute.preview_features
+WHERE project = '{{ project }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="update"
+    values={[
+        { label: 'update', value: 'update' }
+    ]}
+>
+<TabItem value="update">
+
+Patches the given PreviewFeature. This method is used to enable or disable<br />a PreviewFeature.
+
+```sql
+UPDATE google.compute.preview_features
+SET 
+data__name = '{{ name }}',
+data__rolloutOperation = '{{ rolloutOperation }}',
+data__activationStatus = '{{ activationStatus }}'
+WHERE 
+project = '{{ project }}' --required
+AND previewFeature = '{{ previewFeature }}' --required
+AND requestId = '{{ requestId}}'
+RETURNING
+id,
+name,
+clientOperationId,
+creationTimestamp,
+description,
+endTime,
+error,
+getVersionOperationMetadata,
+httpErrorMessage,
+httpErrorStatusCode,
+insertTime,
+instancesBulkInsertOperationMetadata,
+kind,
+operationGroupId,
+operationType,
+progress,
+region,
+selfLink,
+setCommonInstanceMetadataOperationMetadata,
+startTime,
+status,
+statusMessage,
+targetId,
+targetLink,
+user,
+warnings,
+zone;
+```
+</TabItem>
+</Tabs>

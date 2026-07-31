@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>mirroring_endpoint_groups</code
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>mirroring_endpoint_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="mirroring_endpoint_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.mirroring_endpoint_groups" /></td></tr>
 </tbody></table>
@@ -92,7 +93,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the endpoint group. See https://google.aip.dev/216.</td>
+    <td>Output only. The current state of the endpoint group. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CLOSED, CREATING, DELETING, OUT_OF_SYNC, DELETE_FAILED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The type of the endpoint group. If left unspecified, defaults to DIRECT. (TYPE_UNSPECIFIED, DIRECT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -156,7 +162,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the endpoint group. See https://google.aip.dev/216.</td>
+    <td>Output only. The current state of the endpoint group. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CLOSED, CREATING, DELETING, OUT_OF_SYNC, DELETE_FAILED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The type of the endpoint group. If left unspecified, defaults to DIRECT. (TYPE_UNSPECIFIED, DIRECT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -194,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_endpoint_groups_list"><CopyableCode code="projects_locations_mirroring_endpoint_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists endpoint groups in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
@@ -208,7 +219,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_endpoint_groups_patch"><CopyableCode code="projects_locations_mirroring_endpoint_groups_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-mirroringEndpointGroupsId"><code>mirroringEndpointGroupsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates an endpoint group. See https://google.aip.dev/134.</td>
 </tr>
 <tr>
@@ -311,6 +322,7 @@ labels,
 mirroringDeploymentGroup,
 reconciling,
 state,
+type,
 updateTime
 FROM google.networksecurity.mirroring_endpoint_groups
 WHERE projectsId = '{{ projectsId }}' -- required
@@ -334,13 +346,14 @@ labels,
 mirroringDeploymentGroup,
 reconciling,
 state,
+type,
 updateTime
 FROM google.networksecurity.mirroring_endpoint_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -363,20 +376,22 @@ Creates an endpoint group in a given project and location. See https://google.ai
 
 ```sql
 INSERT INTO google.networksecurity.mirroring_endpoint_groups (
-data__name,
 data__labels,
-data__description,
+data__name,
 data__mirroringDeploymentGroup,
+data__type,
+data__description,
 projectsId,
 locationsId,
 mirroringEndpointGroupId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
-'{{ description }}',
+'{{ name }}',
 '{{ mirroringDeploymentGroup }}',
+'{{ type }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ mirroringEndpointGroupId }}',
@@ -392,41 +407,42 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: mirroring_endpoint_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the mirroring_endpoint_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the mirroring_endpoint_groups resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this endpoint group, for example: `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See https://google.aip.dev/122 for more details.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels are key/value pairs that help to organize and filter resources.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. User-provided description of the endpoint group. Used as additional context for the endpoint group.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of this endpoint group, for example: \`projects/123456789/locations/global/mirroringEndpointGroups/my-eg\`. See https://google.aip.dev/122 for more details.
     - name: mirroringDeploymentGroup
-      value: string
-      description: >
-        Immutable. The deployment group that this DIRECT endpoint group is connected to, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/124.
-        
+      value: "{{ mirroringDeploymentGroup }}"
+      description: |
+        Immutable. The deployment group that this DIRECT endpoint group is connected to, for example: \`projects/123456789/locations/global/mirroringDeploymentGroups/my-dg\`. See https://google.aip.dev/124.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Immutable. The type of the endpoint group. If left unspecified, defaults to DIRECT.
+      valid_values: ['TYPE_UNSPECIFIED', 'DIRECT']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User-provided description of the endpoint group. Used as additional context for the endpoint group.
     - name: mirroringEndpointGroupId
-      value: string
+      value: "{{ mirroringEndpointGroupId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -446,16 +462,17 @@ Updates an endpoint group. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.mirroring_endpoint_groups
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__mirroringDeploymentGroup = '{{ mirroringDeploymentGroup }}'
+data__name = '{{ name }}',
+data__mirroringDeploymentGroup = '{{ mirroringDeploymentGroup }}',
+data__type = '{{ type }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND mirroringEndpointGroupsId = '{{ mirroringEndpointGroupsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

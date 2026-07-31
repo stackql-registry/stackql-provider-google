@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>conversion_workspaces</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>conversion_workspaces</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="conversion_workspaces" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datamigration.conversion_workspaces" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="destinationProvider" /></td>
     <td><code>string</code></td>
-    <td>Optional. The provider for the destination database.</td>
+    <td>Optional. The provider for the destination database. (DATABASE_PROVIDER_UNSPECIFIED, CLOUDSQL, RDS, AURORA, ALLOYDB, AZURE_DATABASE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="sourceProvider" /></td>
     <td><code>string</code></td>
-    <td>Optional. The provider for the source database.</td>
+    <td>Optional. The provider for the source database. (DATABASE_PROVIDER_UNSPECIFIED, CLOUDSQL, RDS, AURORA, ALLOYDB, AZURE_DATABASE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="destinationProvider" /></td>
     <td><code>string</code></td>
-    <td>Optional. The provider for the destination database.</td>
+    <td>Optional. The provider for the destination database. (DATABASE_PROVIDER_UNSPECIFIED, CLOUDSQL, RDS, AURORA, ALLOYDB, AZURE_DATABASE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="sourceProvider" /></td>
     <td><code>string</code></td>
-    <td>Optional. The provider for the source database.</td>
+    <td>Optional. The provider for the source database. (DATABASE_PROVIDER_UNSPECIFIED, CLOUDSQL, RDS, AURORA, ALLOYDB, AZURE_DATABASE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists conversion workspaces in a given project and location.</td>
 </tr>
 <tr>
@@ -239,25 +240,11 @@ The following methods are available for this resource:
     <td>Deletes a single conversion workspace.</td>
 </tr>
 <tr>
-    <td><a href="#seed"><CopyableCode code="seed" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
-    <td></td>
-    <td>Imports a snapshot of the source database into the conversion workspace.</td>
-</tr>
-<tr>
     <td><a href="#convert"><CopyableCode code="convert" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
     <td></td>
     <td>Creates a draft tree schema for the destination database.</td>
-</tr>
-<tr>
-    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
-    <td></td>
-    <td>Marks all the data in the conversion workspace as committed.</td>
 </tr>
 <tr>
     <td><a href="#rollback"><CopyableCode code="rollback" /></a></td>
@@ -267,18 +254,25 @@ The following methods are available for this resource:
     <td>Rolls back a conversion workspace to the last committed snapshot.</td>
 </tr>
 <tr>
+    <td><a href="#seed"><CopyableCode code="seed" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
+    <td></td>
+    <td>Imports a snapshot of the source database into the conversion workspace.</td>
+</tr>
+<tr>
+    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
+    <td></td>
+    <td>Marks all the data in the conversion workspace as committed.</td>
+</tr>
+<tr>
     <td><a href="#apply"><CopyableCode code="apply" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
     <td></td>
     <td>Applies draft tree onto a specific destination database.</td>
-</tr>
-<tr>
-    <td><a href="#describe_database_entities"><CopyableCode code="describe_database_entities" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-tree"><code>tree</code></a>, <a href="#parameter-uncommitted"><code>uncommitted</code></a>, <a href="#parameter-commitId"><code>commitId</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-view"><code>view</code></a></td>
-    <td>Describes the database entities tree for a specific conversion workspace and a specific tree type. Database entities are not resources like conversion workspaces or mapping rules, and they can't be created, updated or deleted. Instead, they are simple data objects describing the structure of the client database.</td>
 </tr>
 <tr>
     <td><a href="#search_background_jobs"><CopyableCode code="search_background_jobs" /></a></td>
@@ -293,6 +287,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
     <td><a href="#parameter-commitId"><code>commitId</code></a></td>
     <td>Retrieves a list of committed revisions of a specific conversion workspace.</td>
+</tr>
+<tr>
+    <td><a href="#describe_database_entities"><CopyableCode code="describe_database_entities" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
+    <td><a href="#parameter-uncommitted"><code>uncommitted</code></a>, <a href="#parameter-commitId"><code>commitId</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-tree"><code>tree</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Describes the database entities tree for a specific conversion workspace and a specific tree type. Database entities are not resources like conversion workspaces or mapping rules, and they can't be created, updated or deleted. Instead, they are simple data objects describing the structure of the client database.</td>
 </tr>
 </tbody>
 </table>
@@ -453,9 +454,9 @@ updateTime
 FROM google.datamigration.conversion_workspaces
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -477,26 +478,26 @@ Creates a new conversion workspace in a given project and location.
 
 ```sql
 INSERT INTO google.datamigration.conversion_workspaces (
-data__name,
 data__source,
-data__destination,
-data__globalSettings,
+data__name,
 data__displayName,
-data__destinationProvider,
+data__globalSettings,
 data__sourceProvider,
+data__destinationProvider,
+data__destination,
 projectsId,
 locationsId,
 conversionWorkspaceId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ source }}',
-'{{ destination }}',
-'{{ globalSettings }}',
+'{{ name }}',
 '{{ displayName }}',
-'{{ destinationProvider }}',
+'{{ globalSettings }}',
 '{{ sourceProvider }}',
+'{{ destinationProvider }}',
+'{{ destination }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ conversionWorkspaceId }}',
@@ -512,58 +513,55 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: conversion_workspaces
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the conversion_workspaces resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the conversion_workspaces resource.
-    - name: name
-      value: string
-      description: >
-        Full name of the workspace resource, in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}.
-        
     - name: source
-      value: object
-      description: >
+      description: |
         Required. The source engine details.
-        
-    - name: destination
-      value: object
-      description: >
-        Required. The destination engine details.
-        
-    - name: globalSettings
-      value: object
-      description: >
-        Optional. A generic list of settings for the workspace. The settings are database pair dependant and can indicate default behavior for the mapping rules engine or turn on or off specific features. Such examples can be: convert_foreign_key_to_interleave=true, skip_triggers=false, ignore_non_table_synonyms=true
-        
+      value:
+        engine: "{{ engine }}"
+        version: "{{ version }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Full name of the workspace resource, in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. The display name for the workspace.
-        
-    - name: destinationProvider
-      value: string
-      description: >
-        Optional. The provider for the destination database.
-        
-      valid_values: ['DATABASE_PROVIDER_UNSPECIFIED', 'CLOUDSQL', 'RDS', 'AURORA', 'ALLOYDB', 'AZURE_DATABASE']
+    - name: globalSettings
+      value: "{{ globalSettings }}"
+      description: |
+        Optional. A generic list of settings for the workspace. The settings are database pair dependant and can indicate default behavior for the mapping rules engine or turn on or off specific features. Such examples can be: convert_foreign_key_to_interleave=true, skip_triggers=false, ignore_non_table_synonyms=true
     - name: sourceProvider
-      value: string
-      description: >
+      value: "{{ sourceProvider }}"
+      description: |
         Optional. The provider for the source database.
-        
       valid_values: ['DATABASE_PROVIDER_UNSPECIFIED', 'CLOUDSQL', 'RDS', 'AURORA', 'ALLOYDB', 'AZURE_DATABASE']
+    - name: destinationProvider
+      value: "{{ destinationProvider }}"
+      description: |
+        Optional. The provider for the destination database.
+      valid_values: ['DATABASE_PROVIDER_UNSPECIFIED', 'CLOUDSQL', 'RDS', 'AURORA', 'ALLOYDB', 'AZURE_DATABASE']
+    - name: destination
+      description: |
+        Required. The destination engine details.
+      value:
+        engine: "{{ engine }}"
+        version: "{{ version }}"
     - name: conversionWorkspaceId
-      value: string
+      value: "{{ conversionWorkspaceId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -583,13 +581,13 @@ Updates the parameters of a single conversion workspace.
 ```sql
 UPDATE google.datamigration.conversion_workspaces
 SET 
-data__name = '{{ name }}',
 data__source = '{{ source }}',
-data__destination = '{{ destination }}',
-data__globalSettings = '{{ globalSettings }}',
+data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__globalSettings = '{{ globalSettings }}',
+data__sourceProvider = '{{ sourceProvider }}',
 data__destinationProvider = '{{ destinationProvider }}',
-data__sourceProvider = '{{ sourceProvider }}'
+data__destination = '{{ destination }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -635,18 +633,48 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="seed"
+    defaultValue="convert"
     values={[
-        { label: 'seed', value: 'seed' },
         { label: 'convert', value: 'convert' },
-        { label: 'commit', value: 'commit' },
         { label: 'rollback', value: 'rollback' },
+        { label: 'seed', value: 'seed' },
+        { label: 'commit', value: 'commit' },
         { label: 'apply', value: 'apply' },
-        { label: 'describe_database_entities', value: 'describe_database_entities' },
         { label: 'search_background_jobs', value: 'search_background_jobs' },
-        { label: 'describe_conversion_workspace_revisions', value: 'describe_conversion_workspace_revisions' }
+        { label: 'describe_conversion_workspace_revisions', value: 'describe_conversion_workspace_revisions' },
+        { label: 'describe_database_entities', value: 'describe_database_entities' }
     ]}
 >
+<TabItem value="convert">
+
+Creates a draft tree schema for the destination database.
+
+```sql
+EXEC google.datamigration.conversion_workspaces.convert 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@conversionWorkspacesId='{{ conversionWorkspacesId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"convertFullPath": {{ convertFullPath }}, 
+"autoCommit": {{ autoCommit }}
+}'
+;
+```
+</TabItem>
+<TabItem value="rollback">
+
+Rolls back a conversion workspace to the last committed snapshot.
+
+```sql
+EXEC google.datamigration.conversion_workspaces.rollback 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@conversionWorkspacesId='{{ conversionWorkspacesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="seed">
 
 Imports a snapshot of the source database into the conversion workspace.
@@ -659,26 +687,8 @@ EXEC google.datamigration.conversion_workspaces.seed
 @@json=
 '{
 "autoCommit": {{ autoCommit }}, 
-"sourceConnectionProfile": "{{ sourceConnectionProfile }}", 
-"destinationConnectionProfile": "{{ destinationConnectionProfile }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="convert">
-
-Creates a draft tree schema for the destination database.
-
-```sql
-EXEC google.datamigration.conversion_workspaces.convert 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@conversionWorkspacesId='{{ conversionWorkspacesId }}' --required 
-@@json=
-'{
-"autoCommit": {{ autoCommit }}, 
-"filter": "{{ filter }}", 
-"convertFullPath": {{ convertFullPath }}
+"destinationConnectionProfile": "{{ destinationConnectionProfile }}", 
+"sourceConnectionProfile": "{{ sourceConnectionProfile }}"
 }'
 ;
 ```
@@ -699,18 +709,6 @@ EXEC google.datamigration.conversion_workspaces.commit
 ;
 ```
 </TabItem>
-<TabItem value="rollback">
-
-Rolls back a conversion workspace to the last committed snapshot.
-
-```sql
-EXEC google.datamigration.conversion_workspaces.rollback 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@conversionWorkspacesId='{{ conversionWorkspacesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="apply">
 
 Applies draft tree onto a specific destination database.
@@ -722,30 +720,11 @@ EXEC google.datamigration.conversion_workspaces.apply
 @conversionWorkspacesId='{{ conversionWorkspacesId }}' --required 
 @@json=
 '{
-"filter": "{{ filter }}", 
 "dryRun": {{ dryRun }}, 
 "autoCommit": {{ autoCommit }}, 
-"connectionProfile": "{{ connectionProfile }}"
+"connectionProfile": "{{ connectionProfile }}", 
+"filter": "{{ filter }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="describe_database_entities">
-
-Describes the database entities tree for a specific conversion workspace and a specific tree type. Database entities are not resources like conversion workspaces or mapping rules, and they can't be created, updated or deleted. Instead, they are simple data objects describing the structure of the client database.
-
-```sql
-EXEC google.datamigration.conversion_workspaces.describe_database_entities 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@conversionWorkspacesId='{{ conversionWorkspacesId }}' --required, 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@tree='{{ tree }}', 
-@uncommitted={{ uncommitted }}, 
-@commitId='{{ commitId }}', 
-@filter='{{ filter }}', 
-@view='{{ view }}'
 ;
 ```
 </TabItem>
@@ -774,6 +753,25 @@ EXEC google.datamigration.conversion_workspaces.describe_conversion_workspace_re
 @locationsId='{{ locationsId }}' --required, 
 @conversionWorkspacesId='{{ conversionWorkspacesId }}' --required, 
 @commitId='{{ commitId }}'
+;
+```
+</TabItem>
+<TabItem value="describe_database_entities">
+
+Describes the database entities tree for a specific conversion workspace and a specific tree type. Database entities are not resources like conversion workspaces or mapping rules, and they can't be created, updated or deleted. Instead, they are simple data objects describing the structure of the client database.
+
+```sql
+EXEC google.datamigration.conversion_workspaces.describe_database_entities 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@conversionWorkspacesId='{{ conversionWorkspacesId }}' --required, 
+@uncommitted={{ uncommitted }}, 
+@commitId='{{ commitId }}', 
+@view='{{ view }}', 
+@filter='{{ filter }}', 
+@tree='{{ tree }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}'
 ;
 ```
 </TabItem>

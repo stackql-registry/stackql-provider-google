@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances_resource_policies</c
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances_resource_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances_resource_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.instances_resource_policies" /></td></tr>
 </tbody></table>
@@ -54,7 +55,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Adds existing resource policies to an instance. You can only add one policy right now which will be applied to this instance for scheduling live migrations.</td>
+    <td>Adds existing resource policies to an instance. You can only add one<br />policy right now which will be applied to this instance for scheduling live<br />migrations.</td>
 </tr>
 <tr>
     <td><a href="#remove_resource_policies"><CopyableCode code="remove_resource_policies" /></a></td>
@@ -113,7 +114,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="add_resource_policies">
 
-Adds existing resource policies to an instance. You can only add one policy right now which will be applied to this instance for scheduling live migrations.
+Adds existing resource policies to an instance. You can only add one<br />policy right now which will be applied to this instance for scheduling live<br />migrations.
 
 ```sql
 INSERT INTO google.compute.instances_resource_policies (
@@ -137,6 +138,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -161,27 +163,27 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances_resource_policies
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the instances_resource_policies resource.
     - name: zone
-      value: string
+      value: "{{ zone }}"
       description: Required parameter for the instances_resource_policies resource.
     - name: instance
-      value: string
+      value: "{{ instance }}"
       description: Required parameter for the instances_resource_policies resource.
     - name: resourcePolicies
-      value: array
-      description: >
+      value:
+        - "{{ resourcePolicies }}"
+      description: |
         Resource policies to be added to this instance.
-        
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

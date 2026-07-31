@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>inbound_oidc_sso_profiles</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>inbound_oidc_sso_profiles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="inbound_oidc_sso_profiles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.inbound_oidc_sso_profiles" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists InboundOidcSsoProfile objects for a Google enterprise customer.</td>
 </tr>
 <tr>
@@ -249,9 +250,9 @@ displayName,
 idpConfig,
 rpConfig
 FROM google.cloudidentity.inbound_oidc_sso_profiles
-WHERE pageSize = '{{ pageSize }}'
+WHERE pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -294,31 +295,33 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: inbound_oidc_sso_profiles
   props:
     - name: rpConfig
-      value: object
-      description: >
+      description: |
         OIDC relying party (RP) configuration for this OIDC SSO profile. These are the RP details provided by Google that should be configured on the corresponding identity provider.
-        
+      value:
+        redirectUris:
+          - "{{ redirectUris }}"
+        clientId: "{{ clientId }}"
+        clientSecret: "{{ clientSecret }}"
     - name: customer
-      value: string
-      description: >
-        Immutable. The customer. For example: `customers/C0123abc`.
-        
+      value: "{{ customer }}"
+      description: |
+        Immutable. The customer. For example: \`customers/C0123abc\`.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Human-readable name of the OIDC SSO profile.
-        
     - name: idpConfig
-      value: object
-      description: >
+      description: |
         OIDC identity provider configuration.
-        
-```
+      value:
+        issuerUri: "{{ issuerUri }}"
+        changePasswordUri: "{{ changePasswordUri }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

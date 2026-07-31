@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>debug</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>debug</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="debug" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataflow.debug" /></td></tr>
 </tbody></table>
@@ -50,16 +51,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_jobs_debug_send_capture"><CopyableCode code="projects_jobs_debug_send_capture" /></a></td>
+    <td><a href="#projects_locations_jobs_debug_send_capture"><CopyableCode code="projects_locations_jobs_debug_send_capture" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td></td>
     <td>Send encoded debug capture data for component.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_jobs_debug_send_capture"><CopyableCode code="projects_locations_jobs_debug_send_capture" /></a></td>
+    <td><a href="#projects_jobs_debug_send_capture"><CopyableCode code="projects_jobs_debug_send_capture" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td></td>
     <td>Send encoded debug capture data for component.</td>
 </tr>
@@ -100,31 +101,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_jobs_debug_send_capture"
+    defaultValue="projects_locations_jobs_debug_send_capture"
     values={[
-        { label: 'projects_jobs_debug_send_capture', value: 'projects_jobs_debug_send_capture' },
-        { label: 'projects_locations_jobs_debug_send_capture', value: 'projects_locations_jobs_debug_send_capture' }
+        { label: 'projects_locations_jobs_debug_send_capture', value: 'projects_locations_jobs_debug_send_capture' },
+        { label: 'projects_jobs_debug_send_capture', value: 'projects_jobs_debug_send_capture' }
     ]}
 >
-<TabItem value="projects_jobs_debug_send_capture">
-
-Send encoded debug capture data for component.
-
-```sql
-EXEC google.dataflow.debug.projects_jobs_debug_send_capture 
-@projectId='{{ projectId }}' --required, 
-@jobId='{{ jobId }}' --required 
-@@json=
-'{
-"workerId": "{{ workerId }}", 
-"componentId": "{{ componentId }}", 
-"data": "{{ data }}", 
-"dataFormat": "{{ dataFormat }}", 
-"location": "{{ location }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_jobs_debug_send_capture">
 
 Send encoded debug capture data for component.
@@ -136,10 +118,29 @@ EXEC google.dataflow.debug.projects_locations_jobs_debug_send_capture
 @jobId='{{ jobId }}' --required 
 @@json=
 '{
-"workerId": "{{ workerId }}", 
 "componentId": "{{ componentId }}", 
-"data": "{{ data }}", 
 "dataFormat": "{{ dataFormat }}", 
+"workerId": "{{ workerId }}", 
+"data": "{{ data }}", 
+"location": "{{ location }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_jobs_debug_send_capture">
+
+Send encoded debug capture data for component.
+
+```sql
+EXEC google.dataflow.debug.projects_jobs_debug_send_capture 
+@projectId='{{ projectId }}' --required, 
+@jobId='{{ jobId }}' --required 
+@@json=
+'{
+"componentId": "{{ componentId }}", 
+"dataFormat": "{{ dataFormat }}", 
+"workerId": "{{ workerId }}", 
+"data": "{{ data }}", 
 "location": "{{ location }}"
 }'
 ;

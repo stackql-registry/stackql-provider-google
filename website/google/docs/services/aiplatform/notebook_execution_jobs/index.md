@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notebook_execution_jobs</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notebook_execution_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notebook_execution_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.notebook_execution_jobs" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="jobState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the NotebookExecutionJob.</td>
+    <td>Output only. The state of the NotebookExecutionJob. (JOB_STATE_UNSPECIFIED, JOB_STATE_QUEUED, JOB_STATE_PENDING, JOB_STATE_RUNNING, JOB_STATE_SUCCEEDED, JOB_STATE_FAILED, JOB_STATE_CANCELLING, JOB_STATE_CANCELLED, JOB_STATE_PAUSED, JOB_STATE_EXPIRED, JOB_STATE_UPDATING, JOB_STATE_PARTIALLY_SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kernelName" /></td>
@@ -221,7 +222,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="jobState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the NotebookExecutionJob.</td>
+    <td>Output only. The state of the NotebookExecutionJob. (JOB_STATE_UNSPECIFIED, JOB_STATE_QUEUED, JOB_STATE_PENDING, JOB_STATE_RUNNING, JOB_STATE_SUCCEEDED, JOB_STATE_FAILED, JOB_STATE_CANCELLING, JOB_STATE_CANCELLED, JOB_STATE_PAUSED, JOB_STATE_EXPIRED, JOB_STATE_UPDATING, JOB_STATE_PARTIALLY_SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kernelName" /></td>
@@ -294,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists NotebookExecutionJobs in a Location.</td>
 </tr>
 <tr>
@@ -447,11 +448,11 @@ workbenchRuntime
 FROM google.aiplatform.notebook_execution_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND view = '{{ view }}'
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -473,41 +474,41 @@ Creates a NotebookExecutionJob.
 
 ```sql
 INSERT INTO google.aiplatform.notebook_execution_jobs (
-data__labels,
-data__scheduleResourceName,
-data__gcsOutputUri,
-data__executionUser,
-data__serviceAccount,
-data__executionTimeout,
-data__workbenchRuntime,
-data__encryptionSpec,
-data__kernelName,
-data__directNotebookSource,
-data__displayName,
-data__gcsNotebookSource,
-data__customEnvironmentSpec,
 data__notebookRuntimeTemplateResourceName,
+data__directNotebookSource,
+data__customEnvironmentSpec,
+data__workbenchRuntime,
+data__executionUser,
+data__displayName,
+data__encryptionSpec,
+data__gcsOutputUri,
+data__executionTimeout,
+data__labels,
 data__dataformRepositorySource,
+data__kernelName,
+data__scheduleResourceName,
+data__gcsNotebookSource,
+data__serviceAccount,
 projectsId,
 locationsId,
 notebookExecutionJobId
 )
 SELECT 
-'{{ labels }}',
-'{{ scheduleResourceName }}',
-'{{ gcsOutputUri }}',
-'{{ executionUser }}',
-'{{ serviceAccount }}',
-'{{ executionTimeout }}',
-'{{ workbenchRuntime }}',
-'{{ encryptionSpec }}',
-'{{ kernelName }}',
-'{{ directNotebookSource }}',
-'{{ displayName }}',
-'{{ gcsNotebookSource }}',
-'{{ customEnvironmentSpec }}',
 '{{ notebookRuntimeTemplateResourceName }}',
+'{{ directNotebookSource }}',
+'{{ customEnvironmentSpec }}',
+'{{ workbenchRuntime }}',
+'{{ executionUser }}',
+'{{ displayName }}',
+'{{ encryptionSpec }}',
+'{{ gcsOutputUri }}',
+'{{ executionTimeout }}',
+'{{ labels }}',
 '{{ dataformRepositorySource }}',
+'{{ kernelName }}',
+'{{ scheduleResourceName }}',
+'{{ gcsNotebookSource }}',
+'{{ serviceAccount }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ notebookExecutionJobId }}'
@@ -522,94 +523,114 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: notebook_execution_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the notebook_execution_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the notebook_execution_jobs resource.
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize NotebookExecutionJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-        
-    - name: scheduleResourceName
-      value: string
-      description: >
-        The Schedule resource name if this job is triggered by one. Format: `projects/{project_id}/locations/{location}/schedules/{schedule_id}`
-        
-    - name: gcsOutputUri
-      value: string
-      description: >
-        The Cloud Storage location to upload the result to. Format: `gs://bucket-name`
-        
-    - name: executionUser
-      value: string
-      description: >
-        The user email to run the execution as. Only supported by Colab runtimes.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        The service account to run the execution as.
-        
-    - name: executionTimeout
-      value: string
-      description: >
-        Max running time of the execution job in seconds (default 86400s / 24 hrs).
-        
-    - name: workbenchRuntime
-      value: object
-      description: >
-        The Workbench runtime configuration to use for the notebook execution.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key spec for the notebook execution job. This field is auto-populated if the NotebookRuntimeTemplate has an encryption spec.
-        
-    - name: kernelName
-      value: string
-      description: >
-        The name of the kernel to use during notebook execution. If unset, the default kernel is used.
-        
-    - name: directNotebookSource
-      value: object
-      description: >
-        The contents of an input notebook file.
-        
-    - name: displayName
-      value: string
-      description: >
-        The display name of the NotebookExecutionJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-    - name: gcsNotebookSource
-      value: object
-      description: >
-        The Cloud Storage url pointing to the ipynb file. Format: `gs://bucket/notebook_file.ipynb`
-        
-    - name: customEnvironmentSpec
-      value: object
-      description: >
-        The custom compute configuration for an execution job.
-        
     - name: notebookRuntimeTemplateResourceName
-      value: string
-      description: >
+      value: "{{ notebookRuntimeTemplateResourceName }}"
+      description: |
         The NotebookRuntimeTemplate to source compute configuration from.
-        
+    - name: directNotebookSource
+      description: |
+        The contents of an input notebook file.
+      value:
+        content: "{{ content }}"
+    - name: customEnvironmentSpec
+      description: |
+        The custom compute configuration for an execution job.
+      value:
+        networkSpec:
+          network: "{{ network }}"
+          enableInternetAccess: {{ enableInternetAccess }}
+          subnetwork: "{{ subnetwork }}"
+        machineSpec:
+          machineType: "{{ machineType }}"
+          tpuTopology: "{{ tpuTopology }}"
+          reservationAffinity:
+            reservationAffinityType: "{{ reservationAffinityType }}"
+            key: "{{ key }}"
+            values:
+              - "{{ values }}"
+          acceleratorCount: {{ acceleratorCount }}
+          acceleratorType: "{{ acceleratorType }}"
+          gpuPartitionSize: "{{ gpuPartitionSize }}"
+        persistentDiskSpec:
+          diskType: "{{ diskType }}"
+          diskSizeGb: "{{ diskSizeGb }}"
+        shieldedInstanceConfig:
+          enableVtpm: {{ enableVtpm }}
+          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+          enableSecureBoot: {{ enableSecureBoot }}
+    - name: workbenchRuntime
+      description: |
+        The Workbench runtime configuration to use for the notebook execution.
+      value:
+        vmImage:
+          family: "{{ family }}"
+          project: "{{ project }}"
+          name: "{{ name }}"
+        customContainerImage:
+          repository: "{{ repository }}"
+          tag: "{{ tag }}"
+    - name: executionUser
+      value: "{{ executionUser }}"
+      description: |
+        The user email to run the execution as. Only supported by Colab runtimes.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The display name of the NotebookExecutionJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: encryptionSpec
+      description: |
+        Customer-managed encryption key spec for the notebook execution job. This field is auto-populated if the NotebookRuntimeTemplate has an encryption spec.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: gcsOutputUri
+      value: "{{ gcsOutputUri }}"
+      description: |
+        The Cloud Storage location to upload the result to. Format: \`gs://bucket-name\`
+    - name: executionTimeout
+      value: "{{ executionTimeout }}"
+      description: |
+        Max running time of the execution job in seconds (default 86400s / 24 hrs).
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize NotebookExecutionJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
     - name: dataformRepositorySource
-      value: object
-      description: >
+      description: |
         The Dataform Repository pointing to a single file notebook repository.
-        
+      value:
+        dataformRepositoryResourceName: "{{ dataformRepositoryResourceName }}"
+        commitSha: "{{ commitSha }}"
+    - name: kernelName
+      value: "{{ kernelName }}"
+      description: |
+        The name of the kernel to use during notebook execution. If unset, the default kernel is used.
+    - name: scheduleResourceName
+      value: "{{ scheduleResourceName }}"
+      description: |
+        The Schedule resource name if this job is triggered by one. Format: \`projects/{project_id}/locations/{location}/schedules/{schedule_id}\`
+    - name: gcsNotebookSource
+      description: |
+        The Cloud Storage url pointing to the ipynb file. Format: \`gs://bucket/notebook_file.ipynb\`
+      value:
+        uri: "{{ uri }}"
+        generation: "{{ generation }}"
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        The service account to run the execution as.
     - name: notebookExecutionJobId
-      value: string
-```
+      value: "{{ notebookExecutionJobId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

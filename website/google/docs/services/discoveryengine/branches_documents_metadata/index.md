@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>branches_documents_metadata</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>branches_documents_metadata</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="branches_documents_metadata" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.branches_documents_metadata" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_branches_batch_get_documents_metadata"><CopyableCode code="projects_locations_collections_data_stores_branches_batch_get_documents_metadata" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td><a href="#parameter-matcher.fhirMatcher.fhirResources"><code>matcher.fhirMatcher.fhirResources</code></a>, <a href="#parameter-matcher.urisMatcher.uris"><code>matcher.urisMatcher.uris</code></a></td>
+    <td><a href="#parameter-matcher.urisMatcher.uris"><code>matcher.urisMatcher.uris</code></a>, <a href="#parameter-matcher.fhirMatcher.fhirResources"><code>matcher.fhirMatcher.fhirResources</code></a></td>
     <td>Gets index freshness metadata for Documents. Supported for website search only.</td>
 </tr>
 <tr>
@@ -183,8 +184,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND branchesId = '{{ branchesId }}' -- required
-AND matcher.fhirMatcher.fhirResources = '{{ matcher.fhirMatcher.fhirResources }}'
 AND matcher.urisMatcher.uris = '{{ matcher.urisMatcher.uris }}'
+AND matcher.fhirMatcher.fhirResources = '{{ matcher.fhirMatcher.fhirResources }}'
 ;
 ```
 </TabItem>

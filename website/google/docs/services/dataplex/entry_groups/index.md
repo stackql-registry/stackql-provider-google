@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entry_groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entry_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entry_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.entry_groups" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="transferStatus" /></td>
     <td><code>string</code></td>
-    <td>Output only. Denotes the transfer status of the Entry Group. It is unspecified for Entry Group created from Dataplex API.</td>
+    <td>Output only. Denotes the transfer status of the Entry Group. It is unspecified for Entry Group created from Dataplex API. (TRANSFER_STATUS_UNSPECIFIED, TRANSFER_STATUS_MIGRATED, TRANSFER_STATUS_TRANSFERRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="transferStatus" /></td>
     <td><code>string</code></td>
-    <td>Output only. Denotes the transfer status of the Entry Group. It is unspecified for Entry Group created from Dataplex API.</td>
+    <td>Output only. Denotes the transfer status of the Entry Group. It is unspecified for Entry Group created from Dataplex API. (TRANSFER_STATUS_UNSPECIFIED, TRANSFER_STATUS_MIGRATED, TRANSFER_STATUS_TRANSFERRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -184,14 +185,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_entry_groups_list"><CopyableCode code="projects_locations_entry_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists EntryGroup resources in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_entry_groups_create"><CopyableCode code="projects_locations_entry_groups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-entryGroupId"><code>entryGroupId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-entryGroupId"><code>entryGroupId</code></a></td>
     <td>Creates an EntryGroup.</td>
 </tr>
 <tr>
@@ -332,9 +333,9 @@ FROM google.dataplex.entry_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -356,24 +357,24 @@ Creates an EntryGroup.
 
 ```sql
 INSERT INTO google.dataplex.entry_groups (
-data__description,
-data__displayName,
-data__labels,
 data__etag,
+data__description,
+data__labels,
+data__displayName,
 projectsId,
 locationsId,
-entryGroupId,
-validateOnly
+validateOnly,
+entryGroupId
 )
 SELECT 
-'{{ description }}',
-'{{ displayName }}',
-'{{ labels }}',
 '{{ etag }}',
+'{{ description }}',
+'{{ labels }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ entryGroupId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ entryGroupId }}'
 RETURNING
 name,
 done,
@@ -385,41 +386,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: entry_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the entry_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the entry_groups resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the EntryGroup.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly display name.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels for the EntryGroup.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         This checksum is computed by the service, and might be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
-    - name: entryGroupId
-      value: string
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the EntryGroup.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the EntryGroup.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: entryGroupId
+      value: "{{ entryGroupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -439,10 +436,10 @@ Updates an EntryGroup.
 ```sql
 UPDATE google.dataplex.entry_groups
 SET 
+data__etag = '{{ etag }}',
 data__description = '{{ description }}',
-data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
-data__etag = '{{ etag }}'
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

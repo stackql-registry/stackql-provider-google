@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>printers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>printers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="printers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.printers" /></td></tr>
 </tbody></table>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orgUnitId"><code>orgUnitId</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orgUnitId"><code>orgUnitId</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List printers configs.</td>
 </tr>
 <tr>
@@ -215,7 +216,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-printersId"><code>printersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-clearMask"><code>clearMask</code></a></td>
+    <td><a href="#parameter-clearMask"><code>clearMask</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a `Printer` resource.</td>
 </tr>
 <tr>
@@ -345,11 +346,11 @@ uri,
 useDriverlessConfig
 FROM googleadmin.directory.printers
 WHERE customersId = '{{ customersId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orgUnitId = '{{ orgUnitId }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -372,25 +373,25 @@ Creates a printer under given Organization Unit.
 
 ```sql
 INSERT INTO googleadmin.directory.printers (
-data__name,
-data__id,
 data__displayName,
-data__description,
-data__makeAndModel,
-data__uri,
-data__orgUnitId,
 data__useDriverlessConfig,
+data__uri,
+data__makeAndModel,
+data__orgUnitId,
+data__id,
+data__description,
+data__name,
 customersId
 )
 SELECT 
-'{{ name }}',
-'{{ id }}',
 '{{ displayName }}',
-'{{ description }}',
-'{{ makeAndModel }}',
-'{{ uri }}',
-'{{ orgUnitId }}',
 {{ useDriverlessConfig }},
+'{{ uri }}',
+'{{ makeAndModel }}',
+'{{ orgUnitId }}',
+'{{ id }}',
+'{{ description }}',
+'{{ name }}',
 '{{ customersId }}'
 RETURNING
 id,
@@ -426,59 +427,65 @@ printers
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: printers
   props:
     - name: customersId
-      value: string
+      value: "{{ customersId }}"
       description: Required parameter for the printers resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the Printer object, in the format customers/{customer-id}/printers/{printer-id} (During printer creation leave empty)
-        
-    - name: id
-      value: string
-      description: >
-        Id of the printer. (During printer creation leave empty)
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Editable. Name of printer.
-        
-    - name: description
-      value: string
-      description: >
-        Editable. Description of printer.
-        
-    - name: makeAndModel
-      value: string
-      description: >
-        Editable. Make and model of printer. e.g. Lexmark MS610de Value must be in format as seen in ListPrinterModels response.
-        
-    - name: uri
-      value: string
-      description: >
-        Editable. Printer URI.
-        
-    - name: orgUnitId
-      value: string
-      description: >
-        Organization Unit that owns this printer (Only can be set during Printer creation)
-        
     - name: useDriverlessConfig
-      value: boolean
-      description: >
+      value: {{ useDriverlessConfig }}
+      description: |
         Editable. flag to use driverless configuration or not. If it's set to be true, make_and_model can be ignored
-        
+    - name: uri
+      value: "{{ uri }}"
+      description: |
+        Editable. Printer URI.
+    - name: makeAndModel
+      value: "{{ makeAndModel }}"
+      description: |
+        Editable. Make and model of printer. e.g. Lexmark MS610de Value must be in format as seen in ListPrinterModels response.
+    - name: orgUnitId
+      value: "{{ orgUnitId }}"
+      description: |
+        Organization Unit that owns this printer (Only can be set during Printer creation)
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Id of the printer. (During printer creation leave empty)
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Editable. Description of printer.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the Printer object, in the format customers/{customer-id}/printers/{printer-id} (During printer creation leave empty)
     - name: requests
-      value: array
-      description: >
+      description: |
         A list of Printers to be created. Max 50 at a time.
-        
-```
+      value:
+        - parent: "{{ parent }}"
+          printer:
+            auxiliaryMessages:
+              - severity: "{{ severity }}"
+                auxiliaryMessage: "{{ auxiliaryMessage }}"
+                fieldMask: "{{ fieldMask }}"
+            displayName: "{{ displayName }}"
+            useDriverlessConfig: {{ useDriverlessConfig }}
+            uri: "{{ uri }}"
+            makeAndModel: "{{ makeAndModel }}"
+            orgUnitId: "{{ orgUnitId }}"
+            createTime: "{{ createTime }}"
+            id: "{{ id }}"
+            description: "{{ description }}"
+            name: "{{ name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -498,19 +505,19 @@ Updates a `Printer` resource.
 ```sql
 UPDATE googleadmin.directory.printers
 SET 
-data__name = '{{ name }}',
-data__id = '{{ id }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__makeAndModel = '{{ makeAndModel }}',
+data__useDriverlessConfig = {{ useDriverlessConfig }},
 data__uri = '{{ uri }}',
+data__makeAndModel = '{{ makeAndModel }}',
 data__orgUnitId = '{{ orgUnitId }}',
-data__useDriverlessConfig = {{ useDriverlessConfig }}
+data__id = '{{ id }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}'
 WHERE 
 customersId = '{{ customersId }}' --required
 AND printersId = '{{ printersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND clearMask = '{{ clearMask}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 id,
 name,

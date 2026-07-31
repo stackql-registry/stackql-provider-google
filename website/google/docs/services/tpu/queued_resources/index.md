@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>queued_resources</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>queued_resources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="queued_resources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.tpu.queued_resources" /></td></tr>
 </tbody></table>
@@ -174,21 +175,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists queued resources.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-queuedResourceId"><code>queuedResourceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-queuedResourceId"><code>queuedResourceId</code></a></td>
     <td>Creates a QueuedResource TPU instance.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuedResourcesId"><code>queuedResourcesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a QueuedResource TPU instance.</td>
 </tr>
 <tr>
@@ -304,8 +305,8 @@ tpu
 FROM google.tpu.queued_resources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -329,24 +330,24 @@ Creates a QueuedResource TPU instance.
 INSERT INTO google.tpu.queued_resources (
 data__tpu,
 data__spot,
-data__guaranteed,
-data__queueingPolicy,
 data__reservationName,
+data__queueingPolicy,
+data__guaranteed,
 projectsId,
 locationsId,
-queuedResourceId,
-requestId
+requestId,
+queuedResourceId
 )
 SELECT 
 '{{ tpu }}',
 '{{ spot }}',
-'{{ guaranteed }}',
-'{{ queueingPolicy }}',
 '{{ reservationName }}',
+'{{ queueingPolicy }}',
+'{{ guaranteed }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ queuedResourceId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ queuedResourceId }}'
 RETURNING
 name,
 done,
@@ -358,46 +359,121 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: queued_resources
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the queued_resources resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the queued_resources resource.
     - name: tpu
-      value: object
-      description: >
+      description: |
         Optional. Defines a TPU resource.
-        
+      value:
+        nodeSpec:
+          - nodeId: "{{ nodeId }}"
+            parent: "{{ parent }}"
+            multisliceParams:
+              nodeCount: {{ nodeCount }}
+              nodeIdPrefix: "{{ nodeIdPrefix }}"
+            node:
+              upcomingMaintenance:
+                maintenanceStatus: "{{ maintenanceStatus }}"
+                canReschedule: {{ canReschedule }}
+                windowStartTime: "{{ windowStartTime }}"
+                type: "{{ type }}"
+                windowEndTime: "{{ windowEndTime }}"
+                latestWindowStartTime: "{{ latestWindowStartTime }}"
+              name: "{{ name }}"
+              schedulingConfig:
+                preemptible: {{ preemptible }}
+                reserved: {{ reserved }}
+                spot: {{ spot }}
+              cidrBlock: "{{ cidrBlock }}"
+              health: "{{ health }}"
+              runtimeVersion: "{{ runtimeVersion }}"
+              metadata: "{{ metadata }}"
+              shieldedInstanceConfig:
+                enableSecureBoot: {{ enableSecureBoot }}
+              networkEndpoints:
+                - accessConfig:
+                    externalIp: "{{ externalIp }}"
+                  ipAddress: "{{ ipAddress }}"
+                  port: {{ port }}
+              queuedResource: "{{ queuedResource }}"
+              state: "{{ state }}"
+              networkConfigs:
+                - subnetwork: "{{ subnetwork }}"
+                  enableExternalIps: {{ enableExternalIps }}
+                  network: "{{ network }}"
+                  queueCount: {{ queueCount }}
+                  canIpForward: {{ canIpForward }}
+              labels: "{{ labels }}"
+              tags:
+                - "{{ tags }}"
+              acceleratorConfig:
+                type: "{{ type }}"
+                topology: "{{ topology }}"
+              multisliceNode: {{ multisliceNode }}
+              id: "{{ id }}"
+              description: "{{ description }}"
+              acceleratorType: "{{ acceleratorType }}"
+              createTime: "{{ createTime }}"
+              symptoms:
+                - createTime: "{{ createTime }}"
+                  details: "{{ details }}"
+                  symptomType: "{{ symptomType }}"
+                  workerId: "{{ workerId }}"
+              apiVersion: "{{ apiVersion }}"
+              networkConfig:
+                subnetwork: "{{ subnetwork }}"
+                enableExternalIps: {{ enableExternalIps }}
+                network: "{{ network }}"
+                queueCount: {{ queueCount }}
+                canIpForward: {{ canIpForward }}
+              bootDiskConfig:
+                customerEncryptionKey:
+                  kmsKeyName: "{{ kmsKeyName }}"
+              dataDisks:
+                - sourceDisk: "{{ sourceDisk }}"
+                  mode: "{{ mode }}"
+              healthDescription: "{{ healthDescription }}"
+              serviceAccount:
+                email: "{{ email }}"
+                scope:
+                  - "{{ scope }}"
     - name: spot
-      value: object
-      description: >
+      value: "{{ spot }}"
+      description: |
         Optional. The Spot tier.
-        
-    - name: guaranteed
-      value: object
-      description: >
-        Optional. The Guaranteed tier
-        
-    - name: queueingPolicy
-      value: object
-      description: >
-        Optional. The queueing policy of the QueuedRequest.
-        
     - name: reservationName
-      value: string
-      description: >
+      value: "{{ reservationName }}"
+      description: |
         Optional. Name of the reservation in which the resource should be provisioned. Format: projects/{project}/locations/{zone}/reservations/{reservation}
-        
-    - name: queuedResourceId
-      value: string
+    - name: queueingPolicy
+      description: |
+        Optional. The queueing policy of the QueuedRequest.
+      value:
+        validInterval:
+          endTime: "{{ endTime }}"
+          startTime: "{{ startTime }}"
+        validUntilDuration: "{{ validUntilDuration }}"
+        validUntilTime: "{{ validUntilTime }}"
+        validAfterDuration: "{{ validAfterDuration }}"
+        validAfterTime: "{{ validAfterTime }}"
+    - name: guaranteed
+      description: |
+        Optional. The Guaranteed tier
+      value:
+        minDuration: "{{ minDuration }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: queuedResourceId
+      value: "{{ queuedResourceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -419,8 +495,8 @@ DELETE FROM google.tpu.queued_resources
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND queuedResourcesId = '{{ queuedResourcesId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

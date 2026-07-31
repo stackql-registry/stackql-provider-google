@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>issues</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>issues</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="issues" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.issues" /></td></tr>
 </tbody></table>
@@ -258,17 +259,17 @@ Creates an issue.
 
 ```sql
 INSERT INTO google.contactcenterinsights.issues (
-data__displayName,
-data__displayDescription,
 data__name,
+data__displayDescription,
+data__displayName,
 projectsId,
 locationsId,
 issueModelsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ displayDescription }}',
 '{{ name }}',
+'{{ displayDescription }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ issueModelsId }}'
@@ -283,35 +284,32 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: issues
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the issues resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the issues resource.
     - name: issueModelsId
-      value: string
+      value: "{{ issueModelsId }}"
       description: Required parameter for the issues resource.
-    - name: displayName
-      value: string
-      description: >
-        The representative name for the issue.
-        
-    - name: displayDescription
-      value: string
-      description: >
-        Representative description of the issue.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. The resource name of the issue. Format: projects/{project}/locations/{location}/issueModels/{issue_model}/issues/{issue}
-        
-```
+    - name: displayDescription
+      value: "{{ displayDescription }}"
+      description: |
+        Representative description of the issue.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The representative name for the issue.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -331,9 +329,9 @@ Updates an issue.
 ```sql
 UPDATE google.contactcenterinsights.issues
 SET 
-data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__displayDescription = '{{ displayDescription }}',
-data__name = '{{ name }}'
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

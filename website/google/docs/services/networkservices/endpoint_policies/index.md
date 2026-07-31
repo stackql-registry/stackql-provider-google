@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>endpoint_policies</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>endpoint_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="endpoint_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkservices.endpoint_policies" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clientTlsPolicy" /></td>
     <td><code>string</code></td>
-    <td>Optional. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be set to specify the authentication for traffic from the proxy to the actual endpoints. More specifically, it is applied to the outgoing traffic from the proxy to the endpoint. This is typically used for sidecar model where the proxy identifies itself as endpoint to the control plane, with the connection between sidecar and endpoint requiring authentication. If this field is not set, authentication is disabled(open). Applicable only when EndpointPolicyType is SIDECAR_PROXY.</td>
+    <td>Optional. Deprecated: This field is not used and is a no-op. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be set to specify the authentication for traffic from the proxy to the actual endpoints. More specifically, it is applied to the outgoing traffic from the proxy to the endpoint. This is typically used for sidecar model where the proxy identifies itself as endpoint to the control plane, with the connection between sidecar and endpoint requiring authentication. If this field is not set, authentication is disabled(open). Applicable only when EndpointPolicyType is SIDECAR_PROXY.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of endpoint policy. This is primarily used to validate the configuration.</td>
+    <td>Required. The type of endpoint policy. This is primarily used to validate the configuration. (ENDPOINT_POLICY_TYPE_UNSPECIFIED, SIDECAR_PROXY, GRPC_SERVER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clientTlsPolicy" /></td>
     <td><code>string</code></td>
-    <td>Optional. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be set to specify the authentication for traffic from the proxy to the actual endpoints. More specifically, it is applied to the outgoing traffic from the proxy to the endpoint. This is typically used for sidecar model where the proxy identifies itself as endpoint to the control plane, with the connection between sidecar and endpoint requiring authentication. If this field is not set, authentication is disabled(open). Applicable only when EndpointPolicyType is SIDECAR_PROXY.</td>
+    <td>Optional. Deprecated: This field is not used and is a no-op. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be set to specify the authentication for traffic from the proxy to the actual endpoints. More specifically, it is applied to the outgoing traffic from the proxy to the endpoint. This is typically used for sidecar model where the proxy identifies itself as endpoint to the control plane, with the connection between sidecar and endpoint requiring authentication. If this field is not set, authentication is disabled(open). Applicable only when EndpointPolicyType is SIDECAR_PROXY.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of endpoint policy. This is primarily used to validate the configuration.</td>
+    <td>Required. The type of endpoint policy. This is primarily used to validate the configuration. (ENDPOINT_POLICY_TYPE_UNSPECIFIED, SIDECAR_PROXY, GRPC_SERVER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists EndpointPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -340,8 +341,8 @@ updateTime
 FROM google.networkservices.endpoint_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -364,29 +365,29 @@ Creates a new EndpointPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.endpoint_policies (
-data__trafficPortSelector,
-data__endpointMatcher,
-data__clientTlsPolicy,
-data__authorizationPolicy,
-data__type,
-data__serverTlsPolicy,
-data__labels,
 data__name,
+data__labels,
+data__type,
+data__authorizationPolicy,
+data__endpointMatcher,
+data__trafficPortSelector,
 data__description,
+data__serverTlsPolicy,
+data__clientTlsPolicy,
 projectsId,
 locationsId,
 endpointPolicyId
 )
 SELECT 
-'{{ trafficPortSelector }}',
-'{{ endpointMatcher }}',
-'{{ clientTlsPolicy }}',
-'{{ authorizationPolicy }}',
-'{{ type }}',
-'{{ serverTlsPolicy }}',
-'{{ labels }}',
 '{{ name }}',
+'{{ labels }}',
+'{{ type }}',
+'{{ authorizationPolicy }}',
+'{{ endpointMatcher }}',
+'{{ trafficPortSelector }}',
 '{{ description }}',
+'{{ serverTlsPolicy }}',
+'{{ clientTlsPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ endpointPolicyId }}'
@@ -401,65 +402,63 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: endpoint_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the endpoint_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the endpoint_policies resource.
-    - name: trafficPortSelector
-      value: object
-      description: >
-        Optional. Port selector for the (matched) endpoints. If no port selector is provided, the matched config is applied to all ports.
-        
-    - name: endpointMatcher
-      value: object
-      description: >
-        Required. A matcher that selects endpoints to which the policies should be applied.
-        
-    - name: clientTlsPolicy
-      value: string
-      description: >
-        Optional. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be set to specify the authentication for traffic from the proxy to the actual endpoints. More specifically, it is applied to the outgoing traffic from the proxy to the endpoint. This is typically used for sidecar model where the proxy identifies itself as endpoint to the control plane, with the connection between sidecar and endpoint requiring authentication. If this field is not set, authentication is disabled(open). Applicable only when EndpointPolicyType is SIDECAR_PROXY.
-        
-    - name: authorizationPolicy
-      value: string
-      description: >
-        Optional. This field specifies the URL of AuthorizationPolicy resource that applies authorization policies to the inbound traffic at the matched endpoints. Refer to Authorization. If this field is not specified, authorization is disabled(no authz checks) for this endpoint.
-        
-    - name: type
-      value: string
-      description: >
-        Required. The type of endpoint policy. This is primarily used to validate the configuration.
-        
-      valid_values: ['ENDPOINT_POLICY_TYPE_UNSPECIFIED', 'SIDECAR_PROXY', 'GRPC_SERVER']
-    - name: serverTlsPolicy
-      value: string
-      description: >
-        Optional. A URL referring to ServerTlsPolicy resource. ServerTlsPolicy is used to determine the authentication policy to be applied to terminate the inbound traffic at the identified backends. If this field is not set, authentication is disabled(open) for this endpoint.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the EndpointPolicy resource.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. Name of the EndpointPolicy resource. It matches pattern `projects/{project}/locations/*/endpointPolicies/{endpoint_policy}`.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the EndpointPolicy resource. It matches pattern \`projects/{project}/locations/*/endpointPolicies/{endpoint_policy}\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the EndpointPolicy resource.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The type of endpoint policy. This is primarily used to validate the configuration.
+      valid_values: ['ENDPOINT_POLICY_TYPE_UNSPECIFIED', 'SIDECAR_PROXY', 'GRPC_SERVER']
+    - name: authorizationPolicy
+      value: "{{ authorizationPolicy }}"
+      description: |
+        Optional. This field specifies the URL of AuthorizationPolicy resource that applies authorization policies to the inbound traffic at the matched endpoints. Refer to Authorization. If this field is not specified, authorization is disabled(no authz checks) for this endpoint.
+    - name: endpointMatcher
+      description: |
+        Required. A matcher that selects endpoints to which the policies should be applied.
+      value:
+        metadataLabelMatcher:
+          metadataLabelMatchCriteria: "{{ metadataLabelMatchCriteria }}"
+          metadataLabels:
+            - labelName: "{{ labelName }}"
+              labelValue: "{{ labelValue }}"
+    - name: trafficPortSelector
+      description: |
+        Optional. Port selector for the (matched) endpoints. If no port selector is provided, the matched config is applied to all ports.
+      value:
+        ports:
+          - "{{ ports }}"
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A free-text description of the resource. Max length 1024 characters.
-        
+    - name: serverTlsPolicy
+      value: "{{ serverTlsPolicy }}"
+      description: |
+        Optional. A URL referring to ServerTlsPolicy resource. ServerTlsPolicy is used to determine the authentication policy to be applied to terminate the inbound traffic at the identified backends. If this field is not set, authentication is disabled(open) for this endpoint.
+    - name: clientTlsPolicy
+      value: "{{ clientTlsPolicy }}"
+      description: |
+        Optional. Deprecated: This field is not used and is a no-op. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be set to specify the authentication for traffic from the proxy to the actual endpoints. More specifically, it is applied to the outgoing traffic from the proxy to the endpoint. This is typically used for sidecar model where the proxy identifies itself as endpoint to the control plane, with the connection between sidecar and endpoint requiring authentication. If this field is not set, authentication is disabled(open). Applicable only when EndpointPolicyType is SIDECAR_PROXY.
     - name: endpointPolicyId
-      value: string
-```
+      value: "{{ endpointPolicyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -479,15 +478,15 @@ Updates the parameters of a single EndpointPolicy.
 ```sql
 UPDATE google.networkservices.endpoint_policies
 SET 
-data__trafficPortSelector = '{{ trafficPortSelector }}',
-data__endpointMatcher = '{{ endpointMatcher }}',
-data__clientTlsPolicy = '{{ clientTlsPolicy }}',
-data__authorizationPolicy = '{{ authorizationPolicy }}',
-data__type = '{{ type }}',
-data__serverTlsPolicy = '{{ serverTlsPolicy }}',
-data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__labels = '{{ labels }}',
+data__type = '{{ type }}',
+data__authorizationPolicy = '{{ authorizationPolicy }}',
+data__endpointMatcher = '{{ endpointMatcher }}',
+data__trafficPortSelector = '{{ trafficPortSelector }}',
+data__description = '{{ description }}',
+data__serverTlsPolicy = '{{ serverTlsPolicy }}',
+data__clientTlsPolicy = '{{ clientTlsPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

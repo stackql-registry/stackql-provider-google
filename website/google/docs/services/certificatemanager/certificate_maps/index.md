@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>certificate_maps</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>certificate_maps</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="certificate_maps" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.certificatemanager.certificate_maps" /></td></tr>
 </tbody></table>
@@ -75,6 +76,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Set of labels associated with a Certificate Map.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The update timestamp of a Certificate Map.</td>
@@ -119,6 +125,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Set of labels associated with a Certificate Map.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The update timestamp of a Certificate Map.</td>
@@ -154,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists CertificateMaps in a given project and location.</td>
 </tr>
 <tr>
@@ -262,6 +273,7 @@ createTime,
 description,
 gclbTargets,
 labels,
+tags,
 updateTime
 FROM google.certificatemanager.certificate_maps
 WHERE projectsId = '{{ projectsId }}' -- required
@@ -281,13 +293,14 @@ createTime,
 description,
 gclbTargets,
 labels,
+tags,
 updateTime
 FROM google.certificatemanager.certificate_maps
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -310,17 +323,19 @@ Creates a new CertificateMap in a given project and location.
 
 ```sql
 INSERT INTO google.certificatemanager.certificate_maps (
-data__name,
-data__description,
 data__labels,
+data__name,
+data__tags,
+data__description,
 projectsId,
 locationsId,
 certificateMapId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ tags }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ certificateMapId }}'
@@ -335,34 +350,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: certificate_maps
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the certificate_maps resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the certificate_maps resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. A user-defined name of the Certificate Map. Certificate Map names must be unique globally and match pattern `projects/*/locations/*/certificateMaps/*`.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. One or more paragraphs of text description of a certificate map.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Set of labels associated with a Certificate Map.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. A user-defined name of the Certificate Map. Certificate Map names must be unique globally and match pattern \`projects/*/locations/*/certificateMaps/*\`.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. One or more paragraphs of text description of a certificate map.
     - name: certificateMapId
-      value: string
-```
+      value: "{{ certificateMapId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -382,9 +398,10 @@ Updates a CertificateMap.
 ```sql
 UPDATE google.certificatemanager.certificate_maps
 SET 
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}'
+data__tags = '{{ tags }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

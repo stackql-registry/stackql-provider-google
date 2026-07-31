@@ -18,7 +18,7 @@ eventarc service documentation.
 
 :::info[Service Summary]
 
-total resources: __20__  
+total resources: __19__  
 
 :::
 
@@ -34,10 +34,9 @@ total resources: __20__
 <a href="/services/eventarc/google_api_sources/">google_api_sources</a><br />
 <a href="/services/eventarc/google_api_sources_iam_policies/">google_api_sources_iam_policies</a><br />
 <a href="/services/eventarc/google_channel_config/">google_channel_config</a><br />
-<a href="/services/eventarc/kafka_sources_iam_policies/">kafka_sources_iam_policies</a>
+<a href="/services/eventarc/locations/">locations</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/eventarc/locations/">locations</a><br />
 <a href="/services/eventarc/message_buses/">message_buses</a><br />
 <a href="/services/eventarc/message_buses_enrollments/">message_buses_enrollments</a><br />
 <a href="/services/eventarc/message_buses_iam_policies/">message_buses_iam_policies</a><br />

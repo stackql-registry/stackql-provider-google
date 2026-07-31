@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>plugins_style_guide</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>plugins_style_guide</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="plugins_style_guide" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.plugins_style_guide" /></td></tr>
 </tbody></table>
@@ -61,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="linter" /></td>
     <td><code>string</code></td>
-    <td>Required. Target linter for the style guide.</td>
+    <td>Required. Target linter for the style guide. (LINTER_UNSPECIFIED, SPECTRAL, OTHER)</td>
 </tr>
 </tbody>
 </table>
@@ -179,8 +180,8 @@ Update the styleGuide to be used for liniting in by API hub.
 UPDATE google.apihub.plugins_style_guide
 SET 
 data__name = '{{ name }}',
-data__linter = '{{ linter }}',
-data__contents = '{{ contents }}'
+data__contents = '{{ contents }}',
+data__linter = '{{ linter }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

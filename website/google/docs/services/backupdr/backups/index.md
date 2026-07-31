@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.backupdr.backups" /></td></tr>
 </tbody></table>
@@ -72,12 +73,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupRetentionInheritance" /></td>
     <td><code>string</code></td>
-    <td>Output only. Setting for how the enforced retention end time is inherited. This value is copied from this backup's BackupVault.</td>
+    <td>Output only. Setting for how the enforced retention end time is inherited. This value is copied from this backup's BackupVault. (BACKUP_RETENTION_INHERITANCE_UNSPECIFIED, INHERIT_VAULT_RETENTION, MATCH_BACKUP_EXPIRE_TIME)</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the backup, unspecified, scheduled or ondemand.</td>
+    <td>Output only. Type of the backup, unspecified, scheduled or ondemand. (BACKUP_TYPE_UNSPECIFIED, SCHEDULED, ON_DEMAND, ON_DEMAND_OPERATIONAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudSqlInstanceBackupProperties" /></td>
@@ -125,6 +126,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. When this backup is automatically expired.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="filestoreInstanceBackupProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Filestore specific backup properties. (id: FilestoreInstanceBackupProperties)</td>
+</tr>
+<tr>
     <td><CopyableCode code="gcpBackupPlanInfo" /></td>
     <td><code>object</code></td>
     <td>Output only. Configuration for a Google Cloud resource. (id: GCPBackupPlanInfo)</td>
@@ -167,7 +173,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Backup resource instance state.</td>
+    <td>Output only. The Backup resource instance state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ERROR, UPLOADING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -211,12 +217,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupRetentionInheritance" /></td>
     <td><code>string</code></td>
-    <td>Output only. Setting for how the enforced retention end time is inherited. This value is copied from this backup's BackupVault.</td>
+    <td>Output only. Setting for how the enforced retention end time is inherited. This value is copied from this backup's BackupVault. (BACKUP_RETENTION_INHERITANCE_UNSPECIFIED, INHERIT_VAULT_RETENTION, MATCH_BACKUP_EXPIRE_TIME)</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the backup, unspecified, scheduled or ondemand.</td>
+    <td>Output only. Type of the backup, unspecified, scheduled or ondemand. (BACKUP_TYPE_UNSPECIFIED, SCHEDULED, ON_DEMAND, ON_DEMAND_OPERATIONAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudSqlInstanceBackupProperties" /></td>
@@ -264,6 +270,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. When this backup is automatically expired.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="filestoreInstanceBackupProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Filestore specific backup properties. (id: FilestoreInstanceBackupProperties)</td>
+</tr>
+<tr>
     <td><CopyableCode code="gcpBackupPlanInfo" /></td>
     <td><code>object</code></td>
     <td>Output only. Configuration for a Google Cloud resource. (id: GCPBackupPlanInfo)</td>
@@ -306,7 +317,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Backup resource instance state.</td>
+    <td>Output only. The Backup resource instance state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ERROR, UPLOADING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -344,7 +355,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Backups in a given project and location.</td>
 </tr>
 <tr>
@@ -477,6 +488,7 @@ diskBackupProperties,
 enforcedRetentionEndTime,
 etag,
 expireTime,
+filestoreInstanceBackupProperties,
 gcpBackupPlanInfo,
 gcpResource,
 kmsKeyVersions,
@@ -518,6 +530,7 @@ diskBackupProperties,
 enforcedRetentionEndTime,
 etag,
 expireTime,
+filestoreInstanceBackupProperties,
 gcpBackupPlanInfo,
 gcpResource,
 kmsKeyVersions,
@@ -533,11 +546,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupVaultsId = '{{ backupVaultsId }}' -- required
 AND dataSourcesId = '{{ dataSourcesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -559,11 +572,11 @@ Updates the settings of a Backup.
 ```sql
 UPDATE google.backupdr.backups
 SET 
+data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
 data__enforcedRetentionEndTime = '{{ enforcedRetentionEndTime }}',
-data__expireTime = '{{ expireTime }}',
-data__etag = '{{ etag }}',
-data__backupApplianceLocks = '{{ backupApplianceLocks }}'
+data__backupApplianceLocks = '{{ backupApplianceLocks }}',
+data__expireTime = '{{ expireTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -631,11 +644,11 @@ EXEC google.backupdr.backups.restore
 @@json=
 '{
 "requestId": "{{ requestId }}", 
+"computeInstanceRestoreProperties": "{{ computeInstanceRestoreProperties }}", 
 "computeInstanceTargetEnvironment": "{{ computeInstanceTargetEnvironment }}", 
 "diskTargetEnvironment": "{{ diskTargetEnvironment }}", 
-"regionDiskTargetEnvironment": "{{ regionDiskTargetEnvironment }}", 
-"computeInstanceRestoreProperties": "{{ computeInstanceRestoreProperties }}", 
 "diskRestoreProperties": "{{ diskRestoreProperties }}", 
+"regionDiskTargetEnvironment": "{{ regionDiskTargetEnvironment }}", 
 "clearOverridesFieldMask": "{{ clearOverridesFieldMask }}"
 }'
 ;

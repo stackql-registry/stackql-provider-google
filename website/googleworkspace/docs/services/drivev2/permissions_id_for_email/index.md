@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>permissions_id_for_email</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>permissions_id_for_email</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="permissions_id_for_email" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.permissions_id_for_email" /></td></tr>
 </tbody></table>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>lb_traffic_extensions</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>lb_traffic_extensions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="lb_traffic_extensions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkservices.lb_traffic_extensions" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="loadBalancingScheme" /></td>
     <td><code>string</code></td>
-    <td>Required. All backend services and forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more information, refer to [Backend services overview](https://cloud.google.com/load-balancing/docs/backend-service).</td>
+    <td>Required. All backend services and forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more information, refer to [Backend services overview](https://cloud.google.com/load-balancing/docs/backend-service). (LOAD_BALANCING_SCHEME_UNSPECIFIED, INTERNAL_MANAGED, EXTERNAL_MANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -108,6 +109,51 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Required. Identifier. Name of the `LbTrafficExtension` resource in the following format: `projects/&#123;project&#125;/locations/&#123;location&#125;/lbTrafficExtensions/&#123;lb_traffic_extension&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A human-readable description of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="extensionChains" /></td>
+    <td><code>array</code></td>
+    <td>Required. A set of ordered extension chains that contain the match conditions and extensions to execute. Match conditions for each extension chain are evaluated in sequence for a given request. The first extension chain that has a condition that matches the request is executed. Any subsequent extension chains do not execute. Limited to 5 extension chains per resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="forwardingRules" /></td>
+    <td><code>array</code></td>
+    <td>Optional. A list of references to the forwarding rules to which this service extension is attached. At least one forwarding rule is required. Only one `LbTrafficExtension` resource can be associated with a forwarding rule.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Set of labels associated with the `LbTrafficExtension` resource. The format must comply with [the requirements for labels](https://cloud.google.com/compute/docs/labeling-resources#requirements) for Google Cloud resources.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="loadBalancingScheme" /></td>
+    <td><code>string</code></td>
+    <td>Required. All backend services and forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more information, refer to [Backend services overview](https://cloud.google.com/load-balancing/docs/backend-service). (LOAD_BALANCING_SCHEME_UNSPECIFIED, INTERNAL_MANAGED, EXTERNAL_MANAGED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The metadata provided here is included as part of the `metadata_context` (of type `google.protobuf.Struct`) in the `ProcessingRequest` message sent to the extension server. The metadata applies to all extensions in all extensions chains in this resource. The metadata is available under the key `com.google.lb_traffic_extension.`. The following variables are supported in the metadata: `&#123;forwarding_rule_id&#125;` - substituted with the forwarding rule's fully qualified resource name. This field must not be set if at least one of the extension chains contains plugin extensions. Setting it results in a validation error. You can set metadata at either the resource level or the extension level. The extension level metadata is recommended because you can pass a different set of metadata through each extension to the backend.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -139,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists `LbTrafficExtension` resources in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-lbTrafficExtensionId"><code>lbTrafficExtensionId</code></a></td>
+    <td><a href="#parameter-lbTrafficExtensionId"><code>lbTrafficExtensionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new `LbTrafficExtension` resource in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lbTrafficExtensionsId"><code>lbTrafficExtensionsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of the specified `LbTrafficExtension` resource.</td>
 </tr>
 <tr>
@@ -269,14 +315,22 @@ Lists `LbTrafficExtension` resources in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+extensionChains,
+forwardingRules,
+labels,
+loadBalancingScheme,
+metadata,
+updateTime
 FROM google.networkservices.lb_traffic_extensions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -298,30 +352,30 @@ Creates a new `LbTrafficExtension` resource in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.lb_traffic_extensions (
+data__name,
 data__description,
 data__labels,
-data__name,
 data__forwardingRules,
-data__metadata,
-data__loadBalancingScheme,
 data__extensionChains,
+data__loadBalancingScheme,
+data__metadata,
 projectsId,
 locationsId,
-requestId,
-lbTrafficExtensionId
+lbTrafficExtensionId,
+requestId
 )
 SELECT 
+'{{ name }}',
 '{{ description }}',
 '{{ labels }}',
-'{{ name }}',
 '{{ forwardingRules }}',
-'{{ metadata }}',
-'{{ loadBalancingScheme }}',
 '{{ extensionChains }}',
+'{{ loadBalancingScheme }}',
+'{{ metadata }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ lbTrafficExtensionId }}'
+'{{ lbTrafficExtensionId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -333,57 +387,55 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: lb_traffic_extensions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the lb_traffic_extensions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the lb_traffic_extensions resource.
-    - name: description
-      value: string
-      description: >
-        Optional. A human-readable description of the resource.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of labels associated with the `LbTrafficExtension` resource. The format must comply with [the requirements for labels](https://cloud.google.com/compute/docs/labeling-resources#requirements) for Google Cloud resources.
-        
     - name: name
-      value: string
-      description: >
-        Required. Identifier. Name of the `LbTrafficExtension` resource in the following format: `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_traffic_extension}`.
-        
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. Name of the \`LbTrafficExtension\` resource in the following format: \`projects/{project}/locations/{location}/lbTrafficExtensions/{lb_traffic_extension}\`.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A human-readable description of the resource.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of labels associated with the \`LbTrafficExtension\` resource. The format must comply with [the requirements for labels](https://cloud.google.com/compute/docs/labeling-resources#requirements) for Google Cloud resources.
     - name: forwardingRules
-      value: array
-      description: >
-        Optional. A list of references to the forwarding rules to which this service extension is attached. At least one forwarding rule is required. Only one `LbTrafficExtension` resource can be associated with a forwarding rule.
-        
-    - name: metadata
-      value: object
-      description: >
-        Optional. The metadata provided here is included as part of the `metadata_context` (of type `google.protobuf.Struct`) in the `ProcessingRequest` message sent to the extension server. The metadata applies to all extensions in all extensions chains in this resource. The metadata is available under the key `com.google.lb_traffic_extension.`. The following variables are supported in the metadata: `{forwarding_rule_id}` - substituted with the forwarding rule's fully qualified resource name. This field must not be set if at least one of the extension chains contains plugin extensions. Setting it results in a validation error. You can set metadata at either the resource level or the extension level. The extension level metadata is recommended because you can pass a different set of metadata through each extension to the backend.
-        
-    - name: loadBalancingScheme
-      value: string
-      description: >
-        Required. All backend services and forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more information, refer to [Backend services overview](https://cloud.google.com/load-balancing/docs/backend-service).
-        
-      valid_values: ['LOAD_BALANCING_SCHEME_UNSPECIFIED', 'INTERNAL_MANAGED', 'EXTERNAL_MANAGED']
+      value:
+        - "{{ forwardingRules }}"
+      description: |
+        Optional. A list of references to the forwarding rules to which this service extension is attached. At least one forwarding rule is required. Only one \`LbTrafficExtension\` resource can be associated with a forwarding rule.
     - name: extensionChains
-      value: array
-      description: >
+      description: |
         Required. A set of ordered extension chains that contain the match conditions and extensions to execute. Match conditions for each extension chain are evaluated in sequence for a given request. The first extension chain that has a condition that matches the request is executed. Any subsequent extension chains do not execute. Limited to 5 extension chains per resource.
-        
-    - name: requestId
-      value: string
+      value:
+        - name: "{{ name }}"
+          matchCondition:
+            celExpression: "{{ celExpression }}"
+          extensions: "{{ extensions }}"
+    - name: loadBalancingScheme
+      value: "{{ loadBalancingScheme }}"
+      description: |
+        Required. All backend services and forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: \`INTERNAL_MANAGED\` and \`EXTERNAL_MANAGED\`. For more information, refer to [Backend services overview](https://cloud.google.com/load-balancing/docs/backend-service).
+      valid_values: ['LOAD_BALANCING_SCHEME_UNSPECIFIED', 'INTERNAL_MANAGED', 'EXTERNAL_MANAGED']
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. The metadata provided here is included as part of the \`metadata_context\` (of type \`google.protobuf.Struct\`) in the \`ProcessingRequest\` message sent to the extension server. The metadata applies to all extensions in all extensions chains in this resource. The metadata is available under the key \`com.google.lb_traffic_extension.\`. The following variables are supported in the metadata: \`{forwarding_rule_id}\` - substituted with the forwarding rule's fully qualified resource name. This field must not be set if at least one of the extension chains contains plugin extensions. Setting it results in a validation error. You can set metadata at either the resource level or the extension level. The extension level metadata is recommended because you can pass a different set of metadata through each extension to the backend.
     - name: lbTrafficExtensionId
-      value: string
-```
+      value: "{{ lbTrafficExtensionId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -403,19 +455,19 @@ Updates the parameters of the specified `LbTrafficExtension` resource.
 ```sql
 UPDATE google.networkservices.lb_traffic_extensions
 SET 
+data__name = '{{ name }}',
 data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}',
 data__forwardingRules = '{{ forwardingRules }}',
-data__metadata = '{{ metadata }}',
+data__extensionChains = '{{ extensionChains }}',
 data__loadBalancingScheme = '{{ loadBalancingScheme }}',
-data__extensionChains = '{{ extensionChains }}'
+data__metadata = '{{ metadata }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND lbTrafficExtensionsId = '{{ lbTrafficExtensionsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

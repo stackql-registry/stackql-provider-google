@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tools</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.tools" /></td></tr>
 </tbody></table>
@@ -52,37 +53,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the Tool. Format: `projects//locations//agents//tools/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="dataStoreSpec" /></td>
     <td><code>object</code></td>
-    <td>Data store search tool specification. (id: GoogleCloudDialogflowCxV3ToolDataStoreTool)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ToolDataStoreTool)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Required. High level description of the Tool and its usage.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the Tool, unique within an agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="functionSpec" /></td>
     <td><code>object</code></td>
-    <td>Client side executed function specification. (id: GoogleCloudDialogflowCxV3ToolFunctionTool)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ToolFunctionTool)</td>
 </tr>
 <tr>
     <td><CopyableCode code="openApiSpec" /></td>
     <td><code>object</code></td>
-    <td>OpenAPI specification of the Tool. (id: GoogleCloudDialogflowCxV3ToolOpenApiTool)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ToolOpenApiTool)</td>
 </tr>
 <tr>
     <td><CopyableCode code="toolType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The tool type.</td>
+    <td> (TOOL_TYPE_UNSPECIFIED, CUSTOMIZED_TOOL, BUILTIN_TOOL)</td>
 </tr>
 </tbody>
 </table>
@@ -101,37 +102,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the Tool. Format: `projects//locations//agents//tools/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="dataStoreSpec" /></td>
     <td><code>object</code></td>
-    <td>Data store search tool specification. (id: GoogleCloudDialogflowCxV3ToolDataStoreTool)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ToolDataStoreTool)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Required. High level description of the Tool and its usage.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the Tool, unique within an agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="functionSpec" /></td>
     <td><code>object</code></td>
-    <td>Client side executed function specification. (id: GoogleCloudDialogflowCxV3ToolFunctionTool)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ToolFunctionTool)</td>
 </tr>
 <tr>
     <td><CopyableCode code="openApiSpec" /></td>
     <td><code>object</code></td>
-    <td>OpenAPI specification of the Tool. (id: GoogleCloudDialogflowCxV3ToolOpenApiTool)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ToolOpenApiTool)</td>
 </tr>
 <tr>
     <td><CopyableCode code="toolType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The tool type.</td>
+    <td> (TOOL_TYPE_UNSPECIFIED, CUSTOMIZED_TOOL, BUILTIN_TOOL)</td>
 </tr>
 </tbody>
 </table>
@@ -158,35 +159,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-toolsId"><code>toolsId</code></a></td>
     <td></td>
-    <td>Retrieves the specified Tool.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_tools_list"><CopyableCode code="projects_locations_agents_tools_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns a list of Tools in the specified agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_tools_create"><CopyableCode code="projects_locations_agents_tools_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Creates a Tool in the specified agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_tools_patch"><CopyableCode code="projects_locations_agents_tools_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-toolsId"><code>toolsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Update the specified Tool.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_tools_delete"><CopyableCode code="projects_locations_agents_tools_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-toolsId"><code>toolsId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
-    <td>Deletes a specified Tool.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -258,7 +259,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_tools_get">
 
-Retrieves the specified Tool.
+Successful response
 
 ```sql
 SELECT
@@ -279,7 +280,7 @@ AND toolsId = '{{ toolsId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_tools_list">
 
-Returns a list of Tools in the specified agent.
+Successful response
 
 ```sql
 SELECT
@@ -313,27 +314,27 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_agents_tools_create">
 
-Creates a Tool in the specified agent.
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.tools (
-data__name,
 data__displayName,
-data__description,
-data__openApiSpec,
-data__dataStoreSpec,
 data__functionSpec,
+data__openApiSpec,
+data__name,
+data__description,
+data__dataStoreSpec,
 projectsId,
 locationsId,
 agentsId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
-'{{ description }}',
-'{{ openApiSpec }}',
-'{{ dataStoreSpec }}',
 '{{ functionSpec }}',
+'{{ openApiSpec }}',
+'{{ name }}',
+'{{ description }}',
+'{{ dataStoreSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}'
@@ -350,50 +351,67 @@ toolType
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tools
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tools resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tools resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the tools resource.
-    - name: name
-      value: string
-      description: >
-        The unique identifier of the Tool. Format: `projects//locations//agents//tools/`.
-        
     - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the Tool, unique within an agent.
-        
-    - name: description
-      value: string
-      description: >
-        Required. High level description of the Tool and its usage.
-        
-    - name: openApiSpec
-      value: object
-      description: >
-        OpenAPI specification of the Tool.
-        
-    - name: dataStoreSpec
-      value: object
-      description: >
-        Data store search tool specification.
-        
+      value: "{{ displayName }}"
     - name: functionSpec
-      value: object
-      description: >
-        Client side executed function specification.
-        
-```
+      value:
+        inputSchema: "{{ inputSchema }}"
+        outputSchema: "{{ outputSchema }}"
+    - name: openApiSpec
+      value:
+        authentication:
+          bearerTokenConfig:
+            secretVersionForToken: "{{ secretVersionForToken }}"
+            token: "{{ token }}"
+          serviceAccountAuthConfig:
+            serviceAccount: "{{ serviceAccount }}"
+          apiKeyConfig:
+            keyName: "{{ keyName }}"
+            apiKey: "{{ apiKey }}"
+            secretVersionForApiKey: "{{ secretVersionForApiKey }}"
+            requestLocation: "{{ requestLocation }}"
+          serviceAgentAuthConfig:
+            serviceAgentAuth: "{{ serviceAgentAuth }}"
+          oauthConfig:
+            secretVersionForClientSecret: "{{ secretVersionForClientSecret }}"
+            oauthGrantType: "{{ oauthGrantType }}"
+            scopes:
+              - "{{ scopes }}"
+            clientSecret: "{{ clientSecret }}"
+            clientId: "{{ clientId }}"
+            tokenEndpoint: "{{ tokenEndpoint }}"
+        textSchema: "{{ textSchema }}"
+        tlsConfig:
+          caCerts:
+            - displayName: "{{ displayName }}"
+              cert: "{{ cert }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+    - name: name
+      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
+    - name: dataStoreSpec
+      value:
+        dataStoreConnections:
+          - dataStore: "{{ dataStore }}"
+            documentProcessingMode: "{{ documentProcessingMode }}"
+            dataStoreType: "{{ dataStoreType }}"
+        fallbackPrompt: "{{ fallbackPrompt }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -408,17 +426,17 @@ toolType
 >
 <TabItem value="projects_locations_agents_tools_patch">
 
-Update the specified Tool.
+No description available.
 
 ```sql
 UPDATE google.dialogflow.tools
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
+data__functionSpec = '{{ functionSpec }}',
 data__openApiSpec = '{{ openApiSpec }}',
-data__dataStoreSpec = '{{ dataStoreSpec }}',
-data__functionSpec = '{{ functionSpec }}'
+data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__dataStoreSpec = '{{ dataStoreSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -448,7 +466,7 @@ toolType;
 >
 <TabItem value="projects_locations_agents_tools_delete">
 
-Deletes a specified Tool.
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.tools

@@ -224,6 +224,11 @@ export function generateStackQLResources(provider, openapiDoc, service, debug) {
                   }
               };
 
+              // NOTE: do not blanket-apply config.requestBodyTranslate (algorithm: naive)
+              // to mutation methods - it breaks operations whose required params are
+              // query parameters (e.g. storage.buckets.insert 'project'), verified by
+              // the smoke test. The published provider has no such config.
+
               objectKey ? methodEntry.response.objectKey = objectKey : null;
 
               // if (objectKey) {
@@ -339,6 +344,9 @@ export function populateSecuritySchemes(authObj) {
 export function replaceSchemaRefs(obj) {
     for (const key in obj) {
       if (typeof obj[key] === 'object') {
+        // NOTE: do not hoist $ref out of additionalProperties for map-typed 'items'
+        // properties (aggregated list responses) - the map wrapper is required for
+        // objectKey paths like $.items[*].instances[*] to resolve (see smoke test)
         replaceSchemaRefs(obj[key]);
       } else if (Array.isArray(obj[key])) {
         for (const item of obj[key]) {

@@ -18,7 +18,7 @@ discoveryengine service documentation.
 
 :::info[Service Summary]
 
-total resources: __41__  
+total resources: __48__  
 
 :::
 
@@ -28,6 +28,7 @@ total resources: __41__
 <a href="/services/discoveryengine/acl_config/">acl_config</a><br />
 <a href="/services/discoveryengine/answers/">answers</a><br />
 <a href="/services/discoveryengine/assistants/">assistants</a><br />
+<a href="/services/discoveryengine/billing_account_license_configs/">billing_account_license_configs</a><br />
 <a href="/services/discoveryengine/branches_documents_metadata/">branches_documents_metadata</a><br />
 <a href="/services/discoveryengine/cmek_config/">cmek_config</a><br />
 <a href="/services/discoveryengine/cmek_configs/">cmek_configs</a><br />
@@ -38,11 +39,13 @@ total resources: __41__
 <a href="/services/discoveryengine/controls/">controls</a><br />
 <a href="/services/discoveryengine/conversations/">conversations</a><br />
 <a href="/services/discoveryengine/custom_models/">custom_models</a><br />
+<a href="/services/discoveryengine/data_connector/">data_connector</a><br />
 <a href="/services/discoveryengine/data_store_operations/">data_store_operations</a><br />
 <a href="/services/discoveryengine/data_stores/">data_stores</a><br />
 <a href="/services/discoveryengine/data_stores_site_search_engine/">data_stores_site_search_engine</a><br />
 <a href="/services/discoveryengine/documents/">documents</a><br />
 <a href="/services/discoveryengine/engines/">engines</a><br />
+<a href="/services/discoveryengine/engines_iam_policies/">engines_iam_policies</a><br />
 <a href="/services/discoveryengine/grounding_configs/">grounding_configs</a><br />
 <a href="/services/discoveryengine/identity_mapping_stores/">identity_mapping_stores</a><br />
 <a href="/services/discoveryengine/identity_mapping_stores_identity_mappings/">identity_mapping_stores_identity_mappings</a>
@@ -51,8 +54,10 @@ total resources: __41__
 <a href="/services/discoveryengine/license_configs/">license_configs</a><br />
 <a href="/services/discoveryengine/license_configs_usage_stats/">license_configs_usage_stats</a><br />
 <a href="/services/discoveryengine/locations/">locations</a><br />
+<a href="/services/discoveryengine/message/">message</a><br />
 <a href="/services/discoveryengine/operations/">operations</a><br />
 <a href="/services/discoveryengine/projects/">projects</a><br />
+<a href="/services/discoveryengine/push_notification_configs/">push_notification_configs</a><br />
 <a href="/services/discoveryengine/ranking_configs/">ranking_configs</a><br />
 <a href="/services/discoveryengine/schemas/">schemas</a><br />
 <a href="/services/discoveryengine/search_engine_operations/">search_engine_operations</a><br />
@@ -64,9 +69,11 @@ total resources: __41__
 <a href="/services/discoveryengine/suggestion_deny_list_entries/">suggestion_deny_list_entries</a><br />
 <a href="/services/discoveryengine/target_site_operations/">target_site_operations</a><br />
 <a href="/services/discoveryengine/target_sites/">target_sites</a><br />
+<a href="/services/discoveryengine/tasks/">tasks</a><br />
 <a href="/services/discoveryengine/user_events/">user_events</a><br />
 <a href="/services/discoveryengine/user_licenses/">user_licenses</a><br />
 <a href="/services/discoveryengine/user_stores/">user_stores</a><br />
+<a href="/services/discoveryengine/v1_card/">v1_card</a><br />
 <a href="/services/discoveryengine/widget_configs/">widget_configs</a>
 </div>
 </div>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>db_system_shapes</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>db_system_shapes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="db_system_shapes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.db_system_shapes" /></td></tr>
 </tbody></table>
@@ -54,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. The name of the Database System Shape resource with the format: projects/&#123;project&#125;/locations/&#123;region&#125;/dbSystemShapes/&#123;db_system_shape&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="availableCoreCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Optional. Available core count.</td>
+</tr>
+<tr>
     <td><CopyableCode code="availableCoreCountPerNode" /></td>
     <td><code>integer (int32)</code></td>
     <td>Optional. Number of cores per node.</td>
@@ -67,6 +73,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="availableMemoryPerNodeGb" /></td>
     <td><code>integer (int32)</code></td>
     <td>Optional. Memory per database server node in gigabytes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="coreCountIncrement" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Optional. Core count increment.</td>
 </tr>
 <tr>
     <td><CopyableCode code="maxNodeCount" /></td>
@@ -102,6 +113,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="minStorageCount" /></td>
     <td><code>integer (int32)</code></td>
     <td>Optional. Minimum number of storage servers.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="minimumCoreCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Optional. Minimum core count per node.</td>
 </tr>
 <tr>
     <td><CopyableCode code="shape" /></td>
@@ -194,9 +210,11 @@ Lists the database system shapes available for the project and location.
 ```sql
 SELECT
 name,
+availableCoreCount,
 availableCoreCountPerNode,
 availableDataStorageTb,
 availableMemoryPerNodeGb,
+coreCountIncrement,
 maxNodeCount,
 maxStorageCount,
 minCoreCountPerNode,
@@ -204,6 +222,7 @@ minDbNodeStoragePerNodeGb,
 minMemoryPerNodeGb,
 minNodeCount,
 minStorageCount,
+minimumCoreCount,
 shape
 FROM google.oracledatabase.db_system_shapes
 WHERE projectsId = '{{ projectsId }}' -- required

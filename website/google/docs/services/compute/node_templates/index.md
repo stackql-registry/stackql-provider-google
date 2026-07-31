@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>node_templates</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>node_templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="node_templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.node_templates" /></td></tr>
 </tbody></table>
@@ -53,12 +54,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
+    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
 </tr>
 <tr>
     <td><CopyableCode code="accelerators" /></td>
@@ -68,12 +69,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cpuOvercommitType" /></td>
     <td><code>string</code></td>
-    <td>CPU overcommit.</td>
+    <td>CPU overcommit. (CPU_OVERCOMMIT_TYPE_UNSPECIFIED, ENABLED, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -88,7 +89,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The type of the resource. Always compute#nodeTemplate for node templates. (default: compute#nodeTemplate)</td>
+    <td>Output only. [Output Only] The type of the resource. Alwayscompute#nodeTemplate for node templates. (default: compute#nodeTemplate)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nodeAffinityLabels" /></td>
@@ -108,27 +109,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The name of the region where the node template resides, such as us-central1.</td>
+    <td>Output only. [Output Only] The name of the region where the node template resides, such as us-central1.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="serverBinding" /></td>
     <td><code>object</code></td>
-    <td>Sets the binding properties for the physical server. Valid values include: - *[Default]* RESTART_NODE_ON_ANY_SERVER: Restarts VMs on any available physical server - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same physical server whenever possible See Sole-tenant node options for more information. (id: ServerBinding)</td>
+    <td>Sets the binding properties for the physical server. Valid values include:        - *[Default]* RESTART_NODE_ON_ANY_SERVER:    Restarts VMs on any available    physical server    - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same    physical server whenever possible    See Sole-tenant node options for more information. (id: ServerBinding)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the node template. One of the following values: CREATING, READY, and DELETING.</td>
+    <td>Output only. [Output Only] The status of the node template. One of the following values:CREATING, READY, and DELETING. (CREATING, DELETING, INVALID, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] An optional, human-readable explanation of the status.</td>
+    <td>Output only. [Output Only] An optional, human-readable explanation of the status.</td>
 </tr>
 </tbody>
 </table>
@@ -157,17 +158,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource.Always compute#nodeTemplateList for lists of node templates. (default: compute#nodeTemplateList)</td>
+    <td>Output only. [Output Only] Type of resource.Always compute#nodeTemplateList for lists of node templates. (default: compute#nodeTemplateList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -191,12 +192,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
+    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
 </tr>
 <tr>
     <td><CopyableCode code="accelerators" /></td>
@@ -206,12 +207,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cpuOvercommitType" /></td>
     <td><code>string</code></td>
-    <td>CPU overcommit.</td>
+    <td>CPU overcommit. (CPU_OVERCOMMIT_TYPE_UNSPECIFIED, ENABLED, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -226,7 +227,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The type of the resource. Always compute#nodeTemplate for node templates. (default: compute#nodeTemplate)</td>
+    <td>Output only. [Output Only] The type of the resource. Alwayscompute#nodeTemplate for node templates. (default: compute#nodeTemplate)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nodeAffinityLabels" /></td>
@@ -246,27 +247,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The name of the region where the node template resides, such as us-central1.</td>
+    <td>Output only. [Output Only] The name of the region where the node template resides, such as us-central1.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="serverBinding" /></td>
     <td><code>object</code></td>
-    <td>Sets the binding properties for the physical server. Valid values include: - *[Default]* RESTART_NODE_ON_ANY_SERVER: Restarts VMs on any available physical server - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same physical server whenever possible See Sole-tenant node options for more information. (id: ServerBinding)</td>
+    <td>Sets the binding properties for the physical server. Valid values include:        - *[Default]* RESTART_NODE_ON_ANY_SERVER:    Restarts VMs on any available    physical server    - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same    physical server whenever possible    See Sole-tenant node options for more information. (id: ServerBinding)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the node template. One of the following values: CREATING, READY, and DELETING.</td>
+    <td>Output only. [Output Only] The status of the node template. One of the following values:CREATING, READY, and DELETING. (CREATING, DELETING, INVALID, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] An optional, human-readable explanation of the status.</td>
+    <td>Output only. [Output Only] An optional, human-readable explanation of the status.</td>
 </tr>
 </tbody>
 </table>
@@ -299,22 +300,22 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of node templates available to the specified project.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves a list of node templates available to the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves an aggregated list of node templates. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Retrieves an aggregated list of node templates.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a NodeTemplate resource in the specified project using the data included in the request.</td>
+    <td>Creates a NodeTemplate resource in the specified project using the data<br />included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -438,7 +439,7 @@ AND nodeTemplate = '{{ nodeTemplate }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of node templates available to the specified project.
+Retrieves a list of node templates available to the specified<br />project.
 
 ```sql
 SELECT
@@ -451,17 +452,17 @@ warning
 FROM google.compute.node_templates
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves an aggregated list of node templates. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves an aggregated list of node templates.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -483,13 +484,13 @@ status,
 statusMessage
 FROM google.compute.node_templates
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -507,47 +508,33 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates a NodeTemplate resource in the specified project using the data included in the request.
+Creates a NodeTemplate resource in the specified project using the data<br />included in the request.
 
 ```sql
 INSERT INTO google.compute.node_templates (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
 data__description,
-data__nodeType,
-data__nodeAffinityLabels,
-data__status,
-data__statusMessage,
-data__region,
-data__selfLink,
-data__nodeTypeFlexibility,
-data__serverBinding,
 data__disks,
-data__accelerators,
+data__nodeType,
+data__serverBinding,
+data__name,
+data__nodeAffinityLabels,
 data__cpuOvercommitType,
+data__nodeTypeFlexibility,
+data__accelerators,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
 '{{ description }}',
-'{{ nodeType }}',
-'{{ nodeAffinityLabels }}',
-'{{ status }}',
-'{{ statusMessage }}',
-'{{ region }}',
-'{{ selfLink }}',
-'{{ nodeTypeFlexibility }}',
-'{{ serverBinding }}',
 '{{ disks }}',
-'{{ accelerators }}',
+'{{ nodeType }}',
+'{{ serverBinding }}',
+'{{ name }}',
+'{{ nodeAffinityLabels }}',
 '{{ cpuOvercommitType }}',
+'{{ nodeTypeFlexibility }}',
+'{{ accelerators }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -559,6 +546,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -583,96 +571,76 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: node_templates
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the node_templates resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the node_templates resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] The type of the resource. Always compute#nodeTemplate for node templates.
-        
-      default: compute#nodeTemplate
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
     - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: nodeType
-      value: string
-      description: >
-        The node type to use for nodes group that are created from this template.
-        
-    - name: nodeAffinityLabels
-      value: object
-      description: >
-        Labels to use for node affinity, which will be used in instance scheduling.
-        
-    - name: status
-      value: string
-      description: >
-        [Output Only] The status of the node template. One of the following values: CREATING, READY, and DELETING.
-        
-      valid_values: ['CREATING', 'DELETING', 'INVALID', 'READY']
-    - name: statusMessage
-      value: string
-      description: >
-        [Output Only] An optional, human-readable explanation of the status.
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] The name of the region where the node template resides, such as us-central1.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: nodeTypeFlexibility
-      value: object
-      description: >
-        Do not use. Instead, use the node_type property.
-        
-    - name: serverBinding
-      value: object
-      description: >
-        Sets the binding properties for the physical server. Valid values include: - *[Default]* RESTART_NODE_ON_ANY_SERVER: Restarts VMs on any available physical server - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same physical server whenever possible See Sole-tenant node options for more information.
-        
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: disks
-      value: array
-    - name: accelerators
-      value: array
+      value:
+        - diskSizeGb: {{ diskSizeGb }}
+          diskCount: {{ diskCount }}
+          diskType: "{{ diskType }}"
+    - name: nodeType
+      value: "{{ nodeType }}"
+      description: |
+        The node type to use for nodes group that are created from this template.
+    - name: serverBinding
+      description: |
+        Sets the binding properties for the physical server. Valid values include:
+        - *[Default]* RESTART_NODE_ON_ANY_SERVER:
+        Restarts VMs on any available
+        physical server
+        - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same
+        physical server whenever possible
+        See Sole-tenant
+        node options for more information.
+      value:
+        type: "{{ type }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the resource, provided by the client when initially creating
+        the resource. The resource name must be 1-63 characters long, and comply
+        withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: nodeAffinityLabels
+      value: "{{ nodeAffinityLabels }}"
+      description: |
+        Labels to use for node affinity, which will be used in instance scheduling.
     - name: cpuOvercommitType
-      value: string
-      description: >
+      value: "{{ cpuOvercommitType }}"
+      description: |
         CPU overcommit.
-        
       valid_values: ['CPU_OVERCOMMIT_TYPE_UNSPECIFIED', 'ENABLED', 'NONE']
+    - name: nodeTypeFlexibility
+      description: |
+        Do not use. Instead, use the node_type property.
+      value:
+        cpus: "{{ cpus }}"
+        memory: "{{ memory }}"
+        localSsd: "{{ localSsd }}"
+    - name: accelerators
+      value:
+        - acceleratorType: "{{ acceleratorType }}"
+          acceleratorCount: {{ acceleratorCount }}
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

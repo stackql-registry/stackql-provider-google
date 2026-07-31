@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>insights</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>insights</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="insights" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.workloadmanager.insights" /></td></tr>
 </tbody></table>
@@ -144,9 +145,9 @@ EXEC google.workloadmanager.insights.write_insight
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"insight": "{{ insight }}", 
 "requestId": "{{ requestId }}", 
-"agentVersion": "{{ agentVersion }}", 
-"insight": "{{ insight }}"
+"agentVersion": "{{ agentVersion }}"
 }'
 ;
 ```

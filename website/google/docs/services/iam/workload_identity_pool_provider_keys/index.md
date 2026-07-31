@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workload_identity_pool_provider
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workload_identity_pool_provider_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workload_identity_pool_provider_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.workload_identity_pool_provider_keys" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the key.</td>
+    <td>Identifier. The resource name of the key.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
@@ -67,12 +68,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the key.</td>
+    <td>Output only. The state of the key. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="use" /></td>
     <td><code>string</code></td>
-    <td>Required. The purpose of the key.</td>
+    <td>Required. The purpose of the key. (KEY_USE_UNSPECIFIED, ENCRYPTION)</td>
 </tr>
 </tbody>
 </table>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the key.</td>
+    <td>Identifier. The resource name of the key.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
@@ -106,12 +107,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the key.</td>
+    <td>Output only. The state of the key. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="use" /></td>
     <td><code>string</code></td>
-    <td>Required. The purpose of the key.</td>
+    <td>Required. The purpose of the key. (KEY_USE_UNSPECIFIED, ENCRYPTION)</td>
 </tr>
 </tbody>
 </table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all non-deleted WorkloadIdentityPoolProviderKeys in a project. If show_deleted is set to `true`, then deleted pools are also listed.</td>
 </tr>
 <tr>
@@ -277,9 +278,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' -- required
 AND providersId = '{{ providersId }}' -- required
+AND showDeleted = '{{ showDeleted }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -302,6 +303,7 @@ Create a new WorkloadIdentityPoolProviderKey in a WorkloadIdentityPoolProvider.
 ```sql
 INSERT INTO google.iam.workload_identity_pool_provider_keys (
 data__keyData,
+data__name,
 data__use,
 projectsId,
 locationsId,
@@ -311,6 +313,7 @@ workloadIdentityPoolProviderKeyId
 )
 SELECT 
 '{{ keyData }}',
+'{{ name }}',
 '{{ use }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -328,36 +331,43 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workload_identity_pool_provider_keys
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the workload_identity_pool_provider_keys resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workload_identity_pool_provider_keys resource.
     - name: workloadIdentityPoolsId
-      value: string
+      value: "{{ workloadIdentityPoolsId }}"
       description: Required parameter for the workload_identity_pool_provider_keys resource.
     - name: providersId
-      value: string
+      value: "{{ providersId }}"
       description: Required parameter for the workload_identity_pool_provider_keys resource.
     - name: keyData
-      value: object
-      description: >
+      description: |
         Immutable. Public half of the asymmetric key.
-        
+      value:
+        format: "{{ format }}"
+        key: "{{ key }}"
+        keySpec: "{{ keySpec }}"
+        notBeforeTime: "{{ notBeforeTime }}"
+        notAfterTime: "{{ notAfterTime }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the key.
     - name: use
-      value: string
-      description: >
+      value: "{{ use }}"
+      description: |
         Required. The purpose of the key.
-        
       valid_values: ['KEY_USE_UNSPECIFIED', 'ENCRYPTION']
     - name: workloadIdentityPoolProviderKeyId
-      value: string
-```
+      value: "{{ workloadIdentityPoolProviderKeyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

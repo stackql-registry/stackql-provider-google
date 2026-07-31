@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>partitions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>partitions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="partitions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.partitions" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_zones_entities_partitions_list"><CopyableCode code="projects_locations_lakes_zones_entities_partitions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-zonesId"><code>zonesId</code></a>, <a href="#parameter-entitiesId"><code>entitiesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List metadata partitions of an entity.</td>
 </tr>
 <tr>
@@ -270,9 +271,9 @@ AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
 AND zonesId = '{{ zonesId }}' -- required
 AND entitiesId = '{{ entitiesId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -294,9 +295,9 @@ Create a metadata partition.
 
 ```sql
 INSERT INTO google.dataplex.partitions (
-data__values,
 data__location,
 data__etag,
+data__values,
 projectsId,
 locationsId,
 lakesId,
@@ -305,9 +306,9 @@ entitiesId,
 validateOnly
 )
 SELECT 
-'{{ values }}',
 '{{ location }}',
 '{{ etag }}',
+'{{ values }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakesId }}',
@@ -324,43 +325,41 @@ values
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: partitions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the partitions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the partitions resource.
     - name: lakesId
-      value: string
+      value: "{{ lakesId }}"
       description: Required parameter for the partitions resource.
     - name: zonesId
-      value: string
+      value: "{{ zonesId }}"
       description: Required parameter for the partitions resource.
     - name: entitiesId
-      value: string
+      value: "{{ entitiesId }}"
       description: Required parameter for the partitions resource.
-    - name: values
-      value: array
-      description: >
-        Required. Immutable. The set of values representing the partition, which correspond to the partition schema defined in the parent entity.
-        
     - name: location
-      value: string
-      description: >
+      value: "{{ location }}"
+      description: |
         Required. Immutable. The location of the entity data within the partition, for example, gs://bucket/path/to/entity/key1=value1/key2=value2. Or projects//datasets//tables/
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Optional. The etag for this partition.
-        
+    - name: values
+      value:
+        - "{{ values }}"
+      description: |
+        Required. Immutable. The set of values representing the partition, which correspond to the partition schema defined in the parent entity.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

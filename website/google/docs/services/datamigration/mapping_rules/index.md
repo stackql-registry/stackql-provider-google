@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>mapping_rules</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>mapping_rules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="mapping_rules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datamigration.mapping_rules" /></td></tr>
 </tbody></table>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ruleScope" /></td>
     <td><code>string</code></td>
-    <td>Required. The rule scope</td>
+    <td>Required. The rule scope (DATABASE_ENTITY_TYPE_UNSPECIFIED, DATABASE_ENTITY_TYPE_SCHEMA, DATABASE_ENTITY_TYPE_TABLE, DATABASE_ENTITY_TYPE_COLUMN, DATABASE_ENTITY_TYPE_CONSTRAINT, DATABASE_ENTITY_TYPE_INDEX, DATABASE_ENTITY_TYPE_TRIGGER, DATABASE_ENTITY_TYPE_VIEW, DATABASE_ENTITY_TYPE_SEQUENCE, DATABASE_ENTITY_TYPE_STORED_PROCEDURE, DATABASE_ENTITY_TYPE_FUNCTION, DATABASE_ENTITY_TYPE_SYNONYM, DATABASE_ENTITY_TYPE_DATABASE_PACKAGE, DATABASE_ENTITY_TYPE_UDT, DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW, DATABASE_ENTITY_TYPE_DATABASE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="setTablePrimaryKey" /></td>
@@ -142,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Optional. The mapping rule state</td>
+    <td>Optional. The mapping rule state (STATE_UNSPECIFIED, ENABLED, DISABLED, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -221,7 +222,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ruleScope" /></td>
     <td><code>string</code></td>
-    <td>Required. The rule scope</td>
+    <td>Required. The rule scope (DATABASE_ENTITY_TYPE_UNSPECIFIED, DATABASE_ENTITY_TYPE_SCHEMA, DATABASE_ENTITY_TYPE_TABLE, DATABASE_ENTITY_TYPE_COLUMN, DATABASE_ENTITY_TYPE_CONSTRAINT, DATABASE_ENTITY_TYPE_INDEX, DATABASE_ENTITY_TYPE_TRIGGER, DATABASE_ENTITY_TYPE_VIEW, DATABASE_ENTITY_TYPE_SEQUENCE, DATABASE_ENTITY_TYPE_STORED_PROCEDURE, DATABASE_ENTITY_TYPE_FUNCTION, DATABASE_ENTITY_TYPE_SYNONYM, DATABASE_ENTITY_TYPE_DATABASE_PACKAGE, DATABASE_ENTITY_TYPE_UDT, DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW, DATABASE_ENTITY_TYPE_DATABASE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="setTablePrimaryKey" /></td>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Optional. The mapping rule state</td>
+    <td>Optional. The mapping rule state (STATE_UNSPECIFIED, ENABLED, DISABLED, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -291,7 +292,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversionWorkspacesId"><code>conversionWorkspacesId</code></a></td>
-    <td><a href="#parameter-mappingRuleId"><code>mappingRuleId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-mappingRuleId"><code>mappingRuleId</code></a></td>
     <td>Creates a new mapping rule for a given conversion workspace.</td>
 </tr>
 <tr>
@@ -461,52 +462,52 @@ Creates a new mapping rule for a given conversion workspace.
 
 ```sql
 INSERT INTO google.datamigration.mapping_rules (
-data__name,
-data__displayName,
-data__state,
 data__ruleScope,
+data__multiEntityRename,
+data__conditionalColumnSetValue,
+data__name,
+data__singlePackageChange,
+data__sourceSqlChange,
+data__setTablePrimaryKey,
+data__state,
+data__entityMove,
+data__filterTableColumns,
+data__displayName,
+data__multiColumnDataTypeChange,
+data__convertRowidColumn,
+data__singleColumnChange,
 data__filter,
 data__ruleOrder,
 data__singleEntityRename,
-data__multiEntityRename,
-data__entityMove,
-data__singleColumnChange,
-data__multiColumnDataTypeChange,
-data__conditionalColumnSetValue,
-data__convertRowidColumn,
-data__setTablePrimaryKey,
-data__singlePackageChange,
-data__sourceSqlChange,
-data__filterTableColumns,
 projectsId,
 locationsId,
 conversionWorkspacesId,
-mappingRuleId,
-requestId
+requestId,
+mappingRuleId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ state }}',
 '{{ ruleScope }}',
+'{{ multiEntityRename }}',
+'{{ conditionalColumnSetValue }}',
+'{{ name }}',
+'{{ singlePackageChange }}',
+'{{ sourceSqlChange }}',
+'{{ setTablePrimaryKey }}',
+'{{ state }}',
+'{{ entityMove }}',
+'{{ filterTableColumns }}',
+'{{ displayName }}',
+'{{ multiColumnDataTypeChange }}',
+'{{ convertRowidColumn }}',
+'{{ singleColumnChange }}',
 '{{ filter }}',
 '{{ ruleOrder }}',
 '{{ singleEntityRename }}',
-'{{ multiEntityRename }}',
-'{{ entityMove }}',
-'{{ singleColumnChange }}',
-'{{ multiColumnDataTypeChange }}',
-'{{ conditionalColumnSetValue }}',
-'{{ convertRowidColumn }}',
-'{{ setTablePrimaryKey }}',
-'{{ singlePackageChange }}',
-'{{ sourceSqlChange }}',
-'{{ filterTableColumns }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ conversionWorkspacesId }}',
-'{{ mappingRuleId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ mappingRuleId }}'
 RETURNING
 name,
 conditionalColumnSetValue,
@@ -532,111 +533,179 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: mapping_rules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the mapping_rules resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the mapping_rules resource.
     - name: conversionWorkspacesId
-      value: string
+      value: "{{ conversionWorkspacesId }}"
       description: Required parameter for the mapping_rules resource.
-    - name: name
-      value: string
-      description: >
-        Full name of the mapping rule resource, in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{set}/mappingRule/{rule}.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. A human readable name
-        
-    - name: state
-      value: string
-      description: >
-        Optional. The mapping rule state
-        
-      valid_values: ['STATE_UNSPECIFIED', 'ENABLED', 'DISABLED', 'DELETED']
     - name: ruleScope
-      value: string
-      description: >
+      value: "{{ ruleScope }}"
+      description: |
         Required. The rule scope
-        
       valid_values: ['DATABASE_ENTITY_TYPE_UNSPECIFIED', 'DATABASE_ENTITY_TYPE_SCHEMA', 'DATABASE_ENTITY_TYPE_TABLE', 'DATABASE_ENTITY_TYPE_COLUMN', 'DATABASE_ENTITY_TYPE_CONSTRAINT', 'DATABASE_ENTITY_TYPE_INDEX', 'DATABASE_ENTITY_TYPE_TRIGGER', 'DATABASE_ENTITY_TYPE_VIEW', 'DATABASE_ENTITY_TYPE_SEQUENCE', 'DATABASE_ENTITY_TYPE_STORED_PROCEDURE', 'DATABASE_ENTITY_TYPE_FUNCTION', 'DATABASE_ENTITY_TYPE_SYNONYM', 'DATABASE_ENTITY_TYPE_DATABASE_PACKAGE', 'DATABASE_ENTITY_TYPE_UDT', 'DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW', 'DATABASE_ENTITY_TYPE_DATABASE']
-    - name: filter
-      value: object
-      description: >
-        Required. The rule filter
-        
-    - name: ruleOrder
-      value: string
-      description: >
-        Required. The order in which the rule is applied. Lower order rules are applied before higher value rules so they may end up being overridden.
-        
-    - name: singleEntityRename
-      value: object
-      description: >
-        Optional. Rule to specify how a single entity should be renamed.
-        
     - name: multiEntityRename
-      value: object
-      description: >
+      description: |
         Optional. Rule to specify how multiple entities should be renamed.
-        
-    - name: entityMove
-      value: object
-      description: >
-        Optional. Rule to specify how multiple entities should be relocated into a different schema.
-        
-    - name: singleColumnChange
-      value: object
-      description: >
-        Optional. Rule to specify how a single column is converted.
-        
-    - name: multiColumnDataTypeChange
-      value: object
-      description: >
-        Optional. Rule to specify how multiple columns should be converted to a different data type.
-        
+      value:
+        newNamePattern: "{{ newNamePattern }}"
+        sourceNameTransformation: "{{ sourceNameTransformation }}"
     - name: conditionalColumnSetValue
-      value: object
-      description: >
+      description: |
         Optional. Rule to specify how the data contained in a column should be transformed (such as trimmed, rounded, etc) provided that the data meets certain criteria.
-        
-    - name: convertRowidColumn
-      value: object
-      description: >
-        Optional. Rule to specify how multiple tables should be converted with an additional rowid column.
-        
-    - name: setTablePrimaryKey
-      value: object
-      description: >
-        Optional. Rule to specify the primary key for a table
-        
+      value:
+        sourceTextFilter:
+          sourceMinLengthFilter: "{{ sourceMinLengthFilter }}"
+          sourceMaxLengthFilter: "{{ sourceMaxLengthFilter }}"
+        customFeatures: "{{ customFeatures }}"
+        sourceNumericFilter:
+          numericFilterOption: "{{ numericFilterOption }}"
+          sourceMinScaleFilter: {{ sourceMinScaleFilter }}
+          sourceMinPrecisionFilter: {{ sourceMinPrecisionFilter }}
+          sourceMaxPrecisionFilter: {{ sourceMaxPrecisionFilter }}
+          sourceMaxScaleFilter: {{ sourceMaxScaleFilter }}
+        valueTransformation:
+          intComparison:
+            valueComparison: "{{ valueComparison }}"
+            value: "{{ value }}"
+          roundScale:
+            scale: {{ scale }}
+          doubleComparison:
+            valueComparison: "{{ valueComparison }}"
+            value: {{ value }}
+          assignMinValue: "{{ assignMinValue }}"
+          assignSpecificValue:
+            value: "{{ value }}"
+          assignNull: "{{ assignNull }}"
+          valueList:
+            ignoreCase: {{ ignoreCase }}
+            valuePresentList: "{{ valuePresentList }}"
+            values:
+              - "{{ values }}"
+          isNull: "{{ isNull }}"
+          assignMaxValue: "{{ assignMaxValue }}"
+          applyHash:
+            uuidFromBytes: "{{ uuidFromBytes }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Full name of the mapping rule resource, in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{set}/mappingRule/{rule}.
     - name: singlePackageChange
-      value: object
-      description: >
+      description: |
         Optional. Rule to specify how a single package is converted.
-        
+      value:
+        packageDescription: "{{ packageDescription }}"
+        packageBody: "{{ packageBody }}"
     - name: sourceSqlChange
-      value: object
-      description: >
+      description: |
         Optional. Rule to change the sql code for an entity, for example, function, procedure.
-        
+      value:
+        sqlCode: "{{ sqlCode }}"
+    - name: setTablePrimaryKey
+      description: |
+        Optional. Rule to specify the primary key for a table
+      value:
+        primaryKeyColumns:
+          - "{{ primaryKeyColumns }}"
+        primaryKey: "{{ primaryKey }}"
+    - name: state
+      value: "{{ state }}"
+      description: |
+        Optional. The mapping rule state
+      valid_values: ['STATE_UNSPECIFIED', 'ENABLED', 'DISABLED', 'DELETED']
+    - name: entityMove
+      description: |
+        Optional. Rule to specify how multiple entities should be relocated into a different schema.
+      value:
+        newSchema: "{{ newSchema }}"
     - name: filterTableColumns
-      value: object
-      description: >
+      description: |
         Optional. Rule to specify the list of columns to include or exclude from a table.
-        
-    - name: mappingRuleId
-      value: string
+      value:
+        includeColumns:
+          - "{{ includeColumns }}"
+        excludeColumns:
+          - "{{ excludeColumns }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. A human readable name
+    - name: multiColumnDataTypeChange
+      description: |
+        Optional. Rule to specify how multiple columns should be converted to a different data type.
+      value:
+        newDataType: "{{ newDataType }}"
+        overrideLength: "{{ overrideLength }}"
+        sourceTextFilter:
+          sourceMinLengthFilter: "{{ sourceMinLengthFilter }}"
+          sourceMaxLengthFilter: "{{ sourceMaxLengthFilter }}"
+        customFeatures: "{{ customFeatures }}"
+        overrideScale: {{ overrideScale }}
+        overrideFractionalSecondsPrecision: {{ overrideFractionalSecondsPrecision }}
+        sourceNumericFilter:
+          numericFilterOption: "{{ numericFilterOption }}"
+          sourceMinScaleFilter: {{ sourceMinScaleFilter }}
+          sourceMinPrecisionFilter: {{ sourceMinPrecisionFilter }}
+          sourceMaxPrecisionFilter: {{ sourceMaxPrecisionFilter }}
+          sourceMaxScaleFilter: {{ sourceMaxScaleFilter }}
+        sourceDataTypeFilter: "{{ sourceDataTypeFilter }}"
+        overridePrecision: {{ overridePrecision }}
+    - name: convertRowidColumn
+      description: |
+        Optional. Rule to specify how multiple tables should be converted with an additional rowid column.
+      value:
+        onlyIfNoPrimaryKey: {{ onlyIfNoPrimaryKey }}
+    - name: singleColumnChange
+      description: |
+        Optional. Rule to specify how a single column is converted.
+      value:
+        precision: {{ precision }}
+        udt: {{ udt }}
+        array: {{ array }}
+        nullable: {{ nullable }}
+        collation: "{{ collation }}"
+        customFeatures: "{{ customFeatures }}"
+        setValues:
+          - "{{ setValues }}"
+        dataType: "{{ dataType }}"
+        scale: {{ scale }}
+        autoGenerated: {{ autoGenerated }}
+        fractionalSecondsPrecision: {{ fractionalSecondsPrecision }}
+        length: "{{ length }}"
+        charset: "{{ charset }}"
+        arrayLength: {{ arrayLength }}
+        comment: "{{ comment }}"
+    - name: filter
+      description: |
+        Required. The rule filter
+      value:
+        parentEntity: "{{ parentEntity }}"
+        entityNameContains: "{{ entityNameContains }}"
+        entityNameSuffix: "{{ entityNameSuffix }}"
+        entityNamePrefix: "{{ entityNamePrefix }}"
+        entities:
+          - "{{ entities }}"
+    - name: ruleOrder
+      value: "{{ ruleOrder }}"
+      description: |
+        Required. The order in which the rule is applied. Lower order rules are applied before higher value rules so they may end up being overridden.
+    - name: singleEntityRename
+      description: |
+        Optional. Rule to specify how a single entity should be renamed.
+      value:
+        newName: "{{ newName }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: mappingRuleId
+      value: "{{ mappingRuleId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -685,9 +754,9 @@ EXEC google.datamigration.mapping_rules.import
 @conversionWorkspacesId='{{ conversionWorkspacesId }}' --required 
 @@json=
 '{
-"rulesFormat": "{{ rulesFormat }}", 
+"autoCommit": {{ autoCommit }}, 
 "rulesFiles": "{{ rulesFiles }}", 
-"autoCommit": {{ autoCommit }}
+"rulesFormat": "{{ rulesFormat }}"
 }'
 ;
 ```

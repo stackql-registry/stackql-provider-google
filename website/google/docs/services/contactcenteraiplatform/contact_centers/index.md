@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>contact_centers</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>contact_centers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="contact_centers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenteraiplatform.contact_centers" /></td></tr>
 </tbody></table>
@@ -85,6 +86,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. Immutable. At least 2 and max 16 char long, must conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).</td>
 </tr>
 <tr>
+    <td><CopyableCode code="deleteTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp in UTC of when this resource was soft-deleted.</td>
+</tr>
+<tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
     <td>Required. A user friendly name for the ContactCenter.</td>
@@ -93,6 +99,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="early" /></td>
     <td><code>object</code></td>
     <td>Optional. Early release channel. (id: Early)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="expireTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp in UTC of when this resource is considered expired.</td>
 </tr>
 <tr>
     <td><CopyableCode code="featureConfig" /></td>
@@ -130,6 +141,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. TODO(b/283407860) Deprecate this field.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="purgeTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp in UTC of when this resource is going to be hard-deleted.</td>
+</tr>
+<tr>
     <td><CopyableCode code="releaseVersion" /></td>
     <td><code>string</code></td>
     <td>Output only. UJET release version, unique for each new release.</td>
@@ -142,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of this contact center.</td>
+    <td>Output only. The state of this contact center. (STATE_UNSPECIFIED, STATE_DEPLOYING, STATE_DEPLOYED, STATE_TERMINATING, STATE_FAILED, STATE_TERMINATING_FAILED, STATE_TERMINATED, STATE_IN_GRACE_PERIOD, STATE_FAILING_OVER, STATE_DEGRADED, STATE_REPAIRING, STATE_EXPIRING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -209,6 +225,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. Immutable. At least 2 and max 16 char long, must conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).</td>
 </tr>
 <tr>
+    <td><CopyableCode code="deleteTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp in UTC of when this resource was soft-deleted.</td>
+</tr>
+<tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
     <td>Required. A user friendly name for the ContactCenter.</td>
@@ -217,6 +238,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="early" /></td>
     <td><code>object</code></td>
     <td>Optional. Early release channel. (id: Early)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="expireTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp in UTC of when this resource is considered expired.</td>
 </tr>
 <tr>
     <td><CopyableCode code="featureConfig" /></td>
@@ -254,6 +280,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. TODO(b/283407860) Deprecate this field.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="purgeTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp in UTC of when this resource is going to be hard-deleted.</td>
+</tr>
+<tr>
     <td><CopyableCode code="releaseVersion" /></td>
     <td><code>string</code></td>
     <td>Output only. UJET release version, unique for each new release.</td>
@@ -266,7 +297,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of this contact center.</td>
+    <td>Output only. The state of this contact center. (STATE_UNSPECIFIED, STATE_DEPLOYING, STATE_DEPLOYED, STATE_TERMINATING, STATE_FAILED, STATE_TERMINATING_FAILED, STATE_TERMINATED, STATE_IN_GRACE_PERIOD, STATE_FAILING_OVER, STATE_DEGRADED, STATE_REPAIRING, STATE_EXPIRING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -314,14 +345,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists ContactCenters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-contactCenterId"><code>contactCenterId</code></a></td>
+    <td><a href="#parameter-contactCenterId"><code>contactCenterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new ContactCenter in a given project and location.</td>
 </tr>
 <tr>
@@ -429,8 +460,10 @@ ccaipManagedUsers,
 createTime,
 critical,
 customerDomainPrefix,
+deleteTime,
 displayName,
 early,
+expireTime,
 featureConfig,
 instanceConfig,
 kmsKey,
@@ -438,6 +471,7 @@ labels,
 normal,
 privateAccess,
 privateComponents,
+purgeTime,
 releaseVersion,
 samlParams,
 state,
@@ -464,8 +498,10 @@ ccaipManagedUsers,
 createTime,
 critical,
 customerDomainPrefix,
+deleteTime,
 displayName,
 early,
+expireTime,
 featureConfig,
 instanceConfig,
 kmsKey,
@@ -473,6 +509,7 @@ labels,
 normal,
 privateAccess,
 privateComponents,
+purgeTime,
 releaseVersion,
 samlParams,
 state,
@@ -484,8 +521,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -507,48 +544,48 @@ Creates a new ContactCenter in a given project and location.
 
 ```sql
 INSERT INTO google.contactcenteraiplatform.contact_centers (
-data__early,
-data__normal,
+data__adminUser,
 data__kmsKey,
-data__instanceConfig,
-data__privateAccess,
-data__featureConfig,
-data__advancedReportingEnabled,
-data__customerDomainPrefix,
 data__samlParams,
+data__userEmail,
+data__featureConfig,
+data__instanceConfig,
+data__name,
 data__labels,
 data__displayName,
 data__critical,
+data__early,
+data__customerDomainPrefix,
+data__advancedReportingEnabled,
 data__ccaipManagedUsers,
-data__userEmail,
-data__adminUser,
-data__name,
+data__privateAccess,
+data__normal,
 projectsId,
 locationsId,
-requestId,
-contactCenterId
+contactCenterId,
+requestId
 )
 SELECT 
-'{{ early }}',
-'{{ normal }}',
+'{{ adminUser }}',
 '{{ kmsKey }}',
-'{{ instanceConfig }}',
-'{{ privateAccess }}',
-'{{ featureConfig }}',
-{{ advancedReportingEnabled }},
-'{{ customerDomainPrefix }}',
 '{{ samlParams }}',
+'{{ userEmail }}',
+'{{ featureConfig }}',
+'{{ instanceConfig }}',
+'{{ name }}',
 '{{ labels }}',
 '{{ displayName }}',
 '{{ critical }}',
+'{{ early }}',
+'{{ customerDomainPrefix }}',
+{{ advancedReportingEnabled }},
 {{ ccaipManagedUsers }},
-'{{ userEmail }}',
-'{{ adminUser }}',
-'{{ name }}',
+'{{ privateAccess }}',
+'{{ normal }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ contactCenterId }}'
+'{{ contactCenterId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -560,101 +597,120 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: contact_centers
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the contact_centers resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the contact_centers resource.
-    - name: early
-      value: object
-      description: >
-        Optional. Early release channel.
-        
-    - name: normal
-      value: object
-      description: >
-        Optional. Normal release channel.
-        
-    - name: kmsKey
-      value: string
-      description: >
-        Immutable. The KMS key name to encrypt the user input (`ContactCenter`).
-        
-    - name: instanceConfig
-      value: object
-      description: >
-        The configuration of this instance, it is currently immutable once created.
-        
-    - name: privateAccess
-      value: object
-      description: >
-        Optional. VPC-SC related networking configuration.
-        
-    - name: featureConfig
-      value: object
-      description: >
-        Optional. Feature configuration to populate the feature flags.
-        
-    - name: advancedReportingEnabled
-      value: boolean
-      description: >
-        Optional. Whether the advanced reporting feature is enabled.
-        
-    - name: customerDomainPrefix
-      value: string
-      description: >
-        Required. Immutable. At least 2 and max 16 char long, must conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).
-        
-    - name: samlParams
-      value: object
-      description: >
-        Optional. Params that sets up Google as IdP.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels as key value pairs
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. A user friendly name for the ContactCenter.
-        
-    - name: critical
-      value: object
-      description: >
-        Optional. Critical release channel.
-        
-    - name: ccaipManagedUsers
-      value: boolean
-      description: >
-        Optional. Whether to enable users to be created in the CCAIP-instance concurrently to having users in Cloud identity
-        
-    - name: userEmail
-      value: string
-      description: >
-        Optional. Email address of the first admin user.
-        
     - name: adminUser
-      value: object
-      description: >
+      description: |
         Optional. Info about the first admin user, such as given name and family name.
-        
+      value:
+        givenName: "{{ givenName }}"
+        familyName: "{{ familyName }}"
+    - name: kmsKey
+      value: "{{ kmsKey }}"
+      description: |
+        Immutable. The KMS key name to encrypt the user input (\`ContactCenter\`).
+    - name: samlParams
+      description: |
+        Optional. Params that sets up Google as IdP.
+      value:
+        authenticationContexts:
+          - "{{ authenticationContexts }}"
+        certificate: "{{ certificate }}"
+        userEmail: "{{ userEmail }}"
+        emailMapping: "{{ emailMapping }}"
+        ssoUri: "{{ ssoUri }}"
+        entityId: "{{ entityId }}"
+    - name: userEmail
+      value: "{{ userEmail }}"
+      description: |
+        Optional. Email address of the first admin user.
+    - name: featureConfig
+      description: |
+        Optional. Feature configuration to populate the feature flags.
+      value:
+        agentDesktopEnabled: {{ agentDesktopEnabled }}
+    - name: instanceConfig
+      description: |
+        The configuration of this instance, it is currently immutable once created.
+      value:
+        instanceSize: "{{ instanceSize }}"
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         name of resource
-        
-    - name: requestId
-      value: string
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. A user friendly name for the ContactCenter.
+    - name: critical
+      description: |
+        Optional. Critical release channel.
+      value:
+        peakHours:
+          - startTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              seconds: {{ seconds }}
+              nanos: {{ nanos }}
+            endTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              seconds: {{ seconds }}
+              nanos: {{ nanos }}
+            days: "{{ days }}"
+            duration: "{{ duration }}"
+    - name: early
+      value: "{{ early }}"
+      description: |
+        Optional. Early release channel.
+    - name: customerDomainPrefix
+      value: "{{ customerDomainPrefix }}"
+      description: |
+        Required. Immutable. At least 2 and max 16 char long, must conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).
+    - name: advancedReportingEnabled
+      value: {{ advancedReportingEnabled }}
+      description: |
+        Optional. Whether the advanced reporting feature is enabled.
+    - name: ccaipManagedUsers
+      value: {{ ccaipManagedUsers }}
+      description: |
+        Optional. Whether to enable users to be created in the CCAIP-instance concurrently to having users in Cloud identity
+    - name: privateAccess
+      description: |
+        Optional. VPC-SC related networking configuration.
+      value:
+        ingressSettings:
+          - name: "{{ name }}"
+            serviceAttachmentNames: "{{ serviceAttachmentNames }}"
+        pscSetting:
+          allowedConsumerProjectIds:
+            - "{{ allowedConsumerProjectIds }}"
+          producerProjectIds:
+            - "{{ producerProjectIds }}"
+        egressSettings:
+          - name: "{{ name }}"
+            serviceAttachmentNames: "{{ serviceAttachmentNames }}"
+    - name: normal
+      value: "{{ normal }}"
+      description: |
+        Optional. Normal release channel.
     - name: contactCenterId
-      value: string
-```
+      value: "{{ contactCenterId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -674,22 +730,22 @@ Updates the parameters of a single ContactCenter.
 ```sql
 UPDATE google.contactcenteraiplatform.contact_centers
 SET 
-data__early = '{{ early }}',
-data__normal = '{{ normal }}',
+data__adminUser = '{{ adminUser }}',
 data__kmsKey = '{{ kmsKey }}',
-data__instanceConfig = '{{ instanceConfig }}',
-data__privateAccess = '{{ privateAccess }}',
-data__featureConfig = '{{ featureConfig }}',
-data__advancedReportingEnabled = {{ advancedReportingEnabled }},
-data__customerDomainPrefix = '{{ customerDomainPrefix }}',
 data__samlParams = '{{ samlParams }}',
+data__userEmail = '{{ userEmail }}',
+data__featureConfig = '{{ featureConfig }}',
+data__instanceConfig = '{{ instanceConfig }}',
+data__name = '{{ name }}',
 data__labels = '{{ labels }}',
 data__displayName = '{{ displayName }}',
 data__critical = '{{ critical }}',
+data__early = '{{ early }}',
+data__customerDomainPrefix = '{{ customerDomainPrefix }}',
+data__advancedReportingEnabled = {{ advancedReportingEnabled }},
 data__ccaipManagedUsers = {{ ccaipManagedUsers }},
-data__userEmail = '{{ userEmail }}',
-data__adminUser = '{{ adminUser }}',
-data__name = '{{ name }}'
+data__privateAccess = '{{ privateAccess }}',
+data__normal = '{{ normal }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

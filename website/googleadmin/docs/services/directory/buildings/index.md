@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>buildings</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>buildings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="buildings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.buildings" /></td></tr>
 </tbody></table>
@@ -317,26 +318,26 @@ Inserts a building.
 
 ```sql
 INSERT INTO googleadmin.directory.buildings (
-data__buildingId,
-data__buildingName,
 data__description,
-data__coordinates,
-data__kind,
-data__etags,
+data__buildingId,
 data__floorNames,
 data__address,
+data__etags,
+data__buildingName,
+data__coordinates,
+data__kind,
 customer,
 coordinatesSource
 )
 SELECT 
-'{{ buildingId }}',
-'{{ buildingName }}',
 '{{ description }}',
-'{{ coordinates }}',
-'{{ kind }}',
-'{{ etags }}',
+'{{ buildingId }}',
 '{{ floorNames }}',
 '{{ address }}',
+'{{ etags }}',
+'{{ buildingName }}',
+'{{ coordinates }}',
+'{{ kind }}',
 '{{ customer }}',
 '{{ coordinatesSource }}'
 RETURNING
@@ -353,57 +354,60 @@ kind
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: buildings
   props:
     - name: customer
-      value: string
+      value: "{{ customer }}"
       description: Required parameter for the buildings resource.
-    - name: buildingId
-      value: string
-      description: >
-        Unique identifier for the building. The maximum length is 100 characters.
-        
-    - name: buildingName
-      value: string
-      description: >
-        The building name as seen by users in Calendar. Must be unique for the customer. For example, "NYC-CHEL". The maximum length is 100 characters.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         A brief description of the building. For example, "Chelsea Market".
-        
-    - name: coordinates
-      value: object
-      description: >
-        The geographic coordinates of the center of the building, expressed as latitude and longitude in decimal degrees.
-        
-    - name: kind
-      value: string
-      description: >
-        Kind of resource this is.
-        
-      default: admin#directory#resources#buildings#Building
-    - name: etags
-      value: string
-      description: >
-        ETag of the resource.
-        
+    - name: buildingId
+      value: "{{ buildingId }}"
+      description: |
+        Unique identifier for the building. The maximum length is 100 characters.
     - name: floorNames
-      value: array
-      description: >
+      value:
+        - "{{ floorNames }}"
+      description: |
         The display names for all floors in this building. The floors are expected to be sorted in ascending order, from lowest floor to highest floor. For example, ["B2", "B1", "L", "1", "2", "2M", "3", "PH"] Must contain at least one entry.
-        
     - name: address
-      value: object
-      description: >
-        The postal address of the building. See [`PostalAddress`](https://developers.google.com/my-business/reference/rest/v4/PostalAddress) for details. Note that only a single address line and region code are required.
-        
+      description: |
+        The postal address of the building. See [\`PostalAddress\`](/my-business/reference/rest/v4/PostalAddress) for details. Note that only a single address line and region code are required.
+      value:
+        addressLines:
+          - "{{ addressLines }}"
+        administrativeArea: "{{ administrativeArea }}"
+        sublocality: "{{ sublocality }}"
+        locality: "{{ locality }}"
+        languageCode: "{{ languageCode }}"
+        postalCode: "{{ postalCode }}"
+        regionCode: "{{ regionCode }}"
+    - name: etags
+      value: "{{ etags }}"
+      description: |
+        ETag of the resource.
+    - name: buildingName
+      value: "{{ buildingName }}"
+      description: |
+        The building name as seen by users in Calendar. Must be unique for the customer. For example, "NYC-CHEL". The maximum length is 100 characters.
+    - name: coordinates
+      description: |
+        The geographic coordinates of the center of the building, expressed as latitude and longitude in decimal degrees.
+      value:
+        longitude: {{ longitude }}
+        latitude: {{ latitude }}
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Kind of resource this is.
+      default: admin#directory#resources#buildings#Building
     - name: coordinatesSource
-      value: string
-```
+      value: "{{ coordinatesSource }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -423,14 +427,14 @@ Patches a building.
 ```sql
 UPDATE googleadmin.directory.buildings
 SET 
-data__buildingId = '{{ buildingId }}',
-data__buildingName = '{{ buildingName }}',
 data__description = '{{ description }}',
-data__coordinates = '{{ coordinates }}',
-data__kind = '{{ kind }}',
-data__etags = '{{ etags }}',
+data__buildingId = '{{ buildingId }}',
 data__floorNames = '{{ floorNames }}',
-data__address = '{{ address }}'
+data__address = '{{ address }}',
+data__etags = '{{ etags }}',
+data__buildingName = '{{ buildingName }}',
+data__coordinates = '{{ coordinates }}',
+data__kind = '{{ kind }}'
 WHERE 
 customer = '{{ customer }}' --required
 AND buildingId = '{{ buildingId }}' --required
@@ -464,14 +468,14 @@ Updates a building.
 ```sql
 REPLACE googleadmin.directory.buildings
 SET 
-data__buildingId = '{{ buildingId }}',
-data__buildingName = '{{ buildingName }}',
 data__description = '{{ description }}',
-data__coordinates = '{{ coordinates }}',
-data__kind = '{{ kind }}',
-data__etags = '{{ etags }}',
+data__buildingId = '{{ buildingId }}',
 data__floorNames = '{{ floorNames }}',
-data__address = '{{ address }}'
+data__address = '{{ address }}',
+data__etags = '{{ etags }}',
+data__buildingName = '{{ buildingName }}',
+data__coordinates = '{{ coordinates }}',
+data__kind = '{{ kind }}'
 WHERE 
 customer = '{{ customer }}' --required
 AND buildingId = '{{ buildingId }}' --required

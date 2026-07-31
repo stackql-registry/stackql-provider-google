@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>discovery_configs</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>discovery_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="discovery_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dlp.discovery_configs" /></td></tr>
 </tbody></table>
@@ -54,7 +55,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
+    <td>Output only. Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actions" /></td>
@@ -79,7 +80,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="inspectTemplates" /></td>
     <td><code>array</code></td>
-    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
+    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastRunTime" /></td>
@@ -104,7 +105,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this configuration.</td>
+    <td>Required. A status for this configuration. (STATUS_UNSPECIFIED, RUNNING, PAUSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targets" /></td>
@@ -133,7 +134,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
+    <td>Output only. Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actions" /></td>
@@ -158,7 +159,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="inspectTemplates" /></td>
     <td><code>array</code></td>
-    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
+    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastRunTime" /></td>
@@ -183,7 +184,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this configuration.</td>
+    <td>Required. A status for this configuration. (STATUS_UNSPECIFIED, RUNNING, PAUSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targets" /></td>
@@ -212,7 +213,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
+    <td>Output only. Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actions" /></td>
@@ -237,7 +238,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="inspectTemplates" /></td>
     <td><code>array</code></td>
-    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
+    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastRunTime" /></td>
@@ -262,7 +263,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this configuration.</td>
+    <td>Required. A status for this configuration. (STATUS_UNSPECIFIED, RUNNING, PAUSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targets" /></td>
@@ -291,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
+    <td>Output only. Unique resource name for the DiscoveryConfig, assigned by the service when the DiscoveryConfig is created, for example `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actions" /></td>
@@ -316,7 +317,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="inspectTemplates" /></td>
     <td><code>array</code></td>
-    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
+    <td>Detection logic for profile generation. Not all template features are used by Discovery. FindingLimits, include_quote and exclude_info_types have no impact on Discovery. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including "global"). Each region is scanned using the applicable template. If no region-specific template is specified, but a "global" template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region's data will not be scanned. For more information, see https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastRunTime" /></td>
@@ -341,7 +342,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this configuration.</td>
+    <td>Required. A status for this configuration. (STATUS_UNSPECIFIED, RUNNING, PAUSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targets" /></td>
@@ -391,14 +392,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_discovery_configs_list"><CopyableCode code="projects_locations_discovery_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists discovery configurations.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_discovery_configs_list"><CopyableCode code="organizations_locations_discovery_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists discovery configurations.</td>
 </tr>
 <tr>
@@ -582,8 +583,8 @@ updateTime
 FROM google.dlp.discovery_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -610,9 +611,9 @@ updateTime
 FROM google.dlp.discovery_configs
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -697,30 +698,197 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: discovery_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the discovery_configs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the discovery_configs resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the discovery_configs resource.
     - name: configId
-      value: string
-      description: >
-        The config ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
-        
+      value: "{{ configId }}"
+      description: |
+        The config ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: \`[a-zA-Zd-_]+\`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
     - name: discoveryConfig
-      value: object
-      description: >
-        Configuration for discovery to scan resources for profile generation. Only one discovery configuration may exist per organization, folder, or project. The generated data profiles are retained according to the [data retention policy] (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
-        
-```
+      description: |
+        Required. The DiscoveryConfig to create.
+      value:
+        updateTime: "{{ updateTime }}"
+        createTime: "{{ createTime }}"
+        otherCloudStartingLocation:
+          awsLocation:
+            accountId: "{{ accountId }}"
+            allAssetInventoryAssets: {{ allAssetInventoryAssets }}
+        processingLocation:
+          imageFallbackLocation:
+            multiRegionProcessing: "{{ multiRegionProcessing }}"
+            globalProcessing: "{{ globalProcessing }}"
+          documentFallbackLocation:
+            multiRegionProcessing: "{{ multiRegionProcessing }}"
+            globalProcessing: "{{ globalProcessing }}"
+        name: "{{ name }}"
+        inspectTemplates:
+          - "{{ inspectTemplates }}"
+        errors:
+          - timestamps: "{{ timestamps }}"
+            extraInfo: "{{ extraInfo }}"
+            details:
+              message: "{{ message }}"
+              details: "{{ details }}"
+              code: {{ code }}
+        actions:
+          - pubSubNotification:
+              topic: "{{ topic }}"
+              event: "{{ event }}"
+              pubsubCondition:
+                expressions:
+                  logicalOperator: "{{ logicalOperator }}"
+                  conditions: "{{ conditions }}"
+              detailOfMessage: "{{ detailOfMessage }}"
+            publishToScc: "{{ publishToScc }}"
+            tagResources:
+              tagConditions:
+                - tag:
+                    namespacedValue: "{{ namespacedValue }}"
+                  sensitivityScore:
+                    score: "{{ score }}"
+              profileGenerationsToTag:
+                - "{{ profileGenerationsToTag }}"
+              lowerDataRiskToLow: {{ lowerDataRiskToLow }}
+            publishToDataplexCatalog:
+              lowerDataRiskToLow: {{ lowerDataRiskToLow }}
+            exportData:
+              profileTable:
+                projectId: "{{ projectId }}"
+                datasetId: "{{ datasetId }}"
+                tableId: "{{ tableId }}"
+              sampleFindingsTable:
+                projectId: "{{ projectId }}"
+                datasetId: "{{ datasetId }}"
+                tableId: "{{ tableId }}"
+            publishToChronicle: "{{ publishToChronicle }}"
+        lastRunTime: "{{ lastRunTime }}"
+        status: "{{ status }}"
+        displayName: "{{ displayName }}"
+        targets:
+          - bigQueryTarget:
+              filter:
+                tables:
+                  includeRegexes: "{{ includeRegexes }}"
+                otherTables: "{{ otherTables }}"
+                tableReference:
+                  datasetId: "{{ datasetId }}"
+                  projectId: "{{ projectId }}"
+                  tableId: "{{ tableId }}"
+              disabled: "{{ disabled }}"
+              cadence:
+                schemaModifiedCadence:
+                  types: "{{ types }}"
+                  frequency: "{{ frequency }}"
+                tableModifiedCadence:
+                  types: "{{ types }}"
+                  frequency: "{{ frequency }}"
+                inspectTemplateModifiedCadence:
+                  frequency: "{{ frequency }}"
+                refreshFrequency: "{{ refreshFrequency }}"
+              conditions:
+                typeCollection: "{{ typeCollection }}"
+                types:
+                  types: "{{ types }}"
+                createdAfter: "{{ createdAfter }}"
+                orConditions:
+                  minRowCount: {{ minRowCount }}
+                  minAge: "{{ minAge }}"
+            cloudSqlTarget:
+              conditions:
+                databaseEngines:
+                  - "{{ databaseEngines }}"
+                types:
+                  - "{{ types }}"
+              generationCadence:
+                schemaModifiedCadence:
+                  types: "{{ types }}"
+                  frequency: "{{ frequency }}"
+                inspectTemplateModifiedCadence:
+                  frequency: "{{ frequency }}"
+                refreshFrequency: "{{ refreshFrequency }}"
+              filter:
+                databaseResourceReference:
+                  database: "{{ database }}"
+                  databaseResource: "{{ databaseResource }}"
+                  projectId: "{{ projectId }}"
+                  instance: "{{ instance }}"
+                collection:
+                  includeRegexes: "{{ includeRegexes }}"
+                others: "{{ others }}"
+              disabled: "{{ disabled }}"
+            secretsTarget: "{{ secretsTarget }}"
+            cloudStorageTarget:
+              filter:
+                collection:
+                  includeTags: "{{ includeTags }}"
+                  includeRegexes: "{{ includeRegexes }}"
+                cloudStorageResourceReference:
+                  bucketName: "{{ bucketName }}"
+                  projectId: "{{ projectId }}"
+                others: "{{ others }}"
+              disabled: "{{ disabled }}"
+              conditions:
+                createdAfter: "{{ createdAfter }}"
+                cloudStorageConditions:
+                  includedObjectAttributes: "{{ includedObjectAttributes }}"
+                  includedBucketAttributes: "{{ includedBucketAttributes }}"
+                minAge: "{{ minAge }}"
+              generationCadence:
+                refreshFrequency: "{{ refreshFrequency }}"
+                inspectTemplateModifiedCadence:
+                  frequency: "{{ frequency }}"
+            otherCloudTarget:
+              generationCadence:
+                refreshFrequency: "{{ refreshFrequency }}"
+                inspectTemplateModifiedCadence:
+                  frequency: "{{ frequency }}"
+              dataSourceType:
+                dataSource: "{{ dataSource }}"
+              disabled: "{{ disabled }}"
+              conditions:
+                minAge: "{{ minAge }}"
+                amazonS3BucketConditions:
+                  bucketTypes: "{{ bucketTypes }}"
+                  objectStorageClasses: "{{ objectStorageClasses }}"
+              filter:
+                singleResource:
+                  amazonS3Bucket: "{{ amazonS3Bucket }}"
+                collection:
+                  includeRegexes: "{{ includeRegexes }}"
+                others: "{{ others }}"
+            vertexDatasetTarget:
+              filter:
+                collection:
+                  vertexDatasetRegexes: "{{ vertexDatasetRegexes }}"
+                vertexDatasetResourceReference:
+                  datasetResourceName: "{{ datasetResourceName }}"
+                others: "{{ others }}"
+              disabled: "{{ disabled }}"
+              conditions:
+                createdAfter: "{{ createdAfter }}"
+                minAge: "{{ minAge }}"
+              generationCadence:
+                inspectTemplateModifiedCadence:
+                  frequency: "{{ frequency }}"
+                refreshFrequency: "{{ refreshFrequency }}"
+        orgConfig:
+          projectId: "{{ projectId }}"
+          location:
+            organizationId: "{{ organizationId }}"
+            folderId: "{{ folderId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -741,8 +909,8 @@ Updates a discovery configuration.
 ```sql
 UPDATE google.dlp.discovery_configs
 SET 
-data__discoveryConfig = '{{ discoveryConfig }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__discoveryConfig = '{{ discoveryConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -770,8 +938,8 @@ Updates a discovery configuration.
 ```sql
 UPDATE google.dlp.discovery_configs
 SET 
-data__discoveryConfig = '{{ discoveryConfig }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__discoveryConfig = '{{ discoveryConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

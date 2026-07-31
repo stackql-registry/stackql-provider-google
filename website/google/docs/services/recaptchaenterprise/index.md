@@ -18,7 +18,7 @@ recaptchaenterprise service documentation.
 
 :::info[Service Summary]
 
-total resources: __10__  
+total resources: __11__  
 
 :::
 
@@ -29,11 +29,12 @@ total resources: __10__
 <a href="/services/recaptchaenterprise/firewallpolicies/">firewallpolicies</a><br />
 <a href="/services/recaptchaenterprise/keys/">keys</a><br />
 <a href="/services/recaptchaenterprise/keys_ip_override/">keys_ip_override</a><br />
-<a href="/services/recaptchaenterprise/keys_ip_overrides/">keys_ip_overrides</a>
+<a href="/services/recaptchaenterprise/keys_ip_overrides/">keys_ip_overrides</a><br />
+<a href="/services/recaptchaenterprise/keys_legacy_secret_key/">keys_legacy_secret_key</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/recaptchaenterprise/keys_legacy_secret_key/">keys_legacy_secret_key</a><br />
 <a href="/services/recaptchaenterprise/keys_metrics/">keys_metrics</a><br />
+<a href="/services/recaptchaenterprise/keys_policy/">keys_policy</a><br />
 <a href="/services/recaptchaenterprise/memberships/">memberships</a><br />
 <a href="/services/recaptchaenterprise/relatedaccountgroupmemberships/">relatedaccountgroupmemberships</a><br />
 <a href="/services/recaptchaenterprise/relatedaccountgroups/">relatedaccountgroups</a>

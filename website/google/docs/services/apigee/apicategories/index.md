@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apicategories</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apicategories</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apicategories" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.apicategories" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="data" /></td>
     <td><code>object</code></td>
-    <td>`ApiCategory` represents an API category. [Catalog items](/apigee/docs/reference/apis/apigee/rest/v1/organizations.sites.apidocs) can be tagged with API categories; users viewing the API catalog in the portal will have the option to browse the catalog by category. (id: GoogleCloudApigeeV1ApiCategory)</td>
+    <td>The API category resource. (id: GoogleCloudApigeeV1ApiCategory)</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorCode" /></td>
@@ -265,17 +266,17 @@ Creates a new API category.
 ```sql
 INSERT INTO google.apigee.apicategories (
 data__siteId,
+data__id,
 data__name,
 data__updateTime,
-data__id,
 organizationsId,
 sitesId
 )
 SELECT 
 '{{ siteId }}',
+'{{ id }}',
 '{{ name }}',
 '{{ updateTime }}',
-'{{ id }}',
 '{{ organizationsId }}',
 '{{ sitesId }}'
 RETURNING
@@ -289,37 +290,33 @@ status
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: apicategories
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the apicategories resource.
     - name: sitesId
-      value: string
+      value: "{{ sitesId }}"
       description: Required parameter for the apicategories resource.
     - name: siteId
-      value: string
-      description: >
+      value: "{{ siteId }}"
+      description: |
         Name of the portal.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the category.
-        
-    - name: updateTime
-      value: string
-      description: >
-        Time the category was last modified in milliseconds since epoch.
-        
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         ID of the category (a UUID).
-        
-```
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the category.
+    - name: updateTime
+      value: "{{ updateTime }}"
+      description: |
+        Time the category was last modified in milliseconds since epoch.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -340,9 +337,9 @@ Updates an API category.
 UPDATE google.apigee.apicategories
 SET 
 data__siteId = '{{ siteId }}',
+data__id = '{{ id }}',
 data__name = '{{ name }}',
-data__updateTime = '{{ updateTime }}',
-data__id = '{{ id }}'
+data__updateTime = '{{ updateTime }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sitesId = '{{ sitesId }}' --required

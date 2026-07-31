@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.looker.backups" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the backup.</td>
+    <td>Output only. The current state of the backup. (STATE_UNSPECIFIED, CREATING, DELETING, ACTIVE, FAILED)</td>
 </tr>
 </tbody>
 </table>
@@ -88,6 +89,31 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The relative resource name of the backup, in the following form: `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;/backups/&#123;backup&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the backup was started.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionConfig" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Current status of the CMEK encryption (id: EncryptionConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="expireTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the backup will be deleted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The current state of the backup. (STATE_UNSPECIFIED, CREATING, DELETING, ACTIVE, FAILED)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -119,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>List backups of Looker instance.</td>
 </tr>
 <tr>
@@ -224,14 +250,18 @@ List backups of Looker instance.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+encryptionConfig,
+expireTime,
+state
 FROM google.looker.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -274,25 +304,24 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backups resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the backups resource.
     - name: name
-      value: string
-      description: >
-        Immutable. The relative resource name of the backup, in the following form: `projects/{project_number}/locations/{location_id}/instances/{instance_id}/backups/{backup}`
-        
-```
+      value: "{{ name }}"
+      description: |
+        Immutable. The relative resource name of the backup, in the following form: \`projects/{project_number}/locations/{location_id}/instances/{instance_id}/backups/{backup}\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

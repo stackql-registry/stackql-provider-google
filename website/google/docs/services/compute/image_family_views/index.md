@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>image_family_views</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>image_family_views</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="image_family_views" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.image_family_views" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="image" /></td>
     <td><code>object</code></td>
-    <td>Represents an Image resource. You can use images to create boot disks for your VM instances. For more information, read Images. (id: Image)</td>
+    <td>The latest image that is part of the specified image family in the requested location, and that is not deprecated. (id: Image)</td>
 </tr>
 </tbody>
 </table>
@@ -78,7 +79,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-family"><code>family</code></a></td>
     <td></td>
-    <td>Returns the latest image that is part of an image family, is not deprecated and is rolled out in the specified zone.</td>
+    <td>Returns the latest image that is part of an image family, is not<br />deprecated and is rolled out in the specified zone.</td>
 </tr>
 </tbody>
 </table>
@@ -124,7 +125,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Returns the latest image that is part of an image family, is not deprecated and is rolled out in the specified zone.
+Returns the latest image that is part of an image family, is not<br />deprecated and is rolled out in the specified zone.
 
 ```sql
 SELECT

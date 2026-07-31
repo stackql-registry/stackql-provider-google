@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rules</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.artifactregistry.rules" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>The action this rule takes.</td>
+    <td>The action this rule takes. (ACTION_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="condition" /></td>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="operation" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td> (OPERATION_UNSPECIFIED, DOWNLOAD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="packageId" /></td>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>The action this rule takes.</td>
+    <td>The action this rule takes. (ACTION_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="condition" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="operation" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td> (OPERATION_UNSPECIFIED, DOWNLOAD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="packageId" /></td>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists rules.</td>
 </tr>
 <tr>
@@ -270,8 +271,8 @@ FROM google.artifactregistry.rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -293,22 +294,22 @@ Creates a rule.
 
 ```sql
 INSERT INTO google.artifactregistry.rules (
-data__operation,
+data__packageId,
 data__name,
 data__condition,
-data__packageId,
 data__action,
+data__operation,
 projectsId,
 locationsId,
 repositoriesId,
 ruleId
 )
 SELECT 
-'{{ operation }}',
+'{{ packageId }}',
 '{{ name }}',
 '{{ condition }}',
-'{{ packageId }}',
 '{{ action }}',
+'{{ operation }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -324,46 +325,46 @@ packageId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the rules resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the rules resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the rules resource.
-    - name: operation
-      value: string
-      valid_values: ['OPERATION_UNSPECIFIED', 'DOWNLOAD']
-    - name: name
-      value: string
-      description: >
-        The name of the rule, for example: `projects/p1/locations/us-central1/repositories/repo1/rules/rule1`.
-        
-    - name: condition
-      value: object
-      description: >
-        Optional. A CEL expression for conditions that must be met in order for the rule to apply. If not provided, the rule matches all objects.
-        
     - name: packageId
-      value: string
-      description: >
+      value: "{{ packageId }}"
+      description: |
         The package ID the rule applies to. If empty, this rule applies to all packages inside the repository.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the rule, for example: \`projects/p1/locations/us-central1/repositories/repo1/rules/rule1\`.
+    - name: condition
+      description: |
+        Optional. A CEL expression for conditions that must be met in order for the rule to apply. If not provided, the rule matches all objects.
+      value:
+        location: "{{ location }}"
+        expression: "{{ expression }}"
+        title: "{{ title }}"
+        description: "{{ description }}"
     - name: action
-      value: string
-      description: >
+      value: "{{ action }}"
+      description: |
         The action this rule takes.
-        
       valid_values: ['ACTION_UNSPECIFIED', 'ALLOW', 'DENY']
+    - name: operation
+      value: "{{ operation }}"
+      valid_values: ['OPERATION_UNSPECIFIED', 'DOWNLOAD']
     - name: ruleId
-      value: string
-```
+      value: "{{ ruleId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -383,11 +384,11 @@ Updates a rule.
 ```sql
 UPDATE google.artifactregistry.rules
 SET 
-data__operation = '{{ operation }}',
+data__packageId = '{{ packageId }}',
 data__name = '{{ name }}',
 data__condition = '{{ condition }}',
-data__packageId = '{{ packageId }}',
-data__action = '{{ action }}'
+data__action = '{{ action }}',
+data__operation = '{{ operation }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

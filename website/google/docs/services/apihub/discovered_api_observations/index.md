@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>discovered_api_observations</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>discovered_api_observations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="discovered_api_observations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.discovered_api_observations" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="origin" /></td>
     <td><code>string</code></td>
-    <td>Optional. For an observation pushed from a gcp resource, this would be the gcp project id.</td>
+    <td>Optional. For an observation pushed from a Google Cloud resource, this would be the Google Cloud project id.</td>
 </tr>
 <tr>
     <td><CopyableCode code="serverIps" /></td>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="style" /></td>
     <td><code>string</code></td>
-    <td>Optional. Style of ApiObservation</td>
+    <td>Optional. Style of ApiObservation (STYLE_UNSPECIFIED, REST, GRPC, GRAPHQL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="unknownOperationsCount" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="origin" /></td>
     <td><code>string</code></td>
-    <td>Optional. For an observation pushed from a gcp resource, this would be the gcp project id.</td>
+    <td>Optional. For an observation pushed from a Google Cloud resource, this would be the Google Cloud project id.</td>
 </tr>
 <tr>
     <td><CopyableCode code="serverIps" /></td>
@@ -191,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="style" /></td>
     <td><code>string</code></td>
-    <td>Optional. Style of ApiObservation</td>
+    <td>Optional. Style of ApiObservation (STYLE_UNSPECIFIED, REST, GRPC, GRAPHQL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="unknownOperationsCount" /></td>
@@ -234,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all the DiscoveredAPIObservations in a given project and location.</td>
 </tr>
 </tbody>
@@ -340,8 +341,8 @@ updateTime
 FROM google.apihub.discovered_api_observations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>data_scans</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>data_scans</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="data_scans" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.data_scans" /></td></tr>
 </tbody></table>
@@ -115,6 +116,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. User friendly display name. Must be between 1-256 characters.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="executionIdentity" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Immutable. The identity to run the datascan. If not specified, defaults to the Dataplex Service Agent. (id: GoogleCloudDataplexV1ExecutionIdentity)</td>
+</tr>
+<tr>
     <td><CopyableCode code="executionSpec" /></td>
     <td><code>object</code></td>
     <td>Optional. DataScan execution settings.If not specified, the fields in it will use their default values. (id: GoogleCloudDataplexV1DataScanExecutionSpec)</td>
@@ -132,17 +138,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the DataScan.</td>
+    <td>Output only. Current state of the DataScan. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of DataScan.</td>
+    <td>Output only. The type of DataScan. (DATA_SCAN_TYPE_UNSPECIFIED, DATA_QUALITY, DATA_PROFILE, DATA_DISCOVERY, DATA_DOCUMENTATION, UNSTRUCTURED_DATA_PROFILE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
     <td>Output only. System generated globally unique ID for the scan. This ID will be different if the scan is deleted and re-created with the same name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unstructuredDataProfileResult" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The result of an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileResult)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unstructuredDataProfileSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings for an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -229,6 +245,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. User friendly display name. Must be between 1-256 characters.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="executionIdentity" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Immutable. The identity to run the datascan. If not specified, defaults to the Dataplex Service Agent. (id: GoogleCloudDataplexV1ExecutionIdentity)</td>
+</tr>
+<tr>
     <td><CopyableCode code="executionSpec" /></td>
     <td><code>object</code></td>
     <td>Optional. DataScan execution settings.If not specified, the fields in it will use their default values. (id: GoogleCloudDataplexV1DataScanExecutionSpec)</td>
@@ -246,17 +267,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the DataScan.</td>
+    <td>Output only. Current state of the DataScan. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of DataScan.</td>
+    <td>Output only. The type of DataScan. (DATA_SCAN_TYPE_UNSPECIFIED, DATA_QUALITY, DATA_PROFILE, DATA_DISCOVERY, DATA_DOCUMENTATION, UNSTRUCTURED_DATA_PROFILE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
     <td>Output only. System generated globally unique ID for the scan. This ID will be different if the scan is deleted and re-created with the same name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unstructuredDataProfileResult" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The result of an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileResult)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unstructuredDataProfileSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings for an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -294,7 +325,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_scans_list"><CopyableCode code="projects_locations_data_scans_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DataScans.</td>
 </tr>
 <tr>
@@ -319,18 +350,18 @@ The following methods are available for this resource:
     <td>Deletes a DataScan resource.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_scans_run"><CopyableCode code="projects_locations_data_scans_run" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a></td>
-    <td></td>
-    <td>Runs an on-demand execution of a DataScan</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_scans_generate_data_quality_rules"><CopyableCode code="projects_locations_data_scans_generate_data_quality_rules" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a></td>
     <td></td>
     <td>Generates recommended data quality rules based on the results of a data profiling scan.Use the recommendations to build rules for a data quality scan.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_scans_run"><CopyableCode code="projects_locations_data_scans_run" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a></td>
+    <td></td>
+    <td>Runs an on-demand execution of a DataScan</td>
 </tr>
 </tbody>
 </table>
@@ -439,12 +470,15 @@ dataQualityResult,
 dataQualitySpec,
 description,
 displayName,
+executionIdentity,
 executionSpec,
 executionStatus,
 labels,
 state,
 type,
 uid,
+unstructuredDataProfileResult,
+unstructuredDataProfileSpec,
 updateTime
 FROM google.dataplex.data_scans
 WHERE projectsId = '{{ projectsId }}' -- required
@@ -473,20 +507,23 @@ dataQualityResult,
 dataQualitySpec,
 description,
 displayName,
+executionIdentity,
 executionSpec,
 executionStatus,
 labels,
 state,
 type,
 uid,
+unstructuredDataProfileResult,
+unstructuredDataProfileSpec,
 updateTime
 FROM google.dataplex.data_scans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -508,30 +545,34 @@ Creates a DataScan resource.
 
 ```sql
 INSERT INTO google.dataplex.data_scans (
+data__unstructuredDataProfileSpec,
 data__description,
-data__displayName,
-data__labels,
-data__data,
-data__executionSpec,
-data__dataQualitySpec,
-data__dataProfileSpec,
-data__dataDiscoverySpec,
 data__dataDocumentationSpec,
+data__dataDiscoverySpec,
+data__executionIdentity,
+data__dataProfileSpec,
+data__labels,
+data__dataQualitySpec,
+data__executionSpec,
+data__data,
+data__displayName,
 projectsId,
 locationsId,
 dataScanId,
 validateOnly
 )
 SELECT 
+'{{ unstructuredDataProfileSpec }}',
 '{{ description }}',
-'{{ displayName }}',
-'{{ labels }}',
-'{{ data }}',
-'{{ executionSpec }}',
-'{{ dataQualitySpec }}',
-'{{ dataProfileSpec }}',
-'{{ dataDiscoverySpec }}',
 '{{ dataDocumentationSpec }}',
+'{{ dataDiscoverySpec }}',
+'{{ executionIdentity }}',
+'{{ dataProfileSpec }}',
+'{{ labels }}',
+'{{ dataQualitySpec }}',
+'{{ executionSpec }}',
+'{{ data }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataScanId }}',
@@ -547,66 +588,190 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: data_scans
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the data_scans resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the data_scans resource.
+    - name: unstructuredDataProfileSpec
+      description: |
+        Optional. Settings for an unstructured data profile scan.
+      value:
+        graphProfilePublishingEnabled: {{ graphProfilePublishingEnabled }}
+        customizedPrompt: "{{ customizedPrompt }}"
+        globalEndpointEnabled: {{ globalEndpointEnabled }}
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the scan. Must be between 1-1024 characters.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly display name. Must be between 1-256 characters.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels for the scan.
-        
-    - name: data
-      value: object
-      description: >
-        Required. The data source for DataScan.
-        
-    - name: executionSpec
-      value: object
-      description: >
-        Optional. DataScan execution settings.If not specified, the fields in it will use their default values.
-        
-    - name: dataQualitySpec
-      value: object
-      description: >
-        Settings for a data quality scan.
-        
-    - name: dataProfileSpec
-      value: object
-      description: >
-        Settings for a data profile scan.
-        
-    - name: dataDiscoverySpec
-      value: object
-      description: >
-        Settings for a data discovery scan.
-        
     - name: dataDocumentationSpec
-      value: object
-      description: >
+      description: |
         Settings for a data documentation scan.
-        
+      value:
+        catalogPublishingEnabled: {{ catalogPublishingEnabled }}
+        generationScopes:
+          - "{{ generationScopes }}"
+    - name: dataDiscoverySpec
+      description: |
+        Settings for a data discovery scan.
+      value:
+        bigqueryPublishingConfig:
+          tableType: "{{ tableType }}"
+          location: "{{ location }}"
+          project: "{{ project }}"
+          connection: "{{ connection }}"
+        storageConfig:
+          csvOptions:
+            delimiter: "{{ delimiter }}"
+            quote: "{{ quote }}"
+            headerRows: {{ headerRows }}
+            typeInferenceDisabled: {{ typeInferenceDisabled }}
+            encoding: "{{ encoding }}"
+          unstructuredDataOptions:
+            semanticInferenceEnabled: {{ semanticInferenceEnabled }}
+            globalEndpointEnabled: {{ globalEndpointEnabled }}
+          excludePatterns:
+            - "{{ excludePatterns }}"
+          jsonOptions:
+            encoding: "{{ encoding }}"
+            typeInferenceDisabled: {{ typeInferenceDisabled }}
+          includePatterns:
+            - "{{ includePatterns }}"
+    - name: executionIdentity
+      description: |
+        Optional. Immutable. The identity to run the datascan. If not specified, defaults to the Dataplex Service Agent.
+      value:
+        dataplexServiceAgent: "{{ dataplexServiceAgent }}"
+        userCredential: "{{ userCredential }}"
+        serviceAccount:
+          email: "{{ email }}"
+    - name: dataProfileSpec
+      description: |
+        Settings for a data profile scan.
+      value:
+        includeFields:
+          fieldNames:
+            - "{{ fieldNames }}"
+        catalogPublishingEnabled: {{ catalogPublishingEnabled }}
+        mode: "{{ mode }}"
+        samplingPercent: {{ samplingPercent }}
+        rowFilter: "{{ rowFilter }}"
+        postScanActions:
+          bigqueryExport:
+            resultsTable: "{{ resultsTable }}"
+        excludeFields:
+          fieldNames:
+            - "{{ fieldNames }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the scan.
+    - name: dataQualitySpec
+      description: |
+        Settings for a data quality scan.
+      value:
+        enableCatalogBasedRules: {{ enableCatalogBasedRules }}
+        rowFilter: "{{ rowFilter }}"
+        postScanActions:
+          notificationReport:
+            scoreThresholdTrigger:
+              scoreThreshold: {{ scoreThreshold }}
+            recipients:
+              emails:
+                - "{{ emails }}"
+            jobFailureTrigger: "{{ jobFailureTrigger }}"
+            jobEndTrigger: "{{ jobEndTrigger }}"
+          bigqueryExport:
+            resultsTable: "{{ resultsTable }}"
+        rules:
+          - setExpectation:
+              values:
+                - "{{ values }}"
+            dimension: "{{ dimension }}"
+            description: "{{ description }}"
+            attributes: "{{ attributes }}"
+            templateReference:
+              name: "{{ name }}"
+              resolvedSql: "{{ resolvedSql }}"
+              values: "{{ values }}"
+              ruleTemplate:
+                capabilities:
+                  - "{{ capabilities }}"
+                name: "{{ name }}"
+                dimension: "{{ dimension }}"
+                inputParameters: "{{ inputParameters }}"
+                sqlCollection:
+                  - query: "{{ query }}"
+            threshold: {{ threshold }}
+            rowConditionExpectation:
+              sqlExpression: "{{ sqlExpression }}"
+            sqlAssertion:
+              sqlStatement: "{{ sqlStatement }}"
+            regexExpectation:
+              regex: "{{ regex }}"
+            statisticRangeExpectation:
+              minValue: "{{ minValue }}"
+              strictMinEnabled: {{ strictMinEnabled }}
+              strictMaxEnabled: {{ strictMaxEnabled }}
+              statistic: "{{ statistic }}"
+              maxValue: "{{ maxValue }}"
+            ruleSource:
+              rulePathElements:
+                - entryLinkSource:
+                    entryLink: "{{ entryLink }}"
+                    entryLinkType: "{{ entryLinkType }}"
+                  entrySource:
+                    entryType: "{{ entryType }}"
+                    displayName: "{{ displayName }}"
+                    entry: "{{ entry }}"
+            uniquenessExpectation: "{{ uniquenessExpectation }}"
+            debugQueries: "{{ debugQueries }}"
+            name: "{{ name }}"
+            nonNullExpectation: "{{ nonNullExpectation }}"
+            column: "{{ column }}"
+            ignoreNull: {{ ignoreNull }}
+            suspended: {{ suspended }}
+            tableConditionExpectation:
+              sqlExpression: "{{ sqlExpression }}"
+            rangeExpectation:
+              minValue: "{{ minValue }}"
+              strictMinEnabled: {{ strictMinEnabled }}
+              strictMaxEnabled: {{ strictMaxEnabled }}
+              maxValue: "{{ maxValue }}"
+        filter: "{{ filter }}"
+        catalogPublishingEnabled: {{ catalogPublishingEnabled }}
+        samplingPercent: {{ samplingPercent }}
+    - name: executionSpec
+      description: |
+        Optional. DataScan execution settings.If not specified, the fields in it will use their default values.
+      value:
+        trigger:
+          schedule:
+            cron: "{{ cron }}"
+          onDemand: "{{ onDemand }}"
+          oneTime:
+            ttlAfterScanCompletion: "{{ ttlAfterScanCompletion }}"
+        field: "{{ field }}"
+    - name: data
+      description: |
+        Required. The data source for DataScan.
+      value:
+        resource: "{{ resource }}"
+        entity: "{{ entity }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name. Must be between 1-256 characters.
     - name: dataScanId
-      value: string
+      value: "{{ dataScanId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -626,15 +791,17 @@ Updates a DataScan resource.
 ```sql
 UPDATE google.dataplex.data_scans
 SET 
+data__unstructuredDataProfileSpec = '{{ unstructuredDataProfileSpec }}',
 data__description = '{{ description }}',
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
-data__data = '{{ data }}',
-data__executionSpec = '{{ executionSpec }}',
-data__dataQualitySpec = '{{ dataQualitySpec }}',
-data__dataProfileSpec = '{{ dataProfileSpec }}',
+data__dataDocumentationSpec = '{{ dataDocumentationSpec }}',
 data__dataDiscoverySpec = '{{ dataDiscoverySpec }}',
-data__dataDocumentationSpec = '{{ dataDocumentationSpec }}'
+data__executionIdentity = '{{ executionIdentity }}',
+data__dataProfileSpec = '{{ dataProfileSpec }}',
+data__labels = '{{ labels }}',
+data__dataQualitySpec = '{{ dataQualitySpec }}',
+data__executionSpec = '{{ executionSpec }}',
+data__data = '{{ data }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -679,30 +846,30 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_data_scans_run"
+    defaultValue="projects_locations_data_scans_generate_data_quality_rules"
     values={[
-        { label: 'projects_locations_data_scans_run', value: 'projects_locations_data_scans_run' },
-        { label: 'projects_locations_data_scans_generate_data_quality_rules', value: 'projects_locations_data_scans_generate_data_quality_rules' }
+        { label: 'projects_locations_data_scans_generate_data_quality_rules', value: 'projects_locations_data_scans_generate_data_quality_rules' },
+        { label: 'projects_locations_data_scans_run', value: 'projects_locations_data_scans_run' }
     ]}
 >
-<TabItem value="projects_locations_data_scans_run">
-
-Runs an on-demand execution of a DataScan
-
-```sql
-EXEC google.dataplex.data_scans.projects_locations_data_scans_run 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataScansId='{{ dataScansId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_data_scans_generate_data_quality_rules">
 
 Generates recommended data quality rules based on the results of a data profiling scan.Use the recommendations to build rules for a data quality scan.
 
 ```sql
 EXEC google.dataplex.data_scans.projects_locations_data_scans_generate_data_quality_rules 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataScansId='{{ dataScansId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_scans_run">
+
+Runs an on-demand execution of a DataScan
+
+```sql
+EXEC google.dataplex.data_scans.projects_locations_data_scans_run 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @dataScansId='{{ dataScansId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>style_guide_contents</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>style_guide_contents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="style_guide_contents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.style_guide_contents" /></td></tr>
 </tbody></table>

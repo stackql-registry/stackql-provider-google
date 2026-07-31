@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>admin_schemav2</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>admin_schemav2</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="admin_schemav2" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.admin_schemav2" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_analytics_admin_get_schemav2"><CopyableCode code="organizations_environments_analytics_admin_get_schemav2" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-disableCache"><code>disableCache</code></a>, <a href="#parameter-type"><code>type</code></a></td>
+    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-disableCache"><code>disableCache</code></a></td>
     <td>Gets a list of metrics and dimensions that can be used to create analytics queries and reports. Each schema element contains the name of the field, its associated type, and a flag indicating whether it is a standard or custom field.</td>
 </tr>
 </tbody>
@@ -149,8 +150,8 @@ metrics
 FROM google.apigee.admin_schemav2
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND disableCache = '{{ disableCache }}'
 AND type = '{{ type }}'
+AND disableCache = '{{ disableCache }}'
 ;
 ```
 </TabItem>

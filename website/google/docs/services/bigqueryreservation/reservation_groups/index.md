@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reservation_groups</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reservation_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reservation_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigqueryreservation.reservation_groups" /></td></tr>
 </tbody></table>
@@ -54,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Identifier. The resource name of the reservation group, e.g., `projects/*/locations/*/reservationGroups/team1-prod`. The reservation_group_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.</td>
 </tr>
+<tr>
+    <td><CopyableCode code="parentGroup" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The parent reservation group of the reservation group. Format: `projects/*/locations/*/reservationGroups/team1-prod` for non-root reservation groups, or `projects/*/locations/*` for root reservation groups.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -72,6 +78,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Identifier. The resource name of the reservation group, e.g., `projects/*/locations/*/reservationGroups/team1-prod`. The reservation_group_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="parentGroup" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The parent reservation group of the reservation group. Format: `projects/*/locations/*/reservationGroups/team1-prod` for non-root reservation groups, or `projects/*/locations/*` for root reservation groups.</td>
 </tr>
 </tbody>
 </table>
@@ -113,6 +124,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-reservationGroupId"><code>reservationGroupId</code></a></td>
     <td>Creates a new reservation group.</td>
+</tr>
+<tr>
+    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reservationGroupsId"><code>reservationGroupsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates an existing reservation group resource.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -167,6 +185,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-updateMask">
+    <td><CopyableCode code="updateMask" /></td>
+    <td><code>string (google-fieldmask)</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -185,7 +208,8 @@ Returns information about the reservation group.
 
 ```sql
 SELECT
-name
+name,
+parentGroup
 FROM google.bigqueryreservation.reservation_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -199,7 +223,8 @@ Lists all the reservation groups for the project in the specified location.
 
 ```sql
 SELECT
-name
+name,
+parentGroup
 FROM google.bigqueryreservation.reservation_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -227,39 +252,75 @@ Creates a new reservation group.
 ```sql
 INSERT INTO google.bigqueryreservation.reservation_groups (
 data__name,
+data__parentGroup,
 projectsId,
 locationsId,
 reservationGroupId
 )
 SELECT 
 '{{ name }}',
+'{{ parentGroup }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ reservationGroupId }}'
 RETURNING
-name
+name,
+parentGroup
 ;
 ```
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reservation_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the reservation_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the reservation_groups resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the reservation group, e.g., `projects/*/locations/*/reservationGroups/team1-prod`. The reservation_group_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the reservation group, e.g., \`projects/*/locations/*/reservationGroups/team1-prod\`. The reservation_group_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.
+    - name: parentGroup
+      value: "{{ parentGroup }}"
+      description: |
+        Optional. The parent reservation group of the reservation group. Format: \`projects/*/locations/*/reservationGroups/team1-prod\` for non-root reservation groups, or \`projects/*/locations/*\` for root reservation groups.
     - name: reservationGroupId
-      value: string
+      value: "{{ reservationGroupId }}"
+`}</CodeBlock>
+
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="patch"
+    values={[
+        { label: 'patch', value: 'patch' }
+    ]}
+>
+<TabItem value="patch">
+
+Updates an existing reservation group resource.
+
+```sql
+UPDATE google.bigqueryreservation.reservation_groups
+SET 
+data__name = '{{ name }}',
+data__parentGroup = '{{ parentGroup }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND reservationGroupsId = '{{ reservationGroupsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+parentGroup;
 ```
 </TabItem>
 </Tabs>

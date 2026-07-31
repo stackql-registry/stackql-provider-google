@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>domain_mappings</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>domain_mappings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="domain_mappings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.appengine.domain_mappings" /></td></tr>
 </tbody></table>
@@ -306,32 +307,33 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: domain_mappings
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the domain_mappings resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the domain_mappings resource.
     - name: applicationsId
-      value: string
+      value: "{{ applicationsId }}"
       description: Required parameter for the domain_mappings resource.
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         Relative name of the domain serving the application. Example: example.com.
-        
     - name: sslSettings
-      value: object
-      description: >
+      description: |
         SSL configuration for this domain. If unconfigured, this domain will not serve with SSL.
-        
+      value:
+        pendingManagedCertificateId: "{{ pendingManagedCertificateId }}"
+        certificateId: "{{ certificateId }}"
+        sslManagementType: "{{ sslManagementType }}"
     - name: overrideStrategy
-      value: string
-```
+      value: "{{ overrideStrategy }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

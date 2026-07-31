@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rateplans</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rateplans</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rateplans" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.rateplans" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="billingPeriod" /></td>
     <td><code>string</code></td>
-    <td>Frequency at which the customer will be billed.</td>
+    <td>Frequency at which the customer will be billed. (BILLING_PERIOD_UNSPECIFIED, WEEKLY, MONTHLY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="consumptionPricingRates" /></td>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="consumptionPricingType" /></td>
     <td><code>string</code></td>
-    <td>Pricing model used for consumption-based charges.</td>
+    <td>Pricing model used for consumption-based charges. (CONSUMPTION_PRICING_TYPE_UNSPECIFIED, FIXED_PER_UNIT, BANDED, TIERED, STAIRSTEP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createdAt" /></td>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="paymentFundingModel" /></td>
     <td><code>string</code></td>
-    <td>DEPRECATED: This field is no longer supported and will eventually be removed when Apigee Hybrid 1.5/1.6 is no longer supported. Instead, use the `billingType` field inside `DeveloperMonetizationConfig` resource. Flag that specifies the billing account type, prepaid or postpaid.</td>
+    <td>DEPRECATED: This field is no longer supported and will eventually be removed when Apigee Hybrid 1.5/1.6 is no longer supported. Instead, use the `billingType` field inside `DeveloperMonetizationConfig` resource. Flag that specifies the billing account type, prepaid or postpaid. (PAYMENT_FUNDING_MODEL_UNSPECIFIED, PREPAID, POSTPAID)</td>
 </tr>
 <tr>
     <td><CopyableCode code="revenueShareRates" /></td>
@@ -127,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="revenueShareType" /></td>
     <td><code>string</code></td>
-    <td>Method used to calculate the revenue that is shared with developers.</td>
+    <td>Method used to calculate the revenue that is shared with developers. (REVENUE_SHARE_TYPE_UNSPECIFIED, FIXED, VOLUME_BANDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="setupFee" /></td>
@@ -142,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Current state of the rate plan (draft or published).</td>
+    <td>Current state of the rate plan (draft or published). (STATE_UNSPECIFIED, DRAFT, PUBLISHED)</td>
 </tr>
 </tbody>
 </table>
@@ -199,7 +200,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_apiproducts_rateplans_list"><CopyableCode code="organizations_apiproducts_rateplans_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
-    <td><a href="#parameter-count"><code>count</code></a>, <a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-state"><code>state</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-count"><code>count</code></a>, <a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-state"><code>state</code></a></td>
     <td>Lists all the rate plans for an API product.</td>
 </tr>
 <tr>
@@ -334,11 +335,11 @@ ratePlans
 FROM google.apigee.rateplans
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND apiproductsId = '{{ apiproductsId }}' -- required
-AND count = '{{ count }}'
 AND startKey = '{{ startKey }}'
+AND count = '{{ count }}'
 AND expand = '{{ expand }}'
-AND state = '{{ state }}'
 AND orderBy = '{{ orderBy }}'
+AND state = '{{ state }}'
 ;
 ```
 </TabItem>
@@ -360,42 +361,42 @@ Create a rate plan that is associated with an API product in an organization. Us
 
 ```sql
 INSERT INTO google.apigee.rateplans (
-data__state,
-data__revenueShareType,
-data__description,
-data__fixedFeeFrequency,
-data__paymentFundingModel,
-data__consumptionPricingType,
 data__apiproduct,
-data__billingPeriod,
-data__endTime,
-data__currencyCode,
-data__startTime,
+data__fixedFeeFrequency,
 data__setupFee,
-data__revenueShareRates,
-data__displayName,
+data__description,
 data__consumptionPricingRates,
+data__paymentFundingModel,
+data__startTime,
+data__consumptionPricingType,
+data__revenueShareRates,
+data__endTime,
+data__revenueShareType,
+data__state,
+data__displayName,
 data__fixedRecurringFee,
+data__billingPeriod,
+data__currencyCode,
 organizationsId,
 apiproductsId
 )
 SELECT 
-'{{ state }}',
-'{{ revenueShareType }}',
-'{{ description }}',
-{{ fixedFeeFrequency }},
-'{{ paymentFundingModel }}',
-'{{ consumptionPricingType }}',
 '{{ apiproduct }}',
-'{{ billingPeriod }}',
-'{{ endTime }}',
-'{{ currencyCode }}',
-'{{ startTime }}',
+{{ fixedFeeFrequency }},
 '{{ setupFee }}',
-'{{ revenueShareRates }}',
-'{{ displayName }}',
+'{{ description }}',
 '{{ consumptionPricingRates }}',
+'{{ paymentFundingModel }}',
+'{{ startTime }}',
+'{{ consumptionPricingType }}',
+'{{ revenueShareRates }}',
+'{{ endTime }}',
+'{{ revenueShareType }}',
+'{{ state }}',
+'{{ displayName }}',
 '{{ fixedRecurringFee }}',
+'{{ billingPeriod }}',
+'{{ currencyCode }}',
 '{{ organizationsId }}',
 '{{ apiproductsId }}'
 RETURNING
@@ -423,102 +424,101 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rateplans
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the rateplans resource.
     - name: apiproductsId
-      value: string
+      value: "{{ apiproductsId }}"
       description: Required parameter for the rateplans resource.
-    - name: state
-      value: string
-      description: >
-        Current state of the rate plan (draft or published).
-        
-      valid_values: ['STATE_UNSPECIFIED', 'DRAFT', 'PUBLISHED']
-    - name: revenueShareType
-      value: string
-      description: >
-        Method used to calculate the revenue that is shared with developers.
-        
-      valid_values: ['REVENUE_SHARE_TYPE_UNSPECIFIED', 'FIXED', 'VOLUME_BANDED']
-    - name: description
-      value: string
-      description: >
-        Description of the rate plan.
-        
-    - name: fixedFeeFrequency
-      value: integer
-      description: >
-        Frequency at which the fixed fee is charged.
-        
-    - name: paymentFundingModel
-      value: string
-      description: >
-        DEPRECATED: This field is no longer supported and will eventually be removed when Apigee Hybrid 1.5/1.6 is no longer supported. Instead, use the `billingType` field inside `DeveloperMonetizationConfig` resource. Flag that specifies the billing account type, prepaid or postpaid.
-        
-      valid_values: ['PAYMENT_FUNDING_MODEL_UNSPECIFIED', 'PREPAID', 'POSTPAID']
-    - name: consumptionPricingType
-      value: string
-      description: >
-        Pricing model used for consumption-based charges.
-        
-      valid_values: ['CONSUMPTION_PRICING_TYPE_UNSPECIFIED', 'FIXED_PER_UNIT', 'BANDED', 'TIERED', 'STAIRSTEP']
     - name: apiproduct
-      value: string
-      description: >
+      value: "{{ apiproduct }}"
+      description: |
         Name of the API product that the rate plan is associated with.
-        
-    - name: billingPeriod
-      value: string
-      description: >
-        Frequency at which the customer will be billed.
-        
-      valid_values: ['BILLING_PERIOD_UNSPECIFIED', 'WEEKLY', 'MONTHLY']
-    - name: endTime
-      value: string
-      description: >
-        Time when the rate plan will expire in milliseconds since epoch. Set to 0 or `null` to indicate that the rate plan should never expire.
-        
-    - name: currencyCode
-      value: string
-      description: >
-        Currency to be used for billing. Consists of a three-letter code as defined by the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) standard.
-        
-    - name: startTime
-      value: string
-      description: >
-        Time when the rate plan becomes active in milliseconds since epoch.
-        
+    - name: fixedFeeFrequency
+      value: {{ fixedFeeFrequency }}
+      description: |
+        Frequency at which the fixed fee is charged.
     - name: setupFee
-      value: object
-      description: >
+      description: |
         Initial, one-time fee paid when purchasing the API product.
-        
-    - name: revenueShareRates
-      value: array
-      description: >
-        Details of the revenue sharing model.
-        
-    - name: displayName
-      value: string
-      description: >
-        Display name of the rate plan.
-        
+      value:
+        currencyCode: "{{ currencyCode }}"
+        units: "{{ units }}"
+        nanos: {{ nanos }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the rate plan.
     - name: consumptionPricingRates
-      value: array
-      description: >
-        API call volume ranges and the fees charged when the total number of API calls is within a given range. The method used to calculate the final fee depends on the selected pricing model. For example, if the pricing model is `BANDED` and the ranges are defined as follows: ``` { "start": 1, "end": 100, "fee": 2 }, { "start": 101, "end": 200, "fee": 1.50 }, { "start": 201, "end": 0, "fee": 1 }, } ``` Then the following fees would be charged based on the total number of API calls (assuming the currency selected is `USD`): * 50 calls cost 50 x $2 = $100 * 150 calls cost 100 x $2 + 50 x $1.5 = $275 * 250 calls cost 100 x $2 + 100 x $1.5 + 50 x $1 = $400 * 500 calls cost 100 x $2 + 100 x $1.5 + 300 x $1 = $650
-        
+      description: |
+        API call volume ranges and the fees charged when the total number of API calls is within a given range. The method used to calculate the final fee depends on the selected pricing model. For example, if the pricing model is \`BANDED\` and the ranges are defined as follows: \`\`\` { "start": 1, "end": 100, "fee": 2 }, { "start": 101, "end": 200, "fee": 1.50 }, { "start": 201, "end": 0, "fee": 1 }, } \`\`\` Then the following fees would be charged based on the total number of API calls (assuming the currency selected is \`USD\`): * 50 calls cost 50 x $2 = $100 * 150 calls cost 100 x $2 + 50 x $1.5 = $275 * 250 calls cost 100 x $2 + 100 x $1.5 + 50 x $1 = $400 * 500 calls cost 100 x $2 + 100 x $1.5 + 300 x $1 = $650
+      value:
+        - end: "{{ end }}"
+          start: "{{ start }}"
+          fee:
+            currencyCode: "{{ currencyCode }}"
+            units: "{{ units }}"
+            nanos: {{ nanos }}
+    - name: paymentFundingModel
+      value: "{{ paymentFundingModel }}"
+      description: |
+        DEPRECATED: This field is no longer supported and will eventually be removed when Apigee Hybrid 1.5/1.6 is no longer supported. Instead, use the \`billingType\` field inside \`DeveloperMonetizationConfig\` resource. Flag that specifies the billing account type, prepaid or postpaid.
+      valid_values: ['PAYMENT_FUNDING_MODEL_UNSPECIFIED', 'PREPAID', 'POSTPAID']
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Time when the rate plan becomes active in milliseconds since epoch.
+    - name: consumptionPricingType
+      value: "{{ consumptionPricingType }}"
+      description: |
+        Pricing model used for consumption-based charges.
+      valid_values: ['CONSUMPTION_PRICING_TYPE_UNSPECIFIED', 'FIXED_PER_UNIT', 'BANDED', 'TIERED', 'STAIRSTEP']
+    - name: revenueShareRates
+      description: |
+        Details of the revenue sharing model.
+      value:
+        - start: "{{ start }}"
+          sharePercentage: {{ sharePercentage }}
+          end: "{{ end }}"
+    - name: endTime
+      value: "{{ endTime }}"
+      description: |
+        Time when the rate plan will expire in milliseconds since epoch. Set to 0 or \`null\` to indicate that the rate plan should never expire.
+    - name: revenueShareType
+      value: "{{ revenueShareType }}"
+      description: |
+        Method used to calculate the revenue that is shared with developers.
+      valid_values: ['REVENUE_SHARE_TYPE_UNSPECIFIED', 'FIXED', 'VOLUME_BANDED']
+    - name: state
+      value: "{{ state }}"
+      description: |
+        Current state of the rate plan (draft or published).
+      valid_values: ['STATE_UNSPECIFIED', 'DRAFT', 'PUBLISHED']
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Display name of the rate plan.
     - name: fixedRecurringFee
-      value: object
-      description: >
+      description: |
         Fixed amount that is charged at a defined interval and billed in advance of use of the API product. The fee will be prorated for the first billing period.
-        
-```
+      value:
+        currencyCode: "{{ currencyCode }}"
+        units: "{{ units }}"
+        nanos: {{ nanos }}
+    - name: billingPeriod
+      value: "{{ billingPeriod }}"
+      description: |
+        Frequency at which the customer will be billed.
+      valid_values: ['BILLING_PERIOD_UNSPECIFIED', 'WEEKLY', 'MONTHLY']
+    - name: currencyCode
+      value: "{{ currencyCode }}"
+      description: |
+        Currency to be used for billing. Consists of a three-letter code as defined by the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) standard.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -538,22 +538,22 @@ Updates an existing rate plan.
 ```sql
 REPLACE google.apigee.rateplans
 SET 
-data__state = '{{ state }}',
-data__revenueShareType = '{{ revenueShareType }}',
-data__description = '{{ description }}',
-data__fixedFeeFrequency = {{ fixedFeeFrequency }},
-data__paymentFundingModel = '{{ paymentFundingModel }}',
-data__consumptionPricingType = '{{ consumptionPricingType }}',
 data__apiproduct = '{{ apiproduct }}',
-data__billingPeriod = '{{ billingPeriod }}',
-data__endTime = '{{ endTime }}',
-data__currencyCode = '{{ currencyCode }}',
-data__startTime = '{{ startTime }}',
+data__fixedFeeFrequency = {{ fixedFeeFrequency }},
 data__setupFee = '{{ setupFee }}',
-data__revenueShareRates = '{{ revenueShareRates }}',
-data__displayName = '{{ displayName }}',
+data__description = '{{ description }}',
 data__consumptionPricingRates = '{{ consumptionPricingRates }}',
-data__fixedRecurringFee = '{{ fixedRecurringFee }}'
+data__paymentFundingModel = '{{ paymentFundingModel }}',
+data__startTime = '{{ startTime }}',
+data__consumptionPricingType = '{{ consumptionPricingType }}',
+data__revenueShareRates = '{{ revenueShareRates }}',
+data__endTime = '{{ endTime }}',
+data__revenueShareType = '{{ revenueShareType }}',
+data__state = '{{ state }}',
+data__displayName = '{{ displayName }}',
+data__fixedRecurringFee = '{{ fixedRecurringFee }}',
+data__billingPeriod = '{{ billingPeriod }}',
+data__currencyCode = '{{ currencyCode }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apiproductsId = '{{ apiproductsId }}' --required

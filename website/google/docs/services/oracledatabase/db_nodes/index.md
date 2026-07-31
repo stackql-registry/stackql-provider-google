@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>db_nodes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>db_nodes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="db_nodes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.db_nodes" /></td></tr>
 </tbody></table>
@@ -81,7 +82,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-exadbVmClustersId"><code>exadbVmClustersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-cloudVmClustersId"><code>cloudVmClustersId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the database nodes of a VM Cluster.</td>
 </tr>
@@ -101,8 +102,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-exadbVmClustersId">
-    <td><CopyableCode code="exadbVmClustersId" /></td>
+<tr id="parameter-cloudVmClustersId">
+    <td><CopyableCode code="cloudVmClustersId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -148,7 +149,7 @@ properties
 FROM google.oracledatabase.db_nodes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND exadbVmClustersId = '{{ exadbVmClustersId }}' -- required
+AND cloudVmClustersId = '{{ cloudVmClustersId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;

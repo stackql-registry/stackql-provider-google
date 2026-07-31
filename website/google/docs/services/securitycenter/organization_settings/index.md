@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>organization_settings</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>organization_settings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="organization_settings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.organization_settings" /></td></tr>
 </tbody></table>
@@ -51,17 +52,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The relative resource name of the settings. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: "organizations/&#123;organization_id&#125;/organizationSettings".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="assetDiscoveryConfig" /></td>
     <td><code>object</code></td>
-    <td>The configuration used for Asset Discovery runs. (id: AssetDiscoveryConfig)</td>
+    <td> (id: AssetDiscoveryConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="enableAssetDiscovery" /></td>
     <td><code>boolean</code></td>
-    <td>A flag that indicates if Asset Discovery should be enabled. If the flag is set to `true`, then discovery of assets will occur. If it is set to `false`, all historical assets will remain, but discovery of future assets will not occur.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -88,14 +89,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Gets the settings for an organization.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_update_organization_settings"><CopyableCode code="organizations_update_organization_settings" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates an organization's settings.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -136,7 +137,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="organizations_get_organization_settings">
 
-Gets the settings for an organization.
+Successful response
 
 ```sql
 SELECT
@@ -161,14 +162,14 @@ WHERE organizationsId = '{{ organizationsId }}' -- required
 >
 <TabItem value="organizations_update_organization_settings">
 
-Updates an organization's settings.
+No description available.
 
 ```sql
 UPDATE google.securitycenter.organization_settings
 SET 
 data__enableAssetDiscovery = {{ enableAssetDiscovery }},
-data__assetDiscoveryConfig = '{{ assetDiscoveryConfig }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__assetDiscoveryConfig = '{{ assetDiscoveryConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND updateMask = '{{ updateMask}}'

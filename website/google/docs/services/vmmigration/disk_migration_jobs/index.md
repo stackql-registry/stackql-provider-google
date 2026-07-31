@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>disk_migration_jobs</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>disk_migration_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="disk_migration_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmmigration.disk_migration_jobs" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the DiskMigrationJob.</td>
+    <td>Output only. State of the DiskMigrationJob. (STATE_UNSPECIFIED, READY, RUNNING, SUCCEEDED, CANCELLING, CANCELLED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="steps" /></td>
@@ -103,46 +104,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Identifier. The identifier of the DiskMigrationJob.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="awsSourceDiskDetails" /></td>
-    <td><code>object</code></td>
-    <td>Details of the unattached AWS source disk. (id: AwsSourceDiskDetails)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time the DiskMigrationJob resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errors" /></td>
-    <td><code>array</code></td>
-    <td>Output only. Provides details on the errors that led to the disk migration job's state in case of an error.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. State of the DiskMigrationJob.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="steps" /></td>
-    <td><code>array</code></td>
-    <td>Output only. The disk migration steps list representing its progress.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="targetDetails" /></td>
-    <td><code>object</code></td>
-    <td>Required. Details of the target Disk in Compute Engine. (id: DiskMigrationJobTargetDetails)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last time the DiskMigrationJob resource was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -174,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DiskMigrationJobs in a given Source.</td>
 </tr>
 <tr>
@@ -199,18 +160,18 @@ The following methods are available for this resource:
     <td>Deletes a single DiskMigrationJob.</td>
 </tr>
 <tr>
-    <td><a href="#run"><CopyableCode code="run" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-diskMigrationJobsId"><code>diskMigrationJobsId</code></a></td>
-    <td></td>
-    <td>Runs the disk migration job.</td>
-</tr>
-<tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-diskMigrationJobsId"><code>diskMigrationJobsId</code></a></td>
     <td></td>
     <td>Cancels the disk migration job.</td>
+</tr>
+<tr>
+    <td><a href="#run"><CopyableCode code="run" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-diskMigrationJobsId"><code>diskMigrationJobsId</code></a></td>
+    <td></td>
+    <td>Runs the disk migration job.</td>
 </tr>
 </tbody>
 </table>
@@ -323,22 +284,15 @@ Lists DiskMigrationJobs in a given Source.
 
 ```sql
 SELECT
-name,
-awsSourceDiskDetails,
-createTime,
-errors,
-state,
-steps,
-targetDetails,
-updateTime
+*
 FROM google.vmmigration.disk_migration_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND sourcesId = '{{ sourcesId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -360,8 +314,8 @@ Creates a new disk migration job in a given Source.
 
 ```sql
 INSERT INTO google.vmmigration.disk_migration_jobs (
-data__awsSourceDiskDetails,
 data__targetDetails,
+data__awsSourceDiskDetails,
 projectsId,
 locationsId,
 sourcesId,
@@ -369,8 +323,8 @@ diskMigrationJobId,
 requestId
 )
 SELECT 
-'{{ awsSourceDiskDetails }}',
 '{{ targetDetails }}',
+'{{ awsSourceDiskDetails }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourcesId }}',
@@ -387,34 +341,46 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: disk_migration_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the disk_migration_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the disk_migration_jobs resource.
     - name: sourcesId
-      value: string
+      value: "{{ sourcesId }}"
       description: Required parameter for the disk_migration_jobs resource.
-    - name: awsSourceDiskDetails
-      value: object
-      description: >
-        Details of the unattached AWS source disk.
-        
     - name: targetDetails
-      value: object
-      description: >
+      description: |
         Required. Details of the target Disk in Compute Engine.
-        
+      value:
+        targetDisk:
+          zone: "{{ zone }}"
+          replicaZones:
+            - "{{ replicaZones }}"
+          diskId: "{{ diskId }}"
+          diskType: "{{ diskType }}"
+        targetProject: "{{ targetProject }}"
+        labels: "{{ labels }}"
+        encryption:
+          kmsKey: "{{ kmsKey }}"
+    - name: awsSourceDiskDetails
+      description: |
+        Details of the unattached AWS source disk.
+      value:
+        volumeId: "{{ volumeId }}"
+        sizeGib: "{{ sizeGib }}"
+        diskType: "{{ diskType }}"
+        tags: "{{ tags }}"
     - name: diskMigrationJobId
-      value: string
+      value: "{{ diskMigrationJobId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -434,8 +400,8 @@ Updates the parameters of a single DiskMigrationJob.
 ```sql
 UPDATE google.vmmigration.disk_migration_jobs
 SET 
-data__awsSourceDiskDetails = '{{ awsSourceDiskDetails }}',
-data__targetDetails = '{{ targetDetails }}'
+data__targetDetails = '{{ targetDetails }}',
+data__awsSourceDiskDetails = '{{ awsSourceDiskDetails }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -481,18 +447,18 @@ AND diskMigrationJobsId = '{{ diskMigrationJobsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="run"
+    defaultValue="cancel"
     values={[
-        { label: 'run', value: 'run' },
-        { label: 'cancel', value: 'cancel' }
+        { label: 'cancel', value: 'cancel' },
+        { label: 'run', value: 'run' }
     ]}
 >
-<TabItem value="run">
+<TabItem value="cancel">
 
-Runs the disk migration job.
+Cancels the disk migration job.
 
 ```sql
-EXEC google.vmmigration.disk_migration_jobs.run 
+EXEC google.vmmigration.disk_migration_jobs.cancel 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @sourcesId='{{ sourcesId }}' --required, 
@@ -500,12 +466,12 @@ EXEC google.vmmigration.disk_migration_jobs.run
 ;
 ```
 </TabItem>
-<TabItem value="cancel">
+<TabItem value="run">
 
-Cancels the disk migration job.
+Runs the disk migration job.
 
 ```sql
-EXEC google.vmmigration.disk_migration_jobs.cancel 
+EXEC google.vmmigration.disk_migration_jobs.run 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @sourcesId='{{ sourcesId }}' --required, 

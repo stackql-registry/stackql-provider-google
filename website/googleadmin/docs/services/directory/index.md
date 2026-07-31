@@ -18,7 +18,7 @@ directory service documentation.
 
 :::info[Service Summary]
 
-total resources: __28__  
+total resources: __29__  
 
 :::
 
@@ -38,10 +38,10 @@ total resources: __28__
 <a href="/services/directory/domains/">domains</a><br />
 <a href="/services/directory/features/">features</a><br />
 <a href="/services/directory/groups/">groups</a><br />
-<a href="/services/directory/members/">members</a>
+<a href="/services/directory/members/">members</a><br />
+<a href="/services/directory/mobiledevices/">mobiledevices</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/directory/mobiledevices/">mobiledevices</a><br />
 <a href="/services/directory/orgunits/">orgunits</a><br />
 <a href="/services/directory/photos/">photos</a><br />
 <a href="/services/directory/print_servers/">print_servers</a><br />
@@ -54,6 +54,7 @@ total resources: __28__
 <a href="/services/directory/tokens/">tokens</a><br />
 <a href="/services/directory/two_step_verification/">two_step_verification</a><br />
 <a href="/services/directory/users/">users</a><br />
+<a href="/services/directory/users_guest/">users_guest</a><br />
 <a href="/services/directory/verification_codes/">verification_codes</a>
 </div>
 </div>

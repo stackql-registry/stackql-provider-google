@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schema_bundles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schema_bundles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schema_bundles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.schema_bundles" /></td></tr>
 </tbody></table>
@@ -285,8 +286,8 @@ Creates a new schema bundle in the specified table.
 
 ```sql
 INSERT INTO google.bigtableadmin.schema_bundles (
-data__protoSchema,
 data__name,
+data__protoSchema,
 data__etag,
 projectsId,
 instancesId,
@@ -294,8 +295,8 @@ tablesId,
 schemaBundleId
 )
 SELECT 
-'{{ protoSchema }}',
 '{{ name }}',
+'{{ protoSchema }}',
 '{{ etag }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
@@ -312,37 +313,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: schema_bundles
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the schema_bundles resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the schema_bundles resource.
     - name: tablesId
-      value: string
+      value: "{{ tablesId }}"
       description: Required parameter for the schema_bundles resource.
-    - name: protoSchema
-      value: object
-      description: >
-        Schema for Protobufs.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. The unique name identifying this schema bundle. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The unique name identifying this schema bundle. Values are of the form \`projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}\`
+    - name: protoSchema
+      description: |
+        Schema for Protobufs.
+      value:
+        protoDescriptors: "{{ protoDescriptors }}"
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Optional. The etag for this schema bundle. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
-        
     - name: schemaBundleId
-      value: string
-```
+      value: "{{ schemaBundleId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -362,8 +361,8 @@ Updates a schema bundle in the specified table.
 ```sql
 UPDATE google.bigtableadmin.schema_bundles
 SET 
-data__protoSchema = '{{ protoSchema }}',
 data__name = '{{ name }}',
+data__protoSchema = '{{ protoSchema }}',
 data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

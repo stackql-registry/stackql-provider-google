@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>https_health_checks</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>https_health_checks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="https_health_checks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.https_health_checks" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="checkIntervalSec" /></td>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>[Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of the resource. (default: compute#httpsHealthCheck)</td>
+    <td>Output only. Type of the resource. (default: compute#httpsHealthCheck)</td>
 </tr>
 <tr>
     <td><CopyableCode code="port" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="requestPath" /></td>
     <td><code>string</code></td>
-    <td>The request path of the HTTPS health check request. The default value is "/". Must comply with RFC3986.</td>
+    <td>The request path of the HTTPS health check request. The default value is "/". Must comply withRFC3986.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -141,17 +142,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of resource. (default: compute#httpsHealthCheckList)</td>
+    <td>Output only. Type of resource. (default: compute#httpsHealthCheckList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -189,29 +190,29 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves the list of HttpsHealthCheck resources available to the specified project.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of HttpsHealthCheck resources available to the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a HttpsHealthCheck resource in the specified project using the data included in the request.</td>
+    <td>Creates a HttpsHealthCheck resource in the specified project using the data<br />included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-httpsHealthCheck"><code>httpsHealthCheck</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates a HttpsHealthCheck resource in the specified project using the data included in the request. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.</td>
+    <td>Updates a HttpsHealthCheck resource in the specified project using the data<br />included in the request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-httpsHealthCheck"><code>httpsHealthCheck</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates a HttpsHealthCheck resource in the specified project using the data included in the request.</td>
+    <td>Updates a HttpsHealthCheck resource in the specified project using the data<br />included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -315,7 +316,7 @@ AND httpsHealthCheck = '{{ httpsHealthCheck }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of HttpsHealthCheck resources available to the specified project.
+Retrieves the list of HttpsHealthCheck resources available to the specified<br />project.
 
 ```sql
 SELECT
@@ -329,8 +330,8 @@ FROM google.compute.https_health_checks
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -349,40 +350,38 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="insert">
 
-Creates a HttpsHealthCheck resource in the specified project using the data included in the request.
+Creates a HttpsHealthCheck resource in the specified project using the data<br />included in the request.
 
 ```sql
 INSERT INTO google.compute.https_health_checks (
-data__kind,
 data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__host,
 data__requestPath,
-data__port,
-data__checkIntervalSec,
-data__timeoutSec,
-data__unhealthyThreshold,
-data__healthyThreshold,
 data__selfLink,
+data__description,
+data__name,
+data__checkIntervalSec,
+data__healthyThreshold,
+data__host,
+data__unhealthyThreshold,
+data__timeoutSec,
+data__creationTimestamp,
+data__port,
 project,
 requestId
 )
 SELECT 
-'{{ kind }}',
 '{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ host }}',
 '{{ requestPath }}',
-{{ port }},
-{{ checkIntervalSec }},
-{{ timeoutSec }},
-{{ unhealthyThreshold }},
-{{ healthyThreshold }},
 '{{ selfLink }}',
+'{{ description }}',
+'{{ name }}',
+{{ checkIntervalSec }},
+{{ healthyThreshold }},
+'{{ host }}',
+{{ unhealthyThreshold }},
+{{ timeoutSec }},
+'{{ creationTimestamp }}',
+{{ port }},
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -393,6 +392,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -417,82 +417,82 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: https_health_checks
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the https_health_checks resource.
-    - name: kind
-      value: string
-      description: >
-        Type of the resource.
-        
-      default: compute#httpsHealthCheck
     - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: host
-      value: string
-      description: >
-        The value of the host header in the HTTPS health check request. If left empty (default value), the public IP on behalf of which this health check is performed will be used.
-        
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
     - name: requestPath
-      value: string
-      description: >
-        The request path of the HTTPS health check request. The default value is "/". Must comply with RFC3986.
-        
-    - name: port
-      value: integer
-      description: >
-        The TCP port number for the HTTPS health check request. The default value is 443.
-        
-    - name: checkIntervalSec
-      value: integer
-      description: >
-        How often (in seconds) to send a health check. The default value is 5 seconds.
-        
-    - name: timeoutSec
-      value: integer
-      description: >
-        How long (in seconds) to wait before claiming failure. The default value is 5 seconds. It is invalid for timeoutSec to have a greater value than checkIntervalSec.
-        
-    - name: unhealthyThreshold
-      value: integer
-      description: >
-        A so-far healthy instance will be marked unhealthy after this many consecutive failures. The default value is 2.
-        
-    - name: healthyThreshold
-      value: integer
-      description: >
-        A so-far unhealthy instance will be marked healthy after this many consecutive successes. The default value is 2.
-        
+      value: "{{ requestPath }}"
+      description: |
+        The request path of the HTTPS health check request. The default value is
+        "/". Must comply withRFC3986.
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         [Output Only] Server-defined URL for the resource.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: checkIntervalSec
+      value: {{ checkIntervalSec }}
+      description: |
+        How often (in seconds) to send a health check. The default value is 5
+        seconds.
+    - name: healthyThreshold
+      value: {{ healthyThreshold }}
+      description: |
+        A so-far unhealthy instance will be marked healthy after this
+        many consecutive successes. The default value is 2.
+    - name: host
+      value: "{{ host }}"
+      description: |
+        The value of the host header in the HTTPS health check request. If left
+        empty (default value), the public IP on behalf of which this health check
+        is performed will be used.
+    - name: unhealthyThreshold
+      value: {{ unhealthyThreshold }}
+      description: |
+        A so-far healthy instance will be marked unhealthy after this
+        many consecutive failures. The default value is 2.
+    - name: timeoutSec
+      value: {{ timeoutSec }}
+      description: |
+        How long (in seconds) to wait before claiming failure. The default value is
+        5 seconds. It is invalid for timeoutSec to have a greater value than
+        checkIntervalSec.
+    - name: creationTimestamp
+      value: "{{ creationTimestamp }}"
+      description: |
+        [Output Only] Creation timestamp inRFC3339
+        text format.
+    - name: port
+      value: {{ port }}
+      description: |
+        The TCP port number for the HTTPS health check request. The default value
+        is 443.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -507,24 +507,23 @@ zone
 >
 <TabItem value="patch">
 
-Updates a HttpsHealthCheck resource in the specified project using the data included in the request. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.
+Updates a HttpsHealthCheck resource in the specified project using the data<br />included in the request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.
 
 ```sql
 UPDATE google.compute.https_health_checks
 SET 
-data__kind = '{{ kind }}',
 data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__host = '{{ host }}',
 data__requestPath = '{{ requestPath }}',
-data__port = {{ port }},
+data__selfLink = '{{ selfLink }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
 data__checkIntervalSec = {{ checkIntervalSec }},
-data__timeoutSec = {{ timeoutSec }},
-data__unhealthyThreshold = {{ unhealthyThreshold }},
 data__healthyThreshold = {{ healthyThreshold }},
-data__selfLink = '{{ selfLink }}'
+data__host = '{{ host }}',
+data__unhealthyThreshold = {{ unhealthyThreshold }},
+data__timeoutSec = {{ timeoutSec }},
+data__creationTimestamp = '{{ creationTimestamp }}',
+data__port = {{ port }}
 WHERE 
 project = '{{ project }}' --required
 AND httpsHealthCheck = '{{ httpsHealthCheck }}' --required
@@ -537,6 +536,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -571,24 +571,23 @@ zone;
 >
 <TabItem value="update">
 
-Updates a HttpsHealthCheck resource in the specified project using the data included in the request.
+Updates a HttpsHealthCheck resource in the specified project using the data<br />included in the request.
 
 ```sql
 REPLACE google.compute.https_health_checks
 SET 
-data__kind = '{{ kind }}',
 data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__host = '{{ host }}',
 data__requestPath = '{{ requestPath }}',
-data__port = {{ port }},
+data__selfLink = '{{ selfLink }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
 data__checkIntervalSec = {{ checkIntervalSec }},
-data__timeoutSec = {{ timeoutSec }},
-data__unhealthyThreshold = {{ unhealthyThreshold }},
 data__healthyThreshold = {{ healthyThreshold }},
-data__selfLink = '{{ selfLink }}'
+data__host = '{{ host }}',
+data__unhealthyThreshold = {{ unhealthyThreshold }},
+data__timeoutSec = {{ timeoutSec }},
+data__creationTimestamp = '{{ creationTimestamp }}',
+data__port = {{ port }}
 WHERE 
 project = '{{ project }}' --required
 AND httpsHealthCheck = '{{ httpsHealthCheck }}' --required
@@ -601,6 +600,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,

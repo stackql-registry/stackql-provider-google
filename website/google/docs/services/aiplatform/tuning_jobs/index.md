@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tuning_jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tuning_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tuning_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.tuning_jobs" /></td></tr>
 </tbody></table>
@@ -85,6 +86,11 @@ The following fields are returned by `SELECT` queries:
     <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="evaluateDatasetRuns" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Evaluation runs for the Tuning Job.</td>
+</tr>
+<tr>
     <td><CopyableCode code="experiment" /></td>
     <td><code>string</code></td>
     <td>Output only. The Experiment associated with this TuningJob.</td>
@@ -117,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the job.</td>
+    <td>Output only. The detailed state of the job. (JOB_STATE_UNSPECIFIED, JOB_STATE_QUEUED, JOB_STATE_PENDING, JOB_STATE_RUNNING, JOB_STATE_SUCCEEDED, JOB_STATE_FAILED, JOB_STATE_CANCELLING, JOB_STATE_CANCELLED, JOB_STATE_PAUSED, JOB_STATE_EXPIRED, JOB_STATE_UPDATING, JOB_STATE_PARTIALLY_SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supervisedTuningSpec" /></td>
@@ -194,6 +200,11 @@ The following fields are returned by `SELECT` queries:
     <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="evaluateDatasetRuns" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Evaluation runs for the Tuning Job.</td>
+</tr>
+<tr>
     <td><CopyableCode code="experiment" /></td>
     <td><code>string</code></td>
     <td>Output only. The Experiment associated with this TuningJob.</td>
@@ -226,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the job.</td>
+    <td>Output only. The detailed state of the job. (JOB_STATE_UNSPECIFIED, JOB_STATE_QUEUED, JOB_STATE_PENDING, JOB_STATE_RUNNING, JOB_STATE_SUCCEEDED, JOB_STATE_FAILED, JOB_STATE_CANCELLING, JOB_STATE_CANCELLED, JOB_STATE_PAUSED, JOB_STATE_EXPIRED, JOB_STATE_UPDATING, JOB_STATE_PARTIALLY_SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supervisedTuningSpec" /></td>
@@ -278,35 +289,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tuningJobsId"><code>tuningJobsId</code></a></td>
     <td></td>
-    <td>Gets a TuningJob.</td>
+    <td>Gets a tuning job.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists TuningJobs in a Location.</td>
+    <td>Lists tuning jobs in a location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a TuningJob. A created TuningJob right away will be attempted to be run.</td>
-</tr>
-<tr>
-    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tuningJobsId"><code>tuningJobsId</code></a></td>
-    <td></td>
-    <td>Cancels a TuningJob. Starts asynchronous cancellation on the TuningJob. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the TuningJob is not deleted; instead it becomes a job with a TuningJob.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`, and TuningJob.state is set to `CANCELLED`.</td>
+    <td>Creates a tuning job. A created tuning job will be subsequently executed to start the model tuning process.</td>
 </tr>
 <tr>
     <td><a href="#rebase_tuned_model"><CopyableCode code="rebase_tuned_model" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Rebase a TunedModel.</td>
+    <td>Rebase a tuned model. A rebase operation takes a model that was previously tuned on a base model version, and retunes it on a new base model version. The rebase operation creates a new tuning job and a new tuned model.</td>
+</tr>
+<tr>
+    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tuningJobsId"><code>tuningJobsId</code></a></td>
+    <td></td>
+    <td>Cancels a tuning job. Starts an asynchronous cancellation request. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the tuning job is not deleted. Instead, its state is set to `CANCELLED`, and `error` is set to a status with a `google.rpc.Status.code` of 1, corresponding to `Code.CANCELLED`.</td>
 </tr>
 </tbody>
 </table>
@@ -368,7 +379,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets a TuningJob.
+Gets a tuning job.
 
 ```sql
 SELECT
@@ -379,6 +390,7 @@ description,
 encryptionSpec,
 endTime,
 error,
+evaluateDatasetRuns,
 experiment,
 labels,
 preTunedModel,
@@ -400,7 +412,7 @@ AND tuningJobsId = '{{ tuningJobsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists TuningJobs in a Location.
+Lists tuning jobs in a location.
 
 ```sql
 SELECT
@@ -411,6 +423,7 @@ description,
 encryptionSpec,
 endTime,
 error,
+evaluateDatasetRuns,
 experiment,
 labels,
 preTunedModel,
@@ -446,32 +459,32 @@ AND pageSize = '{{ pageSize }}'
 >
 <TabItem value="create">
 
-Creates a TuningJob. A created TuningJob right away will be attempted to be run.
+Creates a tuning job. A created tuning job will be subsequently executed to start the model tuning process.
 
 ```sql
 INSERT INTO google.aiplatform.tuning_jobs (
-data__encryptionSpec,
-data__supervisedTuningSpec,
 data__tunedModelDisplayName,
-data__preTunedModel,
-data__labels,
 data__description,
-data__preferenceOptimizationSpec,
-data__serviceAccount,
 data__baseModel,
+data__labels,
+data__supervisedTuningSpec,
+data__encryptionSpec,
+data__preferenceOptimizationSpec,
+data__preTunedModel,
+data__serviceAccount,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ encryptionSpec }}',
-'{{ supervisedTuningSpec }}',
 '{{ tunedModelDisplayName }}',
-'{{ preTunedModel }}',
-'{{ labels }}',
 '{{ description }}',
-'{{ preferenceOptimizationSpec }}',
-'{{ serviceAccount }}',
 '{{ baseModel }}',
+'{{ labels }}',
+'{{ supervisedTuningSpec }}',
+'{{ encryptionSpec }}',
+'{{ preferenceOptimizationSpec }}',
+'{{ preTunedModel }}',
+'{{ serviceAccount }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -482,6 +495,7 @@ description,
 encryptionSpec,
 endTime,
 error,
+evaluateDatasetRuns,
 experiment,
 labels,
 preTunedModel,
@@ -499,62 +513,406 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tuning_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tuning_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tuning_jobs resource.
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key options for a TuningJob. If this is set, then all resources created by the TuningJob will be encrypted with the provided encryption key.
-        
-    - name: supervisedTuningSpec
-      value: object
-      description: >
-        Tuning Spec for Supervised Fine Tuning.
-        
     - name: tunedModelDisplayName
-      value: string
-      description: >
+      value: "{{ tunedModelDisplayName }}"
+      description: |
         Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters. For continuous tuning, tuned_model_display_name will by default use the same display name as the pre-tuned model. If a new display name is provided, the tuning job will create a new model instead of a new version.
-        
-    - name: preTunedModel
-      value: object
-      description: >
-        The pre-tuned model for continuous tuning.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels with user-defined metadata to organize TuningJob and generated resources such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. The description of the TuningJob.
-        
-    - name: preferenceOptimizationSpec
-      value: object
-      description: >
-        Tuning Spec for Preference Optimization.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        The service account that the tuningJob workload runs as. If not specified, the Vertex AI Secure Fine-Tuned Service Agent in the project will be used. See https://cloud.google.com/iam/docs/service-agents#vertex-ai-secure-fine-tuning-service-agent Users starting the pipeline must have the `iam.serviceAccounts.actAs` permission on this service account.
-        
     - name: baseModel
-      value: string
-      description: >
+      value: "{{ baseModel }}"
+      description: |
         The base model that is being tuned. See [Supported models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
-        
-```
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels with user-defined metadata to organize TuningJob and generated resources such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+    - name: supervisedTuningSpec
+      description: |
+        Tuning Spec for Supervised Fine Tuning.
+      value:
+        exportLastCheckpointOnly: {{ exportLastCheckpointOnly }}
+        validationDatasetUri: "{{ validationDatasetUri }}"
+        trainingDatasetUri: "{{ trainingDatasetUri }}"
+        evaluationConfig:
+          metrics:
+            - pointwiseMetricSpec:
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                systemInstruction: "{{ systemInstruction }}"
+                customOutputFormatConfig:
+                  returnRawOutput: {{ returnRawOutput }}
+              bleuSpec:
+                useEffectiveOrder: {{ useEffectiveOrder }}
+              rougeSpec:
+                useStemmer: {{ useStemmer }}
+                rougeType: "{{ rougeType }}"
+                splitSummaries: {{ splitSummaries }}
+              exactMatchSpec: "{{ exactMatchSpec }}"
+              computationBasedMetricSpec:
+                type: "{{ type }}"
+                parameters: "{{ parameters }}"
+              predefinedMetricSpec:
+                metricSpecName: "{{ metricSpecName }}"
+                metricSpecParameters: "{{ metricSpecParameters }}"
+              metadata:
+                otherMetadata: "{{ otherMetadata }}"
+                title: "{{ title }}"
+                scoreRange:
+                  min: {{ min }}
+                  step: {{ step }}
+                  description: "{{ description }}"
+                  max: {{ max }}
+              customCodeExecutionSpec:
+                evaluationFunction: "{{ evaluationFunction }}"
+              pairwiseMetricSpec:
+                systemInstruction: "{{ systemInstruction }}"
+                baselineResponseFieldName: "{{ baselineResponseFieldName }}"
+                candidateResponseFieldName: "{{ candidateResponseFieldName }}"
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                customOutputFormatConfig:
+                  returnRawOutput: {{ returnRawOutput }}
+              aggregationMetrics: "{{ aggregationMetrics }}"
+              llmBasedMetricSpec:
+                systemInstruction: "{{ systemInstruction }}"
+                judgeAutoraterConfig:
+                  samplingCount: {{ samplingCount }}
+                  flipEnabled: {{ flipEnabled }}
+                  autoraterModel: "{{ autoraterModel }}"
+                  generationConfig: "{{ generationConfig }}"
+                rubricGroupKey: "{{ rubricGroupKey }}"
+                resultParserConfig:
+                  customCodeParserConfig: "{{ customCodeParserConfig }}"
+                predefinedRubricGenerationSpec:
+                  metricSpecName: "{{ metricSpecName }}"
+                  metricSpecParameters: "{{ metricSpecParameters }}"
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                rubricGenerationSpec:
+                  promptTemplate: "{{ promptTemplate }}"
+                  modelConfig: "{{ modelConfig }}"
+                  rubricTypeOntology: "{{ rubricTypeOntology }}"
+                  rubricContentType: "{{ rubricContentType }}"
+                additionalConfig: "{{ additionalConfig }}"
+          inferenceGenerationConfig:
+            speechConfig:
+              languageCode: "{{ languageCode }}"
+              multiSpeakerVoiceConfig:
+                speakerVoiceConfigs: "{{ speakerVoiceConfigs }}"
+              voiceConfig:
+                replicatedVoiceConfig: "{{ replicatedVoiceConfig }}"
+                prebuiltVoiceConfig: "{{ prebuiltVoiceConfig }}"
+            seed: {{ seed }}
+            imageConfig:
+              personGeneration: "{{ personGeneration }}"
+              aspectRatio: "{{ aspectRatio }}"
+              imageSize: "{{ imageSize }}"
+              prominentPeople: "{{ prominentPeople }}"
+              imageOutputOptions:
+                compressionQuality: {{ compressionQuality }}
+                mimeType: "{{ mimeType }}"
+            audioTranscriptionConfig:
+              customVocabulary:
+                - "{{ customVocabulary }}"
+              languageHints:
+                languageCodes: "{{ languageCodes }}"
+              diarization: {{ diarization }}
+              adaptationPhrases:
+                - "{{ adaptationPhrases }}"
+              languageAuto: "{{ languageAuto }}"
+              wordTimestamp: {{ wordTimestamp }}
+            maxOutputTokens: {{ maxOutputTokens }}
+            responseModalities:
+              - "{{ responseModalities }}"
+            topP: {{ topP }}
+            responseJsonSchema: "{{ responseJsonSchema }}"
+            responseFormat:
+              - audio:
+                  mimeType: "{{ mimeType }}"
+                  bitRate: {{ bitRate }}
+                  delivery: "{{ delivery }}"
+                  sampleRate: {{ sampleRate }}
+                text:
+                  mimeType: "{{ mimeType }}"
+                  schema: "{{ schema }}"
+                image:
+                  mimeType: "{{ mimeType }}"
+                  delivery: "{{ delivery }}"
+                  aspectRatio: "{{ aspectRatio }}"
+                  imageSize: "{{ imageSize }}"
+                video:
+                  delivery: "{{ delivery }}"
+                  aspectRatio: "{{ aspectRatio }}"
+                  gcsUri: "{{ gcsUri }}"
+                  duration: "{{ duration }}"
+            thinkingConfig:
+              includeThoughts: {{ includeThoughts }}
+              thinkingLevel: "{{ thinkingLevel }}"
+              thinkingBudget: {{ thinkingBudget }}
+            enableAffectiveDialog: {{ enableAffectiveDialog }}
+            topK: {{ topK }}
+            logprobs: {{ logprobs }}
+            presencePenalty: {{ presencePenalty }}
+            candidateCount: {{ candidateCount }}
+            responseSchema:
+              ref: "{{ ref }}"
+              enum:
+                - "{{ enum }}"
+              minLength: "{{ minLength }}"
+              title: "{{ title }}"
+              minimum: {{ minimum }}
+              maxProperties: "{{ maxProperties }}"
+              properties: "{{ properties }}"
+              nullable: {{ nullable }}
+              example: "{{ example }}"
+              minProperties: "{{ minProperties }}"
+              type: "{{ type }}"
+              pattern: "{{ pattern }}"
+              additionalProperties: "{{ additionalProperties }}"
+              format: "{{ format }}"
+              propertyOrdering:
+                - "{{ propertyOrdering }}"
+              minItems: "{{ minItems }}"
+              maximum: {{ maximum }}
+              maxLength: "{{ maxLength }}"
+              items:
+                ref: "{{ ref }}"
+                enum: "{{ enum }}"
+                minLength: "{{ minLength }}"
+                title: "{{ title }}"
+                minimum: {{ minimum }}
+                maxProperties: "{{ maxProperties }}"
+                properties: "{{ properties }}"
+                nullable: {{ nullable }}
+                example: "{{ example }}"
+                minProperties: "{{ minProperties }}"
+                type: "{{ type }}"
+                pattern: "{{ pattern }}"
+                additionalProperties: "{{ additionalProperties }}"
+                format: "{{ format }}"
+                propertyOrdering: "{{ propertyOrdering }}"
+                minItems: "{{ minItems }}"
+                maximum: {{ maximum }}
+                maxLength: "{{ maxLength }}"
+                items: "{{ items }}"
+                description: "{{ description }}"
+                required: "{{ required }}"
+                maxItems: "{{ maxItems }}"
+                defs: "{{ defs }}"
+                anyOf: "{{ anyOf }}"
+                default: "{{ default }}"
+              description: "{{ description }}"
+              required:
+                - "{{ required }}"
+              maxItems: "{{ maxItems }}"
+              defs: "{{ defs }}"
+              anyOf:
+                - ref: "{{ ref }}"
+                  enum: "{{ enum }}"
+                  minLength: "{{ minLength }}"
+                  title: "{{ title }}"
+                  minimum: {{ minimum }}
+                  maxProperties: "{{ maxProperties }}"
+                  properties: "{{ properties }}"
+                  nullable: {{ nullable }}
+                  example: "{{ example }}"
+                  minProperties: "{{ minProperties }}"
+                  type: "{{ type }}"
+                  pattern: "{{ pattern }}"
+                  additionalProperties: "{{ additionalProperties }}"
+                  format: "{{ format }}"
+                  propertyOrdering: "{{ propertyOrdering }}"
+                  minItems: "{{ minItems }}"
+                  maximum: {{ maximum }}
+                  maxLength: "{{ maxLength }}"
+                  items:
+                    ref: "{{ ref }}"
+                    enum: "{{ enum }}"
+                    minLength: "{{ minLength }}"
+                    title: "{{ title }}"
+                    minimum: {{ minimum }}
+                    maxProperties: "{{ maxProperties }}"
+                    properties: "{{ properties }}"
+                    nullable: {{ nullable }}
+                    example: "{{ example }}"
+                    minProperties: "{{ minProperties }}"
+                    type: "{{ type }}"
+                    pattern: "{{ pattern }}"
+                    additionalProperties: "{{ additionalProperties }}"
+                    format: "{{ format }}"
+                    propertyOrdering: "{{ propertyOrdering }}"
+                    minItems: "{{ minItems }}"
+                    maximum: {{ maximum }}
+                    maxLength: "{{ maxLength }}"
+                    items: "{{ items }}"
+                    description: "{{ description }}"
+                    required: "{{ required }}"
+                    maxItems: "{{ maxItems }}"
+                    defs: "{{ defs }}"
+                    anyOf: "{{ anyOf }}"
+                    default: "{{ default }}"
+                  description: "{{ description }}"
+                  required: "{{ required }}"
+                  maxItems: "{{ maxItems }}"
+                  defs: "{{ defs }}"
+                  anyOf: "{{ anyOf }}"
+                  default: "{{ default }}"
+              default: "{{ default }}"
+            routingConfig:
+              manualMode:
+                modelName: "{{ modelName }}"
+              autoMode:
+                modelRoutingPreference: "{{ modelRoutingPreference }}"
+            audioTimestamp: {{ audioTimestamp }}
+            temperature: {{ temperature }}
+            stopSequences:
+              - "{{ stopSequences }}"
+            responseLogprobs: {{ responseLogprobs }}
+            responseMimeType: "{{ responseMimeType }}"
+            mediaResolution: "{{ mediaResolution }}"
+            frequencyPenalty: {{ frequencyPenalty }}
+          autoraterConfig:
+            samplingCount: {{ samplingCount }}
+            flipEnabled: {{ flipEnabled }}
+            autoraterModel: "{{ autoraterModel }}"
+            generationConfig:
+              speechConfig:
+                languageCode: "{{ languageCode }}"
+                multiSpeakerVoiceConfig: "{{ multiSpeakerVoiceConfig }}"
+                voiceConfig: "{{ voiceConfig }}"
+              seed: {{ seed }}
+              imageConfig:
+                personGeneration: "{{ personGeneration }}"
+                aspectRatio: "{{ aspectRatio }}"
+                imageSize: "{{ imageSize }}"
+                prominentPeople: "{{ prominentPeople }}"
+                imageOutputOptions: "{{ imageOutputOptions }}"
+              audioTranscriptionConfig:
+                customVocabulary: "{{ customVocabulary }}"
+                languageHints: "{{ languageHints }}"
+                diarization: {{ diarization }}
+                adaptationPhrases: "{{ adaptationPhrases }}"
+                languageAuto: "{{ languageAuto }}"
+                wordTimestamp: {{ wordTimestamp }}
+              maxOutputTokens: {{ maxOutputTokens }}
+              responseModalities:
+                - "{{ responseModalities }}"
+              topP: {{ topP }}
+              responseJsonSchema: "{{ responseJsonSchema }}"
+              responseFormat:
+                - audio:
+                    mimeType: "{{ mimeType }}"
+                    bitRate: {{ bitRate }}
+                    delivery: "{{ delivery }}"
+                    sampleRate: {{ sampleRate }}
+                  text:
+                    mimeType: "{{ mimeType }}"
+                    schema: "{{ schema }}"
+                  image:
+                    mimeType: "{{ mimeType }}"
+                    delivery: "{{ delivery }}"
+                    aspectRatio: "{{ aspectRatio }}"
+                    imageSize: "{{ imageSize }}"
+                  video:
+                    delivery: "{{ delivery }}"
+                    aspectRatio: "{{ aspectRatio }}"
+                    gcsUri: "{{ gcsUri }}"
+                    duration: "{{ duration }}"
+              thinkingConfig:
+                includeThoughts: {{ includeThoughts }}
+                thinkingLevel: "{{ thinkingLevel }}"
+                thinkingBudget: {{ thinkingBudget }}
+              enableAffectiveDialog: {{ enableAffectiveDialog }}
+              topK: {{ topK }}
+              logprobs: {{ logprobs }}
+              presencePenalty: {{ presencePenalty }}
+              candidateCount: {{ candidateCount }}
+              responseSchema:
+                ref: "{{ ref }}"
+                enum: "{{ enum }}"
+                minLength: "{{ minLength }}"
+                title: "{{ title }}"
+                minimum: {{ minimum }}
+                maxProperties: "{{ maxProperties }}"
+                properties: "{{ properties }}"
+                nullable: {{ nullable }}
+                example: "{{ example }}"
+                minProperties: "{{ minProperties }}"
+                type: "{{ type }}"
+                pattern: "{{ pattern }}"
+                additionalProperties: "{{ additionalProperties }}"
+                format: "{{ format }}"
+                propertyOrdering: "{{ propertyOrdering }}"
+                minItems: "{{ minItems }}"
+                maximum: {{ maximum }}
+                maxLength: "{{ maxLength }}"
+                items: "{{ items }}"
+                description: "{{ description }}"
+                required: "{{ required }}"
+                maxItems: "{{ maxItems }}"
+                defs: "{{ defs }}"
+                anyOf: "{{ anyOf }}"
+                default: "{{ default }}"
+              routingConfig:
+                manualMode: "{{ manualMode }}"
+                autoMode: "{{ autoMode }}"
+              audioTimestamp: {{ audioTimestamp }}
+              temperature: {{ temperature }}
+              stopSequences:
+                - "{{ stopSequences }}"
+              responseLogprobs: {{ responseLogprobs }}
+              responseMimeType: "{{ responseMimeType }}"
+              mediaResolution: "{{ mediaResolution }}"
+              frequencyPenalty: {{ frequencyPenalty }}
+          outputConfig:
+            gcsDestination:
+              outputUriPrefix: "{{ outputUriPrefix }}"
+          datasetCustomMetrics:
+            - displayName: "{{ displayName }}"
+              aggregationFunction: "{{ aggregationFunction }}"
+        hyperParameters:
+          adapterSize: "{{ adapterSize }}"
+          epochCount: "{{ epochCount }}"
+          learningRateMultiplier: {{ learningRateMultiplier }}
+    - name: encryptionSpec
+      description: |
+        Customer-managed encryption key options for a TuningJob. If this is set, then all resources created by the TuningJob will be encrypted with the provided encryption key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: preferenceOptimizationSpec
+      description: |
+        Tuning Spec for Preference Optimization.
+      value:
+        hyperParameters:
+          adapterSize: "{{ adapterSize }}"
+          beta: {{ beta }}
+          epochCount: "{{ epochCount }}"
+          learningRateMultiplier: {{ learningRateMultiplier }}
+        validationDatasetUri: "{{ validationDatasetUri }}"
+        trainingDatasetUri: "{{ trainingDatasetUri }}"
+        exportLastCheckpointOnly: {{ exportLastCheckpointOnly }}
+    - name: preTunedModel
+      description: |
+        The pre-tuned model for continuous tuning.
+      value:
+        tunedModelName: "{{ tunedModelName }}"
+        checkpointId: "{{ checkpointId }}"
+        baseModel: "{{ baseModel }}"
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        The service account that the tuningJob workload runs as. If not specified, the Vertex AI Secure Fine-Tuned Service Agent in the project will be used. See https://cloud.google.com/iam/docs/service-agents#vertex-ai-secure-fine-tuning-service-agent Users starting the pipeline must have the \`iam.serviceAccounts.actAs\` permission on this service account.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -562,27 +920,15 @@ updateTime
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="cancel"
+    defaultValue="rebase_tuned_model"
     values={[
-        { label: 'cancel', value: 'cancel' },
-        { label: 'rebase_tuned_model', value: 'rebase_tuned_model' }
+        { label: 'rebase_tuned_model', value: 'rebase_tuned_model' },
+        { label: 'cancel', value: 'cancel' }
     ]}
 >
-<TabItem value="cancel">
-
-Cancels a TuningJob. Starts asynchronous cancellation on the TuningJob. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the TuningJob is not deleted; instead it becomes a job with a TuningJob.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`, and TuningJob.state is set to `CANCELLED`.
-
-```sql
-EXEC google.aiplatform.tuning_jobs.cancel 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@tuningJobsId='{{ tuningJobsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="rebase_tuned_model">
 
-Rebase a TunedModel.
+Rebase a tuned model. A rebase operation takes a model that was previously tuned on a base model version, and retunes it on a new base model version. The rebase operation creates a new tuning job and a new tuned model.
 
 ```sql
 EXEC google.aiplatform.tuning_jobs.rebase_tuned_model 
@@ -590,11 +936,23 @@ EXEC google.aiplatform.tuning_jobs.rebase_tuned_model
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"tuningJob": "{{ tuningJob }}", 
 "deployToSameEndpoint": {{ deployToSameEndpoint }}, 
 "tunedModelRef": "{{ tunedModelRef }}", 
-"artifactDestination": "{{ artifactDestination }}", 
-"tuningJob": "{{ tuningJob }}"
+"artifactDestination": "{{ artifactDestination }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="cancel">
+
+Cancels a tuning job. Starts an asynchronous cancellation request. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the tuning job is not deleted. Instead, its state is set to `CANCELLED`, and `error` is set to a status with a `google.rpc.Status.code` of 1, corresponding to `Code.CANCELLED`.
+
+```sql
+EXEC google.aiplatform.tuning_jobs.cancel 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@tuningJobsId='{{ tuningJobsId }}' --required
 ;
 ```
 </TabItem>

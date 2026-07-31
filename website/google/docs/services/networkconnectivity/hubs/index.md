@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>hubs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>hubs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="hubs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.hubs" /></td></tr>
 </tbody></table>
@@ -32,37 +33,13 @@ Creates, updates, deletes, gets or lists a <code>hubs</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="query_status"
+    defaultValue="get"
     values={[
-        { label: 'query_status', value: 'query_status' },
         { label: 'get', value: 'get' },
+        { label: 'query_status', value: 'query_status' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_status">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="hubStatusEntries" /></td>
-    <td><code>array</code></td>
-    <td>The list of hub status.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>The token for the next page of the response. To see more results, use this value as the page_token for your next request. If this value is empty, there are no more results.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="get">
 
 <table>
@@ -102,12 +79,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="policyMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The policy mode of this hub. This field can be either PRESET or CUSTOM. If unspecified, the policy_mode defaults to PRESET.</td>
+    <td>Optional. The policy mode of this hub. This field can be either PRESET or CUSTOM. If unspecified, the policy_mode defaults to PRESET. (POLICY_MODE_UNSPECIFIED, PRESET)</td>
 </tr>
 <tr>
     <td><CopyableCode code="presetTopology" /></td>
     <td><code>string</code></td>
-    <td>Optional. The topology implemented in this hub. Currently, this field is only used when policy_mode = PRESET. The available preset topologies are MESH and STAR. If preset_topology is unspecified and policy_mode = PRESET, the preset_topology defaults to MESH. When policy_mode = CUSTOM, the preset_topology is set to PRESET_TOPOLOGY_UNSPECIFIED.</td>
+    <td>Optional. The topology implemented in this hub. Currently, this field is only used when policy_mode = PRESET. The available preset topologies are MESH and STAR. If preset_topology is unspecified and policy_mode = PRESET, the preset_topology defaults to MESH. When policy_mode = CUSTOM, the preset_topology is set to PRESET_TOPOLOGY_UNSPECIFIED. (PRESET_TOPOLOGY_UNSPECIFIED, MESH, STAR, HYBRID_INSPECTION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="routeTables" /></td>
@@ -127,7 +104,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current lifecycle state of this hub.</td>
+    <td>Output only. The current lifecycle state of this hub. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ACCEPTING, REJECTING, UPDATING, INACTIVE, OBSOLETE, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uniqueId" /></td>
@@ -138,6 +115,30 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time the hub was last updated.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="query_status">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="hubStatusEntries" /></td>
+    <td><code>array</code></td>
+    <td>The list of hub status.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>The token for the next page of the response. To see more results, use this value as the page_token for your next request. If this value is empty, there are no more results.</td>
 </tr>
 </tbody>
 </table>
@@ -181,12 +182,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="policyMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The policy mode of this hub. This field can be either PRESET or CUSTOM. If unspecified, the policy_mode defaults to PRESET.</td>
+    <td>Optional. The policy mode of this hub. This field can be either PRESET or CUSTOM. If unspecified, the policy_mode defaults to PRESET. (POLICY_MODE_UNSPECIFIED, PRESET)</td>
 </tr>
 <tr>
     <td><CopyableCode code="presetTopology" /></td>
     <td><code>string</code></td>
-    <td>Optional. The topology implemented in this hub. Currently, this field is only used when policy_mode = PRESET. The available preset topologies are MESH and STAR. If preset_topology is unspecified and policy_mode = PRESET, the preset_topology defaults to MESH. When policy_mode = CUSTOM, the preset_topology is set to PRESET_TOPOLOGY_UNSPECIFIED.</td>
+    <td>Optional. The topology implemented in this hub. Currently, this field is only used when policy_mode = PRESET. The available preset topologies are MESH and STAR. If preset_topology is unspecified and policy_mode = PRESET, the preset_topology defaults to MESH. When policy_mode = CUSTOM, the preset_topology is set to PRESET_TOPOLOGY_UNSPECIFIED. (PRESET_TOPOLOGY_UNSPECIFIED, MESH, STAR, HYBRID_INSPECTION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="routeTables" /></td>
@@ -206,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current lifecycle state of this hub.</td>
+    <td>Output only. The current lifecycle state of this hub. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ACCEPTING, REJECTING, UPDATING, INACTIVE, OBSOLETE, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uniqueId" /></td>
@@ -239,13 +240,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#query_status"><CopyableCode code="query_status" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-groupBy"><code>groupBy</code></a></td>
-    <td>Query the Private Service Connect propagation status of a Network Connectivity Center hub.</td>
-</tr>
-<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
@@ -253,24 +247,31 @@ The following methods are available for this resource:
     <td>Gets details about a Network Connectivity Center hub.</td>
 </tr>
 <tr>
+    <td><a href="#query_status"><CopyableCode code="query_status" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-groupBy"><code>groupBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Query the Private Service Connect propagation status of a Network Connectivity Center hub.</td>
+</tr>
+<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists the Network Connectivity Center hubs associated with a given project.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-hubId"><code>hubId</code></a></td>
+    <td><a href="#parameter-hubId"><code>hubId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Network Connectivity Center hub in the specified project.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the description and/or labels of a Network Connectivity Center hub.</td>
 </tr>
 <tr>
@@ -281,18 +282,18 @@ The following methods are available for this resource:
     <td>Deletes a Network Connectivity Center hub.</td>
 </tr>
 <tr>
-    <td><a href="#accept_spoke_update"><CopyableCode code="accept_spoke_update" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td></td>
-    <td>Accepts a proposal to update a Network Connectivity Center spoke in a hub.</td>
-</tr>
-<tr>
     <td><a href="#reject_spoke_update"><CopyableCode code="reject_spoke_update" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
     <td></td>
     <td>Rejects a proposal to update a Network Connectivity Center spoke in a hub.</td>
+</tr>
+<tr>
+    <td><a href="#reject_spoke"><CopyableCode code="reject_spoke" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
+    <td></td>
+    <td>Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.</td>
 </tr>
 <tr>
     <td><a href="#accept_spoke"><CopyableCode code="accept_spoke" /></a></td>
@@ -302,11 +303,11 @@ The following methods are available for this resource:
     <td>Accepts a proposal to attach a Network Connectivity Center spoke to a hub.</td>
 </tr>
 <tr>
-    <td><a href="#reject_spoke"><CopyableCode code="reject_spoke" /></a></td>
+    <td><a href="#accept_spoke_update"><CopyableCode code="accept_spoke_update" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
     <td></td>
-    <td>Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.</td>
+    <td>Accepts a proposal to update a Network Connectivity Center spoke in a hub.</td>
 </tr>
 </tbody>
 </table>
@@ -380,32 +381,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="query_status"
+    defaultValue="get"
     values={[
-        { label: 'query_status', value: 'query_status' },
         { label: 'get', value: 'get' },
+        { label: 'query_status', value: 'query_status' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_status">
-
-Query the Private Service Connect propagation status of a Network Connectivity Center hub.
-
-```sql
-SELECT
-hubStatusEntries,
-nextPageToken
-FROM google.networkconnectivity.hubs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND hubsId = '{{ hubsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND groupBy = '{{ groupBy }}'
-;
-```
-</TabItem>
 <TabItem value="get">
 
 Gets details about a Network Connectivity Center hub.
@@ -431,6 +413,25 @@ AND hubsId = '{{ hubsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="query_status">
+
+Query the Private Service Connect propagation status of a Network Connectivity Center hub.
+
+```sql
+SELECT
+hubStatusEntries,
+nextPageToken
+FROM google.networkconnectivity.hubs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND hubsId = '{{ hubsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND groupBy = '{{ groupBy }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+;
+```
+</TabItem>
 <TabItem value="list">
 
 Lists the Network Connectivity Center hubs associated with a given project.
@@ -452,10 +453,10 @@ uniqueId,
 updateTime
 FROM google.networkconnectivity.hubs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -477,26 +478,26 @@ Creates a new Network Connectivity Center hub in the specified project.
 
 ```sql
 INSERT INTO google.networkconnectivity.hubs (
-data__policyMode,
-data__presetTopology,
 data__labels,
-data__exportPsc,
-data__name,
+data__presetTopology,
+data__policyMode,
 data__description,
+data__name,
+data__exportPsc,
 projectsId,
-requestId,
-hubId
+hubId,
+requestId
 )
 SELECT 
-'{{ policyMode }}',
-'{{ presetTopology }}',
 '{{ labels }}',
-{{ exportPsc }},
-'{{ name }}',
+'{{ presetTopology }}',
+'{{ policyMode }}',
 '{{ description }}',
+'{{ name }}',
+{{ exportPsc }},
 '{{ projectsId }}',
-'{{ requestId }}',
-'{{ hubId }}'
+'{{ hubId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -508,50 +509,44 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: hubs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the hubs resource.
-    - name: policyMode
-      value: string
-      description: >
-        Optional. The policy mode of this hub. This field can be either PRESET or CUSTOM. If unspecified, the policy_mode defaults to PRESET.
-        
-      valid_values: ['POLICY_MODE_UNSPECIFIED', 'PRESET']
-    - name: presetTopology
-      value: string
-      description: >
-        Optional. The topology implemented in this hub. Currently, this field is only used when policy_mode = PRESET. The available preset topologies are MESH and STAR. If preset_topology is unspecified and policy_mode = PRESET, the preset_topology defaults to MESH. When policy_mode = CUSTOM, the preset_topology is set to PRESET_TOPOLOGY_UNSPECIFIED.
-        
-      valid_values: ['PRESET_TOPOLOGY_UNSPECIFIED', 'MESH', 'STAR']
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
-        
-    - name: exportPsc
-      value: boolean
-      description: >
-        Optional. Whether Private Service Connect connection propagation is enabled for the hub. If true, Private Service Connect endpoints in VPC spokes attached to the hub are made accessible to other VPC spokes attached to the hub. The default value is false.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The name of the hub. Hub names must be unique. They use the following form: `projects/{project_number}/locations/global/hubs/{hub_id}`
-        
+    - name: presetTopology
+      value: "{{ presetTopology }}"
+      description: |
+        Optional. The topology implemented in this hub. Currently, this field is only used when policy_mode = PRESET. The available preset topologies are MESH and STAR. If preset_topology is unspecified and policy_mode = PRESET, the preset_topology defaults to MESH. When policy_mode = CUSTOM, the preset_topology is set to PRESET_TOPOLOGY_UNSPECIFIED.
+      valid_values: ['PRESET_TOPOLOGY_UNSPECIFIED', 'MESH', 'STAR', 'HYBRID_INSPECTION']
+    - name: policyMode
+      value: "{{ policyMode }}"
+      description: |
+        Optional. The policy mode of this hub. This field can be either PRESET or CUSTOM. If unspecified, the policy_mode defaults to PRESET.
+      valid_values: ['POLICY_MODE_UNSPECIFIED', 'PRESET']
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. An optional description of the hub.
-        
-    - name: requestId
-      value: string
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The name of the hub. Hub names must be unique. They use the following form: \`projects/{project_number}/locations/global/hubs/{hub_id}\`
+    - name: exportPsc
+      value: {{ exportPsc }}
+      description: |
+        Optional. Whether Private Service Connect connection propagation is enabled for the hub. If true, Private Service Connect endpoints in VPC spokes attached to the hub are made accessible to other VPC spokes attached to the hub. The default value is false.
     - name: hubId
-      value: string
-```
+      value: "{{ hubId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -571,17 +566,17 @@ Updates the description and/or labels of a Network Connectivity Center hub.
 ```sql
 UPDATE google.networkconnectivity.hubs
 SET 
-data__policyMode = '{{ policyMode }}',
-data__presetTopology = '{{ presetTopology }}',
 data__labels = '{{ labels }}',
-data__exportPsc = {{ exportPsc }},
+data__presetTopology = '{{ presetTopology }}',
+data__policyMode = '{{ policyMode }}',
+data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__exportPsc = {{ exportPsc }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND hubsId = '{{ hubsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,
@@ -619,31 +614,14 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="accept_spoke_update"
+    defaultValue="reject_spoke_update"
     values={[
-        { label: 'accept_spoke_update', value: 'accept_spoke_update' },
         { label: 'reject_spoke_update', value: 'reject_spoke_update' },
+        { label: 'reject_spoke', value: 'reject_spoke' },
         { label: 'accept_spoke', value: 'accept_spoke' },
-        { label: 'reject_spoke', value: 'reject_spoke' }
+        { label: 'accept_spoke_update', value: 'accept_spoke_update' }
     ]}
 >
-<TabItem value="accept_spoke_update">
-
-Accepts a proposal to update a Network Connectivity Center spoke in a hub.
-
-```sql
-EXEC google.networkconnectivity.hubs.accept_spoke_update 
-@projectsId='{{ projectsId }}' --required, 
-@hubsId='{{ hubsId }}' --required 
-@@json=
-'{
-"requestId": "{{ requestId }}", 
-"spokeEtag": "{{ spokeEtag }}", 
-"spokeUri": "{{ spokeUri }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="reject_spoke_update">
 
 Rejects a proposal to update a Network Connectivity Center spoke in a hub.
@@ -654,10 +632,27 @@ EXEC google.networkconnectivity.hubs.reject_spoke_update
 @hubsId='{{ hubsId }}' --required 
 @@json=
 '{
-"spokeEtag": "{{ spokeEtag }}", 
-"requestId": "{{ requestId }}", 
+"spokeUri": "{{ spokeUri }}", 
 "details": "{{ details }}", 
-"spokeUri": "{{ spokeUri }}"
+"spokeEtag": "{{ spokeEtag }}", 
+"requestId": "{{ requestId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reject_spoke">
+
+Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.
+
+```sql
+EXEC google.networkconnectivity.hubs.reject_spoke 
+@projectsId='{{ projectsId }}' --required, 
+@hubsId='{{ hubsId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"spokeUri": "{{ spokeUri }}", 
+"details": "{{ details }}"
 }'
 ;
 ```
@@ -678,19 +673,19 @@ EXEC google.networkconnectivity.hubs.accept_spoke
 ;
 ```
 </TabItem>
-<TabItem value="reject_spoke">
+<TabItem value="accept_spoke_update">
 
-Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.
+Accepts a proposal to update a Network Connectivity Center spoke in a hub.
 
 ```sql
-EXEC google.networkconnectivity.hubs.reject_spoke 
+EXEC google.networkconnectivity.hubs.accept_spoke_update 
 @projectsId='{{ projectsId }}' --required, 
 @hubsId='{{ hubsId }}' --required 
 @@json=
 '{
-"spokeUri": "{{ spokeUri }}", 
-"details": "{{ details }}", 
-"requestId": "{{ requestId }}"
+"spokeEtag": "{{ spokeEtag }}", 
+"requestId": "{{ requestId }}", 
+"spokeUri": "{{ spokeUri }}"
 }'
 ;
 ```

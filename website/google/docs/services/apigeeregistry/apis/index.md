@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apis</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apis</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apis" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigeeregistry.apis" /></td></tr>
 </tbody></table>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_list"><CopyableCode code="projects_locations_apis_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Returns matching APIs.</td>
 </tr>
 <tr>
@@ -208,7 +209,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_patch"><CopyableCode code="projects_locations_apis_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Used to modify a specified API.</td>
 </tr>
 <tr>
@@ -343,10 +344,10 @@ updateTime
 FROM google.apigeeregistry.apis
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -369,26 +370,26 @@ Creates a specified API.
 ```sql
 INSERT INTO google.apigeeregistry.apis (
 data__recommendedVersion,
-data__availability,
-data__description,
-data__labels,
 data__recommendedDeployment,
-data__annotations,
+data__labels,
 data__name,
 data__displayName,
+data__description,
+data__availability,
+data__annotations,
 projectsId,
 locationsId,
 apiId
 )
 SELECT 
 '{{ recommendedVersion }}',
-'{{ availability }}',
-'{{ description }}',
-'{{ labels }}',
 '{{ recommendedDeployment }}',
-'{{ annotations }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ displayName }}',
+'{{ description }}',
+'{{ availability }}',
+'{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apiId }}'
@@ -408,59 +409,51 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: apis
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the apis resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the apis resource.
     - name: recommendedVersion
-      value: string
-      description: >
-        The recommended version of the API. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}`
-        
-    - name: availability
-      value: string
-      description: >
-        A user-definable description of the availability of this service. Format: free-form, but we expect single words that describe availability, e.g., "NONE", "TESTING", "PREVIEW", "GENERAL", "DEPRECATED", "SHUTDOWN".
-        
-    - name: description
-      value: string
-      description: >
-        A detailed description.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores, and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `apigeeregistry.googleapis.com/` and cannot be changed.
-        
+      value: "{{ recommendedVersion }}"
+      description: |
+        The recommended version of the API. Format: \`projects/{project}/locations/{location}/apis/{api}/versions/{version}\`
     - name: recommendedDeployment
-      value: string
-      description: >
-        The recommended deployment of the API. Format: `projects/{project}/locations/{location}/apis/{api}/deployments/{deployment}`
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
-        
+      value: "{{ recommendedDeployment }}"
+      description: |
+        The recommended deployment of the API. Format: \`projects/{project}/locations/{location}/apis/{api}/deployments/{deployment}\`
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores, and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \`apigeeregistry.googleapis.com/\` and cannot be changed.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Resource name.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Human-meaningful name.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A detailed description.
+    - name: availability
+      value: "{{ availability }}"
+      description: |
+        A user-definable description of the availability of this service. Format: free-form, but we expect single words that describe availability, e.g., "NONE", "TESTING", "PREVIEW", "GENERAL", "DEPRECATED", "SHUTDOWN".
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
     - name: apiId
-      value: string
-```
+      value: "{{ apiId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -481,19 +474,19 @@ Used to modify a specified API.
 UPDATE google.apigeeregistry.apis
 SET 
 data__recommendedVersion = '{{ recommendedVersion }}',
-data__availability = '{{ availability }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
 data__recommendedDeployment = '{{ recommendedDeployment }}',
-data__annotations = '{{ annotations }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__description = '{{ description }}',
+data__availability = '{{ availability }}',
+data__annotations = '{{ annotations }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND apisId = '{{ apisId }}' --required
-AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
+AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 annotations,

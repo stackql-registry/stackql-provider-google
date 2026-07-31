@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>cloud_vm_clusters</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>cloud_vm_clusters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="cloud_vm_clusters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.cloud_vm_clusters" /></td></tr>
 </tbody></table>
@@ -85,6 +86,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. The name of the Exadata Infrastructure resource on which VM cluster resource is created, in the following format: projects/&#123;project&#125;/locations/&#123;region&#125;/cloudExadataInfrastuctures/&#123;cloud_extradata_infrastructure&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="exascaleDbStorageVault" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The name of ExascaleDbStorageVault associated with the VM Cluster. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/exascaleDbStorageVaults/&#123;exascale_db_storage_vault&#125;</td>
+</tr>
+<tr>
     <td><CopyableCode code="gcpOracleZone" /></td>
     <td><code>string</code></td>
     <td>Output only. The GCP Oracle zone where Oracle CloudVmCluster is hosted. This will be the same as the gcp_oracle_zone of the CloudExadataInfrastructure. Example: us-east4-b-r2.</td>
@@ -133,76 +139,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The name of the VM Cluster resource with the format: projects/&#123;project&#125;/locations/&#123;region&#125;/cloudVmClusters/&#123;cloud_vm_cluster&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupOdbSubnet" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The name of the backup OdbSubnet associated with the VM Cluster. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/odbNetworks/&#123;odb_network&#125;/odbSubnets/&#123;odb_subnet&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupSubnetCidr" /></td>
-    <td><code>string</code></td>
-    <td>Optional. CIDR range of the backup subnet.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cidr" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Network settings. CIDR to use for cluster IP allocation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The date and time that the VM cluster was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. User friendly name for this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="exadataInfrastructure" /></td>
-    <td><code>string</code></td>
-    <td>Required. The name of the Exadata Infrastructure resource on which VM cluster resource is created, in the following format: projects/&#123;project&#125;/locations/&#123;region&#125;/cloudExadataInfrastuctures/&#123;cloud_extradata_infrastructure&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gcpOracleZone" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The GCP Oracle zone where Oracle CloudVmCluster is hosted. This will be the same as the gcp_oracle_zone of the CloudExadataInfrastructure. Example: us-east4-b-r2.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="identityConnector" /></td>
-    <td><code>object</code></td>
-    <td>Output only. The identity connector details which will allow OCI to securely access the resources in the customer project. (id: IdentityConnector)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels or tags associated with the VM Cluster.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="network" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The name of the VPC network. Format: projects/&#123;project&#125;/global/networks/&#123;network&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="odbNetwork" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The name of the OdbNetwork associated with the VM Cluster. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/odbNetworks/&#123;odb_network&#125; It is optional but if specified, this should match the parent ODBNetwork of the odb_subnet and backup_odb_subnet.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="odbSubnet" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The name of the OdbSubnet associated with the VM Cluster for IP allocation. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/odbNetworks/&#123;odb_network&#125;/odbSubnets/&#123;odb_subnet&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="properties" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Various properties of the VM Cluster. (id: CloudVmClusterProperties)</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -234,14 +170,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the VM Clusters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-cloudVmClusterId"><code>cloudVmClusterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-cloudVmClusterId"><code>cloudVmClusterId</code></a></td>
     <td>Creates a new VM Cluster in a given project and location.</td>
 </tr>
 <tr>
@@ -337,6 +273,7 @@ cidr,
 createTime,
 displayName,
 exadataInfrastructure,
+exascaleDbStorageVault,
 gcpOracleZone,
 identityConnector,
 labels,
@@ -357,26 +294,13 @@ Lists the VM Clusters in a given project and location.
 
 ```sql
 SELECT
-name,
-backupOdbSubnet,
-backupSubnetCidr,
-cidr,
-createTime,
-displayName,
-exadataInfrastructure,
-gcpOracleZone,
-identityConnector,
-labels,
-network,
-odbNetwork,
-odbSubnet,
-properties
+*
 FROM google.oracledatabase.cloud_vm_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -398,38 +322,40 @@ Creates a new VM Cluster in a given project and location.
 
 ```sql
 INSERT INTO google.oracledatabase.cloud_vm_clusters (
-data__name,
-data__exadataInfrastructure,
-data__displayName,
 data__properties,
-data__labels,
-data__cidr,
+data__exascaleDbStorageVault,
 data__backupSubnetCidr,
 data__network,
-data__odbNetwork,
+data__cidr,
+data__exadataInfrastructure,
+data__labels,
+data__displayName,
 data__odbSubnet,
+data__odbNetwork,
 data__backupOdbSubnet,
+data__name,
 projectsId,
 locationsId,
-cloudVmClusterId,
-requestId
+requestId,
+cloudVmClusterId
 )
 SELECT 
-'{{ name }}',
-'{{ exadataInfrastructure }}',
-'{{ displayName }}',
 '{{ properties }}',
-'{{ labels }}',
-'{{ cidr }}',
+'{{ exascaleDbStorageVault }}',
 '{{ backupSubnetCidr }}',
 '{{ network }}',
-'{{ odbNetwork }}',
+'{{ cidr }}',
+'{{ exadataInfrastructure }}',
+'{{ labels }}',
+'{{ displayName }}',
 '{{ odbSubnet }}',
+'{{ odbNetwork }}',
 '{{ backupOdbSubnet }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ cloudVmClusterId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ cloudVmClusterId }}'
 RETURNING
 name,
 done,
@@ -441,76 +367,111 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: cloud_vm_clusters
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the cloud_vm_clusters resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the cloud_vm_clusters resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the VM Cluster resource with the format: projects/{project}/locations/{region}/cloudVmClusters/{cloud_vm_cluster}
-        
-    - name: exadataInfrastructure
-      value: string
-      description: >
-        Required. The name of the Exadata Infrastructure resource on which VM cluster resource is created, in the following format: projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly name for this resource.
-        
     - name: properties
-      value: object
-      description: >
+      description: |
         Optional. Various properties of the VM Cluster.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels or tags associated with the VM Cluster.
-        
-    - name: cidr
-      value: string
-      description: >
-        Optional. Network settings. CIDR to use for cluster IP allocation.
-        
+      value:
+        licenseType: "{{ licenseType }}"
+        hostname: "{{ hostname }}"
+        dbServerOcids:
+          - "{{ dbServerOcids }}"
+        memorySizeGb: {{ memorySizeGb }}
+        systemVersion: "{{ systemVersion }}"
+        cpuCoreCount: {{ cpuCoreCount }}
+        computeModel: "{{ computeModel }}"
+        storageManagementType: "{{ storageManagementType }}"
+        scanDns: "{{ scanDns }}"
+        ocid: "{{ ocid }}"
+        sparseDiskgroupEnabled: {{ sparseDiskgroupEnabled }}
+        localBackupEnabled: {{ localBackupEnabled }}
+        diagnosticsDataCollectionOptions:
+          healthMonitoringEnabled: {{ healthMonitoringEnabled }}
+          incidentLogsEnabled: {{ incidentLogsEnabled }}
+          diagnosticsEventsEnabled: {{ diagnosticsEventsEnabled }}
+        ocpuCount: {{ ocpuCount }}
+        storageSizeGb: {{ storageSizeGb }}
+        hostnamePrefix: "{{ hostnamePrefix }}"
+        scanDnsRecordId: "{{ scanDnsRecordId }}"
+        scanListenerPortTcpSsl: {{ scanListenerPortTcpSsl }}
+        scanListenerPortTcp: {{ scanListenerPortTcp }}
+        sshPublicKeys:
+          - "{{ sshPublicKeys }}"
+        compartmentId: "{{ compartmentId }}"
+        state: "{{ state }}"
+        ociUrl: "{{ ociUrl }}"
+        timeZone:
+          id: "{{ id }}"
+          version: "{{ version }}"
+        dnsListenerIp: "{{ dnsListenerIp }}"
+        dbNodeStorageSizeGb: {{ dbNodeStorageSizeGb }}
+        dataStorageSizeTb: {{ dataStorageSizeTb }}
+        diskRedundancy: "{{ diskRedundancy }}"
+        scanIpIds:
+          - "{{ scanIpIds }}"
+        clusterName: "{{ clusterName }}"
+        nodeCount: {{ nodeCount }}
+        giVersion: "{{ giVersion }}"
+        shape: "{{ shape }}"
+        domain: "{{ domain }}"
+    - name: exascaleDbStorageVault
+      value: "{{ exascaleDbStorageVault }}"
+      description: |
+        Optional. The name of ExascaleDbStorageVault associated with the VM Cluster. Format: projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_storage_vault}
     - name: backupSubnetCidr
-      value: string
-      description: >
+      value: "{{ backupSubnetCidr }}"
+      description: |
         Optional. CIDR range of the backup subnet.
-        
     - name: network
-      value: string
-      description: >
+      value: "{{ network }}"
+      description: |
         Optional. The name of the VPC network. Format: projects/{project}/global/networks/{network}
-        
-    - name: odbNetwork
-      value: string
-      description: >
-        Optional. The name of the OdbNetwork associated with the VM Cluster. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the odb_subnet and backup_odb_subnet.
-        
+    - name: cidr
+      value: "{{ cidr }}"
+      description: |
+        Optional. Network settings. CIDR to use for cluster IP allocation.
+    - name: exadataInfrastructure
+      value: "{{ exadataInfrastructure }}"
+      description: |
+        Required. The name of the Exadata Infrastructure resource on which VM cluster resource is created, in the following format: projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels or tags associated with the VM Cluster.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly name for this resource.
     - name: odbSubnet
-      value: string
-      description: >
+      value: "{{ odbSubnet }}"
+      description: |
         Optional. The name of the OdbSubnet associated with the VM Cluster for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
-        
+    - name: odbNetwork
+      value: "{{ odbNetwork }}"
+      description: |
+        Optional. The name of the OdbNetwork associated with the VM Cluster. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the odb_subnet and backup_odb_subnet.
     - name: backupOdbSubnet
-      value: string
-      description: >
+      value: "{{ backupOdbSubnet }}"
+      description: |
         Optional. The name of the backup OdbSubnet associated with the VM Cluster. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
-        
-    - name: cloudVmClusterId
-      value: string
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the VM Cluster resource with the format: projects/{project}/locations/{region}/cloudVmClusters/{cloud_vm_cluster}
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: cloudVmClusterId
+      value: "{{ cloudVmClusterId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

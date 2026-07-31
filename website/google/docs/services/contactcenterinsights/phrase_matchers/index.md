@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>phrase_matchers</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>phrase_matchers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="phrase_matchers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.phrase_matchers" /></td></tr>
 </tbody></table>
@@ -87,12 +88,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="roleMatch" /></td>
     <td><code>string</code></td>
-    <td>The role whose utterances the phrase matcher should be matched against. If the role is ROLE_UNSPECIFIED it will be matched against any utterances in the transcript.</td>
+    <td>The role whose utterances the phrase matcher should be matched against. If the role is ROLE_UNSPECIFIED it will be matched against any utterances in the transcript. (ROLE_UNSPECIFIED, HUMAN_AGENT, AUTOMATED_AGENT, END_USER, ANY_AGENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of this phrase matcher.</td>
+    <td>Required. The type of this phrase matcher. (PHRASE_MATCHER_TYPE_UNSPECIFIED, ALL_OF, ANY_OF)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -156,12 +157,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="roleMatch" /></td>
     <td><code>string</code></td>
-    <td>The role whose utterances the phrase matcher should be matched against. If the role is ROLE_UNSPECIFIED it will be matched against any utterances in the transcript.</td>
+    <td>The role whose utterances the phrase matcher should be matched against. If the role is ROLE_UNSPECIFIED it will be matched against any utterances in the transcript. (ROLE_UNSPECIFIED, HUMAN_AGENT, AUTOMATED_AGENT, END_USER, ANY_AGENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of this phrase matcher.</td>
+    <td>Required. The type of this phrase matcher. (PHRASE_MATCHER_TYPE_UNSPECIFIED, ALL_OF, ANY_OF)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -359,23 +360,23 @@ Creates a phrase matcher.
 
 ```sql
 INSERT INTO google.contactcenterinsights.phrase_matchers (
+data__name,
+data__type,
 data__displayName,
+data__roleMatch,
 data__phraseMatchRuleGroups,
 data__versionTag,
-data__type,
-data__name,
-data__roleMatch,
 data__active,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ name }}',
+'{{ type }}',
 '{{ displayName }}',
+'{{ roleMatch }}',
 '{{ phraseMatchRuleGroups }}',
 '{{ versionTag }}',
-'{{ type }}',
-'{{ name }}',
-'{{ roleMatch }}',
 {{ active }},
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -396,54 +397,49 @@ versionTag
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: phrase_matchers
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the phrase_matchers resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the phrase_matchers resource.
-    - name: displayName
-      value: string
-      description: >
-        The human-readable name of the phrase matcher.
-        
-    - name: phraseMatchRuleGroups
-      value: array
-      description: >
-        A list of phase match rule groups that are included in this matcher.
-        
-    - name: versionTag
-      value: string
-      description: >
-        The customized version tag to use for the phrase matcher. If not specified, it will default to `revision_id`.
-        
-    - name: type
-      value: string
-      description: >
-        Required. The type of this phrase matcher.
-        
-      valid_values: ['PHRASE_MATCHER_TYPE_UNSPECIFIED', 'ALL_OF', 'ANY_OF']
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The resource name of the phrase matcher. Format: projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher}
-        
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The type of this phrase matcher.
+      valid_values: ['PHRASE_MATCHER_TYPE_UNSPECIFIED', 'ALL_OF', 'ANY_OF']
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The human-readable name of the phrase matcher.
     - name: roleMatch
-      value: string
-      description: >
+      value: "{{ roleMatch }}"
+      description: |
         The role whose utterances the phrase matcher should be matched against. If the role is ROLE_UNSPECIFIED it will be matched against any utterances in the transcript.
-        
       valid_values: ['ROLE_UNSPECIFIED', 'HUMAN_AGENT', 'AUTOMATED_AGENT', 'END_USER', 'ANY_AGENT']
+    - name: phraseMatchRuleGroups
+      description: |
+        A list of phase match rule groups that are included in this matcher.
+      value:
+        - type: "{{ type }}"
+          phraseMatchRules: "{{ phraseMatchRules }}"
+    - name: versionTag
+      value: "{{ versionTag }}"
+      description: |
+        The customized version tag to use for the phrase matcher. If not specified, it will default to \`revision_id\`.
     - name: active
-      value: boolean
-      description: >
+      value: {{ active }}
+      description: |
         Applies the phrase matcher only when it is active.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -463,12 +459,12 @@ Updates a phrase matcher.
 ```sql
 UPDATE google.contactcenterinsights.phrase_matchers
 SET 
+data__name = '{{ name }}',
+data__type = '{{ type }}',
 data__displayName = '{{ displayName }}',
+data__roleMatch = '{{ roleMatch }}',
 data__phraseMatchRuleGroups = '{{ phraseMatchRuleGroups }}',
 data__versionTag = '{{ versionTag }}',
-data__type = '{{ type }}',
-data__name = '{{ name }}',
-data__roleMatch = '{{ roleMatch }}',
 data__active = {{ active }}
 WHERE 
 projectsId = '{{ projectsId }}' --required

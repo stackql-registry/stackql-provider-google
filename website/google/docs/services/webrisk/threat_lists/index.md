@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>threat_lists</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>threat_lists</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="threat_lists" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.webrisk.threat_lists" /></td></tr>
 </tbody></table>
@@ -53,7 +54,7 @@ The following methods are available for this resource:
     <td><a href="#compute_diff"><CopyableCode code="compute_diff" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-versionToken"><code>versionToken</code></a>, <a href="#parameter-constraints.maxDiffEntries"><code>constraints.maxDiffEntries</code></a>, <a href="#parameter-threatType"><code>threatType</code></a>, <a href="#parameter-constraints.supportedCompressions"><code>constraints.supportedCompressions</code></a>, <a href="#parameter-constraints.maxDatabaseEntries"><code>constraints.maxDatabaseEntries</code></a></td>
+    <td><a href="#parameter-constraints.supportedCompressions"><code>constraints.supportedCompressions</code></a>, <a href="#parameter-threatType"><code>threatType</code></a>, <a href="#parameter-constraints.maxDatabaseEntries"><code>constraints.maxDatabaseEntries</code></a>, <a href="#parameter-versionToken"><code>versionToken</code></a>, <a href="#parameter-constraints.maxDiffEntries"><code>constraints.maxDiffEntries</code></a></td>
     <td>Gets the most recent threat list diffs. These diffs should be applied to a local database of hashes to keep it up-to-date. If the local database is empty or excessively out-of-date, a complete snapshot of the database will be returned. This Method only updates a single ThreatList at a time. To update multiple ThreatList databases, this method needs to be called once for each list.</td>
 </tr>
 </tbody>
@@ -114,11 +115,11 @@ Gets the most recent threat list diffs. These diffs should be applied to a local
 
 ```sql
 EXEC google.webrisk.threat_lists.compute_diff 
-@versionToken='{{ versionToken }}', 
-@constraints.maxDiffEntries='{{ constraints.maxDiffEntries }}', 
-@threatType='{{ threatType }}', 
 @constraints.supportedCompressions='{{ constraints.supportedCompressions }}', 
-@constraints.maxDatabaseEntries='{{ constraints.maxDatabaseEntries }}'
+@threatType='{{ threatType }}', 
+@constraints.maxDatabaseEntries='{{ constraints.maxDatabaseEntries }}', 
+@versionToken='{{ versionToken }}', 
+@constraints.maxDiffEntries='{{ constraints.maxDiffEntries }}'
 ;
 ```
 </TabItem>

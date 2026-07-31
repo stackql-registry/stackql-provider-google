@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tag_binding_collections</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tag_binding_collections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tag_binding_collections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.tag_binding_collections" /></td></tr>
 </tbody></table>
@@ -178,10 +179,10 @@ Updates tag bindings directly attached to a GCP resource. Update_mask can be kep
 ```sql
 UPDATE google.cloudresourcemanager.tag_binding_collections
 SET 
-data__fullResourceName = '{{ fullResourceName }}',
+data__name = '{{ name }}',
 data__tags = '{{ tags }}',
 data__etag = '{{ etag }}',
-data__name = '{{ name }}'
+data__fullResourceName = '{{ fullResourceName }}'
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND tagBindingCollectionsId = '{{ tagBindingCollectionsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>bare_metal_admin_clusters</code
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>bare_metal_admin_clusters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="bare_metal_admin_clusters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkeonprem.bare_metal_admin_clusters" /></td></tr>
 </tbody></table>
@@ -167,7 +168,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the bare metal admin cluster.</td>
+    <td>Output only. The current state of the bare metal admin cluster. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -326,7 +327,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the bare metal admin cluster.</td>
+    <td>Output only. The current state of the bare metal admin cluster. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -384,21 +385,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_bare_metal_admin_clusters_list"><CopyableCode code="projects_locations_bare_metal_admin_clusters_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Lists bare metal admin clusters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_admin_clusters_create"><CopyableCode code="projects_locations_bare_metal_admin_clusters_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-bareMetalAdminClusterId"><code>bareMetalAdminClusterId</code></a>, <a href="#parameter-allowPreflightFailure"><code>allowPreflightFailure</code></a></td>
+    <td><a href="#parameter-bareMetalAdminClusterId"><code>bareMetalAdminClusterId</code></a>, <a href="#parameter-allowPreflightFailure"><code>allowPreflightFailure</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new bare metal admin cluster in a given project and location. The API needs to be combined with creating a bootstrap cluster to work. See: https://cloud.google.com/anthos/clusters/docs/bare-metal/latest/installing/creating-clusters/create-admin-cluster-api#prepare_bootstrap_environment</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_admin_clusters_patch"><CopyableCode code="projects_locations_bare_metal_admin_clusters_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalAdminClustersId"><code>bareMetalAdminClustersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single bare metal admin cluster.</td>
 </tr>
 <tr>
@@ -602,10 +603,10 @@ validationCheck
 FROM google.gkeonprem.bare_metal_admin_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND view = '{{ view }}'
-AND pageToken = '{{ pageToken }}'
-AND allowMissing = '{{ allowMissing }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
+AND allowMissing = '{{ allowMissing }}'
 ;
 ```
 </TabItem>
@@ -627,52 +628,52 @@ Creates a new bare metal admin cluster in a given project and location. The API 
 
 ```sql
 INSERT INTO google.gkeonprem.bare_metal_admin_clusters (
-data__loadBalancer,
-data__name,
-data__etag,
+data__osEnvironmentConfig,
 data__nodeAccessConfig,
-data__controlPlane,
-data__annotations,
-data__nodeConfig,
-data__binaryAuthorization,
-data__storage,
-data__proxy,
-data__description,
-data__maintenanceConfig,
+data__name,
+data__securityConfig,
 data__clusterOperations,
 data__bareMetalVersion,
-data__securityConfig,
+data__maintenanceConfig,
+data__controlPlane,
+data__description,
+data__nodeConfig,
+data__proxy,
+data__loadBalancer,
 data__networkConfig,
-data__osEnvironmentConfig,
+data__etag,
+data__binaryAuthorization,
+data__annotations,
+data__storage,
 projectsId,
 locationsId,
-validateOnly,
 bareMetalAdminClusterId,
-allowPreflightFailure
+allowPreflightFailure,
+validateOnly
 )
 SELECT 
-'{{ loadBalancer }}',
-'{{ name }}',
-'{{ etag }}',
+'{{ osEnvironmentConfig }}',
 '{{ nodeAccessConfig }}',
-'{{ controlPlane }}',
-'{{ annotations }}',
-'{{ nodeConfig }}',
-'{{ binaryAuthorization }}',
-'{{ storage }}',
-'{{ proxy }}',
-'{{ description }}',
-'{{ maintenanceConfig }}',
+'{{ name }}',
+'{{ securityConfig }}',
 '{{ clusterOperations }}',
 '{{ bareMetalVersion }}',
-'{{ securityConfig }}',
+'{{ maintenanceConfig }}',
+'{{ controlPlane }}',
+'{{ description }}',
+'{{ nodeConfig }}',
+'{{ proxy }}',
+'{{ loadBalancer }}',
 '{{ networkConfig }}',
-'{{ osEnvironmentConfig }}',
+'{{ etag }}',
+'{{ binaryAuthorization }}',
+'{{ annotations }}',
+'{{ storage }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
 '{{ bareMetalAdminClusterId }}',
-'{{ allowPreflightFailure }}'
+'{{ allowPreflightFailure }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -684,108 +685,170 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: bare_metal_admin_clusters
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the bare_metal_admin_clusters resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the bare_metal_admin_clusters resource.
-    - name: loadBalancer
-      value: object
-      description: >
-        Load balancer configuration.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The bare metal admin cluster resource name.
-        
-    - name: etag
-      value: string
-      description: >
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
-        
-    - name: nodeAccessConfig
-      value: object
-      description: >
-        Node access related configurations.
-        
-    - name: controlPlane
-      value: object
-      description: >
-        Control plane configuration.
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations on the bare metal admin cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
-        
-    - name: nodeConfig
-      value: object
-      description: >
-        Workload node configuration.
-        
-    - name: binaryAuthorization
-      value: object
-      description: >
-        Binary Authorization related configurations.
-        
-    - name: storage
-      value: object
-      description: >
-        Storage configuration.
-        
-    - name: proxy
-      value: object
-      description: >
-        Proxy configuration.
-        
-    - name: description
-      value: string
-      description: >
-        A human readable description of this bare metal admin cluster.
-        
-    - name: maintenanceConfig
-      value: object
-      description: >
-        Maintenance configuration.
-        
-    - name: clusterOperations
-      value: object
-      description: >
-        Cluster operations configuration.
-        
-    - name: bareMetalVersion
-      value: string
-      description: >
-        The Anthos clusters on bare metal version for the bare metal admin cluster.
-        
-    - name: securityConfig
-      value: object
-      description: >
-        Security related configuration.
-        
-    - name: networkConfig
-      value: object
-      description: >
-        Network configuration.
-        
     - name: osEnvironmentConfig
-      value: object
-      description: >
+      description: |
         OS environment related configurations.
-        
-    - name: validateOnly
-      value: boolean
+      value:
+        packageRepoExcluded: {{ packageRepoExcluded }}
+    - name: nodeAccessConfig
+      description: |
+        Node access related configurations.
+      value:
+        loginUser: "{{ loginUser }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The bare metal admin cluster resource name.
+    - name: securityConfig
+      description: |
+        Security related configuration.
+      value:
+        authorization:
+          adminUsers:
+            - username: "{{ username }}"
+    - name: clusterOperations
+      description: |
+        Cluster operations configuration.
+      value:
+        enableApplicationLogs: {{ enableApplicationLogs }}
+    - name: bareMetalVersion
+      value: "{{ bareMetalVersion }}"
+      description: |
+        The Anthos clusters on bare metal version for the bare metal admin cluster.
+    - name: maintenanceConfig
+      description: |
+        Maintenance configuration.
+      value:
+        maintenanceAddressCidrBlocks:
+          - "{{ maintenanceAddressCidrBlocks }}"
+    - name: controlPlane
+      description: |
+        Control plane configuration.
+      value:
+        controlPlaneNodePoolConfig:
+          nodePoolConfig:
+            labels: "{{ labels }}"
+            kubeletConfig:
+              registryPullQps: {{ registryPullQps }}
+              registryBurst: {{ registryBurst }}
+              serializeImagePullsDisabled: {{ serializeImagePullsDisabled }}
+            operatingSystem: "{{ operatingSystem }}"
+            nodeConfigs:
+              - labels: "{{ labels }}"
+                nodeIp: "{{ nodeIp }}"
+            taints:
+              - key: "{{ key }}"
+                value: "{{ value }}"
+                effect: "{{ effect }}"
+        apiServerArgs:
+          - argument: "{{ argument }}"
+            value: "{{ value }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A human readable description of this bare metal admin cluster.
+    - name: nodeConfig
+      description: |
+        Workload node configuration.
+      value:
+        maxPodsPerNode: "{{ maxPodsPerNode }}"
+    - name: proxy
+      description: |
+        Proxy configuration.
+      value:
+        uri: "{{ uri }}"
+        noProxy:
+          - "{{ noProxy }}"
+    - name: loadBalancer
+      description: |
+        Load balancer configuration.
+      value:
+        vipConfig:
+          controlPlaneVip: "{{ controlPlaneVip }}"
+        portConfig:
+          controlPlaneLoadBalancerPort: {{ controlPlaneLoadBalancerPort }}
+        manualLbConfig:
+          enabled: {{ enabled }}
+        bgpLbConfig:
+          addressPools:
+            - pool: "{{ pool }}"
+              addresses: "{{ addresses }}"
+              manualAssign: {{ manualAssign }}
+              avoidBuggyIps: {{ avoidBuggyIps }}
+          loadBalancerNodePoolConfig:
+            nodePoolConfig:
+              labels: "{{ labels }}"
+              kubeletConfig:
+                registryPullQps: {{ registryPullQps }}
+                registryBurst: {{ registryBurst }}
+                serializeImagePullsDisabled: {{ serializeImagePullsDisabled }}
+              operatingSystem: "{{ operatingSystem }}"
+              nodeConfigs:
+                - labels: "{{ labels }}"
+                  nodeIp: "{{ nodeIp }}"
+              taints:
+                - key: "{{ key }}"
+                  value: "{{ value }}"
+                  effect: "{{ effect }}"
+          asn: "{{ asn }}"
+          bgpPeerConfigs:
+            - ipAddress: "{{ ipAddress }}"
+              controlPlaneNodes: "{{ controlPlaneNodes }}"
+              asn: "{{ asn }}"
+    - name: networkConfig
+      description: |
+        Network configuration.
+      value:
+        advancedNetworking: {{ advancedNetworking }}
+        multipleNetworkInterfacesConfig:
+          enabled: {{ enabled }}
+        islandModeCidr:
+          podAddressCidrBlocks:
+            - "{{ podAddressCidrBlocks }}"
+          serviceAddressCidrBlocks:
+            - "{{ serviceAddressCidrBlocks }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
+    - name: binaryAuthorization
+      description: |
+        Binary Authorization related configurations.
+      value:
+        evaluationMode: "{{ evaluationMode }}"
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations on the bare metal admin cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+    - name: storage
+      description: |
+        Storage configuration.
+      value:
+        lvpShareConfig:
+          lvpConfig:
+            path: "{{ path }}"
+            storageClass: "{{ storageClass }}"
+          sharedPathPvCount: {{ sharedPathPvCount }}
+        lvpNodeMountsConfig:
+          path: "{{ path }}"
+          storageClass: "{{ storageClass }}"
     - name: bareMetalAdminClusterId
-      value: string
+      value: "{{ bareMetalAdminClusterId }}"
     - name: allowPreflightFailure
-      value: boolean
-```
+      value: {{ allowPreflightFailure }}
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -805,29 +868,29 @@ Updates the parameters of a single bare metal admin cluster.
 ```sql
 UPDATE google.gkeonprem.bare_metal_admin_clusters
 SET 
-data__loadBalancer = '{{ loadBalancer }}',
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
+data__osEnvironmentConfig = '{{ osEnvironmentConfig }}',
 data__nodeAccessConfig = '{{ nodeAccessConfig }}',
-data__controlPlane = '{{ controlPlane }}',
-data__annotations = '{{ annotations }}',
-data__nodeConfig = '{{ nodeConfig }}',
-data__binaryAuthorization = '{{ binaryAuthorization }}',
-data__storage = '{{ storage }}',
-data__proxy = '{{ proxy }}',
-data__description = '{{ description }}',
-data__maintenanceConfig = '{{ maintenanceConfig }}',
+data__name = '{{ name }}',
+data__securityConfig = '{{ securityConfig }}',
 data__clusterOperations = '{{ clusterOperations }}',
 data__bareMetalVersion = '{{ bareMetalVersion }}',
-data__securityConfig = '{{ securityConfig }}',
+data__maintenanceConfig = '{{ maintenanceConfig }}',
+data__controlPlane = '{{ controlPlane }}',
+data__description = '{{ description }}',
+data__nodeConfig = '{{ nodeConfig }}',
+data__proxy = '{{ proxy }}',
+data__loadBalancer = '{{ loadBalancer }}',
 data__networkConfig = '{{ networkConfig }}',
-data__osEnvironmentConfig = '{{ osEnvironmentConfig }}'
+data__etag = '{{ etag }}',
+data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__annotations = '{{ annotations }}',
+data__storage = '{{ storage }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bareMetalAdminClustersId = '{{ bareMetalAdminClustersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

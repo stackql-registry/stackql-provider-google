@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reservation_sub_blocks</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reservation_sub_blocks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reservation_sub_blocks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.reservation_sub_blocks" /></td></tr>
 </tbody></table>
@@ -81,12 +82,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of the resource. Always compute#reservationSubBlock for a list of reservation subBlocks. (default: compute#reservationSubBlock)</td>
+    <td>Type of the resource. Alwayscompute#reservationSubBlock for a list of reservation subBlocks. (default: compute#reservationSubBlock)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -121,23 +122,30 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-parentName"><code>parentName</code></a>, <a href="#parameter-reservationSubBlock"><code>reservationSubBlock</code></a></td>
-    <td></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-reservationsId"><code>reservationsId</code></a>, <a href="#parameter-reservationBlocksId"><code>reservationBlocksId</code></a>, <a href="#parameter-reservationSubBlock"><code>reservationSubBlock</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a></td>
     <td>Retrieves information about the specified reservation subBlock.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-parentName"><code>parentName</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-reservationsId"><code>reservationsId</code></a>, <a href="#parameter-reservationBlocksId"><code>reservationBlocksId</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Retrieves a list of reservation subBlocks under a single reservation.</td>
 </tr>
 <tr>
     <td><a href="#perform_maintenance"><CopyableCode code="perform_maintenance" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-parentName"><code>parentName</code></a>, <a href="#parameter-reservationSubBlock"><code>reservationSubBlock</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-reservationsId"><code>reservationsId</code></a>, <a href="#parameter-reservationBlocksId"><code>reservationBlocksId</code></a>, <a href="#parameter-reservationSubBlock"><code>reservationSubBlock</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Allows customers to perform maintenance on a reservation subBlock</td>
+</tr>
+<tr>
+    <td><a href="#report_faulty"><CopyableCode code="report_faulty" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-reservationsId"><code>reservationsId</code></a>, <a href="#parameter-reservationBlocksId"><code>reservationBlocksId</code></a>, <a href="#parameter-reservationSubBlock"><code>reservationSubBlock</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Allows customers to report a faulty subBlock.</td>
 </tr>
 </tbody>
 </table>
@@ -155,18 +163,23 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-parentName">
-    <td><CopyableCode code="parentName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-reservationBlocksId">
+    <td><CopyableCode code="reservationBlocksId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-reservationSubBlock">
     <td><CopyableCode code="reservationSubBlock" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-reservationsId">
+    <td><CopyableCode code="reservationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -205,6 +218,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>boolean</code></td>
     <td></td>
 </tr>
+<tr id="parameter-view">
+    <td><CopyableCode code="view" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -227,8 +245,10 @@ resource
 FROM google.compute.reservation_sub_blocks
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND parentName = '{{ parentName }}' -- required
+AND reservationsId = '{{ reservationsId }}' -- required
+AND reservationBlocksId = '{{ reservationBlocksId }}' -- required
 AND reservationSubBlock = '{{ reservationSubBlock }}' -- required
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -247,12 +267,13 @@ warning
 FROM google.compute.reservation_sub_blocks
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND parentName = '{{ parentName }}' -- required
+AND reservationsId = '{{ reservationsId }}' -- required
+AND reservationBlocksId = '{{ reservationBlocksId }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -264,7 +285,8 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 <Tabs
     defaultValue="perform_maintenance"
     values={[
-        { label: 'perform_maintenance', value: 'perform_maintenance' }
+        { label: 'perform_maintenance', value: 'perform_maintenance' },
+        { label: 'report_faulty', value: 'report_faulty' }
     ]}
 >
 <TabItem value="perform_maintenance">
@@ -275,9 +297,31 @@ Allows customers to perform maintenance on a reservation subBlock
 EXEC google.compute.reservation_sub_blocks.perform_maintenance 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
-@parentName='{{ parentName }}' --required, 
+@reservationsId='{{ reservationsId }}' --required, 
+@reservationBlocksId='{{ reservationBlocksId }}' --required, 
 @reservationSubBlock='{{ reservationSubBlock }}' --required, 
 @requestId='{{ requestId }}'
+;
+```
+</TabItem>
+<TabItem value="report_faulty">
+
+Allows customers to report a faulty subBlock.
+
+```sql
+EXEC google.compute.reservation_sub_blocks.report_faulty 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@reservationsId='{{ reservationsId }}' --required, 
+@reservationBlocksId='{{ reservationBlocksId }}' --required, 
+@reservationSubBlock='{{ reservationSubBlock }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"disruptionSchedule": "{{ disruptionSchedule }}", 
+"faultReasons": "{{ faultReasons }}", 
+"failureComponent": "{{ failureComponent }}"
+}'
 ;
 ```
 </TabItem>

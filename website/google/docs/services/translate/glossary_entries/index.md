@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>glossary_entries</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>glossary_entries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="glossary_entries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.glossary_entries" /></td></tr>
 </tbody></table>
@@ -272,8 +273,8 @@ Creates a glossary entry.
 ```sql
 INSERT INTO google.translate.glossary_entries (
 data__name,
-data__termsPair,
 data__termsSet,
+data__termsPair,
 data__description,
 projectsId,
 locationsId,
@@ -281,8 +282,8 @@ glossariesId
 )
 SELECT 
 '{{ name }}',
-'{{ termsPair }}',
 '{{ termsSet }}',
+'{{ termsPair }}',
 '{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -297,40 +298,45 @@ termsSet
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: glossary_entries
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the glossary_entries resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the glossary_entries resource.
     - name: glossariesId
-      value: string
+      value: "{{ glossariesId }}"
       description: Required parameter for the glossary_entries resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the entry. Format: `projects/*/locations/*/glossaries/*/glossaryEntries/*`
-        
-    - name: termsPair
-      value: object
-      description: >
-        Used for an unidirectional glossary.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the entry. Format: \`projects/*/locations/*/glossaries/*/glossaryEntries/*\`
     - name: termsSet
-      value: object
-      description: >
+      description: |
         Used for an equivalent term sets glossary.
-        
+      value:
+        terms:
+          - languageCode: "{{ languageCode }}"
+            text: "{{ text }}"
+    - name: termsPair
+      description: |
+        Used for an unidirectional glossary.
+      value:
+        targetTerm:
+          languageCode: "{{ languageCode }}"
+          text: "{{ text }}"
+        sourceTerm:
+          languageCode: "{{ languageCode }}"
+          text: "{{ text }}"
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Describes the glossary entry.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -351,8 +357,8 @@ Updates a glossary entry.
 UPDATE google.translate.glossary_entries
 SET 
 data__name = '{{ name }}',
-data__termsPair = '{{ termsPair }}',
 data__termsSet = '{{ termsSet }}',
+data__termsPair = '{{ termsPair }}',
 data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

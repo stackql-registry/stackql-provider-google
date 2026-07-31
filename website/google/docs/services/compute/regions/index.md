@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>regions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>regions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="regions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.regions" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>[Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deprecated" /></td>
@@ -77,12 +78,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#region for regions. (default: compute#region)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#region for regions. (default: compute#region)</td>
 </tr>
 <tr>
     <td><CopyableCode code="quotaStatusWarning" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] Warning of fetching the `quotas` field for this region. This field is populated only if fetching of the `quotas` field fails.</td>
+    <td>Output only. [Output Only] Warning of fetching the `quotas` field for this region. This field is populated only if fetching of the `quotas` field fails.</td>
 </tr>
 <tr>
     <td><CopyableCode code="quotas" /></td>
@@ -97,12 +98,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Status of the region, either UP or DOWN.</td>
+    <td>[Output Only] Status of the region, either UP orDOWN. (DOWN, UP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supportsPzs" /></td>
     <td><code>boolean</code></td>
-    <td>[Output Only] Reserved for future use.</td>
+    <td>Output only. [Output Only] Reserved for future use.</td>
 </tr>
 <tr>
     <td><CopyableCode code="zones" /></td>
@@ -136,17 +137,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#regionList for lists of regions. (default: compute#regionList)</td>
+    <td>Output only. [Output Only] Type of resource. Always compute#regionList for lists of regions. (default: compute#regionList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -178,14 +179,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td></td>
-    <td>Returns the specified Region resource. To decrease latency for this method, you can optionally omit any unneeded information from the response by using a field mask. This practice is especially recommended for unused quota information (the `quotas` field). To exclude one or more fields, set your request's `fields` query parameter to only include the fields you need. For example, to only include the `id` and `selfLink` fields, add the query parameter `?fields=id,selfLink` to your request. This method fails if the quota information is unavailable for the region and if the organization policy constraint compute.requireBasicQuotaInResponse is enforced. This constraint, when enforced, disables the fail-open behaviour when quota information (the `items.quotas` field) is unavailable for the region. It is recommended to use the default setting for the constraint unless your application requires the fail-closed behaviour for this method.</td>
+    <td>Returns the specified Region resource.<br /><br />To decrease latency for this method, you can optionally omit any unneeded<br />information from the response by using a field mask. This practice is<br />especially recommended for unused quota information (the `quotas` field).<br />To exclude one or more fields, set your request's `fields` query parameter<br />to only include the fields you need. For example, to only include the `id`<br />and `selfLink` fields, add the query parameter `?fields=id,selfLink` to<br />your request.<br /><br />This method fails if the quota information is unavailable for the region<br />and if the organization policy constraint<br />compute.requireBasicQuotaInResponse is enforced. This<br />constraint, when enforced, disables the fail-open behaviour when quota<br />information (the `items.quotas` field) is unavailable for the region.<br />It is recommended to use the default setting<br />for the constraint unless your application requires the fail-closed<br />behaviour for this method.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves the list of region resources available to the specified project. To decrease latency for this method, you can optionally omit any unneeded information from the response by using a field mask. This practice is especially recommended for unused quota information (the `items.quotas` field). To exclude one or more fields, set your request's `fields` query parameter to only include the fields you need. For example, to only include the `id` and `selfLink` fields, add the query parameter `?fields=id,selfLink` to your request. This method fails if the quota information is unavailable for the region and if the organization policy constraint compute.requireBasicQuotaInResponse is enforced. This constraint, when enforced, disables the fail-open behaviour when quota information (the `items.quotas` field) is unavailable for the region. It is recommended to use the default setting for the constraint unless your application requires the fail-closed behaviour for this method.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Retrieves the list of region resources available to the specified project.<br /><br />To decrease latency for this method, you can optionally omit any unneeded<br />information from the response by using a field mask. This practice is<br />especially recommended for unused quota information<br />(the `items.quotas` field).<br />To exclude one or more fields, set your request's `fields` query parameter<br />to only include the fields you need. For example, to only include the `id`<br />and `selfLink` fields, add the query parameter `?fields=id,selfLink` to<br />your request.<br /><br />This method fails if the quota information is unavailable for the region<br />and if the organization policy constraint<br />compute.requireBasicQuotaInResponse is enforced. This<br />constraint, when enforced, disables the fail-open behaviour when quota<br />information (the `items.quotas` field) is unavailable for the region.<br />It is recommended to use the default setting<br />for the constraint unless your application requires the fail-closed<br />behaviour for this method.</td>
 </tr>
 </tbody>
 </table>
@@ -252,7 +253,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Returns the specified Region resource. To decrease latency for this method, you can optionally omit any unneeded information from the response by using a field mask. This practice is especially recommended for unused quota information (the `quotas` field). To exclude one or more fields, set your request's `fields` query parameter to only include the fields you need. For example, to only include the `id` and `selfLink` fields, add the query parameter `?fields=id,selfLink` to your request. This method fails if the quota information is unavailable for the region and if the organization policy constraint compute.requireBasicQuotaInResponse is enforced. This constraint, when enforced, disables the fail-open behaviour when quota information (the `items.quotas` field) is unavailable for the region. It is recommended to use the default setting for the constraint unless your application requires the fail-closed behaviour for this method.
+Returns the specified Region resource.<br /><br />To decrease latency for this method, you can optionally omit any unneeded<br />information from the response by using a field mask. This practice is<br />especially recommended for unused quota information (the `quotas` field).<br />To exclude one or more fields, set your request's `fields` query parameter<br />to only include the fields you need. For example, to only include the `id`<br />and `selfLink` fields, add the query parameter `?fields=id,selfLink` to<br />your request.<br /><br />This method fails if the quota information is unavailable for the region<br />and if the organization policy constraint<br />compute.requireBasicQuotaInResponse is enforced. This<br />constraint, when enforced, disables the fail-open behaviour when quota<br />information (the `items.quotas` field) is unavailable for the region.<br />It is recommended to use the default setting<br />for the constraint unless your application requires the fail-closed<br />behaviour for this method.
 
 ```sql
 SELECT
@@ -276,7 +277,7 @@ AND region = '{{ region }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of region resources available to the specified project. To decrease latency for this method, you can optionally omit any unneeded information from the response by using a field mask. This practice is especially recommended for unused quota information (the `items.quotas` field). To exclude one or more fields, set your request's `fields` query parameter to only include the fields you need. For example, to only include the `id` and `selfLink` fields, add the query parameter `?fields=id,selfLink` to your request. This method fails if the quota information is unavailable for the region and if the organization policy constraint compute.requireBasicQuotaInResponse is enforced. This constraint, when enforced, disables the fail-open behaviour when quota information (the `items.quotas` field) is unavailable for the region. It is recommended to use the default setting for the constraint unless your application requires the fail-closed behaviour for this method.
+Retrieves the list of region resources available to the specified project.<br /><br />To decrease latency for this method, you can optionally omit any unneeded<br />information from the response by using a field mask. This practice is<br />especially recommended for unused quota information<br />(the `items.quotas` field).<br />To exclude one or more fields, set your request's `fields` query parameter<br />to only include the fields you need. For example, to only include the `id`<br />and `selfLink` fields, add the query parameter `?fields=id,selfLink` to<br />your request.<br /><br />This method fails if the quota information is unavailable for the region<br />and if the organization policy constraint<br />compute.requireBasicQuotaInResponse is enforced. This<br />constraint, when enforced, disables the fail-open behaviour when quota<br />information (the `items.quotas` field) is unavailable for the region.<br />It is recommended to use the default setting<br />for the constraint unless your application requires the fail-closed<br />behaviour for this method.
 
 ```sql
 SELECT
@@ -288,11 +289,11 @@ selfLink,
 warning
 FROM google.compute.regions
 WHERE project = '{{ project }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

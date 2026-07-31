@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sinks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sinks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sinks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.logging.sinks" /></td></tr>
 </tbody></table>
@@ -32,188 +33,20 @@ Creates, updates, deletes, gets or lists a <code>sinks</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_sinks_get"
+    defaultValue="billing_accounts_sinks_get"
     values={[
+        { label: 'billing_accounts_sinks_get', value: 'billing_accounts_sinks_get' },
+        { label: 'folders_sinks_get', value: 'folders_sinks_get' },
+        { label: 'projects_sinks_get', value: 'projects_sinks_get' },
         { label: 'organizations_sinks_get', value: 'organizations_sinks_get' },
         { label: 'sinks_list', value: 'sinks_list' },
-        { label: 'billing_accounts_sinks_get', value: 'billing_accounts_sinks_get' },
-        { label: 'projects_sinks_get', value: 'projects_sinks_get' },
-        { label: 'folders_sinks_get', value: 'folders_sinks_get' },
-        { label: 'organizations_sinks_list', value: 'organizations_sinks_list' },
-        { label: 'sinks_get', value: 'sinks_get' },
         { label: 'billing_accounts_sinks_list', value: 'billing_accounts_sinks_list' },
+        { label: 'folders_sinks_list', value: 'folders_sinks_list' },
         { label: 'projects_sinks_list', value: 'projects_sinks_list' },
-        { label: 'folders_sinks_list', value: 'folders_sinks_list' }
+        { label: 'organizations_sinks_list', value: 'organizations_sinks_list' },
+        { label: 'sinks_get', value: 'sinks_get' }
     ]}
 >
-<TabItem value="organizations_sinks_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="bigqueryOptions" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Options that affect sinks exporting data to BigQuery. (id: BigQueryOptions)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of the sink.This field may not be present for older sinks.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A description of this sink.The maximum length of the description is 8000 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="destination" /></td>
-    <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="disabled" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. If set to true, then this sink is disabled and it does not export any log entries.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="exclusions" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
-</tr>
-<tr>
-    <td><CopyableCode code="includeChildren" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance</td>
-</tr>
-<tr>
-    <td><CopyableCode code="interceptChildren" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="outputVersionFormat" /></td>
-    <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resourceName" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the sink. "projects/[PROJECT_ID]/sinks/[SINK_NAME] "organizations/[ORGANIZATION_ID]/sinks/[SINK_NAME] "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_NAME] "folders/[FOLDER_ID]/sinks/[SINK_NAME] For example: projects/my_project/sinks/SINK_NAME</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of the sink.This field may not be present for older sinks.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="writerIdentity" /></td>
-    <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="sinks_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="bigqueryOptions" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Options that affect sinks exporting data to BigQuery. (id: BigQueryOptions)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of the sink.This field may not be present for older sinks.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A description of this sink.The maximum length of the description is 8000 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="destination" /></td>
-    <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="disabled" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. If set to true, then this sink is disabled and it does not export any log entries.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="exclusions" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
-</tr>
-<tr>
-    <td><CopyableCode code="includeChildren" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance</td>
-</tr>
-<tr>
-    <td><CopyableCode code="interceptChildren" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="outputVersionFormat" /></td>
-    <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resourceName" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the sink. "projects/[PROJECT_ID]/sinks/[SINK_NAME] "organizations/[ORGANIZATION_ID]/sinks/[SINK_NAME] "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_NAME] "folders/[FOLDER_ID]/sinks/[SINK_NAME] For example: projects/my_project/sinks/SINK_NAME</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of the sink.This field may not be present for older sinks.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="writerIdentity" /></td>
-    <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="billing_accounts_sinks_get">
 
 <table>
@@ -248,7 +81,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="destination" /></td>
     <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -263,7 +96,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
 </tr>
 <tr>
     <td><CopyableCode code="includeChildren" /></td>
@@ -278,7 +111,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="outputVersionFormat" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceName" /></td>
@@ -293,91 +126,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="writerIdentity" /></td>
     <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_sinks_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="bigqueryOptions" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Options that affect sinks exporting data to BigQuery. (id: BigQueryOptions)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of the sink.This field may not be present for older sinks.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A description of this sink.The maximum length of the description is 8000 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="destination" /></td>
-    <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="disabled" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. If set to true, then this sink is disabled and it does not export any log entries.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="exclusions" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
-</tr>
-<tr>
-    <td><CopyableCode code="includeChildren" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance</td>
-</tr>
-<tr>
-    <td><CopyableCode code="interceptChildren" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="outputVersionFormat" /></td>
-    <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resourceName" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the sink. "projects/[PROJECT_ID]/sinks/[SINK_NAME] "organizations/[ORGANIZATION_ID]/sinks/[SINK_NAME] "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_NAME] "folders/[FOLDER_ID]/sinks/[SINK_NAME] For example: projects/my_project/sinks/SINK_NAME</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of the sink.This field may not be present for older sinks.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="writerIdentity" /></td>
-    <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
 </tr>
 </tbody>
 </table>
@@ -416,7 +165,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="destination" /></td>
     <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -431,7 +180,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
 </tr>
 <tr>
     <td><CopyableCode code="includeChildren" /></td>
@@ -446,7 +195,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="outputVersionFormat" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceName" /></td>
@@ -461,12 +210,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="writerIdentity" /></td>
     <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
 </tr>
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_sinks_list">
+<TabItem value="projects_sinks_get">
 
 <table>
 <thead>
@@ -500,7 +249,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="destination" /></td>
     <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -515,7 +264,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
 </tr>
 <tr>
     <td><CopyableCode code="includeChildren" /></td>
@@ -530,7 +279,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="outputVersionFormat" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceName" /></td>
@@ -545,12 +294,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="writerIdentity" /></td>
     <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
 </tr>
 </tbody>
 </table>
 </TabItem>
-<TabItem value="sinks_get">
+<TabItem value="organizations_sinks_get">
 
 <table>
 <thead>
@@ -584,7 +333,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="destination" /></td>
     <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -599,7 +348,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
 </tr>
 <tr>
     <td><CopyableCode code="includeChildren" /></td>
@@ -614,7 +363,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="outputVersionFormat" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceName" /></td>
@@ -629,7 +378,91 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="writerIdentity" /></td>
     <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="sinks_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bigqueryOptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Options that affect sinks exporting data to BigQuery. (id: BigQueryOptions)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of the sink.This field may not be present for older sinks.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A description of this sink.The maximum length of the description is 8000 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="destination" /></td>
+    <td><code>string</code></td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="disabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If set to true, then this sink is disabled and it does not export any log entries.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="exclusions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+</tr>
+<tr>
+    <td><CopyableCode code="includeChildren" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance</td>
+</tr>
+<tr>
+    <td><CopyableCode code="interceptChildren" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="outputVersionFormat" /></td>
+    <td><code>string</code></td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the sink. "projects/[PROJECT_ID]/sinks/[SINK_NAME] "organizations/[ORGANIZATION_ID]/sinks/[SINK_NAME] "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_NAME] "folders/[FOLDER_ID]/sinks/[SINK_NAME] For example: projects/my_project/sinks/SINK_NAME</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of the sink.This field may not be present for older sinks.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="writerIdentity" /></td>
+    <td><code>string</code></td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
 </tr>
 </tbody>
 </table>
@@ -668,7 +501,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="destination" /></td>
     <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -683,7 +516,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
 </tr>
 <tr>
     <td><CopyableCode code="includeChildren" /></td>
@@ -698,7 +531,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="outputVersionFormat" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceName" /></td>
@@ -713,91 +546,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="writerIdentity" /></td>
     <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_sinks_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="bigqueryOptions" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Options that affect sinks exporting data to BigQuery. (id: BigQueryOptions)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of the sink.This field may not be present for older sinks.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A description of this sink.The maximum length of the description is 8000 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="destination" /></td>
-    <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="disabled" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. If set to true, then this sink is disabled and it does not export any log entries.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="exclusions" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
-</tr>
-<tr>
-    <td><CopyableCode code="includeChildren" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance</td>
-</tr>
-<tr>
-    <td><CopyableCode code="interceptChildren" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="outputVersionFormat" /></td>
-    <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resourceName" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the sink. "projects/[PROJECT_ID]/sinks/[SINK_NAME] "organizations/[ORGANIZATION_ID]/sinks/[SINK_NAME] "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_NAME] "folders/[FOLDER_ID]/sinks/[SINK_NAME] For example: projects/my_project/sinks/SINK_NAME</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of the sink.This field may not be present for older sinks.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="writerIdentity" /></td>
-    <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
 </tr>
 </tbody>
 </table>
@@ -836,7 +585,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="destination" /></td>
     <td><code>string</code></td>
-    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).</td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -851,7 +600,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
 </tr>
 <tr>
     <td><CopyableCode code="includeChildren" /></td>
@@ -866,7 +615,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="outputVersionFormat" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field is unused.</td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceName" /></td>
@@ -881,7 +630,259 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="writerIdentity" /></td>
     <td><code>string</code></td>
-    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_sinks_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bigqueryOptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Options that affect sinks exporting data to BigQuery. (id: BigQueryOptions)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of the sink.This field may not be present for older sinks.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A description of this sink.The maximum length of the description is 8000 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="destination" /></td>
+    <td><code>string</code></td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="disabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If set to true, then this sink is disabled and it does not export any log entries.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="exclusions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+</tr>
+<tr>
+    <td><CopyableCode code="includeChildren" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance</td>
+</tr>
+<tr>
+    <td><CopyableCode code="interceptChildren" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="outputVersionFormat" /></td>
+    <td><code>string</code></td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the sink. "projects/[PROJECT_ID]/sinks/[SINK_NAME] "organizations/[ORGANIZATION_ID]/sinks/[SINK_NAME] "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_NAME] "folders/[FOLDER_ID]/sinks/[SINK_NAME] For example: projects/my_project/sinks/SINK_NAME</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of the sink.This field may not be present for older sinks.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="writerIdentity" /></td>
+    <td><code>string</code></td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_sinks_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bigqueryOptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Options that affect sinks exporting data to BigQuery. (id: BigQueryOptions)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of the sink.This field may not be present for older sinks.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A description of this sink.The maximum length of the description is 8000 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="destination" /></td>
+    <td><code>string</code></td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="disabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If set to true, then this sink is disabled and it does not export any log entries.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="exclusions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+</tr>
+<tr>
+    <td><CopyableCode code="includeChildren" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance</td>
+</tr>
+<tr>
+    <td><CopyableCode code="interceptChildren" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="outputVersionFormat" /></td>
+    <td><code>string</code></td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the sink. "projects/[PROJECT_ID]/sinks/[SINK_NAME] "organizations/[ORGANIZATION_ID]/sinks/[SINK_NAME] "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_NAME] "folders/[FOLDER_ID]/sinks/[SINK_NAME] For example: projects/my_project/sinks/SINK_NAME</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of the sink.This field may not be present for older sinks.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="writerIdentity" /></td>
+    <td><code>string</code></td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="sinks_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bigqueryOptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Options that affect sinks exporting data to BigQuery. (id: BigQueryOptions)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of the sink.This field may not be present for older sinks.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A description of this sink.The maximum length of the description is 8000 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="destination" /></td>
+    <td><code>string</code></td>
+    <td>Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="disabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If set to true, then this sink is disabled and it does not export any log entries.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="exclusions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td>Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity&gt;=ERROR</td>
+</tr>
+<tr>
+    <td><CopyableCode code="includeChildren" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance</td>
+</tr>
+<tr>
+    <td><CopyableCode code="interceptChildren" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="outputVersionFormat" /></td>
+    <td><code>string</code></td>
+    <td>Deprecated. This field is unused. (VERSION_FORMAT_UNSPECIFIED, V2, V1)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the sink. "projects/[PROJECT_ID]/sinks/[SINK_NAME] "organizations/[ORGANIZATION_ID]/sinks/[SINK_NAME] "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_NAME] "folders/[FOLDER_ID]/sinks/[SINK_NAME] For example: projects/my_project/sinks/SINK_NAME</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of the sink.This field may not be present for older sinks.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="writerIdentity" /></td>
+    <td><code>string</code></td>
+    <td>Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is either set by specifying custom_writer_identity or set automatically by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Manage access to projects, folders, and organizations (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink cannot have a writer_identity and no additional permissions are required.</td>
 </tr>
 </tbody>
 </table>
@@ -904,30 +905,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_sinks_get"><CopyableCode code="organizations_sinks_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td></td>
-    <td>Gets a sink.</td>
-</tr>
-<tr>
-    <td><a href="#sinks_list"><CopyableCode code="sinks_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists sinks.</td>
-</tr>
-<tr>
     <td><a href="#billing_accounts_sinks_get"><CopyableCode code="billing_accounts_sinks_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td></td>
-    <td>Gets a sink.</td>
-</tr>
-<tr>
-    <td><a href="#projects_sinks_get"><CopyableCode code="projects_sinks_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
     <td></td>
     <td>Gets a sink.</td>
 </tr>
@@ -939,10 +919,52 @@ The following methods are available for this resource:
     <td>Gets a sink.</td>
 </tr>
 <tr>
+    <td><a href="#projects_sinks_get"><CopyableCode code="projects_sinks_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
+    <td></td>
+    <td>Gets a sink.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_sinks_get"><CopyableCode code="organizations_sinks_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
+    <td></td>
+    <td>Gets a sink.</td>
+</tr>
+<tr>
+    <td><a href="#sinks_list"><CopyableCode code="sinks_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists sinks.</td>
+</tr>
+<tr>
+    <td><a href="#billing_accounts_sinks_list"><CopyableCode code="billing_accounts_sinks_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists sinks.</td>
+</tr>
+<tr>
+    <td><a href="#folders_sinks_list"><CopyableCode code="folders_sinks_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists sinks.</td>
+</tr>
+<tr>
+    <td><a href="#projects_sinks_list"><CopyableCode code="projects_sinks_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists sinks.</td>
+</tr>
+<tr>
     <td><a href="#organizations_sinks_list"><CopyableCode code="organizations_sinks_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists sinks.</td>
 </tr>
 <tr>
@@ -953,44 +975,23 @@ The following methods are available for this resource:
     <td>Gets a sink.</td>
 </tr>
 <tr>
-    <td><a href="#billing_accounts_sinks_list"><CopyableCode code="billing_accounts_sinks_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists sinks.</td>
-</tr>
-<tr>
-    <td><a href="#projects_sinks_list"><CopyableCode code="projects_sinks_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists sinks.</td>
-</tr>
-<tr>
-    <td><a href="#folders_sinks_list"><CopyableCode code="folders_sinks_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists sinks.</td>
-</tr>
-<tr>
     <td><a href="#sinks_create"><CopyableCode code="sinks_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a></td>
-    <td>Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_sinks_create"><CopyableCode code="organizations_sinks_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a></td>
+    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a></td>
     <td>Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_sinks_create"><CopyableCode code="billing_accounts_sinks_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a></td>
+    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a></td>
+    <td>Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.</td>
+</tr>
+<tr>
+    <td><a href="#folders_sinks_create"><CopyableCode code="folders_sinks_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td><a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a></td>
     <td>Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.</td>
 </tr>
@@ -1002,24 +1003,24 @@ The following methods are available for this resource:
     <td>Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.</td>
 </tr>
 <tr>
-    <td><a href="#folders_sinks_create"><CopyableCode code="folders_sinks_create" /></a></td>
+    <td><a href="#organizations_sinks_create"><CopyableCode code="organizations_sinks_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a></td>
     <td>Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_sinks_patch"><CopyableCode code="organizations_sinks_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td><a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_sinks_patch"><CopyableCode code="billing_accounts_sinks_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td><a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
+</tr>
+<tr>
+    <td><a href="#folders_sinks_patch"><CopyableCode code="folders_sinks_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
+    <td><a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a></td>
     <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
 </tr>
 <tr>
@@ -1030,31 +1031,17 @@ The following methods are available for this resource:
     <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
 </tr>
 <tr>
-    <td><a href="#folders_sinks_patch"><CopyableCode code="folders_sinks_patch" /></a></td>
+    <td><a href="#organizations_sinks_patch"><CopyableCode code="organizations_sinks_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_sinks_update"><CopyableCode code="organizations_sinks_update" /></a></td>
-    <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a></td>
+    <td><a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a></td>
     <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_sinks_update"><CopyableCode code="billing_accounts_sinks_update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a></td>
-    <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
-</tr>
-<tr>
-    <td><a href="#projects_sinks_update"><CopyableCode code="projects_sinks_update" /></a></td>
-    <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a></td>
+    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
 </tr>
 <tr>
@@ -1065,23 +1052,37 @@ The following methods are available for this resource:
     <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
 </tr>
 <tr>
-    <td><a href="#sinks_update"><CopyableCode code="sinks_update" /></a></td>
+    <td><a href="#projects_sinks_update"><CopyableCode code="projects_sinks_update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-sinkName"><code>sinkName</code></a></td>
-    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
+    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_sinks_delete"><CopyableCode code="organizations_sinks_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#organizations_sinks_update"><CopyableCode code="organizations_sinks_update" /></a></td>
+    <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
-    <td></td>
-    <td>Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.</td>
+    <td><a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a>, <a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
+</tr>
+<tr>
+    <td><a href="#sinks_update"><CopyableCode code="sinks_update" /></a></td>
+    <td><CopyableCode code="replace" /></td>
+    <td><a href="#parameter-sinkName"><code>sinkName</code></a></td>
+    <td><a href="#parameter-uniqueWriterIdentity"><code>uniqueWriterIdentity</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-customWriterIdentity"><code>customWriterIdentity</code></a></td>
+    <td>Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_sinks_delete"><CopyableCode code="billing_accounts_sinks_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
+    <td></td>
+    <td>Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.</td>
+</tr>
+<tr>
+    <td><a href="#folders_sinks_delete"><CopyableCode code="folders_sinks_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
     <td></td>
     <td>Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.</td>
 </tr>
@@ -1093,9 +1094,9 @@ The following methods are available for this resource:
     <td>Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.</td>
 </tr>
 <tr>
-    <td><a href="#folders_sinks_delete"><CopyableCode code="folders_sinks_delete" /></a></td>
+    <td><a href="#organizations_sinks_delete"><CopyableCode code="organizations_sinks_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sinksId"><code>sinksId</code></a></td>
     <td></td>
     <td>Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.</td>
 </tr>
@@ -1198,20 +1199,98 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_sinks_get"
+    defaultValue="billing_accounts_sinks_get"
     values={[
+        { label: 'billing_accounts_sinks_get', value: 'billing_accounts_sinks_get' },
+        { label: 'folders_sinks_get', value: 'folders_sinks_get' },
+        { label: 'projects_sinks_get', value: 'projects_sinks_get' },
         { label: 'organizations_sinks_get', value: 'organizations_sinks_get' },
         { label: 'sinks_list', value: 'sinks_list' },
-        { label: 'billing_accounts_sinks_get', value: 'billing_accounts_sinks_get' },
-        { label: 'projects_sinks_get', value: 'projects_sinks_get' },
-        { label: 'folders_sinks_get', value: 'folders_sinks_get' },
-        { label: 'organizations_sinks_list', value: 'organizations_sinks_list' },
-        { label: 'sinks_get', value: 'sinks_get' },
         { label: 'billing_accounts_sinks_list', value: 'billing_accounts_sinks_list' },
+        { label: 'folders_sinks_list', value: 'folders_sinks_list' },
         { label: 'projects_sinks_list', value: 'projects_sinks_list' },
-        { label: 'folders_sinks_list', value: 'folders_sinks_list' }
+        { label: 'organizations_sinks_list', value: 'organizations_sinks_list' },
+        { label: 'sinks_get', value: 'sinks_get' }
     ]}
 >
+<TabItem value="billing_accounts_sinks_get">
+
+Gets a sink.
+
+```sql
+SELECT
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity
+FROM google.logging.sinks
+WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
+AND sinksId = '{{ sinksId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="folders_sinks_get">
+
+Gets a sink.
+
+```sql
+SELECT
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity
+FROM google.logging.sinks
+WHERE foldersId = '{{ foldersId }}' -- required
+AND sinksId = '{{ sinksId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_sinks_get">
+
+Gets a sink.
+
+```sql
+SELECT
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity
+FROM google.logging.sinks
+WHERE projectsId = '{{ projectsId }}' -- required
+AND sinksId = '{{ sinksId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="organizations_sinks_get">
 
 Gets a sink.
@@ -1261,15 +1340,15 @@ writerIdentity
 FROM google.logging.sinks
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="billing_accounts_sinks_get">
+<TabItem value="billing_accounts_sinks_list">
 
-Gets a sink.
+Lists sinks.
 
 ```sql
 SELECT
@@ -1289,39 +1368,15 @@ updateTime,
 writerIdentity
 FROM google.logging.sinks
 WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
-AND sinksId = '{{ sinksId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
-<TabItem value="projects_sinks_get">
+<TabItem value="folders_sinks_list">
 
-Gets a sink.
-
-```sql
-SELECT
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity
-FROM google.logging.sinks
-WHERE projectsId = '{{ projectsId }}' -- required
-AND sinksId = '{{ sinksId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="folders_sinks_get">
-
-Gets a sink.
+Lists sinks.
 
 ```sql
 SELECT
@@ -1341,7 +1396,37 @@ updateTime,
 writerIdentity
 FROM google.logging.sinks
 WHERE foldersId = '{{ foldersId }}' -- required
-AND sinksId = '{{ sinksId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="projects_sinks_list">
+
+Lists sinks.
+
+```sql
+SELECT
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity
+FROM google.logging.sinks
+WHERE projectsId = '{{ projectsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -1367,8 +1452,8 @@ updateTime,
 writerIdentity
 FROM google.logging.sinks
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```
@@ -1398,90 +1483,6 @@ WHERE sinkName = '{{ sinkName }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="billing_accounts_sinks_list">
-
-Lists sinks.
-
-```sql
-SELECT
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity
-FROM google.logging.sinks
-WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_sinks_list">
-
-Lists sinks.
-
-```sql
-SELECT
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity
-FROM google.logging.sinks
-WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="folders_sinks_list">
-
-Lists sinks.
-
-```sql
-SELECT
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity
-FROM google.logging.sinks
-WHERE foldersId = '{{ foldersId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 </Tabs>
 
 
@@ -1491,10 +1492,10 @@ AND pageToken = '{{ pageToken }}'
     defaultValue="sinks_create"
     values={[
         { label: 'sinks_create', value: 'sinks_create' },
-        { label: 'organizations_sinks_create', value: 'organizations_sinks_create' },
         { label: 'billing_accounts_sinks_create', value: 'billing_accounts_sinks_create' },
-        { label: 'projects_sinks_create', value: 'projects_sinks_create' },
         { label: 'folders_sinks_create', value: 'folders_sinks_create' },
+        { label: 'projects_sinks_create', value: 'projects_sinks_create' },
+        { label: 'organizations_sinks_create', value: 'organizations_sinks_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
@@ -1504,88 +1505,36 @@ Creates a sink that exports specified log entries to a destination. The export b
 
 ```sql
 INSERT INTO google.logging.sinks (
-data__disabled,
-data__bigqueryOptions,
-data__interceptChildren,
-data__exclusions,
 data__name,
 data__destination,
-data__description,
-data__outputVersionFormat,
 data__includeChildren,
+data__exclusions,
+data__disabled,
+data__bigqueryOptions,
 data__filter,
+data__interceptChildren,
+data__outputVersionFormat,
+data__description,
 parentType,
 parent,
-uniqueWriterIdentity,
-customWriterIdentity
+customWriterIdentity,
+uniqueWriterIdentity
 )
 SELECT 
-{{ disabled }},
-'{{ bigqueryOptions }}',
-{{ interceptChildren }},
-'{{ exclusions }}',
 '{{ name }}',
 '{{ destination }}',
-'{{ description }}',
-'{{ outputVersionFormat }}',
 {{ includeChildren }},
+'{{ exclusions }}',
+{{ disabled }},
+'{{ bigqueryOptions }}',
 '{{ filter }}',
+{{ interceptChildren }},
+'{{ outputVersionFormat }}',
+'{{ description }}',
 '{{ parentType }}',
 '{{ parent }}',
-'{{ uniqueWriterIdentity }}',
-'{{ customWriterIdentity }}'
-RETURNING
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity
-;
-```
-</TabItem>
-<TabItem value="organizations_sinks_create">
-
-Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.
-
-```sql
-INSERT INTO google.logging.sinks (
-data__disabled,
-data__bigqueryOptions,
-data__interceptChildren,
-data__exclusions,
-data__name,
-data__destination,
-data__description,
-data__outputVersionFormat,
-data__includeChildren,
-data__filter,
-organizationsId,
-uniqueWriterIdentity,
-customWriterIdentity
-)
-SELECT 
-{{ disabled }},
-'{{ bigqueryOptions }}',
-{{ interceptChildren }},
-'{{ exclusions }}',
-'{{ name }}',
-'{{ destination }}',
-'{{ description }}',
-'{{ outputVersionFormat }}',
-{{ includeChildren }},
-'{{ filter }}',
-'{{ organizationsId }}',
-'{{ uniqueWriterIdentity }}',
-'{{ customWriterIdentity }}'
+'{{ customWriterIdentity }}',
+'{{ uniqueWriterIdentity }}'
 RETURNING
 name,
 bigqueryOptions,
@@ -1610,32 +1559,84 @@ Creates a sink that exports specified log entries to a destination. The export b
 
 ```sql
 INSERT INTO google.logging.sinks (
-data__disabled,
-data__bigqueryOptions,
-data__interceptChildren,
-data__exclusions,
 data__name,
 data__destination,
-data__description,
-data__outputVersionFormat,
 data__includeChildren,
+data__exclusions,
+data__disabled,
+data__bigqueryOptions,
 data__filter,
+data__interceptChildren,
+data__outputVersionFormat,
+data__description,
 billingAccountsId,
+customWriterIdentity,
+uniqueWriterIdentity
+)
+SELECT 
+'{{ name }}',
+'{{ destination }}',
+{{ includeChildren }},
+'{{ exclusions }}',
+{{ disabled }},
+'{{ bigqueryOptions }}',
+'{{ filter }}',
+{{ interceptChildren }},
+'{{ outputVersionFormat }}',
+'{{ description }}',
+'{{ billingAccountsId }}',
+'{{ customWriterIdentity }}',
+'{{ uniqueWriterIdentity }}'
+RETURNING
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity
+;
+```
+</TabItem>
+<TabItem value="folders_sinks_create">
+
+Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.
+
+```sql
+INSERT INTO google.logging.sinks (
+data__name,
+data__destination,
+data__includeChildren,
+data__exclusions,
+data__disabled,
+data__bigqueryOptions,
+data__filter,
+data__interceptChildren,
+data__outputVersionFormat,
+data__description,
+foldersId,
 uniqueWriterIdentity,
 customWriterIdentity
 )
 SELECT 
-{{ disabled }},
-'{{ bigqueryOptions }}',
-{{ interceptChildren }},
-'{{ exclusions }}',
 '{{ name }}',
 '{{ destination }}',
-'{{ description }}',
-'{{ outputVersionFormat }}',
 {{ includeChildren }},
+'{{ exclusions }}',
+{{ disabled }},
+'{{ bigqueryOptions }}',
 '{{ filter }}',
-'{{ billingAccountsId }}',
+{{ interceptChildren }},
+'{{ outputVersionFormat }}',
+'{{ description }}',
+'{{ foldersId }}',
 '{{ uniqueWriterIdentity }}',
 '{{ customWriterIdentity }}'
 RETURNING
@@ -1662,31 +1663,31 @@ Creates a sink that exports specified log entries to a destination. The export b
 
 ```sql
 INSERT INTO google.logging.sinks (
-data__disabled,
-data__bigqueryOptions,
-data__interceptChildren,
-data__exclusions,
 data__name,
 data__destination,
-data__description,
-data__outputVersionFormat,
 data__includeChildren,
+data__exclusions,
+data__disabled,
+data__bigqueryOptions,
 data__filter,
+data__interceptChildren,
+data__outputVersionFormat,
+data__description,
 projectsId,
 uniqueWriterIdentity,
 customWriterIdentity
 )
 SELECT 
-{{ disabled }},
-'{{ bigqueryOptions }}',
-{{ interceptChildren }},
-'{{ exclusions }}',
 '{{ name }}',
 '{{ destination }}',
-'{{ description }}',
-'{{ outputVersionFormat }}',
 {{ includeChildren }},
+'{{ exclusions }}',
+{{ disabled }},
+'{{ bigqueryOptions }}',
 '{{ filter }}',
+{{ interceptChildren }},
+'{{ outputVersionFormat }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ uniqueWriterIdentity }}',
 '{{ customWriterIdentity }}'
@@ -1708,38 +1709,38 @@ writerIdentity
 ;
 ```
 </TabItem>
-<TabItem value="folders_sinks_create">
+<TabItem value="organizations_sinks_create">
 
 Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.
 
 ```sql
 INSERT INTO google.logging.sinks (
-data__disabled,
-data__bigqueryOptions,
-data__interceptChildren,
-data__exclusions,
 data__name,
 data__destination,
-data__description,
-data__outputVersionFormat,
 data__includeChildren,
+data__exclusions,
+data__disabled,
+data__bigqueryOptions,
 data__filter,
-foldersId,
+data__interceptChildren,
+data__outputVersionFormat,
+data__description,
+organizationsId,
 customWriterIdentity,
 uniqueWriterIdentity
 )
 SELECT 
-{{ disabled }},
-'{{ bigqueryOptions }}',
-{{ interceptChildren }},
-'{{ exclusions }}',
 '{{ name }}',
 '{{ destination }}',
-'{{ description }}',
-'{{ outputVersionFormat }}',
 {{ includeChildren }},
+'{{ exclusions }}',
+{{ disabled }},
+'{{ bigqueryOptions }}',
 '{{ filter }}',
-'{{ foldersId }}',
+{{ interceptChildren }},
+'{{ outputVersionFormat }}',
+'{{ description }}',
+'{{ organizationsId }}',
 '{{ customWriterIdentity }}',
 '{{ uniqueWriterIdentity }}'
 RETURNING
@@ -1762,84 +1763,82 @@ writerIdentity
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sinks
   props:
     - name: parentType
-      value: string
+      value: "{{ parentType }}"
       description: Required parameter for the sinks resource.
     - name: parent
-      value: string
-      description: Required parameter for the sinks resource.
-    - name: organizationsId
-      value: string
+      value: "{{ parent }}"
       description: Required parameter for the sinks resource.
     - name: billingAccountsId
-      value: string
-      description: Required parameter for the sinks resource.
-    - name: projectsId
-      value: string
+      value: "{{ billingAccountsId }}"
       description: Required parameter for the sinks resource.
     - name: foldersId
-      value: string
+      value: "{{ foldersId }}"
       description: Required parameter for the sinks resource.
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. If set to true, then this sink is disabled and it does not export any log entries.
-        
-    - name: bigqueryOptions
-      value: object
-      description: >
-        Optional. Options that affect sinks exporting data to BigQuery.
-        
-    - name: interceptChildren
-      value: boolean
-      description: >
-        Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.
-        
-    - name: exclusions
-      value: array
-      description: >
-        Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.
-        
+    - name: projectsId
+      value: "{{ projectsId }}"
+      description: Required parameter for the sinks resource.
+    - name: organizationsId
+      value: "{{ organizationsId }}"
+      description: Required parameter for the sinks resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Optional. The client-assigned sink identifier, unique within the project.For example: "my-syslog-errors-to-pubsub".Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.
-        
     - name: destination
-      value: string
-      description: >
-        Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A description of this sink.The maximum length of the description is 8000 characters.
-        
-    - name: outputVersionFormat
-      value: string
-      description: >
-        Deprecated. This field is unused.
-        
-      valid_values: ['VERSION_FORMAT_UNSPECIFIED', 'V2', 'V1']
+      value: "{{ destination }}"
+      description: |
+        Required. The export destination: "storage.googleapis.com/[GCS_BUCKET]" "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]" "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" "logging.googleapis.com/projects/[PROJECT_ID]" "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Route logs to supported destinations (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).
     - name: includeChildren
-      value: boolean
-      description: >
+      value: {{ includeChildren }}
+      description: |
         Optional. This field applies only to sinks owned by organizations and folders. If the field is false, the default, only the logs owned by the sink's parent resource are available for export. If the field is true, then log entries from all the projects, folders, and billing accounts contained in the sink's parent resource are also available for export. Whether a particular log entry from the children is exported depends on the sink's filter expression.For example, if this field is true, then the filter resource.type=gce_instance would export all Compute Engine VM instance log entries from all projects in the sink's parent.To only export entries from certain child projects, filter on the project part of the log name:logName:("projects/test-project1/" OR "projects/test-project2/") AND resource.type=gce_instance
-        
+    - name: exclusions
+      description: |
+        Optional. Log entries that match any of these exclusion filters will not be exported.If a log entry is matched by both filter and one of exclusions it will not be exported.
+      value:
+        - updateTime: "{{ updateTime }}"
+          description: "{{ description }}"
+          name: "{{ name }}"
+          filter: "{{ filter }}"
+          disabled: {{ disabled }}
+          createTime: "{{ createTime }}"
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. If set to true, then this sink is disabled and it does not export any log entries.
+    - name: bigqueryOptions
+      description: |
+        Optional. Options that affect sinks exporting data to BigQuery.
+      value:
+        usesTimestampColumnPartitioning: {{ usesTimestampColumnPartitioning }}
+        usePartitionedTables: {{ usePartitionedTables }}
     - name: filter
-      value: string
-      description: >
-        Optional. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced-queries). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity>=ERROR
-        
-    - name: uniqueWriterIdentity
-      value: boolean
+      value: "{{ filter }}"
+      description: |
+        Optional. An advanced logs filter (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression). The only exported log entries are those that are in the resource owning the sink and that match the filter.For example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity>=ERROR
+    - name: interceptChildren
+      value: {{ interceptChildren }}
+      description: |
+        Optional. This field applies only to sinks owned by organizations and folders.When the value of 'intercept_children' is true, the following restrictions apply: The sink must have the include_children flag set to true. The sink destination must be a Cloud project.Also, the following behaviors apply: Any logs matched by the sink won't be included by non-_Required sinks owned by child resources. The sink appears in the results of a ListSinks call from a child resource if the value of the filter field in its request is either 'in_scope("ALL")' or 'in_scope("ANCESTOR")'.
+    - name: outputVersionFormat
+      value: "{{ outputVersionFormat }}"
+      description: |
+        Deprecated. This field is unused.
+      valid_values: ['VERSION_FORMAT_UNSPECIFIED', 'V2', 'V1']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of this sink.The maximum length of the description is 8000 characters.
     - name: customWriterIdentity
-      value: string
-```
+      value: "{{ customWriterIdentity }}"
+    - name: uniqueWriterIdentity
+      value: {{ uniqueWriterIdentity }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1847,54 +1846,14 @@ writerIdentity
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="organizations_sinks_patch"
+    defaultValue="billing_accounts_sinks_patch"
     values={[
-        { label: 'organizations_sinks_patch', value: 'organizations_sinks_patch' },
         { label: 'billing_accounts_sinks_patch', value: 'billing_accounts_sinks_patch' },
+        { label: 'folders_sinks_patch', value: 'folders_sinks_patch' },
         { label: 'projects_sinks_patch', value: 'projects_sinks_patch' },
-        { label: 'folders_sinks_patch', value: 'folders_sinks_patch' }
+        { label: 'organizations_sinks_patch', value: 'organizations_sinks_patch' }
     ]}
 >
-<TabItem value="organizations_sinks_patch">
-
-Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
-
-```sql
-UPDATE google.logging.sinks
-SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
-data__name = '{{ name }}',
-data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
-data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
-WHERE 
-organizationsId = '{{ organizationsId }}' --required
-AND sinksId = '{{ sinksId }}' --required
-AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
-AND customWriterIdentity = '{{ customWriterIdentity}}'
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity;
-```
-</TabItem>
 <TabItem value="billing_accounts_sinks_patch">
 
 Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
@@ -1902,62 +1861,22 @@ Updates a sink. This method replaces the values of the destination and filter fi
 ```sql
 UPDATE google.logging.sinks
 SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
 data__name = '{{ name }}',
 data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
 data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
 WHERE 
 billingAccountsId = '{{ billingAccountsId }}' --required
 AND sinksId = '{{ sinksId }}' --required
-AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
 AND customWriterIdentity = '{{ customWriterIdentity}}'
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity;
-```
-</TabItem>
-<TabItem value="projects_sinks_patch">
-
-Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
-
-```sql
-UPDATE google.logging.sinks
-SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
-data__name = '{{ name }}',
-data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
-data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND sinksId = '{{ sinksId }}' --required
 AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
 AND updateMask = '{{ updateMask}}'
-AND customWriterIdentity = '{{ customWriterIdentity}}'
 RETURNING
 name,
 bigqueryOptions,
@@ -1982,22 +1901,102 @@ Updates a sink. This method replaces the values of the destination and filter fi
 ```sql
 UPDATE google.logging.sinks
 SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
 data__name = '{{ name }}',
 data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
 data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
 AND sinksId = '{{ sinksId }}' --required
-AND customWriterIdentity = '{{ customWriterIdentity}}'
 AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
 AND updateMask = '{{ updateMask}}'
+AND customWriterIdentity = '{{ customWriterIdentity}}'
+RETURNING
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity;
+```
+</TabItem>
+<TabItem value="projects_sinks_patch">
+
+Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
+
+```sql
+UPDATE google.logging.sinks
+SET 
+data__name = '{{ name }}',
+data__destination = '{{ destination }}',
+data__includeChildren = {{ includeChildren }},
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND sinksId = '{{ sinksId }}' --required
+AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
+AND updateMask = '{{ updateMask}}'
+AND customWriterIdentity = '{{ customWriterIdentity}}'
+RETURNING
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity;
+```
+</TabItem>
+<TabItem value="organizations_sinks_patch">
+
+Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
+
+```sql
+UPDATE google.logging.sinks
+SET 
+data__name = '{{ name }}',
+data__destination = '{{ destination }}',
+data__includeChildren = {{ includeChildren }},
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
+WHERE 
+organizationsId = '{{ organizationsId }}' --required
+AND sinksId = '{{ sinksId }}' --required
+AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
+AND updateMask = '{{ updateMask}}'
+AND customWriterIdentity = '{{ customWriterIdentity}}'
 RETURNING
 name,
 bigqueryOptions,
@@ -2021,55 +2020,15 @@ writerIdentity;
 ## `REPLACE` examples
 
 <Tabs
-    defaultValue="organizations_sinks_update"
+    defaultValue="billing_accounts_sinks_update"
     values={[
-        { label: 'organizations_sinks_update', value: 'organizations_sinks_update' },
         { label: 'billing_accounts_sinks_update', value: 'billing_accounts_sinks_update' },
-        { label: 'projects_sinks_update', value: 'projects_sinks_update' },
         { label: 'folders_sinks_update', value: 'folders_sinks_update' },
+        { label: 'projects_sinks_update', value: 'projects_sinks_update' },
+        { label: 'organizations_sinks_update', value: 'organizations_sinks_update' },
         { label: 'sinks_update', value: 'sinks_update' }
     ]}
 >
-<TabItem value="organizations_sinks_update">
-
-Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
-
-```sql
-REPLACE google.logging.sinks
-SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
-data__name = '{{ name }}',
-data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
-data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
-WHERE 
-organizationsId = '{{ organizationsId }}' --required
-AND sinksId = '{{ sinksId }}' --required
-AND customWriterIdentity = '{{ customWriterIdentity}}'
-AND updateMask = '{{ updateMask}}'
-AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
-RETURNING
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity;
-```
-</TabItem>
 <TabItem value="billing_accounts_sinks_update">
 
 Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
@@ -2077,62 +2036,22 @@ Updates a sink. This method replaces the values of the destination and filter fi
 ```sql
 REPLACE google.logging.sinks
 SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
 data__name = '{{ name }}',
 data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
 data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
 WHERE 
 billingAccountsId = '{{ billingAccountsId }}' --required
 AND sinksId = '{{ sinksId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND customWriterIdentity = '{{ customWriterIdentity}}'
 AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
-RETURNING
-name,
-bigqueryOptions,
-createTime,
-description,
-destination,
-disabled,
-exclusions,
-filter,
-includeChildren,
-interceptChildren,
-outputVersionFormat,
-resourceName,
-updateTime,
-writerIdentity;
-```
-</TabItem>
-<TabItem value="projects_sinks_update">
-
-Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
-
-```sql
-REPLACE google.logging.sinks
-SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
-data__name = '{{ name }}',
-data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
-data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND sinksId = '{{ sinksId }}' --required
 AND updateMask = '{{ updateMask}}'
-AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
-AND customWriterIdentity = '{{ customWriterIdentity}}'
 RETURNING
 name,
 bigqueryOptions,
@@ -2157,22 +2076,102 @@ Updates a sink. This method replaces the values of the destination and filter fi
 ```sql
 REPLACE google.logging.sinks
 SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
 data__name = '{{ name }}',
 data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
 data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
 AND sinksId = '{{ sinksId }}' --required
 AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
 AND updateMask = '{{ updateMask}}'
 AND customWriterIdentity = '{{ customWriterIdentity}}'
+RETURNING
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity;
+```
+</TabItem>
+<TabItem value="projects_sinks_update">
+
+Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
+
+```sql
+REPLACE google.logging.sinks
+SET 
+data__name = '{{ name }}',
+data__destination = '{{ destination }}',
+data__includeChildren = {{ includeChildren }},
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND sinksId = '{{ sinksId }}' --required
+AND customWriterIdentity = '{{ customWriterIdentity}}'
+AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+bigqueryOptions,
+createTime,
+description,
+destination,
+disabled,
+exclusions,
+filter,
+includeChildren,
+interceptChildren,
+outputVersionFormat,
+resourceName,
+updateTime,
+writerIdentity;
+```
+</TabItem>
+<TabItem value="organizations_sinks_update">
+
+Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.
+
+```sql
+REPLACE google.logging.sinks
+SET 
+data__name = '{{ name }}',
+data__destination = '{{ destination }}',
+data__includeChildren = {{ includeChildren }},
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
+WHERE 
+organizationsId = '{{ organizationsId }}' --required
+AND sinksId = '{{ sinksId }}' --required
+AND customWriterIdentity = '{{ customWriterIdentity}}'
+AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 bigqueryOptions,
@@ -2197,21 +2196,21 @@ Updates a sink. This method replaces the values of the destination and filter fi
 ```sql
 REPLACE google.logging.sinks
 SET 
-data__disabled = {{ disabled }},
-data__bigqueryOptions = '{{ bigqueryOptions }}',
-data__interceptChildren = {{ interceptChildren }},
-data__exclusions = '{{ exclusions }}',
 data__name = '{{ name }}',
 data__destination = '{{ destination }}',
-data__description = '{{ description }}',
-data__outputVersionFormat = '{{ outputVersionFormat }}',
 data__includeChildren = {{ includeChildren }},
-data__filter = '{{ filter }}'
+data__exclusions = '{{ exclusions }}',
+data__disabled = {{ disabled }},
+data__bigqueryOptions = '{{ bigqueryOptions }}',
+data__filter = '{{ filter }}',
+data__interceptChildren = {{ interceptChildren }},
+data__outputVersionFormat = '{{ outputVersionFormat }}',
+data__description = '{{ description }}'
 WHERE 
 sinkName = '{{ sinkName }}' --required
-AND customWriterIdentity = '{{ customWriterIdentity}}'
-AND updateMask = '{{ updateMask}}'
 AND uniqueWriterIdentity = {{ uniqueWriterIdentity}}
+AND updateMask = '{{ updateMask}}'
+AND customWriterIdentity = '{{ customWriterIdentity}}'
 RETURNING
 name,
 bigqueryOptions,
@@ -2235,26 +2234,15 @@ writerIdentity;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="organizations_sinks_delete"
+    defaultValue="billing_accounts_sinks_delete"
     values={[
-        { label: 'organizations_sinks_delete', value: 'organizations_sinks_delete' },
         { label: 'billing_accounts_sinks_delete', value: 'billing_accounts_sinks_delete' },
-        { label: 'projects_sinks_delete', value: 'projects_sinks_delete' },
         { label: 'folders_sinks_delete', value: 'folders_sinks_delete' },
+        { label: 'projects_sinks_delete', value: 'projects_sinks_delete' },
+        { label: 'organizations_sinks_delete', value: 'organizations_sinks_delete' },
         { label: 'sinks_delete', value: 'sinks_delete' }
     ]}
 >
-<TabItem value="organizations_sinks_delete">
-
-Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.
-
-```sql
-DELETE FROM google.logging.sinks
-WHERE organizationsId = '{{ organizationsId }}' --required
-AND sinksId = '{{ sinksId }}' --required
-;
-```
-</TabItem>
 <TabItem value="billing_accounts_sinks_delete">
 
 Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.
@@ -2262,6 +2250,17 @@ Deletes a sink. If the sink has a unique writer_identity, then that service acco
 ```sql
 DELETE FROM google.logging.sinks
 WHERE billingAccountsId = '{{ billingAccountsId }}' --required
+AND sinksId = '{{ sinksId }}' --required
+;
+```
+</TabItem>
+<TabItem value="folders_sinks_delete">
+
+Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.
+
+```sql
+DELETE FROM google.logging.sinks
+WHERE foldersId = '{{ foldersId }}' --required
 AND sinksId = '{{ sinksId }}' --required
 ;
 ```
@@ -2277,13 +2276,13 @@ AND sinksId = '{{ sinksId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="folders_sinks_delete">
+<TabItem value="organizations_sinks_delete">
 
 Deletes a sink. If the sink has a unique writer_identity, then that service account is also deleted.
 
 ```sql
 DELETE FROM google.logging.sinks
-WHERE foldersId = '{{ foldersId }}' --required
+WHERE organizationsId = '{{ organizationsId }}' --required
 AND sinksId = '{{ sinksId }}' --required
 ;
 ```

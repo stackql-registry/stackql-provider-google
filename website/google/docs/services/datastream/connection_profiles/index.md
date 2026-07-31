@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connection_profiles</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connection_profiles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connection_profiles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datastream.connection_profiles" /></td></tr>
 </tbody></table>
@@ -57,12 +58,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="bigqueryProfile" /></td>
     <td><code>object</code></td>
-    <td>BigQuery Connection Profile configuration. (id: BigQueryProfile)</td>
+    <td>Profile for connecting to a BigQuery destination. (id: BigQueryProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The create time of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataverseProfile" /></td>
+    <td><code>object</code></td>
+    <td>Profile for connecting to a Dataverse source. (id: DataverseProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -77,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gcsProfile" /></td>
     <td><code>object</code></td>
-    <td>Cloud Storage ConnectionProfile configuration. (id: GcsProfile)</td>
+    <td>Profile for connecting to a Cloud Storage destination. (id: GcsProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -87,22 +93,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mongodbProfile" /></td>
     <td><code>object</code></td>
-    <td>MongoDB Connection Profile configuration. (id: MongodbProfile)</td>
+    <td>Profile for connecting to a MongoDB source. (id: MongodbProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="mysqlProfile" /></td>
     <td><code>object</code></td>
-    <td>MySQL ConnectionProfile configuration. (id: MysqlProfile)</td>
+    <td>Profile for connecting to a MySQL source. (id: MysqlProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="oracleProfile" /></td>
     <td><code>object</code></td>
-    <td>Oracle ConnectionProfile configuration. (id: OracleProfile)</td>
+    <td>Profile for connecting to an Oracle source. (id: OracleProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="postgresqlProfile" /></td>
     <td><code>object</code></td>
-    <td>PostgreSQL Connection Profile configuration. (id: PostgresqlProfile)</td>
+    <td>Profile for connecting to a PostgreSQL source. (id: PostgresqlProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="privateConnectivity" /></td>
@@ -110,9 +116,14 @@ The following fields are returned by `SELECT` queries:
     <td>Private connectivity. (id: PrivateConnectivity)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="salesforceMarketingCloudProfile" /></td>
+    <td><code>object</code></td>
+    <td>Profile for connecting to a Salesforce Marketing Cloud source. (id: SalesforceMarketingCloudProfile)</td>
+</tr>
+<tr>
     <td><CopyableCode code="salesforceProfile" /></td>
     <td><code>object</code></td>
-    <td>Salesforce Connection Profile configuration. (id: SalesforceProfile)</td>
+    <td>Profile for connecting to a Salesforce source. (id: SalesforceProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
@@ -125,9 +136,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Reserved for future use.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="serviceNowProfile" /></td>
+    <td><code>object</code></td>
+    <td>Profile for connecting to a ServiceNow source. (id: ServiceNowProfile)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="spannerProfile" /></td>
+    <td><code>object</code></td>
+    <td>Profile for connecting to a Spanner source. (id: SpannerProfile)</td>
+</tr>
+<tr>
     <td><CopyableCode code="sqlServerProfile" /></td>
     <td><code>object</code></td>
-    <td>SQLServer Connection Profile configuration. (id: SqlServerProfile)</td>
+    <td>Profile for connecting to a SQLServer source. (id: SqlServerProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="staticServiceIpConnectivity" /></td>
@@ -138,6 +159,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The update time of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workdayProfile" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Profile for connecting to a Workday source. (id: WorkdayProfile)</td>
 </tr>
 </tbody>
 </table>
@@ -161,12 +187,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="bigqueryProfile" /></td>
     <td><code>object</code></td>
-    <td>BigQuery Connection Profile configuration. (id: BigQueryProfile)</td>
+    <td>Profile for connecting to a BigQuery destination. (id: BigQueryProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The create time of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataverseProfile" /></td>
+    <td><code>object</code></td>
+    <td>Profile for connecting to a Dataverse source. (id: DataverseProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -181,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gcsProfile" /></td>
     <td><code>object</code></td>
-    <td>Cloud Storage ConnectionProfile configuration. (id: GcsProfile)</td>
+    <td>Profile for connecting to a Cloud Storage destination. (id: GcsProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -191,22 +222,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mongodbProfile" /></td>
     <td><code>object</code></td>
-    <td>MongoDB Connection Profile configuration. (id: MongodbProfile)</td>
+    <td>Profile for connecting to a MongoDB source. (id: MongodbProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="mysqlProfile" /></td>
     <td><code>object</code></td>
-    <td>MySQL ConnectionProfile configuration. (id: MysqlProfile)</td>
+    <td>Profile for connecting to a MySQL source. (id: MysqlProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="oracleProfile" /></td>
     <td><code>object</code></td>
-    <td>Oracle ConnectionProfile configuration. (id: OracleProfile)</td>
+    <td>Profile for connecting to an Oracle source. (id: OracleProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="postgresqlProfile" /></td>
     <td><code>object</code></td>
-    <td>PostgreSQL Connection Profile configuration. (id: PostgresqlProfile)</td>
+    <td>Profile for connecting to a PostgreSQL source. (id: PostgresqlProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="privateConnectivity" /></td>
@@ -214,9 +245,14 @@ The following fields are returned by `SELECT` queries:
     <td>Private connectivity. (id: PrivateConnectivity)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="salesforceMarketingCloudProfile" /></td>
+    <td><code>object</code></td>
+    <td>Profile for connecting to a Salesforce Marketing Cloud source. (id: SalesforceMarketingCloudProfile)</td>
+</tr>
+<tr>
     <td><CopyableCode code="salesforceProfile" /></td>
     <td><code>object</code></td>
-    <td>Salesforce Connection Profile configuration. (id: SalesforceProfile)</td>
+    <td>Profile for connecting to a Salesforce source. (id: SalesforceProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
@@ -229,9 +265,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Reserved for future use.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="serviceNowProfile" /></td>
+    <td><code>object</code></td>
+    <td>Profile for connecting to a ServiceNow source. (id: ServiceNowProfile)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="spannerProfile" /></td>
+    <td><code>object</code></td>
+    <td>Profile for connecting to a Spanner source. (id: SpannerProfile)</td>
+</tr>
+<tr>
     <td><CopyableCode code="sqlServerProfile" /></td>
     <td><code>object</code></td>
-    <td>SQLServer Connection Profile configuration. (id: SqlServerProfile)</td>
+    <td>Profile for connecting to a SQLServer source. (id: SqlServerProfile)</td>
 </tr>
 <tr>
     <td><CopyableCode code="staticServiceIpConnectivity" /></td>
@@ -242,6 +288,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The update time of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workdayProfile" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Profile for connecting to a Workday source. (id: WorkdayProfile)</td>
 </tr>
 </tbody>
 </table>
@@ -274,21 +325,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Use this method to list connection profiles created in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-connectionProfileId"><code>connectionProfileId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-connectionProfileId"><code>connectionProfileId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Use this method to create a connection profile in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionProfilesId"><code>connectionProfilesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Use this method to update the parameters of a connection profile.</td>
 </tr>
 <tr>
@@ -402,6 +453,7 @@ SELECT
 name,
 bigqueryProfile,
 createTime,
+dataverseProfile,
 displayName,
 forwardSshConnectivity,
 gcsProfile,
@@ -411,12 +463,16 @@ mysqlProfile,
 oracleProfile,
 postgresqlProfile,
 privateConnectivity,
+salesforceMarketingCloudProfile,
 salesforceProfile,
 satisfiesPzi,
 satisfiesPzs,
+serviceNowProfile,
+spannerProfile,
 sqlServerProfile,
 staticServiceIpConnectivity,
-updateTime
+updateTime,
+workdayProfile
 FROM google.datastream.connection_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -433,6 +489,7 @@ SELECT
 name,
 bigqueryProfile,
 createTime,
+dataverseProfile,
 displayName,
 forwardSshConnectivity,
 gcsProfile,
@@ -442,18 +499,22 @@ mysqlProfile,
 oracleProfile,
 postgresqlProfile,
 privateConnectivity,
+salesforceMarketingCloudProfile,
 salesforceProfile,
 satisfiesPzi,
 satisfiesPzs,
+serviceNowProfile,
+spannerProfile,
 sqlServerProfile,
 staticServiceIpConnectivity,
-updateTime
+updateTime,
+workdayProfile
 FROM google.datastream.connection_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -476,46 +537,56 @@ Use this method to create a connection profile in a project and location.
 
 ```sql
 INSERT INTO google.datastream.connection_profiles (
-data__labels,
-data__displayName,
-data__oracleProfile,
-data__gcsProfile,
-data__mysqlProfile,
 data__bigqueryProfile,
-data__postgresqlProfile,
-data__sqlServerProfile,
-data__salesforceProfile,
-data__mongodbProfile,
 data__staticServiceIpConnectivity,
-data__forwardSshConnectivity,
+data__workdayProfile,
 data__privateConnectivity,
+data__sqlServerProfile,
+data__mongodbProfile,
+data__salesforceProfile,
+data__oracleProfile,
+data__forwardSshConnectivity,
+data__spannerProfile,
+data__mysqlProfile,
+data__displayName,
+data__postgresqlProfile,
+data__serviceNowProfile,
+data__gcsProfile,
+data__labels,
+data__salesforceMarketingCloudProfile,
+data__dataverseProfile,
 projectsId,
 locationsId,
+force,
 connectionProfileId,
 requestId,
-validateOnly,
-force
+validateOnly
 )
 SELECT 
-'{{ labels }}',
-'{{ displayName }}',
-'{{ oracleProfile }}',
-'{{ gcsProfile }}',
-'{{ mysqlProfile }}',
 '{{ bigqueryProfile }}',
-'{{ postgresqlProfile }}',
-'{{ sqlServerProfile }}',
-'{{ salesforceProfile }}',
-'{{ mongodbProfile }}',
 '{{ staticServiceIpConnectivity }}',
-'{{ forwardSshConnectivity }}',
+'{{ workdayProfile }}',
 '{{ privateConnectivity }}',
+'{{ sqlServerProfile }}',
+'{{ mongodbProfile }}',
+'{{ salesforceProfile }}',
+'{{ oracleProfile }}',
+'{{ forwardSshConnectivity }}',
+'{{ spannerProfile }}',
+'{{ mysqlProfile }}',
+'{{ displayName }}',
+'{{ postgresqlProfile }}',
+'{{ serviceNowProfile }}',
+'{{ gcsProfile }}',
+'{{ labels }}',
+'{{ salesforceMarketingCloudProfile }}',
+'{{ dataverseProfile }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ force }}',
 '{{ connectionProfileId }}',
 '{{ requestId }}',
-'{{ validateOnly }}',
-'{{ force }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -527,90 +598,234 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connection_profiles
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the connection_profiles resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the connection_profiles resource.
-    - name: labels
-      value: object
-      description: >
-        Labels.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. Display name.
-        
-    - name: oracleProfile
-      value: object
-      description: >
-        Oracle ConnectionProfile configuration.
-        
-    - name: gcsProfile
-      value: object
-      description: >
-        Cloud Storage ConnectionProfile configuration.
-        
-    - name: mysqlProfile
-      value: object
-      description: >
-        MySQL ConnectionProfile configuration.
-        
     - name: bigqueryProfile
-      value: object
-      description: >
-        BigQuery Connection Profile configuration.
-        
-    - name: postgresqlProfile
-      value: object
-      description: >
-        PostgreSQL Connection Profile configuration.
-        
-    - name: sqlServerProfile
-      value: object
-      description: >
-        SQLServer Connection Profile configuration.
-        
-    - name: salesforceProfile
-      value: object
-      description: >
-        Salesforce Connection Profile configuration.
-        
-    - name: mongodbProfile
-      value: object
-      description: >
-        MongoDB Connection Profile configuration.
-        
+      value: "{{ bigqueryProfile }}"
+      description: |
+        Profile for connecting to a BigQuery destination.
     - name: staticServiceIpConnectivity
-      value: object
-      description: >
+      value: "{{ staticServiceIpConnectivity }}"
+      description: |
         Static Service IP connectivity.
-        
-    - name: forwardSshConnectivity
-      value: object
-      description: >
-        Forward SSH tunnel connectivity.
-        
+    - name: workdayProfile
+      description: |
+        Optional. Profile for connecting to a Workday source.
+      value:
+        host: "{{ host }}"
+        oauthRefreshTokenCredentials:
+          oauthClientCredentials:
+            clientId: "{{ clientId }}"
+            clientSecret:
+              rawValue: "{{ rawValue }}"
+              secretVersion: "{{ secretVersion }}"
+          refreshToken:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
+        tenant: "{{ tenant }}"
     - name: privateConnectivity
-      value: object
-      description: >
+      description: |
         Private connectivity.
-        
-    - name: connectionProfileId
-      value: string
-    - name: requestId
-      value: string
-    - name: validateOnly
-      value: boolean
+      value:
+        privateConnection: "{{ privateConnection }}"
+    - name: sqlServerProfile
+      description: |
+        Profile for connecting to a SQLServer source.
+      value:
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        username: "{{ username }}"
+        port: {{ port }}
+        password: "{{ password }}"
+        database: "{{ database }}"
+        hostname: "{{ hostname }}"
+        sslConfig:
+          encryptionNotEnforced: "{{ encryptionNotEnforced }}"
+          basicEncryption: "{{ basicEncryption }}"
+          encryptionAndServerValidation:
+            caCertificate: "{{ caCertificate }}"
+            serverCertificateHostname: "{{ serverCertificateHostname }}"
+    - name: mongodbProfile
+      description: |
+        Profile for connecting to a MongoDB source.
+      value:
+        srvConnectionFormat: "{{ srvConnectionFormat }}"
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        replicaSet: "{{ replicaSet }}"
+        sslConfig:
+          clientKeySet: {{ clientKeySet }}
+          caCertificateSet: {{ caCertificateSet }}
+          caCertificate: "{{ caCertificate }}"
+          clientCertificateSet: {{ clientCertificateSet }}
+          clientKey: "{{ clientKey }}"
+          secretManagerStoredClientKey: "{{ secretManagerStoredClientKey }}"
+          clientCertificate: "{{ clientCertificate }}"
+        additionalOptions: "{{ additionalOptions }}"
+        standardConnectionFormat:
+          directConnection: {{ directConnection }}
+        hostAddresses:
+          - port: {{ port }}
+            hostname: "{{ hostname }}"
+    - name: salesforceProfile
+      description: |
+        Profile for connecting to a Salesforce source.
+      value:
+        userCredentials:
+          username: "{{ username }}"
+          secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+          secretManagerStoredSecurityToken: "{{ secretManagerStoredSecurityToken }}"
+          securityToken: "{{ securityToken }}"
+          password: "{{ password }}"
+        oauth2ClientCredentials:
+          clientSecret: "{{ clientSecret }}"
+          clientId: "{{ clientId }}"
+          secretManagerStoredClientSecret: "{{ secretManagerStoredClientSecret }}"
+        domain: "{{ domain }}"
+    - name: oracleProfile
+      description: |
+        Profile for connecting to an Oracle source.
+      value:
+        connectionAttributes: "{{ connectionAttributes }}"
+        oracleAsmConfig:
+          port: {{ port }}
+          connectionAttributes: "{{ connectionAttributes }}"
+          password: "{{ password }}"
+          hostname: "{{ hostname }}"
+          asmService: "{{ asmService }}"
+          oracleSslConfig:
+            caCertificate: "{{ caCertificate }}"
+            serverCertificateDistinguishedName: "{{ serverCertificateDistinguishedName }}"
+            caCertificateSet: {{ caCertificateSet }}
+          secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+          username: "{{ username }}"
+        hostname: "{{ hostname }}"
+        databaseService: "{{ databaseService }}"
+        port: {{ port }}
+        password: "{{ password }}"
+        oracleSslConfig:
+          caCertificate: "{{ caCertificate }}"
+          serverCertificateDistinguishedName: "{{ serverCertificateDistinguishedName }}"
+          caCertificateSet: {{ caCertificateSet }}
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        username: "{{ username }}"
+    - name: forwardSshConnectivity
+      description: |
+        Forward SSH tunnel connectivity.
+      value:
+        hostname: "{{ hostname }}"
+        privateKey: "{{ privateKey }}"
+        password: "{{ password }}"
+        port: {{ port }}
+        username: "{{ username }}"
+    - name: spannerProfile
+      description: |
+        Profile for connecting to a Spanner source.
+      value:
+        host: "{{ host }}"
+        database: "{{ database }}"
+    - name: mysqlProfile
+      description: |
+        Profile for connecting to a MySQL source.
+      value:
+        port: {{ port }}
+        password: "{{ password }}"
+        hostname: "{{ hostname }}"
+        sslConfig:
+          caCertificate: "{{ caCertificate }}"
+          clientCertificateSet: {{ clientCertificateSet }}
+          clientKey: "{{ clientKey }}"
+          clientCertificate: "{{ clientCertificate }}"
+          clientKeySet: {{ clientKeySet }}
+          caCertificateSet: {{ caCertificateSet }}
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        username: "{{ username }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name.
+    - name: postgresqlProfile
+      description: |
+        Profile for connecting to a PostgreSQL source.
+      value:
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        database: "{{ database }}"
+        hostname: "{{ hostname }}"
+        sslConfig:
+          serverAndClientVerification:
+            caCertificate: "{{ caCertificate }}"
+            serverCertificateHostname: "{{ serverCertificateHostname }}"
+            clientCertificate: "{{ clientCertificate }}"
+            clientKey: "{{ clientKey }}"
+          serverVerification:
+            caCertificate: "{{ caCertificate }}"
+            serverCertificateHostname: "{{ serverCertificateHostname }}"
+        port: {{ port }}
+    - name: serviceNowProfile
+      description: |
+        Profile for connecting to a ServiceNow source.
+      value:
+        instance: "{{ instance }}"
+        oauthClientCredentials:
+          clientId: "{{ clientId }}"
+          clientSecret:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
+        userPasswordCredentials:
+          password:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
+          username: "{{ username }}"
+    - name: gcsProfile
+      description: |
+        Profile for connecting to a Cloud Storage destination.
+      value:
+        bucket: "{{ bucket }}"
+        rootPath: "{{ rootPath }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels.
+    - name: salesforceMarketingCloudProfile
+      description: |
+        Profile for connecting to a Salesforce Marketing Cloud source.
+      value:
+        subdomain: "{{ subdomain }}"
+        oauthClientCredentials:
+          clientId: "{{ clientId }}"
+          clientSecret:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
+    - name: dataverseProfile
+      description: |
+        Profile for connecting to a Dataverse source.
+      value:
+        tenantId: "{{ tenantId }}"
+        environmentUrl: "{{ environmentUrl }}"
+        oauthClientCredentials:
+          clientId: "{{ clientId }}"
+          clientSecret:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
     - name: force
-      value: boolean
-```
+      value: {{ force }}
+    - name: connectionProfileId
+      value: "{{ connectionProfileId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -630,27 +845,32 @@ Use this method to update the parameters of a connection profile.
 ```sql
 UPDATE google.datastream.connection_profiles
 SET 
-data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}',
-data__oracleProfile = '{{ oracleProfile }}',
-data__gcsProfile = '{{ gcsProfile }}',
-data__mysqlProfile = '{{ mysqlProfile }}',
 data__bigqueryProfile = '{{ bigqueryProfile }}',
-data__postgresqlProfile = '{{ postgresqlProfile }}',
-data__sqlServerProfile = '{{ sqlServerProfile }}',
-data__salesforceProfile = '{{ salesforceProfile }}',
-data__mongodbProfile = '{{ mongodbProfile }}',
 data__staticServiceIpConnectivity = '{{ staticServiceIpConnectivity }}',
+data__workdayProfile = '{{ workdayProfile }}',
+data__privateConnectivity = '{{ privateConnectivity }}',
+data__sqlServerProfile = '{{ sqlServerProfile }}',
+data__mongodbProfile = '{{ mongodbProfile }}',
+data__salesforceProfile = '{{ salesforceProfile }}',
+data__oracleProfile = '{{ oracleProfile }}',
 data__forwardSshConnectivity = '{{ forwardSshConnectivity }}',
-data__privateConnectivity = '{{ privateConnectivity }}'
+data__spannerProfile = '{{ spannerProfile }}',
+data__mysqlProfile = '{{ mysqlProfile }}',
+data__displayName = '{{ displayName }}',
+data__postgresqlProfile = '{{ postgresqlProfile }}',
+data__serviceNowProfile = '{{ serviceNowProfile }}',
+data__gcsProfile = '{{ gcsProfile }}',
+data__labels = '{{ labels }}',
+data__salesforceMarketingCloudProfile = '{{ salesforceMarketingCloudProfile }}',
+data__dataverseProfile = '{{ dataverseProfile }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionProfilesId = '{{ connectionProfilesId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
-AND validateOnly = {{ validateOnly}}
 AND force = {{ force}}
+AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -704,16 +924,18 @@ EXEC google.datastream.connection_profiles.discover
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"connectionProfile": "{{ connectionProfile }}", 
-"connectionProfileName": "{{ connectionProfileName }}", 
-"fullHierarchy": {{ fullHierarchy }}, 
-"hierarchyDepth": {{ hierarchyDepth }}, 
-"oracleRdbms": "{{ oracleRdbms }}", 
-"mysqlRdbms": "{{ mysqlRdbms }}", 
 "postgresqlRdbms": "{{ postgresqlRdbms }}", 
-"sqlServerRdbms": "{{ sqlServerRdbms }}", 
+"spannerDatabase": "{{ spannerDatabase }}", 
+"mysqlRdbms": "{{ mysqlRdbms }}", 
 "salesforceOrg": "{{ salesforceOrg }}", 
-"mongodbCluster": "{{ mongodbCluster }}"
+"oracleRdbms": "{{ oracleRdbms }}", 
+"sourceCatalog": "{{ sourceCatalog }}", 
+"sqlServerRdbms": "{{ sqlServerRdbms }}", 
+"connectionProfileName": "{{ connectionProfileName }}", 
+"mongodbCluster": "{{ mongodbCluster }}", 
+"connectionProfile": "{{ connectionProfile }}", 
+"fullHierarchy": {{ fullHierarchy }}, 
+"hierarchyDepth": {{ hierarchyDepth }}
 }'
 ;
 ```

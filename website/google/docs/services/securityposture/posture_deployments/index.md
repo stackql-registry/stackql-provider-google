@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>posture_deployments</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>posture_deployments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="posture_deployments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securityposture.posture_deployments" /></td></tr>
 </tbody></table>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the posture deployment.</td>
+    <td>Output only. The state of the posture deployment. (STATE_UNSPECIFIED, CREATING, DELETING, UPDATING, ACTIVE, CREATE_FAILED, UPDATE_FAILED, DELETE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetResource" /></td>
@@ -201,7 +202,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the posture deployment.</td>
+    <td>Output only. The state of the posture deployment. (STATE_UNSPECIFIED, CREATING, DELETING, UPDATING, ACTIVE, CREATE_FAILED, UPDATE_FAILED, DELETE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetResource" /></td>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists every PostureDeployment in a project and location.</td>
 </tr>
 <tr>
@@ -393,9 +394,9 @@ updateTime
 FROM google.securityposture.posture_deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -417,25 +418,25 @@ Creates a new PostureDeployment in a given project and location.
 
 ```sql
 INSERT INTO google.securityposture.posture_deployments (
+data__annotations,
 data__targetResource,
-data__name,
 data__etag,
+data__description,
+data__name,
 data__postureId,
 data__postureRevisionId,
-data__annotations,
-data__description,
 organizationsId,
 locationsId,
 postureDeploymentId
 )
 SELECT 
+'{{ annotations }}',
 '{{ targetResource }}',
-'{{ name }}',
 '{{ etag }}',
+'{{ description }}',
+'{{ name }}',
 '{{ postureId }}',
 '{{ postureRevisionId }}',
-'{{ annotations }}',
-'{{ description }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ postureDeploymentId }}'
@@ -450,54 +451,47 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: posture_deployments
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the posture_deployments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the posture_deployments resource.
-    - name: targetResource
-      value: string
-      description: >
-        Required. The organization, folder, or project where the posture is deployed. Uses one of the following formats: * `organizations/{organization_number}` * `folders/{folder_number}` * `projects/{project_number}`
-        
-    - name: name
-      value: string
-      description: >
-        Required. Identifier. The name of the posture deployment, in the format `organizations/{organization}/locations/global/postureDeployments/{deployment_id}`.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. An opaque identifier for the current version of the posture deployment. To prevent concurrent updates from overwriting each other, always provide the `etag` when you update a posture deployment. You can also provide the `etag` when you delete a posture deployment, to help ensure that you're deleting the intended posture deployment.
-        
-    - name: postureId
-      value: string
-      description: >
-        Required. The posture used in the deployment, in the format `organizations/{organization}/locations/global/postures/{posture_id}`.
-        
-    - name: postureRevisionId
-      value: string
-      description: >
-        Required. The revision ID of the posture used in the deployment.
-        
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. The user-specified annotations for the posture deployment. For details about the values you can use in an annotation, see [AIP-148: Standard fields](https://google.aip.dev/148#annotations).
-        
+    - name: targetResource
+      value: "{{ targetResource }}"
+      description: |
+        Required. The organization, folder, or project where the posture is deployed. Uses one of the following formats: * \`organizations/{organization_number}\` * \`folders/{folder_number}\` * \`projects/{project_number}\`
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. An opaque identifier for the current version of the posture deployment. To prevent concurrent updates from overwriting each other, always provide the \`etag\` when you update a posture deployment. You can also provide the \`etag\` when you delete a posture deployment, to help ensure that you're deleting the intended posture deployment.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A description of the posture deployment.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. The name of the posture deployment, in the format \`organizations/{organization}/locations/global/postureDeployments/{deployment_id}\`.
+    - name: postureId
+      value: "{{ postureId }}"
+      description: |
+        Required. The posture used in the deployment, in the format \`organizations/{organization}/locations/global/postures/{posture_id}\`.
+    - name: postureRevisionId
+      value: "{{ postureRevisionId }}"
+      description: |
+        Required. The revision ID of the posture used in the deployment.
     - name: postureDeploymentId
-      value: string
-```
+      value: "{{ postureDeploymentId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -517,13 +511,13 @@ Updates an existing PostureDeployment. To prevent concurrent updates from overwr
 ```sql
 UPDATE google.securityposture.posture_deployments
 SET 
-data__targetResource = '{{ targetResource }}',
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
-data__postureId = '{{ postureId }}',
-data__postureRevisionId = '{{ postureRevisionId }}',
 data__annotations = '{{ annotations }}',
-data__description = '{{ description }}'
+data__targetResource = '{{ targetResource }}',
+data__etag = '{{ etag }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__postureId = '{{ postureId }}',
+data__postureRevisionId = '{{ postureRevisionId }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

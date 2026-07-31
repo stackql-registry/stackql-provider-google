@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>target_projects</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>target_projects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="target_projects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmmigration.target_projects" /></td></tr>
 </tbody></table>
@@ -144,14 +145,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists TargetProjects in a given project. NOTE: TargetProject is a global resource; hence the only supported value for location is `global`.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-targetProjectId"><code>targetProjectId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-targetProjectId"><code>targetProjectId</code></a></td>
     <td>Creates a new TargetProject in a given project. NOTE: TargetProject is a global resource; hence the only supported value for location is `global`.</td>
 </tr>
 <tr>
@@ -278,10 +279,10 @@ updateTime
 FROM google.vmmigration.target_projects
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -303,20 +304,20 @@ Creates a new TargetProject in a given project. NOTE: TargetProject is a global 
 
 ```sql
 INSERT INTO google.vmmigration.target_projects (
-data__project,
 data__description,
+data__project,
 projectsId,
 locationsId,
-targetProjectId,
-requestId
+requestId,
+targetProjectId
 )
 SELECT 
-'{{ project }}',
 '{{ description }}',
+'{{ project }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ targetProjectId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ targetProjectId }}'
 RETURNING
 name,
 done,
@@ -328,31 +329,29 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: target_projects
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the target_projects resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the target_projects resource.
-    - name: project
-      value: string
-      description: >
-        Required. The target project ID (number) or project name.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         The target project's description.
-        
-    - name: targetProjectId
-      value: string
+    - name: project
+      value: "{{ project }}"
+      description: |
+        Required. The target project ID (number) or project name.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: targetProjectId
+      value: "{{ targetProjectId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -372,8 +371,8 @@ Updates the parameters of a single TargetProject. NOTE: TargetProject is a globa
 ```sql
 UPDATE google.vmmigration.target_projects
 SET 
-data__project = '{{ project }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__project = '{{ project }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dns_record_sets</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dns_record_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dns_record_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicenetworking.dns_record_sets" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-consumerNetwork"><code>consumerNetwork</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
+    <td><a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-consumerNetwork"><code>consumerNetwork</code></a></td>
     <td>Producers can use this method to retrieve a list of available DNS RecordSets available inside the private zone on the tenant host project accessible from their network.</td>
 </tr>
 <tr>
@@ -152,8 +153,8 @@ SELECT
 dnsRecordSets
 FROM google.servicenetworking.dns_record_sets
 WHERE servicesId = '{{ servicesId }}' -- required
-AND consumerNetwork = '{{ consumerNetwork }}'
 AND zone = '{{ zone }}'
+AND consumerNetwork = '{{ consumerNetwork }}'
 ;
 ```
 </TabItem>
@@ -175,15 +176,15 @@ Service producers can use this method to add DNS record sets to private DNS zone
 
 ```sql
 INSERT INTO google.servicenetworking.dns_record_sets (
+data__dnsRecordSet,
 data__consumerNetwork,
 data__zone,
-data__dnsRecordSet,
 servicesId
 )
 SELECT 
+'{{ dnsRecordSet }}',
 '{{ consumerNetwork }}',
 '{{ zone }}',
-'{{ dnsRecordSet }}',
 '{{ servicesId }}'
 RETURNING
 name,
@@ -196,29 +197,31 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dns_record_sets
   props:
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the dns_record_sets resource.
-    - name: consumerNetwork
-      value: string
-      description: >
-        Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is the project number, as in '12345' {network} is the network name.
-        
-    - name: zone
-      value: string
-      description: >
-        Required. The name of the private DNS zone in the shared producer host project to which the record set will be added.
-        
     - name: dnsRecordSet
-      value: object
-      description: >
-        Required. The DNS record set to add.
-        
-```
+      description: |
+        Represents a DNS record set resource.
+      value:
+        type: "{{ type }}"
+        ttl: "{{ ttl }}"
+        domain: "{{ domain }}"
+        data:
+          - "{{ data }}"
+    - name: consumerNetwork
+      value: "{{ consumerNetwork }}"
+      description: |
+        Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is the project number, as in '12345' {network} is the network name.
+    - name: zone
+      value: "{{ zone }}"
+      description: |
+        Required. The name of the private DNS zone in the shared producer host project to which the record set will be added.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -239,8 +242,8 @@ Service producers can use this method to update DNS record sets from private DNS
 UPDATE google.servicenetworking.dns_record_sets
 SET 
 data__consumerNetwork = '{{ consumerNetwork }}',
-data__zone = '{{ zone }}',
 data__existingDnsRecordSet = '{{ existingDnsRecordSet }}',
+data__zone = '{{ zone }}',
 data__newDnsRecordSet = '{{ newDnsRecordSet }}'
 WHERE 
 servicesId = '{{ servicesId }}' --required

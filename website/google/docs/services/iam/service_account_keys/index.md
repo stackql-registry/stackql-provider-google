@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_account_keys</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_account_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_account_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.service_account_keys" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="disableReason" /></td>
     <td><code>string</code></td>
-    <td>Output only. optional. If the key is disabled, it may have a DisableReason describing why it was disabled.</td>
+    <td>Output only. optional. If the key is disabled, it may have a DisableReason describing why it was disabled. (SERVICE_ACCOUNT_KEY_DISABLE_REASON_UNSPECIFIED, SERVICE_ACCOUNT_KEY_DISABLE_REASON_USER_INITIATED, SERVICE_ACCOUNT_KEY_DISABLE_REASON_EXPOSED, SERVICE_ACCOUNT_KEY_DISABLE_REASON_COMPROMISE_DETECTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -72,17 +73,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="keyAlgorithm" /></td>
     <td><code>string</code></td>
-    <td>Specifies the algorithm (and possibly key size) for the key.</td>
+    <td>Specifies the algorithm (and possibly key size) for the key. (KEY_ALG_UNSPECIFIED, KEY_ALG_RSA_1024, KEY_ALG_RSA_2048)</td>
 </tr>
 <tr>
     <td><CopyableCode code="keyOrigin" /></td>
     <td><code>string</code></td>
-    <td>The key origin.</td>
+    <td>The key origin. (ORIGIN_UNSPECIFIED, USER_PROVIDED, GOOGLE_PROVIDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="keyType" /></td>
     <td><code>string</code></td>
-    <td>The key type.</td>
+    <td>The key type. (KEY_TYPE_UNSPECIFIED, USER_MANAGED, SYSTEM_MANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="privateKeyData" /></td>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="privateKeyType" /></td>
     <td><code>string</code></td>
-    <td>The output format for the private key. Only provided in `CreateServiceAccountKey` responses, not in `GetServiceAccountKey` or `ListServiceAccountKey` responses. Google never exposes system-managed private keys, and never retains user-managed private keys.</td>
+    <td>The output format for the private key. Only provided in `CreateServiceAccountKey` responses, not in `GetServiceAccountKey` or `ListServiceAccountKey` responses. Google never exposes system-managed private keys, and never retains user-managed private keys. (TYPE_UNSPECIFIED, TYPE_PKCS12_FILE, TYPE_GOOGLE_CREDENTIALS_FILE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="publicKeyData" /></td>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="disableReason" /></td>
     <td><code>string</code></td>
-    <td>Output only. optional. If the key is disabled, it may have a DisableReason describing why it was disabled.</td>
+    <td>Output only. optional. If the key is disabled, it may have a DisableReason describing why it was disabled. (SERVICE_ACCOUNT_KEY_DISABLE_REASON_UNSPECIFIED, SERVICE_ACCOUNT_KEY_DISABLE_REASON_USER_INITIATED, SERVICE_ACCOUNT_KEY_DISABLE_REASON_EXPOSED, SERVICE_ACCOUNT_KEY_DISABLE_REASON_COMPROMISE_DETECTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -146,17 +147,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="keyAlgorithm" /></td>
     <td><code>string</code></td>
-    <td>Specifies the algorithm (and possibly key size) for the key.</td>
+    <td>Specifies the algorithm (and possibly key size) for the key. (KEY_ALG_UNSPECIFIED, KEY_ALG_RSA_1024, KEY_ALG_RSA_2048)</td>
 </tr>
 <tr>
     <td><CopyableCode code="keyOrigin" /></td>
     <td><code>string</code></td>
-    <td>The key origin.</td>
+    <td>The key origin. (ORIGIN_UNSPECIFIED, USER_PROVIDED, GOOGLE_PROVIDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="keyType" /></td>
     <td><code>string</code></td>
-    <td>The key type.</td>
+    <td>The key type. (KEY_TYPE_UNSPECIFIED, USER_MANAGED, SYSTEM_MANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="privateKeyData" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="privateKeyType" /></td>
     <td><code>string</code></td>
-    <td>The output format for the private key. Only provided in `CreateServiceAccountKey` responses, not in `GetServiceAccountKey` or `ListServiceAccountKey` responses. Google never exposes system-managed private keys, and never retains user-managed private keys.</td>
+    <td>The output format for the private key. Only provided in `CreateServiceAccountKey` responses, not in `GetServiceAccountKey` or `ListServiceAccountKey` responses. Google never exposes system-managed private keys, and never retains user-managed private keys. (TYPE_UNSPECIFIED, TYPE_PKCS12_FILE, TYPE_GOOGLE_CREDENTIALS_FILE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="publicKeyData" /></td>
@@ -232,11 +233,11 @@ The following methods are available for this resource:
     <td>Deletes a ServiceAccountKey. Deleting a service account key does not revoke short-lived credentials that have been issued based on the service account key.</td>
 </tr>
 <tr>
-    <td><a href="#upload"><CopyableCode code="upload" /></a></td>
+    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
     <td></td>
-    <td>Uploads the public key portion of a key pair that you manage, and associates the public key with a ServiceAccount. After you upload the public key, you can use the private key from the key pair as a service account key.</td>
+    <td>Enable a ServiceAccountKey.</td>
 </tr>
 <tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
@@ -246,11 +247,11 @@ The following methods are available for this resource:
     <td>Disable a ServiceAccountKey. A disabled service account key can be re-enabled with EnableServiceAccountKey.</td>
 </tr>
 <tr>
-    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
+    <td><a href="#upload"><CopyableCode code="upload" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
     <td></td>
-    <td>Enable a ServiceAccountKey.</td>
+    <td>Uploads the public key portion of a key pair that you manage, and associates the public key with a ServiceAccount. After you upload the public key, you can use the private key from the key pair as a service account key.</td>
 </tr>
 </tbody>
 </table>
@@ -402,29 +403,27 @@ validBeforeTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: service_account_keys
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the service_account_keys resource.
     - name: serviceAccountsId
-      value: string
+      value: "{{ serviceAccountsId }}"
       description: Required parameter for the service_account_keys resource.
     - name: privateKeyType
-      value: string
-      description: >
-        The output format of the private key. The default value is `TYPE_GOOGLE_CREDENTIALS_FILE`, which is the Google Credentials File format.
-        
+      value: "{{ privateKeyType }}"
+      description: |
+        The output format of the private key. The default value is \`TYPE_GOOGLE_CREDENTIALS_FILE\`, which is the Google Credentials File format.
       valid_values: ['TYPE_UNSPECIFIED', 'TYPE_PKCS12_FILE', 'TYPE_GOOGLE_CREDENTIALS_FILE']
     - name: keyAlgorithm
-      value: string
-      description: >
+      value: "{{ keyAlgorithm }}"
+      description: |
         Which type of key and algorithm to use for the key. The default is currently a 2K RSA key. However this may change in the future.
-        
       valid_values: ['KEY_ALG_UNSPECIFIED', 'KEY_ALG_RSA_1024', 'KEY_ALG_RSA_2048']
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -455,13 +454,37 @@ AND keysId = '{{ keysId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="upload"
+    defaultValue="enable"
     values={[
-        { label: 'upload', value: 'upload' },
+        { label: 'enable', value: 'enable' },
         { label: 'disable', value: 'disable' },
-        { label: 'enable', value: 'enable' }
+        { label: 'upload', value: 'upload' }
     ]}
 >
+<TabItem value="enable">
+
+Enable a ServiceAccountKey.
+
+```sql
+EXEC google.iam.service_account_keys.enable 
+@projectsId='{{ projectsId }}' --required, 
+@serviceAccountsId='{{ serviceAccountsId }}' --required, 
+@keysId='{{ keysId }}' --required
+;
+```
+</TabItem>
+<TabItem value="disable">
+
+Disable a ServiceAccountKey. A disabled service account key can be re-enabled with EnableServiceAccountKey.
+
+```sql
+EXEC google.iam.service_account_keys.disable 
+@projectsId='{{ projectsId }}' --required, 
+@serviceAccountsId='{{ serviceAccountsId }}' --required, 
+@keysId='{{ keysId }}' --required
+;
+```
+</TabItem>
 <TabItem value="upload">
 
 Uploads the public key portion of a key pair that you manage, and associates the public key with a ServiceAccount. After you upload the public key, you can use the private key from the key pair as a service account key.
@@ -474,35 +497,6 @@ EXEC google.iam.service_account_keys.upload
 '{
 "publicKeyData": "{{ publicKeyData }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="disable">
-
-Disable a ServiceAccountKey. A disabled service account key can be re-enabled with EnableServiceAccountKey.
-
-```sql
-EXEC google.iam.service_account_keys.disable 
-@projectsId='{{ projectsId }}' --required, 
-@serviceAccountsId='{{ serviceAccountsId }}' --required, 
-@keysId='{{ keysId }}' --required 
-@@json=
-'{
-"serviceAccountKeyDisableReason": "{{ serviceAccountKeyDisableReason }}", 
-"extendedStatusMessage": "{{ extendedStatusMessage }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="enable">
-
-Enable a ServiceAccountKey.
-
-```sql
-EXEC google.iam.service_account_keys.enable 
-@projectsId='{{ projectsId }}' --required, 
-@serviceAccountsId='{{ serviceAccountsId }}' --required, 
-@keysId='{{ keysId }}' --required
 ;
 ```
 </TabItem>

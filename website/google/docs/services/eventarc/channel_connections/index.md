@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>channel_connections</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>channel_connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="channel_connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.eventarc.channel_connections" /></td></tr>
 </tbody></table>
@@ -298,19 +299,19 @@ Create a new ChannelConnection in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.channel_connections (
-data__name,
-data__channel,
-data__activationToken,
 data__labels,
+data__name,
+data__activationToken,
+data__channel,
 projectsId,
 locationsId,
 channelConnectionId
 )
 SELECT 
-'{{ name }}',
-'{{ channel }}',
-'{{ activationToken }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ activationToken }}',
+'{{ channel }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ channelConnectionId }}'
@@ -325,39 +326,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: channel_connections
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the channel_connections resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the channel_connections resource.
-    - name: name
-      value: string
-      description: >
-        Required. The name of the connection.
-        
-    - name: channel
-      value: string
-      description: >
-        Required. The name of the connected subscriber Channel. This is a weak reference to avoid cross project and cross accounts references. This must be in `projects/{project}/location/{location}/channels/{channel_id}` format.
-        
-    - name: activationToken
-      value: string
-      description: >
-        Input only. Activation token for the channel. The token will be used during the creation of ChannelConnection to bind the channel with the provider project. This field will not be stored in the provider resource.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Resource labels.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The name of the connection.
+    - name: activationToken
+      value: "{{ activationToken }}"
+      description: |
+        Input only. Activation token for the channel. The token will be used during the creation of ChannelConnection to bind the channel with the provider project. This field will not be stored in the provider resource.
+    - name: channel
+      value: "{{ channel }}"
+      description: |
+        Required. The name of the connected subscriber Channel. This is a weak reference to avoid cross project and cross accounts references. This must be in \`projects/{project}/location/{location}/channels/{channel_id}\` format.
     - name: channelConnectionId
-      value: string
-```
+      value: "{{ channelConnectionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>status</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>status</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="status" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contentwarehouse.status" /></td></tr>
 </tbody></table>
@@ -51,12 +52,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="accessControlMode" /></td>
     <td><code>string</code></td>
-    <td>Access control mode.</td>
+    <td>Access control mode. (ACL_MODE_UNKNOWN, ACL_MODE_UNIVERSAL_ACCESS, ACL_MODE_DOCUMENT_LEVEL_ACCESS_CONTROL_BYOID, ACL_MODE_DOCUMENT_LEVEL_ACCESS_CONTROL_GCI)</td>
 </tr>
 <tr>
     <td><CopyableCode code="databaseType" /></td>
     <td><code>string</code></td>
-    <td>Database type.</td>
+    <td>Database type. (DB_UNKNOWN, DB_INFRA_SPANNER, DB_CLOUD_SQL_POSTGRES)</td>
 </tr>
 <tr>
     <td><CopyableCode code="documentCreatorDefaultRole" /></td>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of the project.</td>
+    <td>State of the project. (PROJECT_STATE_UNSPECIFIED, PROJECT_STATE_PENDING, PROJECT_STATE_COMPLETED, PROJECT_STATE_FAILED, PROJECT_STATE_DELETING, PROJECT_STATE_DELETING_FAILED, PROJECT_STATE_DELETED, PROJECT_STATE_NOT_FOUND)</td>
 </tr>
 </tbody>
 </table>

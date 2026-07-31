@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>trial</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>trial</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="trial" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.backupdr.trial" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="endReason" /></td>
     <td><code>string</code></td>
-    <td>Output only. The reason for ending the trial.</td>
+    <td>Output only. The reason for ending the trial. (END_REASON_UNSPECIFIED, MOVE_TO_PAID, DISCONTINUED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the trial.</td>
+    <td>Output only. The state of the trial. (STATE_UNSPECIFIED, SUBSCRIBED, UNSUBSCRIBED, EXPIRED, ELIGIBLE, NOT_ELIGIBLE)</td>
 </tr>
 </tbody>
 </table>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>protected_resources</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>protected_resources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="protected_resources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.kmsinventory.protected_resources" /></td></tr>
 </tbody></table>
@@ -53,8 +54,8 @@ The following methods are available for this resource:
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-cryptoKey"><code>cryptoKey</code></a>, <a href="#parameter-resourceTypes"><code>resourceTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Returns metadata about the resources protected by the given Cloud KMS CryptoKey in the given Cloud organization.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-cryptoKey"><code>cryptoKey</code></a>, <a href="#parameter-resourceTypes"><code>resourceTypes</code></a></td>
+    <td>Returns metadata about the resources protected by the given Cloud KMS CryptoKey in the given Cloud organization/project.</td>
 </tr>
 </tbody>
 </table>
@@ -110,15 +111,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="search">
 
-Returns metadata about the resources protected by the given Cloud KMS CryptoKey in the given Cloud organization.
+Returns metadata about the resources protected by the given Cloud KMS CryptoKey in the given Cloud organization/project.
 
 ```sql
 EXEC google.kmsinventory.protected_resources.search 
 @organizationsId='{{ organizationsId }}' --required, 
 @pageToken='{{ pageToken }}', 
+@pageSize='{{ pageSize }}', 
 @cryptoKey='{{ cryptoKey }}', 
-@resourceTypes='{{ resourceTypes }}', 
-@pageSize='{{ pageSize }}'
+@resourceTypes='{{ resourceTypes }}'
 ;
 ```
 </TabItem>

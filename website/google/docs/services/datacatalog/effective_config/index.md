@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>effective_config</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>effective_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="effective_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datacatalog.effective_config" /></td></tr>
 </tbody></table>
@@ -52,12 +53,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="catalogUiExperience" /></td>
     <td><code>string</code></td>
-    <td>Opt-in status for the UI switch to Dataplex Universal Catalog.</td>
+    <td>Opt-in status for the UI switch to Dataplex Universal Catalog. (CATALOG_UI_EXPERIENCE_UNSPECIFIED, CATALOG_UI_EXPERIENCE_ENABLED, CATALOG_UI_EXPERIENCE_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tagTemplateMigration" /></td>
     <td><code>string</code></td>
-    <td>Opt-in status for the migration of Tag Templates to Dataplex Universal Catalog.</td>
+    <td>Opt-in status for the migration of Tag Templates to Dataplex Universal Catalog. (TAG_TEMPLATE_MIGRATION_UNSPECIFIED, TAG_TEMPLATE_MIGRATION_ENABLED, TAG_TEMPLATE_MIGRATION_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="templateMigrationEnabledTime" /></td>
@@ -81,12 +82,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="catalogUiExperience" /></td>
     <td><code>string</code></td>
-    <td>Opt-in status for the UI switch to Dataplex Universal Catalog.</td>
+    <td>Opt-in status for the UI switch to Dataplex Universal Catalog. (CATALOG_UI_EXPERIENCE_UNSPECIFIED, CATALOG_UI_EXPERIENCE_ENABLED, CATALOG_UI_EXPERIENCE_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tagTemplateMigration" /></td>
     <td><code>string</code></td>
-    <td>Opt-in status for the migration of Tag Templates to Dataplex Universal Catalog.</td>
+    <td>Opt-in status for the migration of Tag Templates to Dataplex Universal Catalog. (TAG_TEMPLATE_MIGRATION_UNSPECIFIED, TAG_TEMPLATE_MIGRATION_ENABLED, TAG_TEMPLATE_MIGRATION_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="templateMigrationEnabledTime" /></td>

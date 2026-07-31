@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.migrationcenter.groups" /></td></tr>
 </tbody></table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists all groups in a given project and location.</td>
 </tr>
 <tr>
@@ -291,9 +292,9 @@ FROM google.migrationcenter.groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -315,8 +316,8 @@ Creates a new group in a given project and location.
 
 ```sql
 INSERT INTO google.migrationcenter.groups (
-data__description,
 data__displayName,
+data__description,
 data__labels,
 projectsId,
 locationsId,
@@ -324,8 +325,8 @@ groupId,
 requestId
 )
 SELECT 
-'{{ description }}',
 '{{ displayName }}',
+'{{ description }}',
 '{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -342,36 +343,33 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the groups resource.
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the group.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. User-friendly display name.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the group.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Labels as key value pairs.
-        
     - name: groupId
-      value: string
+      value: "{{ groupId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -391,8 +389,8 @@ Updates the parameters of a group.
 ```sql
 UPDATE google.migrationcenter.groups
 SET 
-data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
+data__description = '{{ description }}',
 data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

@@ -18,7 +18,7 @@ parametermanager service documentation.
 
 :::info[Service Summary]
 
-total resources: __3__  
+total resources: __4__  
 
 :::
 
@@ -29,6 +29,7 @@ total resources: __3__
 <a href="/services/parametermanager/parameters/">parameters</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/parametermanager/templates/">templates</a><br />
 <a href="/services/parametermanager/versions/">versions</a>
 </div>
 </div>

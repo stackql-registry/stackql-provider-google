@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reference_images</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reference_images</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reference_images" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vision.reference_images" /></td></tr>
 </tbody></table>
@@ -124,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_reference_images_list"><CopyableCode code="projects_locations_products_reference_images_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists reference images. Possible errors: * Returns NOT_FOUND if the parent product does not exist. * Returns INVALID_ARGUMENT if the page_size is greater than 100, or less than 1.</td>
 </tr>
 <tr>
@@ -234,8 +235,8 @@ FROM google.vision.reference_images
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND productsId = '{{ productsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -257,18 +258,18 @@ Creates and returns a new ReferenceImage resource. The `bounding_poly` field is 
 
 ```sql
 INSERT INTO google.vision.reference_images (
+data__name,
 data__uri,
 data__boundingPolys,
-data__name,
 projectsId,
 locationsId,
 productsId,
 referenceImageId
 )
 SELECT 
+'{{ name }}',
 '{{ uri }}',
 '{{ boundingPolys }}',
-'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productsId }}',
@@ -282,37 +283,36 @@ uri
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reference_images
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the reference_images resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the reference_images resource.
     - name: productsId
-      value: string
+      value: "{{ productsId }}"
       description: Required parameter for the reference_images resource.
-    - name: uri
-      value: string
-      description: >
-        Required. The Google Cloud Storage URI of the reference image. The URI must start with `gs://`.
-        
-    - name: boundingPolys
-      value: array
-      description: >
-        Optional. Bounding polygons around the areas of interest in the reference image. If this field is empty, the system will try to detect regions of interest. At most 10 bounding polygons will be used. The provided shape is converted into a non-rotated rectangle. Once converted, the small edge of the rectangle must be greater than or equal to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok; 1:5 is not).
-        
     - name: name
-      value: string
-      description: >
-        The resource name of the reference image. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`. This field is ignored when creating a reference image.
-        
+      value: "{{ name }}"
+      description: |
+        The resource name of the reference image. Format is: \`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID\`. This field is ignored when creating a reference image.
+    - name: uri
+      value: "{{ uri }}"
+      description: |
+        Required. The Google Cloud Storage URI of the reference image. The URI must start with \`gs://\`.
+    - name: boundingPolys
+      description: |
+        Optional. Bounding polygons around the areas of interest in the reference image. If this field is empty, the system will try to detect regions of interest. At most 10 bounding polygons will be used. The provided shape is converted into a non-rotated rectangle. Once converted, the small edge of the rectangle must be greater than or equal to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok; 1:5 is not).
+      value:
+        - vertices: "{{ vertices }}"
+          normalizedVertices: "{{ normalizedVertices }}"
     - name: referenceImageId
-      value: string
-```
+      value: "{{ referenceImageId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

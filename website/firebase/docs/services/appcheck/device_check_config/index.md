@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>device_check_config</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>device_check_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="device_check_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appcheck.device_check_config" /></td></tr>
 </tbody></table>
@@ -230,10 +231,10 @@ Updates the DeviceCheckConfig for the specified app. While this configuration is
 ```sql
 UPDATE firebase.appcheck.device_check_config
 SET 
-data__name = '{{ name }}',
 data__tokenTtl = '{{ tokenTtl }}',
 data__keyId = '{{ keyId }}',
-data__privateKey = '{{ privateKey }}'
+data__privateKey = '{{ privateKey }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND appsId = '{{ appsId }}' --required

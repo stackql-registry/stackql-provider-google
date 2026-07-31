@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>anywhere_caches</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>anywhere_caches</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="anywhere_caches" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storage.anywhere_caches" /></td></tr>
 </tbody></table>
@@ -73,6 +74,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (date-time)</code></td>
     <td>The creation time of the cache instance in RFC 3339 format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ingestOnWrite" /></td>
+    <td><code>boolean</code></td>
+    <td>Specifies whether objects are ingested into the cache upon write.</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
@@ -147,6 +153,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (date-time)</code></td>
     <td>The creation time of the cache instance in RFC 3339 format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ingestOnWrite" /></td>
+    <td><code>boolean</code></td>
+    <td>Specifies whether objects are ingested into the cache upon write.</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
@@ -229,7 +240,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-anywhereCacheId"><code>anywhereCacheId</code></a></td>
     <td></td>
-    <td>Updates the config(ttl and admissionPolicy) of an Anywhere Cache instance.</td>
+    <td>Updates the config of an Anywhere Cache instance.</td>
 </tr>
 <tr>
     <td><a href="#pause"><CopyableCode code="pause" /></a></td>
@@ -311,6 +322,7 @@ admissionPolicy,
 anywhereCacheId,
 bucket,
 createTime,
+ingestOnWrite,
 kind,
 pendingUpdate,
 selfLink,
@@ -335,6 +347,7 @@ admissionPolicy,
 anywhereCacheId,
 bucket,
 createTime,
+ingestOnWrite,
 kind,
 pendingUpdate,
 selfLink,
@@ -379,6 +392,7 @@ data__updateTime,
 data__ttl,
 data__admissionPolicy,
 data__pendingUpdate,
+data__ingestOnWrite,
 bucket
 )
 SELECT 
@@ -394,6 +408,7 @@ SELECT
 '{{ ttl }}',
 '{{ admissionPolicy }}',
 {{ pendingUpdate }},
+{{ ingestOnWrite }},
 '{{ bucket }}'
 RETURNING
 name,
@@ -408,75 +423,67 @@ selfLink
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: anywhere_caches
   props:
     - name: bucket
-      value: string
+      value: "{{ bucket }}"
       description: Required parameter for the anywhere_caches resource.
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         The kind of item this is. For Anywhere Cache, this is always storage#anywhereCache.
-        
       default: storage#anywhereCache
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         The ID of the resource, including the project number, bucket name and anywhere cache ID.
-        
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         The link to this cache instance.
-        
     - name: bucket
-      value: string
-      description: >
+      value: "{{ bucket }}"
+      description: |
         The name of the bucket containing this cache instance.
-        
     - name: anywhereCacheId
-      value: string
-      description: >
+      value: "{{ anywhereCacheId }}"
+      description: |
         The ID of the Anywhere cache instance.
-        
     - name: zone
-      value: string
-      description: >
+      value: "{{ zone }}"
+      description: |
         The zone in which the cache instance is running. For example, us-central1-a.
-        
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         The current state of the cache instance.
-        
     - name: createTime
-      value: string
-      description: >
+      value: "{{ createTime }}"
+      description: |
         The creation time of the cache instance in RFC 3339 format.
-        
     - name: updateTime
-      value: string
-      description: >
+      value: "{{ updateTime }}"
+      description: |
         The modification time of the cache instance metadata in RFC 3339 format.
-        
     - name: ttl
-      value: string
-      description: >
-        The TTL of all cache entries in whole seconds. e.g., "7200s". 
-        
+      value: "{{ ttl }}"
+      description: |
+        The TTL of all cache entries in whole seconds. e.g., "7200s".
     - name: admissionPolicy
-      value: string
-      description: >
+      value: "{{ admissionPolicy }}"
+      description: |
         The cache-level entry admission policy.
-        
     - name: pendingUpdate
-      value: boolean
-      description: >
+      value: {{ pendingUpdate }}
+      description: |
         True if the cache instance has an active Update long-running operation.
-        
-```
+    - name: ingestOnWrite
+      value: {{ ingestOnWrite }}
+      description: |
+        Specifies whether objects are ingested into the cache upon write.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -491,7 +498,7 @@ selfLink
 >
 <TabItem value="update">
 
-Updates the config(ttl and admissionPolicy) of an Anywhere Cache instance.
+Updates the config of an Anywhere Cache instance.
 
 ```sql
 UPDATE google.storage.anywhere_caches
@@ -507,7 +514,8 @@ data__createTime = '{{ createTime }}',
 data__updateTime = '{{ updateTime }}',
 data__ttl = '{{ ttl }}',
 data__admissionPolicy = '{{ admissionPolicy }}',
-data__pendingUpdate = {{ pendingUpdate }}
+data__pendingUpdate = {{ pendingUpdate }},
+data__ingestOnWrite = {{ ingestOnWrite }}
 WHERE 
 bucket = '{{ bucket }}' --required
 AND anywhereCacheId = '{{ anywhereCacheId }}' --required

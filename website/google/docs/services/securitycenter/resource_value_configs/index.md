@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resource_value_configs</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resource_value_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resource_value_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.resource_value_configs" /></td></tr>
 </tbody></table>
@@ -52,57 +53,57 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name for the resource value configuration</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudProvider" /></td>
     <td><code>string</code></td>
-    <td>Cloud provider this configuration applies to</td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp this resource value configuration was created.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Description of the resource value configuration.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceLabelsSelector" /></td>
     <td><code>object</code></td>
-    <td>List of resource labels to search for, evaluated with `AND`. For example, `"resource_labels_selector": &#123;"key": "value", "env": "prod"&#125;` will match resources with labels "key": "value" `AND` "env": "prod" https://cloud.google.com/resource-manager/docs/creating-managing-labels</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceType" /></td>
     <td><code>string</code></td>
-    <td>Apply resource_value only to resources that match resource_type. resource_type will be checked with `AND` of other resources. For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValue" /></td>
     <td><code>string</code></td>
-    <td>Required. Resource value level this expression represents</td>
+    <td> (RESOURCE_VALUE_UNSPECIFIED, HIGH, MEDIUM, LOW, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Project or folder to scope this configuration to. For example, "project/456" would apply this configuration only to resources in "project/456" scope will be checked with `AND` of other resources.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="sensitiveDataProtectionMapping" /></td>
     <td><code>object</code></td>
-    <td>A mapping of the sensitivity on Sensitive Data Protection finding to resource values. This mapping can only be used in combination with a resource_type that is related to BigQuery, e.g. "bigquery.googleapis.com/Dataset". (id: GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping)</td>
+    <td> (id: GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tagValues" /></td>
     <td><code>array</code></td>
-    <td>Required. Tag values combined with `AND` to check against. For Google Cloud resources, they are tag value IDs in the form of "tagValues/123". Example: `[ "tagValues/123", "tagValues/456", "tagValues/789" ]` https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp this resource value configuration was last updated.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -121,57 +122,57 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name for the resource value configuration</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudProvider" /></td>
     <td><code>string</code></td>
-    <td>Cloud provider this configuration applies to</td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp this resource value configuration was created.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Description of the resource value configuration.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceLabelsSelector" /></td>
     <td><code>object</code></td>
-    <td>List of resource labels to search for, evaluated with `AND`. For example, `"resource_labels_selector": &#123;"key": "value", "env": "prod"&#125;` will match resources with labels "key": "value" `AND` "env": "prod" https://cloud.google.com/resource-manager/docs/creating-managing-labels</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceType" /></td>
     <td><code>string</code></td>
-    <td>Apply resource_value only to resources that match resource_type. resource_type will be checked with `AND` of other resources. For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValue" /></td>
     <td><code>string</code></td>
-    <td>Required. Resource value level this expression represents</td>
+    <td> (RESOURCE_VALUE_UNSPECIFIED, HIGH, MEDIUM, LOW, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Project or folder to scope this configuration to. For example, "project/456" would apply this configuration only to resources in "project/456" scope will be checked with `AND` of other resources.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="sensitiveDataProtectionMapping" /></td>
     <td><code>object</code></td>
-    <td>A mapping of the sensitivity on Sensitive Data Protection finding to resource values. This mapping can only be used in combination with a resource_type that is related to BigQuery, e.g. "bigquery.googleapis.com/Dataset". (id: GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping)</td>
+    <td> (id: GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tagValues" /></td>
     <td><code>array</code></td>
-    <td>Required. Tag values combined with `AND` to check against. For Google Cloud resources, they are tag value IDs in the form of "tagValues/123". Example: `[ "tagValues/123", "tagValues/456", "tagValues/789" ]` https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp this resource value configuration was last updated.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -198,35 +199,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-resourceValueConfigsId"><code>resourceValueConfigsId</code></a></td>
     <td></td>
-    <td>Gets a ResourceValueConfig.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_resource_value_configs_list"><CopyableCode code="organizations_resource_value_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists all ResourceValueConfigs.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_resource_value_configs_batch_create"><CopyableCode code="organizations_resource_value_configs_batch_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Creates a ResourceValueConfig for an organization. Maps user's tags to difference resource values for use by the attack path simulation.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_resource_value_configs_patch"><CopyableCode code="organizations_resource_value_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-resourceValueConfigsId"><code>resourceValueConfigsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates an existing ResourceValueConfigs with new rules.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_resource_value_configs_delete"><CopyableCode code="organizations_resource_value_configs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-resourceValueConfigsId"><code>resourceValueConfigsId</code></a></td>
     <td></td>
-    <td>Deletes a ResourceValueConfig.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -283,7 +284,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="organizations_resource_value_configs_get">
 
-Gets a ResourceValueConfig.
+Successful response
 
 ```sql
 SELECT
@@ -306,7 +307,7 @@ AND resourceValueConfigsId = '{{ resourceValueConfigsId }}' -- required
 </TabItem>
 <TabItem value="organizations_resource_value_configs_list">
 
-Lists all ResourceValueConfigs.
+Successful response
 
 ```sql
 SELECT
@@ -342,7 +343,7 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="organizations_resource_value_configs_batch_create">
 
-Creates a ResourceValueConfig for an organization. Maps user's tags to difference resource values for use by the attack path simulation.
+No description available.
 
 ```sql
 INSERT INTO google.securitycenter.resource_value_configs (
@@ -359,19 +360,32 @@ resourceValueConfigs
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: resource_value_configs
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the resource_value_configs resource.
     - name: requests
-      value: array
-      description: >
-        Required. The resource value configs to be created.
-        
-```
+      value:
+        - parent: "{{ parent }}"
+          resourceValueConfig:
+            scope: "{{ scope }}"
+            updateTime: "{{ updateTime }}"
+            resourceValue: "{{ resourceValue }}"
+            resourceType: "{{ resourceType }}"
+            description: "{{ description }}"
+            name: "{{ name }}"
+            createTime: "{{ createTime }}"
+            cloudProvider: "{{ cloudProvider }}"
+            resourceLabelsSelector: "{{ resourceLabelsSelector }}"
+            tagValues:
+              - "{{ tagValues }}"
+            sensitiveDataProtectionMapping:
+              highSensitivityMapping: "{{ highSensitivityMapping }}"
+              mediumSensitivityMapping: "{{ mediumSensitivityMapping }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -386,20 +400,20 @@ resourceValueConfigs
 >
 <TabItem value="organizations_resource_value_configs_patch">
 
-Updates an existing ResourceValueConfigs with new rules.
+No description available.
 
 ```sql
 UPDATE google.securitycenter.resource_value_configs
 SET 
-data__name = '{{ name }}',
-data__tagValues = '{{ tagValues }}',
-data__resourceType = '{{ resourceType }}',
-data__cloudProvider = '{{ cloudProvider }}',
+data__scope = '{{ scope }}',
 data__resourceValue = '{{ resourceValue }}',
+data__resourceType = '{{ resourceType }}',
 data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__cloudProvider = '{{ cloudProvider }}',
 data__resourceLabelsSelector = '{{ resourceLabelsSelector }}',
-data__sensitiveDataProtectionMapping = '{{ sensitiveDataProtectionMapping }}',
-data__scope = '{{ scope }}'
+data__tagValues = '{{ tagValues }}',
+data__sensitiveDataProtectionMapping = '{{ sensitiveDataProtectionMapping }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND resourceValueConfigsId = '{{ resourceValueConfigsId }}' --required
@@ -431,7 +445,7 @@ updateTime;
 >
 <TabItem value="organizations_resource_value_configs_delete">
 
-Deletes a ResourceValueConfig.
+No description available.
 
 ```sql
 DELETE FROM google.securitycenter.resource_value_configs

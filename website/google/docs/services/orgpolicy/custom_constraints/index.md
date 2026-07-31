@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>custom_constraints</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>custom_constraints</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="custom_constraints" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.orgpolicy.custom_constraints" /></td></tr>
 </tbody></table>
@@ -52,17 +53,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/&#123;organization_id&#125;/customConstraints/&#123;custom_constraint_id&#125;` Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms` The max length is 70 characters and the minimum length is 1. Note that the prefix `organizations/&#123;organization_id&#125;/customConstraints/` is not counted.</td>
+    <td>Immutable. Name of the constraint. This is unique within the organization. The name must be of the form: * `organizations/&#123;organization_id&#125;/customConstraints/&#123;custom_constraint_id&#125;` Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms` The max length is 71 characters and the minimum length is 1. Note that the prefix `organizations/&#123;organization_id&#125;/customConstraints/custom.` is not counted.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actionType" /></td>
     <td><code>string</code></td>
-    <td>Allow or deny type.</td>
+    <td>Allow or deny type. (ACTION_TYPE_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="condition" /></td>
     <td><code>string</code></td>
-    <td>A Common Expression Language (CEL) condition which is used in the evaluation of the constraint. For example: `resource.instanceName.matches("[production|test]_.*_(\d)+")` or, `resource.management.auto_upgrade == true` The max length of the condition is 1000 characters.</td>
+    <td>A Common Expression Language (CEL) condition which is used in the evaluation of the constraint. For example: `resource.instanceName.matches("(production|test)_(.+_)?[\d]+")` or, `resource.management.auto_upgrade == true` The max length of the condition is 1000 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -106,17 +107,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/&#123;organization_id&#125;/customConstraints/&#123;custom_constraint_id&#125;` Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms` The max length is 70 characters and the minimum length is 1. Note that the prefix `organizations/&#123;organization_id&#125;/customConstraints/` is not counted.</td>
+    <td>Immutable. Name of the constraint. This is unique within the organization. The name must be of the form: * `organizations/&#123;organization_id&#125;/customConstraints/&#123;custom_constraint_id&#125;` Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms` The max length is 71 characters and the minimum length is 1. Note that the prefix `organizations/&#123;organization_id&#125;/customConstraints/custom.` is not counted.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actionType" /></td>
     <td><code>string</code></td>
-    <td>Allow or deny type.</td>
+    <td>Allow or deny type. (ACTION_TYPE_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="condition" /></td>
     <td><code>string</code></td>
-    <td>A Common Expression Language (CEL) condition which is used in the evaluation of the constraint. For example: `resource.instanceName.matches("[production|test]_.*_(\d)+")` or, `resource.management.auto_upgrade == true` The max length of the condition is 1000 characters.</td>
+    <td>A Common Expression Language (CEL) condition which is used in the evaluation of the constraint. For example: `resource.instanceName.matches("(production|test)_(.+_)?[\d]+")` or, `resource.management.auto_upgrade == true` The max length of the condition is 1000 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -305,23 +306,23 @@ Creates a custom constraint. Returns a `google.rpc.Status` with `google.rpc.Code
 
 ```sql
 INSERT INTO google.orgpolicy.custom_constraints (
-data__name,
-data__resourceTypes,
-data__methodTypes,
-data__condition,
 data__actionType,
 data__displayName,
+data__condition,
+data__name,
+data__methodTypes,
 data__description,
+data__resourceTypes,
 organizationsId
 )
 SELECT 
-'{{ name }}',
-'{{ resourceTypes }}',
-'{{ methodTypes }}',
-'{{ condition }}',
 '{{ actionType }}',
 '{{ displayName }}',
+'{{ condition }}',
+'{{ name }}',
+'{{ methodTypes }}',
 '{{ description }}',
+'{{ resourceTypes }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -337,50 +338,45 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: custom_constraints
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the custom_constraints resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/{organization_id}/customConstraints/{custom_constraint_id}` Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms` The max length is 70 characters and the minimum length is 1. Note that the prefix `organizations/{organization_id}/customConstraints/` is not counted.
-        
-    - name: resourceTypes
-      value: array
-      description: >
-        Immutable. The resource instance type on which this policy applies. Format will be of the form : `/` Example: * `compute.googleapis.com/Instance`.
-        
-    - name: methodTypes
-      value: array
-      description: >
-        All the operations being applied for this constraint.
-        
-    - name: condition
-      value: string
-      description: >
-        A Common Expression Language (CEL) condition which is used in the evaluation of the constraint. For example: `resource.instanceName.matches("[production|test]_.*_(\d)+")` or, `resource.management.auto_upgrade == true` The max length of the condition is 1000 characters.
-        
     - name: actionType
-      value: string
-      description: >
+      value: "{{ actionType }}"
+      description: |
         Allow or deny type.
-        
       valid_values: ['ACTION_TYPE_UNSPECIFIED', 'ALLOW', 'DENY']
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         One line display name for the UI. The max length of the display_name is 200 characters.
-        
+    - name: condition
+      value: "{{ condition }}"
+      description: |
+        A Common Expression Language (CEL) condition which is used in the evaluation of the constraint. For example: \`resource.instanceName.matches("(production|test)_(.+_)?[d]+")\` or, \`resource.management.auto_upgrade == true\` The max length of the condition is 1000 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Name of the constraint. This is unique within the organization. The name must be of the form: * \`organizations/{organization_id}/customConstraints/{custom_constraint_id}\` Example: \`organizations/123/customConstraints/custom.createOnlyE2TypeVms\` The max length is 71 characters and the minimum length is 1. Note that the prefix \`organizations/{organization_id}/customConstraints/custom.\` is not counted.
+    - name: methodTypes
+      value:
+        - "{{ methodTypes }}"
+      description: |
+        All the operations being applied for this constraint.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Detailed information about this custom policy constraint. The max length of the description is 2000 characters.
-        
-```
+    - name: resourceTypes
+      value:
+        - "{{ resourceTypes }}"
+      description: |
+        Immutable. The resource instance type on which this policy applies. Format will be of the form : \`/\` Example: * \`compute.googleapis.com/Instance\`.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -400,13 +396,13 @@ Updates a custom constraint. Returns a `google.rpc.Status` with `google.rpc.Code
 ```sql
 UPDATE google.orgpolicy.custom_constraints
 SET 
-data__name = '{{ name }}',
-data__resourceTypes = '{{ resourceTypes }}',
-data__methodTypes = '{{ methodTypes }}',
-data__condition = '{{ condition }}',
 data__actionType = '{{ actionType }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}'
+data__condition = '{{ condition }}',
+data__name = '{{ name }}',
+data__methodTypes = '{{ methodTypes }}',
+data__description = '{{ description }}',
+data__resourceTypes = '{{ resourceTypes }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND customConstraintsId = '{{ customConstraintsId }}' --required

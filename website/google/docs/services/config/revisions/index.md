@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>revisions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.config.revisions" /></td></tr>
 </tbody></table>
@@ -52,107 +53,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Revision name. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/deployments/&#123;deployment&#125;/ revisions/&#123;revision&#125;`</td>
+    <td>Identifier. The name of the deployment group revision. Format: 'projects/&#123;project_id&#125;/locations/&#123;location&#125;/deploymentGroups/&#123;deployment_group&#125;/revisions/&#123;revision&#125;'.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="action" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The action which created this revision</td>
-</tr>
-<tr>
-    <td><CopyableCode code="applyResults" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Outputs and artifacts from applying a deployment. (id: ApplyResults)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="build" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Cloud Build instance UUID associated with this revision.</td>
+    <td><CopyableCode code="alternativeIds" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The alternative IDs of the deployment group revision.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the revision was created.</td>
+    <td>Output only. Time when the deployment group revision was created.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="errorCode" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Code describing any errors that may have occurred.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errorLogs" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Location of Terraform error logs in Google Cloud Storage. Format: `gs://&#123;bucket&#125;/&#123;object&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="importExistingResources" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. By default, Infra Manager will return a failure when Terraform encounters a 409 code (resource conflict error) during actuation. If this flag is set to true, Infra Manager will instead attempt to automatically import the resource into the Terraform state (for supported resource types) and continue actuation. Not all resource types are supported, refer to documentation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="logs" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Location of Revision operation logs in `gs://&#123;bucket&#125;/&#123;object&#125;` format.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="providerConfig" /></td>
+    <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>Output only. This field specifies the provider configurations. (id: ProviderConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="quotaValidation" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Input to control quota checks for resources in terraform configuration files. There are limited resources on which quota validation applies.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="quotaValidationResults" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Cloud Storage path containing quota validation results. This field is set when a user sets Deployment.quota_validation field to ENABLED or ENFORCED. Format: `gs://&#123;bucket&#125;/&#123;object&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Output only. User-specified Service Account (SA) to be used as credential to manage resources. Format: `projects/&#123;projectID&#125;/serviceAccounts/&#123;serviceAccount&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Current state of the revision.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateDetail" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Additional info regarding the current state.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="terraformBlueprint" /></td>
-    <td><code>object</code></td>
-    <td>Output only. A blueprint described using Terraform's HashiCorp Configuration Language as a root module. (id: TerraformBlueprint)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfErrors" /></td>
-    <td><code>array</code></td>
-    <td>Output only. Errors encountered when creating or updating this deployment. Errors are truncated to 10 entries, see `delete_results` and `error_logs` for full details.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfVersion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The version of Terraform used to create the Revision. It is in the format of "Major.Minor.Patch", for example, "1.3.10".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfVersionConstraint" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The user-specified Terraform version constraint. Example: "=1.3.10".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the revision was last modified.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="workerPool" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/workerPools/&#123;workerPoolId&#125;`. If this field is unspecified, the default Cloud Build worker pool will be used.</td>
+    <td>A DeploymentGroup is a collection of DeploymentUnits that in a DAG-like structure. (id: DeploymentGroup)</td>
 </tr>
 </tbody>
 </table>
@@ -171,107 +87,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Revision name. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/deployments/&#123;deployment&#125;/ revisions/&#123;revision&#125;`</td>
+    <td>Identifier. The name of the deployment group revision. Format: 'projects/&#123;project_id&#125;/locations/&#123;location&#125;/deploymentGroups/&#123;deployment_group&#125;/revisions/&#123;revision&#125;'.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="action" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The action which created this revision</td>
-</tr>
-<tr>
-    <td><CopyableCode code="applyResults" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Outputs and artifacts from applying a deployment. (id: ApplyResults)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="build" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Cloud Build instance UUID associated with this revision.</td>
+    <td><CopyableCode code="alternativeIds" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The alternative IDs of the deployment group revision.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the revision was created.</td>
+    <td>Output only. Time when the deployment group revision was created.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="errorCode" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Code describing any errors that may have occurred.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errorLogs" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Location of Terraform error logs in Google Cloud Storage. Format: `gs://&#123;bucket&#125;/&#123;object&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="importExistingResources" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. By default, Infra Manager will return a failure when Terraform encounters a 409 code (resource conflict error) during actuation. If this flag is set to true, Infra Manager will instead attempt to automatically import the resource into the Terraform state (for supported resource types) and continue actuation. Not all resource types are supported, refer to documentation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="logs" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Location of Revision operation logs in `gs://&#123;bucket&#125;/&#123;object&#125;` format.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="providerConfig" /></td>
+    <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>Output only. This field specifies the provider configurations. (id: ProviderConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="quotaValidation" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Input to control quota checks for resources in terraform configuration files. There are limited resources on which quota validation applies.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="quotaValidationResults" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Cloud Storage path containing quota validation results. This field is set when a user sets Deployment.quota_validation field to ENABLED or ENFORCED. Format: `gs://&#123;bucket&#125;/&#123;object&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Output only. User-specified Service Account (SA) to be used as credential to manage resources. Format: `projects/&#123;projectID&#125;/serviceAccounts/&#123;serviceAccount&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Current state of the revision.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateDetail" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Additional info regarding the current state.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="terraformBlueprint" /></td>
-    <td><code>object</code></td>
-    <td>Output only. A blueprint described using Terraform's HashiCorp Configuration Language as a root module. (id: TerraformBlueprint)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfErrors" /></td>
-    <td><code>array</code></td>
-    <td>Output only. Errors encountered when creating or updating this deployment. Errors are truncated to 10 entries, see `delete_results` and `error_logs` for full details.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfVersion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The version of Terraform used to create the Revision. It is in the format of "Major.Minor.Patch", for example, "1.3.10".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfVersionConstraint" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The user-specified Terraform version constraint. Example: "=1.3.10".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the revision was last modified.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="workerPool" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/workerPools/&#123;workerPoolId&#125;`. If this field is unspecified, the default Cloud Build worker pool will be used.</td>
+    <td>A DeploymentGroup is a collection of DeploymentUnits that in a DAG-like structure. (id: DeploymentGroup)</td>
 </tr>
 </tbody>
 </table>
@@ -296,16 +127,16 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentGroupsId"><code>deploymentGroupsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
-    <td>Gets details about a Revision.</td>
+    <td>Gets details about a DeploymentGroupRevision.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists Revisions of a deployment.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentGroupsId"><code>deploymentGroupsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists DeploymentGroupRevisions in a given DeploymentGroup.</td>
 </tr>
 <tr>
     <td><a href="#export_state"><CopyableCode code="export_state" /></a></td>
@@ -330,6 +161,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-deploymentGroupsId">
+    <td><CopyableCode code="deploymentGroupsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-deploymentsId">
     <td><CopyableCode code="deploymentsId" /></td>
     <td><code>string</code></td>
@@ -347,16 +183,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-revisionsId">
     <td><CopyableCode code="revisionsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-filter">
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-orderBy">
-    <td><CopyableCode code="orderBy" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -384,74 +210,38 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets details about a Revision.
+Gets details about a DeploymentGroupRevision.
 
 ```sql
 SELECT
 name,
-action,
-applyResults,
-build,
+alternativeIds,
 createTime,
-errorCode,
-errorLogs,
-importExistingResources,
-logs,
-providerConfig,
-quotaValidation,
-quotaValidationResults,
-serviceAccount,
-state,
-stateDetail,
-terraformBlueprint,
-tfErrors,
-tfVersion,
-tfVersionConstraint,
-updateTime,
-workerPool
+snapshot
 FROM google.config.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND deploymentsId = '{{ deploymentsId }}' -- required
+AND deploymentGroupsId = '{{ deploymentGroupsId }}' -- required
 AND revisionsId = '{{ revisionsId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Lists Revisions of a deployment.
+Lists DeploymentGroupRevisions in a given DeploymentGroup.
 
 ```sql
 SELECT
 name,
-action,
-applyResults,
-build,
+alternativeIds,
 createTime,
-errorCode,
-errorLogs,
-importExistingResources,
-logs,
-providerConfig,
-quotaValidation,
-quotaValidationResults,
-serviceAccount,
-state,
-stateDetail,
-terraformBlueprint,
-tfErrors,
-tfVersion,
-tfVersionConstraint,
-updateTime,
-workerPool
+snapshot
 FROM google.config.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND deploymentsId = '{{ deploymentsId }}' -- required
+AND deploymentGroupsId = '{{ deploymentGroupsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>referencedby</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>referencedby</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="referencedby" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.referencedby" /></td></tr>
 </tbody></table>
@@ -86,7 +87,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td></td>
     <td>Get a list of IDs of schemas that reference the schema with the given subject and version.</td>
 </tr>
@@ -106,11 +107,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-contextsId">
-    <td><CopyableCode code="contextsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-locationsId">
     <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
@@ -160,7 +156,6 @@ FROM google.managedkafka.referencedby
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' -- required
-AND contextsId = '{{ contextsId }}' -- required
 AND subjectsId = '{{ subjectsId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
 ;

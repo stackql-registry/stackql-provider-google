@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>response_policies</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>response_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="response_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dns.response_policies" /></td></tr>
 </tbody></table>
@@ -306,24 +307,24 @@ Creates a new Response Policy
 
 ```sql
 INSERT INTO google.dns.response_policies (
-data__id,
 data__responsePolicyName,
-data__description,
-data__networks,
 data__gkeClusters,
 data__labels,
+data__networks,
+data__description,
 data__kind,
+data__id,
 project,
 clientOperationId
 )
 SELECT 
-'{{ id }}',
 '{{ responsePolicyName }}',
-'{{ description }}',
-'{{ networks }}',
 '{{ gkeClusters }}',
 '{{ labels }}',
+'{{ networks }}',
+'{{ description }}',
 '{{ kind }}',
+'{{ id }}',
 '{{ project }}',
 '{{ clientOperationId }}'
 RETURNING
@@ -339,49 +340,47 @@ responsePolicyName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: response_policies
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the response_policies resource.
-    - name: id
-      value: string
-      description: >
-        Unique identifier for the resource; defined by the server (output only).
-        
     - name: responsePolicyName
-      value: string
-      description: >
+      value: "{{ responsePolicyName }}"
+      description: |
         User assigned name for this Response Policy.
-        
-    - name: description
-      value: string
-      description: >
-        User-provided description for this Response Policy.
-        
-    - name: networks
-      value: array
-      description: >
-        List of network names specifying networks to which this policy is applied.
-        
     - name: gkeClusters
-      value: array
-      description: >
+      description: |
         The list of Google Kubernetes Engine clusters to which this response policy is applied.
-        
+      value:
+        - gkeClusterName: "{{ gkeClusterName }}"
+          kind: "{{ kind }}"
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         User labels.
-        
+    - name: networks
+      description: |
+        List of network names specifying networks to which this policy is applied.
+      value:
+        - networkUrl: "{{ networkUrl }}"
+          kind: "{{ kind }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided description for this Response Policy.
     - name: kind
-      value: string
+      value: "{{ kind }}"
       default: dns#responsePolicy
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Unique identifier for the resource; defined by the server (output only).
     - name: clientOperationId
-      value: string
-```
+      value: "{{ clientOperationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -401,13 +400,13 @@ Applies a partial update to an existing Response Policy.
 ```sql
 UPDATE google.dns.response_policies
 SET 
-data__id = '{{ id }}',
 data__responsePolicyName = '{{ responsePolicyName }}',
-data__description = '{{ description }}',
-data__networks = '{{ networks }}',
 data__gkeClusters = '{{ gkeClusters }}',
 data__labels = '{{ labels }}',
-data__kind = '{{ kind }}'
+data__networks = '{{ networks }}',
+data__description = '{{ description }}',
+data__kind = '{{ kind }}',
+data__id = '{{ id }}'
 WHERE 
 project = '{{ project }}' --required
 AND responsePolicy = '{{ responsePolicy }}' --required
@@ -434,13 +433,13 @@ Updates an existing Response Policy.
 ```sql
 REPLACE google.dns.response_policies
 SET 
-data__id = '{{ id }}',
 data__responsePolicyName = '{{ responsePolicyName }}',
-data__description = '{{ description }}',
-data__networks = '{{ networks }}',
 data__gkeClusters = '{{ gkeClusters }}',
 data__labels = '{{ labels }}',
-data__kind = '{{ kind }}'
+data__networks = '{{ networks }}',
+data__description = '{{ description }}',
+data__kind = '{{ kind }}',
+data__id = '{{ id }}'
 WHERE 
 project = '{{ project }}' --required
 AND responsePolicy = '{{ responsePolicy }}' --required

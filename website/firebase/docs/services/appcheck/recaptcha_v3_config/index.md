@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>recaptcha_v3_config</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>recaptcha_v3_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="recaptcha_v3_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appcheck.recaptcha_v3_config" /></td></tr>
 </tbody></table>
@@ -53,6 +54,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/&#123;project_number&#125;/apps/&#123;app_id&#125;/recaptchaV3Config ```</td>
+</tr>
+<tr>
+    <td><CopyableCode code="minValidScore" /></td>
+    <td><code>number (float)</code></td>
+    <td>Specifies a minimum score required for a reCAPTCHA token to be considered valid. If its score is greater than or equal to this value, it will be accepted; otherwise, it will be rejected. The value must be between 0.0 and 1.0. The default value is 0.5.</td>
 </tr>
 <tr>
     <td><CopyableCode code="siteSecret" /></td>
@@ -127,7 +133,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the RecaptchaV3Config for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA V3 tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.</td>
+    <td>Updates the RecaptchaV3Config for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA v3 tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.</td>
 </tr>
 </tbody>
 </table>
@@ -184,6 +190,7 @@ Gets the RecaptchaV3Config for the specified app. For security reasons, the `sit
 ```sql
 SELECT
 name,
+minValidScore,
 siteSecret,
 siteSecretSet,
 tokenTtl
@@ -219,20 +226,22 @@ AND names = '{{ names }}'
 >
 <TabItem value="patch">
 
-Updates the RecaptchaV3Config for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA V3 tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.
+Updates the RecaptchaV3Config for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA v3 tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.
 
 ```sql
 UPDATE firebase.appcheck.recaptcha_v3_config
 SET 
 data__tokenTtl = '{{ tokenTtl }}',
 data__name = '{{ name }}',
-data__siteSecret = '{{ siteSecret }}'
+data__siteSecret = '{{ siteSecret }}',
+data__minValidScore = {{ minValidScore }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND appsId = '{{ appsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+minValidScore,
 siteSecret,
 siteSecretSet,
 tokenTtl;

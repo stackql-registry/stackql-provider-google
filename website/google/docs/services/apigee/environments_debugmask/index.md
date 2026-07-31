@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>environments_debugmask</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>environments_debugmask</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="environments_debugmask" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.environments_debugmask" /></td></tr>
 </tbody></table>
@@ -216,12 +217,12 @@ SET
 data__faultXPaths = '{{ faultXPaths }}',
 data__requestJSONPaths = '{{ requestJSONPaths }}',
 data__faultJSONPaths = '{{ faultJSONPaths }}',
-data__variables = '{{ variables }}',
-data__responseXPaths = '{{ responseXPaths }}',
-data__responseJSONPaths = '{{ responseJSONPaths }}',
+data__name = '{{ name }}',
 data__namespaces = '{{ namespaces }}',
+data__responseJSONPaths = '{{ responseJSONPaths }}',
 data__requestXPaths = '{{ requestXPaths }}',
-data__name = '{{ name }}'
+data__variables = '{{ variables }}',
+data__responseXPaths = '{{ responseXPaths }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

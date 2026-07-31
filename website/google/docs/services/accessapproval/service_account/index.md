@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_account</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_account</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_account" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.accessapproval.service_account" /></td></tr>
 </tbody></table>
@@ -32,14 +33,14 @@ Creates, updates, deletes, gets or lists a <code>service_account</code> resource
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_get_service_account"
+    defaultValue="projects_get_service_account"
     values={[
-        { label: 'organizations_get_service_account', value: 'organizations_get_service_account' },
         { label: 'projects_get_service_account', value: 'projects_get_service_account' },
+        { label: 'organizations_get_service_account', value: 'organizations_get_service_account' },
         { label: 'folders_get_service_account', value: 'folders_get_service_account' }
     ]}
 >
-<TabItem value="organizations_get_service_account">
+<TabItem value="projects_get_service_account">
 
 <table>
 <thead>
@@ -63,7 +64,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_get_service_account">
+<TabItem value="organizations_get_service_account">
 
 <table>
 <thead>
@@ -129,16 +130,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_get_service_account"><CopyableCode code="organizations_get_service_account" /></a></td>
+    <td><a href="#projects_get_service_account"><CopyableCode code="projects_get_service_account" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.</td>
 </tr>
 <tr>
-    <td><a href="#projects_get_service_account"><CopyableCode code="projects_get_service_account" /></a></td>
+    <td><a href="#organizations_get_service_account"><CopyableCode code="organizations_get_service_account" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
     <td>Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.</td>
 </tr>
@@ -186,26 +187,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_get_service_account"
+    defaultValue="projects_get_service_account"
     values={[
-        { label: 'organizations_get_service_account', value: 'organizations_get_service_account' },
         { label: 'projects_get_service_account', value: 'projects_get_service_account' },
+        { label: 'organizations_get_service_account', value: 'organizations_get_service_account' },
         { label: 'folders_get_service_account', value: 'folders_get_service_account' }
     ]}
 >
-<TabItem value="organizations_get_service_account">
-
-Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.
-
-```sql
-SELECT
-name,
-accountEmail
-FROM google.accessapproval.service_account
-WHERE organizationsId = '{{ organizationsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_get_service_account">
 
 Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.
@@ -216,6 +204,19 @@ name,
 accountEmail
 FROM google.accessapproval.service_account
 WHERE projectsId = '{{ projectsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_get_service_account">
+
+Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.
+
+```sql
+SELECT
+name,
+accountEmail
+FROM google.accessapproval.service_account
+WHERE organizationsId = '{{ organizationsId }}' -- required
 ;
 ```
 </TabItem>

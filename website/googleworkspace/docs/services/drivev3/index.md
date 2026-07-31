@@ -18,7 +18,7 @@ drivev3 service documentation.
 
 :::info[Service Summary]
 
-total resources: __15__  
+total resources: __16__  
 
 :::
 
@@ -27,14 +27,15 @@ total resources: __15__
 <div class="providerDocColumn">
 <a href="/services/drivev3/about/">about</a><br />
 <a href="/services/drivev3/accessproposals/">accessproposals</a><br />
+<a href="/services/drivev3/approvals/">approvals</a><br />
 <a href="/services/drivev3/apps/">apps</a><br />
 <a href="/services/drivev3/changes/">changes</a><br />
 <a href="/services/drivev3/changes_start_page_token/">changes_start_page_token</a><br />
 <a href="/services/drivev3/channels/">channels</a><br />
-<a href="/services/drivev3/comments/">comments</a><br />
-<a href="/services/drivev3/drives/">drives</a>
+<a href="/services/drivev3/comments/">comments</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/drivev3/drives/">drives</a><br />
 <a href="/services/drivev3/files/">files</a><br />
 <a href="/services/drivev3/files_labels/">files_labels</a><br />
 <a href="/services/drivev3/operations/">operations</a><br />

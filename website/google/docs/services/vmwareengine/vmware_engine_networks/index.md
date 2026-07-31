@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>vmware_engine_networks</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>vmware_engine_networks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="vmware_engine_networks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.vmware_engine_networks" /></td></tr>
 </tbody></table>
@@ -72,12 +73,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the VMware Engine network.</td>
+    <td>Output only. State of the VMware Engine network. (STATE_UNSPECIFIED, CREATING, ACTIVE, UPDATING, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. VMware Engine network type.</td>
+    <td>Required. VMware Engine network type. (TYPE_UNSPECIFIED, LEGACY, STANDARD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -131,12 +132,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the VMware Engine network.</td>
+    <td>Output only. State of the VMware Engine network. (STATE_UNSPECIFIED, CREATING, ACTIVE, UPDATING, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. VMware Engine network type.</td>
+    <td>Required. VMware Engine network type. (TYPE_UNSPECIFIED, LEGACY, STANDARD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -184,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists `VmwareEngineNetwork` resources in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-vmwareEngineNetworkId"><code>vmwareEngineNetworkId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-vmwareEngineNetworkId"><code>vmwareEngineNetworkId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new VMware Engine network that can be used by a private cloud.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareEngineNetworksId"><code>vmwareEngineNetworksId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Modifies a VMware Engine network resource. Only the following fields can be updated: `description`. Only fields specified in `updateMask` are applied.</td>
 </tr>
 <tr>
@@ -274,6 +275,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (google-fieldmask)</code></td>
     <td></td>
 </tr>
+<tr id="parameter-validateOnly">
+    <td><CopyableCode code="validateOnly" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-vmwareEngineNetworkId">
     <td><CopyableCode code="vmwareEngineNetworkId" /></td>
     <td><code>string</code></td>
@@ -331,9 +337,9 @@ vpcNetworks
 FROM google.vmwareengine.vmware_engine_networks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -357,21 +363,23 @@ Creates a new VMware Engine network that can be used by a private cloud.
 ```sql
 INSERT INTO google.vmwareengine.vmware_engine_networks (
 data__description,
-data__type,
 data__etag,
+data__type,
 projectsId,
 locationsId,
+requestId,
 vmwareEngineNetworkId,
-requestId
+validateOnly
 )
 SELECT 
 '{{ description }}',
-'{{ type }}',
 '{{ etag }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ requestId }}',
 '{{ vmwareEngineNetworkId }}',
-'{{ requestId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -383,37 +391,36 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: vmware_engine_networks
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the vmware_engine_networks resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the vmware_engine_networks resource.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         User-provided description for this VMware Engine network.
-        
-    - name: type
-      value: string
-      description: >
-        Required. VMware Engine network type.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'LEGACY', 'STANDARD']
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Checksum that may be sent on update and delete requests to ensure that the user-provided value is up to date before the server processes a request. The server computes checksums based on the value of other fields in the request.
-        
-    - name: vmwareEngineNetworkId
-      value: string
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. VMware Engine network type.
+      valid_values: ['TYPE_UNSPECIFIED', 'LEGACY', 'STANDARD']
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: vmwareEngineNetworkId
+      value: "{{ vmwareEngineNetworkId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -434,14 +441,15 @@ Modifies a VMware Engine network resource. Only the following fields can be upda
 UPDATE google.vmwareengine.vmware_engine_networks
 SET 
 data__description = '{{ description }}',
-data__type = '{{ type }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND vmwareEngineNetworksId = '{{ vmwareEngineNetworksId }}' --required
 AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,

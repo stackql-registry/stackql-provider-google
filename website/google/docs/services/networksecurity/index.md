@@ -18,7 +18,7 @@ networksecurity service documentation.
 
 :::info[Service Summary]
 
-total resources: __31__  
+total resources: __34__  
 
 :::
 
@@ -36,6 +36,7 @@ total resources: __31__
 <a href="/services/networksecurity/backend_authentication_configs/">backend_authentication_configs</a><br />
 <a href="/services/networksecurity/client_tls_policies/">client_tls_policies</a><br />
 <a href="/services/networksecurity/client_tls_policies_iam_policies/">client_tls_policies_iam_policies</a><br />
+<a href="/services/networksecurity/dns_threat_detectors/">dns_threat_detectors</a><br />
 <a href="/services/networksecurity/firewall_endpoint_associations/">firewall_endpoint_associations</a><br />
 <a href="/services/networksecurity/firewall_endpoints/">firewall_endpoints</a><br />
 <a href="/services/networksecurity/gateway_security_policies/">gateway_security_policies</a><br />
@@ -52,6 +53,8 @@ total resources: __31__
 <a href="/services/networksecurity/mirroring_endpoint_groups/">mirroring_endpoint_groups</a><br />
 <a href="/services/networksecurity/operations/">operations</a><br />
 <a href="/services/networksecurity/rules/">rules</a><br />
+<a href="/services/networksecurity/sac_attachments/">sac_attachments</a><br />
+<a href="/services/networksecurity/sac_realms/">sac_realms</a><br />
 <a href="/services/networksecurity/security_profile_groups/">security_profile_groups</a><br />
 <a href="/services/networksecurity/security_profiles/">security_profiles</a><br />
 <a href="/services/networksecurity/server_tls_policies/">server_tls_policies</a><br />

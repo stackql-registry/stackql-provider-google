@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>target_https_proxies</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>target_https_proxies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="target_https_proxies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.target_https_proxies" /></td></tr>
 </tbody></table>
@@ -35,7 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'aggregated_list', value: 'aggregated_list' }
     ]}
 >
 <TabItem value="get">
@@ -57,22 +59,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="authorizationPolicy" /></td>
     <td><code>string</code></td>
-    <td>Optional. A URL referring to a networksecurity.AuthorizationPolicy resource that describes how the proxy should authorize inbound traffic. If left blank, access will not be restricted by an authorization policy. Refer to the AuthorizationPolicy resource for additional details. authorizationPolicy only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED. Note: This field currently has no impact.</td>
+    <td>Optional. A URL referring to a networksecurity.AuthorizationPolicy resource that describes how the proxy should authorize inbound traffic. If left blank, access will not be restricted by an authorization policy.   Refer to the AuthorizationPolicy resource for additional details.   authorizationPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED.   Note: This field currently has no impact.</td>
 </tr>
 <tr>
     <td><CopyableCode code="certificateMap" /></td>
     <td><code>string</code></td>
-    <td>URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for Global external Application Load Balancer or Classic Application Load Balancer. For other products use Certificate Manager Certificates instead. If set, sslCertificates will be ignored. Accepted format is //certificatemanager.googleapis.com/projects/&#123;project &#125;/locations/&#123;location&#125;/certificateMaps/&#123;resourceName&#125;.</td>
+    <td>URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for Global external Application Load Balancer or Classic Application Load Balancer. For other products use Certificate Manager Certificates instead.  If set, sslCertificates will be ignored.   Accepted format is//certificatemanager.googleapis.com/projects/&#123;project&#125;/locations/&#123;location&#125;/certificateMaps/&#123;resourceName&#125;.</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -87,27 +89,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="httpKeepAliveTimeoutSec" /></td>
     <td><code>integer (int32)</code></td>
-    <td>Specifies how long to keep a connection open, after completing a response, while there is no matching traffic (in seconds). If an HTTP keep-alive is not specified, a default value (610 seconds) will be used. For global external Application Load Balancers, the minimum allowed value is 5 seconds and the maximum allowed value is 1200 seconds. For classic Application Load Balancers, this option is not supported.</td>
+    <td>Specifies how long to keep a connection open, after completing a response, while there is no matching traffic (in seconds). If an HTTP keep-alive is not specified, a default value (610 seconds) will be used.  For global external Application Load Balancers, the minimum allowed value is 5 seconds and the maximum allowed value is 1200 seconds.  For classic Application Load Balancers, this option is not supported.</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#targetHttpsProxy for target HTTPS proxies. (default: compute#targetHttpsProxy)</td>
+    <td>Output only. [Output Only] Type of resource. Alwayscompute#targetHttpsProxy for target HTTPS proxies. (default: compute#targetHttpsProxy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="proxyBind" /></td>
     <td><code>boolean</code></td>
-    <td>This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED. When this field is set to true, Envoy proxies set up inbound traffic interception and bind to the IP address and port specified in the forwarding rule. This is generally useful when using Traffic Director to configure Envoy as a gateway or middle proxy (in other words, not a sidecar proxy). The Envoy proxy listens for inbound requests and handles requests when it receives them. The default is false.</td>
+    <td>This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.  When this field is set to true, Envoy proxies set up inbound traffic interception and bind to the IP address and port specified in the forwarding rule. This is generally useful when using Traffic Director to configure Envoy as a gateway or middle proxy (in other words, not a sidecar proxy). The Envoy proxy listens for inbound requests and handles requests when it receives them.  The default is false.</td>
 </tr>
 <tr>
     <td><CopyableCode code="quicOverride" /></td>
     <td><code>string</code></td>
-    <td>Specifies the QUIC override policy for this TargetHttpsProxy resource. This setting determines whether the load balancer attempts to negotiate QUIC with clients. You can specify NONE, ENABLE, or DISABLE. - When quic-override is set to NONE, Google manages whether QUIC is used. - When quic-override is set to ENABLE, the load balancer uses QUIC when possible. - When quic-override is set to DISABLE, the load balancer doesn't use QUIC. - If the quic-override flag is not specified, NONE is implied. </td>
+    <td>Specifies the QUIC override policy for this TargetHttpsProxy resource. This setting determines whether the load balancer attempts to negotiate QUIC with clients. You can specify NONE, ENABLE, orDISABLE.        - When quic-override is set to NONE,    Google manages whether QUIC is used.    - When quic-override is set to ENABLE, the    load balancer uses QUIC when possible.    - When quic-override is set to DISABLE, the    load balancer doesn't use QUIC.    - If the quic-override flag is not specified,NONE is implied. (DISABLE, ENABLE, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the regional TargetHttpsProxy resides. This field is not applicable to global TargetHttpsProxies.</td>
+    <td>Output only. [Output Only] URL of the region where the regional TargetHttpsProxy resides. This field is not applicable to global TargetHttpsProxies.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -117,12 +119,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serverTlsPolicy" /></td>
     <td><code>string</code></td>
-    <td>Optional. A URL referring to a networksecurity.ServerTlsPolicy resource that describes how the proxy should authenticate inbound traffic. serverTlsPolicy only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED or EXTERNAL or EXTERNAL_MANAGED or INTERNAL_MANAGED. It also applies to a regional TargetHttpsProxy attached to regional forwardingRules with the loadBalancingScheme set to EXTERNAL_MANAGED or INTERNAL_MANAGED. For details which ServerTlsPolicy resources are accepted with INTERNAL_SELF_MANAGED and which with EXTERNAL, INTERNAL_MANAGED, EXTERNAL_MANAGED loadBalancingScheme consult ServerTlsPolicy documentation. If left blank, communications are not encrypted.</td>
+    <td>Optional. A URL referring to a networksecurity.ServerTlsPolicy resource that describes how the proxy should authenticate inbound traffic.   serverTlsPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED or EXTERNAL orEXTERNAL_MANAGED or INTERNAL_MANAGED. It also applies to a regional TargetHttpsProxy attached to regional forwardingRules with theloadBalancingScheme set to EXTERNAL_MANAGED orINTERNAL_MANAGED. For details whichServerTlsPolicy resources are accepted withINTERNAL_SELF_MANAGED and which with EXTERNAL,INTERNAL_MANAGED, EXTERNAL_MANAGEDloadBalancingScheme consult ServerTlsPolicy documentation.    If left blank, communications are not encrypted.</td>
 </tr>
 <tr>
     <td><CopyableCode code="sslCertificates" /></td>
     <td><code>array</code></td>
-    <td>URLs to SslCertificate resources that are used to authenticate connections between users and the load balancer. At least one SSL certificate must be specified. SslCertificates do not apply when the load balancing scheme is set to INTERNAL_SELF_MANAGED. The URLs should refer to a SSL Certificate resource or Certificate Manager Certificate resource. Mixing Classic Certificates and Certificate Manager Certificates is not allowed. Certificate Manager Certificates must include the certificatemanager API namespace. Using Certificate Manager Certificates in this field is not supported by Global external Application Load Balancer or Classic Application Load Balancer, use certificate_map instead. Currently, you may specify up to 15 Classic SSL Certificates or up to 100 Certificate Manager Certificates. Certificate Manager Certificates accepted formats are: - //certificatemanager.googleapis.com/projects/&#123;project&#125;/locations/&#123; location&#125;/certificates/&#123;resourceName&#125;. - https://certificatemanager.googleapis.com/v1alpha1/projects/&#123;project &#125;/locations/&#123;location&#125;/certificates/&#123;resourceName&#125;. </td>
+    <td>URLs to SslCertificate resources that are used to authenticate connections between users and the load balancer. At least one SSL certificate must be specified. SslCertificates do not apply when the load balancing scheme is set to INTERNAL_SELF_MANAGED.  The URLs should refer to a SSL Certificate resource or Certificate Manager Certificate resource. Mixing Classic Certificates and Certificate Manager Certificates is not allowed. Certificate Manager Certificates must include the certificatemanager API namespace. Using Certificate Manager Certificates in this field is not supported by Global external Application Load Balancer or Classic Application Load Balancer, use certificate_map instead.  Currently, you may specify up to 15 Classic SSL Certificates or up to 100 Certificate Manager Certificates.  Certificate Manager Certificates accepted formats are:        - //certificatemanager.googleapis.com/projects/&#123;project&#125;/locations/&#123;location&#125;/certificates/&#123;resourceName&#125;.    - https://certificatemanager.googleapis.com/v1alpha1/projects/&#123;project&#125;/locations/&#123;location&#125;/certificates/&#123;resourceName&#125;.</td>
 </tr>
 <tr>
     <td><CopyableCode code="sslPolicy" /></td>
@@ -132,12 +134,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tlsEarlyData" /></td>
     <td><code>string</code></td>
-    <td> Specifies whether TLS 1.3 0-RTT Data ("Early Data") should be accepted for this service. Early Data allows a TLS resumption handshake to include the initial application payload (a HTTP request) alongside the handshake, reducing the effective round trips to "zero". This applies to TLS 1.3 connections over TCP (HTTP/2) as well as over UDP (QUIC/h3). This can improve application performance, especially on networks where interruptions may be common, such as on mobile. Requests with Early Data will have the "Early-Data" HTTP header set on the request, with a value of "1", to allow the backend to determine whether Early Data was included. Note: TLS Early Data may allow requests to be replayed, as the data is sent to the backend before the handshake has fully completed. Applications that allow idempotent HTTP methods to make non-idempotent changes, such as a GET request updating a database, should not accept Early Data on those requests, and reject requests with the "Early-Data: 1" HTTP header by returning a HTTP 425 (Too Early) status code, in order to remain RFC compliant. The default value is DISABLED.</td>
+    <td>Specifies whether TLS 1.3 0-RTT Data ("Early Data") should be accepted for this service. Early Data allows a TLS resumption handshake to include the initial application payload (a HTTP request) alongside the handshake, reducing the effective round trips to "zero". This applies to TLS 1.3 connections over TCP (HTTP/2) as well as over UDP (QUIC/h3).   This can improve application performance, especially on networks where interruptions may be common, such as on mobile.   Requests with Early Data will have the "Early-Data" HTTP header set on the request, with a value of "1", to allow the backend to determine whether Early Data was included.   Note: TLS Early Data may allow requests to be replayed, as the data is sent to the backend before the handshake has fully completed. Applications that allow idempotent HTTP methods to make non-idempotent changes, such as a GET request updating a database, should not accept Early Data on those requests, and reject requests with the "Early-Data: 1" HTTP header by returning a HTTP 425 (Too Early) status code, in order to remain RFC compliant.   The default value is DISABLED. (DISABLED, PERMISSIVE, STRICT, UNRESTRICTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="urlMap" /></td>
     <td><code>string</code></td>
-    <td>A fully-qualified or valid partial URL to the UrlMap resource that defines the mapping from URL to the BackendService. For example, the following are all valid URLs for specifying a URL map: - https://www.googleapis.compute/v1/projects/project/global/urlMaps/ url-map - projects/project/global/urlMaps/url-map - global/urlMaps/url-map </td>
+    <td>A fully-qualified or valid partial URL to the UrlMap resource that defines the mapping from URL to the BackendService. For example, the following are all valid URLs for specifying a URL map:        - https://www.googleapis.compute/v1/projects/project/global/urlMaps/url-map     - projects/project/global/urlMaps/url-map     - global/urlMaps/url-map</td>
 </tr>
 </tbody>
 </table>
@@ -166,22 +168,126 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of resource. Always compute#targetHttpsProxyList for lists of target HTTPS proxies. (default: compute#targetHttpsProxyList)</td>
+    <td>Output only. Type of resource. Always compute#targetHttpsProxyList for lists of target HTTPS proxies. (default: compute#targetHttpsProxyList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
     <td><code>object</code></td>
     <td>[Output Only] Informational warning message.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="aggregated_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string (uint64)</code></td>
+    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="authorizationPolicy" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A URL referring to a networksecurity.AuthorizationPolicy resource that describes how the proxy should authorize inbound traffic. If left blank, access will not be restricted by an authorization policy.   Refer to the AuthorizationPolicy resource for additional details.   authorizationPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED.   Note: This field currently has no impact.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="certificateMap" /></td>
+    <td><code>string</code></td>
+    <td>URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for Global external Application Load Balancer or Classic Application Load Balancer. For other products use Certificate Manager Certificates instead.  If set, sslCertificates will be ignored.   Accepted format is//certificatemanager.googleapis.com/projects/&#123;project&#125;/locations/&#123;location&#125;/certificateMaps/&#123;resourceName&#125;.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="creationTimestamp" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>An optional description of this resource. Provide this property when you create the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="fingerprint" /></td>
+    <td><code>string (byte)</code></td>
+    <td>Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a TargetHttpsProxy. An up-to-date fingerprint must be provided in order to patch the TargetHttpsProxy; otherwise, the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve the TargetHttpsProxy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="httpKeepAliveTimeoutSec" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Specifies how long to keep a connection open, after completing a response, while there is no matching traffic (in seconds). If an HTTP keep-alive is not specified, a default value (610 seconds) will be used.  For global external Application Load Balancers, the minimum allowed value is 5 seconds and the maximum allowed value is 1200 seconds.  For classic Application Load Balancers, this option is not supported.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Type of resource. Alwayscompute#targetHttpsProxy for target HTTPS proxies. (default: compute#targetHttpsProxy)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="proxyBind" /></td>
+    <td><code>boolean</code></td>
+    <td>This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.  When this field is set to true, Envoy proxies set up inbound traffic interception and bind to the IP address and port specified in the forwarding rule. This is generally useful when using Traffic Director to configure Envoy as a gateway or middle proxy (in other words, not a sidecar proxy). The Envoy proxy listens for inbound requests and handles requests when it receives them.  The default is false.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="quicOverride" /></td>
+    <td><code>string</code></td>
+    <td>Specifies the QUIC override policy for this TargetHttpsProxy resource. This setting determines whether the load balancer attempts to negotiate QUIC with clients. You can specify NONE, ENABLE, orDISABLE.        - When quic-override is set to NONE,    Google manages whether QUIC is used.    - When quic-override is set to ENABLE, the    load balancer uses QUIC when possible.    - When quic-override is set to DISABLE, the    load balancer doesn't use QUIC.    - If the quic-override flag is not specified,NONE is implied. (DISABLE, ENABLE, NONE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="region" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] URL of the region where the regional TargetHttpsProxy resides. This field is not applicable to global TargetHttpsProxies.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] Server-defined URL for the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serverTlsPolicy" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A URL referring to a networksecurity.ServerTlsPolicy resource that describes how the proxy should authenticate inbound traffic.   serverTlsPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED or EXTERNAL orEXTERNAL_MANAGED or INTERNAL_MANAGED. It also applies to a regional TargetHttpsProxy attached to regional forwardingRules with theloadBalancingScheme set to EXTERNAL_MANAGED orINTERNAL_MANAGED. For details whichServerTlsPolicy resources are accepted withINTERNAL_SELF_MANAGED and which with EXTERNAL,INTERNAL_MANAGED, EXTERNAL_MANAGEDloadBalancingScheme consult ServerTlsPolicy documentation.    If left blank, communications are not encrypted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sslCertificates" /></td>
+    <td><code>array</code></td>
+    <td>URLs to SslCertificate resources that are used to authenticate connections between users and the load balancer. At least one SSL certificate must be specified. SslCertificates do not apply when the load balancing scheme is set to INTERNAL_SELF_MANAGED.  The URLs should refer to a SSL Certificate resource or Certificate Manager Certificate resource. Mixing Classic Certificates and Certificate Manager Certificates is not allowed. Certificate Manager Certificates must include the certificatemanager API namespace. Using Certificate Manager Certificates in this field is not supported by Global external Application Load Balancer or Classic Application Load Balancer, use certificate_map instead.  Currently, you may specify up to 15 Classic SSL Certificates or up to 100 Certificate Manager Certificates.  Certificate Manager Certificates accepted formats are:        - //certificatemanager.googleapis.com/projects/&#123;project&#125;/locations/&#123;location&#125;/certificates/&#123;resourceName&#125;.    - https://certificatemanager.googleapis.com/v1alpha1/projects/&#123;project&#125;/locations/&#123;location&#125;/certificates/&#123;resourceName&#125;.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sslPolicy" /></td>
+    <td><code>string</code></td>
+    <td>URL of SslPolicy resource that will be associated with the TargetHttpsProxy resource. If not set, the TargetHttpsProxy resource has no SSL policy configured.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tlsEarlyData" /></td>
+    <td><code>string</code></td>
+    <td>Specifies whether TLS 1.3 0-RTT Data ("Early Data") should be accepted for this service. Early Data allows a TLS resumption handshake to include the initial application payload (a HTTP request) alongside the handshake, reducing the effective round trips to "zero". This applies to TLS 1.3 connections over TCP (HTTP/2) as well as over UDP (QUIC/h3).   This can improve application performance, especially on networks where interruptions may be common, such as on mobile.   Requests with Early Data will have the "Early-Data" HTTP header set on the request, with a value of "1", to allow the backend to determine whether Early Data was included.   Note: TLS Early Data may allow requests to be replayed, as the data is sent to the backend before the handshake has fully completed. Applications that allow idempotent HTTP methods to make non-idempotent changes, such as a GET request updating a database, should not accept Early Data on those requests, and reject requests with the "Early-Data: 1" HTTP header by returning a HTTP 425 (Too Early) status code, in order to remain RFC compliant.   The default value is DISABLED. (DISABLED, PERMISSIVE, STRICT, UNRESTRICTED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="urlMap" /></td>
+    <td><code>string</code></td>
+    <td>A fully-qualified or valid partial URL to the UrlMap resource that defines the mapping from URL to the BackendService. For example, the following are all valid URLs for specifying a URL map:        - https://www.googleapis.compute/v1/projects/project/global/urlMaps/url-map     - projects/project/global/urlMaps/url-map     - global/urlMaps/url-map</td>
 </tr>
 </tbody>
 </table>
@@ -214,22 +320,29 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves the list of TargetHttpsProxy resources available to the specified project in the specified region.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Retrieves the list of TargetHttpsProxy resources available<br />to the specified project in the specified region.</td>
+</tr>
+<tr>
+    <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
+    <td>Retrieves the list of all TargetHttpsProxy resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a TargetHttpsProxy resource in the specified project and region using the data included in the request.</td>
+    <td>Creates a TargetHttpsProxy resource in the specified project and region<br />using the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Patches the specified regional TargetHttpsProxy resource with the data included in the request. This method supports PATCH semantics and uses JSON merge patch format and processing rules.</td>
+    <td>Patches the specified regional TargetHttpsProxy resource with the data<br />included in the request. This method supports PATCH<br />semantics and usesJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -239,18 +352,25 @@ The following methods are available for this resource:
     <td>Deletes the specified TargetHttpsProxy resource.</td>
 </tr>
 <tr>
-    <td><a href="#set_url_map"><CopyableCode code="set_url_map" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Changes the URL map for TargetHttpsProxy.</td>
-</tr>
-<tr>
     <td><a href="#set_ssl_certificates"><CopyableCode code="set_ssl_certificates" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Replaces SslCertificates for TargetHttpsProxy.</td>
+</tr>
+<tr>
+    <td><a href="#set_ssl_policy"><CopyableCode code="set_ssl_policy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the SSL policy for TargetHttpsProxy. The SSL policy specifies the<br />server-side support for SSL features. This affects connections between<br />clients and the HTTPS proxy load balancer. They do not affect the<br />connection between the load balancer and the backends.</td>
+</tr>
+<tr>
+    <td><a href="#set_quic_override"><CopyableCode code="set_quic_override" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the QUIC override policy for TargetHttpsProxy.</td>
 </tr>
 <tr>
     <td><a href="#set_certificate_map"><CopyableCode code="set_certificate_map" /></a></td>
@@ -260,18 +380,11 @@ The following methods are available for this resource:
     <td>Changes the Certificate Map for TargetHttpsProxy.</td>
 </tr>
 <tr>
-    <td><a href="#set_ssl_policy"><CopyableCode code="set_ssl_policy" /></a></td>
+    <td><a href="#set_url_map"><CopyableCode code="set_url_map" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the SSL policy for TargetHttpsProxy. The SSL policy specifies the server-side support for SSL features. This affects connections between clients and the HTTPS proxy load balancer. They do not affect the connection between the load balancer and the backends.</td>
-</tr>
-<tr>
-    <td><a href="#set_quic_override"><CopyableCode code="set_quic_override" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the QUIC override policy for TargetHttpsProxy.</td>
+    <td>Changes the URL map for TargetHttpsProxy.</td>
 </tr>
 </tbody>
 </table>
@@ -309,6 +422,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-includeAllScopes">
+    <td><CopyableCode code="includeAllScopes" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-maxResults">
     <td><CopyableCode code="maxResults" /></td>
     <td><code>integer (uint32)</code></td>
@@ -334,6 +452,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>boolean</code></td>
     <td></td>
 </tr>
+<tr id="parameter-serviceProjectNumber">
+    <td><CopyableCode code="serviceProjectNumber" /></td>
+    <td><code>string (int64)</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -343,7 +466,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'aggregated_list', value: 'aggregated_list' }
     ]}
 >
 <TabItem value="get">
@@ -379,7 +503,7 @@ AND targetHttpsProxy = '{{ targetHttpsProxy }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of TargetHttpsProxy resources available to the specified project in the specified region.
+Retrieves the list of TargetHttpsProxy resources available<br />to the specified project in the specified region.
 
 ```sql
 SELECT
@@ -392,11 +516,47 @@ warning
 FROM google.compute.target_https_proxies
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+;
+```
+</TabItem>
+<TabItem value="aggregated_list">
+
+Retrieves the list of all TargetHttpsProxy resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
+
+```sql
+SELECT
+id,
+name,
+authorizationPolicy,
+certificateMap,
+creationTimestamp,
+description,
+fingerprint,
+httpKeepAliveTimeoutSec,
+kind,
+proxyBind,
+quicOverride,
+region,
+selfLink,
+serverTlsPolicy,
+sslCertificates,
+sslPolicy,
+tlsEarlyData,
+urlMap
+FROM google.compute.target_https_proxies
+WHERE project = '{{ project }}' -- required
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -414,51 +574,45 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="insert">
 
-Creates a TargetHttpsProxy resource in the specified project and region using the data included in the request.
+Creates a TargetHttpsProxy resource in the specified project and region<br />using the data included in the request.
 
 ```sql
 INSERT INTO google.compute.target_https_proxies (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__selfLink,
 data__urlMap,
-data__sslCertificates,
-data__certificateMap,
-data__quicOverride,
-data__sslPolicy,
-data__region,
-data__proxyBind,
-data__serverTlsPolicy,
-data__authorizationPolicy,
 data__fingerprint,
-data__httpKeepAliveTimeoutSec,
 data__tlsEarlyData,
+data__sslCertificates,
+data__id,
+data__selfLink,
+data__description,
+data__quicOverride,
+data__authorizationPolicy,
+data__certificateMap,
+data__httpKeepAliveTimeoutSec,
+data__serverTlsPolicy,
+data__name,
+data__sslPolicy,
+data__proxyBind,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ selfLink }}',
 '{{ urlMap }}',
-'{{ sslCertificates }}',
-'{{ certificateMap }}',
-'{{ quicOverride }}',
-'{{ sslPolicy }}',
-'{{ region }}',
-{{ proxyBind }},
-'{{ serverTlsPolicy }}',
-'{{ authorizationPolicy }}',
 '{{ fingerprint }}',
-{{ httpKeepAliveTimeoutSec }},
 '{{ tlsEarlyData }}',
+'{{ sslCertificates }}',
+'{{ id }}',
+'{{ selfLink }}',
+'{{ description }}',
+'{{ quicOverride }}',
+'{{ authorizationPolicy }}',
+'{{ certificateMap }}',
+{{ httpKeepAliveTimeoutSec }},
+'{{ serverTlsPolicy }}',
+'{{ name }}',
+'{{ sslPolicy }}',
+{{ proxyBind }},
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -470,6 +624,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -494,112 +649,177 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: target_https_proxies
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the target_https_proxies resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the target_https_proxies resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of resource. Always compute#targetHttpsProxy for target HTTPS proxies.
-        
-      default: compute#targetHttpsProxy
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
     - name: urlMap
-      value: string
-      description: >
-        A fully-qualified or valid partial URL to the UrlMap resource that defines the mapping from URL to the BackendService. For example, the following are all valid URLs for specifying a URL map: - https://www.googleapis.compute/v1/projects/project/global/urlMaps/ url-map - projects/project/global/urlMaps/url-map - global/urlMaps/url-map 
-        
-    - name: sslCertificates
-      value: array
-      description: >
-        URLs to SslCertificate resources that are used to authenticate connections between users and the load balancer. At least one SSL certificate must be specified. SslCertificates do not apply when the load balancing scheme is set to INTERNAL_SELF_MANAGED. The URLs should refer to a SSL Certificate resource or Certificate Manager Certificate resource. Mixing Classic Certificates and Certificate Manager Certificates is not allowed. Certificate Manager Certificates must include the certificatemanager API namespace. Using Certificate Manager Certificates in this field is not supported by Global external Application Load Balancer or Classic Application Load Balancer, use certificate_map instead. Currently, you may specify up to 15 Classic SSL Certificates or up to 100 Certificate Manager Certificates. Certificate Manager Certificates accepted formats are: - //certificatemanager.googleapis.com/projects/{project}/locations/{ location}/certificates/{resourceName}. - https://certificatemanager.googleapis.com/v1alpha1/projects/{project }/locations/{location}/certificates/{resourceName}. 
-        
-    - name: certificateMap
-      value: string
-      description: >
-        URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for Global external Application Load Balancer or Classic Application Load Balancer. For other products use Certificate Manager Certificates instead. If set, sslCertificates will be ignored. Accepted format is //certificatemanager.googleapis.com/projects/{project }/locations/{location}/certificateMaps/{resourceName}.
-        
-    - name: quicOverride
-      value: string
-      description: >
-        Specifies the QUIC override policy for this TargetHttpsProxy resource. This setting determines whether the load balancer attempts to negotiate QUIC with clients. You can specify NONE, ENABLE, or DISABLE. - When quic-override is set to NONE, Google manages whether QUIC is used. - When quic-override is set to ENABLE, the load balancer uses QUIC when possible. - When quic-override is set to DISABLE, the load balancer doesn't use QUIC. - If the quic-override flag is not specified, NONE is implied. 
-        
-      valid_values: ['DISABLE', 'ENABLE', 'NONE']
-    - name: sslPolicy
-      value: string
-      description: >
-        URL of SslPolicy resource that will be associated with the TargetHttpsProxy resource. If not set, the TargetHttpsProxy resource has no SSL policy configured.
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] URL of the region where the regional TargetHttpsProxy resides. This field is not applicable to global TargetHttpsProxies.
-        
-    - name: proxyBind
-      value: boolean
-      description: >
-        This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED. When this field is set to true, Envoy proxies set up inbound traffic interception and bind to the IP address and port specified in the forwarding rule. This is generally useful when using Traffic Director to configure Envoy as a gateway or middle proxy (in other words, not a sidecar proxy). The Envoy proxy listens for inbound requests and handles requests when it receives them. The default is false.
-        
-    - name: serverTlsPolicy
-      value: string
-      description: >
-        Optional. A URL referring to a networksecurity.ServerTlsPolicy resource that describes how the proxy should authenticate inbound traffic. serverTlsPolicy only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED or EXTERNAL or EXTERNAL_MANAGED or INTERNAL_MANAGED. It also applies to a regional TargetHttpsProxy attached to regional forwardingRules with the loadBalancingScheme set to EXTERNAL_MANAGED or INTERNAL_MANAGED. For details which ServerTlsPolicy resources are accepted with INTERNAL_SELF_MANAGED and which with EXTERNAL, INTERNAL_MANAGED, EXTERNAL_MANAGED loadBalancingScheme consult ServerTlsPolicy documentation. If left blank, communications are not encrypted.
-        
-    - name: authorizationPolicy
-      value: string
-      description: >
-        Optional. A URL referring to a networksecurity.AuthorizationPolicy resource that describes how the proxy should authorize inbound traffic. If left blank, access will not be restricted by an authorization policy. Refer to the AuthorizationPolicy resource for additional details. authorizationPolicy only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED. Note: This field currently has no impact.
-        
+      value: "{{ urlMap }}"
+      description: |
+        A fully-qualified or valid partial URL to the UrlMap resource that defines
+        the mapping from URL to the BackendService. For example, the following are
+        all valid URLs for specifying a URL map:
+        - https://www.googleapis.compute/v1/projects/project/global/urlMaps/url-map
+        - projects/project/global/urlMaps/url-map
+        - global/urlMaps/url-map
     - name: fingerprint
-      value: string
-      description: >
-        Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a TargetHttpsProxy. An up-to-date fingerprint must be provided in order to patch the TargetHttpsProxy; otherwise, the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve the TargetHttpsProxy.
-        
-    - name: httpKeepAliveTimeoutSec
-      value: integer
-      description: >
-        Specifies how long to keep a connection open, after completing a response, while there is no matching traffic (in seconds). If an HTTP keep-alive is not specified, a default value (610 seconds) will be used. For global external Application Load Balancers, the minimum allowed value is 5 seconds and the maximum allowed value is 1200 seconds. For classic Application Load Balancers, this option is not supported.
-        
+      value: "{{ fingerprint }}"
+      description: |
+        Fingerprint of this resource. A hash of the contents stored in this object.
+        This field is used in optimistic locking. This field will be ignored when
+        inserting a TargetHttpsProxy. An up-to-date fingerprint must
+        be provided in order to patch the TargetHttpsProxy; otherwise, the request
+        will fail with error 412 conditionNotMet. To see the latest
+        fingerprint, make a get() request to retrieve the
+        TargetHttpsProxy.
     - name: tlsEarlyData
-      value: string
-      description: >
-         Specifies whether TLS 1.3 0-RTT Data ("Early Data") should be accepted for this service. Early Data allows a TLS resumption handshake to include the initial application payload (a HTTP request) alongside the handshake, reducing the effective round trips to "zero". This applies to TLS 1.3 connections over TCP (HTTP/2) as well as over UDP (QUIC/h3). This can improve application performance, especially on networks where interruptions may be common, such as on mobile. Requests with Early Data will have the "Early-Data" HTTP header set on the request, with a value of "1", to allow the backend to determine whether Early Data was included. Note: TLS Early Data may allow requests to be replayed, as the data is sent to the backend before the handshake has fully completed. Applications that allow idempotent HTTP methods to make non-idempotent changes, such as a GET request updating a database, should not accept Early Data on those requests, and reject requests with the "Early-Data: 1" HTTP header by returning a HTTP 425 (Too Early) status code, in order to remain RFC compliant. The default value is DISABLED.
-        
+      value: "{{ tlsEarlyData }}"
+      description: |
+        Specifies whether TLS 1.3 0-RTT Data ("Early Data") should be accepted
+        for this service. Early Data allows a TLS resumption handshake to include
+        the initial application payload (a HTTP request) alongside the handshake,
+        reducing the effective round trips to "zero". This applies to TLS 1.3
+        connections over TCP (HTTP/2) as well as over UDP (QUIC/h3).
+        This can improve application performance, especially on networks where
+        interruptions may be common, such as on mobile.
+        Requests with Early Data will have the "Early-Data" HTTP header set on
+        the request, with a value of "1", to allow the backend to determine whether
+        Early Data was included.
+        Note: TLS Early Data may allow requests to be replayed, as the data is
+        sent to the backend before the handshake has fully completed. Applications
+        that allow idempotent HTTP methods to make non-idempotent changes, such as
+        a GET request updating a database, should not accept Early Data on those
+        requests, and reject requests with the "Early-Data: 1" HTTP header by
+        returning a HTTP 425 (Too Early) status code, in order to remain RFC
+        compliant.
+        The default value is DISABLED.
       valid_values: ['DISABLED', 'PERMISSIVE', 'STRICT', 'UNRESTRICTED']
+    - name: sslCertificates
+      value:
+        - "{{ sslCertificates }}"
+      description: |
+        URLs to SslCertificate resources that are used to authenticate
+        connections between users and the load balancer. At least one SSL
+        certificate must be specified. SslCertificates do not apply when the load
+        balancing scheme is set to INTERNAL_SELF_MANAGED.
+        The URLs should refer to a SSL Certificate resource or Certificate Manager
+        Certificate resource. Mixing Classic Certificates and Certificate Manager
+        Certificates is not allowed. Certificate Manager Certificates must include
+        the certificatemanager API namespace. Using Certificate Manager
+        Certificates in this field is not supported by Global external Application
+        Load Balancer or Classic Application Load Balancer, use certificate_map
+        instead.
+        Currently, you may specify up to 15 Classic SSL Certificates or up to 100
+        Certificate Manager Certificates.
+        Certificate Manager Certificates accepted formats are:
+        - //certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificates/{resourceName}.
+        - https://certificatemanager.googleapis.com/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: quicOverride
+      value: "{{ quicOverride }}"
+      description: |
+        Specifies the QUIC override policy for this TargetHttpsProxy resource. This
+        setting determines whether the load balancer attempts to negotiate QUIC
+        with clients.
+        You can specify NONE, ENABLE, orDISABLE.
+        - When quic-override is set to NONE,
+        Google manages whether QUIC is used.
+        - When quic-override is set to ENABLE, the
+        load balancer uses QUIC when possible.
+        - When quic-override is set to DISABLE, the
+        load balancer doesn't use QUIC.
+        - If the quic-override flag is not specified,NONE is implied.
+      valid_values: ['DISABLE', 'ENABLE', 'NONE']
+    - name: authorizationPolicy
+      value: "{{ authorizationPolicy }}"
+      description: |
+        Optional. A URL referring to a networksecurity.AuthorizationPolicy resource
+        that describes how the proxy should authorize inbound traffic. If left
+        blank, access will not be restricted by an authorization policy.
+        Refer to the AuthorizationPolicy resource for additional
+        details.
+        authorizationPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED.
+        Note: This field currently has no impact.
+    - name: certificateMap
+      value: "{{ certificateMap }}"
+      description: |
+        URL of a certificate map that identifies a certificate map associated with
+        the given target proxy.
+        This field can only be set for Global external Application Load Balancer or
+        Classic Application Load Balancer. For other products use Certificate
+        Manager Certificates instead.
+        If set, sslCertificates will be ignored.
+        Accepted format is//certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificateMaps/{resourceName}.
+    - name: httpKeepAliveTimeoutSec
+      value: {{ httpKeepAliveTimeoutSec }}
+      description: |
+        Specifies how long to keep a connection open, after completing a response,
+        while there is no matching traffic (in seconds). If an HTTP keep-alive is
+        not specified, a default value (610 seconds) will be used.
+        For global external Application Load Balancers, the minimum allowed value
+        is 5 seconds and the maximum allowed value is 1200 seconds.
+        For classic Application Load Balancers, this option is not supported.
+    - name: serverTlsPolicy
+      value: "{{ serverTlsPolicy }}"
+      description: |
+        Optional. A URL referring to a networksecurity.ServerTlsPolicy resource
+        that describes how the proxy should authenticate inbound traffic.
+        serverTlsPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED
+        or EXTERNAL orEXTERNAL_MANAGED or INTERNAL_MANAGED.
+        It also applies to a regional TargetHttpsProxy attached to
+        regional forwardingRules with theloadBalancingScheme set to EXTERNAL_MANAGED orINTERNAL_MANAGED. For details whichServerTlsPolicy resources are accepted withINTERNAL_SELF_MANAGED and which with EXTERNAL,INTERNAL_MANAGED, EXTERNAL_MANAGEDloadBalancingScheme consult ServerTlsPolicy
+        documentation.
+        If left blank, communications are not encrypted.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: sslPolicy
+      value: "{{ sslPolicy }}"
+      description: |
+        URL of SslPolicy resource that will be associated with the TargetHttpsProxy
+        resource. If not set, the TargetHttpsProxy resource has no
+        SSL policy configured.
+    - name: proxyBind
+      value: {{ proxyBind }}
+      description: |
+        This field only applies when the forwarding rule that references this
+        target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.
+        When this field is set to true, Envoy proxies set up inbound
+        traffic interception and bind to the IP address and port specified in the
+        forwarding rule. This is generally useful when using Traffic Director to
+        configure Envoy as a gateway or middle proxy (in other words, not a
+        sidecar proxy). The Envoy proxy listens for inbound requests and handles
+        requests when it receives them.
+        The default is false.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -614,29 +834,26 @@ zone
 >
 <TabItem value="patch">
 
-Patches the specified regional TargetHttpsProxy resource with the data included in the request. This method supports PATCH semantics and uses JSON merge patch format and processing rules.
+Patches the specified regional TargetHttpsProxy resource with the data<br />included in the request. This method supports PATCH<br />semantics and usesJSON merge<br />patch format and processing rules.
 
 ```sql
 UPDATE google.compute.target_https_proxies
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__selfLink = '{{ selfLink }}',
 data__urlMap = '{{ urlMap }}',
-data__sslCertificates = '{{ sslCertificates }}',
-data__certificateMap = '{{ certificateMap }}',
-data__quicOverride = '{{ quicOverride }}',
-data__sslPolicy = '{{ sslPolicy }}',
-data__region = '{{ region }}',
-data__proxyBind = {{ proxyBind }},
-data__serverTlsPolicy = '{{ serverTlsPolicy }}',
-data__authorizationPolicy = '{{ authorizationPolicy }}',
 data__fingerprint = '{{ fingerprint }}',
+data__tlsEarlyData = '{{ tlsEarlyData }}',
+data__sslCertificates = '{{ sslCertificates }}',
+data__id = '{{ id }}',
+data__selfLink = '{{ selfLink }}',
+data__description = '{{ description }}',
+data__quicOverride = '{{ quicOverride }}',
+data__authorizationPolicy = '{{ authorizationPolicy }}',
+data__certificateMap = '{{ certificateMap }}',
 data__httpKeepAliveTimeoutSec = {{ httpKeepAliveTimeoutSec }},
-data__tlsEarlyData = '{{ tlsEarlyData }}'
+data__serverTlsPolicy = '{{ serverTlsPolicy }}',
+data__name = '{{ name }}',
+data__sslPolicy = '{{ sslPolicy }}',
+data__proxyBind = {{ proxyBind }}
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -650,6 +867,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -701,32 +919,15 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_url_map"
+    defaultValue="set_ssl_certificates"
     values={[
-        { label: 'set_url_map', value: 'set_url_map' },
         { label: 'set_ssl_certificates', value: 'set_ssl_certificates' },
-        { label: 'set_certificate_map', value: 'set_certificate_map' },
         { label: 'set_ssl_policy', value: 'set_ssl_policy' },
-        { label: 'set_quic_override', value: 'set_quic_override' }
+        { label: 'set_quic_override', value: 'set_quic_override' },
+        { label: 'set_certificate_map', value: 'set_certificate_map' },
+        { label: 'set_url_map', value: 'set_url_map' }
     ]}
 >
-<TabItem value="set_url_map">
-
-Changes the URL map for TargetHttpsProxy.
-
-```sql
-EXEC google.compute.target_https_proxies.set_url_map 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@targetHttpsProxy='{{ targetHttpsProxy }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"urlMap": "{{ urlMap }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="set_ssl_certificates">
 
 Replaces SslCertificates for TargetHttpsProxy.
@@ -744,25 +945,9 @@ EXEC google.compute.target_https_proxies.set_ssl_certificates
 ;
 ```
 </TabItem>
-<TabItem value="set_certificate_map">
-
-Changes the Certificate Map for TargetHttpsProxy.
-
-```sql
-EXEC google.compute.target_https_proxies.set_certificate_map 
-@project='{{ project }}' --required, 
-@targetHttpsProxy='{{ targetHttpsProxy }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"certificateMap": "{{ certificateMap }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="set_ssl_policy">
 
-Sets the SSL policy for TargetHttpsProxy. The SSL policy specifies the server-side support for SSL features. This affects connections between clients and the HTTPS proxy load balancer. They do not affect the connection between the load balancer and the backends.
+Sets the SSL policy for TargetHttpsProxy. The SSL policy specifies the<br />server-side support for SSL features. This affects connections between<br />clients and the HTTPS proxy load balancer. They do not affect the<br />connection between the load balancer and the backends.
 
 ```sql
 EXEC google.compute.target_https_proxies.set_ssl_policy 
@@ -788,6 +973,39 @@ EXEC google.compute.target_https_proxies.set_quic_override
 @@json=
 '{
 "quicOverride": "{{ quicOverride }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_certificate_map">
+
+Changes the Certificate Map for TargetHttpsProxy.
+
+```sql
+EXEC google.compute.target_https_proxies.set_certificate_map 
+@project='{{ project }}' --required, 
+@targetHttpsProxy='{{ targetHttpsProxy }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"certificateMap": "{{ certificateMap }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_url_map">
+
+Changes the URL map for TargetHttpsProxy.
+
+```sql
+EXEC google.compute.target_https_proxies.set_url_map 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@targetHttpsProxy='{{ targetHttpsProxy }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"urlMap": "{{ urlMap }}"
 }'
 ;
 ```

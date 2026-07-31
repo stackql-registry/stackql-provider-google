@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances_entra_id_certificate
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances_entra_id_certificate</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances_entra_id_certificate" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sqladmin.instances_entra_id_certificate" /></td></tr>
 </tbody></table>
@@ -132,16 +133,16 @@ user
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances_entra_id_certificate
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the instances_entra_id_certificate resource.
     - name: instance
-      value: string
+      value: "{{ instance }}"
       description: Required parameter for the instances_entra_id_certificate resource.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

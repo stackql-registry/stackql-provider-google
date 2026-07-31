@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>import_data_files</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>import_data_files</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="import_data_files" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.migrationcenter.import_data_files" /></td></tr>
 </tbody></table>
@@ -62,17 +63,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>User-friendly display name. Maximum length is 63 characters.</td>
+    <td>Optional. User-friendly display name. Maximum length is 63 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="format" /></td>
     <td><code>string</code></td>
-    <td>Required. The payload format.</td>
+    <td>Required. The payload format. (IMPORT_JOB_FORMAT_UNSPECIFIED, IMPORT_JOB_FORMAT_RVTOOLS_XLSX, IMPORT_JOB_FORMAT_RVTOOLS_CSV, IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV, IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV, IMPORT_JOB_FORMAT_STRATOZONE_CSV, IMPORT_JOB_FORMAT_DATABASE_ZIP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the import data file.</td>
+    <td>Output only. The state of the import data file. (STATE_UNSPECIFIED, CREATING, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uploadFileInfo" /></td>
@@ -106,17 +107,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>User-friendly display name. Maximum length is 63 characters.</td>
+    <td>Optional. User-friendly display name. Maximum length is 63 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="format" /></td>
     <td><code>string</code></td>
-    <td>Required. The payload format.</td>
+    <td>Required. The payload format. (IMPORT_JOB_FORMAT_UNSPECIFIED, IMPORT_JOB_FORMAT_RVTOOLS_XLSX, IMPORT_JOB_FORMAT_RVTOOLS_CSV, IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV, IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV, IMPORT_JOB_FORMAT_STRATOZONE_CSV, IMPORT_JOB_FORMAT_DATABASE_ZIP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the import data file.</td>
+    <td>Output only. The state of the import data file. (STATE_UNSPECIFIED, CREATING, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uploadFileInfo" /></td>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-importJobsId"><code>importJobsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>List import data files.</td>
 </tr>
 <tr>
@@ -285,9 +286,9 @@ FROM google.migrationcenter.import_data_files
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND importJobsId = '{{ importJobsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -310,9 +311,9 @@ Creates an import data file.
 
 ```sql
 INSERT INTO google.migrationcenter.import_data_files (
-data__format,
 data__displayName,
 data__uploadFileInfo,
+data__format,
 projectsId,
 locationsId,
 importJobsId,
@@ -320,9 +321,9 @@ importDataFileId,
 requestId
 )
 SELECT 
-'{{ format }}',
 '{{ displayName }}',
 '{{ uploadFileInfo }}',
+'{{ format }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ importJobsId }}',
@@ -339,40 +340,40 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: import_data_files
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the import_data_files resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the import_data_files resource.
     - name: importJobsId
-      value: string
+      value: "{{ importJobsId }}"
       description: Required parameter for the import_data_files resource.
-    - name: format
-      value: string
-      description: >
-        Required. The payload format.
-        
-      valid_values: ['IMPORT_JOB_FORMAT_UNSPECIFIED', 'IMPORT_JOB_FORMAT_RVTOOLS_XLSX', 'IMPORT_JOB_FORMAT_RVTOOLS_CSV', 'IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV', 'IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV', 'IMPORT_JOB_FORMAT_STRATOZONE_CSV', 'IMPORT_JOB_FORMAT_DATABASE_ZIP']
     - name: displayName
-      value: string
-      description: >
-        User-friendly display name. Maximum length is 63 characters.
-        
+      value: "{{ displayName }}"
+      description: |
+        Optional. User-friendly display name. Maximum length is 63 characters.
     - name: uploadFileInfo
-      value: object
-      description: >
+      description: |
         Information about a file that is uploaded to a storage service.
-        
+      value:
+        signedUri: "{{ signedUri }}"
+        headers: "{{ headers }}"
+        uriExpirationTime: "{{ uriExpirationTime }}"
+    - name: format
+      value: "{{ format }}"
+      description: |
+        Required. The payload format.
+      valid_values: ['IMPORT_JOB_FORMAT_UNSPECIFIED', 'IMPORT_JOB_FORMAT_RVTOOLS_XLSX', 'IMPORT_JOB_FORMAT_RVTOOLS_CSV', 'IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV', 'IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV', 'IMPORT_JOB_FORMAT_STRATOZONE_CSV', 'IMPORT_JOB_FORMAT_DATABASE_ZIP']
     - name: importDataFileId
-      value: string
+      value: "{{ importDataFileId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

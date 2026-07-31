@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>repositories</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>repositories</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="repositories" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataform.repositories" /></td></tr>
 </tbody></table>
@@ -32,87 +33,13 @@ Creates, updates, deletes, gets or lists a <code>repositories</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="get"
+    defaultValue="query_directory_contents"
     values={[
-        { label: 'get', value: 'get' },
         { label: 'query_directory_contents', value: 'query_directory_contents' },
+        { label: 'get', value: 'get' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The repository's name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp of when the repository was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dataEncryptionState" /></td>
-    <td><code>object</code></td>
-    <td>Output only. A data encryption state of a Git repository if this Repository is protected by a KMS key. (id: DataEncryptionState)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The repository's user-friendly name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gitRemoteSettings" /></td>
-    <td><code>object</code></td>
-    <td>Optional. If set, configures this repository to be linked to a Git remote. (id: GitRemoteSettings)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="internalMetadata" /></td>
-    <td><code>string</code></td>
-    <td>Output only. All the metadata information that is used internally to serve the resource. For example: timestamps, flags, status fields, etc. The format of this field is a JSON string.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kmsKeyName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: `projects/&#123;kms_project&#125;/locations/&#123;location&#125;/keyRings/&#123;key_location&#125;/cryptoKeys/&#123;key&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Repository user labels.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="npmrcEnvironmentVariablesSecretVersion" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The name of the Secret Manager secret version to be used to interpolate variables into the .npmrc file for package installation operations. Must be in the format `projects/*/secrets/*/versions/*`. The file itself must be in a JSON format.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The service account to run workflow invocations under.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="setAuthenticatedUserAdmin" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="workspaceCompilationOverrides" /></td>
-    <td><code>object</code></td>
-    <td>Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information. (id: WorkspaceCompilationOverrides)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="query_directory_contents">
 
 <table>
@@ -137,7 +64,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="list">
+<TabItem value="get">
 
 <table>
 <thead>
@@ -152,6 +79,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Identifier. The repository's name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="containingFolder" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The name of the containing folder of the repository. The field is immutable and it can be modified via a MoveRepository operation. Format: `projects/*/locations/*/folders/*`. or `projects/*/locations/*/teamFolders/*`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -202,6 +134,95 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="setAuthenticatedUserAdmin" /></td>
     <td><code>boolean</code></td>
     <td>Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="teamFolderName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the TeamFolder that this Repository is associated with. This should take the format: projects/&#123;project&#125;/locations/&#123;location&#125;/teamFolders/&#123;teamFolder&#125;. If this is not set, the Repository is not associated with a TeamFolder.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workspaceCompilationOverrides" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information. (id: WorkspaceCompilationOverrides)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The repository's name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="containingFolder" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The name of the containing folder of the repository. The field is immutable and it can be modified via a MoveRepository operation. Format: `projects/*/locations/*/folders/*`. or `projects/*/locations/*/teamFolders/*`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp of when the repository was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataEncryptionState" /></td>
+    <td><code>object</code></td>
+    <td>Output only. A data encryption state of a Git repository if this Repository is protected by a KMS key. (id: DataEncryptionState)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The repository's user-friendly name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gitRemoteSettings" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If set, configures this repository to be linked to a Git remote. (id: GitRemoteSettings)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="internalMetadata" /></td>
+    <td><code>string</code></td>
+    <td>Output only. All the metadata information that is used internally to serve the resource. For example: timestamps, flags, status fields, etc. The format of this field is a JSON string.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kmsKeyName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: `projects/&#123;kms_project&#125;/locations/&#123;location&#125;/keyRings/&#123;key_location&#125;/cryptoKeys/&#123;key&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Repository user labels.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="npmrcEnvironmentVariablesSecretVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The name of the Secret Manager secret version to be used to interpolate variables into the .npmrc file for package installation operations. Must be in the format `projects/*/secrets/*/versions/*`. The file itself must be in a JSON format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceAccount" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The service account to run workflow invocations under.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="setAuthenticatedUserAdmin" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="teamFolderName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the TeamFolder that this Repository is associated with. This should take the format: projects/&#123;project&#125;/locations/&#123;location&#125;/teamFolders/&#123;teamFolder&#125;. If this is not set, the Repository is not associated with a TeamFolder.</td>
 </tr>
 <tr>
     <td><CopyableCode code="workspaceCompilationOverrides" /></td>
@@ -229,6 +250,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#query_directory_contents"><CopyableCode code="query_directory_contents" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-path"><code>path</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.</td>
+</tr>
+<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
@@ -236,17 +264,10 @@ The following methods are available for this resource:
     <td>Fetches a single Repository.</td>
 </tr>
 <tr>
-    <td><a href="#query_directory_contents"><CopyableCode code="query_directory_contents" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-path"><code>path</code></a></td>
-    <td>Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.</td>
-</tr>
-<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Repositories in a given project and location. **Note:** *This method can return repositories not shown in the [Dataform UI](https://console.cloud.google.com/bigquery/dataform)*.</td>
 </tr>
 <tr>
@@ -278,18 +299,25 @@ The following methods are available for this resource:
     <td>Computes a Repository's Git access token status.</td>
 </tr>
 <tr>
-    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
+    <td><a href="#move"><CopyableCode code="move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
     <td></td>
-    <td>Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.</td>
+    <td>Moves a Repository to a new location.</td>
 </tr>
 <tr>
     <td><a href="#read_file"><CopyableCode code="read_file" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-path"><code>path</code></a>, <a href="#parameter-commitSha"><code>commitSha</code></a></td>
+    <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-path"><code>path</code></a></td>
     <td>Returns the contents of a file (inside a Repository). The Repository must not have a value for `git_remote_settings.url`.</td>
+</tr>
+<tr>
+    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td></td>
+    <td>Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.</td>
 </tr>
 </tbody>
 </table>
@@ -373,38 +401,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="get"
+    defaultValue="query_directory_contents"
     values={[
-        { label: 'get', value: 'get' },
         { label: 'query_directory_contents', value: 'query_directory_contents' },
+        { label: 'get', value: 'get' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="get">
-
-Fetches a single Repository.
-
-```sql
-SELECT
-name,
-createTime,
-dataEncryptionState,
-displayName,
-gitRemoteSettings,
-internalMetadata,
-kmsKeyName,
-labels,
-npmrcEnvironmentVariablesSecretVersion,
-serviceAccount,
-setAuthenticatedUserAdmin,
-workspaceCompilationOverrides
-FROM google.dataform.repositories
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND repositoriesId = '{{ repositoriesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="query_directory_contents">
 
 Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.
@@ -418,19 +421,20 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND commitSha = '{{ commitSha }}'
+AND path = '{{ path }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND path = '{{ path }}'
 ;
 ```
 </TabItem>
-<TabItem value="list">
+<TabItem value="get">
 
-Lists Repositories in a given project and location. **Note:** *This method can return repositories not shown in the [Dataform UI](https://console.cloud.google.com/bigquery/dataform)*.
+Fetches a single Repository.
 
 ```sql
 SELECT
 name,
+containingFolder,
 createTime,
 dataEncryptionState,
 displayName,
@@ -441,14 +445,42 @@ labels,
 npmrcEnvironmentVariablesSecretVersion,
 serviceAccount,
 setAuthenticatedUserAdmin,
+teamFolderName,
+workspaceCompilationOverrides
+FROM google.dataform.repositories
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND repositoriesId = '{{ repositoriesId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="list">
+
+Lists Repositories in a given project and location. **Note:** *This method can return repositories not shown in the [Dataform UI](https://console.cloud.google.com/bigquery/dataform)*.
+
+```sql
+SELECT
+name,
+containingFolder,
+createTime,
+dataEncryptionState,
+displayName,
+gitRemoteSettings,
+internalMetadata,
+kmsKeyName,
+labels,
+npmrcEnvironmentVariablesSecretVersion,
+serviceAccount,
+setAuthenticatedUserAdmin,
+teamFolderName,
 workspaceCompilationOverrides
 FROM google.dataform.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -470,34 +502,37 @@ Creates a new Repository in a given project and location.
 
 ```sql
 INSERT INTO google.dataform.repositories (
-data__workspaceCompilationOverrides,
-data__gitRemoteSettings,
-data__name,
-data__npmrcEnvironmentVariablesSecretVersion,
 data__displayName,
+data__containingFolder,
+data__npmrcEnvironmentVariablesSecretVersion,
+data__workspaceCompilationOverrides,
 data__kmsKeyName,
-data__serviceAccount,
+data__name,
+data__gitRemoteSettings,
 data__labels,
+data__serviceAccount,
 data__setAuthenticatedUserAdmin,
 projectsId,
 locationsId,
 repositoryId
 )
 SELECT 
-'{{ workspaceCompilationOverrides }}',
-'{{ gitRemoteSettings }}',
-'{{ name }}',
-'{{ npmrcEnvironmentVariablesSecretVersion }}',
 '{{ displayName }}',
+'{{ containingFolder }}',
+'{{ npmrcEnvironmentVariablesSecretVersion }}',
+'{{ workspaceCompilationOverrides }}',
 '{{ kmsKeyName }}',
-'{{ serviceAccount }}',
+'{{ name }}',
+'{{ gitRemoteSettings }}',
 '{{ labels }}',
+'{{ serviceAccount }}',
 {{ setAuthenticatedUserAdmin }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoryId }}'
 RETURNING
 name,
+containingFolder,
 createTime,
 dataEncryptionState,
 displayName,
@@ -508,70 +543,78 @@ labels,
 npmrcEnvironmentVariablesSecretVersion,
 serviceAccount,
 setAuthenticatedUserAdmin,
+teamFolderName,
 workspaceCompilationOverrides
 ;
 ```
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: repositories
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the repositories resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the repositories resource.
-    - name: workspaceCompilationOverrides
-      value: object
-      description: >
-        Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information.
-        
-    - name: gitRemoteSettings
-      value: object
-      description: >
-        Optional. If set, configures this repository to be linked to a Git remote.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The repository's name.
-        
-    - name: npmrcEnvironmentVariablesSecretVersion
-      value: string
-      description: >
-        Optional. The name of the Secret Manager secret version to be used to interpolate variables into the .npmrc file for package installation operations. Must be in the format `projects/*/secrets/*/versions/*`. The file itself must be in a JSON format.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. The repository's user-friendly name.
-        
+    - name: containingFolder
+      value: "{{ containingFolder }}"
+      description: |
+        Optional. The name of the containing folder of the repository. The field is immutable and it can be modified via a MoveRepository operation. Format: \`projects/*/locations/*/folders/*\`. or \`projects/*/locations/*/teamFolders/*\`.
+    - name: npmrcEnvironmentVariablesSecretVersion
+      value: "{{ npmrcEnvironmentVariablesSecretVersion }}"
+      description: |
+        Optional. The name of the Secret Manager secret version to be used to interpolate variables into the .npmrc file for package installation operations. Must be in the format \`projects/*/secrets/*/versions/*\`. The file itself must be in a JSON format.
+    - name: workspaceCompilationOverrides
+      description: |
+        Optional. If set, fields of \`workspace_compilation_overrides\` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for \`WorkspaceCompilationOverrides\` for more information.
+      value:
+        schemaSuffix: "{{ schemaSuffix }}"
+        defaultDatabase: "{{ defaultDatabase }}"
+        tablePrefix: "{{ tablePrefix }}"
     - name: kmsKeyName
-      value: string
-      description: >
-        Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: `projects/{kms_project}/locations/{location}/keyRings/{key_location}/cryptoKeys/{key}`
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Optional. The service account to run workflow invocations under.
-        
+      value: "{{ kmsKeyName }}"
+      description: |
+        Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: \`projects/{kms_project}/locations/{location}/keyRings/{key_location}/cryptoKeys/{key}\`
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The repository's name.
+    - name: gitRemoteSettings
+      description: |
+        Optional. If set, configures this repository to be linked to a Git remote.
+      value:
+        defaultBranch: "{{ defaultBranch }}"
+        url: "{{ url }}"
+        effectiveDefaultBranch: "{{ effectiveDefaultBranch }}"
+        gitRepositoryLink: "{{ gitRepositoryLink }}"
+        tokenStatus: "{{ tokenStatus }}"
+        sshAuthenticationConfig:
+          userPrivateKeySecretVersion: "{{ userPrivateKeySecretVersion }}"
+          hostPublicKey: "{{ hostPublicKey }}"
+        authenticationTokenSecretVersion: "{{ authenticationTokenSecretVersion }}"
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Repository user labels.
-        
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Optional. The service account to run workflow invocations under.
     - name: setAuthenticatedUserAdmin
-      value: boolean
-      description: >
+      value: {{ setAuthenticatedUserAdmin }}
+      description: |
         Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.
-        
     - name: repositoryId
-      value: string
-```
+      value: "{{ repositoryId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -591,14 +634,15 @@ Updates a single Repository. **Note:** *This method does not fully implement [AI
 ```sql
 UPDATE google.dataform.repositories
 SET 
-data__workspaceCompilationOverrides = '{{ workspaceCompilationOverrides }}',
-data__gitRemoteSettings = '{{ gitRemoteSettings }}',
-data__name = '{{ name }}',
-data__npmrcEnvironmentVariablesSecretVersion = '{{ npmrcEnvironmentVariablesSecretVersion }}',
 data__displayName = '{{ displayName }}',
+data__containingFolder = '{{ containingFolder }}',
+data__npmrcEnvironmentVariablesSecretVersion = '{{ npmrcEnvironmentVariablesSecretVersion }}',
+data__workspaceCompilationOverrides = '{{ workspaceCompilationOverrides }}',
 data__kmsKeyName = '{{ kmsKeyName }}',
-data__serviceAccount = '{{ serviceAccount }}',
+data__name = '{{ name }}',
+data__gitRemoteSettings = '{{ gitRemoteSettings }}',
 data__labels = '{{ labels }}',
+data__serviceAccount = '{{ serviceAccount }}',
 data__setAuthenticatedUserAdmin = {{ setAuthenticatedUserAdmin }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -607,6 +651,7 @@ AND repositoriesId = '{{ repositoriesId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+containingFolder,
 createTime,
 dataEncryptionState,
 displayName,
@@ -617,6 +662,7 @@ labels,
 npmrcEnvironmentVariablesSecretVersion,
 serviceAccount,
 setAuthenticatedUserAdmin,
+teamFolderName,
 workspaceCompilationOverrides;
 ```
 </TabItem>
@@ -653,8 +699,9 @@ AND force = '{{ force }}'
     defaultValue="compute_access_token_status"
     values={[
         { label: 'compute_access_token_status', value: 'compute_access_token_status' },
-        { label: 'commit', value: 'commit' },
-        { label: 'read_file', value: 'read_file' }
+        { label: 'move', value: 'move' },
+        { label: 'read_file', value: 'read_file' },
+        { label: 'commit', value: 'commit' }
     ]}
 >
 <TabItem value="compute_access_token_status">
@@ -666,6 +713,36 @@ EXEC google.dataform.repositories.compute_access_token_status
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @repositoriesId='{{ repositoriesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="move">
+
+Moves a Repository to a new location.
+
+```sql
+EXEC google.dataform.repositories.move 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required 
+@@json=
+'{
+"destinationContainingFolder": "{{ destinationContainingFolder }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="read_file">
+
+Returns the contents of a file (inside a Repository). The Repository must not have a value for `git_remote_settings.url`.
+
+```sql
+EXEC google.dataform.repositories.read_file 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@commitSha='{{ commitSha }}', 
+@path='{{ path }}'
 ;
 ```
 </TabItem>
@@ -681,23 +758,9 @@ EXEC google.dataform.repositories.commit
 @@json=
 '{
 "commitMetadata": "{{ commitMetadata }}", 
-"fileOperations": "{{ fileOperations }}", 
-"requiredHeadCommitSha": "{{ requiredHeadCommitSha }}"
+"requiredHeadCommitSha": "{{ requiredHeadCommitSha }}", 
+"fileOperations": "{{ fileOperations }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="read_file">
-
-Returns the contents of a file (inside a Repository). The Repository must not have a value for `git_remote_settings.url`.
-
-```sql
-EXEC google.dataform.repositories.read_file 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@path='{{ path }}', 
-@commitSha='{{ commitSha }}'
 ;
 ```
 </TabItem>

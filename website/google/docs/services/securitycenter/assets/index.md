@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>assets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>assets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="assets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.assets" /></td></tr>
 </tbody></table>
@@ -32,37 +33,13 @@ Creates, updates, deletes, gets or lists an <code>assets</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="folders_assets_list"
+    defaultValue="organizations_assets_list"
     values={[
-        { label: 'folders_assets_list', value: 'folders_assets_list' },
         { label: 'organizations_assets_list', value: 'organizations_assets_list' },
-        { label: 'projects_assets_list', value: 'projects_assets_list' }
+        { label: 'projects_assets_list', value: 'projects_assets_list' },
+        { label: 'folders_assets_list', value: 'folders_assets_list' }
     ]}
 >
-<TabItem value="folders_assets_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="asset" /></td>
-    <td><code>object</code></td>
-    <td>Asset matching the search request. (id: Asset)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateChange" /></td>
-    <td><code>string</code></td>
-    <td>State change of the asset between the points in time.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_assets_list">
 
 <table>
@@ -77,12 +54,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="asset" /></td>
     <td><code>object</code></td>
-    <td>Asset matching the search request. (id: Asset)</td>
+    <td> (id: Asset)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateChange" /></td>
     <td><code>string</code></td>
-    <td>State change of the asset between the points in time.</td>
+    <td> (UNUSED, ADDED, REMOVED, ACTIVE)</td>
 </tr>
 </tbody>
 </table>
@@ -101,12 +78,36 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="asset" /></td>
     <td><code>object</code></td>
-    <td>Asset matching the search request. (id: Asset)</td>
+    <td> (id: Asset)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateChange" /></td>
     <td><code>string</code></td>
-    <td>State change of the asset between the points in time.</td>
+    <td> (UNUSED, ADDED, REMOVED, ACTIVE)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_assets_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="asset" /></td>
+    <td><code>object</code></td>
+    <td> (id: Asset)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="stateChange" /></td>
+    <td><code>string</code></td>
+    <td> (UNUSED, ADDED, REMOVED, ACTIVE)</td>
 </tr>
 </tbody>
 </table>
@@ -129,53 +130,53 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#folders_assets_list"><CopyableCode code="folders_assets_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a></td>
-    <td>Lists an organization's assets.</td>
-</tr>
-<tr>
     <td><a href="#organizations_assets_list"><CopyableCode code="organizations_assets_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a></td>
-    <td>Lists an organization's assets.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_assets_list"><CopyableCode code="projects_assets_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists an organization's assets.</td>
+    <td><a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_assets_group"><CopyableCode code="folders_assets_group" /></a></td>
-    <td><CopyableCode code="exec" /></td>
+    <td><a href="#folders_assets_list"><CopyableCode code="folders_assets_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td></td>
-    <td>Filters an organization's assets and groups them by their specified properties.</td>
 </tr>
 <tr>
     <td><a href="#organizations_assets_run_discovery"><CopyableCode code="organizations_assets_run_discovery" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Runs asset discovery. The discovery is tracked with a long-running operation. This API can only be called with limited frequency for an organization. If it is called too frequently the caller will receive a TOO_MANY_REQUESTS error.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_assets_group"><CopyableCode code="organizations_assets_group" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Filters an organization's assets and groups them by their specified properties.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_assets_group"><CopyableCode code="projects_assets_group" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Filters an organization's assets and groups them by their specified properties.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_assets_group"><CopyableCode code="folders_assets_group" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -249,36 +250,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="folders_assets_list"
+    defaultValue="organizations_assets_list"
     values={[
-        { label: 'folders_assets_list', value: 'folders_assets_list' },
         { label: 'organizations_assets_list', value: 'organizations_assets_list' },
-        { label: 'projects_assets_list', value: 'projects_assets_list' }
+        { label: 'projects_assets_list', value: 'projects_assets_list' },
+        { label: 'folders_assets_list', value: 'folders_assets_list' }
     ]}
 >
-<TabItem value="folders_assets_list">
-
-Lists an organization's assets.
-
-```sql
-SELECT
-asset,
-stateChange
-FROM google.securitycenter.assets
-WHERE foldersId = '{{ foldersId }}' -- required
-AND readTime = '{{ readTime }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND fieldMask = '{{ fieldMask }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND compareDuration = '{{ compareDuration }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_assets_list">
 
-Lists an organization's assets.
+Successful response
 
 ```sql
 SELECT
@@ -286,19 +267,19 @@ asset,
 stateChange
 FROM google.securitycenter.assets
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND compareDuration = '{{ compareDuration }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
-AND readTime = '{{ readTime }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND readTime = '{{ readTime }}'
+AND compareDuration = '{{ compareDuration }}'
 AND fieldMask = '{{ fieldMask }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
 <TabItem value="projects_assets_list">
 
-Lists an organization's assets.
+Successful response
 
 ```sql
 SELECT
@@ -306,13 +287,33 @@ asset,
 stateChange
 FROM google.securitycenter.assets
 WHERE projectsId = '{{ projectsId }}' -- required
-AND readTime = '{{ readTime }}'
-AND filter = '{{ filter }}'
+AND compareDuration = '{{ compareDuration }}'
 AND fieldMask = '{{ fieldMask }}'
 AND pageSize = '{{ pageSize }}'
-AND compareDuration = '{{ compareDuration }}'
-AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND readTime = '{{ readTime }}'
+;
+```
+</TabItem>
+<TabItem value="folders_assets_list">
+
+Successful response
+
+```sql
+SELECT
+asset,
+stateChange
+FROM google.securitycenter.assets
+WHERE foldersId = '{{ foldersId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND readTime = '{{ readTime }}'
+AND compareDuration = '{{ compareDuration }}'
+AND fieldMask = '{{ fieldMask }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -322,36 +323,17 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="folders_assets_group"
+    defaultValue="organizations_assets_run_discovery"
     values={[
-        { label: 'folders_assets_group', value: 'folders_assets_group' },
         { label: 'organizations_assets_run_discovery', value: 'organizations_assets_run_discovery' },
         { label: 'organizations_assets_group', value: 'organizations_assets_group' },
-        { label: 'projects_assets_group', value: 'projects_assets_group' }
+        { label: 'projects_assets_group', value: 'projects_assets_group' },
+        { label: 'folders_assets_group', value: 'folders_assets_group' }
     ]}
 >
-<TabItem value="folders_assets_group">
-
-Filters an organization's assets and groups them by their specified properties.
-
-```sql
-EXEC google.securitycenter.assets.folders_assets_group 
-@foldersId='{{ foldersId }}' --required 
-@@json=
-'{
-"pageSize": {{ pageSize }}, 
-"readTime": "{{ readTime }}", 
-"groupBy": "{{ groupBy }}", 
-"pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}", 
-"compareDuration": "{{ compareDuration }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="organizations_assets_run_discovery">
 
-Runs asset discovery. The discovery is tracked with a long-running operation. This API can only be called with limited frequency for an organization. If it is called too frequently the caller will receive a TOO_MANY_REQUESTS error.
+Successful response
 
 ```sql
 EXEC google.securitycenter.assets.organizations_assets_run_discovery 
@@ -361,18 +343,18 @@ EXEC google.securitycenter.assets.organizations_assets_run_discovery
 </TabItem>
 <TabItem value="organizations_assets_group">
 
-Filters an organization's assets and groups them by their specified properties.
+Successful response
 
 ```sql
 EXEC google.securitycenter.assets.organizations_assets_group 
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"pageSize": {{ pageSize }}, 
 "readTime": "{{ readTime }}", 
-"groupBy": "{{ groupBy }}", 
 "pageToken": "{{ pageToken }}", 
+"groupBy": "{{ groupBy }}", 
 "filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
 "compareDuration": "{{ compareDuration }}"
 }'
 ;
@@ -380,18 +362,37 @@ EXEC google.securitycenter.assets.organizations_assets_group
 </TabItem>
 <TabItem value="projects_assets_group">
 
-Filters an organization's assets and groups them by their specified properties.
+Successful response
 
 ```sql
 EXEC google.securitycenter.assets.projects_assets_group 
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"pageSize": {{ pageSize }}, 
 "readTime": "{{ readTime }}", 
-"groupBy": "{{ groupBy }}", 
 "pageToken": "{{ pageToken }}", 
+"groupBy": "{{ groupBy }}", 
 "filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
+"compareDuration": "{{ compareDuration }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="folders_assets_group">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.assets.folders_assets_group 
+@foldersId='{{ foldersId }}' --required 
+@@json=
+'{
+"readTime": "{{ readTime }}", 
+"pageToken": "{{ pageToken }}", 
+"groupBy": "{{ groupBy }}", 
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
 "compareDuration": "{{ compareDuration }}"
 }'
 ;

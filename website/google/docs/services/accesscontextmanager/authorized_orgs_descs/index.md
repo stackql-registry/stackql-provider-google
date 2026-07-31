@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>authorized_orgs_descs</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>authorized_orgs_descs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="authorized_orgs_descs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.accesscontextmanager.authorized_orgs_descs" /></td></tr>
 </tbody></table>
@@ -57,17 +58,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="assetType" /></td>
     <td><code>string</code></td>
-    <td>The asset type of this authorized orgs desc. Valid values are `ASSET_TYPE_DEVICE`, and `ASSET_TYPE_CREDENTIAL_STRENGTH`.</td>
+    <td>The asset type of this authorized orgs desc. Valid values are `ASSET_TYPE_DEVICE`, and `ASSET_TYPE_CREDENTIAL_STRENGTH`. (ASSET_TYPE_UNSPECIFIED, ASSET_TYPE_DEVICE, ASSET_TYPE_CREDENTIAL_STRENGTH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="authorizationDirection" /></td>
     <td><code>string</code></td>
-    <td>The direction of the authorization relationship between this organization and the organizations listed in the `orgs` field. The valid values for this field include the following: `AUTHORIZATION_DIRECTION_FROM`: Allows this organization to evaluate traffic in the organizations listed in the `orgs` field. `AUTHORIZATION_DIRECTION_TO`: Allows the organizations listed in the `orgs` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying `AUTHORIZATION_DIRECTION_TO` as the authorization direction, organizations B and C must specify `AUTHORIZATION_DIRECTION_FROM` as the authorization direction in their `AuthorizedOrgsDesc` resource.</td>
+    <td>The direction of the authorization relationship between this organization and the organizations listed in the `orgs` field. The valid values for this field include the following: `AUTHORIZATION_DIRECTION_FROM`: Allows this organization to evaluate traffic in the organizations listed in the `orgs` field. `AUTHORIZATION_DIRECTION_TO`: Allows the organizations listed in the `orgs` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying `AUTHORIZATION_DIRECTION_TO` as the authorization direction, organizations B and C must specify `AUTHORIZATION_DIRECTION_FROM` as the authorization direction in their `AuthorizedOrgsDesc` resource. (AUTHORIZATION_DIRECTION_UNSPECIFIED, AUTHORIZATION_DIRECTION_TO, AUTHORIZATION_DIRECTION_FROM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="authorizationType" /></td>
     <td><code>string</code></td>
-    <td>A granular control type for authorization levels. Valid value is `AUTHORIZATION_TYPE_TRUST`.</td>
+    <td>A granular control type for authorization levels. Valid value is `AUTHORIZATION_TYPE_TRUST`. (AUTHORIZATION_TYPE_UNSPECIFIED, AUTHORIZATION_TYPE_TRUST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="orgs" /></td>
@@ -96,17 +97,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="assetType" /></td>
     <td><code>string</code></td>
-    <td>The asset type of this authorized orgs desc. Valid values are `ASSET_TYPE_DEVICE`, and `ASSET_TYPE_CREDENTIAL_STRENGTH`.</td>
+    <td>The asset type of this authorized orgs desc. Valid values are `ASSET_TYPE_DEVICE`, and `ASSET_TYPE_CREDENTIAL_STRENGTH`. (ASSET_TYPE_UNSPECIFIED, ASSET_TYPE_DEVICE, ASSET_TYPE_CREDENTIAL_STRENGTH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="authorizationDirection" /></td>
     <td><code>string</code></td>
-    <td>The direction of the authorization relationship between this organization and the organizations listed in the `orgs` field. The valid values for this field include the following: `AUTHORIZATION_DIRECTION_FROM`: Allows this organization to evaluate traffic in the organizations listed in the `orgs` field. `AUTHORIZATION_DIRECTION_TO`: Allows the organizations listed in the `orgs` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying `AUTHORIZATION_DIRECTION_TO` as the authorization direction, organizations B and C must specify `AUTHORIZATION_DIRECTION_FROM` as the authorization direction in their `AuthorizedOrgsDesc` resource.</td>
+    <td>The direction of the authorization relationship between this organization and the organizations listed in the `orgs` field. The valid values for this field include the following: `AUTHORIZATION_DIRECTION_FROM`: Allows this organization to evaluate traffic in the organizations listed in the `orgs` field. `AUTHORIZATION_DIRECTION_TO`: Allows the organizations listed in the `orgs` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying `AUTHORIZATION_DIRECTION_TO` as the authorization direction, organizations B and C must specify `AUTHORIZATION_DIRECTION_FROM` as the authorization direction in their `AuthorizedOrgsDesc` resource. (AUTHORIZATION_DIRECTION_UNSPECIFIED, AUTHORIZATION_DIRECTION_TO, AUTHORIZATION_DIRECTION_FROM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="authorizationType" /></td>
     <td><code>string</code></td>
-    <td>A granular control type for authorization levels. Valid value is `AUTHORIZATION_TYPE_TRUST`.</td>
+    <td>A granular control type for authorization levels. Valid value is `AUTHORIZATION_TYPE_TRUST`. (AUTHORIZATION_TYPE_UNSPECIFIED, AUTHORIZATION_TYPE_TRUST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="orgs" /></td>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-accessPoliciesId"><code>accessPoliciesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all authorized orgs descs for an access policy.</td>
 </tr>
 <tr>
@@ -251,8 +252,8 @@ authorizationType,
 orgs
 FROM google.accesscontextmanager.authorized_orgs_descs
 WHERE accessPoliciesId = '{{ accessPoliciesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -274,18 +275,18 @@ Creates an authorized orgs desc. The long-running operation from this RPC has a 
 
 ```sql
 INSERT INTO google.accesscontextmanager.authorized_orgs_descs (
-data__name,
-data__assetType,
-data__orgs,
 data__authorizationDirection,
+data__assetType,
+data__name,
+data__orgs,
 data__authorizationType,
 accessPoliciesId
 )
 SELECT 
-'{{ name }}',
-'{{ assetType }}',
-'{{ orgs }}',
 '{{ authorizationDirection }}',
+'{{ assetType }}',
+'{{ name }}',
+'{{ orgs }}',
 '{{ authorizationType }}',
 '{{ accessPoliciesId }}'
 RETURNING
@@ -299,42 +300,38 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: authorized_orgs_descs
   props:
     - name: accessPoliciesId
-      value: string
+      value: "{{ accessPoliciesId }}"
       description: Required parameter for the authorized_orgs_descs resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name for the `AuthorizedOrgsDesc`. Format: `accessPolicies/{access_policy}/authorizedOrgsDescs/{authorized_orgs_desc}`. The `authorized_orgs_desc` component must begin with a letter, followed by alphanumeric characters or `_`. After you create an `AuthorizedOrgsDesc`, you cannot change its `name`.
-        
-    - name: assetType
-      value: string
-      description: >
-        The asset type of this authorized orgs desc. Valid values are `ASSET_TYPE_DEVICE`, and `ASSET_TYPE_CREDENTIAL_STRENGTH`.
-        
-      valid_values: ['ASSET_TYPE_UNSPECIFIED', 'ASSET_TYPE_DEVICE', 'ASSET_TYPE_CREDENTIAL_STRENGTH']
-    - name: orgs
-      value: array
-      description: >
-        The list of organization ids in this AuthorizedOrgsDesc. Format: `organizations/` Example: `organizations/123456`
-        
     - name: authorizationDirection
-      value: string
-      description: >
-        The direction of the authorization relationship between this organization and the organizations listed in the `orgs` field. The valid values for this field include the following: `AUTHORIZATION_DIRECTION_FROM`: Allows this organization to evaluate traffic in the organizations listed in the `orgs` field. `AUTHORIZATION_DIRECTION_TO`: Allows the organizations listed in the `orgs` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying `AUTHORIZATION_DIRECTION_TO` as the authorization direction, organizations B and C must specify `AUTHORIZATION_DIRECTION_FROM` as the authorization direction in their `AuthorizedOrgsDesc` resource.
-        
+      value: "{{ authorizationDirection }}"
+      description: |
+        The direction of the authorization relationship between this organization and the organizations listed in the \`orgs\` field. The valid values for this field include the following: \`AUTHORIZATION_DIRECTION_FROM\`: Allows this organization to evaluate traffic in the organizations listed in the \`orgs\` field. \`AUTHORIZATION_DIRECTION_TO\`: Allows the organizations listed in the \`orgs\` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying \`AUTHORIZATION_DIRECTION_TO\` as the authorization direction, organizations B and C must specify \`AUTHORIZATION_DIRECTION_FROM\` as the authorization direction in their \`AuthorizedOrgsDesc\` resource.
       valid_values: ['AUTHORIZATION_DIRECTION_UNSPECIFIED', 'AUTHORIZATION_DIRECTION_TO', 'AUTHORIZATION_DIRECTION_FROM']
+    - name: assetType
+      value: "{{ assetType }}"
+      description: |
+        The asset type of this authorized orgs desc. Valid values are \`ASSET_TYPE_DEVICE\`, and \`ASSET_TYPE_CREDENTIAL_STRENGTH\`.
+      valid_values: ['ASSET_TYPE_UNSPECIFIED', 'ASSET_TYPE_DEVICE', 'ASSET_TYPE_CREDENTIAL_STRENGTH']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name for the \`AuthorizedOrgsDesc\`. Format: \`accessPolicies/{access_policy}/authorizedOrgsDescs/{authorized_orgs_desc}\`. The \`authorized_orgs_desc\` component must begin with a letter, followed by alphanumeric characters or \`_\`. After you create an \`AuthorizedOrgsDesc\`, you cannot change its \`name\`.
+    - name: orgs
+      value:
+        - "{{ orgs }}"
+      description: |
+        The list of organization ids in this AuthorizedOrgsDesc. Format: \`organizations/\` Example: \`organizations/123456\`
     - name: authorizationType
-      value: string
-      description: >
-        A granular control type for authorization levels. Valid value is `AUTHORIZATION_TYPE_TRUST`.
-        
+      value: "{{ authorizationType }}"
+      description: |
+        A granular control type for authorization levels. Valid value is \`AUTHORIZATION_TYPE_TRUST\`.
       valid_values: ['AUTHORIZATION_TYPE_UNSPECIFIED', 'AUTHORIZATION_TYPE_TRUST']
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -354,10 +351,10 @@ Updates an authorized orgs desc. The long-running operation from this RPC has a 
 ```sql
 UPDATE google.accesscontextmanager.authorized_orgs_descs
 SET 
-data__name = '{{ name }}',
-data__assetType = '{{ assetType }}',
-data__orgs = '{{ orgs }}',
 data__authorizationDirection = '{{ authorizationDirection }}',
+data__assetType = '{{ assetType }}',
+data__name = '{{ name }}',
+data__orgs = '{{ orgs }}',
 data__authorizationType = '{{ authorizationType }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required

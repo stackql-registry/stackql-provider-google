@@ -18,7 +18,7 @@ connectors service documentation.
 
 :::info[Service Summary]
 
-total resources: __6__  
+total resources: __8__  
 
 :::
 
@@ -27,11 +27,13 @@ total resources: __6__
 <div class="providerDocColumn">
 <a href="/services/connectors/actions/">actions</a><br />
 <a href="/services/connectors/connections/">connections</a><br />
+<a href="/services/connectors/connections_custom_tool_names/">connections_custom_tool_names</a><br />
 <a href="/services/connectors/entities/">entities</a>
 </div>
 <div class="providerDocColumn">
 <a href="/services/connectors/entity_types/">entity_types</a><br />
 <a href="/services/connectors/resources/">resources</a><br />
+<a href="/services/connectors/resources_resource_post/">resources_resource_post</a><br />
 <a href="/services/connectors/tools/">tools</a>
 </div>
 </div>

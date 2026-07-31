@@ -18,7 +18,7 @@ securesourcemanager service documentation.
 
 :::info[Service Summary]
 
-total resources: __15__  
+total resources: __16__  
 
 :::
 
@@ -41,6 +41,7 @@ total resources: __15__
 <a href="/services/securesourcemanager/repositories/">repositories</a><br />
 <a href="/services/securesourcemanager/repositories_blob/">repositories_blob</a><br />
 <a href="/services/securesourcemanager/repositories_iam_policies/">repositories_iam_policies</a><br />
+<a href="/services/securesourcemanager/repositories_refs/">repositories_refs</a><br />
 <a href="/services/securesourcemanager/repositories_tree/">repositories_tree</a>
 </div>
 </div>

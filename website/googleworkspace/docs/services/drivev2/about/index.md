@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>about</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>about</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="about" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.about" /></td></tr>
 </tbody></table>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="domainSharingPolicy" /></td>
     <td><code>string</code></td>
-    <td>The domain sharing policy for the current user. Possible values are: * `allowed` * `allowedWithWarning` * `incomingOnly` * `disallowed`</td>
+    <td>Deprecated: Does not granularly represent allowlisted domains or Trust Rules. The domain sharing policy for the current user. Possible values are: * `allowed` * `allowedWithWarning` * `incomingOnly` * `disallowed` Note that if the user is enrolled in Trust Rules, `disallowed` will always be returned. If sharing is restricted to allowlisted domains, either `incomingOnly` or `allowedWithWarning` will be returned, depending on whether receiving files from outside the allowlisted domains is permitted.</td>
 </tr>
 <tr>
     <td><CopyableCode code="driveThemes" /></td>
@@ -212,7 +213,7 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-includeSubscribed"><code>includeSubscribed</code></a>, <a href="#parameter-maxChangeIdCount"><code>maxChangeIdCount</code></a>, <a href="#parameter-startChangeId"><code>startChangeId</code></a></td>
+    <td><a href="#parameter-maxChangeIdCount"><code>maxChangeIdCount</code></a>, <a href="#parameter-startChangeId"><code>startChangeId</code></a>, <a href="#parameter-includeSubscribed"><code>includeSubscribed</code></a></td>
     <td>Gets the information about the current user along with Drive API settings</td>
 </tr>
 </tbody>
@@ -292,9 +293,9 @@ selfLink,
 teamDriveThemes,
 user
 FROM googleworkspace.drivev2.about
-WHERE includeSubscribed = '{{ includeSubscribed }}'
-AND maxChangeIdCount = '{{ maxChangeIdCount }}'
+WHERE maxChangeIdCount = '{{ maxChangeIdCount }}'
 AND startChangeId = '{{ startChangeId }}'
+AND includeSubscribed = '{{ includeSubscribed }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.file.instances" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="capacityStepSizeGb" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. The increase/decrease capacity step size in GB.</td>
+    <td>Output only. The incremental increase or decrease in capacity, designated in some number of GB.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -112,12 +113,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="maxCapacityGb" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. The max capacity of the instance in GB.</td>
+    <td>Output only. The maximum capacity of the instance in GB.</td>
 </tr>
 <tr>
     <td><CopyableCode code="minCapacityGb" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. The min capacity of the instance in GB.</td>
+    <td>Output only. The minimum capacity of the instance in GB.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networks" /></td>
@@ -137,7 +138,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protocol" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: `NFS_V3`.</td>
+    <td>Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: `NFS_V3`. (FILE_PROTOCOL_UNSPECIFIED, NFS_V3, NFS_V4_1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="replication" /></td>
@@ -157,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The instance state.</td>
+    <td>Output only. The instance state. (STATE_UNSPECIFIED, CREATING, READY, REPAIRING, DELETING, ERROR, RESTORING, SUSPENDED, SUSPENDING, RESUMING, REVERTING, PROMOTING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
@@ -177,7 +178,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tier" /></td>
     <td><code>string</code></td>
-    <td>The service tier of the instance.</td>
+    <td>The service tier of the instance. (TIER_UNSPECIFIED, STANDARD, PREMIUM, BASIC_HDD, BASIC_SSD, HIGH_SCALE_SSD, ENTERPRISE, ZONAL, REGIONAL)</td>
 </tr>
 </tbody>
 </table>
@@ -201,7 +202,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="capacityStepSizeGb" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. The increase/decrease capacity step size in GB.</td>
+    <td>Output only. The incremental increase or decrease in capacity, designated in some number of GB.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -256,12 +257,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="maxCapacityGb" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. The max capacity of the instance in GB.</td>
+    <td>Output only. The maximum capacity of the instance in GB.</td>
 </tr>
 <tr>
     <td><CopyableCode code="minCapacityGb" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. The min capacity of the instance in GB.</td>
+    <td>Output only. The minimum capacity of the instance in GB.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networks" /></td>
@@ -281,7 +282,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protocol" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: `NFS_V3`.</td>
+    <td>Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: `NFS_V3`. (FILE_PROTOCOL_UNSPECIFIED, NFS_V3, NFS_V4_1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="replication" /></td>
@@ -301,7 +302,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The instance state.</td>
+    <td>Output only. The instance state. (STATE_UNSPECIFIED, CREATING, READY, REPAIRING, DELETING, ERROR, RESTORING, SUSPENDED, SUSPENDING, RESUMING, REVERTING, PROMOTING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
@@ -321,7 +322,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tier" /></td>
     <td><code>string</code></td>
-    <td>The service tier of the instance.</td>
+    <td>The service tier of the instance. (TIER_UNSPECIFIED, STANDARD, PREMIUM, BASIC_HDD, BASIC_SSD, HIGH_SCALE_SSD, ENTERPRISE, ZONAL, REGIONAL)</td>
 </tr>
 </tbody>
 </table>
@@ -354,7 +355,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all instances in a project for either a specified location or for all locations.</td>
 </tr>
 <tr>
@@ -379,13 +380,6 @@ The following methods are available for this resource:
     <td>Deletes an instance.</td>
 </tr>
 <tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Restores an existing instance's file share from a backup. The capacity of the instance needs to be equal to or larger than the capacity of the backup (and also equal to or larger than the minimum capacity of the tier).</td>
-</tr>
-<tr>
     <td><a href="#revert"><CopyableCode code="revert" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
@@ -393,11 +387,32 @@ The following methods are available for this resource:
     <td>Revert an existing instance's file system to a specified snapshot.</td>
 </tr>
 <tr>
+    <td><a href="#pause_replica"><CopyableCode code="pause_replica" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Pause the standby instance (replica). WARNING: This operation makes the standby instance's NFS filesystem writable. Any data written to the standby instance while paused will be lost when the replica is resumed or promoted.</td>
+</tr>
+<tr>
+    <td><a href="#resume_replica"><CopyableCode code="resume_replica" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Resume the standby instance (replica). WARNING: Any data written to the standby instance while paused will be lost when the replica is resumed.</td>
+</tr>
+<tr>
     <td><a href="#promote_replica"><CopyableCode code="promote_replica" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Promote the standby instance (replica).</td>
+</tr>
+<tr>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Restores an existing instance's file share from a backup. The capacity of the instance needs to be equal to or larger than the capacity of the backup (and also equal to or larger than the minimum capacity of the tier).</td>
 </tr>
 </tbody>
 </table>
@@ -551,10 +566,10 @@ tier
 FROM google.file.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -576,39 +591,39 @@ Creates an instance. When creating from a backup, the capacity of the new instan
 
 ```sql
 INSERT INTO google.file.instances (
-data__description,
-data__tier,
 data__labels,
-data__fileShares,
-data__networks,
-data__etag,
-data__kmsKeyName,
-data__replication,
+data__performanceConfig,
 data__tags,
+data__tier,
+data__fileShares,
+data__replication,
+data__etag,
+data__deletionProtectionEnabled,
 data__protocol,
 data__directoryServices,
-data__performanceConfig,
-data__deletionProtectionEnabled,
+data__description,
 data__deletionProtectionReason,
+data__kmsKeyName,
+data__networks,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ description }}',
-'{{ tier }}',
 '{{ labels }}',
-'{{ fileShares }}',
-'{{ networks }}',
-'{{ etag }}',
-'{{ kmsKeyName }}',
-'{{ replication }}',
+'{{ performanceConfig }}',
 '{{ tags }}',
+'{{ tier }}',
+'{{ fileShares }}',
+'{{ replication }}',
+'{{ etag }}',
+{{ deletionProtectionEnabled }},
 '{{ protocol }}',
 '{{ directoryServices }}',
-'{{ performanceConfig }}',
-{{ deletionProtectionEnabled }},
+'{{ description }}',
 '{{ deletionProtectionReason }}',
+'{{ kmsKeyName }}',
+'{{ networks }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -623,91 +638,106 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: description
-      value: string
-      description: >
-        The description of the instance (2048 characters or less).
-        
-    - name: tier
-      value: string
-      description: >
-        The service tier of the instance.
-        
-      valid_values: ['TIER_UNSPECIFIED', 'STANDARD', 'PREMIUM', 'BASIC_HDD', 'BASIC_SSD', 'HIGH_SCALE_SSD', 'ENTERPRISE', 'ZONAL', 'REGIONAL']
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Resource labels to represent user provided metadata.
-        
-    - name: fileShares
-      value: array
-      description: >
-        File system shares on the instance. For this version, only a single file share is supported.
-        
-    - name: networks
-      value: array
-      description: >
-        VPC networks to which the instance is connected. For this version, only a single network is supported.
-        
-    - name: etag
-      value: string
-      description: >
-        Server-specified ETag for the instance resource to prevent simultaneous updates from overwriting each other.
-        
-    - name: kmsKeyName
-      value: string
-      description: >
-        KMS key name used for data encryption.
-        
-    - name: replication
-      value: object
-      description: >
-        Optional. Replication configuration.
-        
+    - name: performanceConfig
+      description: |
+        Optional. Used to configure performance.
+      value:
+        fixedIops:
+          maxIops: "{{ maxIops }}"
+        iopsPerTb:
+          maxIopsPerTb: "{{ maxIopsPerTb }}"
     - name: tags
-      value: object
-      description: >
+      value: "{{ tags }}"
+      description: |
         Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: "123456789012/environment" : "production", "123456789013/costCenter" : "marketing" See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
-        
+    - name: tier
+      value: "{{ tier }}"
+      description: |
+        The service tier of the instance.
+      valid_values: ['TIER_UNSPECIFIED', 'STANDARD', 'PREMIUM', 'BASIC_HDD', 'BASIC_SSD', 'HIGH_SCALE_SSD', 'ENTERPRISE', 'ZONAL', 'REGIONAL']
+    - name: fileShares
+      description: |
+        File system shares on the instance. For this version, only a single file share is supported.
+      value:
+        - capacityGb: "{{ capacityGb }}"
+          sourceBackup: "{{ sourceBackup }}"
+          nfsExportOptions: "{{ nfsExportOptions }}"
+          name: "{{ name }}"
+          sourceBackupdrBackup: "{{ sourceBackupdrBackup }}"
+    - name: replication
+      description: |
+        Optional. Replication configuration.
+      value:
+        role: "{{ role }}"
+        replicas:
+          - stateReasons: "{{ stateReasons }}"
+            lastActiveSyncTime: "{{ lastActiveSyncTime }}"
+            state: "{{ state }}"
+            peerInstance: "{{ peerInstance }}"
+            stateUpdateTime: "{{ stateUpdateTime }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Server-specified ETag for the instance resource to prevent simultaneous updates from overwriting each other.
+    - name: deletionProtectionEnabled
+      value: {{ deletionProtectionEnabled }}
+      description: |
+        Optional. Indicates whether the instance is protected against deletion.
     - name: protocol
-      value: string
-      description: >
-        Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: `NFS_V3`.
-        
+      value: "{{ protocol }}"
+      description: |
+        Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: \`NFS_V3\`.
       valid_values: ['FILE_PROTOCOL_UNSPECIFIED', 'NFS_V3', 'NFS_V4_1']
     - name: directoryServices
-      value: object
-      description: >
+      description: |
         Optional. Directory Services configuration for Kerberos-based authentication. Should only be set if protocol is "NFS_V4_1".
-        
-    - name: performanceConfig
-      value: object
-      description: >
-        Optional. Used to configure performance.
-        
-    - name: deletionProtectionEnabled
-      value: boolean
-      description: >
-        Optional. Indicates whether the instance is protected against deletion.
-        
+      value:
+        ldap:
+          servers:
+            - "{{ servers }}"
+          usersOu: "{{ usersOu }}"
+          domain: "{{ domain }}"
+          groupsOu: "{{ groupsOu }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The description of the instance (2048 characters or less).
     - name: deletionProtectionReason
-      value: string
-      description: >
+      value: "{{ deletionProtectionReason }}"
+      description: |
         Optional. The reason for enabling deletion protection.
-        
+    - name: kmsKeyName
+      value: "{{ kmsKeyName }}"
+      description: |
+        KMS key name used for data encryption.
+    - name: networks
+      description: |
+        VPC networks to which the instance is connected. For this version, only a single network is supported.
+      value:
+        - reservedIpRange: "{{ reservedIpRange }}"
+          network: "{{ network }}"
+          modes: "{{ modes }}"
+          ipAddresses: "{{ ipAddresses }}"
+          pscConfig:
+            endpointProject: "{{ endpointProject }}"
+          connectMode: "{{ connectMode }}"
     - name: instanceId
-      value: string
-```
+      value: "{{ instanceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -727,20 +757,20 @@ Updates the settings of a specific instance.
 ```sql
 UPDATE google.file.instances
 SET 
-data__description = '{{ description }}',
-data__tier = '{{ tier }}',
 data__labels = '{{ labels }}',
-data__fileShares = '{{ fileShares }}',
-data__networks = '{{ networks }}',
-data__etag = '{{ etag }}',
-data__kmsKeyName = '{{ kmsKeyName }}',
-data__replication = '{{ replication }}',
+data__performanceConfig = '{{ performanceConfig }}',
 data__tags = '{{ tags }}',
+data__tier = '{{ tier }}',
+data__fileShares = '{{ fileShares }}',
+data__replication = '{{ replication }}',
+data__etag = '{{ etag }}',
+data__deletionProtectionEnabled = {{ deletionProtectionEnabled }},
 data__protocol = '{{ protocol }}',
 data__directoryServices = '{{ directoryServices }}',
-data__performanceConfig = '{{ performanceConfig }}',
-data__deletionProtectionEnabled = {{ deletionProtectionEnabled }},
-data__deletionProtectionReason = '{{ deletionProtectionReason }}'
+data__description = '{{ description }}',
+data__deletionProtectionReason = '{{ deletionProtectionReason }}',
+data__kmsKeyName = '{{ kmsKeyName }}',
+data__networks = '{{ networks }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -784,30 +814,15 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="restore"
+    defaultValue="revert"
     values={[
-        { label: 'restore', value: 'restore' },
         { label: 'revert', value: 'revert' },
-        { label: 'promote_replica', value: 'promote_replica' }
+        { label: 'pause_replica', value: 'pause_replica' },
+        { label: 'resume_replica', value: 'resume_replica' },
+        { label: 'promote_replica', value: 'promote_replica' },
+        { label: 'restore', value: 'restore' }
     ]}
 >
-<TabItem value="restore">
-
-Restores an existing instance's file share from a backup. The capacity of the instance needs to be equal to or larger than the capacity of the backup (and also equal to or larger than the minimum capacity of the tier).
-
-```sql
-EXEC google.file.instances.restore 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"fileShare": "{{ fileShare }}", 
-"sourceBackup": "{{ sourceBackup }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="revert">
 
 Revert an existing instance's file system to a specified snapshot.
@@ -824,6 +839,30 @@ EXEC google.file.instances.revert
 ;
 ```
 </TabItem>
+<TabItem value="pause_replica">
+
+Pause the standby instance (replica). WARNING: This operation makes the standby instance's NFS filesystem writable. Any data written to the standby instance while paused will be lost when the replica is resumed or promoted.
+
+```sql
+EXEC google.file.instances.pause_replica 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="resume_replica">
+
+Resume the standby instance (replica). WARNING: Any data written to the standby instance while paused will be lost when the replica is resumed.
+
+```sql
+EXEC google.file.instances.resume_replica 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="promote_replica">
 
 Promote the standby instance (replica).
@@ -836,6 +875,23 @@ EXEC google.file.instances.promote_replica
 @@json=
 '{
 "peerInstance": "{{ peerInstance }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore">
+
+Restores an existing instance's file share from a backup. The capacity of the instance needs to be equal to or larger than the capacity of the backup (and also equal to or larger than the minimum capacity of the tier).
+
+```sql
+EXEC google.file.instances.restore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"fileShare": "{{ fileShare }}", 
+"sourceBackup": "{{ sourceBackup }}"
 }'
 ;
 ```

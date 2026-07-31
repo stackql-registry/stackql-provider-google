@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>debugsessions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>debugsessions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="debugsessions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.debugsessions" /></td></tr>
 </tbody></table>
@@ -336,12 +337,12 @@ Creates a debug session for a deployed API Proxy revision.
 
 ```sql
 INSERT INTO google.apigee.debugsessions (
-data__timeout,
-data__validity,
-data__name,
-data__tracesize,
-data__count,
 data__filter,
+data__validity,
+data__count,
+data__timeout,
+data__tracesize,
+data__name,
 organizationsId,
 environmentsId,
 apisId,
@@ -349,12 +350,12 @@ revisionsId,
 timeout
 )
 SELECT 
-'{{ timeout }}',
-{{ validity }},
-'{{ name }}',
-{{ tracesize }},
-{{ count }},
 '{{ filter }}',
+{{ validity }},
+{{ count }},
+'{{ timeout }}',
+{{ tracesize }},
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
 '{{ apisId }}',
@@ -373,54 +374,48 @@ validity
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: debugsessions
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the debugsessions resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the debugsessions resource.
     - name: apisId
-      value: string
+      value: "{{ apisId }}"
       description: Required parameter for the debugsessions resource.
     - name: revisionsId
-      value: string
+      value: "{{ revisionsId }}"
       description: Required parameter for the debugsessions resource.
-    - name: timeout
-      value: string
-      description: >
-        Optional. The time in seconds after which this DebugSession should end. This value will override the value in query param, if both are provided.
-        
-    - name: validity
-      value: integer
-      description: >
-        Optional. The length of time, in seconds, that this debug session is valid, starting from when it's received in the control plane. Min = 1, Max = 15, Default = 10.
-        
-    - name: name
-      value: string
-      description: >
-        A unique ID for this DebugSession.
-        
-    - name: tracesize
-      value: integer
-      description: >
-        Optional. The maximum number of bytes captured from the response payload. Min = 0, Max = 5120, Default = 5120.
-        
-    - name: count
-      value: integer
-      description: >
-        Optional. The number of request to be traced. Min = 1, Max = 15, Default = 10.
-        
     - name: filter
-      value: string
-      description: >
+      value: "{{ filter }}"
+      description: |
         Optional. A conditional statement which is evaluated against the request message to determine if it should be traced. Syntax matches that of on API Proxy bundle flow Condition.
-        
+    - name: validity
+      value: {{ validity }}
+      description: |
+        Optional. The length of time, in seconds, that this debug session is valid, starting from when it's received in the control plane. Min = 1, Max = 15, Default = 10.
+    - name: count
+      value: {{ count }}
+      description: |
+        Optional. The number of request to be traced. Min = 1, Max = 15, Default = 10.
     - name: timeout
-      value: string (int64)
-```
+      value: "{{ timeout }}"
+      description: |
+        Optional. The time in seconds after which this DebugSession should end. This value will override the value in query param, if both are provided.
+    - name: tracesize
+      value: {{ tracesize }}
+      description: |
+        Optional. The maximum number of bytes captured from the response payload. Min = 0, Max = 5120, Default = 5120.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        A unique ID for this DebugSession.
+    - name: timeout
+      value: "{{ timeout }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

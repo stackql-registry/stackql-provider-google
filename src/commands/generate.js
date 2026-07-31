@@ -275,24 +275,43 @@ export async function generateSpecs(options, rootDir) {
         });
     }
 
+    const failedServices = [];
+
     for(let service of services){
         try {
             logger.info(`checking ${service.name}...`);
 
-            // get service data
+            // get service data (retry transient failures, skip services with dead
+            // discovery endpoints - google retires APIs without removing them from
+            // the root discovery document)
             logger.info(`fetching service data from ${service.discoveryRestUrl}...`);
-            const svcResp = await fetch(service.discoveryRestUrl);
-            const responseText = await svcResp.text();
+            let svcData;
+            const maxAttempts = 3;
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                try {
+                    const svcResp = await fetch(service.discoveryRestUrl);
+                    const responseText = await svcResp.text();
 
-            // Write to file if debugging
-            if (debug) {
-                await writeFile(path.join(rootDir, 'svcResp.tmp'), responseText, debug);
+                    // Write to file if debugging
+                    if (debug) {
+                        await writeFile(path.join(rootDir, 'svcResp.tmp'), responseText, debug);
+                    }
+
+                    if (!svcResp.ok) {
+                        throw new Error(`HTTP ${svcResp.status} from discovery endpoint`);
+                    }
+
+                    // Parse the text as JSON
+                    svcData = JSON.parse(responseText);
+                    break;
+                } catch (fetchErr) {
+                    if (attempt === maxAttempts) {
+                        throw Object.assign(new Error(`failed to fetch/parse discovery doc: ${fetchErr.message}`), { isFetchError: true });
+                    }
+                    logger.warn(`attempt ${attempt} failed for ${service.name} (${fetchErr.message}), retrying...`);
+                    await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
+                }
             }
-
-            // Parse the text as JSON
-            const svcData = JSON.parse(responseText);            
-
-            // const svcData = await svcResp.json();
 
             // check if svcData.auth.oauth2.scopes includes any key
             if(svcData['auth'] && svcData['auth']['oauth2'] && svcData['auth']['oauth2']['scopes']
@@ -320,18 +339,24 @@ export async function generateSpecs(options, rootDir) {
             }
 
         } catch (err) {
-            // crash program if error
-            logger.error(err);
-            if(['poly', 'lifesciences'].includes(service.name) == false){
-                process.exit(1);
+            if (err.isFetchError) {
+                logger.warn(`skipping ${service.name}: ${err.message}`);
+                failedServices.push(service.name);
+                continue;
             }
+            logger.error(err);
+            process.exit(1);
         }
+    }
+
+    if (failedServices.length > 0) {
+        logger.warn(`services skipped due to discovery doc failures: ${failedServices.join(', ')}`);
     }
 
     // add provider.yaml file
     await generateProviderIndex(provider, servicesDir, providerDir, providerConfig[provider]['configObj'], debug);
 
     const runtime = Math.round(process.uptime() * 100) / 100;
-    logger.info(`generate completed in ${runtime}s. ${services.length} files generated.`);
+    logger.info(`generate completed in ${runtime}s. ${services.length} services processed, ${failedServices.length} skipped.`);
  
 }

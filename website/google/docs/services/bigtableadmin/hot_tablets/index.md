@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>hot_tablets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>hot_tablets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="hot_tablets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.hot_tablets" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
+    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists hot tablets in a cluster, within the time range provided. Hot tablets are ordered based on CPU usage.</td>
 </tr>
 </tbody>
@@ -189,10 +190,10 @@ FROM google.bigtableadmin.hot_tablets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND endTime = '{{ endTime }}'
-AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND startTime = '{{ startTime }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

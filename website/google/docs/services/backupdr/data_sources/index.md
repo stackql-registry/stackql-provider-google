@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>data_sources</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>data_sources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="data_sources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.backupdr.data_sources" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="configState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The backup configuration state.</td>
+    <td>Output only. The backup configuration state. (BACKUP_CONFIG_STATE_UNSPECIFIED, ACTIVE, PASSIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The DataSource resource instance state.</td>
+    <td>Output only. The DataSource resource instance state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="totalStoredBytes" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="configState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The backup configuration state.</td>
+    <td>Output only. The backup configuration state. (BACKUP_CONFIG_STATE_UNSPECIFIED, ACTIVE, PASSIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The DataSource resource instance state.</td>
+    <td>Output only. The DataSource resource instance state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="totalStoredBytes" /></td>
@@ -224,14 +225,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists DataSources in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the settings of a DataSource.</td>
 </tr>
 <tr>
@@ -242,18 +243,11 @@ The following methods are available for this resource:
     <td>Deletes a DataSource. This is a custom method instead of a standard delete method because external clients will not delete DataSources except for BackupDR backup appliances.</td>
 </tr>
 <tr>
-    <td><a href="#set_internal_status"><CopyableCode code="set_internal_status" /></a></td>
+    <td><a href="#finalize_backup"><CopyableCode code="finalize_backup" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
     <td></td>
-    <td>Sets the internal status of a DataSource.</td>
-</tr>
-<tr>
-    <td><a href="#initiate_backup"><CopyableCode code="initiate_backup" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
-    <td></td>
-    <td>Internal only. Initiates a backup.</td>
+    <td>Internal only. Finalize a backup that was started by a call to InitiateBackup.</td>
 </tr>
 <tr>
     <td><a href="#abandon_backup"><CopyableCode code="abandon_backup" /></a></td>
@@ -263,11 +257,11 @@ The following methods are available for this resource:
     <td>Internal only. Abandons a backup.</td>
 </tr>
 <tr>
-    <td><a href="#finalize_backup"><CopyableCode code="finalize_backup" /></a></td>
+    <td><a href="#initiate_backup"><CopyableCode code="initiate_backup" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
     <td></td>
-    <td>Internal only. Finalize a backup that was started by a call to InitiateBackup.</td>
+    <td>Internal only. Initiates a backup.</td>
 </tr>
 <tr>
     <td><a href="#fetch_access_token"><CopyableCode code="fetch_access_token" /></a></td>
@@ -275,6 +269,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
     <td></td>
     <td>Internal only. Fetch access token for a given data source.</td>
+</tr>
+<tr>
+    <td><a href="#set_internal_status"><CopyableCode code="set_internal_status" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
+    <td></td>
+    <td>Sets the internal status of a DataSource.</td>
 </tr>
 </tbody>
 </table>
@@ -409,10 +410,10 @@ FROM google.backupdr.data_sources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupVaultsId = '{{ backupVaultsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -435,19 +436,19 @@ Updates the settings of a DataSource.
 UPDATE google.backupdr.data_sources
 SET 
 data__labels = '{{ labels }}',
-data__backupCount = '{{ backupCount }}',
-data__etag = '{{ etag }}',
-data__totalStoredBytes = '{{ totalStoredBytes }}',
 data__dataSourceGcpResource = '{{ dataSourceGcpResource }}',
-data__dataSourceBackupApplianceApplication = '{{ dataSourceBackupApplianceApplication }}'
+data__etag = '{{ etag }}',
+data__dataSourceBackupApplianceApplication = '{{ dataSourceBackupApplianceApplication }}',
+data__totalStoredBytes = '{{ totalStoredBytes }}',
+data__backupCount = '{{ backupCount }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupVaultsId = '{{ backupVaultsId }}' --required
 AND dataSourcesId = '{{ dataSourcesId }}' --required
+AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
-AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 done,
@@ -486,28 +487,50 @@ AND dataSourcesId = '{{ dataSourcesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_internal_status"
+    defaultValue="finalize_backup"
     values={[
-        { label: 'set_internal_status', value: 'set_internal_status' },
-        { label: 'initiate_backup', value: 'initiate_backup' },
-        { label: 'abandon_backup', value: 'abandon_backup' },
         { label: 'finalize_backup', value: 'finalize_backup' },
-        { label: 'fetch_access_token', value: 'fetch_access_token' }
+        { label: 'abandon_backup', value: 'abandon_backup' },
+        { label: 'initiate_backup', value: 'initiate_backup' },
+        { label: 'fetch_access_token', value: 'fetch_access_token' },
+        { label: 'set_internal_status', value: 'set_internal_status' }
     ]}
 >
-<TabItem value="set_internal_status">
+<TabItem value="finalize_backup">
 
-Sets the internal status of a DataSource.
+Internal only. Finalize a backup that was started by a call to InitiateBackup.
 
 ```sql
-EXEC google.backupdr.data_sources.set_internal_status 
+EXEC google.backupdr.data_sources.finalize_backup 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @backupVaultsId='{{ backupVaultsId }}' --required, 
 @dataSourcesId='{{ dataSourcesId }}' --required 
 @@json=
 '{
-"value": "{{ value }}", 
+"consistencyTime": "{{ consistencyTime }}", 
+"requestId": "{{ requestId }}", 
+"description": "{{ description }}", 
+"recoveryRangeStartTime": "{{ recoveryRangeStartTime }}", 
+"recoveryRangeEndTime": "{{ recoveryRangeEndTime }}", 
+"backupId": "{{ backupId }}", 
+"retentionDuration": "{{ retentionDuration }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="abandon_backup">
+
+Internal only. Abandons a backup.
+
+```sql
+EXEC google.backupdr.data_sources.abandon_backup 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@backupVaultsId='{{ backupVaultsId }}' --required, 
+@dataSourcesId='{{ dataSourcesId }}' --required 
+@@json=
+'{
 "requestId": "{{ requestId }}"
 }'
 ;
@@ -531,46 +554,6 @@ EXEC google.backupdr.data_sources.initiate_backup
 ;
 ```
 </TabItem>
-<TabItem value="abandon_backup">
-
-Internal only. Abandons a backup.
-
-```sql
-EXEC google.backupdr.data_sources.abandon_backup 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@backupVaultsId='{{ backupVaultsId }}' --required, 
-@dataSourcesId='{{ dataSourcesId }}' --required 
-@@json=
-'{
-"requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="finalize_backup">
-
-Internal only. Finalize a backup that was started by a call to InitiateBackup.
-
-```sql
-EXEC google.backupdr.data_sources.finalize_backup 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@backupVaultsId='{{ backupVaultsId }}' --required, 
-@dataSourcesId='{{ dataSourcesId }}' --required 
-@@json=
-'{
-"description": "{{ description }}", 
-"consistencyTime": "{{ consistencyTime }}", 
-"requestId": "{{ requestId }}", 
-"backupId": "{{ backupId }}", 
-"recoveryRangeStartTime": "{{ recoveryRangeStartTime }}", 
-"recoveryRangeEndTime": "{{ recoveryRangeEndTime }}", 
-"retentionDuration": "{{ retentionDuration }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="fetch_access_token">
 
 Internal only. Fetch access token for a given data source.
@@ -584,6 +567,24 @@ EXEC google.backupdr.data_sources.fetch_access_token
 @@json=
 '{
 "generationId": {{ generationId }}
+}'
+;
+```
+</TabItem>
+<TabItem value="set_internal_status">
+
+Sets the internal status of a DataSource.
+
+```sql
+EXEC google.backupdr.data_sources.set_internal_status 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@backupVaultsId='{{ backupVaultsId }}' --required, 
+@dataSourcesId='{{ dataSourcesId }}' --required 
+@@json=
+'{
+"value": "{{ value }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```

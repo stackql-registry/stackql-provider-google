@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>gateways</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>gateways</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="gateways" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkservices.gateways" /></td></tr>
 </tbody></table>
@@ -60,6 +61,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Zero or one IPv4 or IPv6 address on which the Gateway will receive the traffic. When no address is provided, an IP from the subnetwork is allocated This field only applies to gateways of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="allPorts" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If true, the Gateway will listen on all ports. This is mutually exclusive with the `ports` field. This field only applies to gateways of type 'SECURE_WEB_GATEWAY'.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowGlobalAccess" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If true, the gateway will allow traffic from clients outside of the region where the gateway is located. This field is configurable only for gateways of type SECURE_WEB_GATEWAY.</td>
+</tr>
+<tr>
     <td><CopyableCode code="certificateUrls" /></td>
     <td><code>array</code></td>
     <td>Optional. A fully-qualified Certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection. This feature only applies to gateways of type 'SECURE_WEB_GATEWAY'.</td>
@@ -77,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="envoyHeaders" /></td>
     <td><code>string</code></td>
-    <td>Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.</td>
+    <td>Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers. (ENVOY_HEADERS_UNSPECIFIED, NONE, DEBUG_HEADERS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="gatewaySecurityPolicy" /></td>
@@ -87,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ipVersion" /></td>
     <td><code>string</code></td>
-    <td>Optional. The IP Version that will be used by this gateway. Valid options are IPV4 or IPV6. Default is IPV4.</td>
+    <td>Optional. The IP Version that will be used by this gateway. Valid options are IPV4 or IPV6. Default is IPV4. (IP_VERSION_UNSPECIFIED, IPV4, IPV6)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -107,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="routingMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The routing mode of the Gateway. This field is configurable only for gateways of type SECURE_WEB_GATEWAY. This field is required for gateways of type SECURE_WEB_GATEWAY.</td>
+    <td>Optional. The routing mode of the Gateway. This field is configurable only for gateways of type SECURE_WEB_GATEWAY. This field is required for gateways of type SECURE_WEB_GATEWAY. (EXPLICIT_ROUTING_MODE, NEXT_HOP_ROUTING_MODE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scope" /></td>
@@ -132,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The type of the customer managed gateway. This field is required. If unspecified, an error is returned.</td>
+    <td>Immutable. The type of the customer managed gateway. This field is required. If unspecified, an error is returned. (TYPE_UNSPECIFIED, OPEN_MESH, SECURE_WEB_GATEWAY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -164,6 +175,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Zero or one IPv4 or IPv6 address on which the Gateway will receive the traffic. When no address is provided, an IP from the subnetwork is allocated This field only applies to gateways of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="allPorts" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If true, the Gateway will listen on all ports. This is mutually exclusive with the `ports` field. This field only applies to gateways of type 'SECURE_WEB_GATEWAY'.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowGlobalAccess" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If true, the gateway will allow traffic from clients outside of the region where the gateway is located. This field is configurable only for gateways of type SECURE_WEB_GATEWAY.</td>
+</tr>
+<tr>
     <td><CopyableCode code="certificateUrls" /></td>
     <td><code>array</code></td>
     <td>Optional. A fully-qualified Certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection. This feature only applies to gateways of type 'SECURE_WEB_GATEWAY'.</td>
@@ -181,7 +202,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="envoyHeaders" /></td>
     <td><code>string</code></td>
-    <td>Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.</td>
+    <td>Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers. (ENVOY_HEADERS_UNSPECIFIED, NONE, DEBUG_HEADERS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="gatewaySecurityPolicy" /></td>
@@ -191,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ipVersion" /></td>
     <td><code>string</code></td>
-    <td>Optional. The IP Version that will be used by this gateway. Valid options are IPV4 or IPV6. Default is IPV4.</td>
+    <td>Optional. The IP Version that will be used by this gateway. Valid options are IPV4 or IPV6. Default is IPV4. (IP_VERSION_UNSPECIFIED, IPV4, IPV6)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -211,7 +232,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="routingMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The routing mode of the Gateway. This field is configurable only for gateways of type SECURE_WEB_GATEWAY. This field is required for gateways of type SECURE_WEB_GATEWAY.</td>
+    <td>Optional. The routing mode of the Gateway. This field is configurable only for gateways of type SECURE_WEB_GATEWAY. This field is required for gateways of type SECURE_WEB_GATEWAY. (EXPLICIT_ROUTING_MODE, NEXT_HOP_ROUTING_MODE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scope" /></td>
@@ -236,7 +257,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The type of the customer managed gateway. This field is required. If unspecified, an error is returned.</td>
+    <td>Immutable. The type of the customer managed gateway. This field is required. If unspecified, an error is returned. (TYPE_UNSPECIFIED, OPEN_MESH, SECURE_WEB_GATEWAY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -369,6 +390,8 @@ Gets details of a single Gateway.
 SELECT
 name,
 addresses,
+allPorts,
+allowGlobalAccess,
 certificateUrls,
 createTime,
 description,
@@ -400,6 +423,8 @@ Lists Gateways in a given project and location.
 SELECT
 name,
 addresses,
+allPorts,
+allowGlobalAccess,
 certificateUrls,
 createTime,
 description,
@@ -442,41 +467,45 @@ Creates a new Gateway in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.gateways (
-data__network,
 data__name,
-data__certificateUrls,
-data__addresses,
-data__description,
-data__subnetwork,
-data__routingMode,
 data__labels,
-data__serverTlsPolicy,
-data__envoyHeaders,
+data__description,
 data__type,
-data__ipVersion,
+data__addresses,
 data__ports,
-data__gatewaySecurityPolicy,
+data__allPorts,
 data__scope,
+data__serverTlsPolicy,
+data__certificateUrls,
+data__gatewaySecurityPolicy,
+data__network,
+data__subnetwork,
+data__ipVersion,
+data__envoyHeaders,
+data__routingMode,
+data__allowGlobalAccess,
 projectsId,
 locationsId,
 gatewayId
 )
 SELECT 
-'{{ network }}',
 '{{ name }}',
-'{{ certificateUrls }}',
-'{{ addresses }}',
-'{{ description }}',
-'{{ subnetwork }}',
-'{{ routingMode }}',
 '{{ labels }}',
-'{{ serverTlsPolicy }}',
-'{{ envoyHeaders }}',
+'{{ description }}',
 '{{ type }}',
-'{{ ipVersion }}',
+'{{ addresses }}',
 '{{ ports }}',
-'{{ gatewaySecurityPolicy }}',
+{{ allPorts }},
 '{{ scope }}',
+'{{ serverTlsPolicy }}',
+'{{ certificateUrls }}',
+'{{ gatewaySecurityPolicy }}',
+'{{ network }}',
+'{{ subnetwork }}',
+'{{ ipVersion }}',
+'{{ envoyHeaders }}',
+'{{ routingMode }}',
+{{ allowGlobalAccess }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewayId }}'
@@ -491,98 +520,94 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: gateways
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the gateways resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the gateways resource.
-    - name: network
-      value: string
-      description: >
-        Optional. The relative resource name identifying the VPC network that is using this configuration. For example: `projects/*/global/networks/network-1`. Currently, this field is specific to gateways of type 'SECURE_WEB_GATEWAY'.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. Name of the Gateway resource. It matches pattern `projects/*/locations/*/gateways/`.
-        
-    - name: certificateUrls
-      value: array
-      description: >
-        Optional. A fully-qualified Certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection. This feature only applies to gateways of type 'SECURE_WEB_GATEWAY'.
-        
-    - name: addresses
-      value: array
-      description: >
-        Optional. Zero or one IPv4 or IPv6 address on which the Gateway will receive the traffic. When no address is provided, an IP from the subnetwork is allocated This field only applies to gateways of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A free-text description of the resource. Max length 1024 characters.
-        
-    - name: subnetwork
-      value: string
-      description: >
-        Optional. The relative resource name identifying the subnetwork in which this SWG is allocated. For example: `projects/*/regions/us-central1/subnetworks/network-1` Currently, this field is specific to gateways of type 'SECURE_WEB_GATEWAY".
-        
-    - name: routingMode
-      value: string
-      description: >
-        Optional. The routing mode of the Gateway. This field is configurable only for gateways of type SECURE_WEB_GATEWAY. This field is required for gateways of type SECURE_WEB_GATEWAY.
-        
-      valid_values: ['EXPLICIT_ROUTING_MODE', 'NEXT_HOP_ROUTING_MODE']
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the Gateway resource. It matches pattern \`projects/*/locations/*/gateways/\`.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Set of label tags associated with the Gateway resource.
-        
-    - name: serverTlsPolicy
-      value: string
-      description: >
-        Optional. A fully-qualified ServerTLSPolicy URL reference. Specifies how TLS traffic is terminated. If empty, TLS termination is disabled.
-        
-    - name: envoyHeaders
-      value: string
-      description: >
-        Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.
-        
-      valid_values: ['ENVOY_HEADERS_UNSPECIFIED', 'NONE', 'DEBUG_HEADERS']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A free-text description of the resource. Max length 1024 characters.
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Immutable. The type of the customer managed gateway. This field is required. If unspecified, an error is returned.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'OPEN_MESH', 'SECURE_WEB_GATEWAY']
-    - name: ipVersion
-      value: string
-      description: >
-        Optional. The IP Version that will be used by this gateway. Valid options are IPV4 or IPV6. Default is IPV4.
-        
-      valid_values: ['IP_VERSION_UNSPECIFIED', 'IPV4', 'IPV6']
+    - name: addresses
+      value:
+        - "{{ addresses }}"
+      description: |
+        Optional. Zero or one IPv4 or IPv6 address on which the Gateway will receive the traffic. When no address is provided, an IP from the subnetwork is allocated This field only applies to gateways of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6.
     - name: ports
-      value: array
-      description: >
+      value:
+        - {{ ports }}
+      description: |
         Required. One or more port numbers (1-65535), on which the Gateway will receive traffic. The proxy binds to the specified ports. Gateways of type 'SECURE_WEB_GATEWAY' are limited to 5 ports. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6 and support multiple ports.
-        
-    - name: gatewaySecurityPolicy
-      value: string
-      description: >
-        Optional. A fully-qualified GatewaySecurityPolicy URL reference. Defines how a server should apply security policy to inbound (VM to Proxy) initiated connections. For example: `projects/*/locations/*/gatewaySecurityPolicies/swg-policy`. This policy is specific to gateways of type 'SECURE_WEB_GATEWAY'.
-        
+    - name: allPorts
+      value: {{ allPorts }}
+      description: |
+        Optional. If true, the Gateway will listen on all ports. This is mutually exclusive with the \`ports\` field. This field only applies to gateways of type 'SECURE_WEB_GATEWAY'.
     - name: scope
-      value: string
-      description: >
+      value: "{{ scope }}"
+      description: |
         Optional. Scope determines how configuration across multiple Gateway instances are merged. The configuration for multiple Gateway instances with the same scope will be merged as presented as a single configuration to the proxy/load balancer. Max length 64 characters. Scope should start with a letter and can only have letters, numbers, hyphens.
-        
+    - name: serverTlsPolicy
+      value: "{{ serverTlsPolicy }}"
+      description: |
+        Optional. A fully-qualified ServerTLSPolicy URL reference. Specifies how TLS traffic is terminated. If empty, TLS termination is disabled.
+    - name: certificateUrls
+      value:
+        - "{{ certificateUrls }}"
+      description: |
+        Optional. A fully-qualified Certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection. This feature only applies to gateways of type 'SECURE_WEB_GATEWAY'.
+    - name: gatewaySecurityPolicy
+      value: "{{ gatewaySecurityPolicy }}"
+      description: |
+        Optional. A fully-qualified GatewaySecurityPolicy URL reference. Defines how a server should apply security policy to inbound (VM to Proxy) initiated connections. For example: \`projects/*/locations/*/gatewaySecurityPolicies/swg-policy\`. This policy is specific to gateways of type 'SECURE_WEB_GATEWAY'.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Optional. The relative resource name identifying the VPC network that is using this configuration. For example: \`projects/*/global/networks/network-1\`. Currently, this field is specific to gateways of type 'SECURE_WEB_GATEWAY'.
+    - name: subnetwork
+      value: "{{ subnetwork }}"
+      description: |
+        Optional. The relative resource name identifying the subnetwork in which this SWG is allocated. For example: \`projects/*/regions/us-central1/subnetworks/network-1\` Currently, this field is specific to gateways of type 'SECURE_WEB_GATEWAY".
+    - name: ipVersion
+      value: "{{ ipVersion }}"
+      description: |
+        Optional. The IP Version that will be used by this gateway. Valid options are IPV4 or IPV6. Default is IPV4.
+      valid_values: ['IP_VERSION_UNSPECIFIED', 'IPV4', 'IPV6']
+    - name: envoyHeaders
+      value: "{{ envoyHeaders }}"
+      description: |
+        Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.
+      valid_values: ['ENVOY_HEADERS_UNSPECIFIED', 'NONE', 'DEBUG_HEADERS']
+    - name: routingMode
+      value: "{{ routingMode }}"
+      description: |
+        Optional. The routing mode of the Gateway. This field is configurable only for gateways of type SECURE_WEB_GATEWAY. This field is required for gateways of type SECURE_WEB_GATEWAY.
+      valid_values: ['EXPLICIT_ROUTING_MODE', 'NEXT_HOP_ROUTING_MODE']
+    - name: allowGlobalAccess
+      value: {{ allowGlobalAccess }}
+      description: |
+        Optional. If true, the gateway will allow traffic from clients outside of the region where the gateway is located. This field is configurable only for gateways of type SECURE_WEB_GATEWAY.
     - name: gatewayId
-      value: string
-```
+      value: "{{ gatewayId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -602,21 +627,23 @@ Updates the parameters of a single Gateway.
 ```sql
 UPDATE google.networkservices.gateways
 SET 
-data__network = '{{ network }}',
 data__name = '{{ name }}',
-data__certificateUrls = '{{ certificateUrls }}',
-data__addresses = '{{ addresses }}',
-data__description = '{{ description }}',
-data__subnetwork = '{{ subnetwork }}',
-data__routingMode = '{{ routingMode }}',
 data__labels = '{{ labels }}',
-data__serverTlsPolicy = '{{ serverTlsPolicy }}',
-data__envoyHeaders = '{{ envoyHeaders }}',
+data__description = '{{ description }}',
 data__type = '{{ type }}',
-data__ipVersion = '{{ ipVersion }}',
+data__addresses = '{{ addresses }}',
 data__ports = '{{ ports }}',
+data__allPorts = {{ allPorts }},
+data__scope = '{{ scope }}',
+data__serverTlsPolicy = '{{ serverTlsPolicy }}',
+data__certificateUrls = '{{ certificateUrls }}',
 data__gatewaySecurityPolicy = '{{ gatewaySecurityPolicy }}',
-data__scope = '{{ scope }}'
+data__network = '{{ network }}',
+data__subnetwork = '{{ subnetwork }}',
+data__ipVersion = '{{ ipVersion }}',
+data__envoyHeaders = '{{ envoyHeaders }}',
+data__routingMode = '{{ routingMode }}',
+data__allowGlobalAccess = {{ allowGlobalAccess }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

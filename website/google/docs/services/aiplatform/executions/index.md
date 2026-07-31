@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>executions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>executions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="executions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.executions" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of this Execution. This is a property of the Execution, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines) and the system does not prescribe or check the validity of state transitions.</td>
+    <td>The state of this Execution. This is a property of the Execution, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines) and the system does not prescribe or check the validity of state transitions. (STATE_UNSPECIFIED, NEW, RUNNING, COMPLETE, FAILED, CACHED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of this Execution. This is a property of the Execution, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines) and the system does not prescribe or check the validity of state transitions.</td>
+    <td>The state of this Execution. This is a property of the Execution, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines) and the system does not prescribe or check the validity of state transitions. (STATE_UNSPECIFIED, NEW, RUNNING, COMPLETE, FAILED, CACHED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Executions in the MetadataStore.</td>
 </tr>
 <tr>
@@ -218,7 +219,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a stored Execution.</td>
 </tr>
 <tr>
@@ -229,18 +230,18 @@ The following methods are available for this resource:
     <td>Deletes an Execution.</td>
 </tr>
 <tr>
-    <td><a href="#add_execution_events"><CopyableCode code="add_execution_events" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td></td>
-    <td>Adds Events to the specified Execution. An Event indicates whether an Artifact was used as an input or output for an Execution. If an Event already exists between the Execution and the Artifact, the Event is skipped.</td>
-</tr>
-<tr>
     <td><a href="#purge"><CopyableCode code="purge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
     <td></td>
     <td>Purges Executions.</td>
+</tr>
+<tr>
+    <td><a href="#add_execution_events"><CopyableCode code="add_execution_events" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
+    <td></td>
+    <td>Adds Events to the specified Execution. An Event indicates whether an Artifact was used as an input or output for an Execution. If an Event already exists between the Execution and the Artifact, the Event is skipped.</td>
 </tr>
 </tbody>
 </table>
@@ -376,10 +377,10 @@ FROM google.aiplatform.executions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND metadataStoresId = '{{ metadataStoresId }}' -- required
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -402,13 +403,13 @@ Creates an Execution associated with a MetadataStore.
 ```sql
 INSERT INTO google.aiplatform.executions (
 data__description,
-data__schemaVersion,
-data__etag,
-data__metadata,
-data__schemaTitle,
 data__state,
+data__metadata,
 data__labels,
+data__schemaVersion,
+data__schemaTitle,
 data__displayName,
+data__etag,
 projectsId,
 locationsId,
 metadataStoresId,
@@ -416,13 +417,13 @@ executionId
 )
 SELECT 
 '{{ description }}',
-'{{ schemaVersion }}',
-'{{ etag }}',
-'{{ metadata }}',
-'{{ schemaTitle }}',
 '{{ state }}',
+'{{ metadata }}',
 '{{ labels }}',
+'{{ schemaVersion }}',
+'{{ schemaTitle }}',
 '{{ displayName }}',
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataStoresId }}',
@@ -444,63 +445,55 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: executions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the executions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the executions resource.
     - name: metadataStoresId
-      value: string
+      value: "{{ metadataStoresId }}"
       description: Required parameter for the executions resource.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Description of the Execution
-        
-    - name: schemaVersion
-      value: string
-      description: >
-        The version of the schema in `schema_title` to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-        
-    - name: etag
-      value: string
-      description: >
-        An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: metadata
-      value: object
-      description: >
-        Properties of the Execution. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
-        
-    - name: schemaTitle
-      value: string
-      description: >
-        The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-        
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         The state of this Execution. This is a property of the Execution, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines) and the system does not prescribe or check the validity of state transitions.
-        
       valid_values: ['STATE_UNSPECIFIED', 'NEW', 'RUNNING', 'COMPLETE', 'FAILED', 'CACHED', 'CANCELLED']
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Properties of the Execution. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         The labels with user-defined metadata to organize your Executions. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Execution (System labels are excluded).
-        
+    - name: schemaVersion
+      value: "{{ schemaVersion }}"
+      description: |
+        The version of the schema in \`schema_title\` to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+    - name: schemaTitle
+      value: "{{ schemaTitle }}"
+      description: |
+        The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         User provided display name of the Execution. May be up to 128 Unicode characters.
-        
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: executionId
-      value: string
-```
+      value: "{{ executionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -521,20 +514,20 @@ Updates a stored Execution.
 UPDATE google.aiplatform.executions
 SET 
 data__description = '{{ description }}',
-data__schemaVersion = '{{ schemaVersion }}',
-data__etag = '{{ etag }}',
-data__metadata = '{{ metadata }}',
-data__schemaTitle = '{{ schemaTitle }}',
 data__state = '{{ state }}',
+data__metadata = '{{ metadata }}',
 data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}'
+data__schemaVersion = '{{ schemaVersion }}',
+data__schemaTitle = '{{ schemaTitle }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND metadataStoresId = '{{ metadataStoresId }}' --required
 AND executionsId = '{{ executionsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 createTime,
@@ -580,12 +573,29 @@ AND etag = '{{ etag }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="add_execution_events"
+    defaultValue="purge"
     values={[
-        { label: 'add_execution_events', value: 'add_execution_events' },
-        { label: 'purge', value: 'purge' }
+        { label: 'purge', value: 'purge' },
+        { label: 'add_execution_events', value: 'add_execution_events' }
     ]}
 >
+<TabItem value="purge">
+
+Purges Executions.
+
+```sql
+EXEC google.aiplatform.executions.purge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@metadataStoresId='{{ metadataStoresId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"force": {{ force }}
+}'
+;
+```
+</TabItem>
 <TabItem value="add_execution_events">
 
 Adds Events to the specified Execution. An Event indicates whether an Artifact was used as an input or output for an Execution. If an Event already exists between the Execution and the Artifact, the Event is skipped.
@@ -599,23 +609,6 @@ EXEC google.aiplatform.executions.add_execution_events
 @@json=
 '{
 "events": "{{ events }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="purge">
-
-Purges Executions.
-
-```sql
-EXEC google.aiplatform.executions.purge 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@metadataStoresId='{{ metadataStoresId }}' --required 
-@@json=
-'{
-"force": {{ force }}, 
-"filter": "{{ filter }}"
 }'
 ;
 ```

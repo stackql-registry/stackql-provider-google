@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>drives</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>drives</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="drives" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev3.drives" /></td></tr>
 </tbody></table>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-q"><code>q</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a></td>
+    <td><a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-q"><code>q</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td> Lists the user's shared drives. This method accepts the `q` parameter, which is a search query combining one or more search terms. For more information, see the [Search for shared drives](https://developers.google.com/workspace/drive/api/guides/search-shareddrives) guide.</td>
 </tr>
 <tr>
@@ -239,18 +240,18 @@ The following methods are available for this resource:
     <td>Permanently deletes a shared drive for which the user is an `organizer`. The shared drive cannot contain any untrashed items. For more information, see [Manage shared drives](https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).</td>
 </tr>
 <tr>
-    <td><a href="#hide"><CopyableCode code="hide" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-driveId"><code>driveId</code></a></td>
-    <td></td>
-    <td>Hides a shared drive from the default view. For more information, see [Manage shared drives](https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).</td>
-</tr>
-<tr>
     <td><a href="#unhide"><CopyableCode code="unhide" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-driveId"><code>driveId</code></a></td>
     <td></td>
     <td>Restores a shared drive to the default view. For more information, see [Manage shared drives](https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).</td>
+</tr>
+<tr>
+    <td><a href="#hide"><CopyableCode code="hide" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-driveId"><code>driveId</code></a></td>
+    <td></td>
+    <td>Hides a shared drive from the default view. For more information, see [Manage shared drives](https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).</td>
 </tr>
 </tbody>
 </table>
@@ -358,10 +359,10 @@ orgUnitId,
 restrictions,
 themeId
 FROM googleworkspace.drivev3.drives
-WHERE pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+WHERE useDomainAdminAccess = '{{ useDomainAdminAccess }}'
 AND q = '{{ q }}'
-AND useDomainAdminAccess = '{{ useDomainAdminAccess }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -383,33 +384,33 @@ Creates a shared drive. For more information, see [Manage shared drives](https:/
 
 ```sql
 INSERT INTO googleworkspace.drivev3.drives (
-data__id,
-data__name,
-data__colorRgb,
-data__kind,
 data__backgroundImageLink,
-data__capabilities,
-data__themeId,
-data__backgroundImageFile,
 data__createdTime,
-data__hidden,
+data__colorRgb,
+data__capabilities,
+data__name,
 data__restrictions,
+data__themeId,
+data__kind,
+data__hidden,
 data__orgUnitId,
+data__id,
+data__backgroundImageFile,
 requestId
 )
 SELECT 
-'{{ id }}',
-'{{ name }}',
-'{{ colorRgb }}',
-'{{ kind }}',
 '{{ backgroundImageLink }}',
-'{{ capabilities }}',
-'{{ themeId }}',
-'{{ backgroundImageFile }}',
 '{{ createdTime }}',
-{{ hidden }},
+'{{ colorRgb }}',
+'{{ capabilities }}',
+'{{ name }}',
 '{{ restrictions }}',
+'{{ themeId }}',
+'{{ kind }}',
+{{ hidden }},
 '{{ orgUnitId }}',
+'{{ id }}',
+'{{ backgroundImageFile }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -429,75 +430,96 @@ themeId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: drives
   props:
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
       description: Required parameter for the drives resource.
-    - name: id
-      value: string
-      description: >
-        Output only. The ID of this shared drive which is also the ID of the top level folder of this shared drive.
-        
-    - name: name
-      value: string
-      description: >
-        The name of this shared drive.
-        
-    - name: colorRgb
-      value: string
-      description: >
-        The color of this shared drive as an RGB hex string. It can only be set on a `drive.drives.update` request that does not set `themeId`.
-        
-    - name: kind
-      value: string
-      description: >
-        Output only. Identifies what kind of resource this is. Value: the fixed string `"drive#drive"`.
-        
-      default: drive#drive
     - name: backgroundImageLink
-      value: string
-      description: >
+      value: "{{ backgroundImageLink }}"
+      description: |
         Output only. A short-lived link to this shared drive's background image.
-        
-    - name: capabilities
-      value: object
-      description: >
-        Output only. Capabilities the current user has on this shared drive.
-        
-    - name: themeId
-      value: string
-      description: >
-        The ID of the theme from which the background image and color will be set. The set of possible `driveThemes` can be retrieved from a `drive.about.get` response. When not specified on a `drive.drives.create` request, a random theme is chosen from which the background image and color are set. This is a write-only field; it can only be set on requests that don't set `colorRgb` or `backgroundImageFile`.
-        
-    - name: backgroundImageFile
-      value: object
-      description: >
-        An image file and cropping parameters from which a background image for this shared drive is set. This is a write only field; it can only be set on `drive.drives.update` requests that don't set `themeId`. When specified, all fields of the `backgroundImageFile` must be set.
-        
     - name: createdTime
-      value: string
-      description: >
+      value: "{{ createdTime }}"
+      description: |
         The time at which the shared drive was created (RFC 3339 date-time).
-        
-    - name: hidden
-      value: boolean
-      description: >
-        Whether the shared drive is hidden from default view.
-        
+    - name: colorRgb
+      value: "{{ colorRgb }}"
+      description: |
+        The color of this shared drive as an RGB hex string. It can only be set on a \`drive.drives.update\` request that does not set \`themeId\`.
+    - name: capabilities
+      description: |
+        Output only. Capabilities the current user has on this shared drive.
+      value:
+        canDeleteDrive: {{ canDeleteDrive }}
+        canChangeCopyRequiresWriterPermissionRestriction: {{ canChangeCopyRequiresWriterPermissionRestriction }}
+        canManageMembers: {{ canManageMembers }}
+        canRenameDrive: {{ canRenameDrive }}
+        canChangeDriveMembersOnlyRestriction: {{ canChangeDriveMembersOnlyRestriction }}
+        canAddChildren: {{ canAddChildren }}
+        canEdit: {{ canEdit }}
+        canTrashChildren: {{ canTrashChildren }}
+        canResetDriveRestrictions: {{ canResetDriveRestrictions }}
+        canDownload: {{ canDownload }}
+        canChangeDownloadRestriction: {{ canChangeDownloadRestriction }}
+        canListChildren: {{ canListChildren }}
+        canChangeDomainUsersOnlyRestriction: {{ canChangeDomainUsersOnlyRestriction }}
+        canReadRevisions: {{ canReadRevisions }}
+        canRename: {{ canRename }}
+        canCopy: {{ canCopy }}
+        canShare: {{ canShare }}
+        canDeleteChildren: {{ canDeleteChildren }}
+        canChangeDriveBackground: {{ canChangeDriveBackground }}
+        canChangeSharingFoldersRequiresOrganizerPermissionRestriction: {{ canChangeSharingFoldersRequiresOrganizerPermissionRestriction }}
+        canComment: {{ canComment }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of this shared drive.
     - name: restrictions
-      value: object
-      description: >
-        A set of restrictions that apply to this shared drive or items inside this shared drive. Note that restrictions can't be set when creating a shared drive. To add a restriction, first create a shared drive and then use `drives.update` to add restrictions.
-        
+      description: |
+        A set of restrictions that apply to this shared drive or items inside this shared drive. Note that restrictions can't be set when creating a shared drive. To add a restriction, first create a shared drive and then use \`drives.update\` to add restrictions.
+      value:
+        downloadRestriction:
+          restrictedForReaders: {{ restrictedForReaders }}
+          restrictedForWriters: {{ restrictedForWriters }}
+        copyRequiresWriterPermission: {{ copyRequiresWriterPermission }}
+        sharingFoldersRequiresOrganizerPermission: {{ sharingFoldersRequiresOrganizerPermission }}
+        adminManagedRestrictions: {{ adminManagedRestrictions }}
+        driveMembersOnly: {{ driveMembersOnly }}
+        domainUsersOnly: {{ domainUsersOnly }}
+    - name: themeId
+      value: "{{ themeId }}"
+      description: |
+        The ID of the theme from which the background image and color will be set. The set of possible \`driveThemes\` can be retrieved from a \`drive.about.get\` response. When not specified on a \`drive.drives.create\` request, a random theme is chosen from which the background image and color are set. This is a write-only field; it can only be set on requests that don't set \`colorRgb\` or \`backgroundImageFile\`.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Output only. Identifies what kind of resource this is. Value: the fixed string \`"drive#drive"\`.
+      default: drive#drive
+    - name: hidden
+      value: {{ hidden }}
+      description: |
+        Whether the shared drive is hidden from default view.
     - name: orgUnitId
-      value: string
-      description: >
-        Output only. The organizational unit of this shared drive. This field is only populated on `drives.list` responses when the `useDomainAdminAccess` parameter is set to `true`.
-        
-```
+      value: "{{ orgUnitId }}"
+      description: |
+        Output only. The organizational unit of this shared drive. This field is only populated on \`drives.list\` responses when the \`useDomainAdminAccess\` parameter is set to \`true\`.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Output only. The ID of this shared drive which is also the ID of the top level folder of this shared drive.
+    - name: backgroundImageFile
+      description: |
+        An image file and cropping parameters from which a background image for this shared drive is set. This is a write only field; it can only be set on \`drive.drives.update\` requests that don't set \`themeId\`. When specified, all fields of the \`backgroundImageFile\` must be set.
+      value:
+        width: {{ width }}
+        id: "{{ id }}"
+        yCoordinate: {{ yCoordinate }}
+        xCoordinate: {{ xCoordinate }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -517,18 +539,18 @@ Updates the metadata for a shared drive. For more information, see [Manage share
 ```sql
 UPDATE googleworkspace.drivev3.drives
 SET 
-data__id = '{{ id }}',
-data__name = '{{ name }}',
-data__colorRgb = '{{ colorRgb }}',
-data__kind = '{{ kind }}',
 data__backgroundImageLink = '{{ backgroundImageLink }}',
-data__capabilities = '{{ capabilities }}',
-data__themeId = '{{ themeId }}',
-data__backgroundImageFile = '{{ backgroundImageFile }}',
 data__createdTime = '{{ createdTime }}',
-data__hidden = {{ hidden }},
+data__colorRgb = '{{ colorRgb }}',
+data__capabilities = '{{ capabilities }}',
+data__name = '{{ name }}',
 data__restrictions = '{{ restrictions }}',
-data__orgUnitId = '{{ orgUnitId }}'
+data__themeId = '{{ themeId }}',
+data__kind = '{{ kind }}',
+data__hidden = {{ hidden }},
+data__orgUnitId = '{{ orgUnitId }}',
+data__id = '{{ id }}',
+data__backgroundImageFile = '{{ backgroundImageFile }}'
 WHERE 
 driveId = '{{ driveId }}' --required
 AND useDomainAdminAccess = {{ useDomainAdminAccess}}
@@ -576,28 +598,28 @@ AND allowItemDeletion = '{{ allowItemDeletion }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="hide"
+    defaultValue="unhide"
     values={[
-        { label: 'hide', value: 'hide' },
-        { label: 'unhide', value: 'unhide' }
+        { label: 'unhide', value: 'unhide' },
+        { label: 'hide', value: 'hide' }
     ]}
 >
-<TabItem value="hide">
-
-Hides a shared drive from the default view. For more information, see [Manage shared drives](https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
-
-```sql
-EXEC googleworkspace.drivev3.drives.hide 
-@driveId='{{ driveId }}' --required
-;
-```
-</TabItem>
 <TabItem value="unhide">
 
 Restores a shared drive to the default view. For more information, see [Manage shared drives](https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
 
 ```sql
 EXEC googleworkspace.drivev3.drives.unhide 
+@driveId='{{ driveId }}' --required
+;
+```
+</TabItem>
+<TabItem value="hide">
+
+Hides a shared drive from the default view. For more information, see [Manage shared drives](https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
+
+```sql
+EXEC googleworkspace.drivev3.drives.hide 
 @driveId='{{ driveId }}' --required
 ;
 ```

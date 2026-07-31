@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>attachments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>attachments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="attachments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.attachments" /></td></tr>
 </tbody></table>
@@ -201,14 +202,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_envgroups_attachments_list"><CopyableCode code="organizations_envgroups_attachments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-envgroupsId"><code>envgroupsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all attachments of an environment group.</td>
 </tr>
 <tr>
     <td><a href="#organizations_instances_attachments_list"><CopyableCode code="organizations_instances_attachments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all attachments to an instance. **Note:** Not supported for Apigee hybrid.</td>
 </tr>
 <tr>
@@ -345,8 +346,8 @@ environmentGroupId
 FROM google.apigee.attachments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND envgroupsId = '{{ envgroupsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -362,8 +363,8 @@ environment
 FROM google.apigee.attachments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -386,14 +387,14 @@ Creates a new attachment of an environment to an environment group.
 
 ```sql
 INSERT INTO google.apigee.attachments (
-data__name,
 data__environment,
+data__name,
 organizationsId,
 envgroupsId
 )
 SELECT 
-'{{ name }}',
 '{{ environment }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ envgroupsId }}'
 RETURNING
@@ -430,30 +431,28 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: attachments
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the attachments resource.
     - name: envgroupsId
-      value: string
+      value: "{{ envgroupsId }}"
       description: Required parameter for the attachments resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the attachments resource.
-    - name: name
-      value: string
-      description: >
-        ID of the environment group attachment.
-        
     - name: environment
-      value: string
-      description: >
+      value: "{{ environment }}"
+      description: |
         ID of the attached environment.
-        
-```
+    - name: name
+      value: "{{ name }}"
+      description: |
+        ID of the environment group attachment.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

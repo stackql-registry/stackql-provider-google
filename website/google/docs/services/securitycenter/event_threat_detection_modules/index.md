@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>event_threat_detection_modules
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>event_threat_detection_modules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="event_threat_detection_modules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.event_threat_detection_modules" /></td></tr>
 </tbody></table>
@@ -32,77 +33,13 @@ Creates, updates, deletes, gets or lists an <code>event_threat_detection_modules
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="folders_event_threat_detection_settings_custom_modules_list"
+    defaultValue="organizations_event_threat_detection_settings_custom_modules_list"
     values={[
-        { label: 'folders_event_threat_detection_settings_custom_modules_list', value: 'folders_event_threat_detection_settings_custom_modules_list' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_list', value: 'organizations_event_threat_detection_settings_custom_modules_list' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_list', value: 'projects_event_threat_detection_settings_custom_modules_list' }
+        { label: 'projects_event_threat_detection_settings_custom_modules_list', value: 'projects_event_threat_detection_settings_custom_modules_list' },
+        { label: 'folders_event_threat_detection_settings_custom_modules_list', value: 'folders_event_threat_detection_settings_custom_modules_list' }
     ]}
 >
-<TabItem value="folders_event_threat_detection_settings_custom_modules_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The resource name of the Event Threat Detection custom module. Its format is: * `organizations/&#123;organization&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`. * `folders/&#123;folder&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`. * `projects/&#123;project&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ancestorModule" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The closest ancestor module that this module inherits the enablement state from. The format is the same as the EventThreatDetectionCustomModule resource name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cloudProvider" /></td>
-    <td><code>string</code></td>
-    <td>The cloud provider of the custom module.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="config" /></td>
-    <td><code>object</code></td>
-    <td>Config for the module. For the resident module, its config value is defined at this level. For the inherited module, its config value is inherited from the ancestor module.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>The description for the module.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The human readable name to be displayed for the module.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="enablementState" /></td>
-    <td><code>string</code></td>
-    <td>The state of enablement for the module at the given level of the hierarchy.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastEditor" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The editor the module was last updated by.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Type for the module. e.g. CONFIGURABLE_BAD_IP.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time the module was last updated.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_list">
 
 <table>
@@ -117,52 +54,52 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the Event Threat Detection custom module. Its format is: * `organizations/&#123;organization&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`. * `folders/&#123;folder&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`. * `projects/&#123;project&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="ancestorModule" /></td>
     <td><code>string</code></td>
-    <td>Output only. The closest ancestor module that this module inherits the enablement state from. The format is the same as the EventThreatDetectionCustomModule resource name.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudProvider" /></td>
     <td><code>string</code></td>
-    <td>The cloud provider of the custom module.</td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="config" /></td>
     <td><code>object</code></td>
-    <td>Config for the module. For the resident module, its config value is defined at this level. For the inherited module, its config value is inherited from the ancestor module.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description for the module.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>The human readable name to be displayed for the module.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="enablementState" /></td>
     <td><code>string</code></td>
-    <td>The state of enablement for the module at the given level of the hierarchy.</td>
+    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastEditor" /></td>
     <td><code>string</code></td>
-    <td>Output only. The editor the module was last updated by.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Type for the module. e.g. CONFIGURABLE_BAD_IP.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time the module was last updated.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -181,52 +118,116 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the Event Threat Detection custom module. Its format is: * `organizations/&#123;organization&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`. * `folders/&#123;folder&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`. * `projects/&#123;project&#125;/eventThreatDetectionSettings/customModules/&#123;module&#125;`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="ancestorModule" /></td>
     <td><code>string</code></td>
-    <td>Output only. The closest ancestor module that this module inherits the enablement state from. The format is the same as the EventThreatDetectionCustomModule resource name.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudProvider" /></td>
     <td><code>string</code></td>
-    <td>The cloud provider of the custom module.</td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="config" /></td>
     <td><code>object</code></td>
-    <td>Config for the module. For the resident module, its config value is defined at this level. For the inherited module, its config value is inherited from the ancestor module.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description for the module.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>The human readable name to be displayed for the module.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="enablementState" /></td>
     <td><code>string</code></td>
-    <td>The state of enablement for the module at the given level of the hierarchy.</td>
+    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastEditor" /></td>
     <td><code>string</code></td>
-    <td>Output only. The editor the module was last updated by.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Type for the module. e.g. CONFIGURABLE_BAD_IP.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time the module was last updated.</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_event_threat_detection_settings_custom_modules_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="ancestorModule" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudProvider" /></td>
+    <td><code>string</code></td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="config" /></td>
+    <td><code>object</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="enablementState" /></td>
+    <td><code>string</code></td>
+    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastEditor" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -249,67 +250,67 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_list"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.</td>
-</tr>
-<tr>
     <td><a href="#organizations_event_threat_detection_settings_custom_modules_list"><CopyableCode code="organizations_event_threat_detection_settings_custom_modules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_event_threat_detection_settings_custom_modules_list"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_create"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_list"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td></td>
-    <td>Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.</td>
 </tr>
 <tr>
     <td><a href="#organizations_event_threat_detection_settings_custom_modules_create"><CopyableCode code="organizations_event_threat_detection_settings_custom_modules_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_event_threat_detection_settings_custom_modules_create"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.</td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_delete"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_create"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
-    <td>Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_event_threat_detection_settings_custom_modules_delete"><CopyableCode code="organizations_event_threat_detection_settings_custom_modules_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
-    <td>Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_event_threat_detection_settings_custom_modules_delete"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
-    <td>Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_delete"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -363,16 +364,62 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="folders_event_threat_detection_settings_custom_modules_list"
+    defaultValue="organizations_event_threat_detection_settings_custom_modules_list"
     values={[
-        { label: 'folders_event_threat_detection_settings_custom_modules_list', value: 'folders_event_threat_detection_settings_custom_modules_list' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_list', value: 'organizations_event_threat_detection_settings_custom_modules_list' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_list', value: 'projects_event_threat_detection_settings_custom_modules_list' }
+        { label: 'projects_event_threat_detection_settings_custom_modules_list', value: 'projects_event_threat_detection_settings_custom_modules_list' },
+        { label: 'folders_event_threat_detection_settings_custom_modules_list', value: 'folders_event_threat_detection_settings_custom_modules_list' }
     ]}
 >
+<TabItem value="organizations_event_threat_detection_settings_custom_modules_list">
+
+Successful response
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+config,
+description,
+displayName,
+enablementState,
+lastEditor,
+type,
+updateTime
+FROM google.securitycenter.event_threat_detection_modules
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
+<TabItem value="projects_event_threat_detection_settings_custom_modules_list">
+
+Successful response
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+config,
+description,
+displayName,
+enablementState,
+lastEditor,
+type,
+updateTime
+FROM google.securitycenter.event_threat_detection_modules
+WHERE projectsId = '{{ projectsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
 <TabItem value="folders_event_threat_detection_settings_custom_modules_list">
 
-Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.
+Successful response
 
 ```sql
 SELECT
@@ -393,127 +440,43 @@ AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
-<TabItem value="organizations_event_threat_detection_settings_custom_modules_list">
-
-Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.
-
-```sql
-SELECT
-name,
-ancestorModule,
-cloudProvider,
-config,
-description,
-displayName,
-enablementState,
-lastEditor,
-type,
-updateTime
-FROM google.securitycenter.event_threat_detection_modules
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_event_threat_detection_settings_custom_modules_list">
-
-Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.
-
-```sql
-SELECT
-name,
-ancestorModule,
-cloudProvider,
-config,
-description,
-displayName,
-enablementState,
-lastEditor,
-type,
-updateTime
-FROM google.securitycenter.event_threat_detection_modules
-WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 </Tabs>
 
 
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="folders_event_threat_detection_settings_custom_modules_create"
+    defaultValue="organizations_event_threat_detection_settings_custom_modules_create"
     values={[
-        { label: 'folders_event_threat_detection_settings_custom_modules_create', value: 'folders_event_threat_detection_settings_custom_modules_create' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_create', value: 'organizations_event_threat_detection_settings_custom_modules_create' },
         { label: 'projects_event_threat_detection_settings_custom_modules_create', value: 'projects_event_threat_detection_settings_custom_modules_create' },
+        { label: 'folders_event_threat_detection_settings_custom_modules_create', value: 'folders_event_threat_detection_settings_custom_modules_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="folders_event_threat_detection_settings_custom_modules_create">
-
-Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.
-
-```sql
-INSERT INTO google.securitycenter.event_threat_detection_modules (
-data__enablementState,
-data__description,
-data__cloudProvider,
-data__displayName,
-data__name,
-data__type,
-data__config,
-foldersId
-)
-SELECT 
-'{{ enablementState }}',
-'{{ description }}',
-'{{ cloudProvider }}',
-'{{ displayName }}',
-'{{ name }}',
-'{{ type }}',
-'{{ config }}',
-'{{ foldersId }}'
-RETURNING
-name,
-ancestorModule,
-cloudProvider,
-config,
-description,
-displayName,
-enablementState,
-lastEditor,
-type,
-updateTime
-;
-```
-</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_create">
 
-Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.
+No description available.
 
 ```sql
 INSERT INTO google.securitycenter.event_threat_detection_modules (
-data__enablementState,
-data__description,
-data__cloudProvider,
-data__displayName,
 data__name,
-data__type,
 data__config,
+data__displayName,
+data__description,
+data__type,
+data__cloudProvider,
+data__enablementState,
 organizationsId
 )
 SELECT 
-'{{ enablementState }}',
-'{{ description }}',
-'{{ cloudProvider }}',
-'{{ displayName }}',
 '{{ name }}',
-'{{ type }}',
 '{{ config }}',
+'{{ displayName }}',
+'{{ description }}',
+'{{ type }}',
+'{{ cloudProvider }}',
+'{{ enablementState }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -531,28 +494,66 @@ updateTime
 </TabItem>
 <TabItem value="projects_event_threat_detection_settings_custom_modules_create">
 
-Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.
+No description available.
 
 ```sql
 INSERT INTO google.securitycenter.event_threat_detection_modules (
-data__enablementState,
-data__description,
-data__cloudProvider,
-data__displayName,
 data__name,
-data__type,
 data__config,
+data__displayName,
+data__description,
+data__type,
+data__cloudProvider,
+data__enablementState,
 projectsId
 )
 SELECT 
-'{{ enablementState }}',
-'{{ description }}',
-'{{ cloudProvider }}',
-'{{ displayName }}',
 '{{ name }}',
-'{{ type }}',
 '{{ config }}',
+'{{ displayName }}',
+'{{ description }}',
+'{{ type }}',
+'{{ cloudProvider }}',
+'{{ enablementState }}',
 '{{ projectsId }}'
+RETURNING
+name,
+ancestorModule,
+cloudProvider,
+config,
+description,
+displayName,
+enablementState,
+lastEditor,
+type,
+updateTime
+;
+```
+</TabItem>
+<TabItem value="folders_event_threat_detection_settings_custom_modules_create">
+
+No description available.
+
+```sql
+INSERT INTO google.securitycenter.event_threat_detection_modules (
+data__name,
+data__config,
+data__displayName,
+data__description,
+data__type,
+data__cloudProvider,
+data__enablementState,
+foldersId
+)
+SELECT 
+'{{ name }}',
+'{{ config }}',
+'{{ displayName }}',
+'{{ description }}',
+'{{ type }}',
+'{{ cloudProvider }}',
+'{{ enablementState }}',
+'{{ foldersId }}'
 RETURNING
 name,
 ancestorModule,
@@ -569,57 +570,36 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: event_threat_detection_modules
   props:
-    - name: foldersId
-      value: string
-      description: Required parameter for the event_threat_detection_modules resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the event_threat_detection_modules resource.
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the event_threat_detection_modules resource.
-    - name: enablementState
-      value: string
-      description: >
-        The state of enablement for the module at the given level of the hierarchy.
-        
-      valid_values: ['ENABLEMENT_STATE_UNSPECIFIED', 'ENABLED', 'DISABLED', 'INHERITED']
-    - name: description
-      value: string
-      description: >
-        The description for the module.
-        
-    - name: cloudProvider
-      value: string
-      description: >
-        The cloud provider of the custom module.
-        
-      valid_values: ['CLOUD_PROVIDER_UNSPECIFIED', 'GOOGLE_CLOUD_PLATFORM', 'AMAZON_WEB_SERVICES', 'MICROSOFT_AZURE']
-    - name: displayName
-      value: string
-      description: >
-        The human readable name to be displayed for the module.
-        
+    - name: foldersId
+      value: "{{ foldersId }}"
+      description: Required parameter for the event_threat_detection_modules resource.
     - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the Event Threat Detection custom module. Its format is: * `organizations/{organization}/eventThreatDetectionSettings/customModules/{module}`. * `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. * `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
-        
-    - name: type
-      value: string
-      description: >
-        Type for the module. e.g. CONFIGURABLE_BAD_IP.
-        
+      value: "{{ name }}"
     - name: config
-      value: object
-      description: >
-        Config for the module. For the resident module, its config value is defined at this level. For the inherited module, its config value is inherited from the ancestor module.
-        
-```
+      value: "{{ config }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: description
+      value: "{{ description }}"
+    - name: type
+      value: "{{ type }}"
+    - name: cloudProvider
+      value: "{{ cloudProvider }}"
+      valid_values: ['CLOUD_PROVIDER_UNSPECIFIED', 'GOOGLE_CLOUD_PLATFORM', 'AMAZON_WEB_SERVICES', 'MICROSOFT_AZURE']
+    - name: enablementState
+      value: "{{ enablementState }}"
+      valid_values: ['ENABLEMENT_STATE_UNSPECIFIED', 'ENABLED', 'DISABLED', 'INHERITED']
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -627,27 +607,16 @@ updateTime
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="folders_event_threat_detection_settings_custom_modules_delete"
+    defaultValue="organizations_event_threat_detection_settings_custom_modules_delete"
     values={[
-        { label: 'folders_event_threat_detection_settings_custom_modules_delete', value: 'folders_event_threat_detection_settings_custom_modules_delete' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_delete', value: 'organizations_event_threat_detection_settings_custom_modules_delete' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_delete', value: 'projects_event_threat_detection_settings_custom_modules_delete' }
+        { label: 'projects_event_threat_detection_settings_custom_modules_delete', value: 'projects_event_threat_detection_settings_custom_modules_delete' },
+        { label: 'folders_event_threat_detection_settings_custom_modules_delete', value: 'folders_event_threat_detection_settings_custom_modules_delete' }
     ]}
 >
-<TabItem value="folders_event_threat_detection_settings_custom_modules_delete">
-
-Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.
-
-```sql
-DELETE FROM google.securitycenter.event_threat_detection_modules
-WHERE foldersId = '{{ foldersId }}' --required
-AND customModulesId = '{{ customModulesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_delete">
 
-Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.
+No description available.
 
 ```sql
 DELETE FROM google.securitycenter.event_threat_detection_modules
@@ -658,11 +627,22 @@ AND customModulesId = '{{ customModulesId }}' --required
 </TabItem>
 <TabItem value="projects_event_threat_detection_settings_custom_modules_delete">
 
-Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.
+No description available.
 
 ```sql
 DELETE FROM google.securitycenter.event_threat_detection_modules
 WHERE projectsId = '{{ projectsId }}' --required
+AND customModulesId = '{{ customModulesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="folders_event_threat_detection_settings_custom_modules_delete">
+
+No description available.
+
+```sql
+DELETE FROM google.securitycenter.event_threat_detection_modules
+WHERE foldersId = '{{ foldersId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
 ;
 ```

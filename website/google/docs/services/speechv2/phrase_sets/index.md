@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>phrase_sets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>phrase_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="phrase_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.speechv2.phrase_sets" /></td></tr>
 </tbody></table>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The PhraseSet lifecycle state.</td>
+    <td>Output only. The PhraseSet lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -201,7 +202,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The PhraseSet lifecycle state.</td>
+    <td>Output only. The PhraseSet lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists PhraseSets.</td>
 </tr>
 <tr>
@@ -265,7 +266,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-phraseSetsId"><code>phraseSetsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes the PhraseSet.</td>
 </tr>
 <tr>
@@ -410,9 +411,9 @@ updateTime
 FROM google.speechv2.phrase_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -434,20 +435,20 @@ Creates a PhraseSet.
 
 ```sql
 INSERT INTO google.speechv2.phrase_sets (
-data__phrases,
-data__boost,
 data__displayName,
+data__phrases,
 data__annotations,
+data__boost,
 projectsId,
 locationsId,
 validateOnly,
 phraseSetId
 )
 SELECT 
-'{{ phrases }}',
-{{ boost }},
 '{{ displayName }}',
+'{{ phrases }}',
 '{{ annotations }}',
+{{ boost }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ validateOnly }}',
@@ -463,41 +464,39 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: phrase_sets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the phrase_sets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the phrase_sets resource.
-    - name: phrases
-      value: array
-      description: >
-        A list of word and phrases.
-        
-    - name: boost
-      value: number
-      description: >
-        Hint Boost. Positive value will increase the probability that a specific phrase will be recognized over other similar sounding phrases. The higher the boost, the higher the chance of false positive recognition as well. Valid `boost` values are between 0 (exclusive) and 20. We recommend using a binary search approach to finding the optimal value for your use case as well as adding phrases both with and without boost to your requests.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         User-settable, human-readable name for the PhraseSet. Must be 63 characters or less.
-        
+    - name: phrases
+      description: |
+        A list of word and phrases.
+      value:
+        - value: "{{ value }}"
+          boost: {{ boost }}
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Allows users to store small amounts of arbitrary data. Both the key and the value must be 63 characters or less each. At most 100 annotations.
-        
+    - name: boost
+      value: {{ boost }}
+      description: |
+        Hint Boost. Positive value will increase the probability that a specific phrase will be recognized over other similar sounding phrases. The higher the boost, the higher the chance of false positive recognition as well. Valid \`boost\` values are between 0 (exclusive) and 20. We recommend using a binary search approach to finding the optimal value for your use case as well as adding phrases both with and without boost to your requests.
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
     - name: phraseSetId
-      value: string
-```
+      value: "{{ phraseSetId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -517,10 +516,10 @@ Updates the PhraseSet.
 ```sql
 UPDATE google.speechv2.phrase_sets
 SET 
-data__phrases = '{{ phrases }}',
-data__boost = {{ boost }},
 data__displayName = '{{ displayName }}',
-data__annotations = '{{ annotations }}'
+data__phrases = '{{ phrases }}',
+data__annotations = '{{ annotations }}',
+data__boost = {{ boost }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -555,8 +554,8 @@ DELETE FROM google.speechv2.phrase_sets
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND phraseSetsId = '{{ phraseSetsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND allowMissing = '{{ allowMissing }}'
+AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
 ;
 ```

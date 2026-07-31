@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>examples</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>examples</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="examples" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.examples" /></td></tr>
 </tbody></table>
@@ -52,57 +53,57 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the playbook example. Format: `projects//locations//agents//playbooks//examples/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="actions" /></td>
     <td><code>array</code></td>
-    <td>Required. The ordered list of actions performed by the end user and the Dialogflow agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="conversationState" /></td>
     <td><code>string</code></td>
-    <td>Required. Example's output state.</td>
+    <td> (OUTPUT_STATE_UNSPECIFIED, OUTPUT_STATE_OK, OUTPUT_STATE_CANCELLED, OUTPUT_STATE_FAILED, OUTPUT_STATE_ESCALATED, OUTPUT_STATE_PENDING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp of initial example creation.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. The high level concise description of the example. The max number of characters is 200.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The display name of the example.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="languageCode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The language code of the example. If not specified, the agent's default language is used. Note: languages must be enabled in the agent before they can be used. Note: example's language code is not currently used in dialogflow agents.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="playbookInput" /></td>
     <td><code>object</code></td>
-    <td>Optional. The input to the playbook in the example. (id: GoogleCloudDialogflowCxV3PlaybookInput)</td>
+    <td> (id: GoogleCloudDialogflowCxV3PlaybookInput)</td>
 </tr>
 <tr>
     <td><CopyableCode code="playbookOutput" /></td>
     <td><code>object</code></td>
-    <td>Optional. The output of the playbook in the example. (id: GoogleCloudDialogflowCxV3PlaybookOutput)</td>
+    <td> (id: GoogleCloudDialogflowCxV3PlaybookOutput)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tokenCount" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. Estimated number of tokes current example takes when sent to the LLM.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Last time the example was updated.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -121,57 +122,57 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the playbook example. Format: `projects//locations//agents//playbooks//examples/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="actions" /></td>
     <td><code>array</code></td>
-    <td>Required. The ordered list of actions performed by the end user and the Dialogflow agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="conversationState" /></td>
     <td><code>string</code></td>
-    <td>Required. Example's output state.</td>
+    <td> (OUTPUT_STATE_UNSPECIFIED, OUTPUT_STATE_OK, OUTPUT_STATE_CANCELLED, OUTPUT_STATE_FAILED, OUTPUT_STATE_ESCALATED, OUTPUT_STATE_PENDING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp of initial example creation.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. The high level concise description of the example. The max number of characters is 200.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The display name of the example.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="languageCode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The language code of the example. If not specified, the agent's default language is used. Note: languages must be enabled in the agent before they can be used. Note: example's language code is not currently used in dialogflow agents.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="playbookInput" /></td>
     <td><code>object</code></td>
-    <td>Optional. The input to the playbook in the example. (id: GoogleCloudDialogflowCxV3PlaybookInput)</td>
+    <td> (id: GoogleCloudDialogflowCxV3PlaybookInput)</td>
 </tr>
 <tr>
     <td><CopyableCode code="playbookOutput" /></td>
     <td><code>object</code></td>
-    <td>Optional. The output of the playbook in the example. (id: GoogleCloudDialogflowCxV3PlaybookOutput)</td>
+    <td> (id: GoogleCloudDialogflowCxV3PlaybookOutput)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tokenCount" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. Estimated number of tokes current example takes when sent to the LLM.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Last time the example was updated.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -198,35 +199,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a>, <a href="#parameter-examplesId"><code>examplesId</code></a></td>
     <td></td>
-    <td>Retrieves the specified example.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_examples_list"><CopyableCode code="projects_locations_agents_playbooks_examples_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Returns a list of examples in the specified playbook.</td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_examples_create"><CopyableCode code="projects_locations_agents_playbooks_examples_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a></td>
     <td></td>
-    <td>Creates an example in the specified playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_examples_patch"><CopyableCode code="projects_locations_agents_playbooks_examples_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a>, <a href="#parameter-examplesId"><code>examplesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Update the specified example.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_examples_delete"><CopyableCode code="projects_locations_agents_playbooks_examples_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a>, <a href="#parameter-examplesId"><code>examplesId</code></a></td>
     <td></td>
-    <td>Deletes the specified example.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -303,7 +304,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_playbooks_examples_get">
 
-Retrieves the specified example.
+Successful response
 
 ```sql
 SELECT
@@ -329,7 +330,7 @@ AND examplesId = '{{ examplesId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_playbooks_examples_list">
 
-Returns a list of examples in the specified playbook.
+Successful response
 
 ```sql
 SELECT
@@ -349,9 +350,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND playbooksId = '{{ playbooksId }}' -- required
+AND languageCode = '{{ languageCode }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND languageCode = '{{ languageCode }}'
 ;
 ```
 </TabItem>
@@ -369,32 +370,32 @@ AND languageCode = '{{ languageCode }}'
 >
 <TabItem value="projects_locations_agents_playbooks_examples_create">
 
-Creates an example in the specified playbook.
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.examples (
-data__name,
-data__playbookInput,
 data__playbookOutput,
-data__actions,
 data__displayName,
-data__description,
 data__conversationState,
+data__name,
 data__languageCode,
+data__playbookInput,
+data__description,
+data__actions,
 projectsId,
 locationsId,
 agentsId,
 playbooksId
 )
 SELECT 
-'{{ name }}',
-'{{ playbookInput }}',
 '{{ playbookOutput }}',
-'{{ actions }}',
 '{{ displayName }}',
-'{{ description }}',
 '{{ conversationState }}',
+'{{ name }}',
 '{{ languageCode }}',
+'{{ playbookInput }}',
+'{{ description }}',
+'{{ actions }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -416,64 +417,70 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: examples
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the examples resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the examples resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the examples resource.
     - name: playbooksId
-      value: string
+      value: "{{ playbooksId }}"
       description: Required parameter for the examples resource.
-    - name: name
-      value: string
-      description: >
-        The unique identifier of the playbook example. Format: `projects//locations//agents//playbooks//examples/`.
-        
-    - name: playbookInput
-      value: object
-      description: >
-        Optional. The input to the playbook in the example.
-        
     - name: playbookOutput
-      value: object
-      description: >
-        Optional. The output of the playbook in the example.
-        
-    - name: actions
-      value: array
-      description: >
-        Required. The ordered list of actions performed by the end user and the Dialogflow agent.
-        
+      value:
+        executionSummary: "{{ executionSummary }}"
     - name: displayName
-      value: string
-      description: >
-        Required. The display name of the example.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. The high level concise description of the example. The max number of characters is 200.
-        
+      value: "{{ displayName }}"
     - name: conversationState
-      value: string
-      description: >
-        Required. Example's output state.
-        
+      value: "{{ conversationState }}"
       valid_values: ['OUTPUT_STATE_UNSPECIFIED', 'OUTPUT_STATE_OK', 'OUTPUT_STATE_CANCELLED', 'OUTPUT_STATE_FAILED', 'OUTPUT_STATE_ESCALATED', 'OUTPUT_STATE_PENDING']
+    - name: name
+      value: "{{ name }}"
     - name: languageCode
-      value: string
-      description: >
-        Optional. The language code of the example. If not specified, the agent's default language is used. Note: languages must be enabled in the agent before they can be used. Note: example's language code is not currently used in dialogflow agents.
-        
-```
+      value: "{{ languageCode }}"
+    - name: playbookInput
+      value:
+        precedingConversationSummary: "{{ precedingConversationSummary }}"
+    - name: description
+      value: "{{ description }}"
+    - name: actions
+      value:
+        - userUtterance:
+            text: "{{ text }}"
+          playbookInvocation:
+            displayName: "{{ displayName }}"
+            playbookOutput:
+              executionSummary: "{{ executionSummary }}"
+            playbook: "{{ playbook }}"
+            playbookState: "{{ playbookState }}"
+            playbookInput:
+              precedingConversationSummary: "{{ precedingConversationSummary }}"
+          playbookTransition:
+            playbook: "{{ playbook }}"
+            displayName: "{{ displayName }}"
+          agentUtterance:
+            text: "{{ text }}"
+          flowInvocation:
+            displayName: "{{ displayName }}"
+            flow: "{{ flow }}"
+            flowState: "{{ flowState }}"
+          flowTransition:
+            displayName: "{{ displayName }}"
+            flow: "{{ flow }}"
+          toolUse:
+            tool: "{{ tool }}"
+            displayName: "{{ displayName }}"
+            inputActionParameters: "{{ inputActionParameters }}"
+            action: "{{ action }}"
+            outputActionParameters: "{{ outputActionParameters }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -488,19 +495,19 @@ updateTime
 >
 <TabItem value="projects_locations_agents_playbooks_examples_patch">
 
-Update the specified example.
+No description available.
 
 ```sql
 UPDATE google.dialogflow.examples
 SET 
-data__name = '{{ name }}',
-data__playbookInput = '{{ playbookInput }}',
 data__playbookOutput = '{{ playbookOutput }}',
-data__actions = '{{ actions }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__conversationState = '{{ conversationState }}',
-data__languageCode = '{{ languageCode }}'
+data__name = '{{ name }}',
+data__languageCode = '{{ languageCode }}',
+data__playbookInput = '{{ playbookInput }}',
+data__description = '{{ description }}',
+data__actions = '{{ actions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -535,7 +542,7 @@ updateTime;
 >
 <TabItem value="projects_locations_agents_playbooks_examples_delete">
 
-Deletes the specified example.
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.examples

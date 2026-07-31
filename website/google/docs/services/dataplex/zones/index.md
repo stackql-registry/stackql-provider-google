@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>zones</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>zones</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="zones" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.zones" /></td></tr>
 </tbody></table>
@@ -92,12 +93,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the zone.</td>
+    <td>Output only. Current state of the zone. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The type of the zone.</td>
+    <td>Required. Immutable. The type of the zone. (TYPE_UNSPECIFIED, RAW, CURATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -166,12 +167,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the zone.</td>
+    <td>Output only. Current state of the zone. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The type of the zone.</td>
+    <td>Required. Immutable. The type of the zone. (TYPE_UNSPECIFIED, RAW, CURATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -214,14 +215,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_zones_list"><CopyableCode code="projects_locations_lakes_zones_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists zone resources in a lake.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_lakes_zones_create"><CopyableCode code="projects_locations_lakes_zones_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-zoneId"><code>zoneId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-zoneId"><code>zoneId</code></a></td>
     <td>Creates a zone resource within a lake.</td>
 </tr>
 <tr>
@@ -369,9 +370,9 @@ FROM google.dataplex.zones
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -394,30 +395,30 @@ Creates a zone resource within a lake.
 
 ```sql
 INSERT INTO google.dataplex.zones (
-data__displayName,
 data__labels,
-data__description,
-data__type,
+data__displayName,
 data__discoverySpec,
+data__type,
 data__resourceSpec,
+data__description,
 projectsId,
 locationsId,
 lakesId,
-zoneId,
-validateOnly
+validateOnly,
+zoneId
 )
 SELECT 
-'{{ displayName }}',
 '{{ labels }}',
-'{{ description }}',
-'{{ type }}',
+'{{ displayName }}',
 '{{ discoverySpec }}',
+'{{ type }}',
 '{{ resourceSpec }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakesId }}',
-'{{ zoneId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ zoneId }}'
 RETURNING
 name,
 done,
@@ -429,55 +430,64 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: zones
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the zones resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the zones resource.
     - name: lakesId
-      value: string
+      value: "{{ lakesId }}"
       description: Required parameter for the zones resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly display name.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. User defined labels for the zone.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the zone.
-        
-    - name: type
-      value: string
-      description: >
-        Required. Immutable. The type of the zone.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'RAW', 'CURATED']
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
     - name: discoverySpec
-      value: object
-      description: >
+      description: |
         Optional. Specification of the discovery feature applied to data in this zone.
-        
+      value:
+        excludePatterns:
+          - "{{ excludePatterns }}"
+        schedule: "{{ schedule }}"
+        csvOptions:
+          headerRows: {{ headerRows }}
+          disableTypeInference: {{ disableTypeInference }}
+          delimiter: "{{ delimiter }}"
+          encoding: "{{ encoding }}"
+        includePatterns:
+          - "{{ includePatterns }}"
+        enabled: {{ enabled }}
+        jsonOptions:
+          encoding: "{{ encoding }}"
+          disableTypeInference: {{ disableTypeInference }}
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. Immutable. The type of the zone.
+      valid_values: ['TYPE_UNSPECIFIED', 'RAW', 'CURATED']
     - name: resourceSpec
-      value: object
-      description: >
+      description: |
         Required. Specification of the resources that are referenced by the assets within this zone.
-        
-    - name: zoneId
-      value: string
+      value:
+        locationType: "{{ locationType }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the zone.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: zoneId
+      value: "{{ zoneId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -497,12 +507,12 @@ Updates a zone resource.
 ```sql
 UPDATE google.dataplex.zones
 SET 
-data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__type = '{{ type }}',
+data__displayName = '{{ displayName }}',
 data__discoverySpec = '{{ discoverySpec }}',
-data__resourceSpec = '{{ resourceSpec }}'
+data__type = '{{ type }}',
+data__resourceSpec = '{{ resourceSpec }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

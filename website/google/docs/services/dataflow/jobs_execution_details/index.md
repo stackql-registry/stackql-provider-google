@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>jobs_execution_details</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>jobs_execution_details</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="jobs_execution_details" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataflow.jobs_execution_details" /></td></tr>
 </tbody></table>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of this stage.</td>
+    <td>State of this stage. (EXECUTION_STATE_UNKNOWN, EXECUTION_STATE_NOT_STARTED, EXECUTION_STATE_RUNNING, EXECUTION_STATE_SUCCEEDED, EXECUTION_STATE_FAILED, EXECUTION_STATE_CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stragglerSummary" /></td>

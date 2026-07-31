@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>valued_resources</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>valued_resources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="valued_resources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.valued_resources" /></td></tr>
 </tbody></table>
@@ -54,37 +55,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Valued resource name, for example, e.g.: `organizations/123/simulations/456/valuedResources/789`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Human-readable name of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="exposedScore" /></td>
     <td><code>number (double)</code></td>
-    <td>Exposed score for this valued resource. A value of 0 means no exposure was detected exposure.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
-    <td>The [full resource name](https://cloud.google.com/apis/design/resource_names#full_resource_name) of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceType" /></td>
     <td><code>string</code></td>
-    <td>The [resource type](https://cloud.google.com/asset-inventory/docs/supported-asset-types) of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValue" /></td>
     <td><code>string</code></td>
-    <td>How valuable this resource is.</td>
+    <td> (RESOURCE_VALUE_UNSPECIFIED, RESOURCE_VALUE_LOW, RESOURCE_VALUE_MEDIUM, RESOURCE_VALUE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValueConfigsUsed" /></td>
     <td><code>array</code></td>
-    <td>List of resource value configurations' metadata used to determine the value of this resource. Maximum of 100.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -103,37 +104,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Valued resource name, for example, e.g.: `organizations/123/simulations/456/valuedResources/789`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Human-readable name of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="exposedScore" /></td>
     <td><code>number (double)</code></td>
-    <td>Exposed score for this valued resource. A value of 0 means no exposure was detected exposure.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
-    <td>The [full resource name](https://cloud.google.com/apis/design/resource_names#full_resource_name) of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceType" /></td>
     <td><code>string</code></td>
-    <td>The [resource type](https://cloud.google.com/asset-inventory/docs/supported-asset-types) of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValue" /></td>
     <td><code>string</code></td>
-    <td>How valuable this resource is.</td>
+    <td> (RESOURCE_VALUE_UNSPECIFIED, RESOURCE_VALUE_LOW, RESOURCE_VALUE_MEDIUM, RESOURCE_VALUE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValueConfigsUsed" /></td>
     <td><code>array</code></td>
-    <td>List of resource value configurations' metadata used to determine the value of this resource. Maximum of 100.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -152,37 +153,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Valued resource name, for example, e.g.: `organizations/123/simulations/456/valuedResources/789`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Human-readable name of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="exposedScore" /></td>
     <td><code>number (double)</code></td>
-    <td>Exposed score for this valued resource. A value of 0 means no exposure was detected exposure.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
-    <td>The [full resource name](https://cloud.google.com/apis/design/resource_names#full_resource_name) of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceType" /></td>
     <td><code>string</code></td>
-    <td>The [resource type](https://cloud.google.com/asset-inventory/docs/supported-asset-types) of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValue" /></td>
     <td><code>string</code></td>
-    <td>How valuable this resource is.</td>
+    <td> (RESOURCE_VALUE_UNSPECIFIED, RESOURCE_VALUE_LOW, RESOURCE_VALUE_MEDIUM, RESOURCE_VALUE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValueConfigsUsed" /></td>
     <td><code>array</code></td>
-    <td>List of resource value configurations' metadata used to determine the value of this resource. Maximum of 100.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -201,37 +202,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Valued resource name, for example, e.g.: `organizations/123/simulations/456/valuedResources/789`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Human-readable name of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="exposedScore" /></td>
     <td><code>number (double)</code></td>
-    <td>Exposed score for this valued resource. A value of 0 means no exposure was detected exposure.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
-    <td>The [full resource name](https://cloud.google.com/apis/design/resource_names#full_resource_name) of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceType" /></td>
     <td><code>string</code></td>
-    <td>The [resource type](https://cloud.google.com/asset-inventory/docs/supported-asset-types) of the valued resource.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValue" /></td>
     <td><code>string</code></td>
-    <td>How valuable this resource is.</td>
+    <td> (RESOURCE_VALUE_UNSPECIFIED, RESOURCE_VALUE_LOW, RESOURCE_VALUE_MEDIUM, RESOURCE_VALUE_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValueConfigsUsed" /></td>
     <td><code>array</code></td>
-    <td>List of resource value configurations' metadata used to determine the value of this resource. Maximum of 100.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -258,28 +259,28 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-valuedResourcesId"><code>valuedResourcesId</code></a></td>
     <td></td>
-    <td>Get the valued resource by name</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_simulations_attack_exposure_results_valued_resources_list"><CopyableCode code="organizations_simulations_attack_exposure_results_valued_resources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-attackExposureResultsId"><code>attackExposureResultsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists the valued resources for a set of simulation results and filter.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_simulations_valued_resources_list"><CopyableCode code="organizations_simulations_valued_resources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists the valued resources for a set of simulation results and filter.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_valued_resources_list"><CopyableCode code="organizations_valued_resources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists the valued resources for a set of simulation results and filter.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -353,7 +354,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="organizations_simulations_valued_resources_get">
 
-Get the valued resource by name
+Successful response
 
 ```sql
 SELECT
@@ -373,7 +374,7 @@ AND valuedResourcesId = '{{ valuedResourcesId }}' -- required
 </TabItem>
 <TabItem value="organizations_simulations_attack_exposure_results_valued_resources_list">
 
-Lists the valued resources for a set of simulation results and filter.
+Successful response
 
 ```sql
 SELECT
@@ -389,15 +390,15 @@ WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
 AND attackExposureResultsId = '{{ attackExposureResultsId }}' -- required
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_simulations_valued_resources_list">
 
-Lists the valued resources for a set of simulation results and filter.
+Successful response
 
 ```sql
 SELECT
@@ -411,16 +412,16 @@ resourceValueConfigsUsed
 FROM google.securitycenter.valued_resources
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_valued_resources_list">
 
-Lists the valued resources for a set of simulation results and filter.
+Successful response
 
 ```sql
 SELECT
@@ -433,10 +434,10 @@ resourceValue,
 resourceValueConfigsUsed
 FROM google.securitycenter.valued_resources
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

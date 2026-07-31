@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>qa_question_tags</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>qa_question_tags</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="qa_question_tags" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.qa_question_tags" /></td></tr>
 </tbody></table>
@@ -280,17 +281,17 @@ Creates a QaQuestionTag.
 
 ```sql
 INSERT INTO google.contactcenterinsights.qa_question_tags (
+data__displayName,
 data__qaQuestionIds,
 data__name,
-data__displayName,
 projectsId,
 locationsId,
 qaQuestionTagId
 )
 SELECT 
+'{{ displayName }}',
 '{{ qaQuestionIds }}',
 '{{ name }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaQuestionTagId }}'
@@ -305,34 +306,32 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: qa_question_tags
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the qa_question_tags resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the qa_question_tags resource.
-    - name: qaQuestionIds
-      value: array
-      description: >
-        Optional. The list of Scorecard Question IDs that the tag applies to. Each QaQuestionId is represented as a full resource name containing the Question ID. Lastly, Since a tag may not necessarily be referenced by any Scorecard Questions, we treat this field as optional.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name for the QaQuestionTag Format projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag} In the above format, the last segment, i.e., qa_question_tag, is a server-generated ID corresponding to the tag resource.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. A user-specified display name for the tag.
-        
+    - name: qaQuestionIds
+      value:
+        - "{{ qaQuestionIds }}"
+      description: |
+        Optional. The list of Scorecard Question IDs that the tag applies to. Each QaQuestionId is represented as a full resource name containing the Question ID. Lastly, Since a tag may not necessarily be referenced by any Scorecard Questions, we treat this field as optional.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name for the QaQuestionTag Format projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag} In the above format, the last segment, i.e., qa_question_tag, is a server-generated ID corresponding to the tag resource.
     - name: qaQuestionTagId
-      value: string
-```
+      value: "{{ qaQuestionTagId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -352,9 +351,9 @@ Updates a QaQuestionTag.
 ```sql
 UPDATE google.contactcenterinsights.qa_question_tags
 SET 
+data__displayName = '{{ displayName }}',
 data__qaQuestionIds = '{{ qaQuestionIds }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

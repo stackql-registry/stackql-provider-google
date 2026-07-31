@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>curations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>curations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="curations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.curations" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="lastExecutionErrorCode" /></td>
     <td><code>string</code></td>
-    <td>Output only. The error code of the last execution of the curation. The error code is populated only when the last execution state is failed.</td>
+    <td>Output only. The error code of the last execution of the curation. The error code is populated only when the last execution state is failed. (ERROR_CODE_UNSPECIFIED, INTERNAL_ERROR, UNAUTHORIZED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastExecutionErrorMessage" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="lastExecutionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The last execution state of the curation.</td>
+    <td>Output only. The last execution state of the curation. (LAST_EXECUTION_STATE_UNSPECIFIED, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pluginInstanceActions" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="lastExecutionErrorCode" /></td>
     <td><code>string</code></td>
-    <td>Output only. The error code of the last execution of the curation. The error code is populated only when the last execution state is failed.</td>
+    <td>Output only. The error code of the last execution of the curation. The error code is populated only when the last execution state is failed. (ERROR_CODE_UNSPECIFIED, INTERNAL_ERROR, UNAUTHORIZED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastExecutionErrorMessage" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="lastExecutionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The last execution state of the curation.</td>
+    <td>Output only. The last execution state of the curation. (LAST_EXECUTION_STATE_UNSPECIFIED, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pluginInstanceActions" /></td>
@@ -352,18 +353,18 @@ Create a curation resource in the API hub. Once a curation resource is created, 
 
 ```sql
 INSERT INTO google.apihub.curations (
+data__description,
 data__name,
 data__displayName,
-data__description,
 data__endpoint,
 projectsId,
 locationsId,
 curationId
 )
 SELECT 
+'{{ description }}',
 '{{ name }}',
 '{{ displayName }}',
-'{{ description }}',
 '{{ endpoint }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -384,39 +385,38 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: curations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the curations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the curations resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the curation. Format: `projects/{project}/locations/{location}/curations/{curation}`
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the curation.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. The description of the curation.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the curation. Format: \`projects/{project}/locations/{location}/curations/{curation}\`
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the curation.
     - name: endpoint
-      value: object
-      description: >
+      description: |
         Required. The endpoint to be triggered for curation.
-        
+      value:
+        applicationIntegrationEndpointDetails:
+          uri: "{{ uri }}"
+          triggerId: "{{ triggerId }}"
     - name: curationId
-      value: string
-```
+      value: "{{ curationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -436,9 +436,9 @@ Update a curation resource in the API hub. The following fields in the curation 
 ```sql
 UPDATE google.apihub.curations
 SET 
+data__description = '{{ description }}',
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__endpoint = '{{ endpoint }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

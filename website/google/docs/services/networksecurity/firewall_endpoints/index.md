@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>firewall_endpoints</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>firewall_endpoints</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="firewall_endpoints" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.firewall_endpoints" /></td></tr>
 </tbody></table>
@@ -32,13 +33,15 @@ Creates, updates, deletes, gets or lists a <code>firewall_endpoints</code> resou
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_locations_firewall_endpoints_get"
+    defaultValue="projects_locations_firewall_endpoints_get"
     values={[
+        { label: 'projects_locations_firewall_endpoints_get', value: 'projects_locations_firewall_endpoints_get' },
         { label: 'organizations_locations_firewall_endpoints_get', value: 'organizations_locations_firewall_endpoints_get' },
+        { label: 'projects_locations_firewall_endpoints_list', value: 'projects_locations_firewall_endpoints_list' },
         { label: 'organizations_locations_firewall_endpoints_list', value: 'organizations_locations_firewall_endpoints_list' }
     ]}
 >
-<TabItem value="organizations_locations_firewall_endpoints_get">
+<TabItem value="projects_locations_firewall_endpoints_get">
 
 <table>
 <thead>
@@ -57,7 +60,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="associatedNetworks" /></td>
     <td><code>array</code></td>
-    <td>Output only. List of networks that are associated with this endpoint in the local zone. This is a projection of the FirewallEndpointAssociations pointing at this endpoint. A network will only appear in this list after traffic routing is fully configured. Format: projects/&#123;project&#125;/global/networks/&#123;name&#125;.</td>
+    <td>Output only. Deprecated: List of networks that are associated with this endpoint in the local zone. This is a projection of the FirewallEndpointAssociations pointing at this endpoint. A network will only appear in this list after traffic routing is fully configured. Format: projects/&#123;project&#125;/global/networks/&#123;name&#125;.</td>
 </tr>
 <tr>
     <td><CopyableCode code="associations" /></td>
@@ -67,7 +70,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="billingProjectId" /></td>
     <td><code>string</code></td>
-    <td>Required. Project to bill on endpoint uptime usage.</td>
+    <td>Optional. Project to charge for the deployed firewall endpoint. This field must be specified when creating the endpoint in the organization scope, and should be omitted otherwise.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -107,7 +110,165 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the endpoint.</td>
+    <td>Output only. Current state of the endpoint. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Update time stamp</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_locations_firewall_endpoints_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Identifier. Name of resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="associatedNetworks" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Deprecated: List of networks that are associated with this endpoint in the local zone. This is a projection of the FirewallEndpointAssociations pointing at this endpoint. A network will only appear in this list after traffic routing is fully configured. Format: projects/&#123;project&#125;/global/networks/&#123;name&#125;.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="associations" /></td>
+    <td><code>array</code></td>
+    <td>Output only. List of FirewallEndpointAssociations that are associated to this endpoint. An association will only appear in this list after traffic routing is fully configured.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="billingProjectId" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Project to charge for the deployed firewall endpoint. This field must be specified when creating the endpoint in the organization scope, and should be omitted otherwise.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create time stamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Description of the firewall endpoint. Max length 2048 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endpointSettings" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings for the endpoint. (id: FirewallEndpointEndpointSettings)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs</td>
+</tr>
+<tr>
+    <td><CopyableCode code="reconciling" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Whether reconciling is in progress, recommended per https://google.aip.dev/128.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. [Output Only] Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. [Output Only] Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Current state of the endpoint. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Update time stamp</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_firewall_endpoints_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Identifier. Name of resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="associatedNetworks" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Deprecated: List of networks that are associated with this endpoint in the local zone. This is a projection of the FirewallEndpointAssociations pointing at this endpoint. A network will only appear in this list after traffic routing is fully configured. Format: projects/&#123;project&#125;/global/networks/&#123;name&#125;.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="associations" /></td>
+    <td><code>array</code></td>
+    <td>Output only. List of FirewallEndpointAssociations that are associated to this endpoint. An association will only appear in this list after traffic routing is fully configured.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="billingProjectId" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Project to charge for the deployed firewall endpoint. This field must be specified when creating the endpoint in the organization scope, and should be omitted otherwise.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create time stamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Description of the firewall endpoint. Max length 2048 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endpointSettings" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings for the endpoint. (id: FirewallEndpointEndpointSettings)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs</td>
+</tr>
+<tr>
+    <td><CopyableCode code="reconciling" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Whether reconciling is in progress, recommended per https://google.aip.dev/128.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. [Output Only] Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. [Output Only] Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Current state of the endpoint. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -136,7 +297,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="associatedNetworks" /></td>
     <td><code>array</code></td>
-    <td>Output only. List of networks that are associated with this endpoint in the local zone. This is a projection of the FirewallEndpointAssociations pointing at this endpoint. A network will only appear in this list after traffic routing is fully configured. Format: projects/&#123;project&#125;/global/networks/&#123;name&#125;.</td>
+    <td>Output only. Deprecated: List of networks that are associated with this endpoint in the local zone. This is a projection of the FirewallEndpointAssociations pointing at this endpoint. A network will only appear in this list after traffic routing is fully configured. Format: projects/&#123;project&#125;/global/networks/&#123;name&#125;.</td>
 </tr>
 <tr>
     <td><CopyableCode code="associations" /></td>
@@ -146,7 +307,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="billingProjectId" /></td>
     <td><code>string</code></td>
-    <td>Required. Project to bill on endpoint uptime usage.</td>
+    <td>Optional. Project to charge for the deployed firewall endpoint. This field must be specified when creating the endpoint in the organization scope, and should be omitted otherwise.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -186,7 +347,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the endpoint.</td>
+    <td>Output only. Current state of the endpoint. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -214,39 +375,74 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#projects_locations_firewall_endpoints_get"><CopyableCode code="projects_locations_firewall_endpoints_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-firewallEndpointsId"><code>firewallEndpointsId</code></a></td>
+    <td></td>
+    <td>Gets details of a single project Endpoint.</td>
+</tr>
+<tr>
     <td><a href="#organizations_locations_firewall_endpoints_get"><CopyableCode code="organizations_locations_firewall_endpoints_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-firewallEndpointsId"><code>firewallEndpointsId</code></a></td>
     <td></td>
-    <td>Gets details of a single Endpoint.</td>
+    <td>Gets details of a single org Endpoint.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_firewall_endpoints_list"><CopyableCode code="projects_locations_firewall_endpoints_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Lists FirewallEndpoints in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_firewall_endpoints_list"><CopyableCode code="organizations_locations_firewall_endpoints_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists FirewallEndpoints in a given project and location.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists FirewallEndpoints in a given organization and location.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_firewall_endpoints_create"><CopyableCode code="projects_locations_firewall_endpoints_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-firewallEndpointId"><code>firewallEndpointId</code></a></td>
+    <td>Creates a new FirewallEndpoint in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_firewall_endpoints_create"><CopyableCode code="organizations_locations_firewall_endpoints_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-firewallEndpointId"><code>firewallEndpointId</code></a></td>
-    <td>Creates a new FirewallEndpoint in a given project and location.</td>
+    <td><a href="#parameter-firewallEndpointId"><code>firewallEndpointId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Creates a new FirewallEndpoint in a given organization and location.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_firewall_endpoints_patch"><CopyableCode code="projects_locations_firewall_endpoints_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-firewallEndpointsId"><code>firewallEndpointsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Update a single project Endpoint.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_firewall_endpoints_patch"><CopyableCode code="organizations_locations_firewall_endpoints_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-firewallEndpointsId"><code>firewallEndpointsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Update a single Endpoint.</td>
+    <td>Update a single org Endpoint.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_firewall_endpoints_delete"><CopyableCode code="projects_locations_firewall_endpoints_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-firewallEndpointsId"><code>firewallEndpointsId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Deletes a single project Endpoint.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_firewall_endpoints_delete"><CopyableCode code="organizations_locations_firewall_endpoints_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-firewallEndpointsId"><code>firewallEndpointsId</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Deletes a single Endpoint.</td>
+    <td>Deletes a single org Endpoint.</td>
 </tr>
 </tbody>
 </table>
@@ -276,6 +472,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-organizationsId">
     <td><CopyableCode code="organizationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -320,15 +521,43 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_locations_firewall_endpoints_get"
+    defaultValue="projects_locations_firewall_endpoints_get"
     values={[
+        { label: 'projects_locations_firewall_endpoints_get', value: 'projects_locations_firewall_endpoints_get' },
         { label: 'organizations_locations_firewall_endpoints_get', value: 'organizations_locations_firewall_endpoints_get' },
+        { label: 'projects_locations_firewall_endpoints_list', value: 'projects_locations_firewall_endpoints_list' },
         { label: 'organizations_locations_firewall_endpoints_list', value: 'organizations_locations_firewall_endpoints_list' }
     ]}
 >
+<TabItem value="projects_locations_firewall_endpoints_get">
+
+Gets details of a single project Endpoint.
+
+```sql
+SELECT
+name,
+associatedNetworks,
+associations,
+billingProjectId,
+createTime,
+description,
+endpointSettings,
+labels,
+reconciling,
+satisfiesPzi,
+satisfiesPzs,
+state,
+updateTime
+FROM google.networksecurity.firewall_endpoints
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND firewallEndpointsId = '{{ firewallEndpointsId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="organizations_locations_firewall_endpoints_get">
 
-Gets details of a single Endpoint.
+Gets details of a single org Endpoint.
 
 ```sql
 SELECT
@@ -352,7 +581,7 @@ AND firewallEndpointsId = '{{ firewallEndpointsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_locations_firewall_endpoints_list">
+<TabItem value="projects_locations_firewall_endpoints_list">
 
 Lists FirewallEndpoints in a given project and location.
 
@@ -372,12 +601,41 @@ satisfiesPzs,
 state,
 updateTime
 FROM google.networksecurity.firewall_endpoints
-WHERE organizationsId = '{{ organizationsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+;
+```
+</TabItem>
+<TabItem value="organizations_locations_firewall_endpoints_list">
+
+Lists FirewallEndpoints in a given organization and location.
+
+```sql
+SELECT
+name,
+associatedNetworks,
+associations,
+billingProjectId,
+createTime,
+description,
+endpointSettings,
+labels,
+reconciling,
+satisfiesPzi,
+satisfiesPzs,
+state,
+updateTime
+FROM google.networksecurity.firewall_endpoints
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -387,35 +645,36 @@ AND filter = '{{ filter }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="organizations_locations_firewall_endpoints_create"
+    defaultValue="projects_locations_firewall_endpoints_create"
     values={[
+        { label: 'projects_locations_firewall_endpoints_create', value: 'projects_locations_firewall_endpoints_create' },
         { label: 'organizations_locations_firewall_endpoints_create', value: 'organizations_locations_firewall_endpoints_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="organizations_locations_firewall_endpoints_create">
+<TabItem value="projects_locations_firewall_endpoints_create">
 
 Creates a new FirewallEndpoint in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.firewall_endpoints (
-data__labels,
 data__billingProjectId,
 data__endpointSettings,
 data__name,
 data__description,
-organizationsId,
+data__labels,
+projectsId,
 locationsId,
 requestId,
 firewallEndpointId
 )
 SELECT 
-'{{ labels }}',
 '{{ billingProjectId }}',
 '{{ endpointSettings }}',
 '{{ name }}',
 '{{ description }}',
-'{{ organizationsId }}',
+'{{ labels }}',
+'{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
 '{{ firewallEndpointId }}'
@@ -428,48 +687,82 @@ response
 ;
 ```
 </TabItem>
+<TabItem value="organizations_locations_firewall_endpoints_create">
+
+Creates a new FirewallEndpoint in a given organization and location.
+
+```sql
+INSERT INTO google.networksecurity.firewall_endpoints (
+data__billingProjectId,
+data__endpointSettings,
+data__name,
+data__description,
+data__labels,
+organizationsId,
+locationsId,
+firewallEndpointId,
+requestId
+)
+SELECT 
+'{{ billingProjectId }}',
+'{{ endpointSettings }}',
+'{{ name }}',
+'{{ description }}',
+'{{ labels }}',
+'{{ organizationsId }}',
+'{{ locationsId }}',
+'{{ firewallEndpointId }}',
+'{{ requestId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: firewall_endpoints
   props:
-    - name: organizationsId
-      value: string
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the firewall_endpoints resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the firewall_endpoints resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs
-        
+    - name: organizationsId
+      value: "{{ organizationsId }}"
+      description: Required parameter for the firewall_endpoints resource.
     - name: billingProjectId
-      value: string
-      description: >
-        Required. Project to bill on endpoint uptime usage.
-        
+      value: "{{ billingProjectId }}"
+      description: |
+        Optional. Project to charge for the deployed firewall endpoint. This field must be specified when creating the endpoint in the organization scope, and should be omitted otherwise.
     - name: endpointSettings
-      value: object
-      description: >
+      description: |
         Optional. Settings for the endpoint.
-        
+      value:
+        jumboFramesEnabled: {{ jumboFramesEnabled }}
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. Identifier. Name of resource.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the firewall endpoint. Max length 2048 characters.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: firewallEndpointId
-      value: string
-```
+      value: "{{ firewallEndpointId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -477,23 +770,50 @@ response
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="organizations_locations_firewall_endpoints_patch"
+    defaultValue="projects_locations_firewall_endpoints_patch"
     values={[
+        { label: 'projects_locations_firewall_endpoints_patch', value: 'projects_locations_firewall_endpoints_patch' },
         { label: 'organizations_locations_firewall_endpoints_patch', value: 'organizations_locations_firewall_endpoints_patch' }
     ]}
 >
-<TabItem value="organizations_locations_firewall_endpoints_patch">
+<TabItem value="projects_locations_firewall_endpoints_patch">
 
-Update a single Endpoint.
+Update a single project Endpoint.
 
 ```sql
 UPDATE google.networksecurity.firewall_endpoints
 SET 
-data__labels = '{{ labels }}',
 data__billingProjectId = '{{ billingProjectId }}',
 data__endpointSettings = '{{ endpointSettings }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__labels = '{{ labels }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND firewallEndpointsId = '{{ firewallEndpointsId }}' --required
+AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
+```
+</TabItem>
+<TabItem value="organizations_locations_firewall_endpoints_patch">
+
+Update a single org Endpoint.
+
+```sql
+UPDATE google.networksecurity.firewall_endpoints
+SET 
+data__billingProjectId = '{{ billingProjectId }}',
+data__endpointSettings = '{{ endpointSettings }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__labels = '{{ labels }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -514,14 +834,28 @@ response;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="organizations_locations_firewall_endpoints_delete"
+    defaultValue="projects_locations_firewall_endpoints_delete"
     values={[
+        { label: 'projects_locations_firewall_endpoints_delete', value: 'projects_locations_firewall_endpoints_delete' },
         { label: 'organizations_locations_firewall_endpoints_delete', value: 'organizations_locations_firewall_endpoints_delete' }
     ]}
 >
+<TabItem value="projects_locations_firewall_endpoints_delete">
+
+Deletes a single project Endpoint.
+
+```sql
+DELETE FROM google.networksecurity.firewall_endpoints
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND firewallEndpointsId = '{{ firewallEndpointsId }}' --required
+AND requestId = '{{ requestId }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_locations_firewall_endpoints_delete">
 
-Deletes a single Endpoint.
+Deletes a single org Endpoint.
 
 ```sql
 DELETE FROM google.networksecurity.firewall_endpoints

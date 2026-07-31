@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>hashes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>hashes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="hashes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.webrisk.hashes" /></td></tr>
 </tbody></table>
@@ -53,7 +54,7 @@ The following methods are available for this resource:
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-threatTypes"><code>threatTypes</code></a>, <a href="#parameter-hashPrefix"><code>hashPrefix</code></a></td>
+    <td><a href="#parameter-hashPrefix"><code>hashPrefix</code></a>, <a href="#parameter-threatTypes"><code>threatTypes</code></a></td>
     <td>Gets the full hashes that match the requested hash prefix. This is used after a hash prefix is looked up in a threatList and there is a match. The client side threatList only holds partial hashes so the client must query this method to determine if there is a full hash match of a threat.</td>
 </tr>
 </tbody>
@@ -99,8 +100,8 @@ Gets the full hashes that match the requested hash prefix. This is used after a 
 
 ```sql
 EXEC google.webrisk.hashes.search 
-@threatTypes='{{ threatTypes }}', 
-@hashPrefix='{{ hashPrefix }}'
+@hashPrefix='{{ hashPrefix }}', 
+@threatTypes='{{ threatTypes }}'
 ;
 ```
 </TabItem>

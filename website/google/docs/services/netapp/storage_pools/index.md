@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>storage_pools</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>storage_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="storage_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.netapp.storage_pools" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Specifies the current pool encryption key source.</td>
+    <td>Output only. Specifies the current pool encryption key source. (ENCRYPTION_TYPE_UNSPECIFIED, SERVICE_MANAGED, CLOUD_KMS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="globalAccessAllowed" /></td>
@@ -135,6 +136,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Flag indicating if the pool is NFS LDAP enabled or not.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="mode" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Mode of the storage pool. This field is used to control whether the user can perform ONTAP operations on the storage pool using the GCNV ONTAP Mode APIs. If not specified during creation, it defaults to `DEFAULT`. (MODE_UNSPECIFIED, DEFAULT, ONTAP)</td>
+</tr>
+<tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
     <td>Required. VPC Network name. Format: projects/&#123;project&#125;/global/networks/&#123;network&#125;</td>
@@ -147,7 +153,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="qosType" /></td>
     <td><code>string</code></td>
-    <td>Optional. QoS (Quality of Service) Type of the storage pool</td>
+    <td>Optional. QoS (Quality of Service) Type of the storage pool (QOS_TYPE_UNSPECIFIED, AUTO, MANUAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="replicaZone" /></td>
@@ -165,14 +171,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Reserved for future use</td>
 </tr>
 <tr>
+    <td><CopyableCode code="scaleType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The scale type of the storage pool. Defaults to `SCALE_TYPE_DEFAULT` if not specified. (SCALE_TYPE_UNSPECIFIED, SCALE_TYPE_DEFAULT, SCALE_TYPE_SCALEOUT)</td>
+</tr>
+<tr>
     <td><CopyableCode code="serviceLevel" /></td>
     <td><code>string</code></td>
-    <td>Required. Service level of the storage pool</td>
+    <td>Required. Service level of the storage pool (SERVICE_LEVEL_UNSPECIFIED, PREMIUM, EXTREME, STANDARD, FLEX)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the storage pool</td>
+    <td>Output only. State of the storage pool (STATE_UNSPECIFIED, READY, CREATING, DELETING, UPDATING, RESTORING, DISABLED, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateDetails" /></td>
@@ -192,7 +203,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Optional. Type of the storage pool. This field is used to control whether the pool supports FILE based volumes only or UNIFIED (both FILE and BLOCK) volumes. If not specified during creation, it defaults to FILE.</td>
+    <td>Optional. Type of the storage pool. This field is used to control whether the pool supports `FILE` based volumes only or `UNIFIED` (both `FILE` and `BLOCK`) volumes. If not specified during creation, it defaults to `FILE`. (STORAGE_POOL_TYPE_UNSPECIFIED, FILE, UNIFIED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="volumeCapacityGib" /></td>
@@ -223,6 +234,176 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Name of the storage pool</td>
+</tr>
+<tr>
+    <td><CopyableCode code="activeDirectory" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Specifies the Active Directory to be used for creating a SMB volume.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowAutoTiering" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. True if the storage pool supports Auto Tiering enabled volumes. Default is false. Auto-tiering can be enabled after storage pool creation but it can't be disabled once enabled.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="availableThroughputMibps" /></td>
+    <td><code>number (double)</code></td>
+    <td>Output only. Available throughput of the storage pool (in MiB/s).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="capacityGib" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Required. Capacity in GIB of the pool</td>
+</tr>
+<tr>
+    <td><CopyableCode code="coldTierSizeUsedGib" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total cold tier data rounded down to the nearest GiB used by the storage pool.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create time of the storage pool</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customPerformanceEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. True if using Independent Scaling of capacity and performance (Hyperdisk) By default set to false</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Description of the storage pool</td>
+</tr>
+<tr>
+    <td><CopyableCode code="enableHotTierAutoResize" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Flag indicating that the hot-tier threshold will be auto-increased by 10% of the hot-tier when it hits 100%. Default is true. The increment will kick in only if the new size after increment is still less than or equal to storage pool size.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionType" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Specifies the current pool encryption key source. (ENCRYPTION_TYPE_UNSPECIFIED, SERVICE_MANAGED, CLOUD_KMS)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="globalAccessAllowed" /></td>
+    <td><code>boolean</code></td>
+    <td>Deprecated. Used to allow SO pool to access AD or DNS server from other regions.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hotTierSizeGib" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Optional. Total hot tier capacity for the Storage Pool. It is applicable only to Flex service level. It should be less than the minimum storage pool size and cannot be more than the current storage pool size. It cannot be decreased once set.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hotTierSizeUsedGib" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total hot tier data rounded down to the nearest GiB used by the storage pool.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kmsConfig" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Specifies the KMS config to be used for volume encryption.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ldapEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Flag indicating if the pool is NFS LDAP enabled or not.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mode" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Mode of the storage pool. This field is used to control whether the user can perform ONTAP operations on the storage pool using the GCNV ONTAP Mode APIs. If not specified during creation, it defaults to `DEFAULT`. (MODE_UNSPECIFIED, DEFAULT, ONTAP)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="network" /></td>
+    <td><code>string</code></td>
+    <td>Required. VPC Network name. Format: projects/&#123;project&#125;/global/networks/&#123;network&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="psaRange" /></td>
+    <td><code>string</code></td>
+    <td>Optional. This field is not implemented. The values provided in this field are ignored.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="qosType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. QoS (Quality of Service) Type of the storage pool (QOS_TYPE_UNSPECIFIED, AUTO, MANUAL)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="replicaZone" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Specifies the replica zone for regional storagePool.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scaleType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The scale type of the storage pool. Defaults to `SCALE_TYPE_DEFAULT` if not specified. (SCALE_TYPE_UNSPECIFIED, SCALE_TYPE_DEFAULT, SCALE_TYPE_SCALEOUT)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceLevel" /></td>
+    <td><code>string</code></td>
+    <td>Required. Service level of the storage pool (SERVICE_LEVEL_UNSPECIFIED, PREMIUM, EXTREME, STANDARD, FLEX)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of the storage pool (STATE_UNSPECIFIED, READY, CREATING, DELETING, UPDATING, RESTORING, DISABLED, ERROR)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="stateDetails" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State details of the storage pool</td>
+</tr>
+<tr>
+    <td><CopyableCode code="totalIops" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Optional. Custom Performance Total IOPS of the pool if not provided, it will be calculated based on the total_throughput_mibps</td>
+</tr>
+<tr>
+    <td><CopyableCode code="totalThroughputMibps" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Optional. Custom Performance Total Throughput of the pool (in MiBps)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Type of the storage pool. This field is used to control whether the pool supports `FILE` based volumes only or `UNIFIED` (both `FILE` and `BLOCK`) volumes. If not specified during creation, it defaults to `FILE`. (STORAGE_POOL_TYPE_UNSPECIFIED, FILE, UNIFIED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="volumeCapacityGib" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Allocated size of all volumes in GIB in the storage pool</td>
+</tr>
+<tr>
+    <td><CopyableCode code="volumeCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Volume count of the storage pool</td>
+</tr>
+<tr>
+    <td><CopyableCode code="zone" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Specifies the active zone for regional storagePool.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -254,7 +435,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns descriptions of all storage pools owned by the caller.</td>
 </tr>
 <tr>
@@ -291,6 +472,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storagePoolsId"><code>storagePoolsId</code></a></td>
     <td></td>
     <td>ValidateDirectoryService does a connectivity check for a directory service policy attached to the storage pool.</td>
+</tr>
+<tr>
+    <td><a href="#restore_volume"><CopyableCode code="restore_volume" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storagePoolsId"><code>storagePoolsId</code></a></td>
+    <td></td>
+    <td>Restores a backup to an ONTAP-mode volume.</td>
 </tr>
 </tbody>
 </table>
@@ -388,12 +576,14 @@ hotTierSizeUsedGib,
 kmsConfig,
 labels,
 ldapEnabled,
+mode,
 network,
 psaRange,
 qosType,
 replicaZone,
 satisfiesPzi,
 satisfiesPzs,
+scaleType,
 serviceLevel,
 state,
 stateDetails,
@@ -416,14 +606,47 @@ Returns descriptions of all storage pools owned by the caller.
 
 ```sql
 SELECT
-*
+name,
+activeDirectory,
+allowAutoTiering,
+availableThroughputMibps,
+capacityGib,
+coldTierSizeUsedGib,
+createTime,
+customPerformanceEnabled,
+description,
+enableHotTierAutoResize,
+encryptionType,
+globalAccessAllowed,
+hotTierSizeGib,
+hotTierSizeUsedGib,
+kmsConfig,
+labels,
+ldapEnabled,
+mode,
+network,
+psaRange,
+qosType,
+replicaZone,
+satisfiesPzi,
+satisfiesPzs,
+scaleType,
+serviceLevel,
+state,
+stateDetails,
+totalIops,
+totalThroughputMibps,
+type,
+volumeCapacityGib,
+volumeCount,
+zone
 FROM google.netapp.storage_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -446,52 +669,56 @@ Creates a new storage pool.
 ```sql
 INSERT INTO google.netapp.storage_pools (
 data__zone,
-data__ldapEnabled,
-data__name,
-data__description,
-data__allowAutoTiering,
-data__enableHotTierAutoResize,
-data__capacityGib,
-data__customPerformanceEnabled,
-data__type,
-data__network,
-data__qosType,
-data__activeDirectory,
-data__labels,
 data__kmsConfig,
-data__psaRange,
-data__totalIops,
-data__serviceLevel,
-data__hotTierSizeGib,
-data__globalAccessAllowed,
-data__totalThroughputMibps,
+data__name,
+data__type,
+data__allowAutoTiering,
 data__replicaZone,
+data__description,
+data__scaleType,
+data__serviceLevel,
+data__qosType,
+data__network,
+data__activeDirectory,
+data__hotTierSizeGib,
+data__psaRange,
+data__totalThroughputMibps,
+data__totalIops,
+data__customPerformanceEnabled,
+data__mode,
+data__labels,
+data__ldapEnabled,
+data__capacityGib,
+data__globalAccessAllowed,
+data__enableHotTierAutoResize,
 projectsId,
 locationsId,
 storagePoolId
 )
 SELECT 
 '{{ zone }}',
-{{ ldapEnabled }},
-'{{ name }}',
-'{{ description }}',
-{{ allowAutoTiering }},
-{{ enableHotTierAutoResize }},
-'{{ capacityGib }}',
-{{ customPerformanceEnabled }},
-'{{ type }}',
-'{{ network }}',
-'{{ qosType }}',
-'{{ activeDirectory }}',
-'{{ labels }}',
 '{{ kmsConfig }}',
-'{{ psaRange }}',
-'{{ totalIops }}',
-'{{ serviceLevel }}',
-'{{ hotTierSizeGib }}',
-{{ globalAccessAllowed }},
-'{{ totalThroughputMibps }}',
+'{{ name }}',
+'{{ type }}',
+{{ allowAutoTiering }},
 '{{ replicaZone }}',
+'{{ description }}',
+'{{ scaleType }}',
+'{{ serviceLevel }}',
+'{{ qosType }}',
+'{{ network }}',
+'{{ activeDirectory }}',
+'{{ hotTierSizeGib }}',
+'{{ psaRange }}',
+'{{ totalThroughputMibps }}',
+'{{ totalIops }}',
+{{ customPerformanceEnabled }},
+'{{ mode }}',
+'{{ labels }}',
+{{ ldapEnabled }},
+'{{ capacityGib }}',
+{{ globalAccessAllowed }},
+{{ enableHotTierAutoResize }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ storagePoolId }}'
@@ -506,127 +733,116 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: storage_pools
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the storage_pools resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the storage_pools resource.
     - name: zone
-      value: string
-      description: >
+      value: "{{ zone }}"
+      description: |
         Optional. Specifies the active zone for regional storagePool.
-        
-    - name: ldapEnabled
-      value: boolean
-      description: >
-        Optional. Flag indicating if the pool is NFS LDAP enabled or not.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the storage pool
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the storage pool
-        
-    - name: allowAutoTiering
-      value: boolean
-      description: >
-        Optional. True if the storage pool supports Auto Tiering enabled volumes. Default is false. Auto-tiering can be enabled after storage pool creation but it can't be disabled once enabled.
-        
-    - name: enableHotTierAutoResize
-      value: boolean
-      description: >
-        Optional. Flag indicating that the hot-tier threshold will be auto-increased by 10% of the hot-tier when it hits 100%. Default is true. The increment will kick in only if the new size after increment is still less than or equal to storage pool size.
-        
-    - name: capacityGib
-      value: string
-      description: >
-        Required. Capacity in GIB of the pool
-        
-    - name: customPerformanceEnabled
-      value: boolean
-      description: >
-        Optional. True if using Independent Scaling of capacity and performance (Hyperdisk) By default set to false
-        
-    - name: type
-      value: string
-      description: >
-        Optional. Type of the storage pool. This field is used to control whether the pool supports FILE based volumes only or UNIFIED (both FILE and BLOCK) volumes. If not specified during creation, it defaults to FILE.
-        
-      valid_values: ['STORAGE_POOL_TYPE_UNSPECIFIED', 'FILE', 'UNIFIED']
-    - name: network
-      value: string
-      description: >
-        Required. VPC Network name. Format: projects/{project}/global/networks/{network}
-        
-    - name: qosType
-      value: string
-      description: >
-        Optional. QoS (Quality of Service) Type of the storage pool
-        
-      valid_values: ['QOS_TYPE_UNSPECIFIED', 'AUTO', 'MANUAL']
-    - name: activeDirectory
-      value: string
-      description: >
-        Optional. Specifies the Active Directory to be used for creating a SMB volume.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs
-        
     - name: kmsConfig
-      value: string
-      description: >
+      value: "{{ kmsConfig }}"
+      description: |
         Optional. Specifies the KMS config to be used for volume encryption.
-        
-    - name: psaRange
-      value: string
-      description: >
-        Optional. This field is not implemented. The values provided in this field are ignored.
-        
-    - name: totalIops
-      value: string
-      description: >
-        Optional. Custom Performance Total IOPS of the pool if not provided, it will be calculated based on the total_throughput_mibps
-        
-    - name: serviceLevel
-      value: string
-      description: >
-        Required. Service level of the storage pool
-        
-      valid_values: ['SERVICE_LEVEL_UNSPECIFIED', 'PREMIUM', 'EXTREME', 'STANDARD', 'FLEX']
-    - name: hotTierSizeGib
-      value: string
-      description: >
-        Optional. Total hot tier capacity for the Storage Pool. It is applicable only to Flex service level. It should be less than the minimum storage pool size and cannot be more than the current storage pool size. It cannot be decreased once set.
-        
-    - name: globalAccessAllowed
-      value: boolean
-      description: >
-        Deprecated. Used to allow SO pool to access AD or DNS server from other regions.
-        
-    - name: totalThroughputMibps
-      value: string
-      description: >
-        Optional. Custom Performance Total Throughput of the pool (in MiBps)
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the storage pool
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Optional. Type of the storage pool. This field is used to control whether the pool supports \`FILE\` based volumes only or \`UNIFIED\` (both \`FILE\` and \`BLOCK\`) volumes. If not specified during creation, it defaults to \`FILE\`.
+      valid_values: ['STORAGE_POOL_TYPE_UNSPECIFIED', 'FILE', 'UNIFIED']
+    - name: allowAutoTiering
+      value: {{ allowAutoTiering }}
+      description: |
+        Optional. True if the storage pool supports Auto Tiering enabled volumes. Default is false. Auto-tiering can be enabled after storage pool creation but it can't be disabled once enabled.
     - name: replicaZone
-      value: string
-      description: >
+      value: "{{ replicaZone }}"
+      description: |
         Optional. Specifies the replica zone for regional storagePool.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the storage pool
+    - name: scaleType
+      value: "{{ scaleType }}"
+      description: |
+        Optional. The scale type of the storage pool. Defaults to \`SCALE_TYPE_DEFAULT\` if not specified.
+      valid_values: ['SCALE_TYPE_UNSPECIFIED', 'SCALE_TYPE_DEFAULT', 'SCALE_TYPE_SCALEOUT']
+    - name: serviceLevel
+      value: "{{ serviceLevel }}"
+      description: |
+        Required. Service level of the storage pool
+      valid_values: ['SERVICE_LEVEL_UNSPECIFIED', 'PREMIUM', 'EXTREME', 'STANDARD', 'FLEX']
+    - name: qosType
+      value: "{{ qosType }}"
+      description: |
+        Optional. QoS (Quality of Service) Type of the storage pool
+      valid_values: ['QOS_TYPE_UNSPECIFIED', 'AUTO', 'MANUAL']
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Required. VPC Network name. Format: projects/{project}/global/networks/{network}
+    - name: activeDirectory
+      value: "{{ activeDirectory }}"
+      description: |
+        Optional. Specifies the Active Directory to be used for creating a SMB volume.
+    - name: hotTierSizeGib
+      value: "{{ hotTierSizeGib }}"
+      description: |
+        Optional. Total hot tier capacity for the Storage Pool. It is applicable only to Flex service level. It should be less than the minimum storage pool size and cannot be more than the current storage pool size. It cannot be decreased once set.
+    - name: psaRange
+      value: "{{ psaRange }}"
+      description: |
+        Optional. This field is not implemented. The values provided in this field are ignored.
+    - name: totalThroughputMibps
+      value: "{{ totalThroughputMibps }}"
+      description: |
+        Optional. Custom Performance Total Throughput of the pool (in MiBps)
+    - name: totalIops
+      value: "{{ totalIops }}"
+      description: |
+        Optional. Custom Performance Total IOPS of the pool if not provided, it will be calculated based on the total_throughput_mibps
+    - name: customPerformanceEnabled
+      value: {{ customPerformanceEnabled }}
+      description: |
+        Optional. True if using Independent Scaling of capacity and performance (Hyperdisk) By default set to false
+    - name: mode
+      value: "{{ mode }}"
+      description: |
+        Optional. Mode of the storage pool. This field is used to control whether the user can perform ONTAP operations on the storage pool using the GCNV ONTAP Mode APIs. If not specified during creation, it defaults to \`DEFAULT\`.
+      valid_values: ['MODE_UNSPECIFIED', 'DEFAULT', 'ONTAP']
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs
+    - name: ldapEnabled
+      value: {{ ldapEnabled }}
+      description: |
+        Optional. Flag indicating if the pool is NFS LDAP enabled or not.
+    - name: capacityGib
+      value: "{{ capacityGib }}"
+      description: |
+        Required. Capacity in GIB of the pool
+    - name: globalAccessAllowed
+      value: {{ globalAccessAllowed }}
+      description: |
+        Deprecated. Used to allow SO pool to access AD or DNS server from other regions.
+    - name: enableHotTierAutoResize
+      value: {{ enableHotTierAutoResize }}
+      description: |
+        Optional. Flag indicating that the hot-tier threshold will be auto-increased by 10% of the hot-tier when it hits 100%. Default is true. The increment will kick in only if the new size after increment is still less than or equal to storage pool size.
     - name: storagePoolId
-      value: string
-```
+      value: "{{ storagePoolId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -647,26 +863,28 @@ Updates the storage pool properties with the full spec
 UPDATE google.netapp.storage_pools
 SET 
 data__zone = '{{ zone }}',
-data__ldapEnabled = {{ ldapEnabled }},
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__allowAutoTiering = {{ allowAutoTiering }},
-data__enableHotTierAutoResize = {{ enableHotTierAutoResize }},
-data__capacityGib = '{{ capacityGib }}',
-data__customPerformanceEnabled = {{ customPerformanceEnabled }},
-data__type = '{{ type }}',
-data__network = '{{ network }}',
-data__qosType = '{{ qosType }}',
-data__activeDirectory = '{{ activeDirectory }}',
-data__labels = '{{ labels }}',
 data__kmsConfig = '{{ kmsConfig }}',
-data__psaRange = '{{ psaRange }}',
-data__totalIops = '{{ totalIops }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}',
+data__allowAutoTiering = {{ allowAutoTiering }},
+data__replicaZone = '{{ replicaZone }}',
+data__description = '{{ description }}',
+data__scaleType = '{{ scaleType }}',
 data__serviceLevel = '{{ serviceLevel }}',
+data__qosType = '{{ qosType }}',
+data__network = '{{ network }}',
+data__activeDirectory = '{{ activeDirectory }}',
 data__hotTierSizeGib = '{{ hotTierSizeGib }}',
-data__globalAccessAllowed = {{ globalAccessAllowed }},
+data__psaRange = '{{ psaRange }}',
 data__totalThroughputMibps = '{{ totalThroughputMibps }}',
-data__replicaZone = '{{ replicaZone }}'
+data__totalIops = '{{ totalIops }}',
+data__customPerformanceEnabled = {{ customPerformanceEnabled }},
+data__mode = '{{ mode }}',
+data__labels = '{{ labels }}',
+data__ldapEnabled = {{ ldapEnabled }},
+data__capacityGib = '{{ capacityGib }}',
+data__globalAccessAllowed = {{ globalAccessAllowed }},
+data__enableHotTierAutoResize = {{ enableHotTierAutoResize }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -712,7 +930,8 @@ AND storagePoolsId = '{{ storagePoolsId }}' --required
     defaultValue="switch"
     values={[
         { label: 'switch', value: 'switch' },
-        { label: 'validate_directory_service', value: 'validate_directory_service' }
+        { label: 'validate_directory_service', value: 'validate_directory_service' },
+        { label: 'restore_volume', value: 'restore_volume' }
     ]}
 >
 <TabItem value="switch">
@@ -739,6 +958,23 @@ EXEC google.netapp.storage_pools.validate_directory_service
 @@json=
 '{
 "directoryServiceType": "{{ directoryServiceType }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore_volume">
+
+Restores a backup to an ONTAP-mode volume.
+
+```sql
+EXEC google.netapp.storage_pools.restore_volume 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@storagePoolsId='{{ storagePoolsId }}' --required 
+@@json=
+'{
+"backupSource": "{{ backupSource }}", 
+"ontapVolumeTarget": "{{ ontapVolumeTarget }}"
 }'
 ;
 ```

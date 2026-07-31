@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>recommenders_config</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>recommenders_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="recommenders_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.recommender.recommenders_config" /></td></tr>
 </tbody></table>
@@ -32,14 +33,14 @@ Creates, updates, deletes, gets or lists a <code>recommenders_config</code> reso
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_recommenders_get_config"
+    defaultValue="organizations_locations_recommenders_get_config"
     values={[
-        { label: 'projects_locations_recommenders_get_config', value: 'projects_locations_recommenders_get_config' },
+        { label: 'organizations_locations_recommenders_get_config', value: 'organizations_locations_recommenders_get_config' },
         { label: 'billing_accounts_locations_recommenders_get_config', value: 'billing_accounts_locations_recommenders_get_config' },
-        { label: 'organizations_locations_recommenders_get_config', value: 'organizations_locations_recommenders_get_config' }
+        { label: 'projects_locations_recommenders_get_config', value: 'projects_locations_recommenders_get_config' }
     ]}
 >
-<TabItem value="projects_locations_recommenders_get_config">
+<TabItem value="organizations_locations_recommenders_get_config">
 
 <table>
 <thead>
@@ -137,7 +138,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_locations_recommenders_get_config">
+<TabItem value="projects_locations_recommenders_get_config">
 
 <table>
 <thead>
@@ -204,9 +205,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_recommenders_get_config"><CopyableCode code="projects_locations_recommenders_get_config" /></a></td>
+    <td><a href="#organizations_locations_recommenders_get_config"><CopyableCode code="organizations_locations_recommenders_get_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recommendersId"><code>recommendersId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recommendersId"><code>recommendersId</code></a></td>
     <td></td>
     <td>Gets the requested Recommender Config. There is only one instance of the config for each Recommender.</td>
 </tr>
@@ -218,16 +219,16 @@ The following methods are available for this resource:
     <td>Gets the requested Recommender Config. There is only one instance of the config for each Recommender.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_recommenders_get_config"><CopyableCode code="organizations_locations_recommenders_get_config" /></a></td>
+    <td><a href="#projects_locations_recommenders_get_config"><CopyableCode code="projects_locations_recommenders_get_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recommendersId"><code>recommendersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recommendersId"><code>recommendersId</code></a></td>
     <td></td>
     <td>Gets the requested Recommender Config. There is only one instance of the config for each Recommender.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_recommenders_update_config"><CopyableCode code="projects_locations_recommenders_update_config" /></a></td>
+    <td><a href="#organizations_locations_recommenders_update_config"><CopyableCode code="organizations_locations_recommenders_update_config" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recommendersId"><code>recommendersId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recommendersId"><code>recommendersId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates a Recommender Config. This will create a new revision of the config.</td>
 </tr>
@@ -239,9 +240,9 @@ The following methods are available for this resource:
     <td>Updates a Recommender Config. This will create a new revision of the config.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_recommenders_update_config"><CopyableCode code="organizations_locations_recommenders_update_config" /></a></td>
+    <td><a href="#projects_locations_recommenders_update_config"><CopyableCode code="projects_locations_recommenders_update_config" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recommendersId"><code>recommendersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recommendersId"><code>recommendersId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates a Recommender Config. This will create a new revision of the config.</td>
 </tr>
@@ -302,14 +303,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_recommenders_get_config"
+    defaultValue="organizations_locations_recommenders_get_config"
     values={[
-        { label: 'projects_locations_recommenders_get_config', value: 'projects_locations_recommenders_get_config' },
+        { label: 'organizations_locations_recommenders_get_config', value: 'organizations_locations_recommenders_get_config' },
         { label: 'billing_accounts_locations_recommenders_get_config', value: 'billing_accounts_locations_recommenders_get_config' },
-        { label: 'organizations_locations_recommenders_get_config', value: 'organizations_locations_recommenders_get_config' }
+        { label: 'projects_locations_recommenders_get_config', value: 'projects_locations_recommenders_get_config' }
     ]}
 >
-<TabItem value="projects_locations_recommenders_get_config">
+<TabItem value="organizations_locations_recommenders_get_config">
 
 Gets the requested Recommender Config. There is only one instance of the config for each Recommender.
 
@@ -323,7 +324,7 @@ recommenderGenerationConfig,
 revisionId,
 updateTime
 FROM google.recommender.recommenders_config
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND recommendersId = '{{ recommendersId }}' -- required
 ;
@@ -349,7 +350,7 @@ AND recommendersId = '{{ recommendersId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_locations_recommenders_get_config">
+<TabItem value="projects_locations_recommenders_get_config">
 
 Gets the requested Recommender Config. There is only one instance of the config for each Recommender.
 
@@ -363,7 +364,7 @@ recommenderGenerationConfig,
 revisionId,
 updateTime
 FROM google.recommender.recommenders_config
-WHERE organizationsId = '{{ organizationsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND recommendersId = '{{ recommendersId }}' -- required
 ;
@@ -375,28 +376,28 @@ AND recommendersId = '{{ recommendersId }}' -- required
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_recommenders_update_config"
+    defaultValue="organizations_locations_recommenders_update_config"
     values={[
-        { label: 'projects_locations_recommenders_update_config', value: 'projects_locations_recommenders_update_config' },
+        { label: 'organizations_locations_recommenders_update_config', value: 'organizations_locations_recommenders_update_config' },
         { label: 'billing_accounts_locations_recommenders_update_config', value: 'billing_accounts_locations_recommenders_update_config' },
-        { label: 'organizations_locations_recommenders_update_config', value: 'organizations_locations_recommenders_update_config' }
+        { label: 'projects_locations_recommenders_update_config', value: 'projects_locations_recommenders_update_config' }
     ]}
 >
-<TabItem value="projects_locations_recommenders_update_config">
+<TabItem value="organizations_locations_recommenders_update_config">
 
 Updates a Recommender Config. This will create a new revision of the config.
 
 ```sql
 UPDATE google.recommender.recommenders_config
 SET 
-data__name = '{{ name }}',
 data__recommenderGenerationConfig = '{{ recommenderGenerationConfig }}',
-data__etag = '{{ etag }}',
-data__updateTime = '{{ updateTime }}',
+data__displayName = '{{ displayName }}',
 data__annotations = '{{ annotations }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}',
+data__etag = '{{ etag }}',
+data__updateTime = '{{ updateTime }}'
 WHERE 
-projectsId = '{{ projectsId }}' --required
+organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND recommendersId = '{{ recommendersId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -418,12 +419,12 @@ Updates a Recommender Config. This will create a new revision of the config.
 ```sql
 UPDATE google.recommender.recommenders_config
 SET 
-data__name = '{{ name }}',
 data__recommenderGenerationConfig = '{{ recommenderGenerationConfig }}',
-data__etag = '{{ etag }}',
-data__updateTime = '{{ updateTime }}',
+data__displayName = '{{ displayName }}',
 data__annotations = '{{ annotations }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}',
+data__etag = '{{ etag }}',
+data__updateTime = '{{ updateTime }}'
 WHERE 
 billingAccountsId = '{{ billingAccountsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -440,21 +441,21 @@ revisionId,
 updateTime;
 ```
 </TabItem>
-<TabItem value="organizations_locations_recommenders_update_config">
+<TabItem value="projects_locations_recommenders_update_config">
 
 Updates a Recommender Config. This will create a new revision of the config.
 
 ```sql
 UPDATE google.recommender.recommenders_config
 SET 
-data__name = '{{ name }}',
 data__recommenderGenerationConfig = '{{ recommenderGenerationConfig }}',
-data__etag = '{{ etag }}',
-data__updateTime = '{{ updateTime }}',
+data__displayName = '{{ displayName }}',
 data__annotations = '{{ annotations }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}',
+data__etag = '{{ etag }}',
+data__updateTime = '{{ updateTime }}'
 WHERE 
-organizationsId = '{{ organizationsId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND recommendersId = '{{ recommendersId }}' --required
 AND updateMask = '{{ updateMask}}'

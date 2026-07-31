@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>clusters</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>clusters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="clusters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataproc.clusters" /></td></tr>
 </tbody></table>
@@ -57,12 +58,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clusterUuid" /></td>
     <td><code>string</code></td>
-    <td>Output only. A cluster UUID (Unique Universal Identifier). Dataproc generates this value when it creates the cluster.</td>
+    <td>Output only. A cluster UUID (Unique Universal Identifier). The service generates this value when it creates the cluster.</td>
 </tr>
 <tr>
     <td><CopyableCode code="config" /></td>
     <td><code>object</code></td>
-    <td>Optional. The cluster config for a cluster of Compute Engine Instances. Note that Dataproc may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified. (id: ClusterConfig)</td>
+    <td>Optional. The cluster config for a cluster of Compute Engine Instances. Note that the service may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified. (id: ClusterConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>object</code></td>
-    <td>Output only. Cluster status. (id: ClusterStatus)</td>
+    <td>The status of a cluster and its instances. (id: ClusterStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusHistory" /></td>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="virtualClusterConfig" /></td>
     <td><code>object</code></td>
-    <td>Optional. The virtual cluster config is used when creating a Dataproc cluster that does not directly control the underlying compute resources, for example, when creating a Dataproc-on-GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). Dataproc may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified. (id: VirtualClusterConfig)</td>
+    <td>Optional. The virtual cluster config is used when creating a cluster that does not directly control the underlying compute resources, for example, when creating a GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). the service may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified. (id: VirtualClusterConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -116,12 +117,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clusterUuid" /></td>
     <td><code>string</code></td>
-    <td>Output only. A cluster UUID (Unique Universal Identifier). Dataproc generates this value when it creates the cluster.</td>
+    <td>Output only. A cluster UUID (Unique Universal Identifier). The service generates this value when it creates the cluster.</td>
 </tr>
 <tr>
     <td><CopyableCode code="config" /></td>
     <td><code>object</code></td>
-    <td>Optional. The cluster config for a cluster of Compute Engine Instances. Note that Dataproc may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified. (id: ClusterConfig)</td>
+    <td>Optional. The cluster config for a cluster of Compute Engine Instances. Note that the service may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified. (id: ClusterConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>object</code></td>
-    <td>Output only. Cluster status. (id: ClusterStatus)</td>
+    <td>The status of a cluster and its instances. (id: ClusterStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusHistory" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="virtualClusterConfig" /></td>
     <td><code>object</code></td>
-    <td>Optional. The virtual cluster config is used when creating a Dataproc cluster that does not directly control the underlying compute resources, for example, when creating a Dataproc-on-GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). Dataproc may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified. (id: VirtualClusterConfig)</td>
+    <td>Optional. The virtual cluster config is used when creating a cluster that does not directly control the underlying compute resources, for example, when creating a GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). the service may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified. (id: VirtualClusterConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -184,29 +185,43 @@ The following methods are available for this resource:
     <td><a href="#projects_regions_clusters_list"><CopyableCode code="projects_regions_clusters_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all regions/&#123;region&#125;/clusters in a project alphabetically.</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_create"><CopyableCode code="projects_regions_clusters_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-actionOnFailedPrimaryWorkers"><code>actionOnFailedPrimaryWorkers</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-actionOnFailedPrimaryWorkers"><code>actionOnFailedPrimaryWorkers</code></a></td>
     <td>Creates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_patch"><CopyableCode code="projects_regions_clusters_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-gracefulDecommissionTimeout"><code>gracefulDecommissionTimeout</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-gracefulDecommissionTimeout"><code>gracefulDecommissionTimeout</code></a></td>
     <td>Updates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). The cluster must be in a RUNNING state or an error is returned.</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_delete"><CopyableCode code="projects_regions_clusters_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td><a href="#parameter-clusterUuid"><code>clusterUuid</code></a>, <a href="#parameter-gracefulTerminationTimeout"><code>gracefulTerminationTimeout</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-clusterUuid"><code>clusterUuid</code></a>, <a href="#parameter-gracefulTerminationTimeout"><code>gracefulTerminationTimeout</code></a></td>
     <td>Deletes a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).</td>
+</tr>
+<tr>
+    <td><a href="#projects_regions_clusters_diagnose"><CopyableCode code="projects_regions_clusters_diagnose" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
+    <td></td>
+    <td>Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).</td>
+</tr>
+<tr>
+    <td><a href="#projects_regions_clusters_repair"><CopyableCode code="projects_regions_clusters_repair" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
+    <td></td>
+    <td>Repairs a cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_start"><CopyableCode code="projects_regions_clusters_start" /></a></td>
@@ -223,25 +238,11 @@ The following methods are available for this resource:
     <td>Stops a cluster in a project.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_clusters_repair"><CopyableCode code="projects_regions_clusters_repair" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td></td>
-    <td>Repairs a cluster.</td>
-</tr>
-<tr>
     <td><a href="#projects_regions_clusters_inject_credentials"><CopyableCode code="projects_regions_clusters_inject_credentials" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td></td>
     <td>Inject encrypted credentials into all of the VMs in a cluster.The target cluster must be a personal auth cluster assigned to the user who is issuing the RPC.</td>
-</tr>
-<tr>
-    <td><a href="#projects_regions_clusters_diagnose"><CopyableCode code="projects_regions_clusters_diagnose" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td></td>
-    <td>Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).</td>
 </tr>
 </tbody>
 </table>
@@ -386,9 +387,9 @@ virtualClusterConfig
 FROM google.dataproc.clusters
 WHERE projectId = '{{ projectId }}' -- required
 AND region = '{{ region }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -410,26 +411,26 @@ Creates a cluster in a project. The returned Operation.metadata will be ClusterO
 
 ```sql
 INSERT INTO google.dataproc.clusters (
-data__projectId,
 data__config,
-data__clusterName,
-data__labels,
+data__projectId,
 data__virtualClusterConfig,
+data__labels,
+data__clusterName,
 projectId,
 region,
-actionOnFailedPrimaryWorkers,
-requestId
+requestId,
+actionOnFailedPrimaryWorkers
 )
 SELECT 
-'{{ projectId }}',
 '{{ config }}',
-'{{ clusterName }}',
-'{{ labels }}',
+'{{ projectId }}',
 '{{ virtualClusterConfig }}',
+'{{ labels }}',
+'{{ clusterName }}',
 '{{ projectId }}',
 '{{ region }}',
-'{{ actionOnFailedPrimaryWorkers }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ actionOnFailedPrimaryWorkers }}'
 RETURNING
 name,
 done,
@@ -441,46 +442,381 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: clusters
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the clusters resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the clusters resource.
-    - name: projectId
-      value: string
-      description: >
-        Required. The Google Cloud Platform project ID that the cluster belongs to.
-        
     - name: config
-      value: object
-      description: >
-        Optional. The cluster config for a cluster of Compute Engine Instances. Note that Dataproc may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
-        
-    - name: clusterName
-      value: string
-      description: >
-        Required. The cluster name, which must be unique within a project. The name must start with a lowercase letter, and can contain up to 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The name of a deleted cluster can be reused.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels to associate with this cluster. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a cluster.
-        
+      description: |
+        Optional. The cluster config for a cluster of Compute Engine Instances. Note that the service may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
+      value:
+        clusterType: "{{ clusterType }}"
+        secondaryWorkerConfig:
+          numInstances: {{ numInstances }}
+          minCpuPlatform: "{{ minCpuPlatform }}"
+          instanceNames:
+            - "{{ instanceNames }}"
+          diskConfig:
+            numLocalSsds: {{ numLocalSsds }}
+            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+            bootDiskType: "{{ bootDiskType }}"
+            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            localSsdInterface: "{{ localSsdInterface }}"
+            attachedDiskConfigs:
+              - provisionedIops: "{{ provisionedIops }}"
+                diskType: "{{ diskType }}"
+                diskSizeGb: {{ diskSizeGb }}
+                provisionedThroughput: "{{ provisionedThroughput }}"
+          managedGroupConfig:
+            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+            instanceTemplateName: "{{ instanceTemplateName }}"
+            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+          instanceReferences:
+            - publicKey: "{{ publicKey }}"
+              instanceName: "{{ instanceName }}"
+              instanceId: "{{ instanceId }}"
+              publicEciesKey: "{{ publicEciesKey }}"
+          imageUri: "{{ imageUri }}"
+          preemptibility: "{{ preemptibility }}"
+          isPreemptible: {{ isPreemptible }}
+          startupConfig:
+            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+          machineTypeUri: "{{ machineTypeUri }}"
+          minNumInstances: {{ minNumInstances }}
+          accelerators:
+            - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+              acceleratorCount: {{ acceleratorCount }}
+          instanceFlexibilityPolicy:
+            provisioningModelMix:
+              standardCapacityBase: {{ standardCapacityBase }}
+              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
+            instanceMachineTypes: "{{ instanceMachineTypes }}"
+            instanceSelectionList:
+              - diskConfig:
+                  numLocalSsds: {{ numLocalSsds }}
+                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                  bootDiskType: "{{ bootDiskType }}"
+                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                  bootDiskSizeGb: {{ bootDiskSizeGb }}
+                  localSsdInterface: "{{ localSsdInterface }}"
+                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                machineTypes: "{{ machineTypes }}"
+                rank: {{ rank }}
+            instanceSelectionResults:
+              - machineType: "{{ machineType }}"
+                vmCount: {{ vmCount }}
+        engine: "{{ engine }}"
+        diagnosticBucket: "{{ diagnosticBucket }}"
+        softwareConfig:
+          imageVersion: "{{ imageVersion }}"
+          properties: "{{ properties }}"
+          optionalComponents:
+            - "{{ optionalComponents }}"
+        encryptionConfig:
+          gcePdKmsKeyName: "{{ gcePdKmsKeyName }}"
+          kmsKey: "{{ kmsKey }}"
+        auxiliaryNodeGroups:
+          - nodeGroup:
+              nodeGroupConfig:
+                numInstances: {{ numInstances }}
+                minCpuPlatform: "{{ minCpuPlatform }}"
+                instanceNames:
+                  - "{{ instanceNames }}"
+                diskConfig:
+                  numLocalSsds: {{ numLocalSsds }}
+                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                  bootDiskType: "{{ bootDiskType }}"
+                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                  bootDiskSizeGb: {{ bootDiskSizeGb }}
+                  localSsdInterface: "{{ localSsdInterface }}"
+                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                managedGroupConfig:
+                  instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+                  instanceTemplateName: "{{ instanceTemplateName }}"
+                  instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+                instanceReferences:
+                  - publicKey: "{{ publicKey }}"
+                    instanceName: "{{ instanceName }}"
+                    instanceId: "{{ instanceId }}"
+                    publicEciesKey: "{{ publicEciesKey }}"
+                imageUri: "{{ imageUri }}"
+                preemptibility: "{{ preemptibility }}"
+                isPreemptible: {{ isPreemptible }}
+                startupConfig:
+                  requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+                machineTypeUri: "{{ machineTypeUri }}"
+                minNumInstances: {{ minNumInstances }}
+                accelerators:
+                  - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+                    acceleratorCount: {{ acceleratorCount }}
+                instanceFlexibilityPolicy:
+                  provisioningModelMix: "{{ provisioningModelMix }}"
+                  instanceMachineTypes: "{{ instanceMachineTypes }}"
+                  instanceSelectionList: "{{ instanceSelectionList }}"
+                  instanceSelectionResults: "{{ instanceSelectionResults }}"
+              labels: "{{ labels }}"
+              roles:
+                - "{{ roles }}"
+              name: "{{ name }}"
+            nodeGroupId: "{{ nodeGroupId }}"
+        masterConfig:
+          numInstances: {{ numInstances }}
+          minCpuPlatform: "{{ minCpuPlatform }}"
+          instanceNames:
+            - "{{ instanceNames }}"
+          diskConfig:
+            numLocalSsds: {{ numLocalSsds }}
+            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+            bootDiskType: "{{ bootDiskType }}"
+            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            localSsdInterface: "{{ localSsdInterface }}"
+            attachedDiskConfigs:
+              - provisionedIops: "{{ provisionedIops }}"
+                diskType: "{{ diskType }}"
+                diskSizeGb: {{ diskSizeGb }}
+                provisionedThroughput: "{{ provisionedThroughput }}"
+          managedGroupConfig:
+            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+            instanceTemplateName: "{{ instanceTemplateName }}"
+            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+          instanceReferences:
+            - publicKey: "{{ publicKey }}"
+              instanceName: "{{ instanceName }}"
+              instanceId: "{{ instanceId }}"
+              publicEciesKey: "{{ publicEciesKey }}"
+          imageUri: "{{ imageUri }}"
+          preemptibility: "{{ preemptibility }}"
+          isPreemptible: {{ isPreemptible }}
+          startupConfig:
+            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+          machineTypeUri: "{{ machineTypeUri }}"
+          minNumInstances: {{ minNumInstances }}
+          accelerators:
+            - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+              acceleratorCount: {{ acceleratorCount }}
+          instanceFlexibilityPolicy:
+            provisioningModelMix:
+              standardCapacityBase: {{ standardCapacityBase }}
+              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
+            instanceMachineTypes: "{{ instanceMachineTypes }}"
+            instanceSelectionList:
+              - diskConfig:
+                  numLocalSsds: {{ numLocalSsds }}
+                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                  bootDiskType: "{{ bootDiskType }}"
+                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                  bootDiskSizeGb: {{ bootDiskSizeGb }}
+                  localSsdInterface: "{{ localSsdInterface }}"
+                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                machineTypes: "{{ machineTypes }}"
+                rank: {{ rank }}
+            instanceSelectionResults:
+              - machineType: "{{ machineType }}"
+                vmCount: {{ vmCount }}
+        securityConfig:
+          kerberosConfig:
+            keystorePasswordUri: "{{ keystorePasswordUri }}"
+            truststorePasswordUri: "{{ truststorePasswordUri }}"
+            realm: "{{ realm }}"
+            keystoreUri: "{{ keystoreUri }}"
+            keyPasswordUri: "{{ keyPasswordUri }}"
+            rootPrincipalPasswordUri: "{{ rootPrincipalPasswordUri }}"
+            tgtLifetimeHours: {{ tgtLifetimeHours }}
+            enableKerberos: {{ enableKerberos }}
+            crossRealmTrustAdminServer: "{{ crossRealmTrustAdminServer }}"
+            crossRealmTrustSharedPasswordUri: "{{ crossRealmTrustSharedPasswordUri }}"
+            kdcDbKeyUri: "{{ kdcDbKeyUri }}"
+            kmsKeyUri: "{{ kmsKeyUri }}"
+            truststoreUri: "{{ truststoreUri }}"
+            crossRealmTrustKdc: "{{ crossRealmTrustKdc }}"
+            crossRealmTrustRealm: "{{ crossRealmTrustRealm }}"
+          identityConfig:
+            userServiceAccountMapping: "{{ userServiceAccountMapping }}"
+            enableSsh: {{ enableSsh }}
+        lifecycleConfig:
+          autoDeleteTtl: "{{ autoDeleteTtl }}"
+          idleStartTime: "{{ idleStartTime }}"
+          autoDeleteTime: "{{ autoDeleteTime }}"
+          idleDeleteTtl: "{{ idleDeleteTtl }}"
+          idleStopTtl: "{{ idleStopTtl }}"
+          autoStopTime: "{{ autoStopTime }}"
+          autoStopTtl: "{{ autoStopTtl }}"
+        metastoreConfig:
+          dataprocMetastoreService: "{{ dataprocMetastoreService }}"
+        dataprocMetricConfig:
+          metrics:
+            - metricSource: "{{ metricSource }}"
+              metricOverrides: "{{ metricOverrides }}"
+        workerConfig:
+          numInstances: {{ numInstances }}
+          minCpuPlatform: "{{ minCpuPlatform }}"
+          instanceNames:
+            - "{{ instanceNames }}"
+          diskConfig:
+            numLocalSsds: {{ numLocalSsds }}
+            bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+            bootDiskType: "{{ bootDiskType }}"
+            bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            localSsdInterface: "{{ localSsdInterface }}"
+            attachedDiskConfigs:
+              - provisionedIops: "{{ provisionedIops }}"
+                diskType: "{{ diskType }}"
+                diskSizeGb: {{ diskSizeGb }}
+                provisionedThroughput: "{{ provisionedThroughput }}"
+          managedGroupConfig:
+            instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+            instanceTemplateName: "{{ instanceTemplateName }}"
+            instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+          instanceReferences:
+            - publicKey: "{{ publicKey }}"
+              instanceName: "{{ instanceName }}"
+              instanceId: "{{ instanceId }}"
+              publicEciesKey: "{{ publicEciesKey }}"
+          imageUri: "{{ imageUri }}"
+          preemptibility: "{{ preemptibility }}"
+          isPreemptible: {{ isPreemptible }}
+          startupConfig:
+            requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+          machineTypeUri: "{{ machineTypeUri }}"
+          minNumInstances: {{ minNumInstances }}
+          accelerators:
+            - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+              acceleratorCount: {{ acceleratorCount }}
+          instanceFlexibilityPolicy:
+            provisioningModelMix:
+              standardCapacityBase: {{ standardCapacityBase }}
+              standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
+            instanceMachineTypes: "{{ instanceMachineTypes }}"
+            instanceSelectionList:
+              - diskConfig:
+                  numLocalSsds: {{ numLocalSsds }}
+                  bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                  bootDiskType: "{{ bootDiskType }}"
+                  bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                  bootDiskSizeGb: {{ bootDiskSizeGb }}
+                  localSsdInterface: "{{ localSsdInterface }}"
+                  attachedDiskConfigs: "{{ attachedDiskConfigs }}"
+                machineTypes: "{{ machineTypes }}"
+                rank: {{ rank }}
+            instanceSelectionResults:
+              - machineType: "{{ machineType }}"
+                vmCount: {{ vmCount }}
+        endpointConfig:
+          enableHttpPortAccess: {{ enableHttpPortAccess }}
+          httpPorts: "{{ httpPorts }}"
+        configBucket: "{{ configBucket }}"
+        clusterTier: "{{ clusterTier }}"
+        gkeClusterConfig:
+          nodePoolTarget:
+            - roles: "{{ roles }}"
+              nodePool: "{{ nodePool }}"
+              nodePoolConfig:
+                locations:
+                  - "{{ locations }}"
+                autoscaling:
+                  maxNodeCount: {{ maxNodeCount }}
+                  minNodeCount: {{ minNodeCount }}
+                config:
+                  preemptible: {{ preemptible }}
+                  minCpuPlatform: "{{ minCpuPlatform }}"
+                  serviceAccount: "{{ serviceAccount }}"
+                  localSsdCount: {{ localSsdCount }}
+                  accelerators: "{{ accelerators }}"
+                  bootDiskKmsKey: "{{ bootDiskKmsKey }}"
+                  machineType: "{{ machineType }}"
+                  spot: {{ spot }}
+          namespacedGkeDeploymentTarget:
+            targetGkeCluster: "{{ targetGkeCluster }}"
+            clusterNamespace: "{{ clusterNamespace }}"
+          gkeClusterTarget: "{{ gkeClusterTarget }}"
+        gceClusterConfig:
+          serviceAccountScopes:
+            - "{{ serviceAccountScopes }}"
+          nodeGroupAffinity:
+            nodeGroupUri: "{{ nodeGroupUri }}"
+          privateIpv6GoogleAccess: "{{ privateIpv6GoogleAccess }}"
+          networkUri: "{{ networkUri }}"
+          shieldedInstanceConfig:
+            enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+            enableVtpm: {{ enableVtpm }}
+            enableSecureBoot: {{ enableSecureBoot }}
+          serviceAccount: "{{ serviceAccount }}"
+          metadata: "{{ metadata }}"
+          confidentialInstanceConfig:
+            enableConfidentialCompute: {{ enableConfidentialCompute }}
+            confidentialInstanceType: "{{ confidentialInstanceType }}"
+          subnetworkUri: "{{ subnetworkUri }}"
+          autoZoneExcludeZoneUris:
+            - "{{ autoZoneExcludeZoneUris }}"
+          internalIpOnly: {{ internalIpOnly }}
+          zoneUri: "{{ zoneUri }}"
+          tags:
+            - "{{ tags }}"
+          reservationAffinity:
+            consumeReservationType: "{{ consumeReservationType }}"
+            key: "{{ key }}"
+            values:
+              - "{{ values }}"
+          resourceManagerTags: "{{ resourceManagerTags }}"
+        tempBucket: "{{ tempBucket }}"
+        initializationActions:
+          - executableFile: "{{ executableFile }}"
+            executionTimeout: "{{ executionTimeout }}"
+        autoscalingConfig:
+          policyUri: "{{ policyUri }}"
+    - name: projectId
+      value: "{{ projectId }}"
+      description: |
+        Required. The Google Cloud Platform project ID that the cluster belongs to.
     - name: virtualClusterConfig
-      value: object
-      description: >
-        Optional. The virtual cluster config is used when creating a Dataproc cluster that does not directly control the underlying compute resources, for example, when creating a Dataproc-on-GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). Dataproc may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified.
-        
-    - name: actionOnFailedPrimaryWorkers
-      value: string
+      description: |
+        Optional. The virtual cluster config is used when creating a cluster that does not directly control the underlying compute resources, for example, when creating a GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). the service may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified.
+      value:
+        auxiliaryServicesConfig:
+          sparkHistoryServerConfig:
+            dataprocCluster: "{{ dataprocCluster }}"
+          metastoreConfig:
+            dataprocMetastoreService: "{{ dataprocMetastoreService }}"
+        stagingBucket: "{{ stagingBucket }}"
+        kubernetesClusterConfig:
+          kubernetesNamespace: "{{ kubernetesNamespace }}"
+          gkeClusterConfig:
+            nodePoolTarget:
+              - roles: "{{ roles }}"
+                nodePool: "{{ nodePool }}"
+                nodePoolConfig:
+                  locations: "{{ locations }}"
+                  autoscaling: "{{ autoscaling }}"
+                  config: "{{ config }}"
+            namespacedGkeDeploymentTarget:
+              targetGkeCluster: "{{ targetGkeCluster }}"
+              clusterNamespace: "{{ clusterNamespace }}"
+            gkeClusterTarget: "{{ gkeClusterTarget }}"
+          kubernetesSoftwareConfig:
+            componentVersion: "{{ componentVersion }}"
+            properties: "{{ properties }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels to associate with this cluster. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a cluster.
+    - name: clusterName
+      value: "{{ clusterName }}"
+      description: |
+        Required. The cluster name, which must be unique within a project. The name must start with a lowercase letter, and can contain up to 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The name of a deleted cluster can be reused.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: actionOnFailedPrimaryWorkers
+      value: "{{ actionOnFailedPrimaryWorkers }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -500,17 +836,17 @@ Updates a cluster in a project. The returned Operation.metadata will be ClusterO
 ```sql
 UPDATE google.dataproc.clusters
 SET 
-data__projectId = '{{ projectId }}',
 data__config = '{{ config }}',
-data__clusterName = '{{ clusterName }}',
+data__projectId = '{{ projectId }}',
+data__virtualClusterConfig = '{{ virtualClusterConfig }}',
 data__labels = '{{ labels }}',
-data__virtualClusterConfig = '{{ virtualClusterConfig }}'
+data__clusterName = '{{ clusterName }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND region = '{{ region }}' --required
 AND clusterName = '{{ clusterName }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 AND gracefulDecommissionTimeout = '{{ gracefulDecommissionTimeout}}'
 RETURNING
 name,
@@ -540,9 +876,9 @@ DELETE FROM google.dataproc.clusters
 WHERE projectId = '{{ projectId }}' --required
 AND region = '{{ region }}' --required
 AND clusterName = '{{ clusterName }}' --required
+AND requestId = '{{ requestId }}'
 AND clusterUuid = '{{ clusterUuid }}'
 AND gracefulTerminationTimeout = '{{ gracefulTerminationTimeout }}'
-AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -552,15 +888,59 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_regions_clusters_start"
+    defaultValue="projects_regions_clusters_diagnose"
     values={[
+        { label: 'projects_regions_clusters_diagnose', value: 'projects_regions_clusters_diagnose' },
+        { label: 'projects_regions_clusters_repair', value: 'projects_regions_clusters_repair' },
         { label: 'projects_regions_clusters_start', value: 'projects_regions_clusters_start' },
         { label: 'projects_regions_clusters_stop', value: 'projects_regions_clusters_stop' },
-        { label: 'projects_regions_clusters_repair', value: 'projects_regions_clusters_repair' },
-        { label: 'projects_regions_clusters_inject_credentials', value: 'projects_regions_clusters_inject_credentials' },
-        { label: 'projects_regions_clusters_diagnose', value: 'projects_regions_clusters_diagnose' }
+        { label: 'projects_regions_clusters_inject_credentials', value: 'projects_regions_clusters_inject_credentials' }
     ]}
 >
+<TabItem value="projects_regions_clusters_diagnose">
+
+Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
+
+```sql
+EXEC google.dataproc.clusters.projects_regions_clusters_diagnose 
+@projectId='{{ projectId }}' --required, 
+@region='{{ region }}' --required, 
+@clusterName='{{ clusterName }}' --required 
+@@json=
+'{
+"diagnosisInterval": "{{ diagnosisInterval }}", 
+"jobs": "{{ jobs }}", 
+"yarnApplicationIds": "{{ yarnApplicationIds }}", 
+"tarballGcsDir": "{{ tarballGcsDir }}", 
+"job": "{{ job }}", 
+"yarnApplicationId": "{{ yarnApplicationId }}", 
+"tarballAccess": "{{ tarballAccess }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_regions_clusters_repair">
+
+Repairs a cluster.
+
+```sql
+EXEC google.dataproc.clusters.projects_regions_clusters_repair 
+@projectId='{{ projectId }}' --required, 
+@region='{{ region }}' --required, 
+@clusterName='{{ clusterName }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"nodePools": "{{ nodePools }}", 
+"parentOperationId": "{{ parentOperationId }}", 
+"dataprocSuperUser": {{ dataprocSuperUser }}, 
+"gracefulDecommissionTimeout": "{{ gracefulDecommissionTimeout }}", 
+"clusterUuid": "{{ clusterUuid }}", 
+"cluster": "{{ cluster }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_regions_clusters_start">
 
 Starts a cluster in a project.
@@ -595,28 +975,6 @@ EXEC google.dataproc.clusters.projects_regions_clusters_stop
 ;
 ```
 </TabItem>
-<TabItem value="projects_regions_clusters_repair">
-
-Repairs a cluster.
-
-```sql
-EXEC google.dataproc.clusters.projects_regions_clusters_repair 
-@projectId='{{ projectId }}' --required, 
-@region='{{ region }}' --required, 
-@clusterName='{{ clusterName }}' --required 
-@@json=
-'{
-"gracefulDecommissionTimeout": "{{ gracefulDecommissionTimeout }}", 
-"clusterUuid": "{{ clusterUuid }}", 
-"nodePools": "{{ nodePools }}", 
-"parentOperationId": "{{ parentOperationId }}", 
-"dataprocSuperUser": {{ dataprocSuperUser }}, 
-"cluster": "{{ cluster }}", 
-"requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_regions_clusters_inject_credentials">
 
 Inject encrypted credentials into all of the VMs in a cluster.The target cluster must be a personal auth cluster assigned to the user who is issuing the RPC.
@@ -628,30 +986,8 @@ EXEC google.dataproc.clusters.projects_regions_clusters_inject_credentials
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"clusterUuid": "{{ clusterUuid }}", 
-"credentialsCiphertext": "{{ credentialsCiphertext }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_regions_clusters_diagnose">
-
-Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
-
-```sql
-EXEC google.dataproc.clusters.projects_regions_clusters_diagnose 
-@projectId='{{ projectId }}' --required, 
-@region='{{ region }}' --required, 
-@clusterName='{{ clusterName }}' --required 
-@@json=
-'{
-"yarnApplicationIds": "{{ yarnApplicationIds }}", 
-"diagnosisInterval": "{{ diagnosisInterval }}", 
-"yarnApplicationId": "{{ yarnApplicationId }}", 
-"job": "{{ job }}", 
-"tarballAccess": "{{ tarballAccess }}", 
-"tarballGcsDir": "{{ tarballGcsDir }}", 
-"jobs": "{{ jobs }}"
+"credentialsCiphertext": "{{ credentialsCiphertext }}", 
+"clusterUuid": "{{ clusterUuid }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>project_settings</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>project_settings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="project_settings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.artifactregistry.project_settings" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="legacyRedirectionState" /></td>
     <td><code>string</code></td>
-    <td>The redirection state of the legacy repositories in this project.</td>
+    <td>The redirection state of the legacy repositories in this project. (REDIRECTION_STATE_UNSPECIFIED, REDIRECTION_FROM_GCR_IO_DISABLED, REDIRECTION_FROM_GCR_IO_ENABLED, REDIRECTION_FROM_GCR_IO_FINALIZED, REDIRECTION_FROM_GCR_IO_ENABLED_AND_COPYING, REDIRECTION_FROM_GCR_IO_PARTIAL_AND_COPYING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pullPercent" /></td>

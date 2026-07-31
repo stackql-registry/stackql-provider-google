@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>effective_firewalls</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>effective_firewalls</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="effective_firewalls" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.effective_firewalls" /></td></tr>
 </tbody></table>
@@ -51,12 +52,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="firewallPolicys" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Effective firewalls from firewall policies.</td>
+    <td>Output only. [Output only] Effective firewalls from firewall policy. It applies to Regional Network Firewall Policies in the specified region, Global Network Firewall Policies and Hierachial Firewall Policies which are associated with the network.</td>
 </tr>
 <tr>
     <td><CopyableCode code="firewalls" /></td>
     <td><code>array</code></td>
-    <td>Effective firewalls on the instance.</td>
+    <td>Effective firewalls on the network.</td>
 </tr>
 </tbody>
 </table>
@@ -81,9 +82,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_effective_firewalls"><CopyableCode code="get_effective_firewalls" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-networkInterface"><code>networkInterface</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-network"><code>network</code></a></td>
     <td></td>
-    <td>Returns effective firewalls applied to an interface of the instance.</td>
+    <td>Returns the effective firewalls on a given network.</td>
 </tr>
 </tbody>
 </table>
@@ -101,13 +102,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-instance">
-    <td><CopyableCode code="instance" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-networkInterface">
-    <td><CopyableCode code="networkInterface" /></td>
+<tr id="parameter-network">
+    <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -116,8 +112,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-zone">
-    <td><CopyableCode code="zone" /></td>
+<tr id="parameter-region">
+    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -134,7 +130,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_effective_firewalls">
 
-Returns effective firewalls applied to an interface of the instance.
+Returns the effective firewalls on a given network.
 
 ```sql
 SELECT
@@ -142,9 +138,8 @@ firewallPolicys,
 firewalls
 FROM google.compute.effective_firewalls
 WHERE project = '{{ project }}' -- required
-AND zone = '{{ zone }}' -- required
-AND instance = '{{ instance }}' -- required
-AND networkInterface = '{{ networkInterface }}' -- required
+AND region = '{{ region }}' -- required
+AND network = '{{ network }}' -- required
 ;
 ```
 </TabItem>

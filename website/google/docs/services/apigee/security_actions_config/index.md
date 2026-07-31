@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_actions_config</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_actions_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_actions_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.security_actions_config" /></td></tr>
 </tbody></table>
@@ -172,8 +173,8 @@ UpdateSecurityActionConfig updates the current SecurityActions configuration. Th
 ```sql
 UPDATE google.apigee.security_actions_config
 SET 
-data__enabled = {{ enabled }},
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__enabled = {{ enabled }}
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

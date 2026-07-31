@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>autoscalers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>autoscalers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="autoscalers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.autoscalers" /></td></tr>
 </tbody></table>
@@ -53,22 +54,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="autoscalingPolicy" /></td>
     <td><code>object</code></td>
-    <td>The configuration parameters for the autoscaling algorithm. You can define one or more signals for an autoscaler: cpuUtilization, customMetricUtilizations, and loadBalancingUtilization. If none of these are specified, the default will be to autoscale based on cpuUtilization to 0.6 or 60%. (id: AutoscalingPolicy)</td>
+    <td>The configuration parameters for the autoscaling algorithm. You can define one or more signals for an autoscaler: cpuUtilization,customMetricUtilizations, andloadBalancingUtilization.  If none of these are specified, the default will be to autoscale based oncpuUtilization to 0.6 or 60%. (id: AutoscalingPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -78,22 +79,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#autoscaler for autoscalers. (default: compute#autoscaler)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#autoscaler for autoscalers. (default: compute#autoscaler)</td>
 </tr>
 <tr>
     <td><CopyableCode code="recommendedSize" /></td>
     <td><code>integer (int32)</code></td>
-    <td>[Output Only] Target recommended MIG size (number of instances) computed by autoscaler. Autoscaler calculates the recommended MIG size even when the autoscaling policy mode is different from ON. This field is empty when autoscaler is not connected to an existing managed instance group or autoscaler did not generate its prediction.</td>
+    <td>Output only. [Output Only] Target recommended MIG size (number of instances) computed by autoscaler. Autoscaler calculates the recommended MIG size even when the autoscaling policy mode is different from ON. This field is empty when autoscaler is not connected to an existing managed instance group or autoscaler did not generate its prediction.</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the instance group resides (for autoscalers living in regional scope).</td>
+    <td>Output only. [Output Only] URL of theregion where the instance group resides (for autoscalers living in regional scope).</td>
 </tr>
 <tr>
     <td><CopyableCode code="scalingScheduleStatus" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] Status information of existing scaling schedules.</td>
+    <td>Output only. [Output Only] Status information of existing scaling schedules.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -103,12 +104,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the autoscaler configuration. Current set of possible values: - PENDING: Autoscaler backend hasn't read new/updated configuration. - DELETING: Configuration is being deleted. - ACTIVE: Configuration is acknowledged to be effective. Some warnings might be present in the statusDetails field. - ERROR: Configuration has errors. Actionable for users. Details are present in the statusDetails field. New values might be added in the future.</td>
+    <td>[Output Only] The status of the autoscaler configuration. Current set of possible values:        - PENDING:      Autoscaler backend hasn't read new/updated configuration.    - DELETING:      Configuration is being deleted.    - ACTIVE:      Configuration is acknowledged to be effective. Some warnings might      be present in the statusDetails field.    - ERROR:      Configuration has errors. Actionable for users. Details are present in      the statusDetails field.   New values might be added in the future. (ACTIVE, DELETING, ERROR, PENDING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusDetails" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Human-readable details about the current state of the autoscaler. Read the documentation for Commonly returned status messages for examples of status messages you might encounter.</td>
+    <td>[Output Only] Human-readable details about the current state of the autoscaler. Read the documentation forCommonly returned status messages for examples of status messages you might encounter.</td>
 </tr>
 <tr>
     <td><CopyableCode code="target" /></td>
@@ -118,7 +119,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the zone where the instance group resides (for autoscalers living in zonal scope).</td>
+    <td>Output only. [Output Only] URL of thezone where the instance group resides (for autoscalers living in zonal scope).</td>
 </tr>
 </tbody>
 </table>
@@ -147,17 +148,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of resource. (default: compute#regionAutoscalerList)</td>
+    <td>Output only. Type of resource. (default: compute#regionAutoscalerList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -181,22 +182,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="autoscalingPolicy" /></td>
     <td><code>object</code></td>
-    <td>The configuration parameters for the autoscaling algorithm. You can define one or more signals for an autoscaler: cpuUtilization, customMetricUtilizations, and loadBalancingUtilization. If none of these are specified, the default will be to autoscale based on cpuUtilization to 0.6 or 60%. (id: AutoscalingPolicy)</td>
+    <td>The configuration parameters for the autoscaling algorithm. You can define one or more signals for an autoscaler: cpuUtilization,customMetricUtilizations, andloadBalancingUtilization.  If none of these are specified, the default will be to autoscale based oncpuUtilization to 0.6 or 60%. (id: AutoscalingPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -206,22 +207,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#autoscaler for autoscalers. (default: compute#autoscaler)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#autoscaler for autoscalers. (default: compute#autoscaler)</td>
 </tr>
 <tr>
     <td><CopyableCode code="recommendedSize" /></td>
     <td><code>integer (int32)</code></td>
-    <td>[Output Only] Target recommended MIG size (number of instances) computed by autoscaler. Autoscaler calculates the recommended MIG size even when the autoscaling policy mode is different from ON. This field is empty when autoscaler is not connected to an existing managed instance group or autoscaler did not generate its prediction.</td>
+    <td>Output only. [Output Only] Target recommended MIG size (number of instances) computed by autoscaler. Autoscaler calculates the recommended MIG size even when the autoscaling policy mode is different from ON. This field is empty when autoscaler is not connected to an existing managed instance group or autoscaler did not generate its prediction.</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the instance group resides (for autoscalers living in regional scope).</td>
+    <td>Output only. [Output Only] URL of theregion where the instance group resides (for autoscalers living in regional scope).</td>
 </tr>
 <tr>
     <td><CopyableCode code="scalingScheduleStatus" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] Status information of existing scaling schedules.</td>
+    <td>Output only. [Output Only] Status information of existing scaling schedules.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -231,12 +232,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the autoscaler configuration. Current set of possible values: - PENDING: Autoscaler backend hasn't read new/updated configuration. - DELETING: Configuration is being deleted. - ACTIVE: Configuration is acknowledged to be effective. Some warnings might be present in the statusDetails field. - ERROR: Configuration has errors. Actionable for users. Details are present in the statusDetails field. New values might be added in the future.</td>
+    <td>[Output Only] The status of the autoscaler configuration. Current set of possible values:        - PENDING:      Autoscaler backend hasn't read new/updated configuration.    - DELETING:      Configuration is being deleted.    - ACTIVE:      Configuration is acknowledged to be effective. Some warnings might      be present in the statusDetails field.    - ERROR:      Configuration has errors. Actionable for users. Details are present in      the statusDetails field.   New values might be added in the future. (ACTIVE, DELETING, ERROR, PENDING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusDetails" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Human-readable details about the current state of the autoscaler. Read the documentation for Commonly returned status messages for examples of status messages you might encounter.</td>
+    <td>[Output Only] Human-readable details about the current state of the autoscaler. Read the documentation forCommonly returned status messages for examples of status messages you might encounter.</td>
 </tr>
 <tr>
     <td><CopyableCode code="target" /></td>
@@ -246,7 +247,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the zone where the instance group resides (for autoscalers living in zonal scope).</td>
+    <td>Output only. [Output Only] URL of thezone where the instance group resides (for autoscalers living in zonal scope).</td>
 </tr>
 </tbody>
 </table>
@@ -279,36 +280,36 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of autoscalers contained within the specified region.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves a list of autoscalers contained within<br />the specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves an aggregated list of autoscalers. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Retrieves an aggregated list of autoscalers.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates an autoscaler in the specified project using the data included in the request.</td>
+    <td>Creates an autoscaler in the specified project using<br />the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-autoscaler"><code>autoscaler</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates an autoscaler in the specified project using the data included in the request. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.</td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-autoscaler"><code>autoscaler</code></a></td>
+    <td>Updates an autoscaler in the specified project using<br />the data included in the request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-autoscaler"><code>autoscaler</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates an autoscaler in the specified project using the data included in the request.</td>
+    <td>Updates an autoscaler in the specified project using<br />the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -435,7 +436,7 @@ AND autoscaler = '{{ autoscaler }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of autoscalers contained within the specified region.
+Retrieves a list of autoscalers contained within<br />the specified region.
 
 ```sql
 SELECT
@@ -448,9 +449,9 @@ warning
 FROM google.compute.autoscalers
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -458,7 +459,7 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves an aggregated list of autoscalers. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves an aggregated list of autoscalers.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -478,13 +479,13 @@ target,
 zone
 FROM google.compute.autoscalers
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -502,43 +503,29 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates an autoscaler in the specified project using the data included in the request.
+Creates an autoscaler in the specified project using<br />the data included in the request.
 
 ```sql
 INSERT INTO google.compute.autoscalers (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
 data__target,
-data__autoscalingPolicy,
-data__zone,
-data__region,
-data__selfLink,
 data__status,
 data__statusDetails,
-data__recommendedSize,
-data__scalingScheduleStatus,
+data__name,
+data__autoscalingPolicy,
+data__selfLink,
+data__description,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
 '{{ target }}',
-'{{ autoscalingPolicy }}',
-'{{ zone }}',
-'{{ region }}',
-'{{ selfLink }}',
 '{{ status }}',
 '{{ statusDetails }}',
-{{ recommendedSize }},
-'{{ scalingScheduleStatus }}',
+'{{ name }}',
+'{{ autoscalingPolicy }}',
+'{{ selfLink }}',
+'{{ description }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -550,6 +537,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -574,91 +562,98 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: autoscalers
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the autoscalers resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the autoscalers resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#autoscaler for autoscalers.
-        
-      default: compute#autoscaler
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
     - name: target
-      value: string
-      description: >
-        URL of the managed instance group that this autoscaler will scale. This field is required when creating an autoscaler.
-        
-    - name: autoscalingPolicy
-      value: object
-      description: >
-        The configuration parameters for the autoscaling algorithm. You can define one or more signals for an autoscaler: cpuUtilization, customMetricUtilizations, and loadBalancingUtilization. If none of these are specified, the default will be to autoscale based on cpuUtilization to 0.6 or 60%.
-        
-    - name: zone
-      value: string
-      description: >
-        [Output Only] URL of the zone where the instance group resides (for autoscalers living in zonal scope).
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] URL of the region where the instance group resides (for autoscalers living in regional scope).
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
+      value: "{{ target }}"
+      description: |
+        URL of the managed instance group that this autoscaler will scale. This
+        field is required when creating an autoscaler.
     - name: status
-      value: string
-      description: >
-        [Output Only] The status of the autoscaler configuration. Current set of possible values: - PENDING: Autoscaler backend hasn't read new/updated configuration. - DELETING: Configuration is being deleted. - ACTIVE: Configuration is acknowledged to be effective. Some warnings might be present in the statusDetails field. - ERROR: Configuration has errors. Actionable for users. Details are present in the statusDetails field. New values might be added in the future.
-        
+      value: "{{ status }}"
+      description: |
+        [Output Only] The status of the autoscaler configuration. Current set of
+        possible values:
+        - PENDING:
+        Autoscaler backend hasn't read new/updated configuration.
+        - DELETING:
+        Configuration is being deleted.
+        - ACTIVE:
+        Configuration is acknowledged to be effective. Some warnings might
+        be present in the statusDetails field.
+        - ERROR:
+        Configuration has errors. Actionable for users. Details are present in
+        the statusDetails field.
+        New values might be added in the future.
       valid_values: ['ACTIVE', 'DELETING', 'ERROR', 'PENDING']
     - name: statusDetails
-      value: array
-      description: >
-        [Output Only] Human-readable details about the current state of the autoscaler. Read the documentation for Commonly returned status messages for examples of status messages you might encounter.
-        
-    - name: recommendedSize
-      value: integer
-      description: >
-        [Output Only] Target recommended MIG size (number of instances) computed by autoscaler. Autoscaler calculates the recommended MIG size even when the autoscaling policy mode is different from ON. This field is empty when autoscaler is not connected to an existing managed instance group or autoscaler did not generate its prediction.
-        
-    - name: scalingScheduleStatus
-      value: object
-      description: >
-        [Output Only] Status information of existing scaling schedules.
-        
+      description: |
+        [Output Only] Human-readable details about the current state of the
+        autoscaler. Read the documentation forCommonly
+        returned status messages for examples of status messages you might
+        encounter.
+      value:
+        - message: "{{ message }}"
+          type: "{{ type }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: autoscalingPolicy
+      description: |
+        The configuration parameters for the autoscaling algorithm. You can define
+        one or more signals for an autoscaler: cpuUtilization,customMetricUtilizations, andloadBalancingUtilization.
+        If none of these are specified, the default will be to autoscale based oncpuUtilization to 0.6 or 60%.
+      value:
+        scaleInControl:
+          timeWindowSec: {{ timeWindowSec }}
+          maxScaledInReplicas:
+            calculated: {{ calculated }}
+            fixed: {{ fixed }}
+            percent: {{ percent }}
+        mode: "{{ mode }}"
+        coolDownPeriodSec: {{ coolDownPeriodSec }}
+        loadBalancingUtilization:
+          utilizationTarget: {{ utilizationTarget }}
+        stabilizationPeriodSec: {{ stabilizationPeriodSec }}
+        customMetricUtilizations:
+          - singleInstanceAssignment: {{ singleInstanceAssignment }}
+            metric: "{{ metric }}"
+            utilizationTargetType: "{{ utilizationTargetType }}"
+            utilizationTarget: {{ utilizationTarget }}
+            filter: "{{ filter }}"
+        minNumReplicas: {{ minNumReplicas }}
+        cpuUtilization:
+          utilizationTarget: {{ utilizationTarget }}
+          predictiveMethod: "{{ predictiveMethod }}"
+        scalingSchedules: "{{ scalingSchedules }}"
+        maxNumReplicas: {{ maxNumReplicas }}
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -673,30 +668,23 @@ zone
 >
 <TabItem value="patch">
 
-Updates an autoscaler in the specified project using the data included in the request. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.
+Updates an autoscaler in the specified project using<br />the data included in the request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.
 
 ```sql
 UPDATE google.compute.autoscalers
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__target = '{{ target }}',
-data__autoscalingPolicy = '{{ autoscalingPolicy }}',
-data__zone = '{{ zone }}',
-data__region = '{{ region }}',
-data__selfLink = '{{ selfLink }}',
 data__status = '{{ status }}',
 data__statusDetails = '{{ statusDetails }}',
-data__recommendedSize = {{ recommendedSize }},
-data__scalingScheduleStatus = '{{ scalingScheduleStatus }}'
+data__name = '{{ name }}',
+data__autoscalingPolicy = '{{ autoscalingPolicy }}',
+data__selfLink = '{{ selfLink }}',
+data__description = '{{ description }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
-AND autoscaler = '{{ autoscaler}}'
 AND requestId = '{{ requestId}}'
+AND autoscaler = '{{ autoscaler}}'
 RETURNING
 id,
 name,
@@ -705,6 +693,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -739,25 +728,18 @@ zone;
 >
 <TabItem value="update">
 
-Updates an autoscaler in the specified project using the data included in the request.
+Updates an autoscaler in the specified project using<br />the data included in the request.
 
 ```sql
 REPLACE google.compute.autoscalers
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__target = '{{ target }}',
-data__autoscalingPolicy = '{{ autoscalingPolicy }}',
-data__zone = '{{ zone }}',
-data__region = '{{ region }}',
-data__selfLink = '{{ selfLink }}',
 data__status = '{{ status }}',
 data__statusDetails = '{{ statusDetails }}',
-data__recommendedSize = {{ recommendedSize }},
-data__scalingScheduleStatus = '{{ scalingScheduleStatus }}'
+data__name = '{{ name }}',
+data__autoscalingPolicy = '{{ autoscalingPolicy }}',
+data__selfLink = '{{ selfLink }}',
+data__description = '{{ description }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -771,6 +753,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,

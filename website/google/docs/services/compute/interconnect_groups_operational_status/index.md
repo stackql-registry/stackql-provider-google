@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>interconnect_groups_operationa
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>interconnect_groups_operational_status</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="interconnect_groups_operational_status" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.interconnect_groups_operational_status" /></td></tr>
 </tbody></table>
@@ -83,7 +84,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-interconnectGroup"><code>interconnectGroup</code></a></td>
     <td></td>
-    <td>Returns the interconnectStatuses for the specified InterconnectGroup.</td>
+    <td>Returns the interconnectStatuses for the specified<br />InterconnectGroup.</td>
 </tr>
 </tbody>
 </table>
@@ -124,7 +125,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_operational_status">
 
-Returns the interconnectStatuses for the specified InterconnectGroup.
+Returns the interconnectStatuses for the specified<br />InterconnectGroup.
 
 ```sql
 SELECT

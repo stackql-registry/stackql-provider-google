@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>invoke</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>invoke</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="invoke" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.invoke" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#invoke"><CopyableCode code="invoke" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a>, <a href="#parameter-invokeId"><code>invokeId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a>, <a href="#parameter-deployedModelId"><code>deployedModelId</code></a>, <a href="#parameter-invokeId"><code>invokeId</code></a></td>
     <td></td>
     <td>Forwards arbitrary HTTP requests for both streaming and non-streaming cases. To use this method, invoke_route_prefix must be set to allow the paths that will be specified in the request.</td>
 </tr>
@@ -72,6 +73,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-deployedModelId">
+    <td><CopyableCode code="deployedModelId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-endpointsId">
     <td><CopyableCode code="endpointsId" /></td>
     <td><code>string</code></td>
@@ -112,6 +118,7 @@ EXEC google.aiplatform.invoke.invoke
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @endpointsId='{{ endpointsId }}' --required, 
+@deployedModelId='{{ deployedModelId }}' --required, 
 @invokeId='{{ invokeId }}' --required 
 @@json=
 '{

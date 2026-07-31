@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>permissions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>permissions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="permissions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.permissions" /></td></tr>
 </tbody></table>
@@ -297,42 +298,42 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-permissionId"><code>permissionId</code></a></td>
-    <td><a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a></td>
+    <td><a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a></td>
     <td>Gets a permission by ID.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a></td>
     <td>Lists a file's or shared drive's permissions.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a></td>
-    <td><a href="#parameter-emailMessage"><code>emailMessage</code></a>, <a href="#parameter-enforceSingleParent"><code>enforceSingleParent</code></a>, <a href="#parameter-moveToNewOwnersRoot"><code>moveToNewOwnersRoot</code></a>, <a href="#parameter-sendNotificationEmails"><code>sendNotificationEmails</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-enforceExpansiveAccess"><code>enforceExpansiveAccess</code></a></td>
+    <td><a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-moveToNewOwnersRoot"><code>moveToNewOwnersRoot</code></a>, <a href="#parameter-enforceExpansiveAccess"><code>enforceExpansiveAccess</code></a>, <a href="#parameter-emailMessage"><code>emailMessage</code></a>, <a href="#parameter-sendNotificationEmails"><code>sendNotificationEmails</code></a>, <a href="#parameter-enforceSingleParent"><code>enforceSingleParent</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a></td>
     <td>Inserts a permission for a file or shared drive. **Warning:** Concurrent permissions operations on the same file are not supported; only the last update is applied.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-permissionId"><code>permissionId</code></a></td>
-    <td><a href="#parameter-removeExpiration"><code>removeExpiration</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-transferOwnership"><code>transferOwnership</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-enforceExpansiveAccess"><code>enforceExpansiveAccess</code></a></td>
+    <td><a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-transferOwnership"><code>transferOwnership</code></a>, <a href="#parameter-enforceExpansiveAccess"><code>enforceExpansiveAccess</code></a>, <a href="#parameter-removeExpiration"><code>removeExpiration</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a></td>
     <td>Updates a permission using patch semantics. **Warning:** Concurrent permissions operations on the same file are not supported; only the last update is applied.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-permissionId"><code>permissionId</code></a></td>
-    <td><a href="#parameter-removeExpiration"><code>removeExpiration</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-transferOwnership"><code>transferOwnership</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-enforceExpansiveAccess"><code>enforceExpansiveAccess</code></a></td>
+    <td><a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-transferOwnership"><code>transferOwnership</code></a>, <a href="#parameter-enforceExpansiveAccess"><code>enforceExpansiveAccess</code></a>, <a href="#parameter-removeExpiration"><code>removeExpiration</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a></td>
     <td>Updates a permission. **Warning:** Concurrent permissions operations on the same file are not supported; only the last update is applied.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-permissionId"><code>permissionId</code></a></td>
-    <td><a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-enforceExpansiveAccess"><code>enforceExpansiveAccess</code></a></td>
+    <td><a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-enforceExpansiveAccess"><code>enforceExpansiveAccess</code></a>, <a href="#parameter-useDomainAdminAccess"><code>useDomainAdminAccess</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a></td>
     <td>Deletes a permission from a file or shared drive. **Warning:** Concurrent permissions operations on the same file are not supported; only the last update is applied.</td>
 </tr>
 </tbody>
@@ -469,8 +470,8 @@ FROM googleworkspace.drivev2.permissions
 WHERE fileId = '{{ fileId }}' -- required
 AND permissionId = '{{ permissionId }}' -- required
 AND supportsAllDrives = '{{ supportsAllDrives }}'
-AND supportsTeamDrives = '{{ supportsTeamDrives }}'
 AND useDomainAdminAccess = '{{ useDomainAdminAccess }}'
+AND supportsTeamDrives = '{{ supportsTeamDrives }}'
 ;
 ```
 </TabItem>
@@ -504,11 +505,11 @@ withLink
 FROM googleworkspace.drivev2.permissions
 WHERE fileId = '{{ fileId }}' -- required
 AND maxResults = '{{ maxResults }}'
+AND supportsTeamDrives = '{{ supportsTeamDrives }}'
+AND includePermissionsForView = '{{ includePermissionsForView }}'
 AND pageToken = '{{ pageToken }}'
 AND supportsAllDrives = '{{ supportsAllDrives }}'
-AND supportsTeamDrives = '{{ supportsTeamDrives }}'
 AND useDomainAdminAccess = '{{ useDomainAdminAccess }}'
-AND includePermissionsForView = '{{ includePermissionsForView }}'
 ;
 ```
 </TabItem>
@@ -530,64 +531,64 @@ Inserts a permission for a file or shared drive. **Warning:** Concurrent permiss
 
 ```sql
 INSERT INTO googleworkspace.drivev2.permissions (
-data__id,
-data__name,
-data__type,
-data__role,
-data__additionalRoles,
-data__authKey,
-data__value,
-data__kind,
-data__withLink,
-data__photoLink,
 data__selfLink,
-data__emailAddress,
-data__domain,
 data__etag,
-data__expirationDate,
 data__deleted,
-data__view,
-data__pendingOwner,
+data__additionalRoles,
+data__photoLink,
 data__inheritedPermissionsDisabled,
+data__id,
+data__kind,
+data__expirationDate,
+data__withLink,
+data__emailAddress,
+data__type,
+data__value,
+data__domain,
+data__pendingOwner,
+data__view,
+data__name,
+data__authKey,
+data__role,
 fileId,
-emailMessage,
-enforceSingleParent,
-moveToNewOwnersRoot,
-sendNotificationEmails,
-supportsAllDrives,
 supportsTeamDrives,
-useDomainAdminAccess,
-enforceExpansiveAccess
+moveToNewOwnersRoot,
+enforceExpansiveAccess,
+emailMessage,
+sendNotificationEmails,
+enforceSingleParent,
+supportsAllDrives,
+useDomainAdminAccess
 )
 SELECT 
-'{{ id }}',
-'{{ name }}',
-'{{ type }}',
-'{{ role }}',
-'{{ additionalRoles }}',
-'{{ authKey }}',
-'{{ value }}',
-'{{ kind }}',
-{{ withLink }},
-'{{ photoLink }}',
 '{{ selfLink }}',
-'{{ emailAddress }}',
-'{{ domain }}',
 '{{ etag }}',
-'{{ expirationDate }}',
 {{ deleted }},
-'{{ view }}',
-{{ pendingOwner }},
+'{{ additionalRoles }}',
+'{{ photoLink }}',
 {{ inheritedPermissionsDisabled }},
+'{{ id }}',
+'{{ kind }}',
+'{{ expirationDate }}',
+{{ withLink }},
+'{{ emailAddress }}',
+'{{ type }}',
+'{{ value }}',
+'{{ domain }}',
+{{ pendingOwner }},
+'{{ view }}',
+'{{ name }}',
+'{{ authKey }}',
+'{{ role }}',
 '{{ fileId }}',
-'{{ emailMessage }}',
-'{{ enforceSingleParent }}',
-'{{ moveToNewOwnersRoot }}',
-'{{ sendNotificationEmails }}',
-'{{ supportsAllDrives }}',
 '{{ supportsTeamDrives }}',
-'{{ useDomainAdminAccess }}',
-'{{ enforceExpansiveAccess }}'
+'{{ moveToNewOwnersRoot }}',
+'{{ enforceExpansiveAccess }}',
+'{{ emailMessage }}',
+'{{ sendNotificationEmails }}',
+'{{ enforceSingleParent }}',
+'{{ supportsAllDrives }}',
+'{{ useDomainAdminAccess }}'
 RETURNING
 id,
 name,
@@ -615,126 +616,108 @@ withLink
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: permissions
   props:
     - name: fileId
-      value: string
+      value: "{{ fileId }}"
       description: Required parameter for the permissions resource.
-    - name: id
-      value: string
-      description: >
-        The ID of the user this permission refers to, and identical to the `permissionId` in the About and Files resources. When making a `drive.permissions.insert` request, exactly one of the `id` or `value` fields must be specified unless the permission type is `anyone`, in which case both `id` and `value` are ignored.
-        
-    - name: name
-      value: string
-      description: >
-        Output only. The name for this permission.
-        
-    - name: type
-      value: string
-      description: >
-        The account type. Allowed values are: * `user` * `group` * `domain` * `anyone`
-        
-    - name: role
-      value: string
-      description: >
-        The primary role for this user. While new values may be supported in the future, the following are currently allowed: * `owner` * `organizer` * `fileOrganizer` * `writer` * `reader`
-        
-    - name: additionalRoles
-      value: array
-      description: >
-        Additional roles for this user. Only `commenter` is currently allowed, though more may be supported in the future.
-        
-    - name: authKey
-      value: string
-      description: >
-        Output only. Deprecated.
-        
-    - name: value
-      value: string
-      description: >
-        The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a `drive.permissions.insert` request, exactly one of the `id` or `value` fields must be specified unless the permission type is `anyone`, in which case both `id` and `value` are ignored.
-        
-    - name: kind
-      value: string
-      description: >
-        Output only. This is always `drive#permission`.
-        
-      default: drive#permission
-    - name: withLink
-      value: boolean
-      description: >
-        Whether the link is required for this permission.
-        
-    - name: photoLink
-      value: string
-      description: >
-        Output only. A link to the profile photo, if available.
-        
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         Output only. A link back to this permission.
-        
-    - name: emailAddress
-      value: string
-      description: >
-        Output only. The email address of the user or group this permission refers to. This is an output-only field which is present when the permission type is `user` or `group`.
-        
-    - name: domain
-      value: string
-      description: >
-        Output only. The domain name of the entity this permission refers to. This is an output-only field which is present when the permission type is `user`, `group` or `domain`.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Output only. The ETag of the permission.
-        
-    - name: expirationDate
-      value: string
-      description: >
-        The time at which this permission will expire (RFC 3339 date-time). Expiration dates have the following restrictions: - They can only be set on user and group permissions - The date must be in the future - The date cannot be more than a year in the future - The date can only be set on drive.permissions.update or drive.permissions.patch requests
-        
     - name: deleted
-      value: boolean
-      description: >
+      value: {{ deleted }}
+      description: |
         Output only. Whether the account associated with this permission has been deleted. This field only pertains to user and group permissions.
-        
-    - name: view
-      value: string
-      description: >
-        Indicates the view for this permission. Only populated for permissions that belong to a view. published and metadata are the only supported values. - published: The permission's role is published_reader. - metadata: The item is only visible to the metadata view because the item has limited access and the scope has at least read access to the parent. Note: The metadata view is currently only supported on folders. 
-        
-    - name: pendingOwner
-      value: boolean
-      description: >
-        Whether the account associated with this permission is a pending owner. Only populated for `user` type permissions for files that are not in a shared drive.
-        
+    - name: additionalRoles
+      value:
+        - "{{ additionalRoles }}"
+      description: |
+        Additional roles for this user. Only \`commenter\` is currently allowed, though more may be supported in the future.
+    - name: photoLink
+      value: "{{ photoLink }}"
+      description: |
+        Output only. A link to the profile photo, if available.
     - name: inheritedPermissionsDisabled
-      value: boolean
-      description: >
+      value: {{ inheritedPermissionsDisabled }}
+      description: |
         When true, only organizers, owners, and users with permissions added directly on the item can access it.
-        
-    - name: emailMessage
-      value: string
-    - name: enforceSingleParent
-      value: boolean
-    - name: moveToNewOwnersRoot
-      value: boolean
-    - name: sendNotificationEmails
-      value: boolean
-    - name: supportsAllDrives
-      value: boolean
+    - name: id
+      value: "{{ id }}"
+      description: |
+        The ID of the user this permission refers to, and identical to the \`permissionId\` in the About and Files resources. When making a \`drive.permissions.insert\` request, exactly one of the \`id\` or \`value\` fields must be specified unless the permission type is \`anyone\`, in which case both \`id\` and \`value\` are ignored.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Output only. This is always \`drive#permission\`.
+      default: drive#permission
+    - name: expirationDate
+      value: "{{ expirationDate }}"
+      description: |
+        The time at which this permission will expire (RFC 3339 date-time). Expiration dates have the following restrictions: - They can only be set on user and group permissions - The date must be in the future - The date cannot be more than a year in the future - The date can only be set on drive.permissions.update or drive.permissions.patch requests
+    - name: withLink
+      value: {{ withLink }}
+      description: |
+        Whether the link is required for this permission.
+    - name: emailAddress
+      value: "{{ emailAddress }}"
+      description: |
+        Output only. The email address of the user or group this permission refers to. This is an output-only field which is present when the permission type is \`user\` or \`group\`.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        The account type. Allowed values are: * \`user\` * \`group\` * \`domain\` * \`anyone\`
+    - name: value
+      value: "{{ value }}"
+      description: |
+        The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a \`drive.permissions.insert\` request, exactly one of the \`id\` or \`value\` fields must be specified unless the permission type is \`anyone\`, in which case both \`id\` and \`value\` are ignored.
+    - name: domain
+      value: "{{ domain }}"
+      description: |
+        Output only. The domain name of the entity this permission refers to. This is an output-only field which is present when the permission type is \`user\`, \`group\` or \`domain\`.
+    - name: pendingOwner
+      value: {{ pendingOwner }}
+      description: |
+        Whether the account associated with this permission is a pending owner. Only populated for \`user\` type permissions for files that are not in a shared drive.
+    - name: view
+      value: "{{ view }}"
+      description: |
+        Indicates the view for this permission. Only populated for permissions that belong to a view. published and metadata are the only supported values. - published: The permission's role is published_reader. - metadata: The item is only visible to the metadata view because the item has limited access and the scope has at least read access to the parent. Note: The metadata view is currently only supported on folders.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Output only. The name for this permission.
+    - name: authKey
+      value: "{{ authKey }}"
+      description: |
+        Output only. Deprecated.
+    - name: role
+      value: "{{ role }}"
+      description: |
+        The primary role for this user. While new values may be supported in the future, the following are currently allowed: * \`owner\` * \`organizer\` * \`fileOrganizer\` * \`writer\` * \`reader\`
     - name: supportsTeamDrives
-      value: boolean
-    - name: useDomainAdminAccess
-      value: boolean
+      value: {{ supportsTeamDrives }}
+    - name: moveToNewOwnersRoot
+      value: {{ moveToNewOwnersRoot }}
     - name: enforceExpansiveAccess
-      value: boolean
-```
+      value: {{ enforceExpansiveAccess }}
+    - name: emailMessage
+      value: "{{ emailMessage }}"
+    - name: sendNotificationEmails
+      value: {{ sendNotificationEmails }}
+    - name: enforceSingleParent
+      value: {{ enforceSingleParent }}
+    - name: supportsAllDrives
+      value: {{ supportsAllDrives }}
+    - name: useDomainAdminAccess
+      value: {{ useDomainAdminAccess }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -754,34 +737,34 @@ Updates a permission using patch semantics. **Warning:** Concurrent permissions 
 ```sql
 UPDATE googleworkspace.drivev2.permissions
 SET 
-data__id = '{{ id }}',
-data__name = '{{ name }}',
-data__type = '{{ type }}',
-data__role = '{{ role }}',
-data__additionalRoles = '{{ additionalRoles }}',
-data__authKey = '{{ authKey }}',
-data__value = '{{ value }}',
-data__kind = '{{ kind }}',
-data__withLink = {{ withLink }},
-data__photoLink = '{{ photoLink }}',
 data__selfLink = '{{ selfLink }}',
-data__emailAddress = '{{ emailAddress }}',
-data__domain = '{{ domain }}',
 data__etag = '{{ etag }}',
-data__expirationDate = '{{ expirationDate }}',
 data__deleted = {{ deleted }},
-data__view = '{{ view }}',
+data__additionalRoles = '{{ additionalRoles }}',
+data__photoLink = '{{ photoLink }}',
+data__inheritedPermissionsDisabled = {{ inheritedPermissionsDisabled }},
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
+data__expirationDate = '{{ expirationDate }}',
+data__withLink = {{ withLink }},
+data__emailAddress = '{{ emailAddress }}',
+data__type = '{{ type }}',
+data__value = '{{ value }}',
+data__domain = '{{ domain }}',
 data__pendingOwner = {{ pendingOwner }},
-data__inheritedPermissionsDisabled = {{ inheritedPermissionsDisabled }}
+data__view = '{{ view }}',
+data__name = '{{ name }}',
+data__authKey = '{{ authKey }}',
+data__role = '{{ role }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND permissionId = '{{ permissionId }}' --required
-AND removeExpiration = {{ removeExpiration}}
-AND supportsAllDrives = {{ supportsAllDrives}}
 AND supportsTeamDrives = {{ supportsTeamDrives}}
+AND supportsAllDrives = {{ supportsAllDrives}}
 AND transferOwnership = {{ transferOwnership}}
-AND useDomainAdminAccess = {{ useDomainAdminAccess}}
 AND enforceExpansiveAccess = {{ enforceExpansiveAccess}}
+AND removeExpiration = {{ removeExpiration}}
+AND useDomainAdminAccess = {{ useDomainAdminAccess}}
 RETURNING
 id,
 name,
@@ -824,34 +807,34 @@ Updates a permission. **Warning:** Concurrent permissions operations on the same
 ```sql
 REPLACE googleworkspace.drivev2.permissions
 SET 
-data__id = '{{ id }}',
-data__name = '{{ name }}',
-data__type = '{{ type }}',
-data__role = '{{ role }}',
-data__additionalRoles = '{{ additionalRoles }}',
-data__authKey = '{{ authKey }}',
-data__value = '{{ value }}',
-data__kind = '{{ kind }}',
-data__withLink = {{ withLink }},
-data__photoLink = '{{ photoLink }}',
 data__selfLink = '{{ selfLink }}',
-data__emailAddress = '{{ emailAddress }}',
-data__domain = '{{ domain }}',
 data__etag = '{{ etag }}',
-data__expirationDate = '{{ expirationDate }}',
 data__deleted = {{ deleted }},
-data__view = '{{ view }}',
+data__additionalRoles = '{{ additionalRoles }}',
+data__photoLink = '{{ photoLink }}',
+data__inheritedPermissionsDisabled = {{ inheritedPermissionsDisabled }},
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
+data__expirationDate = '{{ expirationDate }}',
+data__withLink = {{ withLink }},
+data__emailAddress = '{{ emailAddress }}',
+data__type = '{{ type }}',
+data__value = '{{ value }}',
+data__domain = '{{ domain }}',
 data__pendingOwner = {{ pendingOwner }},
-data__inheritedPermissionsDisabled = {{ inheritedPermissionsDisabled }}
+data__view = '{{ view }}',
+data__name = '{{ name }}',
+data__authKey = '{{ authKey }}',
+data__role = '{{ role }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND permissionId = '{{ permissionId }}' --required
-AND removeExpiration = {{ removeExpiration}}
 AND supportsAllDrives = {{ supportsAllDrives}}
-AND supportsTeamDrives = {{ supportsTeamDrives}}
 AND transferOwnership = {{ transferOwnership}}
-AND useDomainAdminAccess = {{ useDomainAdminAccess}}
 AND enforceExpansiveAccess = {{ enforceExpansiveAccess}}
+AND removeExpiration = {{ removeExpiration}}
+AND useDomainAdminAccess = {{ useDomainAdminAccess}}
+AND supportsTeamDrives = {{ supportsTeamDrives}}
 RETURNING
 id,
 name,
@@ -896,9 +879,9 @@ DELETE FROM googleworkspace.drivev2.permissions
 WHERE fileId = '{{ fileId }}' --required
 AND permissionId = '{{ permissionId }}' --required
 AND supportsAllDrives = '{{ supportsAllDrives }}'
-AND supportsTeamDrives = '{{ supportsTeamDrives }}'
-AND useDomainAdminAccess = '{{ useDomainAdminAccess }}'
 AND enforceExpansiveAccess = '{{ enforceExpansiveAccess }}'
+AND useDomainAdminAccess = '{{ useDomainAdminAccess }}'
+AND supportsTeamDrives = '{{ supportsTeamDrives }}'
 ;
 ```
 </TabItem>

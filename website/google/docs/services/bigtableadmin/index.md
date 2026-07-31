@@ -18,7 +18,7 @@ bigtableadmin service documentation.
 
 :::info[Service Summary]
 
-total resources: __19__  
+total resources: __21__  
 
 :::
 
@@ -31,6 +31,7 @@ total resources: __19__
 <a href="/services/bigtableadmin/backups/">backups</a><br />
 <a href="/services/bigtableadmin/backups_iam_policies/">backups_iam_policies</a><br />
 <a href="/services/bigtableadmin/clusters/">clusters</a><br />
+<a href="/services/bigtableadmin/clusters_memory_layer/">clusters_memory_layer</a><br />
 <a href="/services/bigtableadmin/hot_tablets/">hot_tablets</a><br />
 <a href="/services/bigtableadmin/instances/">instances</a><br />
 <a href="/services/bigtableadmin/instances_iam_policies/">instances_iam_policies</a><br />
@@ -41,6 +42,7 @@ total resources: __19__
 <a href="/services/bigtableadmin/logical_views_iam_policies/">logical_views_iam_policies</a><br />
 <a href="/services/bigtableadmin/materialized_views/">materialized_views</a><br />
 <a href="/services/bigtableadmin/materialized_views_iam_policies/">materialized_views_iam_policies</a><br />
+<a href="/services/bigtableadmin/memory_layers/">memory_layers</a><br />
 <a href="/services/bigtableadmin/operations/">operations</a><br />
 <a href="/services/bigtableadmin/schema_bundles/">schema_bundles</a><br />
 <a href="/services/bigtableadmin/schema_bundles_iam_policies/">schema_bundles_iam_policies</a><br />

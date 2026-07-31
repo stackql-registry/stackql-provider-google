@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>hooks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>hooks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="hooks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securesourcemanager.hooks" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists hooks in a given repository.</td>
 </tr>
 <tr>
@@ -318,8 +319,8 @@ FROM google.securesourcemanager.hooks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -341,24 +342,24 @@ Creates a new hook in a given repository.
 
 ```sql
 INSERT INTO google.securesourcemanager.hooks (
+data__disabled,
 data__sensitiveQueryString,
 data__pushOption,
-data__disabled,
-data__name,
 data__targetUri,
 data__events,
+data__name,
 projectsId,
 locationsId,
 repositoriesId,
 hookId
 )
 SELECT 
+{{ disabled }},
 '{{ sensitiveQueryString }}',
 '{{ pushOption }}',
-{{ disabled }},
-'{{ name }}',
 '{{ targetUri }}',
 '{{ events }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -374,52 +375,48 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: hooks
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the hooks resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the hooks resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the hooks resource.
-    - name: sensitiveQueryString
-      value: string
-      description: >
-        Optional. The sensitive query string to be appended to the target URI.
-        
-    - name: pushOption
-      value: object
-      description: >
-        Optional. The trigger option for push events.
-        
     - name: disabled
-      value: boolean
-      description: >
+      value: {{ disabled }}
+      description: |
         Optional. Determines if the hook disabled or not. Set to true to stop sending traffic.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. A unique identifier for a Hook. The name should be of the format: `projects/{project}/locations/{location_id}/repositories/{repository_id}/hooks/{hook_id}`
-        
+    - name: sensitiveQueryString
+      value: "{{ sensitiveQueryString }}"
+      description: |
+        Optional. The sensitive query string to be appended to the target URI.
+    - name: pushOption
+      description: |
+        Optional. The trigger option for push events.
+      value:
+        branchFilter: "{{ branchFilter }}"
     - name: targetUri
-      value: string
-      description: >
+      value: "{{ targetUri }}"
+      description: |
         Required. The target URI to which the payloads will be delivered.
-        
     - name: events
-      value: array
-      description: >
+      value:
+        - "{{ events }}"
+      description: |
         Optional. The events that trigger hook on.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. A unique identifier for a Hook. The name should be of the format: \`projects/{project}/locations/{location_id}/repositories/{repository_id}/hooks/{hook_id}\`
     - name: hookId
-      value: string
-```
+      value: "{{ hookId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -439,12 +436,12 @@ Updates the metadata of a hook.
 ```sql
 UPDATE google.securesourcemanager.hooks
 SET 
+data__disabled = {{ disabled }},
 data__sensitiveQueryString = '{{ sensitiveQueryString }}',
 data__pushOption = '{{ pushOption }}',
-data__disabled = {{ disabled }},
-data__name = '{{ name }}',
 data__targetUri = '{{ targetUri }}',
-data__events = '{{ events }}'
+data__events = '{{ events }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

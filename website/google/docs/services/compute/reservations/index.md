@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reservations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reservations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reservations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.reservations" /></td></tr>
 </tbody></table>
@@ -53,12 +54,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="advancedDeploymentControl" /></td>
@@ -73,12 +74,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="commitment" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.</td>
+    <td>Output only. [Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="confidentialComputeType" /></td>
+    <td><code>string</code></td>
+    <td> (CONFIDENTIAL_COMPUTE_TYPE_TDX, CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteAfterDuration" /></td>
@@ -88,17 +94,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deleteAtTime" /></td>
     <td><code>string</code></td>
-    <td>Absolute time in future when the reservation will be auto-deleted by Compute Engine. Timestamp is represented in RFC3339 text format.</td>
+    <td>Absolute time in future when the reservation will be  auto-deleted by Compute Engine. Timestamp is represented inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deploymentType" /></td>
     <td><code>string</code></td>
-    <td>Specifies the deployment strategy for this reservation.</td>
+    <td>Specifies the deployment strategy for this reservation. (DENSE, DEPLOYMENT_TYPE_UNSPECIFIED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
     <td>An optional description of this resource. Provide this property when you create the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="earlyAccessMaintenance" /></td>
+    <td><code>string</code></td>
+    <td>Indicates the early access maintenance for the reservation. If this field is absent or set to NO_EARLY_ACCESS, the reservation is not enrolled in early access maintenance and the standard notice applies. (NO_EARLY_ACCESS, WAVE1, WAVE2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="enableEmergentMaintenance" /></td>
@@ -108,12 +119,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#reservations for reservations. (default: compute#reservation)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#reservations for reservations. (default: compute#reservation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="linkedCommitments" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Full or partial URL to parent commitments. This field displays for reservations that are tied to multiple commitments.</td>
+    <td>Output only. [Output Only] Full or partial URL to parent commitments. This field displays for reservations that are tied to multiple commitments.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="params" /></td>
+    <td><code>object</code></td>
+    <td>Input only. Additional params passed with the request, but not persisted as part of resource payload. (id: ReservationParams)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="protectionTier" /></td>
+    <td><code>string</code></td>
+    <td>Protection tier for the workload which specifies the workload expectations in the event of infrastructure failures at data center (e.g. power and/or cooling failures). (CAPACITY_OPTIMIZED, PROTECTION_TIER_UNSPECIFIED, STANDARD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reservationSharingPolicy" /></td>
@@ -128,22 +149,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="resourceStatus" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] Status information for Reservation resource. (id: AllocationResourceStatus)</td>
+    <td>Output only. [Output Only] Status information for Reservation resource. (id: AllocationResourceStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzs" /></td>
     <td><code>boolean</code></td>
-    <td>[Output Only] Reserved for future use.</td>
+    <td>Output only. [Output Only] Reserved for future use.</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedulingType" /></td>
     <td><code>string</code></td>
-    <td>The type of maintenance for the reservation.</td>
+    <td>The type of maintenance for the reservation. (GROUPED, GROUP_MAINTENANCE_TYPE_UNSPECIFIED, INDEPENDENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined fully-qualified URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined fully-qualified URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="shareSettings" /></td>
@@ -163,7 +184,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the reservation. - CREATING: Reservation resources are being allocated. - READY: Reservation resources have been allocated, and the reservation is ready for use. - DELETING: Reservation deletion is in progress. - UPDATING: Reservation update is in progress. </td>
+    <td>Output only. [Output Only] The status of the reservation.              - CREATING: Reservation resources are being        allocated.      - READY: Reservation resources have been allocated,        and the reservation is ready for use.      - DELETING: Reservation deletion is in progress.      - UPDATING: Reservation update is in progress. (CREATING, DELETING, INVALID, READY, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="zone" /></td>
@@ -197,17 +218,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource.Always compute#reservationsList for listsof reservations (default: compute#reservationList)</td>
+    <td>Output only. [Output Only] Type of resource.Always compute#reservationsList for listsof reservations (default: compute#reservationList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -231,12 +252,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="advancedDeploymentControl" /></td>
@@ -251,12 +272,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="commitment" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.</td>
+    <td>Output only. [Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="confidentialComputeType" /></td>
+    <td><code>string</code></td>
+    <td> (CONFIDENTIAL_COMPUTE_TYPE_TDX, CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteAfterDuration" /></td>
@@ -266,17 +292,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deleteAtTime" /></td>
     <td><code>string</code></td>
-    <td>Absolute time in future when the reservation will be auto-deleted by Compute Engine. Timestamp is represented in RFC3339 text format.</td>
+    <td>Absolute time in future when the reservation will be  auto-deleted by Compute Engine. Timestamp is represented inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deploymentType" /></td>
     <td><code>string</code></td>
-    <td>Specifies the deployment strategy for this reservation.</td>
+    <td>Specifies the deployment strategy for this reservation. (DENSE, DEPLOYMENT_TYPE_UNSPECIFIED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
     <td>An optional description of this resource. Provide this property when you create the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="earlyAccessMaintenance" /></td>
+    <td><code>string</code></td>
+    <td>Indicates the early access maintenance for the reservation. If this field is absent or set to NO_EARLY_ACCESS, the reservation is not enrolled in early access maintenance and the standard notice applies. (NO_EARLY_ACCESS, WAVE1, WAVE2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="enableEmergentMaintenance" /></td>
@@ -286,12 +317,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#reservations for reservations. (default: compute#reservation)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#reservations for reservations. (default: compute#reservation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="linkedCommitments" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Full or partial URL to parent commitments. This field displays for reservations that are tied to multiple commitments.</td>
+    <td>Output only. [Output Only] Full or partial URL to parent commitments. This field displays for reservations that are tied to multiple commitments.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="params" /></td>
+    <td><code>object</code></td>
+    <td>Input only. Additional params passed with the request, but not persisted as part of resource payload. (id: ReservationParams)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="protectionTier" /></td>
+    <td><code>string</code></td>
+    <td>Protection tier for the workload which specifies the workload expectations in the event of infrastructure failures at data center (e.g. power and/or cooling failures). (CAPACITY_OPTIMIZED, PROTECTION_TIER_UNSPECIFIED, STANDARD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reservationSharingPolicy" /></td>
@@ -306,22 +347,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="resourceStatus" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] Status information for Reservation resource. (id: AllocationResourceStatus)</td>
+    <td>Output only. [Output Only] Status information for Reservation resource. (id: AllocationResourceStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzs" /></td>
     <td><code>boolean</code></td>
-    <td>[Output Only] Reserved for future use.</td>
+    <td>Output only. [Output Only] Reserved for future use.</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedulingType" /></td>
     <td><code>string</code></td>
-    <td>The type of maintenance for the reservation.</td>
+    <td>The type of maintenance for the reservation. (GROUPED, GROUP_MAINTENANCE_TYPE_UNSPECIFIED, INDEPENDENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined fully-qualified URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined fully-qualified URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="shareSettings" /></td>
@@ -341,7 +382,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the reservation. - CREATING: Reservation resources are being allocated. - READY: Reservation resources have been allocated, and the reservation is ready for use. - DELETING: Reservation deletion is in progress. - UPDATING: Reservation update is in progress. </td>
+    <td>Output only. [Output Only] The status of the reservation.              - CREATING: Reservation resources are being        allocated.      - READY: Reservation resources have been allocated,        and the reservation is ready for use.      - DELETING: Reservation deletion is in progress.      - UPDATING: Reservation update is in progress. (CREATING, DELETING, INVALID, READY, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="zone" /></td>
@@ -379,22 +420,22 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>A list of all the reservations that have been configured for the specified project in specified zone.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>A list of all the reservations that have been configured for the<br />specified project in specified zone.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves an aggregated list of reservations. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
+    <td>Retrieves an aggregated list of reservations.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a new reservation. For more information, read Reserving zonal resources.</td>
+    <td>Creates a new reservation. For more information, readReserving zonal<br />resources.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
@@ -411,18 +452,18 @@ The following methods are available for this resource:
     <td>Deletes the specified reservation.</td>
 </tr>
 <tr>
-    <td><a href="#resize"><CopyableCode code="resize" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-reservation"><code>reservation</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Resizes the reservation (applicable to standalone reservations only). For more information, read Modifying reservations.</td>
-</tr>
-<tr>
     <td><a href="#perform_maintenance"><CopyableCode code="perform_maintenance" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-reservation"><code>reservation</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Perform maintenance on an extended reservation</td>
+</tr>
+<tr>
+    <td><a href="#resize"><CopyableCode code="resize" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-reservation"><code>reservation</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Resizes the reservation (applicable to standalone reservations only). For<br />more information, readModifying<br />reservations.</td>
 </tr>
 </tbody>
 </table>
@@ -529,14 +570,18 @@ name,
 advancedDeploymentControl,
 aggregateReservation,
 commitment,
+confidentialComputeType,
 creationTimestamp,
 deleteAfterDuration,
 deleteAtTime,
 deploymentType,
 description,
+earlyAccessMaintenance,
 enableEmergentMaintenance,
 kind,
 linkedCommitments,
+params,
+protectionTier,
 reservationSharingPolicy,
 resourcePolicies,
 resourceStatus,
@@ -557,7 +602,7 @@ AND reservation = '{{ reservation }}' -- required
 </TabItem>
 <TabItem value="list">
 
-A list of all the reservations that have been configured for the specified project in specified zone.
+A list of all the reservations that have been configured for the<br />specified project in specified zone.
 
 ```sql
 SELECT
@@ -572,15 +617,15 @@ WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves an aggregated list of reservations. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves an aggregated list of reservations.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -589,14 +634,18 @@ name,
 advancedDeploymentControl,
 aggregateReservation,
 commitment,
+confidentialComputeType,
 creationTimestamp,
 deleteAfterDuration,
 deleteAtTime,
 deploymentType,
 description,
+earlyAccessMaintenance,
 enableEmergentMaintenance,
 kind,
 linkedCommitments,
+params,
+protectionTier,
 reservationSharingPolicy,
 resourcePolicies,
 resourceStatus,
@@ -610,12 +659,12 @@ status,
 zone
 FROM google.compute.reservations
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
@@ -634,63 +683,53 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates a new reservation. For more information, read Reserving zonal resources.
+Creates a new reservation. For more information, readReserving zonal<br />resources.
 
 ```sql
 INSERT INTO google.compute.reservations (
-data__specificReservation,
-data__aggregateReservation,
 data__deleteAtTime,
-data__deleteAfterDuration,
-data__kind,
-data__id,
-data__creationTimestamp,
-data__selfLink,
-data__zone,
-data__description,
 data__name,
-data__commitment,
-data__linkedCommitments,
-data__specificReservationRequired,
-data__status,
-data__shareSettings,
-data__satisfiesPzs,
-data__resourcePolicies,
-data__resourceStatus,
-data__reservationSharingPolicy,
-data__deploymentType,
-data__advancedDeploymentControl,
-data__enableEmergentMaintenance,
+data__confidentialComputeType,
+data__description,
+data__deleteAfterDuration,
 data__schedulingType,
+data__earlyAccessMaintenance,
+data__resourcePolicies,
+data__advancedDeploymentControl,
+data__deploymentType,
+data__protectionTier,
+data__shareSettings,
+data__reservationSharingPolicy,
+data__params,
+data__zone,
+data__aggregateReservation,
+data__enableEmergentMaintenance,
+data__specificReservation,
+data__specificReservationRequired,
 project,
 zone,
 requestId
 )
 SELECT 
-'{{ specificReservation }}',
-'{{ aggregateReservation }}',
 '{{ deleteAtTime }}',
-'{{ deleteAfterDuration }}',
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ selfLink }}',
-'{{ zone }}',
-'{{ description }}',
 '{{ name }}',
-'{{ commitment }}',
-'{{ linkedCommitments }}',
-{{ specificReservationRequired }},
-'{{ status }}',
-'{{ shareSettings }}',
-{{ satisfiesPzs }},
-'{{ resourcePolicies }}',
-'{{ resourceStatus }}',
-'{{ reservationSharingPolicy }}',
-'{{ deploymentType }}',
-'{{ advancedDeploymentControl }}',
-{{ enableEmergentMaintenance }},
+'{{ confidentialComputeType }}',
+'{{ description }}',
+'{{ deleteAfterDuration }}',
 '{{ schedulingType }}',
+'{{ earlyAccessMaintenance }}',
+'{{ resourcePolicies }}',
+'{{ advancedDeploymentControl }}',
+'{{ deploymentType }}',
+'{{ protectionTier }}',
+'{{ shareSettings }}',
+'{{ reservationSharingPolicy }}',
+'{{ params }}',
+'{{ zone }}',
+'{{ aggregateReservation }}',
+{{ enableEmergentMaintenance }},
+'{{ specificReservation }}',
+{{ specificReservationRequired }},
 '{{ project }}',
 '{{ zone }}',
 '{{ requestId }}'
@@ -702,6 +741,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -726,143 +766,155 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reservations
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the reservations resource.
     - name: zone
-      value: string
+      value: "{{ zone }}"
       description: Required parameter for the reservations resource.
-    - name: specificReservation
-      value: object
-      description: >
-        Reservation for instances with specific machine shapes.
-        
-    - name: aggregateReservation
-      value: object
-      description: >
-        Reservation for aggregated resources, providing shape flexibility.
-        
     - name: deleteAtTime
-      value: string
-      description: >
-        Absolute time in future when the reservation will be auto-deleted by Compute Engine. Timestamp is represented in RFC3339 text format.
-        
-    - name: deleteAfterDuration
-      value: object
-      description: >
-        Duration time relative to reservation creation when Compute Engine will automatically delete this resource.
-        
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#reservations for reservations.
-        
-      default: compute#reservation
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined fully-qualified URL for this resource.
-        
-    - name: zone
-      value: string
-      description: >
-        Zone in which the reservation resides. A zone must be provided if the reservation is created within a commitment.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
+      value: "{{ deleteAtTime }}"
+      description: |
+        Absolute time in future when the reservation will be
+        auto-deleted by Compute Engine. Timestamp is represented inRFC3339 text format.
     - name: name
-      value: string
-      description: >
-        The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: commitment
-      value: string
-      description: >
-        [Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.
-        
-    - name: linkedCommitments
-      value: array
-      description: >
-        [Output Only] Full or partial URL to parent commitments. This field displays for reservations that are tied to multiple commitments.
-        
-    - name: specificReservationRequired
-      value: boolean
-      description: >
-        Indicates whether the reservation can be consumed by VMs with affinity for "any" reservation. If the field is set, then only VMs that target the reservation by name can consume from this reservation.
-        
-    - name: status
-      value: string
-      description: >
-        [Output Only] The status of the reservation. - CREATING: Reservation resources are being allocated. - READY: Reservation resources have been allocated, and the reservation is ready for use. - DELETING: Reservation deletion is in progress. - UPDATING: Reservation update is in progress. 
-        
-      valid_values: ['CREATING', 'DELETING', 'INVALID', 'READY', 'UPDATING']
-    - name: shareSettings
-      value: object
-      description: >
-        Specify share-settings to create a shared reservation. This property is optional. For more information about the syntax and options for this field and its subfields, see the guide for creating a shared reservation.
-        
-    - name: satisfiesPzs
-      value: boolean
-      description: >
-        [Output Only] Reserved for future use.
-        
-    - name: resourcePolicies
-      value: object
-      description: >
-        Resource policies to be added to this reservation. The key is defined by user, and the value is resource policy url. This is to define placement policy with reservation.
-        
-    - name: resourceStatus
-      value: object
-      description: >
-        [Output Only] Status information for Reservation resource.
-        
-    - name: reservationSharingPolicy
-      value: object
-      description: >
-        Specify the reservation sharing policy. If unspecified, the reservation will not be shared with Google Cloud managed services.
-        
-    - name: deploymentType
-      value: string
-      description: >
-        Specifies the deployment strategy for this reservation.
-        
-      valid_values: ['DENSE', 'DEPLOYMENT_TYPE_UNSPECIFIED']
-    - name: advancedDeploymentControl
-      value: object
-      description: >
-        Advanced control for cluster management, applicable only to DENSE deployment type reservations.
-        
-    - name: enableEmergentMaintenance
-      value: boolean
-      description: >
-        Indicates whether Compute Engine allows unplanned maintenance for your VMs; for example, to fix hardware errors.
-        
+      value: "{{ name }}"
+      description: |
+        The name of the resource, provided by the client when initially creating
+        the resource. The resource name must be 1-63 characters long, and comply
+        withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: confidentialComputeType
+      value: "{{ confidentialComputeType }}"
+      valid_values: ['CONFIDENTIAL_COMPUTE_TYPE_TDX', 'CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: deleteAfterDuration
+      description: |
+        Duration time relative to reservation creation when Compute Engine will
+        automatically delete this resource.
+      value:
+        nanos: {{ nanos }}
+        seconds: "{{ seconds }}"
     - name: schedulingType
-      value: string
-      description: >
+      value: "{{ schedulingType }}"
+      description: |
         The type of maintenance for the reservation.
-        
       valid_values: ['GROUPED', 'GROUP_MAINTENANCE_TYPE_UNSPECIFIED', 'INDEPENDENT']
+    - name: earlyAccessMaintenance
+      value: "{{ earlyAccessMaintenance }}"
+      description: |
+        Indicates the early access maintenance for the reservation.
+        If this field is absent or set to NO_EARLY_ACCESS, the reservation is not
+        enrolled in early access maintenance and the standard notice applies.
+      valid_values: ['NO_EARLY_ACCESS', 'WAVE1', 'WAVE2']
+    - name: resourcePolicies
+      value: "{{ resourcePolicies }}"
+      description: |
+        Resource policies to be added to this reservation. The key is defined by
+        user, and the value is resource policy url. This is to define placement
+        policy with reservation.
+    - name: advancedDeploymentControl
+      description: |
+        Advanced control for cluster management, applicable only to DENSE
+        deployment type reservations.
+      value:
+        reservationOperationalMode: "{{ reservationOperationalMode }}"
+    - name: deploymentType
+      value: "{{ deploymentType }}"
+      description: |
+        Specifies the deployment strategy for this reservation.
+      valid_values: ['DENSE', 'DEPLOYMENT_TYPE_UNSPECIFIED']
+    - name: protectionTier
+      value: "{{ protectionTier }}"
+      description: |
+        Protection tier for the workload which specifies the workload expectations
+        in the event of infrastructure failures at data center (e.g. power
+        and/or cooling failures).
+      valid_values: ['CAPACITY_OPTIMIZED', 'PROTECTION_TIER_UNSPECIFIED', 'STANDARD']
+    - name: shareSettings
+      description: |
+        Specify share-settings to create a shared reservation. This property is
+        optional. For more information about the syntax and options for this
+        field and its subfields, see the guide for creating
+        a shared reservation.
+      value:
+        shareType: "{{ shareType }}"
+        projectMap: "{{ projectMap }}"
+    - name: reservationSharingPolicy
+      description: |
+        Specify the reservation sharing policy. If unspecified, the reservation
+        will not be shared with Google Cloud managed services.
+      value:
+        serviceShareType: "{{ serviceShareType }}"
+    - name: params
+      description: |
+        Input only. Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: zone
+      value: "{{ zone }}"
+      description: |
+        Zone in which the reservation resides. A zone must be provided if the
+        reservation is created within a commitment.
+    - name: aggregateReservation
+      description: |
+        Reservation for aggregated resources, providing shape flexibility.
+      value:
+        inUseResources:
+          - accelerator:
+              acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+        workloadType: "{{ workloadType }}"
+        vmFamily: "{{ vmFamily }}"
+        reservedResources:
+          - accelerator:
+              acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+    - name: enableEmergentMaintenance
+      value: {{ enableEmergentMaintenance }}
+      description: |
+        Indicates whether Compute Engine allows unplanned maintenance for your VMs;
+        for example, to fix hardware errors.
+    - name: specificReservation
+      description: |
+        Reservation for instances with specific machine shapes.
+      value:
+        assuredCount: "{{ assuredCount }}"
+        instanceProperties:
+          minCpuPlatform: "{{ minCpuPlatform }}"
+          guestAccelerators:
+            - acceleratorType: "{{ acceleratorType }}"
+              acceleratorCount: {{ acceleratorCount }}
+          localSsds:
+            - diskSizeGb: "{{ diskSizeGb }}"
+              interface: "{{ interface }}"
+          machineType: "{{ machineType }}"
+          locationHint: "{{ locationHint }}"
+        inUseCount: "{{ inUseCount }}"
+        sourceInstanceTemplate: "{{ sourceInstanceTemplate }}"
+        count: "{{ count }}"
+    - name: specificReservationRequired
+      value: {{ specificReservationRequired }}
+      description: |
+        Indicates whether the reservation can be consumed by VMs with affinity
+        for "any" reservation. If the field is set, then only VMs that target
+        the reservation by name can consume from this reservation.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -882,30 +934,25 @@ Update share settings of the reservation.
 ```sql
 UPDATE google.compute.reservations
 SET 
-data__specificReservation = '{{ specificReservation }}',
-data__aggregateReservation = '{{ aggregateReservation }}',
 data__deleteAtTime = '{{ deleteAtTime }}',
-data__deleteAfterDuration = '{{ deleteAfterDuration }}',
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__selfLink = '{{ selfLink }}',
-data__zone = '{{ zone }}',
-data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__commitment = '{{ commitment }}',
-data__linkedCommitments = '{{ linkedCommitments }}',
-data__specificReservationRequired = {{ specificReservationRequired }},
-data__status = '{{ status }}',
-data__shareSettings = '{{ shareSettings }}',
-data__satisfiesPzs = {{ satisfiesPzs }},
+data__confidentialComputeType = '{{ confidentialComputeType }}',
+data__description = '{{ description }}',
+data__deleteAfterDuration = '{{ deleteAfterDuration }}',
+data__schedulingType = '{{ schedulingType }}',
+data__earlyAccessMaintenance = '{{ earlyAccessMaintenance }}',
 data__resourcePolicies = '{{ resourcePolicies }}',
-data__resourceStatus = '{{ resourceStatus }}',
-data__reservationSharingPolicy = '{{ reservationSharingPolicy }}',
-data__deploymentType = '{{ deploymentType }}',
 data__advancedDeploymentControl = '{{ advancedDeploymentControl }}',
+data__deploymentType = '{{ deploymentType }}',
+data__protectionTier = '{{ protectionTier }}',
+data__shareSettings = '{{ shareSettings }}',
+data__reservationSharingPolicy = '{{ reservationSharingPolicy }}',
+data__params = '{{ params }}',
+data__zone = '{{ zone }}',
+data__aggregateReservation = '{{ aggregateReservation }}',
 data__enableEmergentMaintenance = {{ enableEmergentMaintenance }},
-data__schedulingType = '{{ schedulingType }}'
+data__specificReservation = '{{ specificReservation }}',
+data__specificReservationRequired = {{ specificReservationRequired }}
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required
@@ -921,6 +968,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -972,29 +1020,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="resize"
+    defaultValue="perform_maintenance"
     values={[
-        { label: 'resize', value: 'resize' },
-        { label: 'perform_maintenance', value: 'perform_maintenance' }
+        { label: 'perform_maintenance', value: 'perform_maintenance' },
+        { label: 'resize', value: 'resize' }
     ]}
 >
-<TabItem value="resize">
-
-Resizes the reservation (applicable to standalone reservations only). For more information, read Modifying reservations.
-
-```sql
-EXEC google.compute.reservations.resize 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@reservation='{{ reservation }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"specificSkuCount": "{{ specificSkuCount }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="perform_maintenance">
 
 Perform maintenance on an extended reservation
@@ -1008,6 +1039,23 @@ EXEC google.compute.reservations.perform_maintenance
 @@json=
 '{
 "maintenanceScope": "{{ maintenanceScope }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="resize">
+
+Resizes the reservation (applicable to standalone reservations only). For<br />more information, readModifying<br />reservations.
+
+```sql
+EXEC google.compute.reservations.resize 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@reservation='{{ reservation }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"specificSkuCount": "{{ specificSkuCount }}"
 }'
 ;
 ```

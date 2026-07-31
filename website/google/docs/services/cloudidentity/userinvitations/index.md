@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>userinvitations</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>userinvitations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="userinvitations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.userinvitations" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of the `UserInvitation`.</td>
+    <td>State of the `UserInvitation`. (STATE_UNSPECIFIED, NOT_YET_SENT, INVITED, ACCEPTED, DECLINED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of the `UserInvitation`.</td>
+    <td>State of the `UserInvitation`. (STATE_UNSPECIFIED, NOT_YET_SENT, INVITED, ACCEPTED, DECLINED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -134,15 +135,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Retrieves a list of UserInvitation resources. **Note:** New consumer accounts with the customer's verified domain created within the previous 48 hours will not appear in the result. This delay also applies to newly-verified domains.</td>
-</tr>
-<tr>
-    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-userinvitationsId"><code>userinvitationsId</code></a></td>
-    <td></td>
-    <td>Cancels a UserInvitation that was already sent.</td>
 </tr>
 <tr>
     <td><a href="#send"><CopyableCode code="send" /></a></td>
@@ -150,6 +144,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-userinvitationsId"><code>userinvitationsId</code></a></td>
     <td></td>
     <td>Sends a UserInvitation to email. If the `UserInvitation` does not exist for this request and it is a valid request, the request creates a `UserInvitation`. **Note:** The `get` and `list` methods have a 48-hour delay where newly-created consumer accounts will not appear in the results. You can still send a `UserInvitation` to those accounts if you know the unmanaged email address and IsInvitableUser==True.</td>
+</tr>
+<tr>
+    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-userinvitationsId"><code>userinvitationsId</code></a></td>
+    <td></td>
+    <td>Cancels a UserInvitation that was already sent.</td>
 </tr>
 <tr>
     <td><a href="#is_invitable_user"><CopyableCode code="is_invitable_user" /></a></td>
@@ -244,10 +245,10 @@ state,
 updateTime
 FROM google.cloudidentity.userinvitations
 WHERE customersId = '{{ customersId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -257,30 +258,30 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="cancel"
+    defaultValue="send"
     values={[
-        { label: 'cancel', value: 'cancel' },
         { label: 'send', value: 'send' },
+        { label: 'cancel', value: 'cancel' },
         { label: 'is_invitable_user', value: 'is_invitable_user' }
     ]}
 >
-<TabItem value="cancel">
-
-Cancels a UserInvitation that was already sent.
-
-```sql
-EXEC google.cloudidentity.userinvitations.cancel 
-@customersId='{{ customersId }}' --required, 
-@userinvitationsId='{{ userinvitationsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="send">
 
 Sends a UserInvitation to email. If the `UserInvitation` does not exist for this request and it is a valid request, the request creates a `UserInvitation`. **Note:** The `get` and `list` methods have a 48-hour delay where newly-created consumer accounts will not appear in the results. You can still send a `UserInvitation` to those accounts if you know the unmanaged email address and IsInvitableUser==True.
 
 ```sql
 EXEC google.cloudidentity.userinvitations.send 
+@customersId='{{ customersId }}' --required, 
+@userinvitationsId='{{ userinvitationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="cancel">
+
+Cancels a UserInvitation that was already sent.
+
+```sql
+EXEC google.cloudidentity.userinvitations.cancel 
 @customersId='{{ customersId }}' --required, 
 @userinvitationsId='{{ userinvitationsId }}' --required
 ;

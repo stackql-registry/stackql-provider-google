@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>user_events</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>user_events</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="user_events" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.user_events" /></td></tr>
 </tbody></table>
@@ -50,62 +51,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_user_events_purge"><CopyableCode code="projects_locations_collections_data_stores_user_events_purge" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_data_stores_user_events_write"><CopyableCode code="projects_locations_collections_data_stores_user_events_write" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-writeAsync"><code>writeAsync</code></a></td>
-    <td>Writes a single user event.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_data_stores_user_events_collect"><CopyableCode code="projects_locations_collections_data_stores_user_events_collect" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-uri"><code>uri</code></a>, <a href="#parameter-ets"><code>ets</code></a>, <a href="#parameter-userEvent"><code>userEvent</code></a></td>
-    <td>Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_data_stores_user_events_import"><CopyableCode code="projects_locations_collections_data_stores_user_events_import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_user_events_purge"><CopyableCode code="projects_locations_data_stores_user_events_purge" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_user_events_collect"><CopyableCode code="projects_locations_data_stores_user_events_collect" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-userEvent"><code>userEvent</code></a>, <a href="#parameter-ets"><code>ets</code></a>, <a href="#parameter-uri"><code>uri</code></a></td>
-    <td>Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_user_events_import"><CopyableCode code="projects_locations_data_stores_user_events_import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_user_events_write"><CopyableCode code="projects_locations_data_stores_user_events_write" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-writeAsync"><code>writeAsync</code></a></td>
-    <td>Writes a single user event.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_user_events_write"><CopyableCode code="projects_locations_user_events_write" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -125,6 +70,62 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_user_events_write"><CopyableCode code="projects_locations_data_stores_user_events_write" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-writeAsync"><code>writeAsync</code></a></td>
+    <td>Writes a single user event.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_user_events_collect"><CopyableCode code="projects_locations_data_stores_user_events_collect" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-userEvent"><code>userEvent</code></a>, <a href="#parameter-uri"><code>uri</code></a>, <a href="#parameter-ets"><code>ets</code></a></td>
+    <td>Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_user_events_purge"><CopyableCode code="projects_locations_data_stores_user_events_purge" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_user_events_import"><CopyableCode code="projects_locations_data_stores_user_events_import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_stores_user_events_purge"><CopyableCode code="projects_locations_collections_data_stores_user_events_purge" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_stores_user_events_import"><CopyableCode code="projects_locations_collections_data_stores_user_events_import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_stores_user_events_write"><CopyableCode code="projects_locations_collections_data_stores_user_events_write" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-writeAsync"><code>writeAsync</code></a></td>
+    <td>Writes a single user event.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_stores_user_events_collect"><CopyableCode code="projects_locations_collections_data_stores_user_events_collect" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-userEvent"><code>userEvent</code></a>, <a href="#parameter-uri"><code>uri</code></a>, <a href="#parameter-ets"><code>ets</code></a></td>
+    <td>Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.</td>
 </tr>
 </tbody>
 </table>
@@ -188,203 +189,21 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_collections_data_stores_user_events_purge"
+    defaultValue="projects_locations_user_events_write"
     values={[
-        { label: 'projects_locations_collections_data_stores_user_events_purge', value: 'projects_locations_collections_data_stores_user_events_purge' },
-        { label: 'projects_locations_collections_data_stores_user_events_write', value: 'projects_locations_collections_data_stores_user_events_write' },
-        { label: 'projects_locations_collections_data_stores_user_events_collect', value: 'projects_locations_collections_data_stores_user_events_collect' },
-        { label: 'projects_locations_collections_data_stores_user_events_import', value: 'projects_locations_collections_data_stores_user_events_import' },
-        { label: 'projects_locations_data_stores_user_events_purge', value: 'projects_locations_data_stores_user_events_purge' },
-        { label: 'projects_locations_data_stores_user_events_collect', value: 'projects_locations_data_stores_user_events_collect' },
-        { label: 'projects_locations_data_stores_user_events_import', value: 'projects_locations_data_stores_user_events_import' },
-        { label: 'projects_locations_data_stores_user_events_write', value: 'projects_locations_data_stores_user_events_write' },
         { label: 'projects_locations_user_events_write', value: 'projects_locations_user_events_write' },
         { label: 'projects_locations_user_events_collect', value: 'projects_locations_user_events_collect' },
-        { label: 'projects_locations_user_events_import', value: 'projects_locations_user_events_import' }
+        { label: 'projects_locations_user_events_import', value: 'projects_locations_user_events_import' },
+        { label: 'projects_locations_data_stores_user_events_write', value: 'projects_locations_data_stores_user_events_write' },
+        { label: 'projects_locations_data_stores_user_events_collect', value: 'projects_locations_data_stores_user_events_collect' },
+        { label: 'projects_locations_data_stores_user_events_purge', value: 'projects_locations_data_stores_user_events_purge' },
+        { label: 'projects_locations_data_stores_user_events_import', value: 'projects_locations_data_stores_user_events_import' },
+        { label: 'projects_locations_collections_data_stores_user_events_purge', value: 'projects_locations_collections_data_stores_user_events_purge' },
+        { label: 'projects_locations_collections_data_stores_user_events_import', value: 'projects_locations_collections_data_stores_user_events_import' },
+        { label: 'projects_locations_collections_data_stores_user_events_write', value: 'projects_locations_collections_data_stores_user_events_write' },
+        { label: 'projects_locations_collections_data_stores_user_events_collect', value: 'projects_locations_collections_data_stores_user_events_collect' }
     ]}
 >
-<TabItem value="projects_locations_collections_data_stores_user_events_purge">
-
-Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.
-
-```sql
-EXEC google.discoveryengine.user_events.projects_locations_collections_data_stores_user_events_purge 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required 
-@@json=
-'{
-"force": {{ force }}, 
-"filter": "{{ filter }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_user_events_write">
-
-Writes a single user event.
-
-```sql
-EXEC google.discoveryengine.user_events.projects_locations_collections_data_stores_user_events_write 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@writeAsync={{ writeAsync }} 
-@@json=
-'{
-"promotionIds": "{{ promotionIds }}", 
-"attributionToken": "{{ attributionToken }}", 
-"panel": "{{ panel }}", 
-"sessionId": "{{ sessionId }}", 
-"documents": "{{ documents }}", 
-"dataStore": "{{ dataStore }}", 
-"pageInfo": "{{ pageInfo }}", 
-"tagIds": "{{ tagIds }}", 
-"completionInfo": "{{ completionInfo }}", 
-"conversionType": "{{ conversionType }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"userInfo": "{{ userInfo }}", 
-"directUserRequest": {{ directUserRequest }}, 
-"engine": "{{ engine }}", 
-"panels": "{{ panels }}", 
-"attributes": "{{ attributes }}", 
-"eventTime": "{{ eventTime }}", 
-"eventType": "{{ eventType }}", 
-"filter": "{{ filter }}", 
-"searchInfo": "{{ searchInfo }}", 
-"transactionInfo": "{{ transactionInfo }}", 
-"mediaInfo": "{{ mediaInfo }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_user_events_collect">
-
-Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.
-
-```sql
-EXEC google.discoveryengine.user_events.projects_locations_collections_data_stores_user_events_collect 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@uri='{{ uri }}', 
-@ets='{{ ets }}', 
-@userEvent='{{ userEvent }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_user_events_import">
-
-Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.
-
-```sql
-EXEC google.discoveryengine.user_events.projects_locations_collections_data_stores_user_events_import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required 
-@@json=
-'{
-"errorConfig": "{{ errorConfig }}", 
-"inlineSource": "{{ inlineSource }}", 
-"gcsSource": "{{ gcsSource }}", 
-"bigquerySource": "{{ bigquerySource }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_user_events_purge">
-
-Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.
-
-```sql
-EXEC google.discoveryengine.user_events.projects_locations_data_stores_user_events_purge 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required 
-@@json=
-'{
-"force": {{ force }}, 
-"filter": "{{ filter }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_user_events_collect">
-
-Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.
-
-```sql
-EXEC google.discoveryengine.user_events.projects_locations_data_stores_user_events_collect 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@userEvent='{{ userEvent }}', 
-@ets='{{ ets }}', 
-@uri='{{ uri }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_user_events_import">
-
-Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.
-
-```sql
-EXEC google.discoveryengine.user_events.projects_locations_data_stores_user_events_import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required 
-@@json=
-'{
-"errorConfig": "{{ errorConfig }}", 
-"inlineSource": "{{ inlineSource }}", 
-"gcsSource": "{{ gcsSource }}", 
-"bigquerySource": "{{ bigquerySource }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_user_events_write">
-
-Writes a single user event.
-
-```sql
-EXEC google.discoveryengine.user_events.projects_locations_data_stores_user_events_write 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@writeAsync={{ writeAsync }} 
-@@json=
-'{
-"promotionIds": "{{ promotionIds }}", 
-"attributionToken": "{{ attributionToken }}", 
-"panel": "{{ panel }}", 
-"sessionId": "{{ sessionId }}", 
-"documents": "{{ documents }}", 
-"dataStore": "{{ dataStore }}", 
-"pageInfo": "{{ pageInfo }}", 
-"tagIds": "{{ tagIds }}", 
-"completionInfo": "{{ completionInfo }}", 
-"conversionType": "{{ conversionType }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"userInfo": "{{ userInfo }}", 
-"directUserRequest": {{ directUserRequest }}, 
-"engine": "{{ engine }}", 
-"panels": "{{ panels }}", 
-"attributes": "{{ attributes }}", 
-"eventTime": "{{ eventTime }}", 
-"eventType": "{{ eventType }}", 
-"filter": "{{ filter }}", 
-"searchInfo": "{{ searchInfo }}", 
-"transactionInfo": "{{ transactionInfo }}", 
-"mediaInfo": "{{ mediaInfo }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_user_events_write">
 
 Writes a single user event.
@@ -396,28 +215,30 @@ EXEC google.discoveryengine.user_events.projects_locations_user_events_write
 @writeAsync={{ writeAsync }} 
 @@json=
 '{
-"promotionIds": "{{ promotionIds }}", 
-"attributionToken": "{{ attributionToken }}", 
-"panel": "{{ panel }}", 
-"sessionId": "{{ sessionId }}", 
-"documents": "{{ documents }}", 
-"dataStore": "{{ dataStore }}", 
-"pageInfo": "{{ pageInfo }}", 
-"tagIds": "{{ tagIds }}", 
-"completionInfo": "{{ completionInfo }}", 
-"conversionType": "{{ conversionType }}", 
-"userPseudoId": "{{ userPseudoId }}", 
 "userInfo": "{{ userInfo }}", 
-"directUserRequest": {{ directUserRequest }}, 
-"engine": "{{ engine }}", 
-"panels": "{{ panels }}", 
-"attributes": "{{ attributes }}", 
+"dataStore": "{{ dataStore }}", 
+"entity": "{{ entity }}", 
 "eventTime": "{{ eventTime }}", 
-"eventType": "{{ eventType }}", 
+"tagIds": "{{ tagIds }}", 
+"directUserRequest": {{ directUserRequest }}, 
 "filter": "{{ filter }}", 
-"searchInfo": "{{ searchInfo }}", 
 "transactionInfo": "{{ transactionInfo }}", 
-"mediaInfo": "{{ mediaInfo }}"
+"mediaInfo": "{{ mediaInfo }}", 
+"userPseudoId": "{{ userPseudoId }}", 
+"attributionToken": "{{ attributionToken }}", 
+"eventType": "{{ eventType }}", 
+"engine": "{{ engine }}", 
+"promotionIds": "{{ promotionIds }}", 
+"conversionType": "{{ conversionType }}", 
+"completionInfo": "{{ completionInfo }}", 
+"feedback": "{{ feedback }}", 
+"sessionId": "{{ sessionId }}", 
+"searchInfo": "{{ searchInfo }}", 
+"attributes": "{{ attributes }}", 
+"panel": "{{ panel }}", 
+"panels": "{{ panels }}", 
+"pageInfo": "{{ pageInfo }}", 
+"documents": "{{ documents }}"
 }'
 ;
 ```
@@ -446,11 +267,197 @@ EXEC google.discoveryengine.user_events.projects_locations_user_events_import
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"errorConfig": "{{ errorConfig }}", 
 "inlineSource": "{{ inlineSource }}", 
-"gcsSource": "{{ gcsSource }}", 
-"bigquerySource": "{{ bigquerySource }}"
+"bigquerySource": "{{ bigquerySource }}", 
+"errorConfig": "{{ errorConfig }}", 
+"gcsSource": "{{ gcsSource }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_user_events_write">
+
+Writes a single user event.
+
+```sql
+EXEC google.discoveryengine.user_events.projects_locations_data_stores_user_events_write 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@writeAsync={{ writeAsync }} 
+@@json=
+'{
+"userInfo": "{{ userInfo }}", 
+"dataStore": "{{ dataStore }}", 
+"entity": "{{ entity }}", 
+"eventTime": "{{ eventTime }}", 
+"tagIds": "{{ tagIds }}", 
+"directUserRequest": {{ directUserRequest }}, 
+"filter": "{{ filter }}", 
+"transactionInfo": "{{ transactionInfo }}", 
+"mediaInfo": "{{ mediaInfo }}", 
+"userPseudoId": "{{ userPseudoId }}", 
+"attributionToken": "{{ attributionToken }}", 
+"eventType": "{{ eventType }}", 
+"engine": "{{ engine }}", 
+"promotionIds": "{{ promotionIds }}", 
+"conversionType": "{{ conversionType }}", 
+"completionInfo": "{{ completionInfo }}", 
+"feedback": "{{ feedback }}", 
+"sessionId": "{{ sessionId }}", 
+"searchInfo": "{{ searchInfo }}", 
+"attributes": "{{ attributes }}", 
+"panel": "{{ panel }}", 
+"panels": "{{ panels }}", 
+"pageInfo": "{{ pageInfo }}", 
+"documents": "{{ documents }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_user_events_collect">
+
+Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.
+
+```sql
+EXEC google.discoveryengine.user_events.projects_locations_data_stores_user_events_collect 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@userEvent='{{ userEvent }}', 
+@uri='{{ uri }}', 
+@ets='{{ ets }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_user_events_purge">
+
+Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.
+
+```sql
+EXEC google.discoveryengine.user_events.projects_locations_data_stores_user_events_purge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"force": {{ force }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_user_events_import">
+
+Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.
+
+```sql
+EXEC google.discoveryengine.user_events.projects_locations_data_stores_user_events_import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required 
+@@json=
+'{
+"inlineSource": "{{ inlineSource }}", 
+"bigquerySource": "{{ bigquerySource }}", 
+"errorConfig": "{{ errorConfig }}", 
+"gcsSource": "{{ gcsSource }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_user_events_purge">
+
+Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.
+
+```sql
+EXEC google.discoveryengine.user_events.projects_locations_collections_data_stores_user_events_purge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"force": {{ force }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_user_events_import">
+
+Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.
+
+```sql
+EXEC google.discoveryengine.user_events.projects_locations_collections_data_stores_user_events_import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required 
+@@json=
+'{
+"inlineSource": "{{ inlineSource }}", 
+"bigquerySource": "{{ bigquerySource }}", 
+"errorConfig": "{{ errorConfig }}", 
+"gcsSource": "{{ gcsSource }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_user_events_write">
+
+Writes a single user event.
+
+```sql
+EXEC google.discoveryengine.user_events.projects_locations_collections_data_stores_user_events_write 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@writeAsync={{ writeAsync }} 
+@@json=
+'{
+"userInfo": "{{ userInfo }}", 
+"dataStore": "{{ dataStore }}", 
+"entity": "{{ entity }}", 
+"eventTime": "{{ eventTime }}", 
+"tagIds": "{{ tagIds }}", 
+"directUserRequest": {{ directUserRequest }}, 
+"filter": "{{ filter }}", 
+"transactionInfo": "{{ transactionInfo }}", 
+"mediaInfo": "{{ mediaInfo }}", 
+"userPseudoId": "{{ userPseudoId }}", 
+"attributionToken": "{{ attributionToken }}", 
+"eventType": "{{ eventType }}", 
+"engine": "{{ engine }}", 
+"promotionIds": "{{ promotionIds }}", 
+"conversionType": "{{ conversionType }}", 
+"completionInfo": "{{ completionInfo }}", 
+"feedback": "{{ feedback }}", 
+"sessionId": "{{ sessionId }}", 
+"searchInfo": "{{ searchInfo }}", 
+"attributes": "{{ attributes }}", 
+"panel": "{{ panel }}", 
+"panels": "{{ panels }}", 
+"pageInfo": "{{ pageInfo }}", 
+"documents": "{{ documents }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_user_events_collect">
+
+Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.
+
+```sql
+EXEC google.discoveryengine.user_events.projects_locations_collections_data_stores_user_events_collect 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@userEvent='{{ userEvent }}', 
+@uri='{{ uri }}', 
+@ets='{{ ets }}'
 ;
 ```
 </TabItem>

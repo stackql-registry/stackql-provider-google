@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>findings</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>findings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="findings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.findings" /></td></tr>
 </tbody></table>
@@ -32,42 +33,13 @@ Creates, updates, deletes, gets or lists a <code>findings</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="folders_sources_findings_list"
+    defaultValue="organizations_sources_findings_list"
     values={[
-        { label: 'folders_sources_findings_list', value: 'folders_sources_findings_list' },
         { label: 'organizations_sources_findings_list', value: 'organizations_sources_findings_list' },
-        { label: 'projects_sources_findings_list', value: 'projects_sources_findings_list' }
+        { label: 'projects_sources_findings_list', value: 'projects_sources_findings_list' },
+        { label: 'folders_sources_findings_list', value: 'folders_sources_findings_list' }
     ]}
 >
-<TabItem value="folders_sources_findings_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="finding" /></td>
-    <td><code>object</code></td>
-    <td>Finding matching the search request. (id: Finding)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resource" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Resource that is associated with this finding. (id: Resource)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateChange" /></td>
-    <td><code>string</code></td>
-    <td>State change of the finding between the points in time.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_sources_findings_list">
 
 <table>
@@ -82,17 +54,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="finding" /></td>
     <td><code>object</code></td>
-    <td>Finding matching the search request. (id: Finding)</td>
+    <td> (id: Finding)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>object</code></td>
-    <td>Output only. Resource that is associated with this finding. (id: Resource)</td>
+    <td> (id: Resource)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateChange" /></td>
     <td><code>string</code></td>
-    <td>State change of the finding between the points in time.</td>
+    <td> (UNUSED, CHANGED, UNCHANGED, ADDED, REMOVED)</td>
 </tr>
 </tbody>
 </table>
@@ -111,17 +83,46 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="finding" /></td>
     <td><code>object</code></td>
-    <td>Finding matching the search request. (id: Finding)</td>
+    <td> (id: Finding)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>object</code></td>
-    <td>Output only. Resource that is associated with this finding. (id: Resource)</td>
+    <td> (id: Resource)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateChange" /></td>
     <td><code>string</code></td>
-    <td>State change of the finding between the points in time.</td>
+    <td> (UNUSED, CHANGED, UNCHANGED, ADDED, REMOVED)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_sources_findings_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="finding" /></td>
+    <td><code>object</code></td>
+    <td> (id: Finding)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resource" /></td>
+    <td><code>object</code></td>
+    <td> (id: Resource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="stateChange" /></td>
+    <td><code>string</code></td>
+    <td> (UNUSED, CHANGED, UNCHANGED, ADDED, REMOVED)</td>
 </tr>
 </tbody>
 </table>
@@ -144,137 +145,137 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#folders_sources_findings_list"><CopyableCode code="folders_sources_findings_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings</td>
-</tr>
-<tr>
     <td><a href="#organizations_sources_findings_list"><CopyableCode code="organizations_sources_findings_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a></td>
-    <td>Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_sources_findings_list"><CopyableCode code="projects_sources_findings_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_sources_findings_list"><CopyableCode code="folders_sources_findings_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_sources_findings_create"><CopyableCode code="organizations_sources_findings_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
     <td><a href="#parameter-findingId"><code>findingId</code></a></td>
-    <td>Creates a finding. The corresponding source must exist for finding creation to succeed.</td>
-</tr>
-<tr>
-    <td><a href="#folders_sources_findings_patch"><CopyableCode code="folders_sources_findings_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_sources_findings_patch"><CopyableCode code="organizations_sources_findings_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_sources_findings_patch"><CopyableCode code="projects_sources_findings_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.</td>
-</tr>
-<tr>
-    <td><a href="#folders_findings_bulk_mute"><CopyableCode code="folders_findings_bulk_mute" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
-    <td>Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.</td>
 </tr>
 <tr>
-    <td><a href="#folders_sources_findings_group"><CopyableCode code="folders_sources_findings_group" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td></td>
-    <td>Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings, /v1/folders/&#123;folder_id&#125;/sources/-/findings, /v1/projects/&#123;project_id&#125;/sources/-/findings</td>
-</tr>
-<tr>
-    <td><a href="#folders_sources_findings_set_mute"><CopyableCode code="folders_sources_findings_set_mute" /></a></td>
-    <td><CopyableCode code="exec" /></td>
+    <td><a href="#folders_sources_findings_patch"><CopyableCode code="folders_sources_findings_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
-    <td>Updates the mute state of a finding.</td>
-</tr>
-<tr>
-    <td><a href="#folders_sources_findings_set_state"><CopyableCode code="folders_sources_findings_set_state" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
-    <td></td>
-    <td>Updates the state of a finding.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_sources_findings_set_state"><CopyableCode code="organizations_sources_findings_set_state" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
-    <td></td>
-    <td>Updates the state of a finding.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_sources_findings_set_mute"><CopyableCode code="organizations_sources_findings_set_mute" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
-    <td></td>
-    <td>Updates the mute state of a finding.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_sources_findings_group"><CopyableCode code="organizations_sources_findings_group" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td></td>
-    <td>Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings, /v1/folders/&#123;folder_id&#125;/sources/-/findings, /v1/projects/&#123;project_id&#125;/sources/-/findings</td>
 </tr>
 <tr>
     <td><a href="#organizations_findings_bulk_mute"><CopyableCode code="organizations_findings_bulk_mute" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.</td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_sources_findings_set_state"><CopyableCode code="projects_sources_findings_set_state" /></a></td>
+    <td><a href="#organizations_sources_findings_set_mute"><CopyableCode code="organizations_sources_findings_set_mute" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
     <td></td>
-    <td>Updates the state of a finding.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#organizations_sources_findings_group"><CopyableCode code="organizations_sources_findings_group" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#organizations_sources_findings_set_state"><CopyableCode code="organizations_sources_findings_set_state" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_sources_findings_group"><CopyableCode code="projects_sources_findings_group" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
     <td></td>
-    <td>Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings, /v1/folders/&#123;folder_id&#125;/sources/-/findings, /v1/projects/&#123;project_id&#125;/sources/-/findings</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_sources_findings_set_mute"><CopyableCode code="projects_sources_findings_set_mute" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
     <td></td>
-    <td>Updates the mute state of a finding.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_sources_findings_set_state"><CopyableCode code="projects_sources_findings_set_state" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_findings_bulk_mute"><CopyableCode code="projects_findings_bulk_mute" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_findings_bulk_mute"><CopyableCode code="folders_findings_bulk_mute" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_sources_findings_set_state"><CopyableCode code="folders_sources_findings_set_state" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_sources_findings_set_mute"><CopyableCode code="folders_sources_findings_set_mute" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_sources_findings_group"><CopyableCode code="folders_sources_findings_group" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -368,16 +369,60 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="folders_sources_findings_list"
+    defaultValue="organizations_sources_findings_list"
     values={[
-        { label: 'folders_sources_findings_list', value: 'folders_sources_findings_list' },
         { label: 'organizations_sources_findings_list', value: 'organizations_sources_findings_list' },
-        { label: 'projects_sources_findings_list', value: 'projects_sources_findings_list' }
+        { label: 'projects_sources_findings_list', value: 'projects_sources_findings_list' },
+        { label: 'folders_sources_findings_list', value: 'folders_sources_findings_list' }
     ]}
 >
+<TabItem value="organizations_sources_findings_list">
+
+Successful response
+
+```sql
+SELECT
+finding,
+resource,
+stateChange
+FROM google.securitycenter.findings
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND sourcesId = '{{ sourcesId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND readTime = '{{ readTime }}'
+AND compareDuration = '{{ compareDuration }}'
+AND fieldMask = '{{ fieldMask }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="projects_sources_findings_list">
+
+Successful response
+
+```sql
+SELECT
+finding,
+resource,
+stateChange
+FROM google.securitycenter.findings
+WHERE projectsId = '{{ projectsId }}' -- required
+AND sourcesId = '{{ sourcesId }}' -- required
+AND filter = '{{ filter }}'
+AND fieldMask = '{{ fieldMask }}'
+AND pageSize = '{{ pageSize }}'
+AND compareDuration = '{{ compareDuration }}'
+AND orderBy = '{{ orderBy }}'
+AND readTime = '{{ readTime }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="folders_sources_findings_list">
 
-Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings
+Successful response
 
 ```sql
 SELECT
@@ -388,56 +433,12 @@ FROM google.securitycenter.findings
 WHERE foldersId = '{{ foldersId }}' -- required
 AND sourcesId = '{{ sourcesId }}' -- required
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
-AND compareDuration = '{{ compareDuration }}'
-AND fieldMask = '{{ fieldMask }}'
-AND pageToken = '{{ pageToken }}'
 AND readTime = '{{ readTime }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="organizations_sources_findings_list">
-
-Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings
-
-```sql
-SELECT
-finding,
-resource,
-stateChange
-FROM google.securitycenter.findings
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND sourcesId = '{{ sourcesId }}' -- required
-AND filter = '{{ filter }}'
-AND compareDuration = '{{ compareDuration }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND readTime = '{{ readTime }}'
-AND fieldMask = '{{ fieldMask }}'
-;
-```
-</TabItem>
-<TabItem value="projects_sources_findings_list">
-
-Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings
-
-```sql
-SELECT
-finding,
-resource,
-stateChange
-FROM google.securitycenter.findings
-WHERE projectsId = '{{ projectsId }}' -- required
-AND sourcesId = '{{ sourcesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND readTime = '{{ readTime }}'
-AND compareDuration = '{{ compareDuration }}'
 AND fieldMask = '{{ fieldMask }}'
-AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND compareDuration = '{{ compareDuration }}'
 ;
 ```
 </TabItem>
@@ -455,127 +456,147 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="organizations_sources_findings_create">
 
-Creates a finding. The corresponding source must exist for finding creation to succeed.
+No description available.
 
 ```sql
 INSERT INTO google.securitycenter.findings (
-data__vertexAi,
-data__application,
-data__attackExposure,
-data__findingClass,
+data__mute,
+data__moduleName,
+data__kubernetes,
+data__aiModel,
+data__agentAnomaly,
+data__externalExposure,
+data__job,
+data__agentSessions,
+data__state,
+data__dataAccessEvents,
+data__secret,
+data__severity,
 data__compliances,
-data__sourceProperties,
+data__orgPolicies,
+data__loadBalancers,
+data__complianceDetails,
+data__agent,
+data__dataRetentionDeletionEvents,
+data__createTime,
+data__containers,
+data__agentDataAccessEvents,
+data__iamDetails,
+data__artifactGuardPolicies,
+data__cloudArmor,
+data__cloudDlpInspection,
+data__discoveredWorkload,
+data__kernelRootkit,
+data__notebook,
+data__muteInitiator,
+data__networks,
+data__connections,
+data__disk,
+data__exfiltration,
+data__mitreAttack,
+data__processes,
 data__parent,
 data__groupMemberships,
-data__createTime,
-data__kernelRootkit,
-data__logEntries,
-data__eventTime,
-data__cloudArmor,
-data__complianceDetails,
-data__indicator,
-data__muteInitiator,
-data__toxicCombination,
-data__exfiltration,
-data__canonicalName,
-data__severity,
-data__loadBalancers,
-data__resourceName,
 data__dataFlowEvents,
-data__processes,
-data__ipRules,
-data__affectedResources,
-data__cloudDlpInspection,
+data__findingClass,
 data__cloudDlpDataProfile,
-data__aiModel,
-data__mitreAttack,
-data__backupDisasterRecovery,
+data__canonicalName,
 data__iamBindings,
-data__mute,
-data__vulnerability,
-data__connections,
-data__notebook,
-data__orgPolicies,
-data__category,
-data__access,
-data__moduleName,
-data__dataRetentionDeletionEvents,
-data__files,
-data__nextSteps,
-data__disk,
-data__externalUri,
-data__database,
-data__description,
 data__securityPosture,
-data__kubernetes,
-data__dataAccessEvents,
-data__state,
+data__files,
+data__sourceProperties,
 data__name,
-data__networks,
+data__category,
+data__application,
+data__description,
+data__database,
+data__ipRules,
+data__externalUri,
+data__nextSteps,
+data__eventTime,
+data__logEntries,
+data__vulnerability,
+data__attackExposure,
+data__vertexAi,
+data__indicator,
+data__resourceName,
+data__toxicCombination,
 data__chokepoint,
-data__job,
-data__containers,
+data__policyViolationSummary,
+data__affectedResources,
+data__access,
+data__backupDisasterRecovery,
 organizationsId,
 sourcesId,
 findingId
 )
 SELECT 
-'{{ vertexAi }}',
-'{{ application }}',
-'{{ attackExposure }}',
-'{{ findingClass }}',
+'{{ mute }}',
+'{{ moduleName }}',
+'{{ kubernetes }}',
+'{{ aiModel }}',
+'{{ agentAnomaly }}',
+'{{ externalExposure }}',
+'{{ job }}',
+'{{ agentSessions }}',
+'{{ state }}',
+'{{ dataAccessEvents }}',
+'{{ secret }}',
+'{{ severity }}',
 '{{ compliances }}',
-'{{ sourceProperties }}',
+'{{ orgPolicies }}',
+'{{ loadBalancers }}',
+'{{ complianceDetails }}',
+'{{ agent }}',
+'{{ dataRetentionDeletionEvents }}',
+'{{ createTime }}',
+'{{ containers }}',
+'{{ agentDataAccessEvents }}',
+'{{ iamDetails }}',
+'{{ artifactGuardPolicies }}',
+'{{ cloudArmor }}',
+'{{ cloudDlpInspection }}',
+'{{ discoveredWorkload }}',
+'{{ kernelRootkit }}',
+'{{ notebook }}',
+'{{ muteInitiator }}',
+'{{ networks }}',
+'{{ connections }}',
+'{{ disk }}',
+'{{ exfiltration }}',
+'{{ mitreAttack }}',
+'{{ processes }}',
 '{{ parent }}',
 '{{ groupMemberships }}',
-'{{ createTime }}',
-'{{ kernelRootkit }}',
-'{{ logEntries }}',
-'{{ eventTime }}',
-'{{ cloudArmor }}',
-'{{ complianceDetails }}',
-'{{ indicator }}',
-'{{ muteInitiator }}',
-'{{ toxicCombination }}',
-'{{ exfiltration }}',
-'{{ canonicalName }}',
-'{{ severity }}',
-'{{ loadBalancers }}',
-'{{ resourceName }}',
 '{{ dataFlowEvents }}',
-'{{ processes }}',
-'{{ ipRules }}',
-'{{ affectedResources }}',
-'{{ cloudDlpInspection }}',
+'{{ findingClass }}',
 '{{ cloudDlpDataProfile }}',
-'{{ aiModel }}',
-'{{ mitreAttack }}',
-'{{ backupDisasterRecovery }}',
+'{{ canonicalName }}',
 '{{ iamBindings }}',
-'{{ mute }}',
-'{{ vulnerability }}',
-'{{ connections }}',
-'{{ notebook }}',
-'{{ orgPolicies }}',
-'{{ category }}',
-'{{ access }}',
-'{{ moduleName }}',
-'{{ dataRetentionDeletionEvents }}',
-'{{ files }}',
-'{{ nextSteps }}',
-'{{ disk }}',
-'{{ externalUri }}',
-'{{ database }}',
-'{{ description }}',
 '{{ securityPosture }}',
-'{{ kubernetes }}',
-'{{ dataAccessEvents }}',
-'{{ state }}',
+'{{ files }}',
+'{{ sourceProperties }}',
 '{{ name }}',
-'{{ networks }}',
+'{{ category }}',
+'{{ application }}',
+'{{ description }}',
+'{{ database }}',
+'{{ ipRules }}',
+'{{ externalUri }}',
+'{{ nextSteps }}',
+'{{ eventTime }}',
+'{{ logEntries }}',
+'{{ vulnerability }}',
+'{{ attackExposure }}',
+'{{ vertexAi }}',
+'{{ indicator }}',
+'{{ resourceName }}',
+'{{ toxicCombination }}',
 '{{ chokepoint }}',
-'{{ job }}',
-'{{ containers }}',
+'{{ policyViolationSummary }}',
+'{{ affectedResources }}',
+'{{ access }}',
+'{{ backupDisasterRecovery }}',
 '{{ organizationsId }}',
 '{{ sourcesId }}',
 '{{ findingId }}'
@@ -583,8 +604,13 @@ RETURNING
 name,
 access,
 affectedResources,
+agent,
+agentAnomaly,
+agentDataAccessEvents,
+agentSessions,
 aiModel,
 application,
+artifactGuardPolicies,
 attackExposure,
 backupDisasterRecovery,
 canonicalName,
@@ -604,15 +630,18 @@ dataFlowEvents,
 dataRetentionDeletionEvents,
 database,
 description,
+discoveredWorkload,
 disk,
 eventTime,
 exfiltration,
+externalExposure,
 externalSystems,
 externalUri,
 files,
 findingClass,
 groupMemberships,
 iamBindings,
+iamDetails,
 indicator,
 ipRules,
 job,
@@ -632,8 +661,10 @@ notebook,
 orgPolicies,
 parent,
 parentDisplayName,
+policyViolationSummary,
 processes,
 resourceName,
+secret,
 securityMarks,
 securityPosture,
 severity,
@@ -647,303 +678,563 @@ vulnerability
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: findings
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the findings resource.
     - name: sourcesId
-      value: string
+      value: "{{ sourcesId }}"
       description: Required parameter for the findings resource.
-    - name: vertexAi
-      value: object
-      description: >
-        VertexAi associated with the finding.
-        
-    - name: application
-      value: object
-      description: >
-        Represents an application associated with the finding.
-        
-    - name: attackExposure
-      value: object
-      description: >
-        The results of an attack path simulation relevant to this finding.
-        
-    - name: findingClass
-      value: string
-      description: >
-        The class of the finding.
-        
-      valid_values: ['FINDING_CLASS_UNSPECIFIED', 'THREAT', 'VULNERABILITY', 'MISCONFIGURATION', 'OBSERVATION', 'SCC_ERROR', 'POSTURE_VIOLATION', 'TOXIC_COMBINATION', 'SENSITIVE_DATA_RISK', 'CHOKEPOINT']
-    - name: compliances
-      value: array
-      description: >
-        Contains compliance information for security standards associated to the finding.
-        
-    - name: sourceProperties
-      value: object
-      description: >
-        Source specific properties. These properties are managed by the source that writes the finding. The key names in the source_properties map must be between 1 and 255 characters, and must start with a letter and contain alphanumeric characters or underscores only.
-        
-    - name: parent
-      value: string
-      description: >
-        The relative resource name of the source the finding belongs to. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name This field is immutable after creation time. For example: "organizations/{organization_id}/sources/{source_id}"
-        
-    - name: groupMemberships
-      value: array
-      description: >
-        Contains details about groups of which this finding is a member. A group is a collection of findings that are related in some way. This field cannot be updated. Its value is ignored in all update requests.
-        
-    - name: createTime
-      value: string
-      description: >
-        The time at which the finding was created in Security Command Center.
-        
-    - name: kernelRootkit
-      value: object
-      description: >
-        Signature of the kernel rootkit.
-        
-    - name: logEntries
-      value: array
-      description: >
-        Log entries that are relevant to the finding.
-        
-    - name: eventTime
-      value: string
-      description: >
-        The time the finding was first detected. If an existing finding is updated, then this is the time the update occurred. For example, if the finding represents an open firewall, this property captures the time the detector believes the firewall became open. The accuracy is determined by the detector. If the finding is later resolved, then this time reflects when the finding was resolved. This must not be set to a value greater than the current timestamp.
-        
-    - name: cloudArmor
-      value: object
-      description: >
-        Fields related to Cloud Armor findings.
-        
-    - name: complianceDetails
-      value: object
-      description: >
-        Details about the compliance implications of the finding.
-        
-    - name: indicator
-      value: object
-      description: >
-        Represents what's commonly known as an *indicator of compromise* (IoC) in computer forensics. This is an artifact observed on a network or in an operating system that, with high confidence, indicates a computer intrusion. For more information, see [Indicator of compromise](https://en.wikipedia.org/wiki/Indicator_of_compromise).
-        
-    - name: muteInitiator
-      value: string
-      description: >
-        Records additional information about the mute operation, for example, the [mute configuration](/security-command-center/docs/how-to-mute-findings) that muted the finding and the user who muted the finding.
-        
-    - name: toxicCombination
-      value: object
-      description: >
-        Contains details about a group of security issues that, when the issues occur together, represent a greater risk than when the issues occur independently. A group of such issues is referred to as a toxic combination. This field cannot be updated. Its value is ignored in all update requests.
-        
-    - name: exfiltration
-      value: object
-      description: >
-        Represents exfiltrations associated with the finding.
-        
-    - name: canonicalName
-      value: string
-      description: >
-        The canonical name of the finding. It's either "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}", "folders/{folder_id}/sources/{source_id}/findings/{finding_id}" or "projects/{project_number}/sources/{source_id}/findings/{finding_id}", depending on the closest CRM ancestor of the resource associated with the finding.
-        
-    - name: severity
-      value: string
-      description: >
-        The severity of the finding. This field is managed by the source that writes the finding.
-        
-      valid_values: ['SEVERITY_UNSPECIFIED', 'CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
-    - name: loadBalancers
-      value: array
-      description: >
-        The load balancers associated with the finding.
-        
-    - name: resourceName
-      value: string
-      description: >
-        For findings on Google Cloud resources, the full resource name of the Google Cloud resource this finding is for. See: https://cloud.google.com/apis/design/resource_names#full_resource_name When the finding is for a non-Google Cloud resource, the resourceName can be a customer or partner defined string. This field is immutable after creation time.
-        
-    - name: dataFlowEvents
-      value: array
-      description: >
-        Data flow events associated with the finding.
-        
-    - name: processes
-      value: array
-      description: >
-        Represents operating system processes associated with the Finding.
-        
-    - name: ipRules
-      value: object
-      description: >
-        IP rules associated with the finding.
-        
-    - name: affectedResources
-      value: object
-      description: >
-        AffectedResources associated with the finding.
-        
-    - name: cloudDlpInspection
-      value: object
-      description: >
-        Cloud Data Loss Prevention (Cloud DLP) inspection results that are associated with the finding.
-        
-    - name: cloudDlpDataProfile
-      value: object
-      description: >
-        Cloud DLP data profile that is associated with the finding.
-        
-    - name: aiModel
-      value: object
-      description: >
-        The AI model associated with the finding.
-        
-    - name: mitreAttack
-      value: object
-      description: >
-        MITRE ATT&CK tactics and techniques related to this finding. See: https://attack.mitre.org
-        
-    - name: backupDisasterRecovery
-      value: object
-      description: >
-        Fields related to Backup and DR findings.
-        
-    - name: iamBindings
-      value: array
-      description: >
-        Represents IAM bindings associated with the finding.
-        
     - name: mute
-      value: string
-      description: >
-        Indicates the mute state of a finding (either muted, unmuted or undefined). Unlike other attributes of a finding, a finding provider shouldn't set the value of mute.
-        
+      value: "{{ mute }}"
       valid_values: ['MUTE_UNSPECIFIED', 'MUTED', 'UNMUTED', 'UNDEFINED']
-    - name: vulnerability
-      value: object
-      description: >
-        Represents vulnerability-specific fields like CVE and CVSS scores. CVE stands for Common Vulnerabilities and Exposures (https://cve.mitre.org/about/)
-        
-    - name: connections
-      value: array
-      description: >
-        Contains information about the IP connection associated with the finding.
-        
-    - name: notebook
-      value: object
-      description: >
-        Notebook associated with the finding.
-        
-    - name: orgPolicies
-      value: array
-      description: >
-        Contains information about the org policies associated with the finding.
-        
-    - name: category
-      value: string
-      description: >
-        The additional taxonomy group within findings from a given source. This field is immutable after creation time. Example: "XSS_FLASH_INJECTION"
-        
-    - name: access
-      value: object
-      description: >
-        Access details associated with the finding, such as more information on the caller, which method was accessed, and from where.
-        
     - name: moduleName
-      value: string
-      description: >
-        Unique identifier of the module which generated the finding. Example: folders/598186756061/securityHealthAnalyticsSettings/customModules/56799441161885
-        
-    - name: dataRetentionDeletionEvents
-      value: array
-      description: >
-        Data retention deletion events associated with the finding.
-        
-    - name: files
-      value: array
-      description: >
-        File associated with the finding.
-        
-    - name: nextSteps
-      value: string
-      description: >
-        Steps to address the finding.
-        
-    - name: disk
-      value: object
-      description: >
-        Disk associated with the finding.
-        
-    - name: externalUri
-      value: string
-      description: >
-        The URI that, if available, points to a web page outside of Security Command Center where additional information about the finding can be found. This field is guaranteed to be either empty or a well formed URL.
-        
-    - name: database
-      value: object
-      description: >
-        Database associated with the finding.
-        
-    - name: description
-      value: string
-      description: >
-        Contains more details about the finding.
-        
-    - name: securityPosture
-      value: object
-      description: >
-        The security posture associated with the finding.
-        
+      value: "{{ moduleName }}"
     - name: kubernetes
-      value: object
-      description: >
-        Kubernetes resources associated with the finding.
-        
-    - name: dataAccessEvents
-      value: array
-      description: >
-        Data access events associated with the finding.
-        
-    - name: state
-      value: string
-      description: >
-        The state of the finding.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'ACTIVE', 'INACTIVE']
-    - name: name
-      value: string
-      description: >
-        The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}", "folders/{folder_id}/sources/{source_id}/findings/{finding_id}", "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
-        
-    - name: networks
-      value: array
-      description: >
-        Represents the VPC networks that the resource is attached to.
-        
-    - name: chokepoint
-      value: object
-      description: >
-        Contains details about a chokepoint, which is a resource or resource group where high-risk attack paths converge, based on [attack path simulations] (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations). This field cannot be updated. Its value is ignored in all update requests.
-        
+      value:
+        roles:
+          - ns: "{{ ns }}"
+            kind: "{{ kind }}"
+            name: "{{ name }}"
+        accessReviews:
+          - resource: "{{ resource }}"
+            ns: "{{ ns }}"
+            version: "{{ version }}"
+            group: "{{ group }}"
+            verb: "{{ verb }}"
+            subresource: "{{ subresource }}"
+            name: "{{ name }}"
+        bindings:
+          - subjects: "{{ subjects }}"
+            ns: "{{ ns }}"
+            name: "{{ name }}"
+            role:
+              ns: "{{ ns }}"
+              kind: "{{ kind }}"
+              name: "{{ name }}"
+        pods:
+          - name: "{{ name }}"
+            ns: "{{ ns }}"
+            labels: "{{ labels }}"
+            containers: "{{ containers }}"
+        objects:
+          - group: "{{ group }}"
+            containers: "{{ containers }}"
+            kind: "{{ kind }}"
+            name: "{{ name }}"
+            ns: "{{ ns }}"
+        nodePools:
+          - name: "{{ name }}"
+            nodes: "{{ nodes }}"
+        nodes:
+          - name: "{{ name }}"
+    - name: aiModel
+      value:
+        domain: "{{ domain }}"
+        displayName: "{{ displayName }}"
+        name: "{{ name }}"
+        deploymentPlatform: "{{ deploymentPlatform }}"
+        location: "{{ location }}"
+        publisher: "{{ publisher }}"
+        usageCategory: "{{ usageCategory }}"
+        library: "{{ library }}"
+    - name: agentAnomaly
+      value:
+        detectorReferences:
+          - severity: "{{ severity }}"
+            displayName: "{{ displayName }}"
+            recommendation: "{{ recommendation }}"
+            explanation: "{{ explanation }}"
+            detectorId: "{{ detectorId }}"
+        invocationReferences:
+          - invocationId: "{{ invocationId }}"
+        confidenceScore: {{ confidenceScore }}
+    - name: externalExposure
+      value:
+        loadBalancerFirewallPolicy: "{{ loadBalancerFirewallPolicy }}"
+        serviceFirewallPolicy: "{{ serviceFirewallPolicy }}"
+        privatePort: "{{ privatePort }}"
+        instanceGroup: "{{ instanceGroup }}"
+        networkIngressFirewallPolicy: "{{ networkIngressFirewallPolicy }}"
+        networkPathInsightsGenerationTime: "{{ networkPathInsightsGenerationTime }}"
+        exposedService: "{{ exposedService }}"
+        backendBucket: "{{ backendBucket }}"
+        networkEndpointGroup: "{{ networkEndpointGroup }}"
+        hostnameUri: "{{ hostnameUri }}"
+        pscNetworkAttachment: "{{ pscNetworkAttachment }}"
+        forwardingRule: "{{ forwardingRule }}"
+        publicPort: "{{ publicPort }}"
+        httpResponse:
+          - statusCode: "{{ statusCode }}"
+            path: "{{ path }}"
+        privateIpAddress: "{{ privateIpAddress }}"
+        exposedEndpoint: "{{ exposedEndpoint }}"
+        publicIpAddress: "{{ publicIpAddress }}"
+        pscServiceAttachment: "{{ pscServiceAttachment }}"
+        internalBackendService: "{{ internalBackendService }}"
+        backendService: "{{ backendService }}"
+        exposedApplication: "{{ exposedApplication }}"
     - name: job
-      value: object
-      description: >
-        Job associated with the finding.
-        
+      value:
+        errorCode: {{ errorCode }}
+        location: "{{ location }}"
+        name: "{{ name }}"
+        state: "{{ state }}"
+    - name: agentSessions
+      value:
+        - sessionId: "{{ sessionId }}"
+    - name: state
+      value: "{{ state }}"
+      valid_values: ['STATE_UNSPECIFIED', 'ACTIVE', 'INACTIVE']
+    - name: dataAccessEvents
+      value:
+        - principalEmail: "{{ principalEmail }}"
+          eventTime: "{{ eventTime }}"
+          eventId: "{{ eventId }}"
+          operation: "{{ operation }}"
+    - name: secret
+      value:
+        status:
+          lastUpdatedTime: "{{ lastUpdatedTime }}"
+          validity: "{{ validity }}"
+        environmentVariable:
+          key: "{{ key }}"
+        type: "{{ type }}"
+        filePath:
+          path: "{{ path }}"
+    - name: severity
+      value: "{{ severity }}"
+      valid_values: ['SEVERITY_UNSPECIFIED', 'CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
+    - name: compliances
+      value:
+        - standard: "{{ standard }}"
+          version: "{{ version }}"
+          ids: "{{ ids }}"
+    - name: orgPolicies
+      value:
+        - name: "{{ name }}"
+    - name: loadBalancers
+      value:
+        - name: "{{ name }}"
+    - name: complianceDetails
+      value:
+        cloudControl:
+          type: "{{ type }}"
+          policyType: "{{ policyType }}"
+          cloudControlName: "{{ cloudControlName }}"
+          version: {{ version }}
+        cloudControlDeploymentNames:
+          - "{{ cloudControlDeploymentNames }}"
+        frameworks:
+          - type: "{{ type }}"
+            name: "{{ name }}"
+            category: "{{ category }}"
+            controls: "{{ controls }}"
+            displayName: "{{ displayName }}"
+    - name: agent
+      value:
+        id: "{{ id }}"
+        displayName: "{{ displayName }}"
+    - name: dataRetentionDeletionEvents
+      value:
+        - maxRetentionAllowed: "{{ maxRetentionAllowed }}"
+          minRetentionAllowed: "{{ minRetentionAllowed }}"
+          eventDetectionTime: "{{ eventDetectionTime }}"
+          dataObjectCount: "{{ dataObjectCount }}"
+          eventType: "{{ eventType }}"
+    - name: createTime
+      value: "{{ createTime }}"
     - name: containers
-      value: array
-      description: >
-        Containers associated with the finding. This field provides information for both Kubernetes and non-Kubernetes containers.
-        
+      value:
+        - createTime: "{{ createTime }}"
+          name: "{{ name }}"
+          labels: "{{ labels }}"
+          uri: "{{ uri }}"
+          imageId: "{{ imageId }}"
+    - name: agentDataAccessEvents
+      value:
+        - eventTime: "{{ eventTime }}"
+          eventId: "{{ eventId }}"
+          principalSubject: "{{ principalSubject }}"
+          operation: "{{ operation }}"
+    - name: iamDetails
+      value:
+        iamRolePermissions:
+          - name: "{{ name }}"
+            role: "{{ role }}"
+    - name: artifactGuardPolicies
+      value:
+        failingPolicies:
+          - type: "{{ type }}"
+            policyId: "{{ policyId }}"
+            failureReason: "{{ failureReason }}"
+        resourceId: "{{ resourceId }}"
+    - name: cloudArmor
+      value:
+        duration: "{{ duration }}"
+        requests:
+          ratio: {{ ratio }}
+          shortTermAllowed: {{ shortTermAllowed }}
+          longTermAllowed: {{ longTermAllowed }}
+          longTermDenied: {{ longTermDenied }}
+        securityPolicy:
+          type: "{{ type }}"
+          preview: {{ preview }}
+          name: "{{ name }}"
+        attack:
+          volumeBpsLong: "{{ volumeBpsLong }}"
+          volumeBps: {{ volumeBps }}
+          volumePpsLong: "{{ volumePpsLong }}"
+          classification: "{{ classification }}"
+          volumePps: {{ volumePps }}
+        threatVector: "{{ threatVector }}"
+        adaptiveProtection:
+          confidence: {{ confidence }}
+    - name: cloudDlpInspection
+      value:
+        fullScan: {{ fullScan }}
+        inspectJob: "{{ inspectJob }}"
+        infoTypeCount: "{{ infoTypeCount }}"
+        infoType: "{{ infoType }}"
+    - name: discoveredWorkload
+      value:
+        confidence: "{{ confidence }}"
+        detectedRelevantKeywords: {{ detectedRelevantKeywords }}
+        detectedRelevantPackages: {{ detectedRelevantPackages }}
+        workloadType: "{{ workloadType }}"
+        detectedRelevantHardware: {{ detectedRelevantHardware }}
+    - name: kernelRootkit
+      value:
+        unexpectedInterruptHandler: {{ unexpectedInterruptHandler }}
+        unexpectedReadOnlyDataModification: {{ unexpectedReadOnlyDataModification }}
+        unexpectedCodeModification: {{ unexpectedCodeModification }}
+        unexpectedKprobeHandler: {{ unexpectedKprobeHandler }}
+        unexpectedSystemCallHandler: {{ unexpectedSystemCallHandler }}
+        unexpectedFtraceHandler: {{ unexpectedFtraceHandler }}
+        name: "{{ name }}"
+        unexpectedProcessesInRunqueue: {{ unexpectedProcessesInRunqueue }}
+        unexpectedKernelCodePages: {{ unexpectedKernelCodePages }}
+    - name: notebook
+      value:
+        name: "{{ name }}"
+        service: "{{ service }}"
+        lastAuthor: "{{ lastAuthor }}"
+        notebookUpdateTime: "{{ notebookUpdateTime }}"
+    - name: muteInitiator
+      value: "{{ muteInitiator }}"
+    - name: networks
+      value:
+        - name: "{{ name }}"
+    - name: connections
+      value:
+        - destinationPort: {{ destinationPort }}
+          protocol: "{{ protocol }}"
+          sourceIp: "{{ sourceIp }}"
+          sourcePort: {{ sourcePort }}
+          destinationIp: "{{ destinationIp }}"
+    - name: disk
+      value:
+        name: "{{ name }}"
+    - name: exfiltration
+      value:
+        targets:
+          - name: "{{ name }}"
+            components: "{{ components }}"
+        sources:
+          - name: "{{ name }}"
+            components: "{{ components }}"
+        totalExfiltratedBytes: "{{ totalExfiltratedBytes }}"
+    - name: mitreAttack
+      value:
+        primaryTechniques:
+          - "{{ primaryTechniques }}"
+        additionalTactics:
+          - "{{ additionalTactics }}"
+        primaryTactic: "{{ primaryTactic }}"
+        additionalTechniques:
+          - "{{ additionalTechniques }}"
+        version: "{{ version }}"
+    - name: processes
+      value:
+        - binary:
+            diskPath:
+              partitionUuid: "{{ partitionUuid }}"
+              relativePath: "{{ relativePath }}"
+            sha256: "{{ sha256 }}"
+            partiallyHashed: {{ partiallyHashed }}
+            path: "{{ path }}"
+            contents: "{{ contents }}"
+            size: "{{ size }}"
+            hashedSize: "{{ hashedSize }}"
+            operations:
+              - type: "{{ type }}"
+            fileLoadState: "{{ fileLoadState }}"
+          envVariables: "{{ envVariables }}"
+          envVariablesTruncated: {{ envVariablesTruncated }}
+          parentPid: "{{ parentPid }}"
+          userId: "{{ userId }}"
+          argumentsTruncated: {{ argumentsTruncated }}
+          libraries: "{{ libraries }}"
+          args: "{{ args }}"
+          pid: "{{ pid }}"
+          script:
+            diskPath:
+              partitionUuid: "{{ partitionUuid }}"
+              relativePath: "{{ relativePath }}"
+            sha256: "{{ sha256 }}"
+            partiallyHashed: {{ partiallyHashed }}
+            path: "{{ path }}"
+            contents: "{{ contents }}"
+            size: "{{ size }}"
+            hashedSize: "{{ hashedSize }}"
+            operations:
+              - type: "{{ type }}"
+            fileLoadState: "{{ fileLoadState }}"
+          name: "{{ name }}"
+    - name: parent
+      value: "{{ parent }}"
+    - name: groupMemberships
+      value:
+        - groupType: "{{ groupType }}"
+          groupId: "{{ groupId }}"
+    - name: dataFlowEvents
+      value:
+        - operation: "{{ operation }}"
+          principalEmail: "{{ principalEmail }}"
+          eventTime: "{{ eventTime }}"
+          violatedLocation: "{{ violatedLocation }}"
+          eventId: "{{ eventId }}"
+    - name: findingClass
+      value: "{{ findingClass }}"
+      valid_values: ['FINDING_CLASS_UNSPECIFIED', 'THREAT', 'VULNERABILITY', 'MISCONFIGURATION', 'OBSERVATION', 'SCC_ERROR', 'POSTURE_VIOLATION', 'TOXIC_COMBINATION', 'SENSITIVE_DATA_RISK', 'CHOKEPOINT', 'EXTERNAL_EXPOSURE', 'SECRET']
+    - name: cloudDlpDataProfile
+      value:
+        parentType: "{{ parentType }}"
+        dataProfile: "{{ dataProfile }}"
+        infoTypes:
+          - version: "{{ version }}"
+            name: "{{ name }}"
+            sensitivityScore:
+              score: "{{ score }}"
+    - name: canonicalName
+      value: "{{ canonicalName }}"
+    - name: iamBindings
+      value:
+        - action: "{{ action }}"
+          role: "{{ role }}"
+          member: "{{ member }}"
+    - name: securityPosture
+      value:
+        name: "{{ name }}"
+        postureDeployment: "{{ postureDeployment }}"
+        policySet: "{{ policySet }}"
+        policy: "{{ policy }}"
+        revisionId: "{{ revisionId }}"
+        changedPolicy: "{{ changedPolicy }}"
+        policyDriftDetails:
+          - detectedValue: "{{ detectedValue }}"
+            field: "{{ field }}"
+            expectedValue: "{{ expectedValue }}"
+        postureDeploymentResource: "{{ postureDeploymentResource }}"
+    - name: files
+      value:
+        - diskPath:
+            partitionUuid: "{{ partitionUuid }}"
+            relativePath: "{{ relativePath }}"
+          sha256: "{{ sha256 }}"
+          partiallyHashed: {{ partiallyHashed }}
+          path: "{{ path }}"
+          contents: "{{ contents }}"
+          size: "{{ size }}"
+          hashedSize: "{{ hashedSize }}"
+          operations: "{{ operations }}"
+          fileLoadState: "{{ fileLoadState }}"
+    - name: sourceProperties
+      value: "{{ sourceProperties }}"
+    - name: name
+      value: "{{ name }}"
+    - name: category
+      value: "{{ category }}"
+    - name: application
+      value:
+        baseUri: "{{ baseUri }}"
+        fullUri: "{{ fullUri }}"
+    - name: description
+      value: "{{ description }}"
+    - name: database
+      value:
+        query: "{{ query }}"
+        grantees:
+          - "{{ grantees }}"
+        version: "{{ version }}"
+        name: "{{ name }}"
+        userName: "{{ userName }}"
+        displayName: "{{ displayName }}"
+    - name: ipRules
+      value:
+        allowed:
+          ipRules:
+            - protocol: "{{ protocol }}"
+              portRanges: "{{ portRanges }}"
+        direction: "{{ direction }}"
+        denied:
+          ipRules:
+            - protocol: "{{ protocol }}"
+              portRanges: "{{ portRanges }}"
+        destinationIpRanges:
+          - "{{ destinationIpRanges }}"
+        sourceIpRanges:
+          - "{{ sourceIpRanges }}"
+        exposedServices:
+          - "{{ exposedServices }}"
+    - name: externalUri
+      value: "{{ externalUri }}"
+    - name: nextSteps
+      value: "{{ nextSteps }}"
+    - name: eventTime
+      value: "{{ eventTime }}"
+    - name: logEntries
+      value:
+        - cloudLoggingEntry:
+            logId: "{{ logId }}"
+            insertId: "{{ insertId }}"
+            resourceContainer: "{{ resourceContainer }}"
+            timestamp: "{{ timestamp }}"
+    - name: vulnerability
+      value:
+        cve:
+          impact: "{{ impact }}"
+          zeroDay: {{ zeroDay }}
+          references:
+            - source: "{{ source }}"
+              uri: "{{ uri }}"
+          id: "{{ id }}"
+          cvssv3:
+            privilegesRequired: "{{ privilegesRequired }}"
+            userInteraction: "{{ userInteraction }}"
+            baseScore: {{ baseScore }}
+            availabilityImpact: "{{ availabilityImpact }}"
+            scope: "{{ scope }}"
+            attackVector: "{{ attackVector }}"
+            integrityImpact: "{{ integrityImpact }}"
+            attackComplexity: "{{ attackComplexity }}"
+            confidentialityImpact: "{{ confidentialityImpact }}"
+          observedInTheWild: {{ observedInTheWild }}
+          exploitReleaseDate: "{{ exploitReleaseDate }}"
+          exploitationActivity: "{{ exploitationActivity }}"
+          upstreamFixAvailable: {{ upstreamFixAvailable }}
+          firstExploitationDate: "{{ firstExploitationDate }}"
+        securityBulletin:
+          submissionTime: "{{ submissionTime }}"
+          bulletinId: "{{ bulletinId }}"
+          suggestedUpgradeVersion: "{{ suggestedUpgradeVersion }}"
+        providerRiskScore: "{{ providerRiskScore }}"
+        reachable: {{ reachable }}
+        cwes:
+          - id: "{{ id }}"
+            references: "{{ references }}"
+        offendingPackage:
+          packageVersion: "{{ packageVersion }}"
+          packageName: "{{ packageName }}"
+          cpeUri: "{{ cpeUri }}"
+          packageType: "{{ packageType }}"
+        fixedPackage:
+          packageVersion: "{{ packageVersion }}"
+          packageName: "{{ packageName }}"
+          cpeUri: "{{ cpeUri }}"
+          packageType: "{{ packageType }}"
+    - name: attackExposure
+      value:
+        attackExposureResult: "{{ attackExposureResult }}"
+        exposedLowValueResourcesCount: {{ exposedLowValueResourcesCount }}
+        exposedHighValueResourcesCount: {{ exposedHighValueResourcesCount }}
+        exposedMediumValueResourcesCount: {{ exposedMediumValueResourcesCount }}
+        latestCalculationTime: "{{ latestCalculationTime }}"
+        state: "{{ state }}"
+        score: {{ score }}
+    - name: vertexAi
+      value:
+        datasets:
+          - name: "{{ name }}"
+            source: "{{ source }}"
+            displayName: "{{ displayName }}"
+        pipelines:
+          - displayName: "{{ displayName }}"
+            name: "{{ name }}"
+    - name: indicator
+      value:
+        signatures:
+          - signatureType: "{{ signatureType }}"
+            yaraRuleSignature:
+              yaraRule: "{{ yaraRule }}"
+            memoryHashSignature:
+              binaryFamily: "{{ binaryFamily }}"
+              detections:
+                - binary: "{{ binary }}"
+                  percentPagesMatched: {{ percentPagesMatched }}
+        uris:
+          - "{{ uris }}"
+        domains:
+          - "{{ domains }}"
+        ipAddresses:
+          - "{{ ipAddresses }}"
+    - name: resourceName
+      value: "{{ resourceName }}"
+    - name: toxicCombination
+      value:
+        attackExposureScore: {{ attackExposureScore }}
+        relatedFindings:
+          - "{{ relatedFindings }}"
+    - name: chokepoint
+      value:
+        relatedFindings:
+          - "{{ relatedFindings }}"
+    - name: policyViolationSummary
+      value:
+        policyViolationsCount: "{{ policyViolationsCount }}"
+        outOfScopeResourcesCount: "{{ outOfScopeResourcesCount }}"
+        conformantResourcesCount: "{{ conformantResourcesCount }}"
+        evaluationErrorsCount: "{{ evaluationErrorsCount }}"
+    - name: affectedResources
+      value:
+        count: "{{ count }}"
+    - name: access
+      value:
+        callerIpGeo:
+          regionCode: "{{ regionCode }}"
+        userAgentFamily: "{{ userAgentFamily }}"
+        serviceAccountKeyName: "{{ serviceAccountKeyName }}"
+        methodName: "{{ methodName }}"
+        userAgent: "{{ userAgent }}"
+        principalSubject: "{{ principalSubject }}"
+        serviceName: "{{ serviceName }}"
+        principalEmail: "{{ principalEmail }}"
+        serviceAccountDelegationInfo:
+          - principalEmail: "{{ principalEmail }}"
+            principalSubject: "{{ principalSubject }}"
+        callerIp: "{{ callerIp }}"
+        userName: "{{ userName }}"
+    - name: backupDisasterRecovery
+      value:
+        appliance: "{{ appliance }}"
+        profile: "{{ profile }}"
+        policies:
+          - "{{ policies }}"
+        host: "{{ host }}"
+        backupCreateTime: "{{ backupCreateTime }}"
+        applications:
+          - "{{ applications }}"
+        backupType: "{{ backupType }}"
+        policyOptions:
+          - "{{ policyOptions }}"
+        backupTemplate: "{{ backupTemplate }}"
+        storagePool: "{{ storagePool }}"
     - name: findingId
-      value: string
-```
+      value: "{{ findingId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -951,209 +1242,86 @@ vulnerability
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="folders_sources_findings_patch"
+    defaultValue="organizations_sources_findings_patch"
     values={[
-        { label: 'folders_sources_findings_patch', value: 'folders_sources_findings_patch' },
         { label: 'organizations_sources_findings_patch', value: 'organizations_sources_findings_patch' },
-        { label: 'projects_sources_findings_patch', value: 'projects_sources_findings_patch' }
+        { label: 'projects_sources_findings_patch', value: 'projects_sources_findings_patch' },
+        { label: 'folders_sources_findings_patch', value: 'folders_sources_findings_patch' }
     ]}
 >
-<TabItem value="folders_sources_findings_patch">
-
-Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.
-
-```sql
-UPDATE google.securitycenter.findings
-SET 
-data__vertexAi = '{{ vertexAi }}',
-data__application = '{{ application }}',
-data__attackExposure = '{{ attackExposure }}',
-data__findingClass = '{{ findingClass }}',
-data__compliances = '{{ compliances }}',
-data__sourceProperties = '{{ sourceProperties }}',
-data__parent = '{{ parent }}',
-data__groupMemberships = '{{ groupMemberships }}',
-data__createTime = '{{ createTime }}',
-data__kernelRootkit = '{{ kernelRootkit }}',
-data__logEntries = '{{ logEntries }}',
-data__eventTime = '{{ eventTime }}',
-data__cloudArmor = '{{ cloudArmor }}',
-data__complianceDetails = '{{ complianceDetails }}',
-data__indicator = '{{ indicator }}',
-data__muteInitiator = '{{ muteInitiator }}',
-data__toxicCombination = '{{ toxicCombination }}',
-data__exfiltration = '{{ exfiltration }}',
-data__canonicalName = '{{ canonicalName }}',
-data__severity = '{{ severity }}',
-data__loadBalancers = '{{ loadBalancers }}',
-data__resourceName = '{{ resourceName }}',
-data__dataFlowEvents = '{{ dataFlowEvents }}',
-data__processes = '{{ processes }}',
-data__ipRules = '{{ ipRules }}',
-data__affectedResources = '{{ affectedResources }}',
-data__cloudDlpInspection = '{{ cloudDlpInspection }}',
-data__cloudDlpDataProfile = '{{ cloudDlpDataProfile }}',
-data__aiModel = '{{ aiModel }}',
-data__mitreAttack = '{{ mitreAttack }}',
-data__backupDisasterRecovery = '{{ backupDisasterRecovery }}',
-data__iamBindings = '{{ iamBindings }}',
-data__mute = '{{ mute }}',
-data__vulnerability = '{{ vulnerability }}',
-data__connections = '{{ connections }}',
-data__notebook = '{{ notebook }}',
-data__orgPolicies = '{{ orgPolicies }}',
-data__category = '{{ category }}',
-data__access = '{{ access }}',
-data__moduleName = '{{ moduleName }}',
-data__dataRetentionDeletionEvents = '{{ dataRetentionDeletionEvents }}',
-data__files = '{{ files }}',
-data__nextSteps = '{{ nextSteps }}',
-data__disk = '{{ disk }}',
-data__externalUri = '{{ externalUri }}',
-data__database = '{{ database }}',
-data__description = '{{ description }}',
-data__securityPosture = '{{ securityPosture }}',
-data__kubernetes = '{{ kubernetes }}',
-data__dataAccessEvents = '{{ dataAccessEvents }}',
-data__state = '{{ state }}',
-data__name = '{{ name }}',
-data__networks = '{{ networks }}',
-data__chokepoint = '{{ chokepoint }}',
-data__job = '{{ job }}',
-data__containers = '{{ containers }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
-AND sourcesId = '{{ sourcesId }}' --required
-AND findingsId = '{{ findingsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-access,
-affectedResources,
-aiModel,
-application,
-attackExposure,
-backupDisasterRecovery,
-canonicalName,
-category,
-chokepoint,
-cloudArmor,
-cloudDlpDataProfile,
-cloudDlpInspection,
-complianceDetails,
-compliances,
-connections,
-contacts,
-containers,
-createTime,
-dataAccessEvents,
-dataFlowEvents,
-dataRetentionDeletionEvents,
-database,
-description,
-disk,
-eventTime,
-exfiltration,
-externalSystems,
-externalUri,
-files,
-findingClass,
-groupMemberships,
-iamBindings,
-indicator,
-ipRules,
-job,
-kernelRootkit,
-kubernetes,
-loadBalancers,
-logEntries,
-mitreAttack,
-moduleName,
-mute,
-muteInfo,
-muteInitiator,
-muteUpdateTime,
-networks,
-nextSteps,
-notebook,
-orgPolicies,
-parent,
-parentDisplayName,
-processes,
-resourceName,
-securityMarks,
-securityPosture,
-severity,
-sourceProperties,
-state,
-toxicCombination,
-vertexAi,
-vulnerability;
-```
-</TabItem>
 <TabItem value="organizations_sources_findings_patch">
 
-Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.
+No description available.
 
 ```sql
 UPDATE google.securitycenter.findings
 SET 
-data__vertexAi = '{{ vertexAi }}',
-data__application = '{{ application }}',
-data__attackExposure = '{{ attackExposure }}',
-data__findingClass = '{{ findingClass }}',
+data__mute = '{{ mute }}',
+data__moduleName = '{{ moduleName }}',
+data__kubernetes = '{{ kubernetes }}',
+data__aiModel = '{{ aiModel }}',
+data__agentAnomaly = '{{ agentAnomaly }}',
+data__externalExposure = '{{ externalExposure }}',
+data__job = '{{ job }}',
+data__agentSessions = '{{ agentSessions }}',
+data__state = '{{ state }}',
+data__dataAccessEvents = '{{ dataAccessEvents }}',
+data__secret = '{{ secret }}',
+data__severity = '{{ severity }}',
 data__compliances = '{{ compliances }}',
-data__sourceProperties = '{{ sourceProperties }}',
+data__orgPolicies = '{{ orgPolicies }}',
+data__loadBalancers = '{{ loadBalancers }}',
+data__complianceDetails = '{{ complianceDetails }}',
+data__agent = '{{ agent }}',
+data__dataRetentionDeletionEvents = '{{ dataRetentionDeletionEvents }}',
+data__createTime = '{{ createTime }}',
+data__containers = '{{ containers }}',
+data__agentDataAccessEvents = '{{ agentDataAccessEvents }}',
+data__iamDetails = '{{ iamDetails }}',
+data__artifactGuardPolicies = '{{ artifactGuardPolicies }}',
+data__cloudArmor = '{{ cloudArmor }}',
+data__cloudDlpInspection = '{{ cloudDlpInspection }}',
+data__discoveredWorkload = '{{ discoveredWorkload }}',
+data__kernelRootkit = '{{ kernelRootkit }}',
+data__notebook = '{{ notebook }}',
+data__muteInitiator = '{{ muteInitiator }}',
+data__networks = '{{ networks }}',
+data__connections = '{{ connections }}',
+data__disk = '{{ disk }}',
+data__exfiltration = '{{ exfiltration }}',
+data__mitreAttack = '{{ mitreAttack }}',
+data__processes = '{{ processes }}',
 data__parent = '{{ parent }}',
 data__groupMemberships = '{{ groupMemberships }}',
-data__createTime = '{{ createTime }}',
-data__kernelRootkit = '{{ kernelRootkit }}',
-data__logEntries = '{{ logEntries }}',
-data__eventTime = '{{ eventTime }}',
-data__cloudArmor = '{{ cloudArmor }}',
-data__complianceDetails = '{{ complianceDetails }}',
-data__indicator = '{{ indicator }}',
-data__muteInitiator = '{{ muteInitiator }}',
-data__toxicCombination = '{{ toxicCombination }}',
-data__exfiltration = '{{ exfiltration }}',
-data__canonicalName = '{{ canonicalName }}',
-data__severity = '{{ severity }}',
-data__loadBalancers = '{{ loadBalancers }}',
-data__resourceName = '{{ resourceName }}',
 data__dataFlowEvents = '{{ dataFlowEvents }}',
-data__processes = '{{ processes }}',
-data__ipRules = '{{ ipRules }}',
-data__affectedResources = '{{ affectedResources }}',
-data__cloudDlpInspection = '{{ cloudDlpInspection }}',
+data__findingClass = '{{ findingClass }}',
 data__cloudDlpDataProfile = '{{ cloudDlpDataProfile }}',
-data__aiModel = '{{ aiModel }}',
-data__mitreAttack = '{{ mitreAttack }}',
-data__backupDisasterRecovery = '{{ backupDisasterRecovery }}',
+data__canonicalName = '{{ canonicalName }}',
 data__iamBindings = '{{ iamBindings }}',
-data__mute = '{{ mute }}',
-data__vulnerability = '{{ vulnerability }}',
-data__connections = '{{ connections }}',
-data__notebook = '{{ notebook }}',
-data__orgPolicies = '{{ orgPolicies }}',
-data__category = '{{ category }}',
-data__access = '{{ access }}',
-data__moduleName = '{{ moduleName }}',
-data__dataRetentionDeletionEvents = '{{ dataRetentionDeletionEvents }}',
-data__files = '{{ files }}',
-data__nextSteps = '{{ nextSteps }}',
-data__disk = '{{ disk }}',
-data__externalUri = '{{ externalUri }}',
-data__database = '{{ database }}',
-data__description = '{{ description }}',
 data__securityPosture = '{{ securityPosture }}',
-data__kubernetes = '{{ kubernetes }}',
-data__dataAccessEvents = '{{ dataAccessEvents }}',
-data__state = '{{ state }}',
+data__files = '{{ files }}',
+data__sourceProperties = '{{ sourceProperties }}',
 data__name = '{{ name }}',
-data__networks = '{{ networks }}',
+data__category = '{{ category }}',
+data__application = '{{ application }}',
+data__description = '{{ description }}',
+data__database = '{{ database }}',
+data__ipRules = '{{ ipRules }}',
+data__externalUri = '{{ externalUri }}',
+data__nextSteps = '{{ nextSteps }}',
+data__eventTime = '{{ eventTime }}',
+data__logEntries = '{{ logEntries }}',
+data__vulnerability = '{{ vulnerability }}',
+data__attackExposure = '{{ attackExposure }}',
+data__vertexAi = '{{ vertexAi }}',
+data__indicator = '{{ indicator }}',
+data__resourceName = '{{ resourceName }}',
+data__toxicCombination = '{{ toxicCombination }}',
 data__chokepoint = '{{ chokepoint }}',
-data__job = '{{ job }}',
-data__containers = '{{ containers }}'
+data__policyViolationSummary = '{{ policyViolationSummary }}',
+data__affectedResources = '{{ affectedResources }}',
+data__access = '{{ access }}',
+data__backupDisasterRecovery = '{{ backupDisasterRecovery }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
@@ -1163,8 +1331,13 @@ RETURNING
 name,
 access,
 affectedResources,
+agent,
+agentAnomaly,
+agentDataAccessEvents,
+agentSessions,
 aiModel,
 application,
+artifactGuardPolicies,
 attackExposure,
 backupDisasterRecovery,
 canonicalName,
@@ -1184,15 +1357,18 @@ dataFlowEvents,
 dataRetentionDeletionEvents,
 database,
 description,
+discoveredWorkload,
 disk,
 eventTime,
 exfiltration,
+externalExposure,
 externalSystems,
 externalUri,
 files,
 findingClass,
 groupMemberships,
 iamBindings,
+iamDetails,
 indicator,
 ipRules,
 job,
@@ -1212,8 +1388,10 @@ notebook,
 orgPolicies,
 parent,
 parentDisplayName,
+policyViolationSummary,
 processes,
 resourceName,
+secret,
 securityMarks,
 securityPosture,
 severity,
@@ -1226,67 +1404,77 @@ vulnerability;
 </TabItem>
 <TabItem value="projects_sources_findings_patch">
 
-Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.
+No description available.
 
 ```sql
 UPDATE google.securitycenter.findings
 SET 
-data__vertexAi = '{{ vertexAi }}',
-data__application = '{{ application }}',
-data__attackExposure = '{{ attackExposure }}',
-data__findingClass = '{{ findingClass }}',
+data__mute = '{{ mute }}',
+data__moduleName = '{{ moduleName }}',
+data__kubernetes = '{{ kubernetes }}',
+data__aiModel = '{{ aiModel }}',
+data__agentAnomaly = '{{ agentAnomaly }}',
+data__externalExposure = '{{ externalExposure }}',
+data__job = '{{ job }}',
+data__agentSessions = '{{ agentSessions }}',
+data__state = '{{ state }}',
+data__dataAccessEvents = '{{ dataAccessEvents }}',
+data__secret = '{{ secret }}',
+data__severity = '{{ severity }}',
 data__compliances = '{{ compliances }}',
-data__sourceProperties = '{{ sourceProperties }}',
+data__orgPolicies = '{{ orgPolicies }}',
+data__loadBalancers = '{{ loadBalancers }}',
+data__complianceDetails = '{{ complianceDetails }}',
+data__agent = '{{ agent }}',
+data__dataRetentionDeletionEvents = '{{ dataRetentionDeletionEvents }}',
+data__createTime = '{{ createTime }}',
+data__containers = '{{ containers }}',
+data__agentDataAccessEvents = '{{ agentDataAccessEvents }}',
+data__iamDetails = '{{ iamDetails }}',
+data__artifactGuardPolicies = '{{ artifactGuardPolicies }}',
+data__cloudArmor = '{{ cloudArmor }}',
+data__cloudDlpInspection = '{{ cloudDlpInspection }}',
+data__discoveredWorkload = '{{ discoveredWorkload }}',
+data__kernelRootkit = '{{ kernelRootkit }}',
+data__notebook = '{{ notebook }}',
+data__muteInitiator = '{{ muteInitiator }}',
+data__networks = '{{ networks }}',
+data__connections = '{{ connections }}',
+data__disk = '{{ disk }}',
+data__exfiltration = '{{ exfiltration }}',
+data__mitreAttack = '{{ mitreAttack }}',
+data__processes = '{{ processes }}',
 data__parent = '{{ parent }}',
 data__groupMemberships = '{{ groupMemberships }}',
-data__createTime = '{{ createTime }}',
-data__kernelRootkit = '{{ kernelRootkit }}',
-data__logEntries = '{{ logEntries }}',
-data__eventTime = '{{ eventTime }}',
-data__cloudArmor = '{{ cloudArmor }}',
-data__complianceDetails = '{{ complianceDetails }}',
-data__indicator = '{{ indicator }}',
-data__muteInitiator = '{{ muteInitiator }}',
-data__toxicCombination = '{{ toxicCombination }}',
-data__exfiltration = '{{ exfiltration }}',
-data__canonicalName = '{{ canonicalName }}',
-data__severity = '{{ severity }}',
-data__loadBalancers = '{{ loadBalancers }}',
-data__resourceName = '{{ resourceName }}',
 data__dataFlowEvents = '{{ dataFlowEvents }}',
-data__processes = '{{ processes }}',
-data__ipRules = '{{ ipRules }}',
-data__affectedResources = '{{ affectedResources }}',
-data__cloudDlpInspection = '{{ cloudDlpInspection }}',
+data__findingClass = '{{ findingClass }}',
 data__cloudDlpDataProfile = '{{ cloudDlpDataProfile }}',
-data__aiModel = '{{ aiModel }}',
-data__mitreAttack = '{{ mitreAttack }}',
-data__backupDisasterRecovery = '{{ backupDisasterRecovery }}',
+data__canonicalName = '{{ canonicalName }}',
 data__iamBindings = '{{ iamBindings }}',
-data__mute = '{{ mute }}',
-data__vulnerability = '{{ vulnerability }}',
-data__connections = '{{ connections }}',
-data__notebook = '{{ notebook }}',
-data__orgPolicies = '{{ orgPolicies }}',
-data__category = '{{ category }}',
-data__access = '{{ access }}',
-data__moduleName = '{{ moduleName }}',
-data__dataRetentionDeletionEvents = '{{ dataRetentionDeletionEvents }}',
-data__files = '{{ files }}',
-data__nextSteps = '{{ nextSteps }}',
-data__disk = '{{ disk }}',
-data__externalUri = '{{ externalUri }}',
-data__database = '{{ database }}',
-data__description = '{{ description }}',
 data__securityPosture = '{{ securityPosture }}',
-data__kubernetes = '{{ kubernetes }}',
-data__dataAccessEvents = '{{ dataAccessEvents }}',
-data__state = '{{ state }}',
+data__files = '{{ files }}',
+data__sourceProperties = '{{ sourceProperties }}',
 data__name = '{{ name }}',
-data__networks = '{{ networks }}',
+data__category = '{{ category }}',
+data__application = '{{ application }}',
+data__description = '{{ description }}',
+data__database = '{{ database }}',
+data__ipRules = '{{ ipRules }}',
+data__externalUri = '{{ externalUri }}',
+data__nextSteps = '{{ nextSteps }}',
+data__eventTime = '{{ eventTime }}',
+data__logEntries = '{{ logEntries }}',
+data__vulnerability = '{{ vulnerability }}',
+data__attackExposure = '{{ attackExposure }}',
+data__vertexAi = '{{ vertexAi }}',
+data__indicator = '{{ indicator }}',
+data__resourceName = '{{ resourceName }}',
+data__toxicCombination = '{{ toxicCombination }}',
 data__chokepoint = '{{ chokepoint }}',
-data__job = '{{ job }}',
-data__containers = '{{ containers }}'
+data__policyViolationSummary = '{{ policyViolationSummary }}',
+data__affectedResources = '{{ affectedResources }}',
+data__access = '{{ access }}',
+data__backupDisasterRecovery = '{{ backupDisasterRecovery }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
@@ -1296,8 +1484,13 @@ RETURNING
 name,
 access,
 affectedResources,
+agent,
+agentAnomaly,
+agentDataAccessEvents,
+agentSessions,
 aiModel,
 application,
+artifactGuardPolicies,
 attackExposure,
 backupDisasterRecovery,
 canonicalName,
@@ -1317,15 +1510,18 @@ dataFlowEvents,
 dataRetentionDeletionEvents,
 database,
 description,
+discoveredWorkload,
 disk,
 eventTime,
 exfiltration,
+externalExposure,
 externalSystems,
 externalUri,
 files,
 findingClass,
 groupMemberships,
 iamBindings,
+iamDetails,
 indicator,
 ipRules,
 job,
@@ -1345,8 +1541,163 @@ notebook,
 orgPolicies,
 parent,
 parentDisplayName,
+policyViolationSummary,
 processes,
 resourceName,
+secret,
+securityMarks,
+securityPosture,
+severity,
+sourceProperties,
+state,
+toxicCombination,
+vertexAi,
+vulnerability;
+```
+</TabItem>
+<TabItem value="folders_sources_findings_patch">
+
+No description available.
+
+```sql
+UPDATE google.securitycenter.findings
+SET 
+data__mute = '{{ mute }}',
+data__moduleName = '{{ moduleName }}',
+data__kubernetes = '{{ kubernetes }}',
+data__aiModel = '{{ aiModel }}',
+data__agentAnomaly = '{{ agentAnomaly }}',
+data__externalExposure = '{{ externalExposure }}',
+data__job = '{{ job }}',
+data__agentSessions = '{{ agentSessions }}',
+data__state = '{{ state }}',
+data__dataAccessEvents = '{{ dataAccessEvents }}',
+data__secret = '{{ secret }}',
+data__severity = '{{ severity }}',
+data__compliances = '{{ compliances }}',
+data__orgPolicies = '{{ orgPolicies }}',
+data__loadBalancers = '{{ loadBalancers }}',
+data__complianceDetails = '{{ complianceDetails }}',
+data__agent = '{{ agent }}',
+data__dataRetentionDeletionEvents = '{{ dataRetentionDeletionEvents }}',
+data__createTime = '{{ createTime }}',
+data__containers = '{{ containers }}',
+data__agentDataAccessEvents = '{{ agentDataAccessEvents }}',
+data__iamDetails = '{{ iamDetails }}',
+data__artifactGuardPolicies = '{{ artifactGuardPolicies }}',
+data__cloudArmor = '{{ cloudArmor }}',
+data__cloudDlpInspection = '{{ cloudDlpInspection }}',
+data__discoveredWorkload = '{{ discoveredWorkload }}',
+data__kernelRootkit = '{{ kernelRootkit }}',
+data__notebook = '{{ notebook }}',
+data__muteInitiator = '{{ muteInitiator }}',
+data__networks = '{{ networks }}',
+data__connections = '{{ connections }}',
+data__disk = '{{ disk }}',
+data__exfiltration = '{{ exfiltration }}',
+data__mitreAttack = '{{ mitreAttack }}',
+data__processes = '{{ processes }}',
+data__parent = '{{ parent }}',
+data__groupMemberships = '{{ groupMemberships }}',
+data__dataFlowEvents = '{{ dataFlowEvents }}',
+data__findingClass = '{{ findingClass }}',
+data__cloudDlpDataProfile = '{{ cloudDlpDataProfile }}',
+data__canonicalName = '{{ canonicalName }}',
+data__iamBindings = '{{ iamBindings }}',
+data__securityPosture = '{{ securityPosture }}',
+data__files = '{{ files }}',
+data__sourceProperties = '{{ sourceProperties }}',
+data__name = '{{ name }}',
+data__category = '{{ category }}',
+data__application = '{{ application }}',
+data__description = '{{ description }}',
+data__database = '{{ database }}',
+data__ipRules = '{{ ipRules }}',
+data__externalUri = '{{ externalUri }}',
+data__nextSteps = '{{ nextSteps }}',
+data__eventTime = '{{ eventTime }}',
+data__logEntries = '{{ logEntries }}',
+data__vulnerability = '{{ vulnerability }}',
+data__attackExposure = '{{ attackExposure }}',
+data__vertexAi = '{{ vertexAi }}',
+data__indicator = '{{ indicator }}',
+data__resourceName = '{{ resourceName }}',
+data__toxicCombination = '{{ toxicCombination }}',
+data__chokepoint = '{{ chokepoint }}',
+data__policyViolationSummary = '{{ policyViolationSummary }}',
+data__affectedResources = '{{ affectedResources }}',
+data__access = '{{ access }}',
+data__backupDisasterRecovery = '{{ backupDisasterRecovery }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
+AND sourcesId = '{{ sourcesId }}' --required
+AND findingsId = '{{ findingsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+access,
+affectedResources,
+agent,
+agentAnomaly,
+agentDataAccessEvents,
+agentSessions,
+aiModel,
+application,
+artifactGuardPolicies,
+attackExposure,
+backupDisasterRecovery,
+canonicalName,
+category,
+chokepoint,
+cloudArmor,
+cloudDlpDataProfile,
+cloudDlpInspection,
+complianceDetails,
+compliances,
+connections,
+contacts,
+containers,
+createTime,
+dataAccessEvents,
+dataFlowEvents,
+dataRetentionDeletionEvents,
+database,
+description,
+discoveredWorkload,
+disk,
+eventTime,
+exfiltration,
+externalExposure,
+externalSystems,
+externalUri,
+files,
+findingClass,
+groupMemberships,
+iamBindings,
+iamDetails,
+indicator,
+ipRules,
+job,
+kernelRootkit,
+kubernetes,
+loadBalancers,
+logEntries,
+mitreAttack,
+moduleName,
+mute,
+muteInfo,
+muteInitiator,
+muteUpdateTime,
+networks,
+nextSteps,
+notebook,
+orgPolicies,
+parent,
+parentDisplayName,
+policyViolationSummary,
+processes,
+resourceName,
+secret,
 securityMarks,
 securityPosture,
 severity,
@@ -1363,111 +1714,41 @@ vulnerability;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="folders_findings_bulk_mute"
+    defaultValue="organizations_findings_bulk_mute"
     values={[
-        { label: 'folders_findings_bulk_mute', value: 'folders_findings_bulk_mute' },
-        { label: 'folders_sources_findings_group', value: 'folders_sources_findings_group' },
-        { label: 'folders_sources_findings_set_mute', value: 'folders_sources_findings_set_mute' },
-        { label: 'folders_sources_findings_set_state', value: 'folders_sources_findings_set_state' },
-        { label: 'organizations_sources_findings_set_state', value: 'organizations_sources_findings_set_state' },
+        { label: 'organizations_findings_bulk_mute', value: 'organizations_findings_bulk_mute' },
         { label: 'organizations_sources_findings_set_mute', value: 'organizations_sources_findings_set_mute' },
         { label: 'organizations_sources_findings_group', value: 'organizations_sources_findings_group' },
-        { label: 'organizations_findings_bulk_mute', value: 'organizations_findings_bulk_mute' },
-        { label: 'projects_sources_findings_set_state', value: 'projects_sources_findings_set_state' },
+        { label: 'organizations_sources_findings_set_state', value: 'organizations_sources_findings_set_state' },
         { label: 'projects_sources_findings_group', value: 'projects_sources_findings_group' },
         { label: 'projects_sources_findings_set_mute', value: 'projects_sources_findings_set_mute' },
-        { label: 'projects_findings_bulk_mute', value: 'projects_findings_bulk_mute' }
+        { label: 'projects_sources_findings_set_state', value: 'projects_sources_findings_set_state' },
+        { label: 'projects_findings_bulk_mute', value: 'projects_findings_bulk_mute' },
+        { label: 'folders_findings_bulk_mute', value: 'folders_findings_bulk_mute' },
+        { label: 'folders_sources_findings_set_state', value: 'folders_sources_findings_set_state' },
+        { label: 'folders_sources_findings_set_mute', value: 'folders_sources_findings_set_mute' },
+        { label: 'folders_sources_findings_group', value: 'folders_sources_findings_group' }
     ]}
 >
-<TabItem value="folders_findings_bulk_mute">
+<TabItem value="organizations_findings_bulk_mute">
 
-Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.
+Successful response
 
 ```sql
-EXEC google.securitycenter.findings.folders_findings_bulk_mute 
-@foldersId='{{ foldersId }}' --required 
+EXEC google.securitycenter.findings.organizations_findings_bulk_mute 
+@organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"filter": "{{ filter }}", 
 "muteAnnotation": "{{ muteAnnotation }}", 
-"muteState": "{{ muteState }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="folders_sources_findings_group">
-
-Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings, /v1/folders/&#123;folder_id&#125;/sources/-/findings, /v1/projects/&#123;project_id&#125;/sources/-/findings
-
-```sql
-EXEC google.securitycenter.findings.folders_sources_findings_group 
-@foldersId='{{ foldersId }}' --required, 
-@sourcesId='{{ sourcesId }}' --required 
-@@json=
-'{
-"groupBy": "{{ groupBy }}", 
-"pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}", 
-"readTime": "{{ readTime }}", 
-"pageSize": {{ pageSize }}, 
-"compareDuration": "{{ compareDuration }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="folders_sources_findings_set_mute">
-
-Updates the mute state of a finding.
-
-```sql
-EXEC google.securitycenter.findings.folders_sources_findings_set_mute 
-@foldersId='{{ foldersId }}' --required, 
-@sourcesId='{{ sourcesId }}' --required, 
-@findingsId='{{ findingsId }}' --required 
-@@json=
-'{
-"mute": "{{ mute }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="folders_sources_findings_set_state">
-
-Updates the state of a finding.
-
-```sql
-EXEC google.securitycenter.findings.folders_sources_findings_set_state 
-@foldersId='{{ foldersId }}' --required, 
-@sourcesId='{{ sourcesId }}' --required, 
-@findingsId='{{ findingsId }}' --required 
-@@json=
-'{
-"startTime": "{{ startTime }}", 
-"state": "{{ state }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="organizations_sources_findings_set_state">
-
-Updates the state of a finding.
-
-```sql
-EXEC google.securitycenter.findings.organizations_sources_findings_set_state 
-@organizationsId='{{ organizationsId }}' --required, 
-@sourcesId='{{ sourcesId }}' --required, 
-@findingsId='{{ findingsId }}' --required 
-@@json=
-'{
-"startTime": "{{ startTime }}", 
-"state": "{{ state }}"
+"muteState": "{{ muteState }}", 
+"filter": "{{ filter }}"
 }'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_sources_findings_set_mute">
 
-Updates the mute state of a finding.
+Successful response
 
 ```sql
 EXEC google.securitycenter.findings.organizations_sources_findings_set_mute 
@@ -1483,7 +1764,7 @@ EXEC google.securitycenter.findings.organizations_sources_findings_set_mute
 </TabItem>
 <TabItem value="organizations_sources_findings_group">
 
-Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings, /v1/folders/&#123;folder_id&#125;/sources/-/findings, /v1/projects/&#123;project_id&#125;/sources/-/findings
+Successful response
 
 ```sql
 EXEC google.securitycenter.findings.organizations_sources_findings_group 
@@ -1491,52 +1772,36 @@ EXEC google.securitycenter.findings.organizations_sources_findings_group
 @sourcesId='{{ sourcesId }}' --required 
 @@json=
 '{
+"filter": "{{ filter }}", 
 "groupBy": "{{ groupBy }}", 
-"pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}", 
-"readTime": "{{ readTime }}", 
+"compareDuration": "{{ compareDuration }}", 
 "pageSize": {{ pageSize }}, 
-"compareDuration": "{{ compareDuration }}"
+"readTime": "{{ readTime }}", 
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="organizations_findings_bulk_mute">
+<TabItem value="organizations_sources_findings_set_state">
 
-Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.
-
-```sql
-EXEC google.securitycenter.findings.organizations_findings_bulk_mute 
-@organizationsId='{{ organizationsId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"muteAnnotation": "{{ muteAnnotation }}", 
-"muteState": "{{ muteState }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_sources_findings_set_state">
-
-Updates the state of a finding.
+Successful response
 
 ```sql
-EXEC google.securitycenter.findings.projects_sources_findings_set_state 
-@projectsId='{{ projectsId }}' --required, 
+EXEC google.securitycenter.findings.organizations_sources_findings_set_state 
+@organizationsId='{{ organizationsId }}' --required, 
 @sourcesId='{{ sourcesId }}' --required, 
 @findingsId='{{ findingsId }}' --required 
 @@json=
 '{
-"startTime": "{{ startTime }}", 
-"state": "{{ state }}"
+"state": "{{ state }}", 
+"startTime": "{{ startTime }}"
 }'
 ;
 ```
 </TabItem>
 <TabItem value="projects_sources_findings_group">
 
-Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/&#123;organization_id&#125;/sources/-/findings, /v1/folders/&#123;folder_id&#125;/sources/-/findings, /v1/projects/&#123;project_id&#125;/sources/-/findings
+Successful response
 
 ```sql
 EXEC google.securitycenter.findings.projects_sources_findings_group 
@@ -1544,19 +1809,19 @@ EXEC google.securitycenter.findings.projects_sources_findings_group
 @sourcesId='{{ sourcesId }}' --required 
 @@json=
 '{
-"groupBy": "{{ groupBy }}", 
-"pageToken": "{{ pageToken }}", 
 "filter": "{{ filter }}", 
-"readTime": "{{ readTime }}", 
+"groupBy": "{{ groupBy }}", 
+"compareDuration": "{{ compareDuration }}", 
 "pageSize": {{ pageSize }}, 
-"compareDuration": "{{ compareDuration }}"
+"readTime": "{{ readTime }}", 
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```
 </TabItem>
 <TabItem value="projects_sources_findings_set_mute">
 
-Updates the mute state of a finding.
+Successful response
 
 ```sql
 EXEC google.securitycenter.findings.projects_sources_findings_set_mute 
@@ -1570,18 +1835,104 @@ EXEC google.securitycenter.findings.projects_sources_findings_set_mute
 ;
 ```
 </TabItem>
+<TabItem value="projects_sources_findings_set_state">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.findings.projects_sources_findings_set_state 
+@projectsId='{{ projectsId }}' --required, 
+@sourcesId='{{ sourcesId }}' --required, 
+@findingsId='{{ findingsId }}' --required 
+@@json=
+'{
+"state": "{{ state }}", 
+"startTime": "{{ startTime }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_findings_bulk_mute">
 
-Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.
+Successful response
 
 ```sql
 EXEC google.securitycenter.findings.projects_findings_bulk_mute 
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"filter": "{{ filter }}", 
 "muteAnnotation": "{{ muteAnnotation }}", 
-"muteState": "{{ muteState }}"
+"muteState": "{{ muteState }}", 
+"filter": "{{ filter }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="folders_findings_bulk_mute">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.findings.folders_findings_bulk_mute 
+@foldersId='{{ foldersId }}' --required 
+@@json=
+'{
+"muteAnnotation": "{{ muteAnnotation }}", 
+"muteState": "{{ muteState }}", 
+"filter": "{{ filter }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="folders_sources_findings_set_state">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.findings.folders_sources_findings_set_state 
+@foldersId='{{ foldersId }}' --required, 
+@sourcesId='{{ sourcesId }}' --required, 
+@findingsId='{{ findingsId }}' --required 
+@@json=
+'{
+"state": "{{ state }}", 
+"startTime": "{{ startTime }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="folders_sources_findings_set_mute">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.findings.folders_sources_findings_set_mute 
+@foldersId='{{ foldersId }}' --required, 
+@sourcesId='{{ sourcesId }}' --required, 
+@findingsId='{{ findingsId }}' --required 
+@@json=
+'{
+"mute": "{{ mute }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="folders_sources_findings_group">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.findings.folders_sources_findings_group 
+@foldersId='{{ foldersId }}' --required, 
+@sourcesId='{{ sourcesId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"groupBy": "{{ groupBy }}", 
+"compareDuration": "{{ compareDuration }}", 
+"pageSize": {{ pageSize }}, 
+"readTime": "{{ readTime }}", 
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```

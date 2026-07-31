@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>databases_split_points</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>databases_split_points</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="databases_split_points" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.spanner.databases_split_points" /></td></tr>
 </tbody></table>
@@ -122,29 +123,31 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: databases_split_points
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the databases_split_points resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the databases_split_points resource.
     - name: databasesId
-      value: string
+      value: "{{ databasesId }}"
       description: Required parameter for the databases_split_points resource.
     - name: splitPoints
-      value: array
-      description: >
+      description: |
         Required. The split points to add.
-        
+      value:
+        - table: "{{ table }}"
+          index: "{{ index }}"
+          keys: "{{ keys }}"
+          expireTime: "{{ expireTime }}"
     - name: initiator
-      value: string
-      description: >
+      value: "{{ initiator }}"
+      description: |
         Optional. A user-supplied tag associated with the split points. For example, "initial_data_load", "special_event_1". Defaults to "CloudAddSplitPointsAPI" if not specified. The length of the tag must not exceed 50 characters, or else it is trimmed. Only valid UTF8 characters are allowed.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>documents</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>documents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="documents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contentwarehouse.documents" /></td></tr>
 </tbody></table>
@@ -61,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="contentCategory" /></td>
     <td><code>string</code></td>
-    <td>Indicates the category (image, audio, video etc.) of the original content.</td>
+    <td>Indicates the category (image, audio, video etc.) of the original content. (CONTENT_CATEGORY_UNSPECIFIED, CONTENT_CATEGORY_IMAGE, CONTENT_CATEGORY_AUDIO, CONTENT_CATEGORY_VIDEO)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="rawDocumentFileType" /></td>
     <td><code>string</code></td>
-    <td>This is used when DocAI was not used to load the document and parsing/ extracting is needed for the inline_raw_document. For example, if inline_raw_document is the byte representation of a PDF file, then this should be set to: RAW_DOCUMENT_FILE_TYPE_PDF.</td>
+    <td>This is used when DocAI was not used to load the document and parsing/ extracting is needed for the inline_raw_document. For example, if inline_raw_document is the byte representation of a PDF file, then this should be set to: RAW_DOCUMENT_FILE_TYPE_PDF. (RAW_DOCUMENT_FILE_TYPE_UNSPECIFIED, RAW_DOCUMENT_FILE_TYPE_PDF, RAW_DOCUMENT_FILE_TYPE_DOCX, RAW_DOCUMENT_FILE_TYPE_XLSX, RAW_DOCUMENT_FILE_TYPE_PPTX, RAW_DOCUMENT_FILE_TYPE_TEXT, RAW_DOCUMENT_FILE_TYPE_TIFF)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rawDocumentPath" /></td>
@@ -209,13 +210,6 @@ The following methods are available for this resource:
     <td>Return all source document-links from the document.</td>
 </tr>
 <tr>
-    <td><a href="#set_acl"><CopyableCode code="set_acl" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
-    <td></td>
-    <td>Sets the access control policy for a resource. Replaces any existing policy.</td>
-</tr>
-<tr>
     <td><a href="#linked_targets"><CopyableCode code="linked_targets" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
@@ -223,11 +217,11 @@ The following methods are available for this resource:
     <td>Return all target document-links from the document.</td>
 </tr>
 <tr>
-    <td><a href="#lock"><CopyableCode code="lock" /></a></td>
+    <td><a href="#set_acl"><CopyableCode code="set_acl" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
     <td></td>
-    <td>Lock the document so the document cannot be updated by other users.</td>
+    <td>Sets the access control policy for a resource. Replaces any existing policy.</td>
 </tr>
 <tr>
     <td><a href="#search"><CopyableCode code="search" /></a></td>
@@ -235,6 +229,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Searches for documents using provided SearchDocumentsRequest. This call only returns documents that the caller has permission to search against.</td>
+</tr>
+<tr>
+    <td><a href="#lock"><CopyableCode code="lock" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
+    <td></td>
+    <td>Lock the document so the document cannot be updated by other users.</td>
 </tr>
 </tbody>
 </table>
@@ -330,19 +331,19 @@ Creates a document.
 
 ```sql
 INSERT INTO google.contentwarehouse.documents (
-data__policy,
 data__requestMetadata,
-data__document,
 data__cloudAiDocumentOption,
+data__document,
+data__policy,
 data__createMask,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ policy }}',
 '{{ requestMetadata }}',
-'{{ document }}',
 '{{ cloudAiDocumentOption }}',
+'{{ document }}',
+'{{ policy }}',
 '{{ createMask }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -356,42 +357,321 @@ ruleEngineOutput
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: documents
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the documents resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the documents resource.
-    - name: policy
-      value: object
-      description: >
-        Default document policy during creation. This refers to an Identity and Access (IAM) policy, which specifies access controls for the Document. Conditions defined in the policy will be ignored.
-        
     - name: requestMetadata
-      value: object
-      description: >
+      description: |
         The meta information collected about the end user, used to enforce access control for the service.
-        
-    - name: document
-      value: object
-      description: >
-        Required. The document to create.
-        
+      value:
+        userInfo:
+          groupIds:
+            - "{{ groupIds }}"
+          id: "{{ id }}"
     - name: cloudAiDocumentOption
-      value: object
-      description: >
+      description: |
         Request Option for processing Cloud AI Document in Document Warehouse. This field offers limited support for mapping entities from Cloud AI Document to Warehouse Document. Please consult with product team before using this field and other available options.
-        
+      value:
+        enableEntitiesConversions: {{ enableEntitiesConversions }}
+        customizedEntitiesPropertiesConversions: "{{ customizedEntitiesPropertiesConversions }}"
+    - name: document
+      description: |
+        Required. The document to create.
+      value:
+        textExtractionEnabled: {{ textExtractionEnabled }}
+        rawDocumentFileType: "{{ rawDocumentFileType }}"
+        cloudAiDocument:
+          chunkedDocument:
+            chunks:
+              - pageHeaders: "{{ pageHeaders }}"
+                chunkId: "{{ chunkId }}"
+                content: "{{ content }}"
+                pageFooters: "{{ pageFooters }}"
+                pageSpan:
+                  pageEnd: {{ pageEnd }}
+                  pageStart: {{ pageStart }}
+                sourceBlockIds: "{{ sourceBlockIds }}"
+          mimeType: "{{ mimeType }}"
+          entities:
+            - mentionId: "{{ mentionId }}"
+              confidence: {{ confidence }}
+              mentionText: "{{ mentionText }}"
+              normalizedValue:
+                dateValue:
+                  year: {{ year }}
+                  day: {{ day }}
+                  month: {{ month }}
+                moneyValue:
+                  units: "{{ units }}"
+                  nanos: {{ nanos }}
+                  currencyCode: "{{ currencyCode }}"
+                floatValue: {{ floatValue }}
+                addressValue:
+                  sublocality: "{{ sublocality }}"
+                  sortingCode: "{{ sortingCode }}"
+                  recipients: "{{ recipients }}"
+                  languageCode: "{{ languageCode }}"
+                  administrativeArea: "{{ administrativeArea }}"
+                  organization: "{{ organization }}"
+                  locality: "{{ locality }}"
+                  revision: {{ revision }}
+                  addressLines: "{{ addressLines }}"
+                  postalCode: "{{ postalCode }}"
+                  regionCode: "{{ regionCode }}"
+                booleanValue: {{ booleanValue }}
+                datetimeValue:
+                  minutes: {{ minutes }}
+                  seconds: {{ seconds }}
+                  timeZone: "{{ timeZone }}"
+                  month: {{ month }}
+                  utcOffset: "{{ utcOffset }}"
+                  nanos: {{ nanos }}
+                  year: {{ year }}
+                  day: {{ day }}
+                  hours: {{ hours }}
+                text: "{{ text }}"
+                integerValue: {{ integerValue }}
+              provenance:
+                parents:
+                  - index: {{ index }}
+                    revision: {{ revision }}
+                    id: {{ id }}
+                revision: {{ revision }}
+                id: {{ id }}
+                type: "{{ type }}"
+              type: "{{ type }}"
+              textAnchor:
+                textSegments:
+                  - endIndex: "{{ endIndex }}"
+                    startIndex: "{{ startIndex }}"
+                content: "{{ content }}"
+              id: "{{ id }}"
+              pageAnchor:
+                pageRefs:
+                  - boundingPoly:
+                      normalizedVertices: "{{ normalizedVertices }}"
+                      vertices: "{{ vertices }}"
+                    confidence: {{ confidence }}
+                    layoutId: "{{ layoutId }}"
+                    page: "{{ page }}"
+                    layoutType: "{{ layoutType }}"
+              redacted: {{ redacted }}
+              properties: "{{ properties }}"
+          textStyles:
+            - fontSize:
+                unit: "{{ unit }}"
+                size: {{ size }}
+              backgroundColor:
+                blue: {{ blue }}
+                red: {{ red }}
+                green: {{ green }}
+                alpha: {{ alpha }}
+              textDecoration: "{{ textDecoration }}"
+              color:
+                blue: {{ blue }}
+                red: {{ red }}
+                green: {{ green }}
+                alpha: {{ alpha }}
+              fontFamily: "{{ fontFamily }}"
+              textStyle: "{{ textStyle }}"
+              fontWeight: "{{ fontWeight }}"
+              textAnchor:
+                textSegments:
+                  - endIndex: "{{ endIndex }}"
+                    startIndex: "{{ startIndex }}"
+                content: "{{ content }}"
+          uri: "{{ uri }}"
+          textChanges:
+            - changedText: "{{ changedText }}"
+              provenance: "{{ provenance }}"
+              textAnchor:
+                textSegments:
+                  - endIndex: "{{ endIndex }}"
+                    startIndex: "{{ startIndex }}"
+                content: "{{ content }}"
+          error:
+            code: {{ code }}
+            message: "{{ message }}"
+            details: "{{ details }}"
+          pages:
+            - formFields: "{{ formFields }}"
+              visualElements: "{{ visualElements }}"
+              detectedLanguages: "{{ detectedLanguages }}"
+              dimension:
+                height: {{ height }}
+                width: {{ width }}
+                unit: "{{ unit }}"
+              lines: "{{ lines }}"
+              detectedBarcodes: "{{ detectedBarcodes }}"
+              blocks: "{{ blocks }}"
+              provenance:
+                parents:
+                  - index: {{ index }}
+                    revision: {{ revision }}
+                    id: {{ id }}
+                revision: {{ revision }}
+                id: {{ id }}
+                type: "{{ type }}"
+              tables: "{{ tables }}"
+              image:
+                mimeType: "{{ mimeType }}"
+                width: {{ width }}
+                height: {{ height }}
+                content: "{{ content }}"
+              transforms: "{{ transforms }}"
+              imageQualityScores:
+                qualityScore: {{ qualityScore }}
+                detectedDefects:
+                  - confidence: {{ confidence }}
+                    type: "{{ type }}"
+              paragraphs: "{{ paragraphs }}"
+              symbols: "{{ symbols }}"
+              layout:
+                confidence: {{ confidence }}
+                boundingPoly:
+                  normalizedVertices: "{{ normalizedVertices }}"
+                  vertices: "{{ vertices }}"
+                orientation: "{{ orientation }}"
+                textAnchor:
+                  textSegments: "{{ textSegments }}"
+                  content: "{{ content }}"
+              pageNumber: {{ pageNumber }}
+              tokens: "{{ tokens }}"
+          text: "{{ text }}"
+          content: "{{ content }}"
+          revisions:
+            - createTime: "{{ createTime }}"
+              humanReview:
+                stateMessage: "{{ stateMessage }}"
+                state: "{{ state }}"
+              processor: "{{ processor }}"
+              parentIds: "{{ parentIds }}"
+              parent: "{{ parent }}"
+              agent: "{{ agent }}"
+              id: "{{ id }}"
+          documentLayout:
+            blocks:
+              - pageSpan:
+                  pageEnd: {{ pageEnd }}
+                  pageStart: {{ pageStart }}
+                blockId: "{{ blockId }}"
+                tableBlock:
+                  caption: "{{ caption }}"
+                  bodyRows: "{{ bodyRows }}"
+                  headerRows: "{{ headerRows }}"
+                listBlock:
+                  listEntries: "{{ listEntries }}"
+                  type: "{{ type }}"
+                textBlock:
+                  type: "{{ type }}"
+                  text: "{{ text }}"
+                  blocks: "{{ blocks }}"
+          entityRelations:
+            - subjectId: "{{ subjectId }}"
+              objectId: "{{ objectId }}"
+              relation: "{{ relation }}"
+          shardInfo:
+            textOffset: "{{ textOffset }}"
+            shardIndex: "{{ shardIndex }}"
+            shardCount: "{{ shardCount }}"
+        referenceId: "{{ referenceId }}"
+        createTime: "{{ createTime }}"
+        legalHold: {{ legalHold }}
+        updater: "{{ updater }}"
+        rawDocumentPath: "{{ rawDocumentPath }}"
+        displayUri: "{{ displayUri }}"
+        dispositionTime: "{{ dispositionTime }}"
+        contentCategory: "{{ contentCategory }}"
+        inlineRawDocument: "{{ inlineRawDocument }}"
+        plainText: "{{ plainText }}"
+        textExtractionDisabled: {{ textExtractionDisabled }}
+        creator: "{{ creator }}"
+        title: "{{ title }}"
+        properties:
+          - enumValues:
+              values:
+                - "{{ values }}"
+            dateTimeValues:
+              values:
+                - minutes: {{ minutes }}
+                  seconds: {{ seconds }}
+                  timeZone:
+                    version: "{{ version }}"
+                    id: "{{ id }}"
+                  month: {{ month }}
+                  utcOffset: "{{ utcOffset }}"
+                  nanos: {{ nanos }}
+                  year: {{ year }}
+                  day: {{ day }}
+                  hours: {{ hours }}
+            propertyValues:
+              properties:
+                - enumValues:
+                    values: "{{ values }}"
+                  dateTimeValues:
+                    values: "{{ values }}"
+                  propertyValues:
+                    properties: "{{ properties }}"
+                  floatValues:
+                    values: "{{ values }}"
+                  name: "{{ name }}"
+                  timestampValues:
+                    values: "{{ values }}"
+                  mapProperty:
+                    fields: "{{ fields }}"
+                  integerValues:
+                    values: "{{ values }}"
+                  textValues:
+                    values: "{{ values }}"
+            floatValues:
+              values:
+                - {{ values }}
+            name: "{{ name }}"
+            timestampValues:
+              values:
+                - timestampValue: "{{ timestampValue }}"
+                  textValue: "{{ textValue }}"
+            mapProperty:
+              fields: "{{ fields }}"
+            integerValues:
+              values:
+                - {{ values }}
+            textValues:
+              values:
+                - "{{ values }}"
+        name: "{{ name }}"
+        documentSchemaName: "{{ documentSchemaName }}"
+        updateTime: "{{ updateTime }}"
+        displayName: "{{ displayName }}"
+    - name: policy
+      description: |
+        Default document policy during creation. This refers to an Identity and Access (IAM) policy, which specifies access controls for the Document. Conditions defined in the policy will be ignored.
+      value:
+        auditConfigs:
+          - auditLogConfigs: "{{ auditLogConfigs }}"
+            service: "{{ service }}"
+        version: {{ version }}
+        bindings:
+          - role: "{{ role }}"
+            condition:
+              expression: "{{ expression }}"
+              location: "{{ location }}"
+              title: "{{ title }}"
+              description: "{{ description }}"
+            members: "{{ members }}"
+        etag: "{{ etag }}"
     - name: createMask
-      value: string
-      description: >
-        Field mask for creating Document fields. If mask path is empty, it means all fields are masked. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
-        
-```
+      value: "{{ createMask }}"
+      description: |
+        Field mask for creating Document fields. If mask path is empty, it means all fields are masked. For the \`FieldMask\` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -412,9 +692,9 @@ Updates a document. Returns INVALID_ARGUMENT if the name of the document is non-
 UPDATE google.contentwarehouse.documents
 SET 
 data__cloudAiDocumentOption = '{{ cloudAiDocumentOption }}',
-data__document = '{{ document }}',
 data__requestMetadata = '{{ requestMetadata }}',
-data__updateOptions = '{{ updateOptions }}'
+data__updateOptions = '{{ updateOptions }}',
+data__document = '{{ document }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -457,10 +737,10 @@ AND documentsId = '{{ documentsId }}' --required
     defaultValue="linked_sources"
     values={[
         { label: 'linked_sources', value: 'linked_sources' },
-        { label: 'set_acl', value: 'set_acl' },
         { label: 'linked_targets', value: 'linked_targets' },
-        { label: 'lock', value: 'lock' },
-        { label: 'search', value: 'search' }
+        { label: 'set_acl', value: 'set_acl' },
+        { label: 'search', value: 'search' },
+        { label: 'lock', value: 'lock' }
     ]}
 >
 <TabItem value="linked_sources">
@@ -474,27 +754,9 @@ EXEC google.contentwarehouse.documents.linked_sources
 @documentsId='{{ documentsId }}' --required 
 @@json=
 '{
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"requestMetadata": "{{ requestMetadata }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_acl">
-
-Sets the access control policy for a resource. Replaces any existing policy.
-
-```sql
-EXEC google.contentwarehouse.documents.set_acl 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@documentsId='{{ documentsId }}' --required 
-@@json=
-'{
 "requestMetadata": "{{ requestMetadata }}", 
-"projectOwner": {{ projectOwner }}, 
-"policy": "{{ policy }}"
+"pageToken": "{{ pageToken }}", 
+"pageSize": {{ pageSize }}
 }'
 ;
 ```
@@ -515,19 +777,20 @@ EXEC google.contentwarehouse.documents.linked_targets
 ;
 ```
 </TabItem>
-<TabItem value="lock">
+<TabItem value="set_acl">
 
-Lock the document so the document cannot be updated by other users.
+Sets the access control policy for a resource. Replaces any existing policy.
 
 ```sql
-EXEC google.contentwarehouse.documents.lock 
+EXEC google.contentwarehouse.documents.set_acl 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @documentsId='{{ documentsId }}' --required 
 @@json=
 '{
-"lockingUser": "{{ lockingUser }}", 
-"collectionId": "{{ collectionId }}"
+"projectOwner": {{ projectOwner }}, 
+"policy": "{{ policy }}", 
+"requestMetadata": "{{ requestMetadata }}"
 }'
 ;
 ```
@@ -542,16 +805,33 @@ EXEC google.contentwarehouse.documents.search
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"pageSize": {{ pageSize }}, 
-"requestMetadata": "{{ requestMetadata }}", 
-"pageToken": "{{ pageToken }}", 
-"documentQuery": "{{ documentQuery }}", 
-"totalResultSize": "{{ totalResultSize }}", 
 "offset": {{ offset }}, 
 "histogramQueries": "{{ histogramQueries }}", 
+"requestMetadata": "{{ requestMetadata }}", 
 "qaSizeLimit": {{ qaSizeLimit }}, 
+"orderBy": "{{ orderBy }}", 
+"totalResultSize": "{{ totalResultSize }}", 
 "requireTotalSize": {{ requireTotalSize }}, 
-"orderBy": "{{ orderBy }}"
+"pageSize": {{ pageSize }}, 
+"documentQuery": "{{ documentQuery }}", 
+"pageToken": "{{ pageToken }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="lock">
+
+Lock the document so the document cannot be updated by other users.
+
+```sql
+EXEC google.contentwarehouse.documents.lock 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@documentsId='{{ documentsId }}' --required 
+@@json=
+'{
+"collectionId": "{{ collectionId }}", 
+"lockingUser": "{{ lockingUser }}"
 }'
 ;
 ```

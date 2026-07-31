@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>attestors</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>attestors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="attestors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.binaryauthorization.attestors" /></td></tr>
 </tbody></table>
@@ -282,17 +283,17 @@ Creates an attestor, and returns a copy of the new attestor. Returns `NOT_FOUND`
 ```sql
 INSERT INTO google.binaryauthorization.attestors (
 data__etag,
-data__name,
-data__userOwnedGrafeasNote,
 data__description,
+data__userOwnedGrafeasNote,
+data__name,
 projectsId,
 attestorId
 )
 SELECT 
 '{{ etag }}',
-'{{ name }}',
-'{{ userOwnedGrafeasNote }}',
 '{{ description }}',
+'{{ userOwnedGrafeasNote }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ attestorId }}'
 RETURNING
@@ -306,36 +307,42 @@ userOwnedGrafeasNote
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: attestors
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the attestors resource.
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Optional. A checksum, returned by the server, that can be sent on update requests to ensure the attestor has an up-to-date value before attempting to update it. See https://google.aip.dev/154.
-        
-    - name: name
-      value: string
-      description: >
-        Required. The resource name, in the format: `projects/*/attestors/*`. This field may not be updated.
-        
-    - name: userOwnedGrafeasNote
-      value: object
-      description: >
-        This specifies how an attestation will be read, and how it will be used during policy enforcement.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A descriptive comment. This field may be updated. The field may be displayed in chooser dialogs.
-        
+    - name: userOwnedGrafeasNote
+      description: |
+        This specifies how an attestation will be read, and how it will be used during policy enforcement.
+      value:
+        delegationServiceAccountEmail: "{{ delegationServiceAccountEmail }}"
+        noteReference: "{{ noteReference }}"
+        publicKeys:
+          - id: "{{ id }}"
+            comment: "{{ comment }}"
+            asciiArmoredPgpPublicKey: "{{ asciiArmoredPgpPublicKey }}"
+            pkixPublicKey:
+              signatureAlgorithm: "{{ signatureAlgorithm }}"
+              publicKeyPem: "{{ publicKeyPem }}"
+              keyId: "{{ keyId }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The resource name, in the format: \`projects/*/attestors/*\`. This field may not be updated.
     - name: attestorId
-      value: string
-```
+      value: "{{ attestorId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -356,9 +363,9 @@ Updates an attestor. Returns `NOT_FOUND` if the attestor does not exist.
 REPLACE google.binaryauthorization.attestors
 SET 
 data__etag = '{{ etag }}',
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__userOwnedGrafeasNote = '{{ userOwnedGrafeasNote }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND attestorsId = '{{ attestorsId }}' --required
@@ -413,9 +420,9 @@ EXEC google.binaryauthorization.attestors.validate_attestation_occurrence
 @attestorsId='{{ attestorsId }}' --required 
 @@json=
 '{
+"occurrenceNote": "{{ occurrenceNote }}", 
 "occurrenceResourceUri": "{{ occurrenceResourceUri }}", 
-"attestation": "{{ attestation }}", 
-"occurrenceNote": "{{ occurrenceNote }}"
+"attestation": "{{ attestation }}"
 }'
 ;
 ```

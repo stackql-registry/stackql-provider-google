@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>customer_nodes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>customer_nodes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="customer_nodes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.prod_tt_sasportal.customer_nodes" /></td></tr>
 </tbody></table>
@@ -117,14 +118,14 @@ The following methods are available for this resource:
     <td><a href="#customers_nodes_nodes_list"><CopyableCode code="customers_nodes_nodes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
     <td><a href="#customers_nodes_list"><CopyableCode code="customers_nodes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
@@ -213,9 +214,9 @@ sasUserIds
 FROM google.prod_tt_sasportal.customer_nodes
 WHERE customersId = '{{ customersId }}' -- required
 AND nodesId = '{{ nodesId }}' -- required
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -230,8 +231,8 @@ displayName,
 sasUserIds
 FROM google.prod_tt_sasportal.customer_nodes
 WHERE customersId = '{{ customersId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -255,16 +256,16 @@ Creates a new node.
 
 ```sql
 INSERT INTO google.prod_tt_sasportal.customer_nodes (
-data__sasUserIds,
 data__name,
 data__displayName,
+data__sasUserIds,
 customersId,
 nodesId
 )
 SELECT 
-'{{ sasUserIds }}',
 '{{ name }}',
 '{{ displayName }}',
+'{{ sasUserIds }}',
 '{{ customersId }}',
 '{{ nodesId }}'
 RETURNING
@@ -280,15 +281,15 @@ Creates a new node.
 
 ```sql
 INSERT INTO google.prod_tt_sasportal.customer_nodes (
-data__sasUserIds,
 data__name,
 data__displayName,
+data__sasUserIds,
 customersId
 )
 SELECT 
-'{{ sasUserIds }}',
 '{{ name }}',
 '{{ displayName }}',
+'{{ sasUserIds }}',
 '{{ customersId }}'
 RETURNING
 name,
@@ -299,32 +300,30 @@ sasUserIds
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: customer_nodes
   props:
     - name: customersId
-      value: string
+      value: "{{ customersId }}"
       description: Required parameter for the customer_nodes resource.
     - name: nodesId
-      value: string
+      value: "{{ nodesId }}"
       description: Required parameter for the customer_nodes resource.
-    - name: sasUserIds
-      value: array
-      description: >
-        User ids used by the devices belonging to this node.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Output only. Resource name.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         The node's display name.
-        
-```
+    - name: sasUserIds
+      value:
+        - "{{ sasUserIds }}"
+      description: |
+        User ids used by the devices belonging to this node.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

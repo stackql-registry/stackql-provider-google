@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>delivery_pipelines</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>delivery_pipelines</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="delivery_pipelines" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouddeploy.delivery_pipelines" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
+    <td>Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="serialPipeline" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
+    <td>Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="serialPipeline" /></td>
@@ -204,28 +205,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists DeliveryPipelines in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-deliveryPipelineId"><code>deliveryPipelineId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-deliveryPipelineId"><code>deliveryPipelineId</code></a></td>
     <td>Creates a new DeliveryPipeline in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Updates the parameters of a single DeliveryPipeline.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single DeliveryPipeline.</td>
 </tr>
 <tr>
@@ -377,10 +378,10 @@ updateTime
 FROM google.clouddeploy.delivery_pipelines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -403,31 +404,31 @@ Creates a new DeliveryPipeline in a given project and location.
 ```sql
 INSERT INTO google.clouddeploy.delivery_pipelines (
 data__suspended,
-data__name,
-data__labels,
 data__description,
-data__annotations,
 data__etag,
+data__annotations,
 data__serialPipeline,
+data__labels,
+data__name,
 projectsId,
 locationsId,
-deliveryPipelineId,
+requestId,
 validateOnly,
-requestId
+deliveryPipelineId
 )
 SELECT 
 {{ suspended }},
-'{{ name }}',
-'{{ labels }}',
 '{{ description }}',
-'{{ annotations }}',
 '{{ etag }}',
+'{{ annotations }}',
 '{{ serialPipeline }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ deliveryPipelineId }}',
+'{{ requestId }}',
 '{{ validateOnly }}',
-'{{ requestId }}'
+'{{ deliveryPipelineId }}'
 RETURNING
 name,
 done,
@@ -439,58 +440,83 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: delivery_pipelines
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the delivery_pipelines resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the delivery_pipelines resource.
     - name: suspended
-      value: boolean
-      description: >
+      value: {{ suspended }}
+      description: |
         Optional. When suspended, no new releases or rollouts can be created, but in-progress ones will complete.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the `DeliveryPipeline`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}`. The `deliveryPipeline` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
-        
-    - name: labels
-      value: object
-      description: >
-        Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
-        
     - name: description
-      value: string
-      description: >
-        Optional. Description of the `DeliveryPipeline`. Max length is 255 characters.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy.
-        
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the \`DeliveryPipeline\`. Max length is 255 characters.
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy.
     - name: serialPipeline
-      value: object
-      description: >
-        Optional. SerialPipeline defines a sequential set of stages for a `DeliveryPipeline`.
-        
-    - name: deliveryPipelineId
-      value: string
-    - name: validateOnly
-      value: boolean
+      description: |
+        Optional. SerialPipeline defines a sequential set of stages for a \`DeliveryPipeline\`.
+      value:
+        stages:
+          - strategy:
+              standard:
+                verify: {{ verify }}
+                predeploy:
+                  actions: "{{ actions }}"
+                  tasks: "{{ tasks }}"
+                analysis:
+                  googleCloud: "{{ googleCloud }}"
+                  customChecks: "{{ customChecks }}"
+                  duration: "{{ duration }}"
+                postdeploy:
+                  actions: "{{ actions }}"
+                  tasks: "{{ tasks }}"
+                verifyConfig:
+                  tasks: "{{ tasks }}"
+              canary:
+                runtimeConfig:
+                  kubernetes: "{{ kubernetes }}"
+                  cloudRun: "{{ cloudRun }}"
+                canaryDeployment:
+                  analysis: "{{ analysis }}"
+                  predeploy: "{{ predeploy }}"
+                  verify: {{ verify }}
+                  verifyConfig: "{{ verifyConfig }}"
+                  percentages: "{{ percentages }}"
+                  postdeploy: "{{ postdeploy }}"
+                customCanaryDeployment:
+                  phaseConfigs: "{{ phaseConfigs }}"
+            profiles: "{{ profiles }}"
+            targetId: "{{ targetId }}"
+            deployParameters: "{{ deployParameters }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the \`DeliveryPipeline\`. Format is \`projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}\`. The \`deliveryPipeline\` component must match \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+    - name: deliveryPipelineId
+      value: "{{ deliveryPipelineId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -511,20 +537,20 @@ Updates the parameters of a single DeliveryPipeline.
 UPDATE google.clouddeploy.delivery_pipelines
 SET 
 data__suspended = {{ suspended }},
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__annotations = '{{ annotations }}',
 data__etag = '{{ etag }}',
-data__serialPipeline = '{{ serialPipeline }}'
+data__annotations = '{{ annotations }}',
+data__serialPipeline = '{{ serialPipeline }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' --required
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
 AND allowMissing = {{ allowMissing}}
-AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -555,9 +581,9 @@ AND locationsId = '{{ locationsId }}' --required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' --required
 AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
-AND validateOnly = '{{ validateOnly }}'
-AND etag = '{{ etag }}'
 AND allowMissing = '{{ allowMissing }}'
+AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -583,13 +609,13 @@ EXEC google.clouddeploy.delivery_pipelines.rollback_target
 @deliveryPipelinesId='{{ deliveryPipelinesId }}' --required 
 @@json=
 '{
-"rollbackConfig": "{{ rollbackConfig }}", 
+"rolloutToRollBack": "{{ rolloutToRollBack }}", 
 "releaseId": "{{ releaseId }}", 
-"rolloutId": "{{ rolloutId }}", 
 "targetId": "{{ targetId }}", 
-"overrideDeployPolicy": "{{ overrideDeployPolicy }}", 
+"rolloutId": "{{ rolloutId }}", 
+"rollbackConfig": "{{ rollbackConfig }}", 
 "validateOnly": {{ validateOnly }}, 
-"rolloutToRollBack": "{{ rolloutToRollBack }}"
+"overrideDeployPolicy": "{{ overrideDeployPolicy }}"
 }'
 ;
 ```

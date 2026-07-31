@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>authorized_views</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>authorized_views</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="authorized_views" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.authorized_views" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>List AuthorizedViewSets</td>
 </tr>
 <tr>
@@ -169,6 +170,20 @@ The following methods are available for this resource:
     <td>Deletes an AuthorizedView.</td>
 </tr>
 <tr>
+    <td><a href="#query_performance_overview"><CopyableCode code="query_performance_overview" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a></td>
+    <td></td>
+    <td>Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.</td>
+</tr>
+<tr>
+    <td><a href="#search"><CopyableCode code="search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>SearchAuthorizedViewSets</td>
+</tr>
+<tr>
     <td><a href="#query_metrics"><CopyableCode code="query_metrics" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a></td>
@@ -176,18 +191,11 @@ The following methods are available for this resource:
     <td>Query metrics.</td>
 </tr>
 <tr>
-    <td><a href="#search"><CopyableCode code="search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a></td>
-    <td>SearchAuthorizedViewSets</td>
-</tr>
-<tr>
-    <td><a href="#query_performance_overview"><CopyableCode code="query_performance_overview" /></a></td>
+    <td><a href="#generative_insights"><CopyableCode code="generative_insights" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a></td>
     <td></td>
-    <td>Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.</td>
+    <td>Natural language based Insights which powers the next generation of dashboards in Insights. Next generation of QueryMetrics.</td>
 </tr>
 </tbody>
 </table>
@@ -307,9 +315,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -331,18 +339,18 @@ Create AuthorizedView
 
 ```sql
 INSERT INTO google.contactcenterinsights.authorized_views (
-data__conversationFilter,
 data__displayName,
 data__name,
+data__conversationFilter,
 projectsId,
 locationsId,
 authorizedViewSetsId,
 authorizedViewId
 )
 SELECT 
-'{{ conversationFilter }}',
 '{{ displayName }}',
 '{{ name }}',
+'{{ conversationFilter }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authorizedViewSetsId }}',
@@ -358,37 +366,34 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: authorized_views
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the authorized_views resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the authorized_views resource.
     - name: authorizedViewSetsId
-      value: string
+      value: "{{ authorizedViewSetsId }}"
       description: Required parameter for the authorized_views resource.
-    - name: conversationFilter
-      value: string
-      description: >
-        A filter to reduce conversation results to a specific subset. The AuthorizedView's assigned permission (read/write) could be applied to the subset of conversations. If conversation_filter is empty, there is no restriction on the conversations that the AuthorizedView can access. Having *authorizedViews.get* access to the AuthorizedView means having the same read/write access to the Conversations (as well as metadata/annotations linked to the conversation) that this AuthorizedView has.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Display Name. Limit 64 characters.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the AuthorizedView. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}/authorizedViews/{authorized_view}
-        
+    - name: conversationFilter
+      value: "{{ conversationFilter }}"
+      description: |
+        A filter to reduce conversation results to a specific subset. The AuthorizedView's assigned permission (read/write) could be applied to the subset of conversations. If conversation_filter is empty, there is no restriction on the conversations that the AuthorizedView can access. Having *authorizedViews.get* access to the AuthorizedView means having the same read/write access to the Conversations (as well as metadata/annotations linked to the conversation) that this AuthorizedView has.
     - name: authorizedViewId
-      value: string
-```
+      value: "{{ authorizedViewId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -408,9 +413,9 @@ Updates an AuthorizedView.
 ```sql
 UPDATE google.contactcenterinsights.authorized_views
 SET 
-data__conversationFilter = '{{ conversationFilter }}',
 data__displayName = '{{ displayName }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__conversationFilter = '{{ conversationFilter }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -455,29 +460,30 @@ AND authorizedViewsId = '{{ authorizedViewsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="query_metrics"
+    defaultValue="query_performance_overview"
     values={[
-        { label: 'query_metrics', value: 'query_metrics' },
+        { label: 'query_performance_overview', value: 'query_performance_overview' },
         { label: 'search', value: 'search' },
-        { label: 'query_performance_overview', value: 'query_performance_overview' }
+        { label: 'query_metrics', value: 'query_metrics' },
+        { label: 'generative_insights', value: 'generative_insights' }
     ]}
 >
-<TabItem value="query_metrics">
+<TabItem value="query_performance_overview">
 
-Query metrics.
+Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.
 
 ```sql
-EXEC google.contactcenterinsights.authorized_views.query_metrics 
+EXEC google.contactcenterinsights.authorized_views.query_performance_overview 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
 @authorizedViewsId='{{ authorizedViewsId }}' --required 
 @@json=
 '{
+"agentPerformanceSource": "{{ agentPerformanceSource }}", 
 "filter": "{{ filter }}", 
-"measureMask": "{{ measureMask }}", 
-"dimensions": "{{ dimensions }}", 
-"timeGranularity": "{{ timeGranularity }}"
+"comparisonQueryInterval": "{{ comparisonQueryInterval }}", 
+"queryInterval": "{{ queryInterval }}"
 }'
 ;
 ```
@@ -491,19 +497,39 @@ EXEC google.contactcenterinsights.authorized_views.search
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
-@orderBy='{{ orderBy }}', 
 @pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}', 
-@query='{{ query }}'
+@query='{{ query }}', 
+@orderBy='{{ orderBy }}', 
+@pageSize='{{ pageSize }}'
 ;
 ```
 </TabItem>
-<TabItem value="query_performance_overview">
+<TabItem value="query_metrics">
 
-Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.
+Query metrics.
 
 ```sql
-EXEC google.contactcenterinsights.authorized_views.query_performance_overview 
+EXEC google.contactcenterinsights.authorized_views.query_metrics 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
+@authorizedViewsId='{{ authorizedViewsId }}' --required 
+@@json=
+'{
+"dimensions": "{{ dimensions }}", 
+"timeGranularity": "{{ timeGranularity }}", 
+"filter": "{{ filter }}", 
+"measureMask": "{{ measureMask }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generative_insights">
+
+Natural language based Insights which powers the next generation of dashboards in Insights. Next generation of QueryMetrics.
+
+```sql
+EXEC google.contactcenterinsights.authorized_views.generative_insights 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
@@ -511,9 +537,14 @@ EXEC google.contactcenterinsights.authorized_views.query_performance_overview
 @@json=
 '{
 "filter": "{{ filter }}", 
-"queryInterval": "{{ queryInterval }}", 
-"agentPerformanceSource": "{{ agentPerformanceSource }}", 
-"comparisonQueryInterval": "{{ comparisonQueryInterval }}"
+"comparisonFilter": "{{ comparisonFilter }}", 
+"chart": "{{ chart }}", 
+"revisionId": "{{ revisionId }}", 
+"userProvidedChartSpec": "{{ userProvidedChartSpec }}", 
+"sqlQuery": "{{ sqlQuery }}", 
+"sessionId": "{{ sessionId }}", 
+"sqlComparisonKey": "{{ sqlComparisonKey }}", 
+"naturalLanguageQuery": "{{ naturalLanguageQuery }}"
 }'
 ;
 ```

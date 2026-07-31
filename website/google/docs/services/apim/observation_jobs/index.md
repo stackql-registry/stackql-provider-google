@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>observation_jobs</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>observation_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="observation_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apim.observation_jobs" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The observation job state</td>
+    <td>Output only. The observation job state (STATE_UNSPECIFIED, CREATING, ENABLING, ENABLED, DISABLING, DISABLED, DELETING, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -88,31 +89,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. name of resource Format: projects/&#123;project&#125;/locations/&#123;location&#125;/observationJobs/&#123;observation_job&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sources" /></td>
-    <td><code>array</code></td>
-    <td>Optional. These should be of the same kind of source.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The observation job state</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update time stamp</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -151,7 +127,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-observationJobId"><code>observationJobId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-observationJobId"><code>observationJobId</code></a></td>
     <td>CreateObservationJob creates a new ObservationJob but does not have any effecton its own. It is a configuration that can be used in an Observation Job to collect data about existing APIs.</td>
 </tr>
 <tr>
@@ -162,18 +138,18 @@ The following methods are available for this resource:
     <td>DeleteObservationJob deletes an ObservationJob. This method will fail if the observation job is currently being used by any ObservationSource, even if not enabled.</td>
 </tr>
 <tr>
-    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-observationJobsId"><code>observationJobsId</code></a></td>
-    <td></td>
-    <td>Enables the given ObservationJob.</td>
-</tr>
-<tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-observationJobsId"><code>observationJobsId</code></a></td>
     <td></td>
     <td>Disables the given ObservationJob.</td>
+</tr>
+<tr>
+    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-observationJobsId"><code>observationJobsId</code></a></td>
+    <td></td>
+    <td>Enables the given ObservationJob.</td>
 </tr>
 </tbody>
 </table>
@@ -262,11 +238,7 @@ ListObservationJobs gets all ObservationJobs for a given project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-sources,
-state,
-updateTime
+*
 FROM google.apim.observation_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -297,16 +269,16 @@ data__name,
 data__sources,
 projectsId,
 locationsId,
-observationJobId,
-requestId
+requestId,
+observationJobId
 )
 SELECT 
 '{{ name }}',
 '{{ sources }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ observationJobId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ observationJobId }}'
 RETURNING
 name,
 done,
@@ -318,31 +290,30 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: observation_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the observation_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the observation_jobs resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. name of resource Format: projects/{project}/locations/{location}/observationJobs/{observation_job}
-        
     - name: sources
-      value: array
-      description: >
+      value:
+        - "{{ sources }}"
+      description: |
         Optional. These should be of the same kind of source.
-        
-    - name: observationJobId
-      value: string
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: observationJobId
+      value: "{{ observationJobId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -373,30 +344,30 @@ AND observationJobsId = '{{ observationJobsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="enable"
+    defaultValue="disable"
     values={[
-        { label: 'enable', value: 'enable' },
-        { label: 'disable', value: 'disable' }
+        { label: 'disable', value: 'disable' },
+        { label: 'enable', value: 'enable' }
     ]}
 >
-<TabItem value="enable">
-
-Enables the given ObservationJob.
-
-```sql
-EXEC google.apim.observation_jobs.enable 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@observationJobsId='{{ observationJobsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="disable">
 
 Disables the given ObservationJob.
 
 ```sql
 EXEC google.apim.observation_jobs.disable 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@observationJobsId='{{ observationJobsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="enable">
+
+Enables the given ObservationJob.
+
+```sql
+EXEC google.apim.observation_jobs.enable 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @observationJobsId='{{ observationJobsId }}' --required

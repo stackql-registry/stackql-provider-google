@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>domains</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>domains</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="domains" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.domains" /></td></tr>
 </tbody></table>
@@ -250,23 +251,23 @@ Inserts a domain of the customer.
 
 ```sql
 INSERT INTO googleadmin.directory.domains (
-data__kind,
 data__domainAliases,
-data__verified,
-data__etag,
 data__creationTime,
-data__isPrimary,
+data__etag,
 data__domainName,
+data__kind,
+data__verified,
+data__isPrimary,
 customer
 )
 SELECT 
-'{{ kind }}',
 '{{ domainAliases }}',
-{{ verified }},
-'{{ etag }}',
 '{{ creationTime }}',
-{{ isPrimary }},
+'{{ etag }}',
 '{{ domainName }}',
+'{{ kind }}',
+{{ verified }},
+{{ isPrimary }},
 '{{ customer }}'
 RETURNING
 creationTime,
@@ -281,50 +282,49 @@ verified
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: domains
   props:
     - name: customer
-      value: string
+      value: "{{ customer }}"
       description: Required parameter for the domains resource.
-    - name: kind
-      value: string
-      description: >
-        Kind of resource this is.
-        
-      default: admin#directory#domain
     - name: domainAliases
-      value: array
-      description: >
+      description: |
         A list of domain alias objects. (Read-only)
-        
-    - name: verified
-      value: boolean
-      description: >
-        Indicates the verification state of a domain. (Read-only).
-        
-    - name: etag
-      value: string
-      description: >
-        ETag of the resource.
-        
+      value:
+        - creationTime: "{{ creationTime }}"
+          domainAliasName: "{{ domainAliasName }}"
+          kind: "{{ kind }}"
+          parentDomainName: "{{ parentDomainName }}"
+          verified: {{ verified }}
+          etag: "{{ etag }}"
     - name: creationTime
-      value: string
-      description: >
+      value: "{{ creationTime }}"
+      description: |
         Creation time of the domain. Expressed in [Unix time](https://en.wikipedia.org/wiki/Epoch_time) format. (Read-only).
-        
-    - name: isPrimary
-      value: boolean
-      description: >
-        Indicates if the domain is a primary domain (Read-only).
-        
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        ETag of the resource.
     - name: domainName
-      value: string
-      description: >
+      value: "{{ domainName }}"
+      description: |
         The domain name of the customer.
-        
-```
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Kind of resource this is.
+      default: admin#directory#domain
+    - name: verified
+      value: {{ verified }}
+      description: |
+        Indicates the verification state of a domain. (Read-only).
+    - name: isPrimary
+      value: {{ isPrimary }}
+      description: |
+        Indicates if the domain is a primary domain (Read-only).
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

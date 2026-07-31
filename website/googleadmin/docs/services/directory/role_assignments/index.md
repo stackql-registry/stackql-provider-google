@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>role_assignments</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>role_assignments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="role_assignments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.role_assignments" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="assigneeType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the assignee (`USER` or `GROUP`).</td>
+    <td>Output only. The type of the assignee (`USER` or `GROUP`). (user, group)</td>
 </tr>
 <tr>
     <td><CopyableCode code="condition" /></td>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="assigneeType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the assignee (`USER` or `GROUP`).</td>
+    <td>Output only. The type of the assignee (`USER` or `GROUP`). (user, group)</td>
 </tr>
 <tr>
     <td><CopyableCode code="condition" /></td>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customer"><code>customer</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-roleId"><code>roleId</code></a>, <a href="#parameter-userKey"><code>userKey</code></a>, <a href="#parameter-includeIndirectRoleAssignments"><code>includeIndirectRoleAssignments</code></a></td>
+    <td><a href="#parameter-userKey"><code>userKey</code></a>, <a href="#parameter-includeIndirectRoleAssignments"><code>includeIndirectRoleAssignments</code></a>, <a href="#parameter-roleId"><code>roleId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Retrieves a paginated list of all roleAssignments.</td>
 </tr>
 <tr>
@@ -302,11 +303,11 @@ roleId,
 scopeType
 FROM googleadmin.directory.role_assignments
 WHERE customer = '{{ customer }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
-AND roleId = '{{ roleId }}'
 AND userKey = '{{ userKey }}'
 AND includeIndirectRoleAssignments = '{{ includeIndirectRoleAssignments }}'
+AND roleId = '{{ roleId }}'
+AND pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -328,25 +329,25 @@ Creates a role assignment.
 
 ```sql
 INSERT INTO googleadmin.directory.role_assignments (
-data__roleAssignmentId,
+data__condition,
 data__roleId,
-data__kind,
+data__scopeType,
 data__etag,
 data__assignedTo,
-data__scopeType,
+data__roleAssignmentId,
+data__kind,
 data__orgUnitId,
-data__condition,
 customer
 )
 SELECT 
-'{{ roleAssignmentId }}',
+'{{ condition }}',
 '{{ roleId }}',
-'{{ kind }}',
+'{{ scopeType }}',
 '{{ etag }}',
 '{{ assignedTo }}',
-'{{ scopeType }}',
+'{{ roleAssignmentId }}',
+'{{ kind }}',
 '{{ orgUnitId }}',
-'{{ condition }}',
 '{{ customer }}'
 RETURNING
 assignedTo,
@@ -363,55 +364,47 @@ scopeType
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: role_assignments
   props:
     - name: customer
-      value: string
+      value: "{{ customer }}"
       description: Required parameter for the role_assignments resource.
-    - name: roleAssignmentId
-      value: string
-      description: >
-        ID of this roleAssignment.
-        
-    - name: roleId
-      value: string
-      description: >
-        The ID of the role that is assigned.
-        
-    - name: kind
-      value: string
-      description: >
-        The type of the API resource. This is always `admin#directory#roleAssignment`.
-        
-      default: admin#directory#roleAssignment
-    - name: etag
-      value: string
-      description: >
-        ETag of the resource.
-        
-    - name: assignedTo
-      value: string
-      description: >
-        The unique ID of the entity this role is assigned to—either the `user_id` of a user, the `group_id` of a group, or the `uniqueId` of a service account as defined in [Identity and Access Management (IAM)](https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts).
-        
-    - name: scopeType
-      value: string
-      description: >
-        The scope in which this role is assigned.
-        
-    - name: orgUnitId
-      value: string
-      description: >
-        If the role is restricted to an organization unit, this contains the ID for the organization unit the exercise of this role is restricted to.
-        
     - name: condition
-      value: string
-      description: >
-        Optional. The condition associated with this role assignment. Note: Feature is available to Enterprise Standard, Enterprise Plus, Google Workspace for Education Plus and Cloud Identity Premium customers. A `RoleAssignment` with the `condition` field set will only take effect when the resource being accessed meets the condition. If `condition` is empty, the role (`role_id`) is applied to the actor (`assigned_to`) at the scope (`scope_type`) unconditionally. Currently, the following conditions are supported: - To make the `RoleAssignment` only applicable to [Security Groups](https://cloud.google.com/identity/docs/groups#group_types): `api.getAttribute('cloudidentity.googleapis.com/groups.labels', []).hasAny(['groups.security']) && resource.type == 'cloudidentity.googleapis.com/Group'` - To make the `RoleAssignment` not applicable to [Security Groups](https://cloud.google.com/identity/docs/groups#group_types): `!api.getAttribute('cloudidentity.googleapis.com/groups.labels', []).hasAny(['groups.security']) && resource.type == 'cloudidentity.googleapis.com/Group'` Currently, the condition strings have to be verbatim and they only work with the following [pre-built administrator roles](https://support.google.com/a/answer/2405986): - Groups Editor - Groups Reader The condition follows [Cloud IAM condition syntax](https://cloud.google.com/iam/docs/conditions-overview). - To make the `RoleAssignment` not applicable to [Locked Groups](https://cloud.google.com/identity/docs/groups#group_types): `!api.getAttribute('cloudidentity.googleapis.com/groups.labels', []).hasAny(['groups.locked']) && resource.type == 'cloudidentity.googleapis.com/Group'` This condition can also be used in conjunction with a Security-related condition.
-        
-```
+      value: "{{ condition }}"
+      description: |
+        Optional. The condition associated with this role assignment. Note: Feature is available to Enterprise Standard, Enterprise Plus, Google Workspace for Education Plus and Cloud Identity Premium customers. A \`RoleAssignment\` with the \`condition\` field set will only take effect when the resource being accessed meets the condition. If \`condition\` is empty, the role (\`role_id\`) is applied to the actor (\`assigned_to\`) at the scope (\`scope_type\`) unconditionally. Currently, the following conditions are supported: - To make the \`RoleAssignment\` only applicable to [Security Groups](https://cloud.google.com/identity/docs/groups#group_types): \`api.getAttribute('cloudidentity.googleapis.com/groups.labels', []).hasAny(['groups.security']) && resource.type == 'cloudidentity.googleapis.com/Group'\` - To make the \`RoleAssignment\` not applicable to [Security Groups](https://cloud.google.com/identity/docs/groups#group_types): \`!api.getAttribute('cloudidentity.googleapis.com/groups.labels', []).hasAny(['groups.security']) && resource.type == 'cloudidentity.googleapis.com/Group'\` Currently, the condition strings have to be verbatim and they only work with the following [pre-built administrator roles](https://support.google.com/a/answer/2405986): - Groups Editor - Groups Reader The condition follows [Cloud IAM condition syntax](https://cloud.google.com/iam/docs/conditions-overview). - To make the \`RoleAssignment\` not applicable to [Locked Groups](https://cloud.google.com/identity/docs/groups#group_types): \`!api.getAttribute('cloudidentity.googleapis.com/groups.labels', []).hasAny(['groups.locked']) && resource.type == 'cloudidentity.googleapis.com/Group'\` This condition can also be used in conjunction with a Security-related condition.
+    - name: roleId
+      value: "{{ roleId }}"
+      description: |
+        The ID of the role that is assigned.
+    - name: scopeType
+      value: "{{ scopeType }}"
+      description: |
+        The scope in which this role is assigned.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        ETag of the resource.
+    - name: assignedTo
+      value: "{{ assignedTo }}"
+      description: |
+        The unique ID of the entity this role is assigned to—either the \`user_id\` of a user, the \`group_id\` of a group, or the \`uniqueId\` of a service account as defined in [Identity and Access Management (IAM)](https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts).
+    - name: roleAssignmentId
+      value: "{{ roleAssignmentId }}"
+      description: |
+        ID of this roleAssignment.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        The type of the API resource. This is always \`admin#directory#roleAssignment\`.
+      default: admin#directory#roleAssignment
+    - name: orgUnitId
+      value: "{{ orgUnitId }}"
+      description: |
+        If the role is restricted to an organization unit, this contains the ID for the organization unit the exercise of this role is restricted to.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

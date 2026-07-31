@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances_referrers</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances_referrers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances_referrers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.instances_referrers" /></td></tr>
 </tbody></table>
@@ -61,17 +62,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#instanceListReferrers for lists of Instance referrers. (default: compute#instanceListReferrers)</td>
+    <td>Output only. [Output Only] Type of resource. Alwayscompute#instanceListReferrers for lists of Instance referrers. (default: compute#instanceListReferrers)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -102,8 +103,8 @@ The following methods are available for this resource:
     <td><a href="#list_referrers"><CopyableCode code="list_referrers" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of resources that refer to the VM instance specified in the request. For example, if the VM instance is part of a managed or unmanaged instance group, the referrers list includes the instance group. For more information, read Viewing referrers to VM instances.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves a list of resources that refer to the VM instance specified in<br />the request. For example, if the VM instance is part of a managed or<br />unmanaged instance group, the referrers list includes the instance group.<br />For more information, readViewing<br />referrers to VM instances.</td>
 </tr>
 </tbody>
 </table>
@@ -174,7 +175,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list_referrers">
 
-Retrieves a list of resources that refer to the VM instance specified in the request. For example, if the VM instance is part of a managed or unmanaged instance group, the referrers list includes the instance group. For more information, read Viewing referrers to VM instances.
+Retrieves a list of resources that refer to the VM instance specified in<br />the request. For example, if the VM instance is part of a managed or<br />unmanaged instance group, the referrers list includes the instance group.<br />For more information, readViewing<br />referrers to VM instances.
 
 ```sql
 SELECT
@@ -188,10 +189,10 @@ FROM google.compute.instances_referrers
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
 AND instance = '{{ instance }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>snapshots</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>snapshots</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="snapshots" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataflow.snapshots" /></td></tr>
 </tbody></table>
@@ -36,8 +37,8 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_snapshots_get', value: 'projects_locations_snapshots_get' },
         { label: 'projects_locations_jobs_snapshots_list', value: 'projects_locations_jobs_snapshots_list' },
-        { label: 'projects_snapshots_get', value: 'projects_snapshots_get' },
         { label: 'projects_locations_snapshots_list', value: 'projects_locations_snapshots_list' },
+        { label: 'projects_snapshots_get', value: 'projects_snapshots_get' },
         { label: 'projects_snapshots_list', value: 'projects_snapshots_list' }
     ]}
 >
@@ -95,7 +96,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of the snapshot.</td>
+    <td>State of the snapshot. (UNKNOWN_SNAPSHOT_STATE, PENDING, RUNNING, READY, FAILED, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ttl" /></td>
@@ -106,6 +107,25 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_locations_jobs_snapshots_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="snapshots" /></td>
+    <td><code>array</code></td>
+    <td>Returned snapshots.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_snapshots_list">
 
 <table>
 <thead>
@@ -178,31 +198,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of the snapshot.</td>
+    <td>State of the snapshot. (UNKNOWN_SNAPSHOT_STATE, PENDING, RUNNING, READY, FAILED, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ttl" /></td>
     <td><code>string (google-duration)</code></td>
     <td>The time after which this snapshot will be automatically deleted.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_snapshots_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="snapshots" /></td>
-    <td><code>array</code></td>
-    <td>Returned snapshots.</td>
 </tr>
 </tbody>
 </table>
@@ -258,18 +259,18 @@ The following methods are available for this resource:
     <td>Lists snapshots.</td>
 </tr>
 <tr>
-    <td><a href="#projects_snapshots_get"><CopyableCode code="projects_snapshots_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-snapshotId"><code>snapshotId</code></a></td>
-    <td><a href="#parameter-location"><code>location</code></a></td>
-    <td>Gets information about a snapshot.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_snapshots_list"><CopyableCode code="projects_locations_snapshots_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a></td>
     <td><a href="#parameter-jobId"><code>jobId</code></a></td>
     <td>Lists snapshots.</td>
+</tr>
+<tr>
+    <td><a href="#projects_snapshots_get"><CopyableCode code="projects_snapshots_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-snapshotId"><code>snapshotId</code></a></td>
+    <td><a href="#parameter-location"><code>location</code></a></td>
+    <td>Gets information about a snapshot.</td>
 </tr>
 <tr>
     <td><a href="#projects_snapshots_list"><CopyableCode code="projects_snapshots_list" /></a></td>
@@ -353,8 +354,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_snapshots_get', value: 'projects_locations_snapshots_get' },
         { label: 'projects_locations_jobs_snapshots_list', value: 'projects_locations_jobs_snapshots_list' },
-        { label: 'projects_snapshots_get', value: 'projects_snapshots_get' },
         { label: 'projects_locations_snapshots_list', value: 'projects_locations_snapshots_list' },
+        { label: 'projects_snapshots_get', value: 'projects_snapshots_get' },
         { label: 'projects_snapshots_list', value: 'projects_snapshots_list' }
     ]}
 >
@@ -395,6 +396,20 @@ AND jobId = '{{ jobId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_snapshots_list">
+
+Lists snapshots.
+
+```sql
+SELECT
+snapshots
+FROM google.dataflow.snapshots
+WHERE projectId = '{{ projectId }}' -- required
+AND location = '{{ location }}' -- required
+AND jobId = '{{ jobId }}'
+;
+```
+</TabItem>
 <TabItem value="projects_snapshots_get">
 
 Gets information about a snapshot.
@@ -415,20 +430,6 @@ FROM google.dataflow.snapshots
 WHERE projectId = '{{ projectId }}' -- required
 AND snapshotId = '{{ snapshotId }}' -- required
 AND location = '{{ location }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_snapshots_list">
-
-Lists snapshots.
-
-```sql
-SELECT
-snapshots
-FROM google.dataflow.snapshots
-WHERE projectId = '{{ projectId }}' -- required
-AND location = '{{ location }}' -- required
-AND jobId = '{{ jobId }}'
 ;
 ```
 </TabItem>

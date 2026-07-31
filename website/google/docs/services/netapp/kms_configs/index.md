@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>kms_configs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>kms_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="kms_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.netapp.kms_configs" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. Name of the KmsConfig.</td>
+    <td>Identifier. Name of the `KmsConfig`. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/kmsConfigs/&#123;kms_config&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cryptoKeyName" /></td>
     <td><code>string</code></td>
-    <td>Required. Customer managed crypto key resource full name. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/keyRings/&#123;key_ring&#125;/cryptoKeys/&#123;crypto_key&#125;.</td>
+    <td>Required. Customer-managed crypto key resource full name. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/keyRings/&#123;key_ring&#125;/cryptoKeys/&#123;crypto_key&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the KmsConfig.</td>
+    <td>Output only. State of the KmsConfig. (STATE_UNSPECIFIED, READY, CREATING, DELETING, UPDATING, IN_USE, ERROR, KEY_CHECK_PENDING, KEY_NOT_REACHABLE, DISABLING, DISABLED, MIGRATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateDetails" /></td>
@@ -139,7 +140,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Returns descriptions of all KMS configs owned by the caller.</td>
 </tr>
 <tr>
@@ -282,10 +283,10 @@ SELECT
 FROM google.netapp.kms_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -307,19 +308,19 @@ Creates a new KMS config.
 
 ```sql
 INSERT INTO google.netapp.kms_configs (
+data__cryptoKeyName,
 data__description,
 data__labels,
 data__name,
-data__cryptoKeyName,
 projectsId,
 locationsId,
 kmsConfigId
 )
 SELECT 
+'{{ cryptoKeyName }}',
 '{{ description }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ cryptoKeyName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ kmsConfigId }}'
@@ -334,39 +335,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: kms_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the kms_configs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the kms_configs resource.
-    - name: description
-      value: string
-      description: >
-        Description of the KmsConfig.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels as key value pairs
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the KmsConfig.
-        
     - name: cryptoKeyName
-      value: string
-      description: >
-        Required. Customer managed crypto key resource full name. Format: projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}.
-        
+      value: "{{ cryptoKeyName }}"
+      description: |
+        Required. Customer-managed crypto key resource full name. Format: \`projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}\`
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the KmsConfig.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the \`KmsConfig\`. Format: \`projects/{project}/locations/{location}/kmsConfigs/{kms_config}\`
     - name: kmsConfigId
-      value: string
-```
+      value: "{{ kmsConfigId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -386,10 +383,10 @@ Updates the Kms config properties with the full spec
 ```sql
 UPDATE google.netapp.kms_configs
 SET 
+data__cryptoKeyName = '{{ cryptoKeyName }}',
 data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__cryptoKeyName = '{{ cryptoKeyName }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

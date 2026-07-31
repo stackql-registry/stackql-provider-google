@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>app_profiles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>app_profiles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="app_profiles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.app_profiles" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the mean time. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.</td>
+    <td>Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the meantime. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.</td>
 </tr>
 <tr>
     <td><CopyableCode code="multiClusterRoutingUseAny" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="priority" /></td>
     <td><code>string</code></td>
-    <td>This field has been deprecated in favor of `standard_isolation.priority`. If you set this field, `standard_isolation.priority` will be set instead. The priority of requests sent using this app profile.</td>
+    <td>This field has been deprecated in favor of `standard_isolation.priority`. If you set this field, `standard_isolation.priority` will be set instead. The priority of requests sent using this app profile. (PRIORITY_UNSPECIFIED, PRIORITY_LOW, PRIORITY_MEDIUM, PRIORITY_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="singleClusterRouting" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the mean time. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.</td>
+    <td>Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the meantime. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.</td>
 </tr>
 <tr>
     <td><CopyableCode code="multiClusterRoutingUseAny" /></td>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="priority" /></td>
     <td><code>string</code></td>
-    <td>This field has been deprecated in favor of `standard_isolation.priority`. If you set this field, `standard_isolation.priority` will be set instead. The priority of requests sent using this app profile.</td>
+    <td>This field has been deprecated in favor of `standard_isolation.priority`. If you set this field, `standard_isolation.priority` will be set instead. The priority of requests sent using this app profile. (PRIORITY_UNSPECIFIED, PRIORITY_LOW, PRIORITY_MEDIUM, PRIORITY_HIGH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="singleClusterRouting" /></td>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about app profiles in an instance.</td>
 </tr>
 <tr>
@@ -188,7 +189,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-appProfilesId"><code>appProfilesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a></td>
+    <td><a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an app profile within an instance.</td>
 </tr>
 <tr>
@@ -304,8 +305,8 @@ standardIsolation
 FROM google.bigtableadmin.app_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -327,28 +328,28 @@ Creates an app profile within an instance.
 
 ```sql
 INSERT INTO google.bigtableadmin.app_profiles (
-data__singleClusterRouting,
+data__etag,
+data__multiClusterRoutingUseAny,
+data__priority,
 data__dataBoostIsolationReadOnly,
 data__description,
+data__singleClusterRouting,
 data__standardIsolation,
 data__name,
-data__multiClusterRoutingUseAny,
-data__etag,
-data__priority,
 projectsId,
 instancesId,
 appProfileId,
 ignoreWarnings
 )
 SELECT 
-'{{ singleClusterRouting }}',
+'{{ etag }}',
+'{{ multiClusterRoutingUseAny }}',
+'{{ priority }}',
 '{{ dataBoostIsolationReadOnly }}',
 '{{ description }}',
+'{{ singleClusterRouting }}',
 '{{ standardIsolation }}',
 '{{ name }}',
-'{{ multiClusterRoutingUseAny }}',
-'{{ etag }}',
-'{{ priority }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ appProfileId }}',
@@ -367,62 +368,62 @@ standardIsolation
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: app_profiles
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the app_profiles resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the app_profiles resource.
-    - name: singleClusterRouting
-      value: object
-      description: >
-        Use a single-cluster routing policy.
-        
-    - name: dataBoostIsolationReadOnly
-      value: object
-      description: >
-        Specifies that this app profile is intended for read-only usage via the Data Boost feature.
-        
-    - name: description
-      value: string
-      description: >
-        Long form description of the use case for this AppProfile.
-        
-    - name: standardIsolation
-      value: object
-      description: >
-        The standard options used for isolating this app profile's traffic from other use cases.
-        
-    - name: name
-      value: string
-      description: >
-        The unique name of the app profile, up to 50 characters long. Values are of the form `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
-        
-    - name: multiClusterRoutingUseAny
-      value: object
-      description: >
-        Use a multi-cluster routing policy.
-        
     - name: etag
-      value: string
-      description: >
-        Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the mean time. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.
-        
+      value: "{{ etag }}"
+      description: |
+        Strongly validated etag for optimistic concurrency control. Preserve the value returned from \`GetAppProfile\` when calling \`UpdateAppProfile\` to fail the request if there has been a modification in the meantime. The \`update_mask\` of the request need not include \`etag\` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.
+    - name: multiClusterRoutingUseAny
+      description: |
+        Use a multi-cluster routing policy.
+      value:
+        clusterIds:
+          - "{{ clusterIds }}"
+        rowAffinity: "{{ rowAffinity }}"
     - name: priority
-      value: string
-      description: >
-        This field has been deprecated in favor of `standard_isolation.priority`. If you set this field, `standard_isolation.priority` will be set instead. The priority of requests sent using this app profile.
-        
+      value: "{{ priority }}"
+      description: |
+        This field has been deprecated in favor of \`standard_isolation.priority\`. If you set this field, \`standard_isolation.priority\` will be set instead. The priority of requests sent using this app profile.
       valid_values: ['PRIORITY_UNSPECIFIED', 'PRIORITY_LOW', 'PRIORITY_MEDIUM', 'PRIORITY_HIGH']
+    - name: dataBoostIsolationReadOnly
+      description: |
+        Specifies that this app profile is intended for read-only usage via the Data Boost feature.
+      value:
+        computeBillingOwner: "{{ computeBillingOwner }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Long form description of the use case for this AppProfile.
+    - name: singleClusterRouting
+      description: |
+        Use a single-cluster routing policy.
+      value:
+        allowTransactionalWrites: {{ allowTransactionalWrites }}
+        clusterId: "{{ clusterId }}"
+    - name: standardIsolation
+      description: |
+        The standard options used for isolating this app profile's traffic from other use cases.
+      value:
+        priority: "{{ priority }}"
+        memoryConfig: "{{ memoryConfig }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The unique name of the app profile, up to 50 characters long. Values are of the form \`projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*\`.
     - name: appProfileId
-      value: string
+      value: "{{ appProfileId }}"
     - name: ignoreWarnings
-      value: boolean
-```
+      value: {{ ignoreWarnings }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -442,20 +443,20 @@ Updates an app profile within an instance.
 ```sql
 UPDATE google.bigtableadmin.app_profiles
 SET 
-data__singleClusterRouting = '{{ singleClusterRouting }}',
+data__etag = '{{ etag }}',
+data__multiClusterRoutingUseAny = '{{ multiClusterRoutingUseAny }}',
+data__priority = '{{ priority }}',
 data__dataBoostIsolationReadOnly = '{{ dataBoostIsolationReadOnly }}',
 data__description = '{{ description }}',
+data__singleClusterRouting = '{{ singleClusterRouting }}',
 data__standardIsolation = '{{ standardIsolation }}',
-data__name = '{{ name }}',
-data__multiClusterRoutingUseAny = '{{ multiClusterRoutingUseAny }}',
-data__etag = '{{ etag }}',
-data__priority = '{{ priority }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
 AND appProfilesId = '{{ appProfilesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND ignoreWarnings = {{ ignoreWarnings}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

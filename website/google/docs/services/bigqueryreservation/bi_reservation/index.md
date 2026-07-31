@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>bi_reservation</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>bi_reservation</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="bi_reservation" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigqueryreservation.bi_reservation" /></td></tr>
 </tbody></table>
@@ -178,9 +179,9 @@ Updates a BI reservation. Only fields specified in the `field_mask` are updated.
 ```sql
 UPDATE google.bigqueryreservation.bi_reservation
 SET 
-data__preferredTables = '{{ preferredTables }}',
 data__size = '{{ size }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__preferredTables = '{{ preferredTables }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

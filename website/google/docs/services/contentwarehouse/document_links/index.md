@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>document_links</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>document_links</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="document_links" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contentwarehouse.document_links" /></td></tr>
 </tbody></table>
@@ -117,15 +118,15 @@ Create a link between a source document and a target document.
 
 ```sql
 INSERT INTO google.contentwarehouse.document_links (
-data__documentLink,
 data__requestMetadata,
+data__documentLink,
 projectsId,
 locationsId,
 documentsId
 )
 SELECT 
-'{{ documentLink }}',
 '{{ requestMetadata }}',
+'{{ documentLink }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ documentsId }}'
@@ -142,30 +143,57 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: document_links
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the document_links resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the document_links resource.
     - name: documentsId
-      value: string
+      value: "{{ documentsId }}"
       description: Required parameter for the document_links resource.
-    - name: documentLink
-      value: object
-      description: >
-        Required. Document links associated with the source documents (source_document_id).
-        
     - name: requestMetadata
-      value: object
-      description: >
+      description: |
         The meta information collected about the document creator, used to enforce access control for the service.
-        
-```
+      value:
+        userInfo:
+          groupIds:
+            - "{{ groupIds }}"
+          id: "{{ id }}"
+    - name: documentLink
+      description: |
+        A document-link between source and target document.
+      value:
+        updateTime: "{{ updateTime }}"
+        state: "{{ state }}"
+        targetDocumentReference:
+          documentName: "{{ documentName }}"
+          displayName: "{{ displayName }}"
+          updateTime: "{{ updateTime }}"
+          documentIsFolder: {{ documentIsFolder }}
+          documentIsLegalHoldFolder: {{ documentIsLegalHoldFolder }}
+          snippet: "{{ snippet }}"
+          deleteTime: "{{ deleteTime }}"
+          createTime: "{{ createTime }}"
+          documentIsRetentionFolder: {{ documentIsRetentionFolder }}
+        name: "{{ name }}"
+        sourceDocumentReference:
+          documentName: "{{ documentName }}"
+          displayName: "{{ displayName }}"
+          updateTime: "{{ updateTime }}"
+          documentIsFolder: {{ documentIsFolder }}
+          documentIsLegalHoldFolder: {{ documentIsLegalHoldFolder }}
+          snippet: "{{ snippet }}"
+          deleteTime: "{{ deleteTime }}"
+          createTime: "{{ createTime }}"
+          documentIsRetentionFolder: {{ documentIsRetentionFolder }}
+        description: "{{ description }}"
+        createTime: "{{ createTime }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

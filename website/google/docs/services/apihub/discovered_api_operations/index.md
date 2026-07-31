@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>discovered_api_operations</code
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>discovered_api_operations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="discovered_api_operations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.discovered_api_operations" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="classification" /></td>
     <td><code>string</code></td>
-    <td>Output only. The classification of the discovered API operation.</td>
+    <td>Output only. The classification of the discovered API operation. (CLASSIFICATION_UNSPECIFIED, KNOWN, UNKNOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="count" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="classification" /></td>
     <td><code>string</code></td>
-    <td>Output only. The classification of the discovered API operation.</td>
+    <td>Output only. The classification of the discovered API operation. (CLASSIFICATION_UNSPECIFIED, KNOWN, UNKNOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="count" /></td>

@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>buckets_firebase</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>buckets_firebase</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="buckets_firebase" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.storage.buckets_firebase" /></td></tr>
 </tbody></table>
@@ -120,17 +121,17 @@ name
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: buckets_firebase
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the buckets_firebase resource.
     - name: bucketsId
-      value: string
+      value: "{{ bucketsId }}"
       description: Required parameter for the buckets_firebase resource.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

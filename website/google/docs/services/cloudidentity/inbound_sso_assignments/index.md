@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>inbound_sso_assignments</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>inbound_sso_assignments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="inbound_sso_assignments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.inbound_sso_assignments" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ssoMode" /></td>
     <td><code>string</code></td>
-    <td>Inbound SSO behavior.</td>
+    <td>Inbound SSO behavior. (SSO_MODE_UNSPECIFIED, SSO_OFF, SAML_SSO, OIDC_SSO, DOMAIN_WIDE_SAML_IF_ENABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetGroup" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ssoMode" /></td>
     <td><code>string</code></td>
-    <td>Inbound SSO behavior.</td>
+    <td>Inbound SSO behavior. (SSO_MODE_UNSPECIFIED, SSO_OFF, SAML_SSO, OIDC_SSO, DOMAIN_WIDE_SAML_IF_ENABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetGroup" /></td>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the InboundSsoAssignments for a `Customer`.</td>
 </tr>
 <tr>
@@ -297,9 +298,9 @@ ssoMode,
 targetGroup,
 targetOrgUnit
 FROM google.cloudidentity.inbound_sso_assignments
-WHERE pageToken = '{{ pageToken }}'
+WHERE filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -322,23 +323,23 @@ Creates an InboundSsoAssignment for users and devices in a `Customer` under a gi
 ```sql
 INSERT INTO google.cloudidentity.inbound_sso_assignments (
 data__oidcSsoInfo,
-data__signInBehavior,
-data__ssoMode,
-data__targetOrgUnit,
 data__samlSsoInfo,
+data__signInBehavior,
+data__targetOrgUnit,
 data__targetGroup,
+data__rank,
 data__customer,
-data__rank
+data__ssoMode
 )
 SELECT 
 '{{ oidcSsoInfo }}',
-'{{ signInBehavior }}',
-'{{ ssoMode }}',
-'{{ targetOrgUnit }}',
 '{{ samlSsoInfo }}',
+'{{ signInBehavior }}',
+'{{ targetOrgUnit }}',
 '{{ targetGroup }}',
+{{ rank }},
 '{{ customer }}',
-{{ rank }}
+'{{ ssoMode }}'
 RETURNING
 name,
 done,
@@ -350,52 +351,47 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: inbound_sso_assignments
   props:
     - name: oidcSsoInfo
-      value: object
-      description: >
-        OpenID Connect SSO details. Must be set if and only if `sso_mode` is set to `OIDC_SSO`.
-        
-    - name: signInBehavior
-      value: object
-      description: >
-        Assertions about users assigned to an IdP will always be accepted from that IdP. This controls whether/when Google should redirect a user to the IdP. Unset (defaults) is the recommended configuration.
-        
-    - name: ssoMode
-      value: string
-      description: >
-        Inbound SSO behavior.
-        
-      valid_values: ['SSO_MODE_UNSPECIFIED', 'SSO_OFF', 'SAML_SSO', 'OIDC_SSO', 'DOMAIN_WIDE_SAML_IF_ENABLED']
-    - name: targetOrgUnit
-      value: string
-      description: >
-        Immutable. Must be of the form `orgUnits/{org_unit}`.
-        
+      description: |
+        OpenID Connect SSO details. Must be set if and only if \`sso_mode\` is set to \`OIDC_SSO\`.
+      value:
+        inboundOidcSsoProfile: "{{ inboundOidcSsoProfile }}"
     - name: samlSsoInfo
-      value: object
-      description: >
-        SAML SSO details. Must be set if and only if `sso_mode` is set to `SAML_SSO`.
-        
+      description: |
+        SAML SSO details. Must be set if and only if \`sso_mode\` is set to \`SAML_SSO\`.
+      value:
+        inboundSamlSsoProfile: "{{ inboundSamlSsoProfile }}"
+    - name: signInBehavior
+      description: |
+        Assertions about users assigned to an IdP will always be accepted from that IdP. This controls whether/when Google should redirect a user to the IdP. Unset (defaults) is the recommended configuration.
+      value:
+        redirectCondition: "{{ redirectCondition }}"
+    - name: targetOrgUnit
+      value: "{{ targetOrgUnit }}"
+      description: |
+        Immutable. Must be of the form \`orgUnits/{org_unit}\`.
     - name: targetGroup
-      value: string
-      description: >
-        Immutable. Must be of the form `groups/{group}`.
-        
-    - name: customer
-      value: string
-      description: >
-        Immutable. The customer. For example: `customers/C0123abc`.
-        
+      value: "{{ targetGroup }}"
+      description: |
+        Immutable. Must be of the form \`groups/{group}\`.
     - name: rank
-      value: integer
-      description: >
-        Must be zero (which is the default value so it can be omitted) for assignments with `target_org_unit` set and must be greater-than-or-equal-to one for assignments with `target_group` set.
-        
-```
+      value: {{ rank }}
+      description: |
+        Must be zero (which is the default value so it can be omitted) for assignments with \`target_org_unit\` set and must be greater-than-or-equal-to one for assignments with \`target_group\` set.
+    - name: customer
+      value: "{{ customer }}"
+      description: |
+        Immutable. The customer. For example: \`customers/C0123abc\`.
+    - name: ssoMode
+      value: "{{ ssoMode }}"
+      description: |
+        Inbound SSO behavior.
+      valid_values: ['SSO_MODE_UNSPECIFIED', 'SSO_OFF', 'SAML_SSO', 'OIDC_SSO', 'DOMAIN_WIDE_SAML_IF_ENABLED']
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -416,13 +412,13 @@ Updates an InboundSsoAssignment. The body of this request is the `inbound_sso_as
 UPDATE google.cloudidentity.inbound_sso_assignments
 SET 
 data__oidcSsoInfo = '{{ oidcSsoInfo }}',
-data__signInBehavior = '{{ signInBehavior }}',
-data__ssoMode = '{{ ssoMode }}',
-data__targetOrgUnit = '{{ targetOrgUnit }}',
 data__samlSsoInfo = '{{ samlSsoInfo }}',
+data__signInBehavior = '{{ signInBehavior }}',
+data__targetOrgUnit = '{{ targetOrgUnit }}',
 data__targetGroup = '{{ targetGroup }}',
+data__rank = {{ rank }},
 data__customer = '{{ customer }}',
-data__rank = {{ rank }}
+data__ssoMode = '{{ ssoMode }}'
 WHERE 
 inboundSsoAssignmentsId = '{{ inboundSsoAssignmentsId }}' --required
 AND updateMask = '{{ updateMask}}'

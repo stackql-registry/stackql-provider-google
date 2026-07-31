@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>data_policies_grantees</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>data_policies_grantees</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="data_policies_grantees" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquerydatapolicy.data_policies_grantees" /></td></tr>
 </tbody></table>
@@ -124,6 +125,7 @@ SELECT
 '{{ dataPoliciesId }}'
 RETURNING
 name,
+dataGovernanceTag,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,
@@ -136,25 +138,25 @@ version
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: data_policies_grantees
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the data_policies_grantees resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the data_policies_grantees resource.
     - name: dataPoliciesId
-      value: string
+      value: "{{ dataPoliciesId }}"
       description: Required parameter for the data_policies_grantees resource.
     - name: grantees
-      value: array
-      description: >
-        Required. IAM principal that should be granted Fine Grained Access to the underlying data goverened by the data policy. The target data policy is determined by the `data_policy` field. Uses the [IAM V2 principal syntax](https://cloud.google.com/iam/docs/principal-identifiers#v2). Supported principal types: * User * Group * Service account
-        
-```
+      value:
+        - "{{ grantees }}"
+      description: |
+        Required. IAM principal that should be granted Fine Grained Access to the underlying data goverened by the data policy. The target data policy is determined by the \`data_policy\` field. Uses the [IAM V2 principal syntax](https://cloud.google.com/iam/docs/principal-identifiers#v2). Supported principal types: * User * Group * Service account
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

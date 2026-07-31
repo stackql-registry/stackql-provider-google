@@ -18,17 +18,18 @@ storagebatchoperations service documentation.
 
 :::info[Service Summary]
 
-total resources: __3__  
+total resources: __4__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
-<a href="/services/storagebatchoperations/jobs/">jobs</a><br />
-<a href="/services/storagebatchoperations/locations/">locations</a>
+<a href="/services/storagebatchoperations/bucket_operations/">bucket_operations</a><br />
+<a href="/services/storagebatchoperations/jobs/">jobs</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/storagebatchoperations/locations/">locations</a><br />
 <a href="/services/storagebatchoperations/operations/">operations</a>
 </div>
 </div>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>database_character_sets</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>database_character_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="database_character_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.database_character_sets" /></td></tr>
 </tbody></table>
@@ -61,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="characterSetType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The character set type for the Database.</td>
+    <td>Output only. The character set type for the Database. (CHARACTER_SET_TYPE_UNSPECIFIED, DATABASE, NATIONAL)</td>
 </tr>
 </tbody>
 </table>

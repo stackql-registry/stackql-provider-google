@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backup_schedules</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backup_schedules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backup_schedules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.firestore.backup_schedules" /></td></tr>
 </tbody></table>
@@ -251,15 +252,15 @@ Creates a backup schedule on a database. At most two backup schedules can be con
 
 ```sql
 INSERT INTO google.firestore.backup_schedules (
-data__weeklyRecurrence,
 data__dailyRecurrence,
+data__weeklyRecurrence,
 data__retention,
 projectsId,
 databasesId
 )
 SELECT 
-'{{ weeklyRecurrence }}',
 '{{ dailyRecurrence }}',
+'{{ weeklyRecurrence }}',
 '{{ retention }}',
 '{{ projectsId }}',
 '{{ databasesId }}'
@@ -275,32 +276,30 @@ weeklyRecurrence
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backup_schedules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backup_schedules resource.
     - name: databasesId
-      value: string
+      value: "{{ databasesId }}"
       description: Required parameter for the backup_schedules resource.
-    - name: weeklyRecurrence
-      value: object
-      description: >
-        For a schedule that runs weekly on a specific day.
-        
     - name: dailyRecurrence
-      value: object
-      description: >
+      value: "{{ dailyRecurrence }}"
+      description: |
         For a schedule that runs daily.
-        
+    - name: weeklyRecurrence
+      description: |
+        For a schedule that runs weekly on a specific day.
+      value:
+        day: "{{ day }}"
     - name: retention
-      value: string
-      description: >
+      value: "{{ retention }}"
+      description: |
         At what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days. The maximum supported retention period is 14 weeks.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -320,8 +319,8 @@ Updates a backup schedule.
 ```sql
 UPDATE google.firestore.backup_schedules
 SET 
-data__weeklyRecurrence = '{{ weeklyRecurrence }}',
 data__dailyRecurrence = '{{ dailyRecurrence }}',
+data__weeklyRecurrence = '{{ weeklyRecurrence }}',
 data__retention = '{{ retention }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

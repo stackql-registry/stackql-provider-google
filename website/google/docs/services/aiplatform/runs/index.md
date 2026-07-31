@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>runs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>runs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="runs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.runs" /></td></tr>
 </tbody></table>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists TensorboardRuns in a Location.</td>
 </tr>
 <tr>
@@ -331,10 +332,10 @@ AND locationsId = '{{ locationsId }}' -- required
 AND tensorboardsId = '{{ tensorboardsId }}' -- required
 AND experimentsId = '{{ experimentsId }}' -- required
 AND readMask = '{{ readMask }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -358,9 +359,9 @@ Creates a TensorboardRun.
 ```sql
 INSERT INTO google.aiplatform.runs (
 data__description,
-data__labels,
-data__etag,
 data__displayName,
+data__etag,
+data__labels,
 projectsId,
 locationsId,
 tensorboardsId,
@@ -369,9 +370,9 @@ tensorboardRunId
 )
 SELECT 
 '{{ description }}',
-'{{ labels }}',
-'{{ etag }}',
 '{{ displayName }}',
+'{{ etag }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tensorboardsId }}',
@@ -413,50 +414,55 @@ tensorboardRuns
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: runs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the runs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the runs resource.
     - name: tensorboardsId
-      value: string
+      value: "{{ tensorboardsId }}"
       description: Required parameter for the runs resource.
     - name: experimentsId
-      value: string
+      value: "{{ experimentsId }}"
       description: Required parameter for the runs resource.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Description of this TensorboardRun.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize your TensorboardRuns. This field will be used to filter and visualize Runs in the Tensorboard UI. For example, a Vertex AI training job can set a label aiplatform.googleapis.com/training_job_id=xxxxx to all the runs created within that job. An end user can set a label experiment_id=xxxxx for all the runs produced in a Jupyter notebook. These runs can be grouped by a label value and visualized together in the Tensorboard UI. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one TensorboardRun (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-        
-    - name: etag
-      value: string
-      description: >
-        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. User provided name of this TensorboardRun. This value must be unique among all TensorboardRuns belonging to the same parent TensorboardExperiment.
-        
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your TensorboardRuns. This field will be used to filter and visualize Runs in the Tensorboard UI. For example, a Vertex AI training job can set a label aiplatform.googleapis.com/training_job_id=xxxxx to all the runs created within that job. An end user can set a label experiment_id=xxxxx for all the runs produced in a Jupyter notebook. These runs can be grouped by a label value and visualized together in the Tensorboard UI. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one TensorboardRun (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
     - name: requests
-      value: array
-      description: >
+      description: |
         Required. The request message specifying the TensorboardRuns to create. A maximum of 1000 TensorboardRuns can be created in a batch.
-        
+      value:
+        - tensorboardRunId: "{{ tensorboardRunId }}"
+          parent: "{{ parent }}"
+          tensorboardRun:
+            name: "{{ name }}"
+            createTime: "{{ createTime }}"
+            description: "{{ description }}"
+            updateTime: "{{ updateTime }}"
+            displayName: "{{ displayName }}"
+            etag: "{{ etag }}"
+            labels: "{{ labels }}"
     - name: tensorboardRunId
-      value: string
-```
+      value: "{{ tensorboardRunId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -477,9 +483,9 @@ Updates a TensorboardRun.
 UPDATE google.aiplatform.runs
 SET 
 data__description = '{{ description }}',
-data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}',
 data__etag = '{{ etag }}',
-data__displayName = '{{ displayName }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -546,8 +552,8 @@ EXEC google.aiplatform.runs.write
 @runsId='{{ runsId }}' --required 
 @@json=
 '{
-"tensorboardRun": "{{ tensorboardRun }}", 
-"timeSeriesData": "{{ timeSeriesData }}"
+"timeSeriesData": "{{ timeSeriesData }}", 
+"tensorboardRun": "{{ tensorboardRun }}"
 }'
 ;
 ```

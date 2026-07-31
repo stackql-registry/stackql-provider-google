@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>iam</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>iam</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="iam" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.policytroubleshooter.iam" /></td></tr>
 </tbody></table>
@@ -54,7 +55,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Checks whether a principal has a specific permission for a specific resource, and explains why the principal does or does not have that permission.</td>
+    <td>Checks whether a principal has a specific permission for a specific resource, and explains why the principal does or doesn't have that permission.</td>
 </tr>
 </tbody>
 </table>
@@ -85,7 +86,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="troubleshoot">
 
-Checks whether a principal has a specific permission for a specific resource, and explains why the principal does or does not have that permission.
+Checks whether a principal has a specific permission for a specific resource, and explains why the principal does or doesn't have that permission.
 
 ```sql
 EXEC google.policytroubleshooter.iam.troubleshoot 

@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>web_apps</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>web_apps</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="web_apps" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.firebase.web_apps" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The lifecycle state of the App.</td>
+    <td>Output only. The lifecycle state of the App. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="webId" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The lifecycle state of the App.</td>
+    <td>Output only. The lifecycle state of the App. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="webId" /></td>
@@ -350,16 +351,16 @@ INSERT INTO firebase.firebase.web_apps (
 data__name,
 data__displayName,
 data__appUrls,
-data__apiKeyId,
 data__etag,
+data__apiKeyId,
 projectsId
 )
 SELECT 
 '{{ name }}',
 '{{ displayName }}',
 '{{ appUrls }}',
-'{{ apiKeyId }}',
 '{{ etag }}',
+'{{ apiKeyId }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -372,39 +373,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: web_apps
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the web_apps resource.
     - name: name
-      value: string
-      description: >
-        The resource name of the WebApp, in the format: projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER: the parent Project's [`ProjectNumber`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510). Note that the value for PROJECT_IDENTIFIER in any response body will be the `ProjectId`. * APP_ID: the globally unique, Firebase-assigned identifier for the App (see [`appId`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)).
-        
+      value: "{{ name }}"
+      description: |
+        The resource name of the WebApp, in the format: projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER: the parent Project's [\`ProjectNumber\`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [\`ProjectId\`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510). Note that the value for PROJECT_IDENTIFIER in any response body will be the \`ProjectId\`. * APP_ID: the globally unique, Firebase-assigned identifier for the App (see [\`appId\`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)).
     - name: displayName
-      value: string
-      description: >
-        The user-assigned display name for the `WebApp`.
-        
+      value: "{{ displayName }}"
+      description: |
+        The user-assigned display name for the \`WebApp\`.
     - name: appUrls
-      value: array
-      description: >
-        The URLs where the `WebApp` is hosted.
-        
-    - name: apiKeyId
-      value: string
-      description: >
-        The globally unique, Google-assigned identifier (UID) for the Firebase API key associated with the `WebApp`. Be aware that this value is the UID of the API key, _not_ the [`keyString`](https://cloud.google.com/api-keys/docs/reference/rest/v2/projects.locations.keys#Key.FIELDS.key_string) of the API key. The `keyString` is the value that can be found in the App's [configuration artifact](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps/getConfig). If `api_key_id` is not set in requests to [`webApps.Create`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps/create), then Firebase automatically associates an `api_key_id` with the `WebApp`. This auto-associated key may be an existing valid key or, if no valid key exists, a new one will be provisioned. In patch requests, `api_key_id` cannot be set to an empty value, and the new UID must have no restrictions or only have restrictions that are valid for the associated `WebApp`. We recommend using the [Google Cloud Console](https://console.cloud.google.com/apis/credentials) to manage API keys.
-        
+      value:
+        - "{{ appUrls }}"
+      description: |
+        The URLs where the \`WebApp\` is hosted.
     - name: etag
-      value: string
-      description: >
-        This checksum is computed by the server based on the value of other fields, and it may be sent with update requests to ensure the client has an up-to-date value before proceeding. Learn more about `etag` in Google's [AIP-154 standard](https://google.aip.dev/154#declarative-friendly-resources). This etag is strongly validated.
-        
-```
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and it may be sent with update requests to ensure the client has an up-to-date value before proceeding. Learn more about \`etag\` in Google's [AIP-154 standard](https://google.aip.dev/154#declarative-friendly-resources). This etag is strongly validated.
+    - name: apiKeyId
+      value: "{{ apiKeyId }}"
+      description: |
+        The globally unique, Google-assigned identifier (UID) for the Firebase API key associated with the \`WebApp\`. Be aware that this value is the UID of the API key, _not_ the [\`keyString\`](https://cloud.google.com/api-keys/docs/reference/rest/v2/projects.locations.keys#Key.FIELDS.key_string) of the API key. The \`keyString\` is the value that can be found in the App's [configuration artifact](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps/getConfig). If \`api_key_id\` is not set in requests to [\`webApps.Create\`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps/create), then Firebase automatically associates an \`api_key_id\` with the \`WebApp\`. This auto-associated key may be an existing valid key or, if no valid key exists, a new one will be provisioned. In patch requests, \`api_key_id\` cannot be set to an empty value, and the new UID must have no restrictions or only have restrictions that are valid for the associated \`WebApp\`. We recommend using the [Google Cloud Console](https://console.cloud.google.com/apis/credentials) to manage API keys.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -427,8 +424,8 @@ SET
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
 data__appUrls = '{{ appUrls }}',
-data__apiKeyId = '{{ apiKeyId }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__apiKeyId = '{{ apiKeyId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND webAppsId = '{{ webAppsId }}' --required

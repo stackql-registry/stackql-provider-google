@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>assets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>assets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="assets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.assets" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the asset.</td>
+    <td>Output only. Current state of the asset. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the asset.</td>
+    <td>Output only. Current state of the asset. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_zones_assets_list"><CopyableCode code="projects_locations_lakes_zones_assets_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-zonesId"><code>zonesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists asset resources in a zone.</td>
 </tr>
 <tr>
@@ -388,9 +389,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
 AND zonesId = '{{ zonesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -413,10 +414,10 @@ Creates an asset resource.
 
 ```sql
 INSERT INTO google.dataplex.assets (
-data__displayName,
 data__labels,
-data__description,
 data__resourceSpec,
+data__description,
+data__displayName,
 data__discoverySpec,
 projectsId,
 locationsId,
@@ -426,10 +427,10 @@ assetId,
 validateOnly
 )
 SELECT 
-'{{ displayName }}',
 '{{ labels }}',
-'{{ description }}',
 '{{ resourceSpec }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ discoverySpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -448,52 +449,64 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: assets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the assets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the assets resource.
     - name: lakesId
-      value: string
+      value: "{{ lakesId }}"
       description: Required parameter for the assets resource.
     - name: zonesId
-      value: string
+      value: "{{ zonesId }}"
       description: Required parameter for the assets resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly display name.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. User defined labels for the asset.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the asset.
-        
     - name: resourceSpec
-      value: object
-      description: >
+      description: |
         Required. Specification of the resource that is referenced by this asset.
-        
+      value:
+        name: "{{ name }}"
+        type: "{{ type }}"
+        readAccessMode: "{{ readAccessMode }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the asset.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
     - name: discoverySpec
-      value: object
-      description: >
+      description: |
         Optional. Specification of the discovery feature applied to data referenced by this asset. When this spec is left unset, the asset will use the spec set on the parent zone.
-        
+      value:
+        includePatterns:
+          - "{{ includePatterns }}"
+        enabled: {{ enabled }}
+        jsonOptions:
+          disableTypeInference: {{ disableTypeInference }}
+          encoding: "{{ encoding }}"
+        excludePatterns:
+          - "{{ excludePatterns }}"
+        schedule: "{{ schedule }}"
+        csvOptions:
+          headerRows: {{ headerRows }}
+          disableTypeInference: {{ disableTypeInference }}
+          encoding: "{{ encoding }}"
+          delimiter: "{{ delimiter }}"
     - name: assetId
-      value: string
+      value: "{{ assetId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -513,10 +526,10 @@ Updates an asset resource.
 ```sql
 UPDATE google.dataplex.assets
 SET 
-data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
 data__resourceSpec = '{{ resourceSpec }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__discoverySpec = '{{ discoverySpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

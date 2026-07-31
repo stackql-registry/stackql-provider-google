@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>replies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>replies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="replies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev3.replies" /></td></tr>
 </tbody></table>
@@ -57,7 +58,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>The action the reply performed to the parent comment. Valid values are: * `resolve` * `reopen`</td>
+    <td>The action the reply performed to the parent comment. The supported values are: * `resolve` * `reopen`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="assigneeEmailAddress" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The email address of the user assigned to this comment. If no user is assigned, the field is unset.</td>
 </tr>
 <tr>
     <td><CopyableCode code="author" /></td>
@@ -67,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="content" /></td>
     <td><code>string</code></td>
-    <td>The plain text content of the reply. This field is used for setting the content, while `htmlContent` should be displayed. This is required on creates if no `action` is specified.</td>
+    <td>The plain text content of the reply. This field is used for setting the content, while `htmlContent` should be displayed. This field is required by the `create` method if no `action` value is specified.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createdTime" /></td>
@@ -88,6 +94,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
     <td>Output only. Identifies what kind of resource this is. Value: the fixed string `"drive#reply"`. (default: drive#reply)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mentionedEmailAddresses" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A list of email addresses for users mentioned in this comment. If no users are mentioned, the list is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="modifiedTime" /></td>
@@ -116,7 +127,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>The action the reply performed to the parent comment. Valid values are: * `resolve` * `reopen`</td>
+    <td>The action the reply performed to the parent comment. The supported values are: * `resolve` * `reopen`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="assigneeEmailAddress" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The email address of the user assigned to this comment. If no user is assigned, the field is unset.</td>
 </tr>
 <tr>
     <td><CopyableCode code="author" /></td>
@@ -126,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="content" /></td>
     <td><code>string</code></td>
-    <td>The plain text content of the reply. This field is used for setting the content, while `htmlContent` should be displayed. This is required on creates if no `action` is specified.</td>
+    <td>The plain text content of the reply. This field is used for setting the content, while `htmlContent` should be displayed. This field is required by the `create` method if no `action` value is specified.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createdTime" /></td>
@@ -147,6 +163,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
     <td>Output only. Identifies what kind of resource this is. Value: the fixed string `"drive#reply"`. (default: drive#reply)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mentionedEmailAddresses" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A list of email addresses for users mentioned in this comment. If no users are mentioned, the list is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="modifiedTime" /></td>
@@ -178,35 +199,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-commentId"><code>commentId</code></a>, <a href="#parameter-replyId"><code>replyId</code></a></td>
     <td><a href="#parameter-includeDeleted"><code>includeDeleted</code></a></td>
-    <td>Gets a reply by ID.</td>
+    <td>Gets a reply by ID. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-commentId"><code>commentId</code></a></td>
-    <td><a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists a comment's replies.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists a comment's replies. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-commentId"><code>commentId</code></a></td>
     <td></td>
-    <td>Creates a reply to a comment.</td>
+    <td>Creates a reply to a comment. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-commentId"><code>commentId</code></a>, <a href="#parameter-replyId"><code>replyId</code></a></td>
     <td></td>
-    <td>Updates a reply with patch semantics.</td>
+    <td>Updates a reply with patch semantics. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-commentId"><code>commentId</code></a>, <a href="#parameter-replyId"><code>replyId</code></a></td>
     <td></td>
-    <td>Deletes a reply.</td>
+    <td>Deletes a reply. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).</td>
 </tr>
 </tbody>
 </table>
@@ -268,18 +289,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets a reply by ID.
+Gets a reply by ID. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).
 
 ```sql
 SELECT
 id,
 action,
+assigneeEmailAddress,
 author,
 content,
 createdTime,
 deleted,
 htmlContent,
 kind,
+mentionedEmailAddresses,
 modifiedTime
 FROM googleworkspace.drivev3.replies
 WHERE fileId = '{{ fileId }}' -- required
@@ -291,25 +314,27 @@ AND includeDeleted = '{{ includeDeleted }}'
 </TabItem>
 <TabItem value="list">
 
-Lists a comment's replies.
+Lists a comment's replies. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).
 
 ```sql
 SELECT
 id,
 action,
+assigneeEmailAddress,
 author,
 content,
 createdTime,
 deleted,
 htmlContent,
 kind,
+mentionedEmailAddresses,
 modifiedTime
 FROM googleworkspace.drivev3.replies
 WHERE fileId = '{{ fileId }}' -- required
 AND commentId = '{{ commentId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND includeDeleted = '{{ includeDeleted }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -327,106 +352,105 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="create">
 
-Creates a reply to a comment.
+Creates a reply to a comment. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).
 
 ```sql
 INSERT INTO googleworkspace.drivev3.replies (
+data__modifiedTime,
+data__htmlContent,
+data__createdTime,
+data__content,
+data__author,
+data__action,
 data__id,
 data__kind,
-data__createdTime,
-data__modifiedTime,
-data__action,
-data__author,
 data__deleted,
-data__htmlContent,
-data__content,
 fileId,
 commentId
 )
 SELECT 
+'{{ modifiedTime }}',
+'{{ htmlContent }}',
+'{{ createdTime }}',
+'{{ content }}',
+'{{ author }}',
+'{{ action }}',
 '{{ id }}',
 '{{ kind }}',
-'{{ createdTime }}',
-'{{ modifiedTime }}',
-'{{ action }}',
-'{{ author }}',
 {{ deleted }},
-'{{ htmlContent }}',
-'{{ content }}',
 '{{ fileId }}',
 '{{ commentId }}'
 RETURNING
 id,
 action,
+assigneeEmailAddress,
 author,
 content,
 createdTime,
 deleted,
 htmlContent,
 kind,
+mentionedEmailAddresses,
 modifiedTime
 ;
 ```
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: replies
   props:
     - name: fileId
-      value: string
+      value: "{{ fileId }}"
       description: Required parameter for the replies resource.
     - name: commentId
-      value: string
+      value: "{{ commentId }}"
       description: Required parameter for the replies resource.
-    - name: id
-      value: string
-      description: >
-        Output only. The ID of the reply.
-        
-    - name: kind
-      value: string
-      description: >
-        Output only. Identifies what kind of resource this is. Value: the fixed string `"drive#reply"`.
-        
-      default: drive#reply
-    - name: createdTime
-      value: string
-      description: >
-        The time at which the reply was created (RFC 3339 date-time).
-        
     - name: modifiedTime
-      value: string
-      description: >
+      value: "{{ modifiedTime }}"
+      description: |
         The last time the reply was modified (RFC 3339 date-time).
-        
-    - name: action
-      value: string
-      description: >
-        The action the reply performed to the parent comment. Valid values are: * `resolve` * `reopen`
-        
-    - name: author
-      value: object
-      description: >
-        Information about a Drive user.
-        
-    - name: deleted
-      value: boolean
-      description: >
-        Output only. Whether the reply has been deleted. A deleted reply has no content.
-        
     - name: htmlContent
-      value: string
-      description: >
+      value: "{{ htmlContent }}"
+      description: |
         Output only. The content of the reply with HTML formatting.
-        
+    - name: createdTime
+      value: "{{ createdTime }}"
+      description: |
+        The time at which the reply was created (RFC 3339 date-time).
     - name: content
-      value: string
-      description: >
-        The plain text content of the reply. This field is used for setting the content, while `htmlContent` should be displayed. This is required on creates if no `action` is specified.
-        
-```
+      value: "{{ content }}"
+      description: |
+        The plain text content of the reply. This field is used for setting the content, while \`htmlContent\` should be displayed. This field is required by the \`create\` method if no \`action\` value is specified.
+    - name: author
+      description: |
+        Information about a Drive user.
+      value:
+        emailAddress: "{{ emailAddress }}"
+        permissionId: "{{ permissionId }}"
+        photoLink: "{{ photoLink }}"
+        displayName: "{{ displayName }}"
+        kind: "{{ kind }}"
+        me: {{ me }}
+    - name: action
+      value: "{{ action }}"
+      description: |
+        The action the reply performed to the parent comment. The supported values are: * \`resolve\` * \`reopen\`
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Output only. The ID of the reply.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Output only. Identifies what kind of resource this is. Value: the fixed string \`"drive#reply"\`.
+      default: drive#reply
+    - name: deleted
+      value: {{ deleted }}
+      description: |
+        Output only. Whether the reply has been deleted. A deleted reply has no content.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -441,20 +465,20 @@ modifiedTime
 >
 <TabItem value="update">
 
-Updates a reply with patch semantics.
+Updates a reply with patch semantics. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).
 
 ```sql
 UPDATE googleworkspace.drivev3.replies
 SET 
+data__modifiedTime = '{{ modifiedTime }}',
+data__htmlContent = '{{ htmlContent }}',
+data__createdTime = '{{ createdTime }}',
+data__content = '{{ content }}',
+data__author = '{{ author }}',
+data__action = '{{ action }}',
 data__id = '{{ id }}',
 data__kind = '{{ kind }}',
-data__createdTime = '{{ createdTime }}',
-data__modifiedTime = '{{ modifiedTime }}',
-data__action = '{{ action }}',
-data__author = '{{ author }}',
-data__deleted = {{ deleted }},
-data__htmlContent = '{{ htmlContent }}',
-data__content = '{{ content }}'
+data__deleted = {{ deleted }}
 WHERE 
 fileId = '{{ fileId }}' --required
 AND commentId = '{{ commentId }}' --required
@@ -462,12 +486,14 @@ AND replyId = '{{ replyId }}' --required
 RETURNING
 id,
 action,
+assigneeEmailAddress,
 author,
 content,
 createdTime,
 deleted,
 htmlContent,
 kind,
+mentionedEmailAddresses,
 modifiedTime;
 ```
 </TabItem>
@@ -484,7 +510,7 @@ modifiedTime;
 >
 <TabItem value="delete">
 
-Deletes a reply.
+Deletes a reply. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments).
 
 ```sql
 DELETE FROM googleworkspace.drivev3.replies

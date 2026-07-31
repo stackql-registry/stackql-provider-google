@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>default_bucket</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>default_bucket</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="default_bucket" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.storage.default_bucket" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Resource name of the default bucket.</td>
+    <td>Identifier. Resource name of the default bucket.</td>
 </tr>
 <tr>
     <td><CopyableCode code="bucket" /></td>
@@ -61,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
-    <td>Immutable. Location of the default bucket.</td>
+    <td>Required. Immutable. Location of the default bucket.</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageClass" /></td>
@@ -174,15 +175,15 @@ Creates a Spark tier-eligible Cloud Storage bucket and links it to your Firebase
 
 ```sql
 INSERT INTO firebase.storage.default_bucket (
-data__name,
-data__location,
 data__storageClass,
+data__location,
+data__name,
 projectsId
 )
 SELECT 
-'{{ name }}',
-'{{ location }}',
 '{{ storageClass }}',
+'{{ location }}',
+'{{ name }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -194,29 +195,26 @@ storageClass
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: default_bucket
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the default_bucket resource.
-    - name: name
-      value: string
-      description: >
-        Resource name of the default bucket.
-        
-    - name: location
-      value: string
-      description: >
-        Immutable. Location of the default bucket.
-        
     - name: storageClass
-      value: string
-      description: >
+      value: "{{ storageClass }}"
+      description: |
         Immutable. Storage class of the default bucket. Supported values are available at https://cloud.google.com/storage/docs/storage-classes#classes.
-        
-```
+    - name: location
+      value: "{{ location }}"
+      description: |
+        Required. Immutable. Location of the default bucket.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the default bucket.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

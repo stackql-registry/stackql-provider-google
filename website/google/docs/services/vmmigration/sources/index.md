@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sources</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmmigration.sources" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Sources in a given project and location.</td>
 </tr>
 <tr>
@@ -326,8 +327,8 @@ vmware
 FROM google.vmmigration.sources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
@@ -351,24 +352,24 @@ Creates a new Source in a given project and location.
 
 ```sql
 INSERT INTO google.vmmigration.sources (
-data__vmware,
-data__aws,
 data__azure,
-data__labels,
-data__description,
 data__encryption,
+data__aws,
+data__labels,
+data__vmware,
+data__description,
 projectsId,
 locationsId,
 sourceId,
 requestId
 )
 SELECT 
-'{{ vmware }}',
-'{{ aws }}',
 '{{ azure }}',
-'{{ labels }}',
-'{{ description }}',
 '{{ encryption }}',
+'{{ aws }}',
+'{{ labels }}',
+'{{ vmware }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourceId }}',
@@ -384,51 +385,81 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sources
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the sources resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the sources resource.
-    - name: vmware
-      value: object
-      description: >
-        Vmware type source details.
-        
-    - name: aws
-      value: object
-      description: >
-        AWS type source details.
-        
     - name: azure
-      value: object
-      description: >
+      description: |
         Azure type source details.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels of the source.
-        
-    - name: description
-      value: string
-      description: >
-        User-provided description of the source.
-        
+      value:
+        error:
+          code: {{ code }}
+          details: "{{ details }}"
+          message: "{{ message }}"
+        resourceGroupId: "{{ resourceGroupId }}"
+        subscriptionId: "{{ subscriptionId }}"
+        migrationResourcesUserTags: "{{ migrationResourcesUserTags }}"
+        clientSecretCreds:
+          tenantId: "{{ tenantId }}"
+          clientSecret: "{{ clientSecret }}"
+          clientId: "{{ clientId }}"
+        azureLocation: "{{ azureLocation }}"
+        state: "{{ state }}"
     - name: encryption
-      value: object
-      description: >
+      description: |
         Optional. Immutable. The encryption details of the source data stored by the service.
-        
+      value:
+        kmsKey: "{{ kmsKey }}"
+    - name: aws
+      description: |
+        AWS type source details.
+      value:
+        accessKeyCreds:
+          secretAccessKey: "{{ secretAccessKey }}"
+          accessKeyId: "{{ accessKeyId }}"
+          sessionToken: "{{ sessionToken }}"
+        state: "{{ state }}"
+        publicIp: "{{ publicIp }}"
+        error:
+          code: {{ code }}
+          details: "{{ details }}"
+          message: "{{ message }}"
+        inventoryTagList:
+          - key: "{{ key }}"
+            value: "{{ value }}"
+        inventorySecurityGroupNames:
+          - "{{ inventorySecurityGroupNames }}"
+        awsRegion: "{{ awsRegion }}"
+        migrationResourcesUserTags: "{{ migrationResourcesUserTags }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels of the source.
+    - name: vmware
+      description: |
+        Vmware type source details.
+      value:
+        username: "{{ username }}"
+        password: "{{ password }}"
+        vcenterIp: "{{ vcenterIp }}"
+        thumbprint: "{{ thumbprint }}"
+        resolvedVcenterHost: "{{ resolvedVcenterHost }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided description of the source.
     - name: sourceId
-      value: string
+      value: "{{ sourceId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -448,12 +479,12 @@ Updates the parameters of a single Source.
 ```sql
 UPDATE google.vmmigration.sources
 SET 
-data__vmware = '{{ vmware }}',
-data__aws = '{{ aws }}',
 data__azure = '{{ azure }}',
+data__encryption = '{{ encryption }}',
+data__aws = '{{ aws }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__encryption = '{{ encryption }}'
+data__vmware = '{{ vmware }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

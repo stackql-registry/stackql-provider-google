@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entries</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datacatalog.entries" /></td></tr>
 </tbody></table>
@@ -132,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="integratedSystem" /></td>
     <td><code>string</code></td>
-    <td>Output only. Indicates the entry's source system that Data Catalog integrates with, such as BigQuery, Pub/Sub, or Dataproc Metastore.</td>
+    <td>Output only. Indicates the entry's source system that Data Catalog integrates with, such as BigQuery, Pub/Sub, or Dataproc Metastore. (INTEGRATED_SYSTEM_UNSPECIFIED, BIGQUERY, CLOUD_PUBSUB, DATAPROC_METASTORE, DATAPLEX, CLOUD_SPANNER, CLOUD_BIGTABLE, CLOUD_SQL, LOOKER, VERTEX_AI)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -180,6 +181,11 @@ The following fields are returned by `SELECT` queries:
     <td>Timestamps from the underlying resource, not from the Data Catalog entry. Output only when the entry has a system listed in the `IntegratedSystem` enum. For entries with `user_specified_system`, this field is optional and defaults to an empty timestamp. (id: GoogleCloudDatacatalogV1SystemTimestamps)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="spannerTableSpec" /></td>
+    <td><code>object</code></td>
+    <td>Specification of a Spanner table. (id: GoogleCloudDatacatalogV1SpannerTableSpec)</td>
+</tr>
+<tr>
     <td><CopyableCode code="sqlDatabaseSystemSpec" /></td>
     <td><code>object</code></td>
     <td>Specification that applies to a relational database system. Only settable when `user_specified_system` is equal to `SQL_DATABASE` (id: GoogleCloudDatacatalogV1SqlDatabaseSystemSpec)</td>
@@ -187,7 +193,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of the entry. For details, see [`EntryType`](https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries#entrytype).</td>
+    <td>The type of the entry. For details, see [`EntryType`](https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries#entrytype). (ENTRY_TYPE_UNSPECIFIED, TABLE, MODEL, DATA_STREAM, FILESET, CLUSTER, DATABASE, DATA_SOURCE_CONNECTION, ROUTINE, LAKE, ZONE, SERVICE, DATABASE_SCHEMA, DASHBOARD, EXPLORE, LOOK, FEATURE_ONLINE_STORE, FEATURE_VIEW, FEATURE_GROUP, GRAPH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="usageSignal" /></td>
@@ -301,7 +307,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="integratedSystem" /></td>
     <td><code>string</code></td>
-    <td>Output only. Indicates the entry's source system that Data Catalog integrates with, such as BigQuery, Pub/Sub, or Dataproc Metastore.</td>
+    <td>Output only. Indicates the entry's source system that Data Catalog integrates with, such as BigQuery, Pub/Sub, or Dataproc Metastore. (INTEGRATED_SYSTEM_UNSPECIFIED, BIGQUERY, CLOUD_PUBSUB, DATAPROC_METASTORE, DATAPLEX, CLOUD_SPANNER, CLOUD_BIGTABLE, CLOUD_SQL, LOOKER, VERTEX_AI)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -349,6 +355,11 @@ The following fields are returned by `SELECT` queries:
     <td>Timestamps from the underlying resource, not from the Data Catalog entry. Output only when the entry has a system listed in the `IntegratedSystem` enum. For entries with `user_specified_system`, this field is optional and defaults to an empty timestamp. (id: GoogleCloudDatacatalogV1SystemTimestamps)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="spannerTableSpec" /></td>
+    <td><code>object</code></td>
+    <td>Specification of a Spanner table. (id: GoogleCloudDatacatalogV1SpannerTableSpec)</td>
+</tr>
+<tr>
     <td><CopyableCode code="sqlDatabaseSystemSpec" /></td>
     <td><code>object</code></td>
     <td>Specification that applies to a relational database system. Only settable when `user_specified_system` is equal to `SQL_DATABASE` (id: GoogleCloudDatacatalogV1SqlDatabaseSystemSpec)</td>
@@ -356,7 +367,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of the entry. For details, see [`EntryType`](https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries#entrytype).</td>
+    <td>The type of the entry. For details, see [`EntryType`](https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries#entrytype). (ENTRY_TYPE_UNSPECIFIED, TABLE, MODEL, DATA_STREAM, FILESET, CLUSTER, DATABASE, DATA_SOURCE_CONNECTION, ROUTINE, LAKE, ZONE, SERVICE, DATABASE_SCHEMA, DASHBOARD, EXPLORE, LOOK, FEATURE_ONLINE_STORE, FEATURE_VIEW, FEATURE_GROUP, GRAPH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="usageSignal" /></td>
@@ -600,6 +611,7 @@ routineSpec,
 schema,
 serviceSpec,
 sourceSystemTimestamps,
+spannerTableSpec,
 sqlDatabaseSystemSpec,
 type,
 usageSignal,
@@ -645,6 +657,7 @@ routineSpec,
 schema,
 serviceSpec,
 sourceSystemTimestamps,
+spannerTableSpec,
 sqlDatabaseSystemSpec,
 type,
 usageSignal,
@@ -696,6 +709,7 @@ data__serviceSpec,
 data__modelSpec,
 data__featureOnlineStoreSpec,
 data__graphSpec,
+data__spannerTableSpec,
 data__displayName,
 data__description,
 data__businessContext,
@@ -727,6 +741,7 @@ SELECT
 '{{ modelSpec }}',
 '{{ featureOnlineStoreSpec }}',
 '{{ graphSpec }}',
+'{{ spannerTableSpec }}',
 '{{ displayName }}',
 '{{ description }}',
 '{{ businessContext }}',
@@ -765,6 +780,7 @@ routineSpec,
 schema,
 serviceSpec,
 sourceSystemTimestamps,
+spannerTableSpec,
 sqlDatabaseSystemSpec,
 type,
 usageSignal,
@@ -775,148 +791,301 @@ userSpecifiedType
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: entries
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the entries resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the entries resource.
     - name: entryGroupsId
-      value: string
+      value: "{{ entryGroupsId }}"
       description: Required parameter for the entries resource.
     - name: linkedResource
-      value: string
-      description: >
-        The resource this metadata entry refers to. For Google Cloud Platform resources, `linked_resource` is the [Full Resource Name] (https://cloud.google.com/apis/design/resource_names#full_resource_name). For example, the `linked_resource` for a table resource from BigQuery is: `//bigquery.googleapis.com/projects/{PROJECT_ID}/datasets/{DATASET_ID}/tables/{TABLE_ID}` Output only when the entry is one of the types in the `EntryType` enum. For entries with a `user_specified_type`, this field is optional and defaults to an empty string. The resource string must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), periods (.), colons (:), slashes (/), dashes (-), and hashes (#). The maximum size is 200 bytes when encoded in UTF-8.
-        
+      value: "{{ linkedResource }}"
+      description: |
+        The resource this metadata entry refers to. For Google Cloud Platform resources, \`linked_resource\` is the [Full Resource Name] (https://cloud.google.com/apis/design/resource_names#full_resource_name). For example, the \`linked_resource\` for a table resource from BigQuery is: \`//bigquery.googleapis.com/projects/{PROJECT_ID}/datasets/{DATASET_ID}/tables/{TABLE_ID}\` Output only when the entry is one of the types in the \`EntryType\` enum. For entries with a \`user_specified_type\`, this field is optional and defaults to an empty string. The resource string must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), periods (.), colons (:), slashes (/), dashes (-), and hashes (#). The maximum size is 200 bytes when encoded in UTF-8.
     - name: fullyQualifiedName
-      value: string
-      description: >
-        [Fully Qualified Name (FQN)](https://cloud.google.com//data-catalog/docs/fully-qualified-names) of the resource. Set automatically for entries representing resources from synced systems. Settable only during creation, and read-only later. Can be used for search and lookup of the entries. 
-        
+      value: "{{ fullyQualifiedName }}"
+      description: |
+        [Fully Qualified Name (FQN)](https://cloud.google.com//data-catalog/docs/fully-qualified-names) of the resource. Set automatically for entries representing resources from synced systems. Settable only during creation, and read-only later. Can be used for search and lookup of the entries.
     - name: type
-      value: string
-      description: >
-        The type of the entry. For details, see [`EntryType`](https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries#entrytype).
-        
-      valid_values: ['ENTRY_TYPE_UNSPECIFIED', 'TABLE', 'MODEL', 'DATA_STREAM', 'FILESET', 'CLUSTER', 'DATABASE', 'DATA_SOURCE_CONNECTION', 'ROUTINE', 'LAKE', 'ZONE', 'SERVICE', 'DATABASE_SCHEMA', 'DASHBOARD', 'EXPLORE', 'LOOK', 'FEATURE_ONLINE_STORE', 'FEATURE_VIEW', 'FEATURE_GROUP']
+      value: "{{ type }}"
+      description: |
+        The type of the entry. For details, see [\`EntryType\`](#entrytype).
+      valid_values: ['ENTRY_TYPE_UNSPECIFIED', 'TABLE', 'MODEL', 'DATA_STREAM', 'FILESET', 'CLUSTER', 'DATABASE', 'DATA_SOURCE_CONNECTION', 'ROUTINE', 'LAKE', 'ZONE', 'SERVICE', 'DATABASE_SCHEMA', 'DASHBOARD', 'EXPLORE', 'LOOK', 'FEATURE_ONLINE_STORE', 'FEATURE_VIEW', 'FEATURE_GROUP', 'GRAPH']
     - name: userSpecifiedType
-      value: string
-      description: >
-        Custom entry type that doesn't match any of the values allowed for input and listed in the `EntryType` enum. When creating an entry, first check the type values in the enum. If there are no appropriate types for the new entry, provide a custom value, for example, `my_special_type`. The `user_specified_type` string has the following limitations: * Is case insensitive. * Must begin with a letter or underscore. * Can only contain letters, numbers, and underscores. * Must be at least 1 character and at most 64 characters long.
-        
+      value: "{{ userSpecifiedType }}"
+      description: |
+        Custom entry type that doesn't match any of the values allowed for input and listed in the \`EntryType\` enum. When creating an entry, first check the type values in the enum. If there are no appropriate types for the new entry, provide a custom value, for example, \`my_special_type\`. The \`user_specified_type\` string has the following limitations: * Is case insensitive. * Must begin with a letter or underscore. * Can only contain letters, numbers, and underscores. * Must be at least 1 character and at most 64 characters long.
     - name: userSpecifiedSystem
-      value: string
-      description: >
-        Indicates the entry's source system that Data Catalog doesn't automatically integrate with. The `user_specified_system` string has the following limitations: * Is case insensitive. * Must begin with a letter or underscore. * Can only contain letters, numbers, and underscores. * Must be at least 1 character and at most 64 characters long.
-        
+      value: "{{ userSpecifiedSystem }}"
+      description: |
+        Indicates the entry's source system that Data Catalog doesn't automatically integrate with. The \`user_specified_system\` string has the following limitations: * Is case insensitive. * Must begin with a letter or underscore. * Can only contain letters, numbers, and underscores. * Must be at least 1 character and at most 64 characters long.
     - name: sqlDatabaseSystemSpec
-      value: object
-      description: >
-        Specification that applies to a relational database system. Only settable when `user_specified_system` is equal to `SQL_DATABASE`
-        
+      description: |
+        Specification that applies to a relational database system. Only settable when \`user_specified_system\` is equal to \`SQL_DATABASE\`
+      value:
+        sqlEngine: "{{ sqlEngine }}"
+        databaseVersion: "{{ databaseVersion }}"
+        instanceHost: "{{ instanceHost }}"
     - name: lookerSystemSpec
-      value: object
-      description: >
-        Specification that applies to Looker sysstem. Only settable when `user_specified_system` is equal to `LOOKER`
-        
+      description: |
+        Specification that applies to Looker sysstem. Only settable when \`user_specified_system\` is equal to \`LOOKER\`
+      value:
+        parentInstanceId: "{{ parentInstanceId }}"
+        parentInstanceDisplayName: "{{ parentInstanceDisplayName }}"
+        parentModelId: "{{ parentModelId }}"
+        parentModelDisplayName: "{{ parentModelDisplayName }}"
+        parentViewId: "{{ parentViewId }}"
+        parentViewDisplayName: "{{ parentViewDisplayName }}"
     - name: cloudBigtableSystemSpec
-      value: object
-      description: >
-        Specification that applies to Cloud Bigtable system. Only settable when `integrated_system` is equal to `CLOUD_BIGTABLE`
-        
+      description: |
+        Specification that applies to Cloud Bigtable system. Only settable when \`integrated_system\` is equal to \`CLOUD_BIGTABLE\`
+      value:
+        instanceDisplayName: "{{ instanceDisplayName }}"
     - name: gcsFilesetSpec
-      value: object
-      description: >
-        Specification that applies to a Cloud Storage fileset. Valid only for entries with the `FILESET` type.
-        
+      description: |
+        Specification that applies to a Cloud Storage fileset. Valid only for entries with the \`FILESET\` type.
+      value:
+        filePatterns:
+          - "{{ filePatterns }}"
+        sampleGcsFileSpecs:
+          - filePath: "{{ filePath }}"
+            gcsTimestamps:
+              createTime: "{{ createTime }}"
+              updateTime: "{{ updateTime }}"
+              expireTime: "{{ expireTime }}"
+            sizeBytes: "{{ sizeBytes }}"
     - name: databaseTableSpec
-      value: object
-      description: >
-        Specification that applies to a table resource. Valid only for entries with the `TABLE` or `EXPLORE` type.
-        
+      description: |
+        Specification that applies to a table resource. Valid only for entries with the \`TABLE\` or \`EXPLORE\` type.
+      value:
+        type: "{{ type }}"
+        dataplexTable:
+          externalTables:
+            - system: "{{ system }}"
+              fullyQualifiedName: "{{ fullyQualifiedName }}"
+              googleCloudResource: "{{ googleCloudResource }}"
+              dataCatalogEntry: "{{ dataCatalogEntry }}"
+          dataplexSpec:
+            asset: "{{ asset }}"
+            dataFormat:
+              avro:
+                text: "{{ text }}"
+              thrift:
+                text: "{{ text }}"
+              protobuf:
+                text: "{{ text }}"
+              parquet: "{{ parquet }}"
+              orc: "{{ orc }}"
+              csv: "{{ csv }}"
+            compressionFormat: "{{ compressionFormat }}"
+            projectId: "{{ projectId }}"
+          userManaged: {{ userManaged }}
+        databaseViewSpec:
+          viewType: "{{ viewType }}"
+          baseTable: "{{ baseTable }}"
+          sqlQuery: "{{ sqlQuery }}"
     - name: dataSourceConnectionSpec
-      value: object
-      description: >
-        Specification that applies to a data source connection. Valid only for entries with the `DATA_SOURCE_CONNECTION` type.
-        
+      description: |
+        Specification that applies to a data source connection. Valid only for entries with the \`DATA_SOURCE_CONNECTION\` type.
+      value:
+        bigqueryConnectionSpec:
+          connectionType: "{{ connectionType }}"
+          cloudSql:
+            instanceId: "{{ instanceId }}"
+            database: "{{ database }}"
+            type: "{{ type }}"
+          hasCredential: {{ hasCredential }}
     - name: routineSpec
-      value: object
-      description: >
-        Specification that applies to a user-defined function or procedure. Valid only for entries with the `ROUTINE` type.
-        
+      description: |
+        Specification that applies to a user-defined function or procedure. Valid only for entries with the \`ROUTINE\` type.
+      value:
+        routineType: "{{ routineType }}"
+        language: "{{ language }}"
+        routineArguments:
+          - name: "{{ name }}"
+            mode: "{{ mode }}"
+            type: "{{ type }}"
+        returnType: "{{ returnType }}"
+        definitionBody: "{{ definitionBody }}"
+        bigqueryRoutineSpec:
+          importedLibraries:
+            - "{{ importedLibraries }}"
     - name: datasetSpec
-      value: object
-      description: >
+      description: |
         Specification that applies to a dataset.
-        
+      value:
+        vertexDatasetSpec:
+          dataItemCount: "{{ dataItemCount }}"
+          dataType: "{{ dataType }}"
     - name: filesetSpec
-      value: object
-      description: >
-        Specification that applies to a fileset resource. Valid only for entries with the `FILESET` type.
-        
+      description: |
+        Specification that applies to a fileset resource. Valid only for entries with the \`FILESET\` type.
+      value:
+        dataplexFileset:
+          dataplexSpec:
+            asset: "{{ asset }}"
+            dataFormat:
+              avro:
+                text: "{{ text }}"
+              thrift:
+                text: "{{ text }}"
+              protobuf:
+                text: "{{ text }}"
+              parquet: "{{ parquet }}"
+              orc: "{{ orc }}"
+              csv: "{{ csv }}"
+            compressionFormat: "{{ compressionFormat }}"
+            projectId: "{{ projectId }}"
     - name: serviceSpec
-      value: object
-      description: >
+      description: |
         Specification that applies to a Service resource.
-        
+      value:
+        cloudBigtableInstanceSpec:
+          cloudBigtableClusterSpecs:
+            - displayName: "{{ displayName }}"
+              location: "{{ location }}"
+              type: "{{ type }}"
+              linkedResource: "{{ linkedResource }}"
     - name: modelSpec
-      value: object
-      description: >
+      description: |
         Model specification.
-        
+      value:
+        vertexModelSpec:
+          versionId: "{{ versionId }}"
+          versionAliases:
+            - "{{ versionAliases }}"
+          versionDescription: "{{ versionDescription }}"
+          vertexModelSourceInfo:
+            sourceType: "{{ sourceType }}"
+            copy: {{ copy }}
+          containerImageUri: "{{ containerImageUri }}"
     - name: featureOnlineStoreSpec
-      value: object
-      description: >
+      description: |
         FeatureonlineStore spec for Vertex AI Feature Store.
-        
+      value:
+        storageType: "{{ storageType }}"
     - name: graphSpec
-      value: object
-      description: >
+      description: |
         Spec for graph.
-        
+      value:
+        name: "{{ name }}"
+        nodeTables:
+          - dataSource: "{{ dataSource }}"
+            alias: "{{ alias }}"
+            kind: "{{ kind }}"
+            inputSource: "{{ inputSource }}"
+            elementKeys: "{{ elementKeys }}"
+            labelAndProperties: "{{ labelAndProperties }}"
+            dynamicLabelColumn: "{{ dynamicLabelColumn }}"
+            dynamicPropertiesColumn: "{{ dynamicPropertiesColumn }}"
+            sourceNodeReference:
+              nodeAlias: "{{ nodeAlias }}"
+              edgeTableColumns:
+                - "{{ edgeTableColumns }}"
+              nodeTableColumns:
+                - "{{ nodeTableColumns }}"
+            destinationNodeReference:
+              nodeAlias: "{{ nodeAlias }}"
+              edgeTableColumns:
+                - "{{ edgeTableColumns }}"
+              nodeTableColumns:
+                - "{{ nodeTableColumns }}"
+        edgeTables:
+          - dataSource: "{{ dataSource }}"
+            alias: "{{ alias }}"
+            kind: "{{ kind }}"
+            inputSource: "{{ inputSource }}"
+            elementKeys: "{{ elementKeys }}"
+            labelAndProperties: "{{ labelAndProperties }}"
+            dynamicLabelColumn: "{{ dynamicLabelColumn }}"
+            dynamicPropertiesColumn: "{{ dynamicPropertiesColumn }}"
+            sourceNodeReference:
+              nodeAlias: "{{ nodeAlias }}"
+              edgeTableColumns:
+                - "{{ edgeTableColumns }}"
+              nodeTableColumns:
+                - "{{ nodeTableColumns }}"
+            destinationNodeReference:
+              nodeAlias: "{{ nodeAlias }}"
+              edgeTableColumns:
+                - "{{ edgeTableColumns }}"
+              nodeTableColumns:
+                - "{{ nodeTableColumns }}"
+    - name: spannerTableSpec
+      description: |
+        Specification of a Spanner table.
+      value:
+        primaryKey:
+          columns:
+            - "{{ columns }}"
+        foreignKeys:
+          - name: "{{ name }}"
+            entry: "{{ entry }}"
+            columnMappings: "{{ columnMappings }}"
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Display name of an entry. The maximum size is 500 bytes when encoded in UTF-8. Default value is an empty string.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Entry description that can consist of several sentences or paragraphs that describe entry contents. The description must not contain Unicode non-characters as well as C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). The maximum size is 2000 bytes when encoded in UTF-8. Default value is an empty string.
-        
     - name: businessContext
-      value: object
-      description: >
+      description: |
         Business Context of the entry. Not supported for BigQuery datasets
-        
+      value:
+        entryOverview:
+          overview: "{{ overview }}"
+        contacts:
+          people:
+            - designation: "{{ designation }}"
+              email: "{{ email }}"
     - name: schema
-      value: object
-      description: >
+      description: |
         Schema of the entry. An entry might not have any schema attached to it.
-        
+      value:
+        columns:
+          - column: "{{ column }}"
+            type: "{{ type }}"
+            description: "{{ description }}"
+            mode: "{{ mode }}"
+            defaultValue: "{{ defaultValue }}"
+            ordinalPosition: {{ ordinalPosition }}
+            highestIndexingType: "{{ highestIndexingType }}"
+            subcolumns: "{{ subcolumns }}"
+            lookerColumnSpec:
+              type: "{{ type }}"
+            rangeElementType:
+              type: "{{ type }}"
+            gcRule: "{{ gcRule }}"
     - name: sourceSystemTimestamps
-      value: object
-      description: >
-        Timestamps from the underlying resource, not from the Data Catalog entry. Output only when the entry has a system listed in the `IntegratedSystem` enum. For entries with `user_specified_system`, this field is optional and defaults to an empty timestamp.
-        
+      description: |
+        Timestamps from the underlying resource, not from the Data Catalog entry. Output only when the entry has a system listed in the \`IntegratedSystem\` enum. For entries with \`user_specified_system\`, this field is optional and defaults to an empty timestamp.
+      value:
+        createTime: "{{ createTime }}"
+        updateTime: "{{ updateTime }}"
+        expireTime: "{{ expireTime }}"
     - name: usageSignal
-      value: object
-      description: >
+      description: |
         Resource usage statistics.
-        
+      value:
+        updateTime: "{{ updateTime }}"
+        usageWithinTimeRange: "{{ usageWithinTimeRange }}"
+        commonUsageWithinTimeRange: "{{ commonUsageWithinTimeRange }}"
+        favoriteCount: "{{ favoriteCount }}"
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Cloud labels attached to the entry. In Data Catalog, you can create and modify labels attached only to custom entries. Synced entries have unmodifiable labels that come from the source system.
-        
     - name: entryId
-      value: string
-```
+      value: "{{ entryId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -954,6 +1123,7 @@ data__serviceSpec = '{{ serviceSpec }}',
 data__modelSpec = '{{ modelSpec }}',
 data__featureOnlineStoreSpec = '{{ featureOnlineStoreSpec }}',
 data__graphSpec = '{{ graphSpec }}',
+data__spannerTableSpec = '{{ spannerTableSpec }}',
 data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
 data__businessContext = '{{ businessContext }}',
@@ -994,6 +1164,7 @@ routineSpec,
 schema,
 serviceSpec,
 sourceSystemTimestamps,
+spannerTableSpec,
 sqlDatabaseSystemSpec,
 type,
 usageSignal,

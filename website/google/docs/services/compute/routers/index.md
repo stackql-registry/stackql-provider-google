@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>routers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>routers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="routers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.routers" /></td></tr>
 </tbody></table>
@@ -58,7 +59,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bgp" /></td>
@@ -68,12 +69,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="bgpPeers" /></td>
     <td><code>array</code></td>
-    <td>BGP information that must be configured into the routing stack to establish BGP peering. This information must specify the peer ASN and either the interface name, IP address, or peer IP address. Please refer to RFC4273.</td>
+    <td>BGP information that must be configured into the routing stack to establish BGP peering. This information must specify the peer ASN and either the interface name, IP address, or peer IP address. Please refer toRFC4273.</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -88,12 +89,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="interfaces" /></td>
     <td><code>array</code></td>
-    <td>Router interfaces. To create a BGP peer that uses a router interface, the interface must have one of the following fields specified: - linkedVpnTunnel - linkedInterconnectAttachment - subnetwork You can create a router interface without any of these fields specified. However, you cannot create a BGP peer that uses that interface.</td>
+    <td>Router interfaces. To create a BGP peer that uses a router interface, the interface must have one of the following fields specified:        - linkedVpnTunnel    - linkedInterconnectAttachment    - subnetwork   You can create a router interface without any of these fields specified. However, you cannot create a BGP peer that uses that interface.</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#router for routers. (default: compute#router)</td>
+    <td>Output only. [Output Only] Type of resource. Always compute#router for routers. (default: compute#router)</td>
 </tr>
 <tr>
     <td><CopyableCode code="md5AuthenticationKeys" /></td>
@@ -106,9 +107,19 @@ The following fields are returned by `SELECT` queries:
     <td>A list of NAT services created in this router.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="nccGateway" /></td>
+    <td><code>string</code></td>
+    <td>URI of the ncc_gateway to which this router associated.</td>
+</tr>
+<tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
     <td>URI of the network to which this router belongs.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="params" /></td>
+    <td><code>object</code></td>
+    <td>Input only. [Input Only] Additional params passed with the request, but not persisted as part of resource payload. (id: RouterParams)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
@@ -147,17 +158,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#router for routers. (default: compute#routerList)</td>
+    <td>Output only. [Output Only] Type of resource. Always compute#router for routers. (default: compute#routerList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -186,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bgp" /></td>
@@ -196,12 +207,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="bgpPeers" /></td>
     <td><code>array</code></td>
-    <td>BGP information that must be configured into the routing stack to establish BGP peering. This information must specify the peer ASN and either the interface name, IP address, or peer IP address. Please refer to RFC4273.</td>
+    <td>BGP information that must be configured into the routing stack to establish BGP peering. This information must specify the peer ASN and either the interface name, IP address, or peer IP address. Please refer toRFC4273.</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -216,12 +227,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="interfaces" /></td>
     <td><code>array</code></td>
-    <td>Router interfaces. To create a BGP peer that uses a router interface, the interface must have one of the following fields specified: - linkedVpnTunnel - linkedInterconnectAttachment - subnetwork You can create a router interface without any of these fields specified. However, you cannot create a BGP peer that uses that interface.</td>
+    <td>Router interfaces. To create a BGP peer that uses a router interface, the interface must have one of the following fields specified:        - linkedVpnTunnel    - linkedInterconnectAttachment    - subnetwork   You can create a router interface without any of these fields specified. However, you cannot create a BGP peer that uses that interface.</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#router for routers. (default: compute#router)</td>
+    <td>Output only. [Output Only] Type of resource. Always compute#router for routers. (default: compute#router)</td>
 </tr>
 <tr>
     <td><CopyableCode code="md5AuthenticationKeys" /></td>
@@ -234,9 +245,19 @@ The following fields are returned by `SELECT` queries:
     <td>A list of NAT services created in this router.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="nccGateway" /></td>
+    <td><code>string</code></td>
+    <td>URI of the ncc_gateway to which this router associated.</td>
+</tr>
+<tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
     <td>URI of the network to which this router belongs.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="params" /></td>
+    <td><code>object</code></td>
+    <td>Input only. [Input Only] Additional params passed with the request, but not persisted as part of resource payload. (id: RouterParams)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
@@ -279,29 +300,36 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of Router resources available to the specified project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves an aggregated list of routers. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Retrieves an aggregated list of routers.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a Router resource in the specified project and region using the data included in the request.</td>
+    <td>Creates a Router resource in the specified project and region using<br />the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Patches the specified Router resource with the data included in the request. This method supports PATCH semantics and uses JSON merge patch format and processing rules.</td>
+    <td>Patches the specified Router resource with the data included in the<br />request. This method supportsPATCH<br />semantics and usesJSON merge<br />patch format and processing rules.</td>
+</tr>
+<tr>
+    <td><a href="#patch_named_set"><CopyableCode code="patch_named_set" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Patches Named Set</td>
 </tr>
 <tr>
     <td><a href="#patch_route_policy"><CopyableCode code="patch_route_policy" /></a></td>
@@ -315,7 +343,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates the specified Router resource with the data included in the request. This method conforms to PUT semantics, which requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload.</td>
+    <td>Updates the specified Router resource with the data included in the<br />request.  This method conforms toPUT semantics, which requests that the state of the<br />target resource be created or replaced with the state defined by the<br />representation enclosed in the request message payload.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -329,7 +357,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
     <td></td>
-    <td>Preview fields auto-generated during router create and update operations. Calling this method does NOT create or update the router.</td>
+    <td>Preview fields auto-generated during router create andupdate operations.<br />Calling this method does NOT create or update the router.</td>
 </tr>
 </tbody>
 </table>
@@ -432,7 +460,9 @@ interfaces,
 kind,
 md5AuthenticationKeys,
 nats,
+nccGateway,
 network,
+params,
 region,
 selfLink
 FROM google.compute.routers
@@ -457,17 +487,17 @@ warning
 FROM google.compute.routers
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves an aggregated list of routers. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves an aggregated list of routers.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -482,18 +512,20 @@ interfaces,
 kind,
 md5AuthenticationKeys,
 nats,
+nccGateway,
 network,
+params,
 region,
 selfLink
 FROM google.compute.routers
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND filter = '{{ filter }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -511,43 +543,43 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates a Router resource in the specified project and region using the data included in the request.
+Creates a Router resource in the specified project and region using<br />the data included in the request.
 
 ```sql
 INSERT INTO google.compute.routers (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__region,
-data__network,
-data__interfaces,
-data__bgpPeers,
 data__bgp,
-data__selfLink,
-data__nats,
-data__encryptedInterconnectRouter,
+data__region,
 data__md5AuthenticationKeys,
+data__network,
+data__params,
+data__bgpPeers,
+data__name,
+data__interfaces,
+data__nccGateway,
+data__description,
+data__nats,
+data__selfLink,
+data__id,
+data__encryptedInterconnectRouter,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ region }}',
-'{{ network }}',
-'{{ interfaces }}',
-'{{ bgpPeers }}',
 '{{ bgp }}',
-'{{ selfLink }}',
-'{{ nats }}',
-{{ encryptedInterconnectRouter }},
+'{{ region }}',
 '{{ md5AuthenticationKeys }}',
+'{{ network }}',
+'{{ params }}',
+'{{ bgpPeers }}',
+'{{ name }}',
+'{{ interfaces }}',
+'{{ nccGateway }}',
+'{{ description }}',
+'{{ nats }}',
+'{{ selfLink }}',
+'{{ id }}',
+{{ encryptedInterconnectRouter }},
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -559,6 +591,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -583,90 +616,170 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: routers
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the routers resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the routers resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of resource. Always compute#router for routers.
-        
-      default: compute#router
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] URI of the region where the router resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
-        
-    - name: network
-      value: string
-      description: >
-        URI of the network to which this router belongs.
-        
-    - name: interfaces
-      value: array
-      description: >
-        Router interfaces. To create a BGP peer that uses a router interface, the interface must have one of the following fields specified: - linkedVpnTunnel - linkedInterconnectAttachment - subnetwork You can create a router interface without any of these fields specified. However, you cannot create a BGP peer that uses that interface.
-        
-    - name: bgpPeers
-      value: array
-      description: >
-        BGP information that must be configured into the routing stack to establish BGP peering. This information must specify the peer ASN and either the interface name, IP address, or peer IP address. Please refer to RFC4273.
-        
     - name: bgp
-      value: object
-      description: >
+      description: |
         BGP information specific to this router.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: nats
-      value: array
-      description: >
-        A list of NAT services created in this router.
-        
-    - name: encryptedInterconnectRouter
-      value: boolean
-      description: >
-        Indicates if a router is dedicated for use with encrypted VLAN attachments (interconnectAttachments).
-        
+      value:
+        advertiseMode: "{{ advertiseMode }}"
+        keepaliveInterval: {{ keepaliveInterval }}
+        asn: {{ asn }}
+        advertisedIpRanges:
+          - range: "{{ range }}"
+            description: "{{ description }}"
+        identifierRange: "{{ identifierRange }}"
+        advertisedGroups:
+          - "{{ advertisedGroups }}"
+    - name: region
+      value: "{{ region }}"
+      description: |
+        [Output Only] URI of the region where the router resides.
+        You must specify this field as part of the HTTP request URL. It is
+        not settable as a field in the request body.
     - name: md5AuthenticationKeys
-      value: array
-      description: >
+      description: |
         Keys used for MD5 authentication.
-        
+      value:
+        - key: "{{ key }}"
+          name: "{{ name }}"
+    - name: network
+      value: "{{ network }}"
+      description: |
+        URI of the network to which this router belongs.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: bgpPeers
+      description: |
+        BGP information that must be configured into the routing stack to
+        establish BGP peering. This information must specify the peer ASN and
+        either the interface name, IP address, or peer IP address. Please refer toRFC4273.
+      value:
+        - ipAddress: "{{ ipAddress }}"
+          routerApplianceInstance: "{{ routerApplianceInstance }}"
+          enableIpv6: {{ enableIpv6 }}
+          peerIpv4NexthopAddress: "{{ peerIpv4NexthopAddress }}"
+          name: "{{ name }}"
+          peerAsn: {{ peerAsn }}
+          md5AuthenticationKeyName: "{{ md5AuthenticationKeyName }}"
+          interfaceName: "{{ interfaceName }}"
+          advertiseMode: "{{ advertiseMode }}"
+          importPolicies: "{{ importPolicies }}"
+          advertisedGroups: "{{ advertisedGroups }}"
+          customLearnedIpRanges: "{{ customLearnedIpRanges }}"
+          ipv6NexthopAddress: "{{ ipv6NexthopAddress }}"
+          advertisedIpRanges: "{{ advertisedIpRanges }}"
+          exportPolicies: "{{ exportPolicies }}"
+          ipv4NexthopAddress: "{{ ipv4NexthopAddress }}"
+          customLearnedRoutePriority: {{ customLearnedRoutePriority }}
+          bfd:
+            minTransmitInterval: {{ minTransmitInterval }}
+            minReceiveInterval: {{ minReceiveInterval }}
+            multiplier: {{ multiplier }}
+            sessionInitializationMode: "{{ sessionInitializationMode }}"
+          enableIpv4: {{ enableIpv4 }}
+          managementType: "{{ managementType }}"
+          enable: "{{ enable }}"
+          peerIpAddress: "{{ peerIpAddress }}"
+          peerIpv6NexthopAddress: "{{ peerIpv6NexthopAddress }}"
+          advertisedRoutePriority: {{ advertisedRoutePriority }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: interfaces
+      description: |
+        Router interfaces.
+        To create a BGP peer that uses a router interface,
+        the interface must have one of the following fields specified:
+        - linkedVpnTunnel
+        - linkedInterconnectAttachment
+        - subnetwork
+        You can create a router interface without any of these fields specified.
+        However, you cannot create a BGP peer that uses that interface.
+      value:
+        - ipVersion: "{{ ipVersion }}"
+          name: "{{ name }}"
+          redundantInterface: "{{ redundantInterface }}"
+          privateIpAddress: "{{ privateIpAddress }}"
+          ipRange: "{{ ipRange }}"
+          linkedVpnTunnel: "{{ linkedVpnTunnel }}"
+          subnetwork: "{{ subnetwork }}"
+          managementType: "{{ managementType }}"
+          linkedInterconnectAttachment: "{{ linkedInterconnectAttachment }}"
+    - name: nccGateway
+      value: "{{ nccGateway }}"
+      description: |
+        URI of the ncc_gateway to which this router associated.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: nats
+      description: |
+        A list of NAT services created in this router.
+      value:
+        - natIpAllocateOption: "{{ natIpAllocateOption }}"
+          icmpIdleTimeoutSec: {{ icmpIdleTimeoutSec }}
+          nat64Subnetworks: "{{ nat64Subnetworks }}"
+          natIps: "{{ natIps }}"
+          minPortsPerVm: {{ minPortsPerVm }}
+          logConfig:
+            enable: {{ enable }}
+            filter: "{{ filter }}"
+          drainNatIps: "{{ drainNatIps }}"
+          effectiveTcpTimeWaitTimeoutSec: {{ effectiveTcpTimeWaitTimeoutSec }}
+          type: "{{ type }}"
+          name: "{{ name }}"
+          autoNetworkTier: "{{ autoNetworkTier }}"
+          tcpEstablishedIdleTimeoutSec: {{ tcpEstablishedIdleTimeoutSec }}
+          udpIdleTimeoutSec: {{ udpIdleTimeoutSec }}
+          rules: "{{ rules }}"
+          tcpTransitoryIdleTimeoutSec: {{ tcpTransitoryIdleTimeoutSec }}
+          subnetworks: "{{ subnetworks }}"
+          sourceSubnetworkIpRangesToNat: "{{ sourceSubnetworkIpRangesToNat }}"
+          sourceSubnetworkIpRangesToNat64: "{{ sourceSubnetworkIpRangesToNat64 }}"
+          maxPortsPerVm: {{ maxPortsPerVm }}
+          enableEndpointIndependentMapping: {{ enableEndpointIndependentMapping }}
+          tcpTimeWaitTimeoutSec: {{ tcpTimeWaitTimeoutSec }}
+          enableDynamicPortAllocation: {{ enableDynamicPortAllocation }}
+          endpointTypes: "{{ endpointTypes }}"
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
+    - name: encryptedInterconnectRouter
+      value: {{ encryptedInterconnectRouter }}
+      description: |
+        Indicates if a router is dedicated for use with encrypted VLAN
+        attachments (interconnectAttachments).
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -677,30 +790,31 @@ zone
     defaultValue="patch"
     values={[
         { label: 'patch', value: 'patch' },
+        { label: 'patch_named_set', value: 'patch_named_set' },
         { label: 'patch_route_policy', value: 'patch_route_policy' }
     ]}
 >
 <TabItem value="patch">
 
-Patches the specified Router resource with the data included in the request. This method supports PATCH semantics and uses JSON merge patch format and processing rules.
+Patches the specified Router resource with the data included in the<br />request. This method supportsPATCH<br />semantics and usesJSON merge<br />patch format and processing rules.
 
 ```sql
 UPDATE google.compute.routers
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__region = '{{ region }}',
-data__network = '{{ network }}',
-data__interfaces = '{{ interfaces }}',
-data__bgpPeers = '{{ bgpPeers }}',
 data__bgp = '{{ bgp }}',
-data__selfLink = '{{ selfLink }}',
+data__region = '{{ region }}',
+data__md5AuthenticationKeys = '{{ md5AuthenticationKeys }}',
+data__network = '{{ network }}',
+data__params = '{{ params }}',
+data__bgpPeers = '{{ bgpPeers }}',
+data__name = '{{ name }}',
+data__interfaces = '{{ interfaces }}',
+data__nccGateway = '{{ nccGateway }}',
+data__description = '{{ description }}',
 data__nats = '{{ nats }}',
-data__encryptedInterconnectRouter = {{ encryptedInterconnectRouter }},
-data__md5AuthenticationKeys = '{{ md5AuthenticationKeys }}'
+data__selfLink = '{{ selfLink }}',
+data__id = '{{ id }}',
+data__encryptedInterconnectRouter = {{ encryptedInterconnectRouter }}
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -714,6 +828,54 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
+httpErrorMessage,
+httpErrorStatusCode,
+insertTime,
+instancesBulkInsertOperationMetadata,
+kind,
+operationGroupId,
+operationType,
+progress,
+region,
+selfLink,
+setCommonInstanceMetadataOperationMetadata,
+startTime,
+status,
+statusMessage,
+targetId,
+targetLink,
+user,
+warnings,
+zone;
+```
+</TabItem>
+<TabItem value="patch_named_set">
+
+Patches Named Set
+
+```sql
+UPDATE google.compute.routers
+SET 
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}',
+data__elements = '{{ elements }}',
+data__fingerprint = '{{ fingerprint }}'
+WHERE 
+project = '{{ project }}' --required
+AND region = '{{ region }}' --required
+AND router = '{{ router }}' --required
+AND requestId = '{{ requestId}}'
+RETURNING
+id,
+name,
+clientOperationId,
+creationTimestamp,
+description,
+endTime,
+error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -743,10 +905,10 @@ Patches Route Policy
 UPDATE google.compute.routers
 SET 
 data__name = '{{ name }}',
-data__type = '{{ type }}',
+data__description = '{{ description }}',
 data__terms = '{{ terms }}',
-data__fingerprint = '{{ fingerprint }}',
-data__description = '{{ description }}'
+data__type = '{{ type }}',
+data__fingerprint = '{{ fingerprint }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -760,6 +922,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -794,25 +957,25 @@ zone;
 >
 <TabItem value="update">
 
-Updates the specified Router resource with the data included in the request. This method conforms to PUT semantics, which requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload.
+Updates the specified Router resource with the data included in the<br />request.  This method conforms toPUT semantics, which requests that the state of the<br />target resource be created or replaced with the state defined by the<br />representation enclosed in the request message payload.
 
 ```sql
 REPLACE google.compute.routers
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__region = '{{ region }}',
-data__network = '{{ network }}',
-data__interfaces = '{{ interfaces }}',
-data__bgpPeers = '{{ bgpPeers }}',
 data__bgp = '{{ bgp }}',
-data__selfLink = '{{ selfLink }}',
+data__region = '{{ region }}',
+data__md5AuthenticationKeys = '{{ md5AuthenticationKeys }}',
+data__network = '{{ network }}',
+data__params = '{{ params }}',
+data__bgpPeers = '{{ bgpPeers }}',
+data__name = '{{ name }}',
+data__interfaces = '{{ interfaces }}',
+data__nccGateway = '{{ nccGateway }}',
+data__description = '{{ description }}',
 data__nats = '{{ nats }}',
-data__encryptedInterconnectRouter = {{ encryptedInterconnectRouter }},
-data__md5AuthenticationKeys = '{{ md5AuthenticationKeys }}'
+data__selfLink = '{{ selfLink }}',
+data__id = '{{ id }}',
+data__encryptedInterconnectRouter = {{ encryptedInterconnectRouter }}
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -826,6 +989,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -884,7 +1048,7 @@ AND requestId = '{{ requestId }}'
 >
 <TabItem value="preview">
 
-Preview fields auto-generated during router create and update operations. Calling this method does NOT create or update the router.
+Preview fields auto-generated during router create andupdate operations.<br />Calling this method does NOT create or update the router.
 
 ```sql
 EXEC google.compute.routers.preview 
@@ -893,20 +1057,20 @@ EXEC google.compute.routers.preview
 @router='{{ router }}' --required 
 @@json=
 '{
-"kind": "{{ kind }}", 
-"id": "{{ id }}", 
-"creationTimestamp": "{{ creationTimestamp }}", 
-"name": "{{ name }}", 
-"description": "{{ description }}", 
-"region": "{{ region }}", 
-"network": "{{ network }}", 
-"interfaces": "{{ interfaces }}", 
-"bgpPeers": "{{ bgpPeers }}", 
 "bgp": "{{ bgp }}", 
-"selfLink": "{{ selfLink }}", 
+"region": "{{ region }}", 
+"md5AuthenticationKeys": "{{ md5AuthenticationKeys }}", 
+"network": "{{ network }}", 
+"params": "{{ params }}", 
+"bgpPeers": "{{ bgpPeers }}", 
+"name": "{{ name }}", 
+"interfaces": "{{ interfaces }}", 
+"nccGateway": "{{ nccGateway }}", 
+"description": "{{ description }}", 
 "nats": "{{ nats }}", 
-"encryptedInterconnectRouter": {{ encryptedInterconnectRouter }}, 
-"md5AuthenticationKeys": "{{ md5AuthenticationKeys }}"
+"selfLink": "{{ selfLink }}", 
+"id": "{{ id }}", 
+"encryptedInterconnectRouter": {{ encryptedInterconnectRouter }}
 }'
 ;
 ```

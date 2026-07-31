@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>videos</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>videos</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="videos" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.videointelligence.videos" /></td></tr>
 </tbody></table>
@@ -93,10 +94,10 @@ EXEC google.videointelligence.videos.videos_annotate
 '{
 "inputUri": "{{ inputUri }}", 
 "inputContent": "{{ inputContent }}", 
+"locationId": "{{ locationId }}", 
 "features": "{{ features }}", 
 "videoContext": "{{ videoContext }}", 
-"outputUri": "{{ outputUri }}", 
-"locationId": "{{ locationId }}"
+"outputUri": "{{ outputUri }}"
 }'
 ;
 ```

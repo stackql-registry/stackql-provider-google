@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>organizations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>organizations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="organizations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.organizations" /></td></tr>
 </tbody></table>
@@ -81,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The organization's current lifecycle state.</td>
+    <td>Output only. The organization's current lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETE_REQUESTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -119,7 +120,7 @@ The following methods are available for this resource:
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Searches organization resources that are visible to the user and satisfy the specified filter. This method returns organizations in an unspecified order. New organizations do not necessarily appear at the end of the results, and may take a small amount of time to appear. Search will only return organizations on which the user has the permission `resourcemanager.organizations.get` or has super admin privileges.</td>
 </tr>
 </tbody>
@@ -205,9 +206,9 @@ Searches organization resources that are visible to the user and satisfy the spe
 
 ```sql
 EXEC google.cloudresourcemanager.organizations.search 
-@pageToken='{{ pageToken }}', 
+@query='{{ query }}', 
 @pageSize='{{ pageSize }}', 
-@query='{{ query }}'
+@pageToken='{{ pageToken }}'
 ;
 ```
 </TabItem>

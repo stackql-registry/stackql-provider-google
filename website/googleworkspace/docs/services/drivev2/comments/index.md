@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>comments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>comments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="comments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.comments" /></td></tr>
 </tbody></table>
@@ -95,11 +96,6 @@ The following fields are returned by `SELECT` queries:
     <td>The title of the file which this comment is addressing.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="genoaAuthor" /></td>
-    <td><code>object</code></td>
-    <td>The user who wrote this comment as a GenoaUser. (id: GenoaUser)</td>
-</tr>
-<tr>
     <td><CopyableCode code="htmlContent" /></td>
     <td><code>string</code></td>
     <td>HTML formatted content for this comment.</td>
@@ -118,11 +114,6 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="replies" /></td>
     <td><code>array</code></td>
     <td>Replies to this post.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resolved" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. Whether the comment has been resolved by one of its replies.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -194,11 +185,6 @@ The following fields are returned by `SELECT` queries:
     <td>The title of the file which this comment is addressing.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="genoaAuthor" /></td>
-    <td><code>object</code></td>
-    <td>The user who wrote this comment as a GenoaUser. (id: GenoaUser)</td>
-</tr>
-<tr>
     <td><CopyableCode code="htmlContent" /></td>
     <td><code>string</code></td>
     <td>HTML formatted content for this comment.</td>
@@ -217,11 +203,6 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="replies" /></td>
     <td><code>array</code></td>
     <td>Replies to this post.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resolved" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. Whether the comment has been resolved by one of its replies.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -264,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a></td>
-    <td><a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-updatedMin"><code>updatedMin</code></a></td>
+    <td><a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-updatedMin"><code>updatedMin</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Lists a file's comments.</td>
 </tr>
 <tr>
@@ -368,12 +349,10 @@ createdDate,
 deleted,
 fileId,
 fileTitle,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
 replies,
-resolved,
 selfLink,
 status
 FROM googleworkspace.drivev2.comments
@@ -398,20 +377,18 @@ createdDate,
 deleted,
 fileId,
 fileTitle,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
 replies,
-resolved,
 selfLink,
 status
 FROM googleworkspace.drivev2.comments
 WHERE fileId = '{{ fileId }}' -- required
 AND includeDeleted = '{{ includeDeleted }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND updatedMin = '{{ updatedMin }}'
+AND pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -433,43 +410,39 @@ Creates a new comment on the given file.
 
 ```sql
 INSERT INTO googleworkspace.drivev2.comments (
-data__commentId,
 data__kind,
-data__createdDate,
-data__modifiedDate,
-data__fileId,
-data__fileTitle,
-data__status,
-data__anchor,
-data__replies,
-data__author,
-data__deleted,
-data__selfLink,
-data__htmlContent,
 data__content,
 data__context,
-data__resolved,
-data__genoaAuthor,
+data__createdDate,
+data__selfLink,
+data__deleted,
+data__anchor,
+data__htmlContent,
+data__modifiedDate,
+data__fileTitle,
+data__status,
+data__author,
+data__fileId,
+data__replies,
+data__commentId,
 fileId
 )
 SELECT 
-'{{ commentId }}',
 '{{ kind }}',
-'{{ createdDate }}',
-'{{ modifiedDate }}',
-'{{ fileId }}',
-'{{ fileTitle }}',
-'{{ status }}',
-'{{ anchor }}',
-'{{ replies }}',
-'{{ author }}',
-{{ deleted }},
-'{{ selfLink }}',
-'{{ htmlContent }}',
 '{{ content }}',
 '{{ context }}',
-{{ resolved }},
-'{{ genoaAuthor }}',
+'{{ createdDate }}',
+'{{ selfLink }}',
+{{ deleted }},
+'{{ anchor }}',
+'{{ htmlContent }}',
+'{{ modifiedDate }}',
+'{{ fileTitle }}',
+'{{ status }}',
+'{{ author }}',
+'{{ fileId }}',
+'{{ replies }}',
+'{{ commentId }}',
 '{{ fileId }}'
 RETURNING
 anchor,
@@ -481,12 +454,10 @@ createdDate,
 deleted,
 fileId,
 fileTitle,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
 replies,
-resolved,
 selfLink,
 status
 ;
@@ -494,100 +465,100 @@ status
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: comments
   props:
     - name: fileId
-      value: string
+      value: "{{ fileId }}"
       description: Required parameter for the comments resource.
-    - name: commentId
-      value: string
-      description: >
-        The ID of the comment.
-        
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         This is always drive#comment.
-        
       default: drive#comment
-    - name: createdDate
-      value: string
-      description: >
-        The date when this comment was first created.
-        
-    - name: modifiedDate
-      value: string
-      description: >
-        The date when this comment or any of its replies were last modified.
-        
-    - name: fileId
-      value: string
-      description: >
-        The file which this comment is addressing.
-        
-    - name: fileTitle
-      value: string
-      description: >
-        The title of the file which this comment is addressing.
-        
-    - name: status
-      value: string
-      description: >
-        The status of this comment. Status can be changed by posting a reply to a comment with the desired status. Possible values are: * `open` - The comment is still open. * `resolved` - The comment has been resolved by one of its replies.
-        
-    - name: anchor
-      value: string
-      description: >
-        A region of the document represented as a JSON string. For details on defining anchor properties, refer to [Manage comments and replies](https://developers.google.com/workspace/drive/api/v3/manage-comments).
-        
-    - name: replies
-      value: array
-      description: >
-        Replies to this post.
-        
-    - name: author
-      value: object
-      description: >
-        Information about a Drive user.
-        
-    - name: deleted
-      value: boolean
-      description: >
-        Whether this comment has been deleted. If a comment has been deleted the content will be cleared and this will only represent a comment that once existed.
-        
-    - name: selfLink
-      value: string
-      description: >
-        A link back to this comment.
-        
-    - name: htmlContent
-      value: string
-      description: >
-        HTML formatted content for this comment.
-        
     - name: content
-      value: string
-      description: >
+      value: "{{ content }}"
+      description: |
         The plain text content used to create this comment. This is not HTML safe and should only be used as a starting point to make edits to a comment's content.
-        
     - name: context
-      value: object
-      description: >
+      description: |
         Context of a file which is being commented on.
-        
-    - name: resolved
-      value: boolean
-      description: >
-        Output only. Whether the comment has been resolved by one of its replies.
-        
-    - name: genoaAuthor
-      value: object
-      description: >
-        The user who wrote this comment as a GenoaUser.
-        
-```
+      value:
+        type: "{{ type }}"
+        value: "{{ value }}"
+    - name: createdDate
+      value: "{{ createdDate }}"
+      description: |
+        The date when this comment was first created.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        A link back to this comment.
+    - name: deleted
+      value: {{ deleted }}
+      description: |
+        Whether this comment has been deleted. If a comment has been deleted the content will be cleared and this will only represent a comment that once existed.
+    - name: anchor
+      value: "{{ anchor }}"
+      description: |
+        A region of the document represented as a JSON string. For details on defining anchor properties, refer to [Manage comments and replies](https://developers.google.com/workspace/drive/api/v3/manage-comments).
+    - name: htmlContent
+      value: "{{ htmlContent }}"
+      description: |
+        HTML formatted content for this comment.
+    - name: modifiedDate
+      value: "{{ modifiedDate }}"
+      description: |
+        The date when this comment or any of its replies were last modified.
+    - name: fileTitle
+      value: "{{ fileTitle }}"
+      description: |
+        The title of the file which this comment is addressing.
+    - name: status
+      value: "{{ status }}"
+      description: |
+        The status of this comment. Status can be changed by posting a reply to a comment with the desired status. Possible values are: * \`open\` - The comment is still open. * \`resolved\` - The comment has been resolved by one of its replies.
+    - name: author
+      description: |
+        Information about a Drive user.
+      value:
+        permissionId: "{{ permissionId }}"
+        picture:
+          url: "{{ url }}"
+        kind: "{{ kind }}"
+        emailAddress: "{{ emailAddress }}"
+        displayName: "{{ displayName }}"
+        isAuthenticatedUser: {{ isAuthenticatedUser }}
+    - name: fileId
+      value: "{{ fileId }}"
+      description: |
+        The file which this comment is addressing.
+    - name: replies
+      description: |
+        Replies to this post.
+      value:
+        - createdDate: "{{ createdDate }}"
+          author:
+            permissionId: "{{ permissionId }}"
+            picture:
+              url: "{{ url }}"
+            kind: "{{ kind }}"
+            emailAddress: "{{ emailAddress }}"
+            displayName: "{{ displayName }}"
+            isAuthenticatedUser: {{ isAuthenticatedUser }}
+          replyId: "{{ replyId }}"
+          deleted: {{ deleted }}
+          kind: "{{ kind }}"
+          htmlContent: "{{ htmlContent }}"
+          content: "{{ content }}"
+          modifiedDate: "{{ modifiedDate }}"
+          verb: "{{ verb }}"
+    - name: commentId
+      value: "{{ commentId }}"
+      description: |
+        The ID of the comment.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -607,23 +578,21 @@ Updates an existing comment.
 ```sql
 UPDATE googleworkspace.drivev2.comments
 SET 
-data__commentId = '{{ commentId }}',
 data__kind = '{{ kind }}',
-data__createdDate = '{{ createdDate }}',
-data__modifiedDate = '{{ modifiedDate }}',
-data__fileId = '{{ fileId }}',
-data__fileTitle = '{{ fileTitle }}',
-data__status = '{{ status }}',
-data__anchor = '{{ anchor }}',
-data__replies = '{{ replies }}',
-data__author = '{{ author }}',
-data__deleted = {{ deleted }},
-data__selfLink = '{{ selfLink }}',
-data__htmlContent = '{{ htmlContent }}',
 data__content = '{{ content }}',
 data__context = '{{ context }}',
-data__resolved = {{ resolved }},
-data__genoaAuthor = '{{ genoaAuthor }}'
+data__createdDate = '{{ createdDate }}',
+data__selfLink = '{{ selfLink }}',
+data__deleted = {{ deleted }},
+data__anchor = '{{ anchor }}',
+data__htmlContent = '{{ htmlContent }}',
+data__modifiedDate = '{{ modifiedDate }}',
+data__fileTitle = '{{ fileTitle }}',
+data__status = '{{ status }}',
+data__author = '{{ author }}',
+data__fileId = '{{ fileId }}',
+data__replies = '{{ replies }}',
+data__commentId = '{{ commentId }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND commentId = '{{ commentId }}' --required
@@ -637,12 +606,10 @@ createdDate,
 deleted,
 fileId,
 fileTitle,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
 replies,
-resolved,
 selfLink,
 status;
 ```
@@ -665,23 +632,21 @@ Updates an existing comment.
 ```sql
 REPLACE googleworkspace.drivev2.comments
 SET 
-data__commentId = '{{ commentId }}',
 data__kind = '{{ kind }}',
-data__createdDate = '{{ createdDate }}',
-data__modifiedDate = '{{ modifiedDate }}',
-data__fileId = '{{ fileId }}',
-data__fileTitle = '{{ fileTitle }}',
-data__status = '{{ status }}',
-data__anchor = '{{ anchor }}',
-data__replies = '{{ replies }}',
-data__author = '{{ author }}',
-data__deleted = {{ deleted }},
-data__selfLink = '{{ selfLink }}',
-data__htmlContent = '{{ htmlContent }}',
 data__content = '{{ content }}',
 data__context = '{{ context }}',
-data__resolved = {{ resolved }},
-data__genoaAuthor = '{{ genoaAuthor }}'
+data__createdDate = '{{ createdDate }}',
+data__selfLink = '{{ selfLink }}',
+data__deleted = {{ deleted }},
+data__anchor = '{{ anchor }}',
+data__htmlContent = '{{ htmlContent }}',
+data__modifiedDate = '{{ modifiedDate }}',
+data__fileTitle = '{{ fileTitle }}',
+data__status = '{{ status }}',
+data__author = '{{ author }}',
+data__fileId = '{{ fileId }}',
+data__replies = '{{ replies }}',
+data__commentId = '{{ commentId }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND commentId = '{{ commentId }}' --required
@@ -695,12 +660,10 @@ createdDate,
 deleted,
 fileId,
 fileTitle,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
 replies,
-resolved,
 selfLink,
 status;
 ```

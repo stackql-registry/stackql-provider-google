@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>organizations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>organizations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="organizations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.organizations" /></td></tr>
 </tbody></table>
@@ -92,12 +93,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="billingType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Billing type of the Apigee organization. See [Apigee pricing](https://cloud.google.com/apigee/pricing).</td>
+    <td>Optional. Billing type of the Apigee organization. See [Apigee pricing](https://cloud.google.com/apigee/pricing). (BILLING_TYPE_UNSPECIFIED, SUBSCRIPTION, EVALUATION, PAYG)</td>
 </tr>
 <tr>
     <td><CopyableCode code="caCertificate" /></td>
     <td><code>string (byte)</code></td>
-    <td>Output only. Base64-encoded public certificate for the root CA of the Apigee organization. Valid only when [RuntimeType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#runtimetype) is `CLOUD`.</td>
+    <td>Output only. Deprecated: Use `ca_certificates` instead. Base64-encoded public certificate for the root CA of the Apigee organization. Valid only when [RuntimeType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#runtimetype) is `CLOUD`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="caCertificates" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Base64-encoded public certificates for the root CA of the Apigee organization. Valid only when [RuntimeType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#runtimetype) is `CLOUD`. Multiple certificates are used to support certificate rotation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="controlPlaneEncryptionKeyName" /></td>
@@ -172,27 +178,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="runtimeType" /></td>
     <td><code>string</code></td>
-    <td>Required. Runtime type of the Apigee organization based on the Apigee subscription purchased.</td>
+    <td>Required. Runtime type of the Apigee organization based on the Apigee subscription purchased. (RUNTIME_TYPE_UNSPECIFIED, CLOUD, HYBRID)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the organization. Values other than ACTIVE means the resource is not ready to use.</td>
+    <td>Output only. State of the organization. Values other than ACTIVE means the resource is not ready to use. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subscriptionPlan" /></td>
     <td><code>string</code></td>
-    <td>Output only. Subscription plan that the customer has purchased. Output only.</td>
+    <td>Output only. Subscription plan that the customer has purchased. Output only. (SUBSCRIPTION_PLAN_UNSPECIFIED, SUBSCRIPTION_2021, SUBSCRIPTION_2024)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subscriptionType" /></td>
     <td><code>string</code></td>
-    <td>Output only. DEPRECATED: This will eventually be replaced by BillingType. Subscription type of the Apigee organization. Valid values include trial (free, limited, and for evaluation purposes only) or paid (full subscription has been purchased). See [Apigee pricing](https://cloud.google.com/apigee/pricing/).</td>
+    <td>Output only. DEPRECATED: This will eventually be replaced by BillingType. Subscription type of the Apigee organization. Valid values include trial (free, limited, and for evaluation purposes only) or paid (full subscription has been purchased). See [Apigee pricing](https://cloud.google.com/apigee/pricing/). (SUBSCRIPTION_TYPE_UNSPECIFIED, PAID, TRIAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Not used by Apigee.</td>
+    <td>Not used by Apigee. (TYPE_UNSPECIFIED, TYPE_TRIAL, TYPE_PAID, TYPE_INTERNAL)</td>
 </tr>
 </tbody>
 </table>
@@ -269,13 +275,6 @@ The following methods are available for this resource:
     <td>Delete an Apigee organization. For organizations with BillingType EVALUATION, an immediate deletion is performed. For paid organizations (Subscription or Pay-as-you-go), a soft-deletion is performed. The organization can be restored within the soft-deletion period, which is specified using the `retention` field in the request or by filing a support ticket with Apigee. During the data retention period specified in the request, the Apigee organization cannot be recreated in the same Google Cloud project. **IMPORTANT: The default data retention setting for this operation is 7 days. To permanently delete the organization in 24 hours, set the retention parameter to `MINIMUM`.**</td>
 </tr>
 <tr>
-    <td><a href="#projects_provision_organization"><CopyableCode code="projects_provision_organization" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Provisions a new Apigee organization with a functioning runtime. This is the standard way to create trial organizations for a free Apigee trial.</td>
-</tr>
-<tr>
     <td><a href="#organizations_set_sync_authorization"><CopyableCode code="organizations_set_sync_authorization" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
@@ -295,6 +294,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
     <td>Compute RAV2 security scores for a set of resources.</td>
+</tr>
+<tr>
+    <td><a href="#projects_provision_organization"><CopyableCode code="projects_provision_organization" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Provisions a new Apigee organization with a functioning runtime. This is the standard way to create trial organizations for a free Apigee trial.</td>
 </tr>
 </tbody>
 </table>
@@ -360,6 +366,7 @@ attributes,
 authorizedNetwork,
 billingType,
 caCertificate,
+caCertificates,
 controlPlaneEncryptionKeyName,
 createdAt,
 customerName,
@@ -413,45 +420,45 @@ Creates an Apigee organization. See [Create an Apigee organization](https://clou
 
 ```sql
 INSERT INTO google.apigee.organizations (
-data__authorizedNetwork,
-data__runtimeDatabaseEncryptionKeyName,
-data__portalDisabled,
-data__controlPlaneEncryptionKeyName,
 data__displayName,
-data__addonsConfig,
+data__portalDisabled,
 data__type,
-data__networkEgressRestricted,
-data__attributes,
 data__apiConsumerDataEncryptionKeyName,
-data__billingType,
+data__authorizedNetwork,
 data__properties,
-data__disableVpcPeering,
-data__apiConsumerDataLocation,
+data__networkEgressRestricted,
 data__runtimeType,
+data__billingType,
+data__runtimeDatabaseEncryptionKeyName,
+data__addonsConfig,
 data__customerName,
+data__apiConsumerDataLocation,
 data__description,
 data__analyticsRegion,
+data__disableVpcPeering,
+data__controlPlaneEncryptionKeyName,
+data__attributes,
 parent
 )
 SELECT 
-'{{ authorizedNetwork }}',
-'{{ runtimeDatabaseEncryptionKeyName }}',
-{{ portalDisabled }},
-'{{ controlPlaneEncryptionKeyName }}',
 '{{ displayName }}',
-'{{ addonsConfig }}',
+{{ portalDisabled }},
 '{{ type }}',
-{{ networkEgressRestricted }},
-'{{ attributes }}',
 '{{ apiConsumerDataEncryptionKeyName }}',
-'{{ billingType }}',
+'{{ authorizedNetwork }}',
 '{{ properties }}',
-{{ disableVpcPeering }},
-'{{ apiConsumerDataLocation }}',
+{{ networkEgressRestricted }},
 '{{ runtimeType }}',
+'{{ billingType }}',
+'{{ runtimeDatabaseEncryptionKeyName }}',
+'{{ addonsConfig }}',
 '{{ customerName }}',
+'{{ apiConsumerDataLocation }}',
 '{{ description }}',
 '{{ analyticsRegion }}',
+{{ disableVpcPeering }},
+'{{ controlPlaneEncryptionKeyName }}',
+'{{ attributes }}',
 '{{ parent }}'
 RETURNING
 name,
@@ -464,106 +471,109 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: organizations
   props:
-    - name: authorizedNetwork
-      value: string
-      description: >
-        Optional. Compute Engine network used for Service Networking to be peered with Apigee runtime instances. See [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started). Valid only when [RuntimeType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#runtimetype) is set to `CLOUD`. The value must be set before the creation of a runtime instance and can be updated only when there are no runtime instances. For example: `default`. When changing authorizedNetwork, you must reconfigure VPC peering. After VPC peering with previous network is deleted, [run the following command](https://cloud.google.com/sdk/gcloud/reference/services/vpc-peerings/delete): `gcloud services vpc-peerings delete --network=NETWORK`, where `NETWORK` is the name of the previous network. This will delete the previous Service Networking. Otherwise, you will get the following error: `The resource 'projects/...-tp' is already linked to another shared VPC host 'projects/...-tp`. Apigee also supports shared VPC (that is, the host network project is not the same as the one that is peering with Apigee). See [Shared VPC overview](https://cloud.google.com/vpc/docs/shared-vpc). To use a shared VPC network, use the following format: `projects/{host-project-id}/{region}/networks/{network-name}`. For example: `projects/my-sharedvpc-host/global/networks/mynetwork` **Note:** Not supported for Apigee hybrid.
-        
-    - name: runtimeDatabaseEncryptionKeyName
-      value: string
-      description: >
-        Optional. Cloud KMS key name used for encrypting the data that is stored and replicated across runtime instances. Update is not allowed after the organization is created. If not specified or [RuntimeType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#runtimetype) is `TRIAL`, a Google-Managed encryption key will be used. For example: "projects/foo/locations/us/keyRings/bar/cryptoKeys/baz". **Note:** Not supported for Apigee hybrid.
-        
-    - name: portalDisabled
-      value: boolean
-      description: >
-        Optional. Configuration for the Portals settings.
-        
-    - name: controlPlaneEncryptionKeyName
-      value: string
-      description: >
-        Optional. Cloud KMS key name used for encrypting control plane data that is stored in a multi region. Only used for the data residency region "US" or "EU". If not specified or [BillingType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#billingtype) is `EVALUATION`, a Google-Managed encryption key will be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. Display name for the Apigee organization. Unused, but reserved for future use.
-        
-    - name: addonsConfig
-      value: object
-      description: >
-        Optional. Addon configurations of the Apigee organization.
-        
+    - name: portalDisabled
+      value: {{ portalDisabled }}
+      description: |
+        Optional. Configuration for the Portals settings.
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Not used by Apigee.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'TYPE_TRIAL', 'TYPE_PAID', 'TYPE_INTERNAL']
-    - name: networkEgressRestricted
-      value: boolean
-      description: >
-        Optional. Flag that specifies if internet egress is restricted for VPC Service Controls. Valid only when runtime_type is `CLOUD` and disable_vpc_peering is `true`.
-        
-    - name: attributes
-      value: array
-      description: >
-        Not used by Apigee.
-        
     - name: apiConsumerDataEncryptionKeyName
-      value: string
-      description: >
-        Optional. Cloud KMS key name used for encrypting API consumer data. If not specified or [BillingType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#billingtype) is `EVALUATION`, a Google-Managed encryption key will be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
-        
-    - name: billingType
-      value: string
-      description: >
-        Optional. Billing type of the Apigee organization. See [Apigee pricing](https://cloud.google.com/apigee/pricing).
-        
-      valid_values: ['BILLING_TYPE_UNSPECIFIED', 'SUBSCRIPTION', 'EVALUATION', 'PAYG']
+      value: "{{ apiConsumerDataEncryptionKeyName }}"
+      description: |
+        Optional. Cloud KMS key name used for encrypting API consumer data. If not specified or [BillingType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#billingtype) is \`EVALUATION\`, a Google-Managed encryption key will be used. Format: \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`
+    - name: authorizedNetwork
+      value: "{{ authorizedNetwork }}"
+      description: |
+        Optional. Compute Engine network used for Service Networking to be peered with Apigee runtime instances. See [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started). Valid only when [RuntimeType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#runtimetype) is set to \`CLOUD\`. The value must be set before the creation of a runtime instance and can be updated only when there are no runtime instances. For example: \`default\`. When changing authorizedNetwork, you must reconfigure VPC peering. After VPC peering with previous network is deleted, [run the following command](https://cloud.google.com/sdk/gcloud/reference/services/vpc-peerings/delete): \`gcloud services vpc-peerings delete --network=NETWORK\`, where \`NETWORK\` is the name of the previous network. This will delete the previous Service Networking. Otherwise, you will get the following error: \`The resource 'projects/...-tp' is already linked to another shared VPC host 'projects/...-tp\`. Apigee also supports shared VPC (that is, the host network project is not the same as the one that is peering with Apigee). See [Shared VPC overview](https://cloud.google.com/vpc/docs/shared-vpc). To use a shared VPC network, use the following format: \`projects/{host-project-id}/{region}/networks/{network-name}\`. For example: \`projects/my-sharedvpc-host/global/networks/mynetwork\` **Note:** Not supported for Apigee hybrid.
     - name: properties
-      value: object
-      description: >
+      description: |
         Optional. Properties defined in the Apigee organization profile.
-        
-    - name: disableVpcPeering
-      value: boolean
-      description: >
-        Optional. Flag that specifies whether the VPC Peering through Private Google Access should be disabled between the consumer network and Apigee. Valid only when RuntimeType is set to CLOUD. Required if an authorizedNetwork on the consumer project is not provided, in which case the flag should be set to true. The value must be set before the creation of any Apigee runtime instance and can be updated only when there are no runtime instances. **Note:** Apigee will be deprecating the vpc peering model that requires you to provide 'authorizedNetwork', by making the non-peering model as the default way of provisioning Apigee organization in future. So, this will be a temporary flag to enable the transition. Not supported for Apigee hybrid.
-        
-    - name: apiConsumerDataLocation
-      value: string
-      description: >
-        Optional. This field is needed only for customers using non-default data residency regions. Apigee stores some control plane data only in single region. This field determines which single region Apigee should use. For example: "us-west1" when control plane is in US or "europe-west2" when control plane is in EU.
-        
+      value:
+        property:
+          - name: "{{ name }}"
+            value: "{{ value }}"
+    - name: networkEgressRestricted
+      value: {{ networkEgressRestricted }}
+      description: |
+        Optional. Flag that specifies if internet egress is restricted for VPC Service Controls. Valid only when runtime_type is \`CLOUD\` and disable_vpc_peering is \`true\`.
     - name: runtimeType
-      value: string
-      description: >
+      value: "{{ runtimeType }}"
+      description: |
         Required. Runtime type of the Apigee organization based on the Apigee subscription purchased.
-        
       valid_values: ['RUNTIME_TYPE_UNSPECIFIED', 'CLOUD', 'HYBRID']
+    - name: billingType
+      value: "{{ billingType }}"
+      description: |
+        Optional. Billing type of the Apigee organization. See [Apigee pricing](https://cloud.google.com/apigee/pricing).
+      valid_values: ['BILLING_TYPE_UNSPECIFIED', 'SUBSCRIPTION', 'EVALUATION', 'PAYG']
+    - name: runtimeDatabaseEncryptionKeyName
+      value: "{{ runtimeDatabaseEncryptionKeyName }}"
+      description: |
+        Optional. Cloud KMS key name used for encrypting the data that is stored and replicated across runtime instances. Update is not allowed after the organization is created. If not specified or [RuntimeType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#runtimetype) is \`TRIAL\`, a Google-Managed encryption key will be used. For example: "projects/foo/locations/us/keyRings/bar/cryptoKeys/baz". **Note:** Not supported for Apigee hybrid.
+    - name: addonsConfig
+      description: |
+        Optional. Addon configurations of the Apigee organization.
+      value:
+        analyticsConfig:
+          expireTimeMillis: "{{ expireTimeMillis }}"
+          state: "{{ state }}"
+          enabled: {{ enabled }}
+          updateTime: "{{ updateTime }}"
+        integrationConfig:
+          enabled: {{ enabled }}
+        apiSecurityConfig:
+          expiresAt: "{{ expiresAt }}"
+          enabled: {{ enabled }}
+        advancedApiOpsConfig:
+          enabled: {{ enabled }}
+        connectorsPlatformConfig:
+          enabled: {{ enabled }}
+          expiresAt: "{{ expiresAt }}"
+        monetizationConfig:
+          enabled: {{ enabled }}
     - name: customerName
-      value: string
-      description: >
+      value: "{{ customerName }}"
+      description: |
         Not used by Apigee.
-        
+    - name: apiConsumerDataLocation
+      value: "{{ apiConsumerDataLocation }}"
+      description: |
+        Optional. This field is needed only for customers using non-default data residency regions. Apigee stores some control plane data only in single region. This field determines which single region Apigee should use. For example: "us-west1" when control plane is in US or "europe-west2" when control plane is in EU.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the Apigee organization.
-        
     - name: analyticsRegion
-      value: string
-      description: >
+      value: "{{ analyticsRegion }}"
+      description: |
         Required. DEPRECATED: This field will eventually be deprecated and replaced with a differently-named field. Primary Google Cloud region for analytics data storage. For valid values, see [Create an Apigee organization](https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
-        
+    - name: disableVpcPeering
+      value: {{ disableVpcPeering }}
+      description: |
+        Optional. Flag that specifies whether the VPC Peering through Private Google Access should be disabled between the consumer network and Apigee. Valid only when RuntimeType is set to CLOUD. Required if an authorizedNetwork on the consumer project is not provided, in which case the flag should be set to true. The value must be set before the creation of any Apigee runtime instance and can be updated only when there are no runtime instances. **Note:** Apigee will be deprecating the vpc peering model that requires you to provide 'authorizedNetwork', by making the non-peering model as the default way of provisioning Apigee organization in future. So, this will be a temporary flag to enable the transition. Not supported for Apigee hybrid.
+    - name: controlPlaneEncryptionKeyName
+      value: "{{ controlPlaneEncryptionKeyName }}"
+      description: |
+        Optional. Cloud KMS key name used for encrypting control plane data that is stored in a multi region. Only used for the data residency region "US" or "EU". If not specified or [BillingType](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations#billingtype) is \`EVALUATION\`, a Google-Managed encryption key will be used. Format: \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`
+    - name: attributes
+      value:
+        - "{{ attributes }}"
+      description: |
+        Not used by Apigee.
     - name: parent
-      value: string
-```
+      value: "{{ parent }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -583,24 +593,24 @@ Updates the properties for an Apigee organization. No other fields in the organi
 ```sql
 REPLACE google.apigee.organizations
 SET 
-data__authorizedNetwork = '{{ authorizedNetwork }}',
-data__runtimeDatabaseEncryptionKeyName = '{{ runtimeDatabaseEncryptionKeyName }}',
-data__portalDisabled = {{ portalDisabled }},
-data__controlPlaneEncryptionKeyName = '{{ controlPlaneEncryptionKeyName }}',
 data__displayName = '{{ displayName }}',
-data__addonsConfig = '{{ addonsConfig }}',
+data__portalDisabled = {{ portalDisabled }},
 data__type = '{{ type }}',
-data__networkEgressRestricted = {{ networkEgressRestricted }},
-data__attributes = '{{ attributes }}',
 data__apiConsumerDataEncryptionKeyName = '{{ apiConsumerDataEncryptionKeyName }}',
-data__billingType = '{{ billingType }}',
+data__authorizedNetwork = '{{ authorizedNetwork }}',
 data__properties = '{{ properties }}',
-data__disableVpcPeering = {{ disableVpcPeering }},
-data__apiConsumerDataLocation = '{{ apiConsumerDataLocation }}',
+data__networkEgressRestricted = {{ networkEgressRestricted }},
 data__runtimeType = '{{ runtimeType }}',
+data__billingType = '{{ billingType }}',
+data__runtimeDatabaseEncryptionKeyName = '{{ runtimeDatabaseEncryptionKeyName }}',
+data__addonsConfig = '{{ addonsConfig }}',
 data__customerName = '{{ customerName }}',
+data__apiConsumerDataLocation = '{{ apiConsumerDataLocation }}',
 data__description = '{{ description }}',
-data__analyticsRegion = '{{ analyticsRegion }}'
+data__analyticsRegion = '{{ analyticsRegion }}',
+data__disableVpcPeering = {{ disableVpcPeering }},
+data__controlPlaneEncryptionKeyName = '{{ controlPlaneEncryptionKeyName }}',
+data__attributes = '{{ attributes }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 RETURNING
@@ -614,6 +624,7 @@ attributes,
 authorizedNetwork,
 billingType,
 caCertificate,
+caCertificates,
 controlPlaneEncryptionKeyName,
 createdAt,
 customerName,
@@ -663,31 +674,14 @@ AND retention = '{{ retention }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_provision_organization"
+    defaultValue="organizations_set_sync_authorization"
     values={[
-        { label: 'projects_provision_organization', value: 'projects_provision_organization' },
         { label: 'organizations_set_sync_authorization', value: 'organizations_set_sync_authorization' },
         { label: 'organizations_set_addons', value: 'organizations_set_addons' },
-        { label: 'organizations_security_assessment_results_batch_compute', value: 'organizations_security_assessment_results_batch_compute' }
+        { label: 'organizations_security_assessment_results_batch_compute', value: 'organizations_security_assessment_results_batch_compute' },
+        { label: 'projects_provision_organization', value: 'projects_provision_organization' }
     ]}
 >
-<TabItem value="projects_provision_organization">
-
-Provisions a new Apigee organization with a functioning runtime. This is the standard way to create trial organizations for a free Apigee trial.
-
-```sql
-EXEC google.apigee.organizations.projects_provision_organization 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"authorizedNetwork": "{{ authorizedNetwork }}", 
-"runtimeLocation": "{{ runtimeLocation }}", 
-"disableVpcPeering": {{ disableVpcPeering }}, 
-"analyticsRegion": "{{ analyticsRegion }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="organizations_set_sync_authorization">
 
 Sets the permissions required to allow the Synchronizer to download environment data from the control plane. You must call this API to enable proper functioning of hybrid. Pass the ETag when calling `setSyncAuthorization` to ensure that you are updating the correct version. To get an ETag, call [getSyncAuthorization](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations/getSyncAuthorization). If you don't pass the ETag in the call to `setSyncAuthorization`, then the existing authorization is overwritten indiscriminately. For more information, see [Configure the Synchronizer](https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-access). **Note**: Available to Apigee hybrid only.
@@ -697,8 +691,8 @@ EXEC google.apigee.organizations.organizations_set_sync_authorization
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"etag": "{{ etag }}", 
-"identities": "{{ identities }}"
+"identities": "{{ identities }}", 
+"etag": "{{ etag }}"
 }'
 ;
 ```
@@ -726,14 +720,31 @@ EXEC google.apigee.organizations.organizations_security_assessment_results_batch
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"apiHubGateways": "{{ apiHubGateways }}", 
-"include": "{{ include }}", 
-"profile": "{{ profile }}", 
-"includeAllResources": "{{ includeAllResources }}", 
-"pageSize": {{ pageSize }}, 
 "apiHubApis": "{{ apiHubApis }}", 
+"include": "{{ include }}", 
+"pageSize": {{ pageSize }}, 
+"profile": "{{ profile }}", 
 "pageToken": "{{ pageToken }}", 
-"scope": "{{ scope }}"
+"scope": "{{ scope }}", 
+"includeAllResources": "{{ includeAllResources }}", 
+"apiHubGateways": "{{ apiHubGateways }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_provision_organization">
+
+Provisions a new Apigee organization with a functioning runtime. This is the standard way to create trial organizations for a free Apigee trial.
+
+```sql
+EXEC google.apigee.organizations.projects_provision_organization 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"disableVpcPeering": {{ disableVpcPeering }}, 
+"authorizedNetwork": "{{ authorizedNetwork }}", 
+"analyticsRegion": "{{ analyticsRegion }}", 
+"runtimeLocation": "{{ runtimeLocation }}"
 }'
 ;
 ```

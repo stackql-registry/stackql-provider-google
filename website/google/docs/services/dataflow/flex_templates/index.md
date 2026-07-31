@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>flex_templates</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>flex_templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="flex_templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataflow.flex_templates" /></td></tr>
 </tbody></table>
@@ -103,8 +104,8 @@ EXEC google.dataflow.flex_templates.projects_locations_flex_templates_launch
 @location='{{ location }}' --required 
 @@json=
 '{
-"launchParameter": "{{ launchParameter }}", 
-"validateOnly": {{ validateOnly }}
+"validateOnly": {{ validateOnly }}, 
+"launchParameter": "{{ launchParameter }}"
 }'
 ;
 ```

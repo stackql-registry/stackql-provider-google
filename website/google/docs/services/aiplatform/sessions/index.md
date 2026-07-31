@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sessions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sessions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sessions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.sessions" /></td></tr>
 </tbody></table>
@@ -184,14 +185,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Sessions in a given reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-sessionId"><code>sessionId</code></a></td>
     <td>Creates a new Session.</td>
 </tr>
 <tr>
@@ -271,6 +272,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-sessionId">
+    <td><CopyableCode code="sessionId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-updateMask">
     <td><CopyableCode code="updateMask" /></td>
     <td><code>string (google-fieldmask)</code></td>
@@ -330,10 +336,10 @@ FROM google.aiplatform.sessions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -355,28 +361,30 @@ Creates a new Session.
 
 ```sql
 INSERT INTO google.aiplatform.sessions (
-data__userId,
-data__expireTime,
-data__sessionState,
 data__name,
-data__displayName,
 data__labels,
+data__expireTime,
 data__ttl,
+data__sessionState,
+data__userId,
+data__displayName,
 projectsId,
 locationsId,
-reasoningEnginesId
+reasoningEnginesId,
+sessionId
 )
 SELECT 
-'{{ userId }}',
-'{{ expireTime }}',
-'{{ sessionState }}',
 '{{ name }}',
-'{{ displayName }}',
 '{{ labels }}',
+'{{ expireTime }}',
 '{{ ttl }}',
+'{{ sessionState }}',
+'{{ userId }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ reasoningEnginesId }}'
+'{{ reasoningEnginesId }}',
+'{{ sessionId }}'
 RETURNING
 name,
 done,
@@ -388,55 +396,50 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sessions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the sessions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the sessions resource.
     - name: reasoningEnginesId
-      value: string
+      value: "{{ reasoningEnginesId }}"
       description: Required parameter for the sessions resource.
-    - name: userId
-      value: string
-      description: >
-        Required. Immutable. String id provided by the user
-        
-    - name: expireTime
-      value: string
-      description: >
-        Optional. Timestamp of when this session is considered expired. This is *always* provided on output, regardless of what was sent on input. The minimum value is 24 hours from the time of creation.
-        
-    - name: sessionState
-      value: object
-      description: >
-        Optional. Session specific memory which stores key conversation points.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the session. Format: 'projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}'.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. The display name of the session.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         The labels with user-defined metadata to organize your Sessions. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
+    - name: expireTime
+      value: "{{ expireTime }}"
+      description: |
+        Optional. Timestamp of when this session is considered expired. This is *always* provided on output, regardless of what was sent on input. The minimum value is 24 hours from the time of creation.
     - name: ttl
-      value: string
-      description: >
+      value: "{{ ttl }}"
+      description: |
         Optional. Input only. The TTL for this session. The minimum value is 24 hours.
-        
-```
+    - name: sessionState
+      value: "{{ sessionState }}"
+      description: |
+        Optional. Session specific memory which stores key conversation points.
+    - name: userId
+      value: "{{ userId }}"
+      description: |
+        Required. Immutable. String id provided by the user
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the session.
+    - name: sessionId
+      value: "{{ sessionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -456,13 +459,13 @@ Updates the specific Session.
 ```sql
 UPDATE google.aiplatform.sessions
 SET 
-data__userId = '{{ userId }}',
-data__expireTime = '{{ expireTime }}',
-data__sessionState = '{{ sessionState }}',
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
-data__ttl = '{{ ttl }}'
+data__expireTime = '{{ expireTime }}',
+data__ttl = '{{ ttl }}',
+data__sessionState = '{{ sessionState }}',
+data__userId = '{{ userId }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -528,15 +531,16 @@ EXEC google.aiplatform.sessions.append_event
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"author": "{{ author }}", 
-"content": "{{ content }}", 
+"errorCode": "{{ errorCode }}", 
 "invocationId": "{{ invocationId }}", 
 "timestamp": "{{ timestamp }}", 
-"actions": "{{ actions }}", 
-"errorCode": "{{ errorCode }}", 
-"errorMessage": "{{ errorMessage }}", 
 "eventMetadata": "{{ eventMetadata }}", 
-"name": "{{ name }}"
+"content": "{{ content }}", 
+"name": "{{ name }}", 
+"rawEvent": "{{ rawEvent }}", 
+"actions": "{{ actions }}", 
+"errorMessage": "{{ errorMessage }}", 
+"author": "{{ author }}"
 }'
 ;
 ```

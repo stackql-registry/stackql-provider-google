@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schemas</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schemas</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schemas" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.dataconnect.schemas" /></td></tr>
 </tbody></table>
@@ -118,61 +119,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The relative resource name of the schema, in the format: ``` projects/&#123;project&#125;/locations/&#123;location&#125;/services/&#123;service&#125;/schemas/&#123;schema&#125; ``` Right now, the only supported schema is "main".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Stores small amounts of arbitrary data.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="datasources" /></td>
-    <td><code>array</code></td>
-    <td>Required. The data sources linked in the schema.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Mutable human-readable name. 63 character limit.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Output only. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. [AIP-154](https://google.aip.dev/154)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="reconciling" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. A field that if true, indicates that the system is working to compile and deploy the schema.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="source" /></td>
-    <td><code>object</code></td>
-    <td>Required. The source files that comprise the application schema. (id: Source)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System-assigned, unique identifier.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update time stamp.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -204,28 +150,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists Schemas in a given project and location. Note that only `schemas/main` is supported, so this will always return at most one Schema.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists Schemas in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-schemaId"><code>schemaId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-schemaId"><code>schemaId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new Schema in a given project and location. Only creation of `schemas/main` is supported and calling create with any other schema ID will result in an error.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Updates the parameters of a single Schema, and creates a new SchemaRevision with the updated Schema.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Deletes a single Schema. Because the schema and connectors must be compatible at all times, if this is called while any connectors are active, this will result in an error.</td>
 </tr>
 </tbody>
@@ -358,29 +304,19 @@ AND schemasId = '{{ schemasId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists Schemas in a given project and location. Note that only `schemas/main` is supported, so this will always return at most one Schema.
+Lists Schemas in a given project and location.
 
 ```sql
 SELECT
-name,
-annotations,
-createTime,
-datasources,
-displayName,
-etag,
-labels,
-reconciling,
-source,
-uid,
-updateTime
+*
 FROM firebase.dataconnect.schemas
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND servicesId = '{{ servicesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -402,31 +338,31 @@ Creates a new Schema in a given project and location. Only creation of `schemas/
 
 ```sql
 INSERT INTO firebase.dataconnect.schemas (
-data__name,
 data__labels,
+data__name,
+data__displayName,
 data__annotations,
 data__datasources,
 data__source,
-data__displayName,
 projectsId,
 locationsId,
 servicesId,
-schemaId,
 requestId,
+schemaId,
 validateOnly
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ displayName }}',
 '{{ annotations }}',
 '{{ datasources }}',
 '{{ source }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ servicesId }}',
-'{{ schemaId }}',
 '{{ requestId }}',
+'{{ schemaId }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -439,56 +375,66 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: schemas
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the schemas resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the schemas resource.
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the schemas resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The relative resource name of the schema, in the format: ``` projects/{project}/locations/{location}/services/{service}/schemas/{schema} ``` Right now, the only supported schema is "main".
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels as key value pairs.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Stores small amounts of arbitrary data.
-        
-    - name: datasources
-      value: array
-      description: >
-        Required. The data sources linked in the schema.
-        
-    - name: source
-      value: object
-      description: >
-        Required. The source files that comprise the application schema.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The relative resource name of the schema, in the format: \`\`\` projects/{project}/locations/{location}/services/{service}/schemas/{schema} \`\`\` Right now, the only supported schema is "main".
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. Mutable human-readable name. 63 character limit.
-        
-    - name: schemaId
-      value: string
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Stores small amounts of arbitrary data.
+    - name: datasources
+      description: |
+        Required. The data sources linked in the schema.
+      value:
+        - postgresql:
+            schemaValidation: "{{ schemaValidation }}"
+            ephemeral: {{ ephemeral }}
+            database: "{{ database }}"
+            schemaMigration: "{{ schemaMigration }}"
+            unlinked: {{ unlinked }}
+            cloudSql:
+              edition: "{{ edition }}"
+              instance: "{{ instance }}"
+            schema: "{{ schema }}"
+          httpGraphql:
+            uri: "{{ uri }}"
+            timeout: "{{ timeout }}"
+    - name: source
+      description: |
+        Required. The source files that comprise the application schema.
+      value:
+        files:
+          - path: "{{ path }}"
+            content: "{{ content }}"
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
+    - name: schemaId
+      value: "{{ schemaId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -508,21 +454,21 @@ Updates the parameters of a single Schema, and creates a new SchemaRevision with
 ```sql
 UPDATE firebase.dataconnect.schemas
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__annotations = '{{ annotations }}',
 data__datasources = '{{ datasources }}',
-data__source = '{{ source }}',
-data__displayName = '{{ displayName }}'
+data__source = '{{ source }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
 AND schemasId = '{{ schemasId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
-AND allowMissing = {{ allowMissing}}
 AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 done,
@@ -552,11 +498,11 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
 AND schemasId = '{{ schemasId }}' --required
-AND force = '{{ force }}'
-AND etag = '{{ etag }}'
 AND requestId = '{{ requestId }}'
-AND allowMissing = '{{ allowMissing }}'
+AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'
+AND force = '{{ force }}'
+AND allowMissing = '{{ allowMissing }}'
 ;
 ```
 </TabItem>

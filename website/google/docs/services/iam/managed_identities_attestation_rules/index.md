@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>managed_identities_attestation_
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>managed_identities_attestation_rules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="managed_identities_attestation_rules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.managed_identities_attestation_rules" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following methods are available for this resource:
     <td><a href="#list_attestation_rules"><CopyableCode code="list_attestation_rules" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a>, <a href="#parameter-namespacesId"><code>namespacesId</code></a>, <a href="#parameter-managedIdentitiesId"><code>managedIdentitiesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all AttestationRule on a WorkloadIdentityPoolManagedIdentity.</td>
 </tr>
 <tr>
@@ -174,8 +175,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' -- required
 AND namespacesId = '{{ namespacesId }}' -- required
 AND managedIdentitiesId = '{{ managedIdentitiesId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -223,31 +224,31 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: managed_identities_attestation_rules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the managed_identities_attestation_rules resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the managed_identities_attestation_rules resource.
     - name: workloadIdentityPoolsId
-      value: string
+      value: "{{ workloadIdentityPoolsId }}"
       description: Required parameter for the managed_identities_attestation_rules resource.
     - name: namespacesId
-      value: string
+      value: "{{ namespacesId }}"
       description: Required parameter for the managed_identities_attestation_rules resource.
     - name: managedIdentitiesId
-      value: string
+      value: "{{ managedIdentitiesId }}"
       description: Required parameter for the managed_identities_attestation_rules resource.
     - name: attestationRule
-      value: object
-      description: >
-        Required. The attestation rule to be added.
-        
-```
+      description: |
+        Defines which workloads can receive an identity within a pool. When an AttestationRule is defined under a managed identity, matching workloads may receive that identity.
+      value:
+        googleCloudResource: "{{ googleCloudResource }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

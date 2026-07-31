@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>policies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.prod_tt_sasportal.policies" /></td></tr>
 </tbody></table>
@@ -173,8 +174,8 @@ EXEC google.prod_tt_sasportal.policies.policies_set
 @@json=
 '{
 "disableNotification": {{ disableNotification }}, 
-"policy": "{{ policy }}", 
-"resource": "{{ resource }}"
+"resource": "{{ resource }}", 
+"policy": "{{ policy }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workflow_templates_iam_policies
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workflow_templates_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workflow_templates_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataproc.workflow_templates_iam_policies" /></td></tr>
 </tbody></table>
@@ -32,13 +33,13 @@ Creates, updates, deletes, gets or lists a <code>workflow_templates_iam_policies
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_regions_workflow_templates_get_iam_policy"
+    defaultValue="projects_locations_workflow_templates_get_iam_policy"
     values={[
-        { label: 'projects_regions_workflow_templates_get_iam_policy', value: 'projects_regions_workflow_templates_get_iam_policy' },
-        { label: 'projects_locations_workflow_templates_get_iam_policy', value: 'projects_locations_workflow_templates_get_iam_policy' }
+        { label: 'projects_locations_workflow_templates_get_iam_policy', value: 'projects_locations_workflow_templates_get_iam_policy' },
+        { label: 'projects_regions_workflow_templates_get_iam_policy', value: 'projects_regions_workflow_templates_get_iam_policy' }
     ]}
 >
-<TabItem value="projects_regions_workflow_templates_get_iam_policy">
+<TabItem value="projects_locations_workflow_templates_get_iam_policy">
 
 <table>
 <thead>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_workflow_templates_get_iam_policy">
+<TabItem value="projects_regions_workflow_templates_get_iam_policy">
 
 <table>
 <thead>
@@ -114,13 +115,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_regions_workflow_templates_get_iam_policy"><CopyableCode code="projects_regions_workflow_templates_get_iam_policy" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-workflowTemplatesId"><code>workflowTemplatesId</code></a></td>
-    <td></td>
-    <td>Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_workflow_templates_get_iam_policy"><CopyableCode code="projects_locations_workflow_templates_get_iam_policy" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workflowTemplatesId"><code>workflowTemplatesId</code></a></td>
@@ -128,11 +122,11 @@ The following methods are available for this resource:
     <td>Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_workflow_templates_set_iam_policy"><CopyableCode code="projects_regions_workflow_templates_set_iam_policy" /></a></td>
-    <td><CopyableCode code="replace" /></td>
+    <td><a href="#projects_regions_workflow_templates_get_iam_policy"><CopyableCode code="projects_regions_workflow_templates_get_iam_policy" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-workflowTemplatesId"><code>workflowTemplatesId</code></a></td>
     <td></td>
-    <td>Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.</td>
+    <td>Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_workflow_templates_set_iam_policy"><CopyableCode code="projects_locations_workflow_templates_set_iam_policy" /></a></td>
@@ -142,16 +136,23 @@ The following methods are available for this resource:
     <td>Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_workflow_templates_test_iam_permissions"><CopyableCode code="projects_regions_workflow_templates_test_iam_permissions" /></a></td>
-    <td><CopyableCode code="exec" /></td>
+    <td><a href="#projects_regions_workflow_templates_set_iam_policy"><CopyableCode code="projects_regions_workflow_templates_set_iam_policy" /></a></td>
+    <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-workflowTemplatesId"><code>workflowTemplatesId</code></a></td>
     <td></td>
-    <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
+    <td>Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_workflow_templates_test_iam_permissions"><CopyableCode code="projects_locations_workflow_templates_test_iam_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workflowTemplatesId"><code>workflowTemplatesId</code></a></td>
+    <td></td>
+    <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
+</tr>
+<tr>
+    <td><a href="#projects_regions_workflow_templates_test_iam_permissions"><CopyableCode code="projects_regions_workflow_templates_test_iam_permissions" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-workflowTemplatesId"><code>workflowTemplatesId</code></a></td>
     <td></td>
     <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
 </tr>
@@ -197,28 +198,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_regions_workflow_templates_get_iam_policy"
+    defaultValue="projects_locations_workflow_templates_get_iam_policy"
     values={[
-        { label: 'projects_regions_workflow_templates_get_iam_policy', value: 'projects_regions_workflow_templates_get_iam_policy' },
-        { label: 'projects_locations_workflow_templates_get_iam_policy', value: 'projects_locations_workflow_templates_get_iam_policy' }
+        { label: 'projects_locations_workflow_templates_get_iam_policy', value: 'projects_locations_workflow_templates_get_iam_policy' },
+        { label: 'projects_regions_workflow_templates_get_iam_policy', value: 'projects_regions_workflow_templates_get_iam_policy' }
     ]}
 >
-<TabItem value="projects_regions_workflow_templates_get_iam_policy">
-
-Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.
-
-```sql
-SELECT
-condition,
-members,
-role
-FROM google.dataproc.workflow_templates_iam_policies
-WHERE projectsId = '{{ projectsId }}' -- required
-AND regionsId = '{{ regionsId }}' -- required
-AND workflowTemplatesId = '{{ workflowTemplatesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_workflow_templates_get_iam_policy">
 
 Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.
@@ -235,36 +220,34 @@ AND workflowTemplatesId = '{{ workflowTemplatesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_regions_workflow_templates_get_iam_policy">
+
+Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.
+
+```sql
+SELECT
+condition,
+members,
+role
+FROM google.dataproc.workflow_templates_iam_policies
+WHERE projectsId = '{{ projectsId }}' -- required
+AND regionsId = '{{ regionsId }}' -- required
+AND workflowTemplatesId = '{{ workflowTemplatesId }}' -- required
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## `REPLACE` examples
 
 <Tabs
-    defaultValue="projects_regions_workflow_templates_set_iam_policy"
+    defaultValue="projects_locations_workflow_templates_set_iam_policy"
     values={[
-        { label: 'projects_regions_workflow_templates_set_iam_policy', value: 'projects_regions_workflow_templates_set_iam_policy' },
-        { label: 'projects_locations_workflow_templates_set_iam_policy', value: 'projects_locations_workflow_templates_set_iam_policy' }
+        { label: 'projects_locations_workflow_templates_set_iam_policy', value: 'projects_locations_workflow_templates_set_iam_policy' },
+        { label: 'projects_regions_workflow_templates_set_iam_policy', value: 'projects_regions_workflow_templates_set_iam_policy' }
     ]}
 >
-<TabItem value="projects_regions_workflow_templates_set_iam_policy">
-
-Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.
-
-```sql
-REPLACE google.dataproc.workflow_templates_iam_policies
-SET 
-data__policy = '{{ policy }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND regionsId = '{{ regionsId }}' --required
-AND workflowTemplatesId = '{{ workflowTemplatesId }}' --required
-RETURNING
-bindings,
-etag,
-version;
-```
-</TabItem>
 <TabItem value="projects_locations_workflow_templates_set_iam_policy">
 
 Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.
@@ -283,34 +266,36 @@ etag,
 version;
 ```
 </TabItem>
+<TabItem value="projects_regions_workflow_templates_set_iam_policy">
+
+Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+
+```sql
+REPLACE google.dataproc.workflow_templates_iam_policies
+SET 
+data__policy = '{{ policy }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND regionsId = '{{ regionsId }}' --required
+AND workflowTemplatesId = '{{ workflowTemplatesId }}' --required
+RETURNING
+bindings,
+etag,
+version;
+```
+</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_regions_workflow_templates_test_iam_permissions"
+    defaultValue="projects_locations_workflow_templates_test_iam_permissions"
     values={[
-        { label: 'projects_regions_workflow_templates_test_iam_permissions', value: 'projects_regions_workflow_templates_test_iam_permissions' },
-        { label: 'projects_locations_workflow_templates_test_iam_permissions', value: 'projects_locations_workflow_templates_test_iam_permissions' }
+        { label: 'projects_locations_workflow_templates_test_iam_permissions', value: 'projects_locations_workflow_templates_test_iam_permissions' },
+        { label: 'projects_regions_workflow_templates_test_iam_permissions', value: 'projects_regions_workflow_templates_test_iam_permissions' }
     ]}
 >
-<TabItem value="projects_regions_workflow_templates_test_iam_permissions">
-
-Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
-
-```sql
-EXEC google.dataproc.workflow_templates_iam_policies.projects_regions_workflow_templates_test_iam_permissions 
-@projectsId='{{ projectsId }}' --required, 
-@regionsId='{{ regionsId }}' --required, 
-@workflowTemplatesId='{{ workflowTemplatesId }}' --required 
-@@json=
-'{
-"permissions": "{{ permissions }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_workflow_templates_test_iam_permissions">
 
 Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
@@ -319,6 +304,22 @@ Returns permissions that a caller has on the specified resource. If the resource
 EXEC google.dataproc.workflow_templates_iam_policies.projects_locations_workflow_templates_test_iam_permissions 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@workflowTemplatesId='{{ workflowTemplatesId }}' --required 
+@@json=
+'{
+"permissions": "{{ permissions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_regions_workflow_templates_test_iam_permissions">
+
+Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
+
+```sql
+EXEC google.dataproc.workflow_templates_iam_policies.projects_regions_workflow_templates_test_iam_permissions 
+@projectsId='{{ projectsId }}' --required, 
+@regionsId='{{ regionsId }}' --required, 
 @workflowTemplatesId='{{ workflowTemplatesId }}' --required 
 @@json=
 '{

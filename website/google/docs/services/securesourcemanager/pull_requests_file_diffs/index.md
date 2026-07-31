@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>pull_requests_file_diffs</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>pull_requests_file_diffs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="pull_requests_file_diffs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securesourcemanager.pull_requests_file_diffs" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>Output only. The action taken on the file (eg. added, modified, deleted).</td>
+    <td>Output only. The action taken on the file (eg. added, modified, deleted). (ACTION_UNSPECIFIED, ADDED, MODIFIED, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="patch" /></td>
@@ -92,7 +93,7 @@ The following methods are available for this resource:
     <td><a href="#list_file_diffs"><CopyableCode code="list_file_diffs" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists a pull request's file diffs.</td>
 </tr>
 </tbody>
@@ -167,8 +168,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND pullRequestsId = '{{ pullRequestsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

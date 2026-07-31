@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>phrase_sets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>phrase_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="phrase_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.speech.phrase_sets" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The CustomClass lifecycle state. This field is not used.</td>
+    <td>Output only. The CustomClass lifecycle state. This field is not used. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The CustomClass lifecycle state. This field is not used.</td>
+    <td>Output only. The CustomClass lifecycle state. This field is not used. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -406,27 +407,40 @@ uid
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: phrase_sets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the phrase_sets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the phrase_sets resource.
     - name: phraseSetId
-      value: string
-      description: >
+      value: "{{ phraseSetId }}"
+      description: |
         Required. The ID to use for the phrase set, which will become the final component of the phrase set's resource name. This value should restrict to letters, numbers, and hyphens, with the first character a letter, the last a letter or a number, and be 4-63 characters.
-        
     - name: phraseSet
-      value: object
-      description: >
-        Required. The phrase set to create.
-        
-```
+      description: |
+        Provides "hints" to the speech recognizer to favor specific words and phrases in the results.
+      value:
+        reconciling: {{ reconciling }}
+        displayName: "{{ displayName }}"
+        uid: "{{ uid }}"
+        expireTime: "{{ expireTime }}"
+        boost: {{ boost }}
+        kmsKeyName: "{{ kmsKeyName }}"
+        state: "{{ state }}"
+        etag: "{{ etag }}"
+        kmsKeyVersionName: "{{ kmsKeyVersionName }}"
+        deleteTime: "{{ deleteTime }}"
+        phrases:
+          - value: "{{ value }}"
+            boost: {{ boost }}
+        name: "{{ name }}"
+        annotations: "{{ annotations }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -446,9 +460,9 @@ Update a phrase set.
 ```sql
 UPDATE google.speech.phrase_sets
 SET 
-data__name = '{{ name }}',
+data__boost = {{ boost }},
 data__phrases = '{{ phrases }}',
-data__boost = {{ boost }}
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apidocs_documentation</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apidocs_documentation</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apidocs_documentation" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.apidocs_documentation" /></td></tr>
 </tbody></table>
@@ -185,8 +186,9 @@ Updates the documentation for the specified catalog item. Note that the document
 ```sql
 UPDATE google.apigee.apidocs_documentation
 SET 
-data__graphqlDocumentation = '{{ graphqlDocumentation }}',
-data__oasDocumentation = '{{ oasDocumentation }}'
+data__oasDocumentation = '{{ oasDocumentation }}',
+data__asyncApiDocumentation = '{{ asyncApiDocumentation }}',
+data__graphqlDocumentation = '{{ graphqlDocumentation }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sitesId = '{{ sitesId }}' --required

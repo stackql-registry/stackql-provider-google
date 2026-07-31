@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>work_items</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>work_items</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="work_items" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataflow.work_items" /></td></tr>
 </tbody></table>
@@ -50,20 +51,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_jobs_work_items_report_status"><CopyableCode code="projects_jobs_work_items_report_status" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
-    <td></td>
-    <td>Reports the status of dataflow WorkItems leased by a worker.</td>
-</tr>
-<tr>
-    <td><a href="#projects_jobs_work_items_lease"><CopyableCode code="projects_jobs_work_items_lease" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
-    <td></td>
-    <td>Leases a dataflow WorkItem to run.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_jobs_work_items_report_status"><CopyableCode code="projects_locations_jobs_work_items_report_status" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
@@ -74,6 +61,20 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_jobs_work_items_lease"><CopyableCode code="projects_locations_jobs_work_items_lease" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td></td>
+    <td>Leases a dataflow WorkItem to run.</td>
+</tr>
+<tr>
+    <td><a href="#projects_jobs_work_items_report_status"><CopyableCode code="projects_jobs_work_items_report_status" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td></td>
+    <td>Reports the status of dataflow WorkItems leased by a worker.</td>
+</tr>
+<tr>
+    <td><a href="#projects_jobs_work_items_lease"><CopyableCode code="projects_jobs_work_items_lease" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td></td>
     <td>Leases a dataflow WorkItem to run.</td>
 </tr>
@@ -114,56 +115,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_jobs_work_items_report_status"
+    defaultValue="projects_locations_jobs_work_items_report_status"
     values={[
-        { label: 'projects_jobs_work_items_report_status', value: 'projects_jobs_work_items_report_status' },
-        { label: 'projects_jobs_work_items_lease', value: 'projects_jobs_work_items_lease' },
         { label: 'projects_locations_jobs_work_items_report_status', value: 'projects_locations_jobs_work_items_report_status' },
-        { label: 'projects_locations_jobs_work_items_lease', value: 'projects_locations_jobs_work_items_lease' }
+        { label: 'projects_locations_jobs_work_items_lease', value: 'projects_locations_jobs_work_items_lease' },
+        { label: 'projects_jobs_work_items_report_status', value: 'projects_jobs_work_items_report_status' },
+        { label: 'projects_jobs_work_items_lease', value: 'projects_jobs_work_items_lease' }
     ]}
 >
-<TabItem value="projects_jobs_work_items_report_status">
-
-Reports the status of dataflow WorkItems leased by a worker.
-
-```sql
-EXEC google.dataflow.work_items.projects_jobs_work_items_report_status 
-@projectId='{{ projectId }}' --required, 
-@jobId='{{ jobId }}' --required 
-@@json=
-'{
-"workerId": "{{ workerId }}", 
-"workItemStatuses": "{{ workItemStatuses }}", 
-"currentWorkerTime": "{{ currentWorkerTime }}", 
-"location": "{{ location }}", 
-"unifiedWorkerRequest": "{{ unifiedWorkerRequest }}", 
-"projectNumber": "{{ projectNumber }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_jobs_work_items_lease">
-
-Leases a dataflow WorkItem to run.
-
-```sql
-EXEC google.dataflow.work_items.projects_jobs_work_items_lease 
-@projectId='{{ projectId }}' --required, 
-@jobId='{{ jobId }}' --required 
-@@json=
-'{
-"workItemTypes": "{{ workItemTypes }}", 
-"workerCapabilities": "{{ workerCapabilities }}", 
-"requestedLeaseDuration": "{{ requestedLeaseDuration }}", 
-"currentWorkerTime": "{{ currentWorkerTime }}", 
-"workerId": "{{ workerId }}", 
-"location": "{{ location }}", 
-"unifiedWorkerRequest": "{{ unifiedWorkerRequest }}", 
-"projectNumber": "{{ projectNumber }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_jobs_work_items_report_status">
 
 Reports the status of dataflow WorkItems leased by a worker.
@@ -175,12 +134,12 @@ EXEC google.dataflow.work_items.projects_locations_jobs_work_items_report_status
 @jobId='{{ jobId }}' --required 
 @@json=
 '{
-"workerId": "{{ workerId }}", 
 "workItemStatuses": "{{ workItemStatuses }}", 
-"currentWorkerTime": "{{ currentWorkerTime }}", 
-"location": "{{ location }}", 
 "unifiedWorkerRequest": "{{ unifiedWorkerRequest }}", 
-"projectNumber": "{{ projectNumber }}"
+"currentWorkerTime": "{{ currentWorkerTime }}", 
+"projectNumber": "{{ projectNumber }}", 
+"workerId": "{{ workerId }}", 
+"location": "{{ location }}"
 }'
 ;
 ```
@@ -196,14 +155,56 @@ EXEC google.dataflow.work_items.projects_locations_jobs_work_items_lease
 @jobId='{{ jobId }}' --required 
 @@json=
 '{
-"workItemTypes": "{{ workItemTypes }}", 
 "workerCapabilities": "{{ workerCapabilities }}", 
 "requestedLeaseDuration": "{{ requestedLeaseDuration }}", 
-"currentWorkerTime": "{{ currentWorkerTime }}", 
-"workerId": "{{ workerId }}", 
 "location": "{{ location }}", 
+"workerId": "{{ workerId }}", 
+"workItemTypes": "{{ workItemTypes }}", 
+"currentWorkerTime": "{{ currentWorkerTime }}", 
+"projectNumber": "{{ projectNumber }}", 
+"unifiedWorkerRequest": "{{ unifiedWorkerRequest }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_jobs_work_items_report_status">
+
+Reports the status of dataflow WorkItems leased by a worker.
+
+```sql
+EXEC google.dataflow.work_items.projects_jobs_work_items_report_status 
+@projectId='{{ projectId }}' --required, 
+@jobId='{{ jobId }}' --required 
+@@json=
+'{
+"workItemStatuses": "{{ workItemStatuses }}", 
 "unifiedWorkerRequest": "{{ unifiedWorkerRequest }}", 
-"projectNumber": "{{ projectNumber }}"
+"currentWorkerTime": "{{ currentWorkerTime }}", 
+"projectNumber": "{{ projectNumber }}", 
+"workerId": "{{ workerId }}", 
+"location": "{{ location }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_jobs_work_items_lease">
+
+Leases a dataflow WorkItem to run.
+
+```sql
+EXEC google.dataflow.work_items.projects_jobs_work_items_lease 
+@projectId='{{ projectId }}' --required, 
+@jobId='{{ jobId }}' --required 
+@@json=
+'{
+"workerCapabilities": "{{ workerCapabilities }}", 
+"requestedLeaseDuration": "{{ requestedLeaseDuration }}", 
+"location": "{{ location }}", 
+"workerId": "{{ workerId }}", 
+"workItemTypes": "{{ workItemTypes }}", 
+"currentWorkerTime": "{{ currentWorkerTime }}", 
+"projectNumber": "{{ projectNumber }}", 
+"unifiedWorkerRequest": "{{ unifiedWorkerRequest }}"
 }'
 ;
 ```

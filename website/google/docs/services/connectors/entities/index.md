@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entities</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entities</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entities" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.connectors.entities" /></td></tr>
 </tbody></table>
@@ -117,49 +118,49 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a>, <a href="#parameter-entitiesId"><code>entitiesId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Gets a single entity row matching the entity type and entity id specified in the request.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
-    <td><a href="#parameter-conditions"><code>conditions</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-sortBy"><code>sortBy</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-sortBy"><code>sortBy</code></a>, <a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-conditions"><code>conditions</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a></td>
     <td>Lists entity rows of a particular entity type contained in the request. Note: 1. Currently, only max of one 'sort_by' column is supported. 2. If no 'sort_by' column is provided, the primary key of the table is used. If zero or more than one primary key is available, we default to the unpaginated list entities logic which only returns the first page. 3. The values of the 'sort_by' columns must uniquely identify an entity row, otherwise undefined behaviors may be observed during pagination. 4. Since transactions are not supported, any updates, inserts or deletes during pagination can lead to stale data being returned or other unexpected behaviors.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Creates a new entity row of the specified entity type in the external system. The field values for creating the row are contained in the body of the request. The response message contains a `Entity` message object returned as a response by the external system.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a>, <a href="#parameter-entitiesId"><code>entitiesId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Updates an existing entity row matching the entity type and entity id specified in the request. The fields in the entity row that need to be modified are contained in the body of the request. All unspecified fields are left unchanged. The response message contains a `Entity` message object returned as a response by the external system.</td>
 </tr>
 <tr>
     <td><a href="#update_entities_with_conditions"><CopyableCode code="update_entities_with_conditions" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
-    <td><a href="#parameter-conditions"><code>conditions</code></a></td>
+    <td><a href="#parameter-conditions"><code>conditions</code></a>, <a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Updates entities based on conditions specified in the request and not on entity id.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a>, <a href="#parameter-entitiesId"><code>entitiesId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Deletes an existing entity row matching the entity type and entity id specified in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete_entities_with_conditions"><CopyableCode code="delete_entities_with_conditions" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
-    <td><a href="#parameter-conditions"><code>conditions</code></a></td>
+    <td><a href="#parameter-conditions"><code>conditions</code></a>, <a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Deletes entities based on conditions specified in the request and not on entity id.</td>
 </tr>
 </tbody>
@@ -205,6 +206,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-conditions">
     <td><CopyableCode code="conditions" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-executionConfig.headers">
+    <td><CopyableCode code="executionConfig.headers" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -255,6 +261,7 @@ AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
 AND entityTypesId = '{{ entityTypesId }}' -- required
 AND entitiesId = '{{ entitiesId }}' -- required
+AND executionConfig.headers = '{{ executionConfig.headers }}'
 ;
 ```
 </TabItem>
@@ -272,10 +279,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
 AND entityTypesId = '{{ entityTypesId }}' -- required
-AND conditions = '{{ conditions }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND sortBy = '{{ sortBy }}'
+AND executionConfig.headers = '{{ executionConfig.headers }}'
+AND pageToken = '{{ pageToken }}'
+AND conditions = '{{ conditions }}'
 AND sortOrder = '{{ sortOrder }}'
 ;
 ```
@@ -303,7 +311,8 @@ data__metadata,
 projectsId,
 locationsId,
 connectionsId,
-entityTypesId
+entityTypesId,
+executionConfig.headers
 )
 SELECT 
 '{{ fields }}',
@@ -311,7 +320,8 @@ SELECT
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectionsId }}',
-'{{ entityTypesId }}'
+'{{ entityTypesId }}',
+'{{ executionConfig.headers }}'
 RETURNING
 name,
 fields,
@@ -321,33 +331,33 @@ metadata
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: entities
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the entities resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the entities resource.
     - name: connectionsId
-      value: string
+      value: "{{ connectionsId }}"
       description: Required parameter for the entities resource.
     - name: entityTypesId
-      value: string
+      value: "{{ entityTypesId }}"
       description: Required parameter for the entities resource.
     - name: fields
-      value: object
-      description: >
-        Fields of the entity. The key is name of the field and the value contains the applicable `google.protobuf.Value` entry for this field.
-        
+      value: "{{ fields }}"
+      description: |
+        Fields of the entity. The key is name of the field and the value contains the applicable \`google.protobuf.Value\` entry for this field.
     - name: metadata
-      value: object
-      description: >
+      value: "{{ metadata }}"
+      description: |
         Metadata like service latency, etc.
-        
-```
+    - name: executionConfig.headers
+      value: "{{ executionConfig.headers }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -376,6 +386,7 @@ AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
 AND entityTypesId = '{{ entityTypesId }}' --required
 AND entitiesId = '{{ entitiesId }}' --required
+AND executionConfig.headers = '{{ executionConfig.headers}}'
 RETURNING
 name,
 fields,
@@ -397,6 +408,7 @@ AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
 AND entityTypesId = '{{ entityTypesId }}' --required
 AND conditions = '{{ conditions}}'
+AND executionConfig.headers = '{{ executionConfig.headers}}'
 RETURNING
 metadata,
 response;
@@ -425,6 +437,7 @@ AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
 AND entityTypesId = '{{ entityTypesId }}' --required
 AND entitiesId = '{{ entitiesId }}' --required
+AND executionConfig.headers = '{{ executionConfig.headers }}'
 ;
 ```
 </TabItem>
@@ -439,6 +452,7 @@ AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
 AND entityTypesId = '{{ entityTypesId }}' --required
 AND conditions = '{{ conditions }}'
+AND executionConfig.headers = '{{ executionConfig.headers }}'
 ;
 ```
 </TabItem>

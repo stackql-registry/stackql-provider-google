@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>databases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>databases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="databases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.biglake.databases" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The database type.</td>
+    <td>The database type. (TYPE_UNSPECIFIED, HIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The database type.</td>
+    <td>The database type. (TYPE_UNSPECIFIED, HIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -344,33 +345,33 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: databases
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the databases resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the databases resource.
     - name: catalogsId
-      value: string
+      value: "{{ catalogsId }}"
       description: Required parameter for the databases resource.
     - name: hiveOptions
-      value: object
-      description: >
+      description: |
         Options of a Hive database.
-        
+      value:
+        locationUri: "{{ locationUri }}"
+        parameters: "{{ parameters }}"
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         The database type.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'HIVE']
     - name: databaseId
-      value: string
-```
+      value: "{{ databaseId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>domains_ldapssettings</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>domains_ldapssettings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="domains_ldapssettings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedidentities.domains_ldapssettings" /></td></tr>
 </tbody></table>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this LDAPS settings.</td>
+    <td>Output only. The current state of this LDAPS settings. (STATE_UNSPECIFIED, UPDATING, ACTIVE, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>

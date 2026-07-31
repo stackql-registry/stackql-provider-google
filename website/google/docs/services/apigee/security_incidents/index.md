@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_incidents</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_incidents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_incidents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.security_incidents" /></td></tr>
 </tbody></table>
@@ -82,12 +83,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="observability" /></td>
     <td><code>string</code></td>
-    <td>Optional. Indicates if the user archived this incident.</td>
+    <td>Optional. Indicates if the user archived this incident. (OBSERVABILITY_UNSPECIFIED, ACTIVE, ARCHIVED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="riskLevel" /></td>
     <td><code>string</code></td>
-    <td>Output only. Risk level of the incident.</td>
+    <td>Output only. Risk level of the incident. (RISK_LEVEL_UNSPECIFIED, LOW, MODERATE, SEVERE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trafficCount" /></td>
@@ -141,12 +142,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="observability" /></td>
     <td><code>string</code></td>
-    <td>Optional. Indicates if the user archived this incident.</td>
+    <td>Optional. Indicates if the user archived this incident. (OBSERVABILITY_UNSPECIFIED, ACTIVE, ARCHIVED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="riskLevel" /></td>
     <td><code>string</code></td>
-    <td>Output only. Risk level of the incident.</td>
+    <td>Output only. Risk level of the incident. (RISK_LEVEL_UNSPECIFIED, LOW, MODERATE, SEVERE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trafficCount" /></td>
@@ -330,8 +331,8 @@ UpdateSecurityIncidents updates an existing security incident.
 UPDATE google.apigee.security_incidents
 SET 
 data__trafficCount = '{{ trafficCount }}',
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__observability = '{{ observability }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

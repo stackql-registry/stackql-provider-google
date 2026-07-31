@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>versions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>versions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="versions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.versions" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="schemaType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The schema type of the schema.</td>
+    <td>Optional. The schema type of the schema. (SCHEMA_TYPE_UNSPECIFIED, AVRO, JSON, PROTOBUF)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subject" /></td>
@@ -131,28 +132,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td><a href="#parameter-deleted"><code>deleted</code></a></td>
     <td>Get a versioned schema (schema with subject/version) of a subject.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
-    <td><a href="#parameter-deleted"><code>deleted</code></a>, <a href="#parameter-subject"><code>subject</code></a></td>
-    <td>List the schema versions for the given schema id. The response will be an array of subject-version pairs as: [&#123;"subject":"subject1", "version":1&#125;, &#123;"subject":"subject2", "version":2&#125;].</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a></td>
+    <td><a href="#parameter-deleted"><code>deleted</code></a></td>
+    <td>Get all versions of a subject. The response will be an array of versions of the subject.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a></td>
     <td></td>
     <td>Register a new version under a given subject with the given schema.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td><a href="#parameter-permanent"><code>permanent</code></a></td>
     <td>Delete a version of a subject. The response will be the deleted version id.</td>
 </tr>
@@ -172,11 +173,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-contextsId">
-    <td><CopyableCode code="contextsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-locationsId">
     <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
@@ -189,11 +185,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-schemaRegistriesId">
     <td><CopyableCode code="schemaRegistriesId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-schemasId">
-    <td><CopyableCode code="schemasId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -215,11 +206,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-permanent">
     <td><CopyableCode code="permanent" /></td>
     <td><code>boolean</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-subject">
-    <td><CopyableCode code="subject" /></td>
-    <td><code>string</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -250,7 +236,6 @@ FROM google.managedkafka.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' -- required
-AND contextsId = '{{ contextsId }}' -- required
 AND subjectsId = '{{ subjectsId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
 AND deleted = '{{ deleted }}'
@@ -259,7 +244,7 @@ AND deleted = '{{ deleted }}'
 </TabItem>
 <TabItem value="list">
 
-List the schema versions for the given schema id. The response will be an array of subject-version pairs as: [&#123;"subject":"subject1", "version":1&#125;, &#123;"subject":"subject2", "version":2&#125;].
+Get all versions of a subject. The response will be an array of versions of the subject.
 
 ```sql
 SELECT
@@ -270,9 +255,8 @@ FROM google.managedkafka.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' -- required
-AND schemasId = '{{ schemasId }}' -- required
+AND subjectsId = '{{ subjectsId }}' -- required
 AND deleted = '{{ deleted }}'
-AND subject = '{{ subject }}'
 ;
 ```
 </TabItem>
@@ -294,29 +278,27 @@ Register a new version under a given subject with the given schema.
 
 ```sql
 INSERT INTO google.managedkafka.versions (
-data__id,
-data__version,
-data__schemaType,
 data__normalize,
+data__version,
+data__id,
+data__schemaType,
 data__schema,
 data__references,
 projectsId,
 locationsId,
 schemaRegistriesId,
-contextsId,
 subjectsId
 )
 SELECT 
-{{ id }},
-{{ version }},
-'{{ schemaType }}',
 {{ normalize }},
+{{ version }},
+{{ id }},
+'{{ schemaType }}',
 '{{ schema }}',
 '{{ references }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ schemaRegistriesId }}',
-'{{ contextsId }}',
 '{{ subjectsId }}'
 RETURNING
 id
@@ -325,57 +307,51 @@ id
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: versions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the versions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the versions resource.
     - name: schemaRegistriesId
-      value: string
-      description: Required parameter for the versions resource.
-    - name: contextsId
-      value: string
+      value: "{{ schemaRegistriesId }}"
       description: Required parameter for the versions resource.
     - name: subjectsId
-      value: string
+      value: "{{ subjectsId }}"
       description: Required parameter for the versions resource.
-    - name: id
-      value: integer
-      description: >
-        Optional. The schema ID of the schema. If not specified, the schema ID will be generated by the server. If the schema ID is specified, it must not be used by an existing schema that is different from the schema to be created.
-        
-    - name: version
-      value: integer
-      description: >
-        Optional. The version to create. It is optional. If not specified, the version will be created with the max version ID of the subject increased by 1. If the version ID is specified, it will be used as the new version ID and must not be used by an existing version of the subject.
-        
-    - name: schemaType
-      value: string
-      description: >
-        Optional. The type of the schema. It is optional. If not specified, the schema type will be AVRO.
-        
-      valid_values: ['SCHEMA_TYPE_UNSPECIFIED', 'AVRO', 'JSON', 'PROTOBUF']
     - name: normalize
-      value: boolean
-      description: >
+      value: {{ normalize }}
+      description: |
         Optional. If true, the schema will be normalized before being stored. The default is false.
-        
+    - name: version
+      value: {{ version }}
+      description: |
+        Optional. The version to create. It is optional. If not specified, the version will be created with the max version ID of the subject increased by 1. If the version ID is specified, it will be used as the new version ID and must not be used by an existing version of the subject.
+    - name: id
+      value: {{ id }}
+      description: |
+        Optional. The schema ID of the schema. If not specified, the schema ID will be generated by the server. If the schema ID is specified, it must not be used by an existing schema that is different from the schema to be created.
+    - name: schemaType
+      value: "{{ schemaType }}"
+      description: |
+        Optional. The type of the schema. It is optional. If not specified, the schema type will be AVRO.
+      valid_values: ['SCHEMA_TYPE_UNSPECIFIED', 'AVRO', 'JSON', 'PROTOBUF']
     - name: schema
-      value: string
-      description: >
+      value: "{{ schema }}"
+      description: |
         Required. The schema payload
-        
     - name: references
-      value: array
-      description: >
+      description: |
         Optional. The schema references used by the schema.
-        
-```
+      value:
+        - name: "{{ name }}"
+          subject: "{{ subject }}"
+          version: {{ version }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -397,7 +373,6 @@ DELETE FROM google.managedkafka.versions
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' --required
-AND contextsId = '{{ contextsId }}' --required
 AND subjectsId = '{{ subjectsId }}' --required
 AND versionsId = '{{ versionsId }}' --required
 AND permanent = '{{ permanent }}'

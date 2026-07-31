@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>developers_monetization_config<
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>developers_monetization_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="developers_monetization_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.developers_monetization_config" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="billingType" /></td>
     <td><code>string</code></td>
-    <td>Billing type.</td>
+    <td>Billing type. (BILLING_TYPE_UNSPECIFIED, PREPAID, POSTPAID)</td>
 </tr>
 </tbody>
 </table>

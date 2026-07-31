@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datafusion.instances" /></td></tr>
 </tbody></table>
@@ -207,7 +208,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this Data Fusion instance.</td>
+    <td>Output only. The current state of this Data Fusion instance. (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, DELETING, UPGRADING, RESTARTING, UPDATING, AUTO_UPDATING, AUTO_UPGRADING, DISABLED, ENABLING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateMessage" /></td>
@@ -227,7 +228,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Instance type.</td>
+    <td>Required. Instance type. (TYPE_UNSPECIFIED, BASIC, ENTERPRISE, DEVELOPER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -421,7 +422,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this Data Fusion instance.</td>
+    <td>Output only. The current state of this Data Fusion instance. (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, DELETING, UPGRADING, RESTARTING, UPDATING, AUTO_UPDATING, AUTO_UPGRADING, DISABLED, ENABLING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateMessage" /></td>
@@ -441,7 +442,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Instance type.</td>
+    <td>Required. Instance type. (TYPE_UNSPECIFIED, BASIC, ENTERPRISE, DEVELOPER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -494,7 +495,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Data Fusion instances in the specified project and location.</td>
 </tr>
 <tr>
@@ -706,9 +707,9 @@ FROM google.datafusion.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -730,53 +731,53 @@ Creates a new Data Fusion instance in the specified project and location.
 
 ```sql
 INSERT INTO google.datafusion.instances (
-data__loggingConfig,
-data__eventPublishConfig,
-data__maintenancePolicy,
-data__enableStackdriverMonitoring,
-data__options,
-data__description,
-data__monitoringConfig,
-data__tags,
-data__enableStackdriverLogging,
-data__networkConfig,
-data__dataplexDataLineageIntegrationEnabled,
-data__dataprocServiceAccount,
 data__patchRevision,
-data__version,
-data__type,
+data__monitoringConfig,
 data__privateInstance,
+data__dataplexDataLineageIntegrationEnabled,
+data__maintenancePolicy,
+data__eventPublishConfig,
+data__labels,
 data__zone,
+data__options,
+data__networkConfig,
+data__displayName,
+data__dataprocServiceAccount,
 data__cryptoKeyConfig,
 data__enableRbac,
-data__displayName,
-data__labels,
+data__type,
+data__version,
+data__tags,
+data__enableStackdriverLogging,
+data__loggingConfig,
+data__enableStackdriverMonitoring,
+data__description,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ loggingConfig }}',
-'{{ eventPublishConfig }}',
-'{{ maintenancePolicy }}',
-{{ enableStackdriverMonitoring }},
-'{{ options }}',
-'{{ description }}',
-'{{ monitoringConfig }}',
-'{{ tags }}',
-{{ enableStackdriverLogging }},
-'{{ networkConfig }}',
-{{ dataplexDataLineageIntegrationEnabled }},
-'{{ dataprocServiceAccount }}',
 '{{ patchRevision }}',
-'{{ version }}',
-'{{ type }}',
+'{{ monitoringConfig }}',
 {{ privateInstance }},
+{{ dataplexDataLineageIntegrationEnabled }},
+'{{ maintenancePolicy }}',
+'{{ eventPublishConfig }}',
+'{{ labels }}',
 '{{ zone }}',
+'{{ options }}',
+'{{ networkConfig }}',
+'{{ displayName }}',
+'{{ dataprocServiceAccount }}',
 '{{ cryptoKeyConfig }}',
 {{ enableRbac }},
-'{{ displayName }}',
-'{{ labels }}',
+'{{ type }}',
+'{{ version }}',
+'{{ tags }}',
+{{ enableStackdriverLogging }},
+'{{ loggingConfig }}',
+{{ enableStackdriverMonitoring }},
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -791,125 +792,126 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: loggingConfig
-      value: object
-      description: >
-        Optional. The logging configuration for this instance. This field is supported only in CDF versions 6.11.0 and above.
-        
-    - name: eventPublishConfig
-      value: object
-      description: >
-        Optional. Option to enable and pass metadata for event publishing.
-        
-    - name: maintenancePolicy
-      value: object
-      description: >
-        Optional. Configure the maintenance policy for this instance.
-        
-    - name: enableStackdriverMonitoring
-      value: boolean
-      description: >
-        Optional. Option to enable Stackdriver Monitoring.
-        
-    - name: options
-      value: object
-      description: >
-        Optional. Map of additional options used to configure the behavior of Data Fusion instance.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A description of this instance.
-        
-    - name: monitoringConfig
-      value: object
-      description: >
-        Optional. The monitoring configuration for this instance.
-        
-    - name: tags
-      value: object
-      description: >
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-        
-    - name: enableStackdriverLogging
-      value: boolean
-      description: >
-        Optional. Option to enable Dataproc Stackdriver Logging.
-        
-    - name: networkConfig
-      value: object
-      description: >
-        Optional. Network configuration options. These are required when a private Data Fusion instance is to be created.
-        
-    - name: dataplexDataLineageIntegrationEnabled
-      value: boolean
-      description: >
-        Optional. Option to enable the Dataplex Lineage Integration feature.
-        
-    - name: dataprocServiceAccount
-      value: string
-      description: >
-        Optional. User-managed service account to set on Dataproc when Cloud Data Fusion creates Dataproc to run data processing pipelines. This allows users to have fine-grained access control on Dataproc's accesses to cloud resources.
-        
     - name: patchRevision
-      value: string
-      description: >
+      value: "{{ patchRevision }}"
+      description: |
         Optional. Current patch revision of the Data Fusion.
-        
-    - name: version
-      value: string
-      description: >
-        Optional. Current version of the Data Fusion. Only specifiable in Update.
-        
-    - name: type
-      value: string
-      description: >
-        Required. Instance type.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'BASIC', 'ENTERPRISE', 'DEVELOPER']
+    - name: monitoringConfig
+      description: |
+        Optional. The monitoring configuration for this instance.
+      value:
+        enableInstanceV2Metrics: {{ enableInstanceV2Metrics }}
     - name: privateInstance
-      value: boolean
-      description: >
+      value: {{ privateInstance }}
+      description: |
         Optional. Specifies whether the Data Fusion instance should be private. If set to true, all Data Fusion nodes will have private IP addresses and will not be able to access the public internet.
-        
-    - name: zone
-      value: string
-      description: >
-        Optional. Name of the zone in which the Data Fusion instance will be created. Only DEVELOPER instances use this field.
-        
-    - name: cryptoKeyConfig
-      value: object
-      description: >
-        Optional. The crypto key configuration. This field is used by the Customer-Managed Encryption Keys (CMEK) feature.
-        
-    - name: enableRbac
-      value: boolean
-      description: >
-        Optional. Option to enable granular role-based access control.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Display name for an instance.
-        
+    - name: dataplexDataLineageIntegrationEnabled
+      value: {{ dataplexDataLineageIntegrationEnabled }}
+      description: |
+        Optional. Option to enable the Dataplex Lineage Integration feature.
+    - name: maintenancePolicy
+      description: |
+        Optional. Configure the maintenance policy for this instance.
+      value:
+        maintenanceWindow:
+          recurringTimeWindow:
+            window:
+              startTime: "{{ startTime }}"
+              endTime: "{{ endTime }}"
+            recurrence: "{{ recurrence }}"
+        maintenanceExclusionWindow:
+          startTime: "{{ startTime }}"
+          endTime: "{{ endTime }}"
+    - name: eventPublishConfig
+      description: |
+        Optional. Option to enable and pass metadata for event publishing.
+      value:
+        topic: "{{ topic }}"
+        enabled: {{ enabled }}
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         The resource labels for instance to use to annotate any related underlying resources such as Compute Engine VMs. The character '=' is not allowed to be used within the labels.
-        
+    - name: zone
+      value: "{{ zone }}"
+      description: |
+        Optional. Name of the zone in which the Data Fusion instance will be created. Only DEVELOPER instances use this field.
+    - name: options
+      value: "{{ options }}"
+      description: |
+        Optional. Map of additional options used to configure the behavior of Data Fusion instance.
+    - name: networkConfig
+      description: |
+        Optional. Network configuration options. These are required when a private Data Fusion instance is to be created.
+      value:
+        ipAllocation: "{{ ipAllocation }}"
+        connectionType: "{{ connectionType }}"
+        network: "{{ network }}"
+        privateServiceConnectConfig:
+          networkAttachment: "{{ networkAttachment }}"
+          effectiveUnreachableCidrBlock: "{{ effectiveUnreachableCidrBlock }}"
+          unreachableCidrBlock: "{{ unreachableCidrBlock }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Display name for an instance.
+    - name: dataprocServiceAccount
+      value: "{{ dataprocServiceAccount }}"
+      description: |
+        Optional. User-managed service account to set on Dataproc when Cloud Data Fusion creates Dataproc to run data processing pipelines. This allows users to have fine-grained access control on Dataproc's accesses to cloud resources.
+    - name: cryptoKeyConfig
+      description: |
+        Optional. The crypto key configuration. This field is used by the Customer-Managed Encryption Keys (CMEK) feature.
+      value:
+        keyReference: "{{ keyReference }}"
+    - name: enableRbac
+      value: {{ enableRbac }}
+      description: |
+        Optional. Option to enable granular role-based access control.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. Instance type.
+      valid_values: ['TYPE_UNSPECIFIED', 'BASIC', 'ENTERPRISE', 'DEVELOPER']
+    - name: version
+      value: "{{ version }}"
+      description: |
+        Optional. Current version of the Data Fusion. Only specifiable in Update.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
+    - name: enableStackdriverLogging
+      value: {{ enableStackdriverLogging }}
+      description: |
+        Optional. Option to enable Dataproc Stackdriver Logging.
+    - name: loggingConfig
+      description: |
+        Optional. The logging configuration for this instance. This field is supported only in CDF versions 6.11.0 and above.
+      value:
+        enableInstanceV2Logs: {{ enableInstanceV2Logs }}
+        instanceCloudLoggingDisabled: {{ instanceCloudLoggingDisabled }}
+    - name: enableStackdriverMonitoring
+      value: {{ enableStackdriverMonitoring }}
+      description: |
+        Optional. Option to enable Stackdriver Monitoring.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of this instance.
     - name: instanceId
-      value: string
-```
+      value: "{{ instanceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -929,27 +931,27 @@ Updates a single Data Fusion instance.
 ```sql
 UPDATE google.datafusion.instances
 SET 
-data__loggingConfig = '{{ loggingConfig }}',
-data__eventPublishConfig = '{{ eventPublishConfig }}',
-data__maintenancePolicy = '{{ maintenancePolicy }}',
-data__enableStackdriverMonitoring = {{ enableStackdriverMonitoring }},
-data__options = '{{ options }}',
-data__description = '{{ description }}',
-data__monitoringConfig = '{{ monitoringConfig }}',
-data__tags = '{{ tags }}',
-data__enableStackdriverLogging = {{ enableStackdriverLogging }},
-data__networkConfig = '{{ networkConfig }}',
-data__dataplexDataLineageIntegrationEnabled = {{ dataplexDataLineageIntegrationEnabled }},
-data__dataprocServiceAccount = '{{ dataprocServiceAccount }}',
 data__patchRevision = '{{ patchRevision }}',
-data__version = '{{ version }}',
-data__type = '{{ type }}',
+data__monitoringConfig = '{{ monitoringConfig }}',
 data__privateInstance = {{ privateInstance }},
+data__dataplexDataLineageIntegrationEnabled = {{ dataplexDataLineageIntegrationEnabled }},
+data__maintenancePolicy = '{{ maintenancePolicy }}',
+data__eventPublishConfig = '{{ eventPublishConfig }}',
+data__labels = '{{ labels }}',
 data__zone = '{{ zone }}',
+data__options = '{{ options }}',
+data__networkConfig = '{{ networkConfig }}',
+data__displayName = '{{ displayName }}',
+data__dataprocServiceAccount = '{{ dataprocServiceAccount }}',
 data__cryptoKeyConfig = '{{ cryptoKeyConfig }}',
 data__enableRbac = {{ enableRbac }},
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}'
+data__type = '{{ type }}',
+data__version = '{{ version }}',
+data__tags = '{{ tags }}',
+data__enableStackdriverLogging = {{ enableStackdriverLogging }},
+data__loggingConfig = '{{ loggingConfig }}',
+data__enableStackdriverMonitoring = {{ enableStackdriverMonitoring }},
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

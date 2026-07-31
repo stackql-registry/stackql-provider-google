@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>members</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>members</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="members" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.members" /></td></tr>
 </tbody></table>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-groupKey"><code>groupKey</code></a></td>
-    <td><a href="#parameter-includeDerivedMembership"><code>includeDerivedMembership</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-roles"><code>roles</code></a></td>
+    <td><a href="#parameter-includeDerivedMembership"><code>includeDerivedMembership</code></a>, <a href="#parameter-roles"><code>roles</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Retrieves a paginated list of all members in a group. This method times out after 60 minutes. For more information, see [Troubleshoot error codes](https://developers.google.com/workspace/admin/directory/v1/guides/troubleshoot-error-codes).</td>
 </tr>
 <tr>
@@ -307,9 +308,9 @@ type
 FROM googleadmin.directory.members
 WHERE groupKey = '{{ groupKey }}' -- required
 AND includeDerivedMembership = '{{ includeDerivedMembership }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND roles = '{{ roles }}'
+AND pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -331,25 +332,25 @@ Adds a user to the specified group.
 
 ```sql
 INSERT INTO googleadmin.directory.members (
-data__kind,
-data__email,
-data__role,
-data__etag,
-data__type,
 data__status,
-data__delivery_settings,
 data__id,
+data__delivery_settings,
+data__email,
+data__etag,
+data__kind,
+data__role,
+data__type,
 groupKey
 )
 SELECT 
-'{{ kind }}',
-'{{ email }}',
-'{{ role }}',
-'{{ etag }}',
-'{{ type }}',
 '{{ status }}',
-'{{ delivery_settings }}',
 '{{ id }}',
+'{{ delivery_settings }}',
+'{{ email }}',
+'{{ etag }}',
+'{{ kind }}',
+'{{ role }}',
+'{{ type }}',
 '{{ groupKey }}'
 RETURNING
 id,
@@ -365,55 +366,47 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: members
   props:
     - name: groupKey
-      value: string
+      value: "{{ groupKey }}"
       description: Required parameter for the members resource.
-    - name: kind
-      value: string
-      description: >
-        The type of the API resource. For Members resources, the value is `admin#directory#member`.
-        
-      default: admin#directory#member
-    - name: email
-      value: string
-      description: >
-        The member's email address. A member can be a user or another group. This property is required when adding a member to a group. The `email` must be unique and cannot be an alias of another group. If the email address is changed, the API automatically reflects the email address changes.
-        
-    - name: role
-      value: string
-      description: >
-        The member's role in a group. The API returns an error for cycles in group memberships. For example, if `group1` is a member of `group2`, `group2` cannot be a member of `group1`. For more information about a member's role, see the [administration help center](https://support.google.com/a/answer/167094).
-        
-    - name: etag
-      value: string
-      description: >
-        ETag of the resource.
-        
-    - name: type
-      value: string
-      description: >
-        The type of group member.
-        
     - name: status
-      value: string
-      description: >
+      value: "{{ status }}"
+      description: |
         Status of member (Immutable)
-        
-    - name: delivery_settings
-      value: string
-      description: >
-        Defines mail delivery preferences of member. This field is only supported by `insert`, `update`, and `get` methods.
-        
     - name: id
-      value: string
-      description: >
-        The unique ID of the group member. A member `id` can be used as a member request URI's `memberKey`.
-        
-```
+      value: "{{ id }}"
+      description: |
+        The unique ID of the group member. A member \`id\` can be used as a member request URI's \`memberKey\`.
+    - name: delivery_settings
+      value: "{{ delivery_settings }}"
+      description: |
+        Defines mail delivery preferences of member. This field is only supported by \`insert\`, \`update\`, and \`get\` methods.
+    - name: email
+      value: "{{ email }}"
+      description: |
+        The member's email address. A member can be a user or another group. This property is required when adding a member to a group. The \`email\` must be unique and cannot be an alias of another group. If the email address is changed, the API automatically reflects the email address changes.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        ETag of the resource.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        The type of the API resource. For Members resources, the value is \`admin#directory#member\`.
+      default: admin#directory#member
+    - name: role
+      value: "{{ role }}"
+      description: |
+        The member's role in a group. The API returns an error for cycles in group memberships. For example, if \`group1\` is a member of \`group2\`, \`group2\` cannot be a member of \`group1\`. For more information about a member's role, see the [administration help center](https://support.google.com/a/answer/167094).
+    - name: type
+      value: "{{ type }}"
+      description: |
+        The type of group member.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -433,14 +426,14 @@ Updates the membership properties of a user in the specified group. This method 
 ```sql
 UPDATE googleadmin.directory.members
 SET 
-data__kind = '{{ kind }}',
-data__email = '{{ email }}',
-data__role = '{{ role }}',
-data__etag = '{{ etag }}',
-data__type = '{{ type }}',
 data__status = '{{ status }}',
+data__id = '{{ id }}',
 data__delivery_settings = '{{ delivery_settings }}',
-data__id = '{{ id }}'
+data__email = '{{ email }}',
+data__etag = '{{ etag }}',
+data__kind = '{{ kind }}',
+data__role = '{{ role }}',
+data__type = '{{ type }}'
 WHERE 
 groupKey = '{{ groupKey }}' --required
 AND memberKey = '{{ memberKey }}' --required
@@ -473,14 +466,14 @@ Updates the membership of a user in the specified group.
 ```sql
 REPLACE googleadmin.directory.members
 SET 
-data__kind = '{{ kind }}',
-data__email = '{{ email }}',
-data__role = '{{ role }}',
-data__etag = '{{ etag }}',
-data__type = '{{ type }}',
 data__status = '{{ status }}',
+data__id = '{{ id }}',
 data__delivery_settings = '{{ delivery_settings }}',
-data__id = '{{ id }}'
+data__email = '{{ email }}',
+data__etag = '{{ etag }}',
+data__kind = '{{ kind }}',
+data__role = '{{ role }}',
+data__type = '{{ type }}'
 WHERE 
 groupKey = '{{ groupKey }}' --required
 AND memberKey = '{{ memberKey }}' --required

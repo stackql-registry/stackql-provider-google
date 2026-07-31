@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>text</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>text</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="text" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.texttospeech.text" /></td></tr>
 </tbody></table>
@@ -91,10 +92,10 @@ Synthesizes speech synchronously: receive results after all text input has been 
 EXEC google.texttospeech.text.synthesize 
 @@json=
 '{
-"voice": "{{ voice }}", 
 "advancedVoiceOptions": "{{ advancedVoiceOptions }}", 
-"audioConfig": "{{ audioConfig }}", 
-"input": "{{ input }}"
+"voice": "{{ voice }}", 
+"input": "{{ input }}", 
+"audioConfig": "{{ audioConfig }}"
 }'
 ;
 ```

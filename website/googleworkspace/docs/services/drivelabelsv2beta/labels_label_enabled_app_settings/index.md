@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>labels_label_enabled_app_settin
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>labels_label_enabled_app_settings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="labels_label_enabled_app_settings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivelabelsv2beta.labels_label_enabled_app_settings" /></td></tr>
 </tbody></table>
@@ -95,10 +96,10 @@ Updates a label's `EnabledAppSettings`. Enabling a label in a Google Workspace a
 ```sql
 UPDATE googleworkspace.drivelabelsv2beta.labels_label_enabled_app_settings
 SET 
-data__enabledAppSettings = '{{ enabledAppSettings }}',
+data__view = '{{ view }}',
 data__useAdminAccess = {{ useAdminAccess }},
 data__languageCode = '{{ languageCode }}',
-data__view = '{{ view }}'
+data__enabledAppSettings = '{{ enabledAppSettings }}'
 WHERE 
 labelsId = '{{ labelsId }}' --required
 RETURNING

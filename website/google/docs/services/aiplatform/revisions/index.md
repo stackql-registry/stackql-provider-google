@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>revisions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.revisions" /></td></tr>
 </tbody></table>
@@ -52,32 +53,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the Memory Revision. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/reasoningEngines/&#123;reasoning_engine&#125;/memories/&#123;memory&#125;/revisions/&#123;memory_revision&#125;`</td>
+    <td>Identifier. Represents the resource name of the Memory Revision. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/reasoningEngines/&#123;reasoning_engine&#125;/memories/&#123;memory&#125;/revisions/&#123;memory_revision&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp when this Memory Revision was created.</td>
+    <td>Output only. Represents the timestamp when this Memory Revision was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp of when this resource is considered expired.</td>
+    <td>Output only. Represents the timestamp of when this resource is considered expired.</td>
 </tr>
 <tr>
     <td><CopyableCode code="extractedMemories" /></td>
     <td><code>array</code></td>
-    <td>Output only. The extracted memories from the source content before consolidation when the memory was updated via GenerateMemories. This information was used to modify an existing Memory via Consolidation.</td>
+    <td>Output only. Represents the extracted memories from the source content before consolidation when the memory was updated via GenerateMemories. This information was used to modify an existing Memory via Consolidation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="fact" /></td>
     <td><code>string</code></td>
-    <td>Output only. The fact of the Memory Revision. This corresponds to the `fact` field of the parent Memory at the time of revision creation.</td>
+    <td>Output only. Represents the fact of the Memory Revision. This corresponds to the `fact` field of the parent Memory at the time of revision creation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Output only. The labels of the Memory Revision. These labels are applied to the MemoryRevision when it is created based on `GenerateMemoriesRequest.revision_labels`.</td>
+    <td>Output only. Represents the labels of the Memory Revision. These labels are applied to the MemoryRevision when it is created based on `GenerateMemoriesRequest.revision_labels`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="structuredData" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Represents the structured value of the memory at the time of revision creation.</td>
 </tr>
 </tbody>
 </table>
@@ -96,32 +102,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the Memory Revision. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/reasoningEngines/&#123;reasoning_engine&#125;/memories/&#123;memory&#125;/revisions/&#123;memory_revision&#125;`</td>
+    <td>Identifier. Represents the resource name of the Memory Revision. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/reasoningEngines/&#123;reasoning_engine&#125;/memories/&#123;memory&#125;/revisions/&#123;memory_revision&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp when this Memory Revision was created.</td>
+    <td>Output only. Represents the timestamp when this Memory Revision was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp of when this resource is considered expired.</td>
+    <td>Output only. Represents the timestamp of when this resource is considered expired.</td>
 </tr>
 <tr>
     <td><CopyableCode code="extractedMemories" /></td>
     <td><code>array</code></td>
-    <td>Output only. The extracted memories from the source content before consolidation when the memory was updated via GenerateMemories. This information was used to modify an existing Memory via Consolidation.</td>
+    <td>Output only. Represents the extracted memories from the source content before consolidation when the memory was updated via GenerateMemories. This information was used to modify an existing Memory via Consolidation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="fact" /></td>
     <td><code>string</code></td>
-    <td>Output only. The fact of the Memory Revision. This corresponds to the `fact` field of the parent Memory at the time of revision creation.</td>
+    <td>Output only. Represents the fact of the Memory Revision. This corresponds to the `fact` field of the parent Memory at the time of revision creation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Output only. The labels of the Memory Revision. These labels are applied to the MemoryRevision when it is created based on `GenerateMemoriesRequest.revision_labels`.</td>
+    <td>Output only. Represents the labels of the Memory Revision. These labels are applied to the MemoryRevision when it is created based on `GenerateMemoriesRequest.revision_labels`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="structuredData" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Represents the structured value of the memory at the time of revision creation.</td>
 </tr>
 </tbody>
 </table>
@@ -146,15 +157,15 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-memoriesId"><code>memoriesId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-memoryBanksId"><code>memoryBanksId</code></a>, <a href="#parameter-memoriesId"><code>memoriesId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
     <td>Get a Memory Revision.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a>, <a href="#parameter-memoriesId"><code>memoriesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-memoryBanksId"><code>memoryBanksId</code></a>, <a href="#parameter-memoriesId"><code>memoriesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List Memory Revisions for a Memory.</td>
 </tr>
 </tbody>
@@ -183,13 +194,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-projectsId">
-    <td><CopyableCode code="projectsId" /></td>
+<tr id="parameter-memoryBanksId">
+    <td><CopyableCode code="memoryBanksId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-reasoningEnginesId">
-    <td><CopyableCode code="reasoningEnginesId" /></td>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -236,11 +247,12 @@ createTime,
 expireTime,
 extractedMemories,
 fact,
-labels
+labels,
+structuredData
 FROM google.aiplatform.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
+AND memoryBanksId = '{{ memoryBanksId }}' -- required
 AND memoriesId = '{{ memoriesId }}' -- required
 AND revisionsId = '{{ revisionsId }}' -- required
 ;
@@ -257,15 +269,16 @@ createTime,
 expireTime,
 extractedMemories,
 fact,
-labels
+labels,
+structuredData
 FROM google.aiplatform.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
+AND memoryBanksId = '{{ memoryBanksId }}' -- required
 AND memoriesId = '{{ memoriesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>controls</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>controls</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="controls" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.controls" /></td></tr>
 </tbody></table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_catalogs_controls_list"><CopyableCode code="projects_locations_catalogs_controls_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all Controls by their parent Catalog.</td>
 </tr>
 <tr>
@@ -287,8 +288,8 @@ FROM google.retail.controls
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND catalogsId = '{{ catalogsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -311,10 +312,10 @@ Creates a Control. If the Control to create already exists, an ALREADY_EXISTS er
 
 ```sql
 INSERT INTO google.retail.controls (
-data__solutionTypes,
-data__searchSolutionUseCase,
 data__name,
 data__rule,
+data__solutionTypes,
+data__searchSolutionUseCase,
 data__displayName,
 projectsId,
 locationsId,
@@ -322,10 +323,10 @@ catalogsId,
 controlId
 )
 SELECT 
-'{{ solutionTypes }}',
-'{{ searchSolutionUseCase }}',
 '{{ name }}',
 '{{ rule }}',
+'{{ solutionTypes }}',
+'{{ searchSolutionUseCase }}',
 '{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -343,47 +344,94 @@ solutionTypes
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: controls
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the controls resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the controls resource.
     - name: catalogsId
-      value: string
+      value: "{{ catalogsId }}"
       description: Required parameter for the controls resource.
-    - name: solutionTypes
-      value: array
-      description: >
-        Required. Immutable. The solution types that the control is used for. Currently we support setting only one type of solution at creation time. Only `SOLUTION_TYPE_SEARCH` value is supported at the moment. If no solution type is provided at creation time, will default to SOLUTION_TYPE_SEARCH.
-        
-    - name: searchSolutionUseCase
-      value: array
-      description: >
-        Specifies the use case for the control. Affects what condition fields can be set. Only settable by search controls. Will default to SEARCH_SOLUTION_USE_CASE_SEARCH if not specified. Currently only allow one search_solution_use_case per control.
-        
     - name: name
-      value: string
-      description: >
-        Immutable. Fully qualified name `projects/*/locations/global/catalogs/*/controls/*`
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. Fully qualified name \`projects/*/locations/global/catalogs/*/controls/*\`
     - name: rule
-      value: object
-      description: >
+      description: |
         A rule control - a condition-action pair. Enacts a set action when the condition is triggered. For example: Boost "gShoe" when query full matches "Running Shoes".
-        
+      value:
+        boostAction:
+          productsFilter: "{{ productsFilter }}"
+          boost: {{ boost }}
+        filterAction:
+          filter: "{{ filter }}"
+        removeFacetAction:
+          attributeNames:
+            - "{{ attributeNames }}"
+        forceReturnFacetAction:
+          facetPositionAdjustments:
+            - position: {{ position }}
+              attributeName: "{{ attributeName }}"
+        ignoreAction:
+          ignoreTerms:
+            - "{{ ignoreTerms }}"
+        redirectAction:
+          redirectUri: "{{ redirectUri }}"
+        twowaySynonymsAction:
+          synonyms:
+            - "{{ synonyms }}"
+        onewaySynonymsAction:
+          synonyms:
+            - "{{ synonyms }}"
+          onewayTerms:
+            - "{{ onewayTerms }}"
+          queryTerms:
+            - "{{ queryTerms }}"
+        doNotAssociateAction:
+          queryTerms:
+            - "{{ queryTerms }}"
+          doNotAssociateTerms:
+            - "{{ doNotAssociateTerms }}"
+          terms:
+            - "{{ terms }}"
+        replacementAction:
+          queryTerms:
+            - "{{ queryTerms }}"
+          term: "{{ term }}"
+          replacementTerm: "{{ replacementTerm }}"
+        condition:
+          queryTerms:
+            - value: "{{ value }}"
+              fullMatch: {{ fullMatch }}
+          activeTimeRange:
+            - startTime: "{{ startTime }}"
+              endTime: "{{ endTime }}"
+          pageCategories:
+            - "{{ pageCategories }}"
+        pinAction:
+          pinMap: "{{ pinMap }}"
+    - name: solutionTypes
+      value:
+        - "{{ solutionTypes }}"
+      description: |
+        Required. Immutable. The solution types that the control is used for. Currently we support setting only one type of solution at creation time. Only \`SOLUTION_TYPE_SEARCH\` value is supported at the moment. If no solution type is provided at creation time, will default to SOLUTION_TYPE_SEARCH.
+    - name: searchSolutionUseCase
+      value:
+        - "{{ searchSolutionUseCase }}"
+      description: |
+        Specifies the use case for the control. Affects what condition fields can be set. Only settable by search controls. Will default to SEARCH_SOLUTION_USE_CASE_SEARCH if not specified. Currently only allow one search_solution_use_case per control.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The human readable control display name. Used in Retail UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is thrown.
-        
     - name: controlId
-      value: string
-```
+      value: "{{ controlId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -403,10 +451,10 @@ Updates a Control. Control cannot be set to a different oneof field, if so an IN
 ```sql
 UPDATE google.retail.controls
 SET 
-data__solutionTypes = '{{ solutionTypes }}',
-data__searchSolutionUseCase = '{{ searchSolutionUseCase }}',
 data__name = '{{ name }}',
 data__rule = '{{ rule }}',
+data__solutionTypes = '{{ solutionTypes }}',
+data__searchSolutionUseCase = '{{ searchSolutionUseCase }}',
 data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

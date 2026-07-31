@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>constraints</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>constraints</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="constraints" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.orgpolicy.constraints" /></td></tr>
 </tbody></table>
@@ -53,7 +54,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the constraint. Must be in one of the following forms: * `projects/&#123;project_number&#125;/constraints/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/constraints/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/constraints/&#123;constraint_name&#125;` For example, "/projects/123/constraints/compute.disableSerialPortAccess".</td>
+    <td>Immutable. The resource name of the constraint. Must be in one of the following forms: * `projects/&#123;project_number&#125;/constraints/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/constraints/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/constraints/&#123;constraint_name&#125;` For example, "/projects/123/constraints/compute.disableSerialPortAccess".</td>
 </tr>
 <tr>
     <td><CopyableCode code="booleanConstraint" /></td>
@@ -63,7 +64,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="constraintDefault" /></td>
     <td><code>string</code></td>
-    <td>The evaluation behavior of this constraint in the absence of a policy.</td>
+    <td>The evaluation behavior of this constraint in the absence of a policy. (CONSTRAINT_DEFAULT_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -78,7 +79,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="equivalentConstraint" /></td>
     <td><code>string</code></td>
-    <td>Managed constraint and canned constraint sometimes can have equivalents. This field is used to store the equivalent constraint name.</td>
+    <td>Defines the equivalent constraint name, if it exists. Managed constraints can have an equivalent legacy managed constraint, and legacy managed constraints can have an equivalent managed constraint. For example, "constraints/iam.disableServiceAccountKeyUpload" is equivalent to "constraints/iam.managed.disableServiceAccountKeyUpload".</td>
 </tr>
 <tr>
     <td><CopyableCode code="listConstraint" /></td>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the constraint. Must be in one of the following forms: * `projects/&#123;project_number&#125;/constraints/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/constraints/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/constraints/&#123;constraint_name&#125;` For example, "/projects/123/constraints/compute.disableSerialPortAccess".</td>
+    <td>Immutable. The resource name of the constraint. Must be in one of the following forms: * `projects/&#123;project_number&#125;/constraints/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/constraints/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/constraints/&#123;constraint_name&#125;` For example, "/projects/123/constraints/compute.disableSerialPortAccess".</td>
 </tr>
 <tr>
     <td><CopyableCode code="booleanConstraint" /></td>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="constraintDefault" /></td>
     <td><code>string</code></td>
-    <td>The evaluation behavior of this constraint in the absence of a policy.</td>
+    <td>The evaluation behavior of this constraint in the absence of a policy. (CONSTRAINT_DEFAULT_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -137,7 +138,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="equivalentConstraint" /></td>
     <td><code>string</code></td>
-    <td>Managed constraint and canned constraint sometimes can have equivalents. This field is used to store the equivalent constraint name.</td>
+    <td>Defines the equivalent constraint name, if it exists. Managed constraints can have an equivalent legacy managed constraint, and legacy managed constraints can have an equivalent managed constraint. For example, "constraints/iam.disableServiceAccountKeyUpload" is equivalent to "constraints/iam.managed.disableServiceAccountKeyUpload".</td>
 </tr>
 <tr>
     <td><CopyableCode code="listConstraint" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the constraint. Must be in one of the following forms: * `projects/&#123;project_number&#125;/constraints/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/constraints/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/constraints/&#123;constraint_name&#125;` For example, "/projects/123/constraints/compute.disableSerialPortAccess".</td>
+    <td>Immutable. The resource name of the constraint. Must be in one of the following forms: * `projects/&#123;project_number&#125;/constraints/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/constraints/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/constraints/&#123;constraint_name&#125;` For example, "/projects/123/constraints/compute.disableSerialPortAccess".</td>
 </tr>
 <tr>
     <td><CopyableCode code="booleanConstraint" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="constraintDefault" /></td>
     <td><code>string</code></td>
-    <td>The evaluation behavior of this constraint in the absence of a policy.</td>
+    <td>The evaluation behavior of this constraint in the absence of a policy. (CONSTRAINT_DEFAULT_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="equivalentConstraint" /></td>
     <td><code>string</code></td>
-    <td>Managed constraint and canned constraint sometimes can have equivalents. This field is used to store the equivalent constraint name.</td>
+    <td>Defines the equivalent constraint name, if it exists. Managed constraints can have an equivalent legacy managed constraint, and legacy managed constraints can have an equivalent managed constraint. For example, "constraints/iam.disableServiceAccountKeyUpload" is equivalent to "constraints/iam.managed.disableServiceAccountKeyUpload".</td>
 </tr>
 <tr>
     <td><CopyableCode code="listConstraint" /></td>

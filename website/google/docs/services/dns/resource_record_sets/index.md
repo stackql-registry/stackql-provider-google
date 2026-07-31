@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resource_record_sets</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resource_record_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resource_record_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dns.resource_record_sets" /></td></tr>
 </tbody></table>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-managedZone"><code>managedZone</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-type"><code>type</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Enumerates ResourceRecordSets that you have created but not yet deleted.</td>
 </tr>
 <tr>
@@ -226,6 +227,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-clientOperationId">
     <td><CopyableCode code="clientOperationId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-filter">
+    <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -299,10 +305,11 @@ type
 FROM google.dns.resource_record_sets
 WHERE project = '{{ project }}' -- required
 AND managedZone = '{{ managedZone }}' -- required
-AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND name = '{{ name }}'
+AND maxResults = '{{ maxResults }}'
 AND type = '{{ type }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -324,25 +331,25 @@ Creates a new ResourceRecordSet.
 
 ```sql
 INSERT INTO google.dns.resource_record_sets (
-data__name,
-data__type,
+data__routingPolicy,
+data__kind,
 data__ttl,
 data__rrdatas,
 data__signatureRrdatas,
-data__routingPolicy,
-data__kind,
+data__type,
+data__name,
 project,
 managedZone,
 clientOperationId
 )
 SELECT 
-'{{ name }}',
-'{{ type }}',
+'{{ routingPolicy }}',
+'{{ kind }}',
 {{ ttl }},
 '{{ rrdatas }}',
 '{{ signatureRrdatas }}',
-'{{ routingPolicy }}',
-'{{ kind }}',
+'{{ type }}',
+'{{ name }}',
 '{{ project }}',
 '{{ managedZone }}',
 '{{ clientOperationId }}'
@@ -359,52 +366,115 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: resource_record_sets
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the resource_record_sets resource.
     - name: managedZone
-      value: string
+      value: "{{ managedZone }}"
       description: Required parameter for the resource_record_sets resource.
-    - name: name
-      value: string
-      description: >
-        For example, www.example.com.
-        
-    - name: type
-      value: string
-      description: >
-        The identifier of a supported record type. See the list of Supported DNS record types.
-        
-    - name: ttl
-      value: integer
-      description: >
-        Number of seconds that this `ResourceRecordSet` can be cached by resolvers.
-        
-    - name: rrdatas
-      value: array
-      description: >
-        As defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1) -- see examples.
-        
-    - name: signatureRrdatas
-      value: array
-      description: >
-        As defined in RFC 4034 (section 3.2).
-        
     - name: routingPolicy
-      value: object
-      description: >
-        Configures dynamic query responses based on either the geo location of the querying user or a weighted round robin based routing policy. A valid `ResourceRecordSet` contains only `rrdata` (for static resolution) or a `routing_policy` (for dynamic resolution).
-        
+      description: |
+        Configures dynamic query responses based on either the geo location of the querying user or a weighted round robin based routing policy. A valid \`ResourceRecordSet\` contains only \`rrdata\` (for static resolution) or a \`routing_policy\` (for dynamic resolution).
+      value:
+        geo:
+          enableFencing: {{ enableFencing }}
+          kind: "{{ kind }}"
+          items:
+            - kind: "{{ kind }}"
+              location: "{{ location }}"
+              rrdatas: "{{ rrdatas }}"
+              signatureRrdatas: "{{ signatureRrdatas }}"
+              healthCheckedTargets:
+                internalLoadBalancers:
+                  - ipAddress: "{{ ipAddress }}"
+                    kind: "{{ kind }}"
+                    ipProtocol: "{{ ipProtocol }}"
+                    region: "{{ region }}"
+                    project: "{{ project }}"
+                    loadBalancerType: "{{ loadBalancerType }}"
+                    networkUrl: "{{ networkUrl }}"
+                    port: "{{ port }}"
+                externalEndpoints:
+                  - "{{ externalEndpoints }}"
+        primaryBackup:
+          primaryTargets:
+            internalLoadBalancers:
+              - ipAddress: "{{ ipAddress }}"
+                kind: "{{ kind }}"
+                ipProtocol: "{{ ipProtocol }}"
+                region: "{{ region }}"
+                project: "{{ project }}"
+                loadBalancerType: "{{ loadBalancerType }}"
+                networkUrl: "{{ networkUrl }}"
+                port: "{{ port }}"
+            externalEndpoints:
+              - "{{ externalEndpoints }}"
+          kind: "{{ kind }}"
+          trickleTraffic: {{ trickleTraffic }}
+          backupGeoTargets:
+            enableFencing: {{ enableFencing }}
+            kind: "{{ kind }}"
+            items:
+              - kind: "{{ kind }}"
+                location: "{{ location }}"
+                rrdatas: "{{ rrdatas }}"
+                signatureRrdatas: "{{ signatureRrdatas }}"
+                healthCheckedTargets:
+                  internalLoadBalancers: "{{ internalLoadBalancers }}"
+                  externalEndpoints: "{{ externalEndpoints }}"
+        healthCheck: "{{ healthCheck }}"
+        kind: "{{ kind }}"
+        wrr:
+          items:
+            - weight: {{ weight }}
+              kind: "{{ kind }}"
+              rrdatas: "{{ rrdatas }}"
+              signatureRrdatas: "{{ signatureRrdatas }}"
+              healthCheckedTargets:
+                internalLoadBalancers:
+                  - ipAddress: "{{ ipAddress }}"
+                    kind: "{{ kind }}"
+                    ipProtocol: "{{ ipProtocol }}"
+                    region: "{{ region }}"
+                    project: "{{ project }}"
+                    loadBalancerType: "{{ loadBalancerType }}"
+                    networkUrl: "{{ networkUrl }}"
+                    port: "{{ port }}"
+                externalEndpoints:
+                  - "{{ externalEndpoints }}"
+          kind: "{{ kind }}"
     - name: kind
-      value: string
+      value: "{{ kind }}"
       default: dns#resourceRecordSet
+    - name: ttl
+      value: {{ ttl }}
+      description: |
+        Number of seconds that this \`ResourceRecordSet\` can be cached by resolvers.
+    - name: rrdatas
+      value:
+        - "{{ rrdatas }}"
+      description: |
+        As defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1) -- see examples.
+    - name: signatureRrdatas
+      value:
+        - "{{ signatureRrdatas }}"
+      description: |
+        As defined in RFC 4034 (section 3.2).
+    - name: type
+      value: "{{ type }}"
+      description: |
+        The identifier of a supported record type. See the list of Supported DNS record types.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        For example, www.example.com.
     - name: clientOperationId
-      value: string
-```
+      value: "{{ clientOperationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -424,13 +494,13 @@ Applies a partial update to an existing ResourceRecordSet.
 ```sql
 UPDATE google.dns.resource_record_sets
 SET 
-data__name = '{{ name }}',
-data__type = '{{ type }}',
+data__routingPolicy = '{{ routingPolicy }}',
+data__kind = '{{ kind }}',
 data__ttl = {{ ttl }},
 data__rrdatas = '{{ rrdatas }}',
 data__signatureRrdatas = '{{ signatureRrdatas }}',
-data__routingPolicy = '{{ routingPolicy }}',
-data__kind = '{{ kind }}'
+data__type = '{{ type }}',
+data__name = '{{ name }}'
 WHERE 
 project = '{{ project }}' --required
 AND managedZone = '{{ managedZone }}' --required

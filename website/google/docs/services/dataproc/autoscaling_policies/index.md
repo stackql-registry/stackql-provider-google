@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>autoscaling_policies</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>autoscaling_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="autoscaling_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataproc.autoscaling_policies" /></td></tr>
 </tbody></table>
@@ -32,63 +33,14 @@ Creates, updates, deletes, gets or lists an <code>autoscaling_policies</code> re
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_regions_autoscaling_policies_get"
+    defaultValue="projects_locations_autoscaling_policies_get"
     values={[
-        { label: 'projects_regions_autoscaling_policies_get', value: 'projects_regions_autoscaling_policies_get' },
         { label: 'projects_locations_autoscaling_policies_get', value: 'projects_locations_autoscaling_policies_get' },
-        { label: 'projects_regions_autoscaling_policies_list', value: 'projects_regions_autoscaling_policies_list' },
-        { label: 'projects_locations_autoscaling_policies_list', value: 'projects_locations_autoscaling_policies_list' }
+        { label: 'projects_regions_autoscaling_policies_get', value: 'projects_regions_autoscaling_policies_get' },
+        { label: 'projects_locations_autoscaling_policies_list', value: 'projects_locations_autoscaling_policies_list' },
+        { label: 'projects_regions_autoscaling_policies_list', value: 'projects_regions_autoscaling_policies_list' }
     ]}
 >
-<TabItem value="projects_regions_autoscaling_policies_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="id" /></td>
-    <td><code>string</code></td>
-    <td>Required. The policy id.The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The "resource name" of the autoscaling policy, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.autoscalingPolicies, the resource name of the policy has the following format: projects/&#123;project_id&#125;/regions/&#123;region&#125;/autoscalingPolicies/&#123;policy_id&#125; For projects.locations.autoscalingPolicies, the resource name of the policy has the following format: projects/&#123;project_id&#125;/locations/&#123;location&#125;/autoscalingPolicies/&#123;policy_id&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="basicAlgorithm" /></td>
-    <td><code>object</code></td>
-    <td>Basic algorithm for autoscaling. (id: BasicAutoscalingAlgorithm)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="clusterType" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The type of the clusters for which this autoscaling policy is to be configured.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. The labels to associate with this autoscaling policy. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling policy.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="secondaryWorkerConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Describes how the autoscaler will operate for secondary workers. (id: InstanceGroupAutoscalingPolicyConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="workerConfig" /></td>
-    <td><code>object</code></td>
-    <td>Required. Describes how the autoscaler will operate for primary workers. (id: InstanceGroupAutoscalingPolicyConfig)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="projects_locations_autoscaling_policies_get">
 
 <table>
@@ -118,7 +70,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clusterType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the clusters for which this autoscaling policy is to be configured.</td>
+    <td>Optional. The type of the clusters for which this autoscaling policy is to be configured. (CLUSTER_TYPE_UNSPECIFIED, STANDARD, ZERO_SCALE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -138,7 +90,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_regions_autoscaling_policies_list">
+<TabItem value="projects_regions_autoscaling_policies_get">
 
 <table>
 <thead>
@@ -167,7 +119,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clusterType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the clusters for which this autoscaling policy is to be configured.</td>
+    <td>Optional. The type of the clusters for which this autoscaling policy is to be configured. (CLUSTER_TYPE_UNSPECIFIED, STANDARD, ZERO_SCALE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -216,7 +168,56 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clusterType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the clusters for which this autoscaling policy is to be configured.</td>
+    <td>Optional. The type of the clusters for which this autoscaling policy is to be configured. (CLUSTER_TYPE_UNSPECIFIED, STANDARD, ZERO_SCALE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The labels to associate with this autoscaling policy. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling policy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="secondaryWorkerConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Describes how the autoscaler will operate for secondary workers. (id: InstanceGroupAutoscalingPolicyConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workerConfig" /></td>
+    <td><code>object</code></td>
+    <td>Required. Describes how the autoscaler will operate for primary workers. (id: InstanceGroupAutoscalingPolicyConfig)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_regions_autoscaling_policies_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string</code></td>
+    <td>Required. The policy id.The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The "resource name" of the autoscaling policy, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.autoscalingPolicies, the resource name of the policy has the following format: projects/&#123;project_id&#125;/regions/&#123;region&#125;/autoscalingPolicies/&#123;policy_id&#125; For projects.locations.autoscalingPolicies, the resource name of the policy has the following format: projects/&#123;project_id&#125;/locations/&#123;location&#125;/autoscalingPolicies/&#123;policy_id&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="basicAlgorithm" /></td>
+    <td><code>object</code></td>
+    <td>Basic algorithm for autoscaling. (id: BasicAutoscalingAlgorithm)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clusterType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The type of the clusters for which this autoscaling policy is to be configured. (CLUSTER_TYPE_UNSPECIFIED, STANDARD, ZERO_SCALE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -254,13 +255,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_regions_autoscaling_policies_get"><CopyableCode code="projects_regions_autoscaling_policies_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-autoscalingPoliciesId"><code>autoscalingPoliciesId</code></a></td>
-    <td></td>
-    <td>Retrieves autoscaling policy.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_autoscaling_policies_get"><CopyableCode code="projects_locations_autoscaling_policies_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-autoscalingPoliciesId"><code>autoscalingPoliciesId</code></a></td>
@@ -268,25 +262,25 @@ The following methods are available for this resource:
     <td>Retrieves autoscaling policy.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_autoscaling_policies_list"><CopyableCode code="projects_regions_autoscaling_policies_list" /></a></td>
+    <td><a href="#projects_regions_autoscaling_policies_get"><CopyableCode code="projects_regions_autoscaling_policies_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists autoscaling policies in the project.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-autoscalingPoliciesId"><code>autoscalingPoliciesId</code></a></td>
+    <td></td>
+    <td>Retrieves autoscaling policy.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_autoscaling_policies_list"><CopyableCode code="projects_locations_autoscaling_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists autoscaling policies in the project.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_autoscaling_policies_create"><CopyableCode code="projects_regions_autoscaling_policies_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
+    <td><a href="#projects_regions_autoscaling_policies_list"><CopyableCode code="projects_regions_autoscaling_policies_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a></td>
-    <td></td>
-    <td>Creates new autoscaling policy.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists autoscaling policies in the project.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_autoscaling_policies_create"><CopyableCode code="projects_locations_autoscaling_policies_create" /></a></td>
@@ -296,11 +290,11 @@ The following methods are available for this resource:
     <td>Creates new autoscaling policy.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_autoscaling_policies_update"><CopyableCode code="projects_regions_autoscaling_policies_update" /></a></td>
-    <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-autoscalingPoliciesId"><code>autoscalingPoliciesId</code></a></td>
+    <td><a href="#projects_regions_autoscaling_policies_create"><CopyableCode code="projects_regions_autoscaling_policies_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a></td>
     <td></td>
-    <td>Updates (replaces) autoscaling policy.Disabled check for update_mask, because all updates will be full replacements.</td>
+    <td>Creates new autoscaling policy.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_autoscaling_policies_update"><CopyableCode code="projects_locations_autoscaling_policies_update" /></a></td>
@@ -310,16 +304,23 @@ The following methods are available for this resource:
     <td>Updates (replaces) autoscaling policy.Disabled check for update_mask, because all updates will be full replacements.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_autoscaling_policies_delete"><CopyableCode code="projects_regions_autoscaling_policies_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_regions_autoscaling_policies_update"><CopyableCode code="projects_regions_autoscaling_policies_update" /></a></td>
+    <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-autoscalingPoliciesId"><code>autoscalingPoliciesId</code></a></td>
     <td></td>
-    <td>Deletes an autoscaling policy. It is an error to delete an autoscaling policy that is in use by one or more clusters.</td>
+    <td>Updates (replaces) autoscaling policy.Disabled check for update_mask, because all updates will be full replacements.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_autoscaling_policies_delete"><CopyableCode code="projects_locations_autoscaling_policies_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-autoscalingPoliciesId"><code>autoscalingPoliciesId</code></a></td>
+    <td></td>
+    <td>Deletes an autoscaling policy. It is an error to delete an autoscaling policy that is in use by one or more clusters.</td>
+</tr>
+<tr>
+    <td><a href="#projects_regions_autoscaling_policies_delete"><CopyableCode code="projects_regions_autoscaling_policies_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-autoscalingPoliciesId"><code>autoscalingPoliciesId</code></a></td>
     <td></td>
     <td>Deletes an autoscaling policy. It is an error to delete an autoscaling policy that is in use by one or more clusters.</td>
 </tr>
@@ -375,34 +376,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_regions_autoscaling_policies_get"
+    defaultValue="projects_locations_autoscaling_policies_get"
     values={[
-        { label: 'projects_regions_autoscaling_policies_get', value: 'projects_regions_autoscaling_policies_get' },
         { label: 'projects_locations_autoscaling_policies_get', value: 'projects_locations_autoscaling_policies_get' },
-        { label: 'projects_regions_autoscaling_policies_list', value: 'projects_regions_autoscaling_policies_list' },
-        { label: 'projects_locations_autoscaling_policies_list', value: 'projects_locations_autoscaling_policies_list' }
+        { label: 'projects_regions_autoscaling_policies_get', value: 'projects_regions_autoscaling_policies_get' },
+        { label: 'projects_locations_autoscaling_policies_list', value: 'projects_locations_autoscaling_policies_list' },
+        { label: 'projects_regions_autoscaling_policies_list', value: 'projects_regions_autoscaling_policies_list' }
     ]}
 >
-<TabItem value="projects_regions_autoscaling_policies_get">
-
-Retrieves autoscaling policy.
-
-```sql
-SELECT
-id,
-name,
-basicAlgorithm,
-clusterType,
-labels,
-secondaryWorkerConfig,
-workerConfig
-FROM google.dataproc.autoscaling_policies
-WHERE projectsId = '{{ projectsId }}' -- required
-AND regionsId = '{{ regionsId }}' -- required
-AND autoscalingPoliciesId = '{{ autoscalingPoliciesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_autoscaling_policies_get">
 
 Retrieves autoscaling policy.
@@ -423,9 +404,9 @@ AND autoscalingPoliciesId = '{{ autoscalingPoliciesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_regions_autoscaling_policies_list">
+<TabItem value="projects_regions_autoscaling_policies_get">
 
-Lists autoscaling policies in the project.
+Retrieves autoscaling policy.
 
 ```sql
 SELECT
@@ -439,8 +420,7 @@ workerConfig
 FROM google.dataproc.autoscaling_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND regionsId = '{{ regionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND autoscalingPoliciesId = '{{ autoscalingPoliciesId }}' -- required
 ;
 ```
 </TabItem>
@@ -460,6 +440,27 @@ workerConfig
 FROM google.dataproc.autoscaling_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_regions_autoscaling_policies_list">
+
+Lists autoscaling policies in the project.
+
+```sql
+SELECT
+id,
+name,
+basicAlgorithm,
+clusterType,
+labels,
+secondaryWorkerConfig,
+workerConfig
+FROM google.dataproc.autoscaling_policies
+WHERE projectsId = '{{ projectsId }}' -- required
+AND regionsId = '{{ regionsId }}' -- required
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 ;
@@ -471,70 +472,35 @@ AND pageSize = '{{ pageSize }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_regions_autoscaling_policies_create"
+    defaultValue="projects_locations_autoscaling_policies_create"
     values={[
-        { label: 'projects_regions_autoscaling_policies_create', value: 'projects_regions_autoscaling_policies_create' },
         { label: 'projects_locations_autoscaling_policies_create', value: 'projects_locations_autoscaling_policies_create' },
+        { label: 'projects_regions_autoscaling_policies_create', value: 'projects_regions_autoscaling_policies_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_regions_autoscaling_policies_create">
-
-Creates new autoscaling policy.
-
-```sql
-INSERT INTO google.dataproc.autoscaling_policies (
-data__id,
-data__basicAlgorithm,
-data__labels,
-data__workerConfig,
-data__clusterType,
-data__secondaryWorkerConfig,
-projectsId,
-regionsId
-)
-SELECT 
-'{{ id }}',
-'{{ basicAlgorithm }}',
-'{{ labels }}',
-'{{ workerConfig }}',
-'{{ clusterType }}',
-'{{ secondaryWorkerConfig }}',
-'{{ projectsId }}',
-'{{ regionsId }}'
-RETURNING
-id,
-name,
-basicAlgorithm,
-clusterType,
-labels,
-secondaryWorkerConfig,
-workerConfig
-;
-```
-</TabItem>
 <TabItem value="projects_locations_autoscaling_policies_create">
 
 Creates new autoscaling policy.
 
 ```sql
 INSERT INTO google.dataproc.autoscaling_policies (
+data__workerConfig,
+data__secondaryWorkerConfig,
+data__clusterType,
+data__labels,
 data__id,
 data__basicAlgorithm,
-data__labels,
-data__workerConfig,
-data__clusterType,
-data__secondaryWorkerConfig,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ workerConfig }}',
+'{{ secondaryWorkerConfig }}',
+'{{ clusterType }}',
+'{{ labels }}',
 '{{ id }}',
 '{{ basicAlgorithm }}',
-'{{ labels }}',
-'{{ workerConfig }}',
-'{{ clusterType }}',
-'{{ secondaryWorkerConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -548,53 +514,102 @@ workerConfig
 ;
 ```
 </TabItem>
+<TabItem value="projects_regions_autoscaling_policies_create">
+
+Creates new autoscaling policy.
+
+```sql
+INSERT INTO google.dataproc.autoscaling_policies (
+data__workerConfig,
+data__secondaryWorkerConfig,
+data__clusterType,
+data__labels,
+data__id,
+data__basicAlgorithm,
+projectsId,
+regionsId
+)
+SELECT 
+'{{ workerConfig }}',
+'{{ secondaryWorkerConfig }}',
+'{{ clusterType }}',
+'{{ labels }}',
+'{{ id }}',
+'{{ basicAlgorithm }}',
+'{{ projectsId }}',
+'{{ regionsId }}'
+RETURNING
+id,
+name,
+basicAlgorithm,
+clusterType,
+labels,
+secondaryWorkerConfig,
+workerConfig
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: autoscaling_policies
   props:
     - name: projectsId
-      value: string
-      description: Required parameter for the autoscaling_policies resource.
-    - name: regionsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the autoscaling_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the autoscaling_policies resource.
-    - name: id
-      value: string
-      description: >
-        Required. The policy id.The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters.
-        
-    - name: basicAlgorithm
-      value: object
-      description: >
-        Basic algorithm for autoscaling.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels to associate with this autoscaling policy. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling policy.
-        
+    - name: regionsId
+      value: "{{ regionsId }}"
+      description: Required parameter for the autoscaling_policies resource.
     - name: workerConfig
-      value: object
-      description: >
+      description: |
         Required. Describes how the autoscaler will operate for primary workers.
-        
-    - name: clusterType
-      value: string
-      description: >
-        Optional. The type of the clusters for which this autoscaling policy is to be configured.
-        
-      valid_values: ['CLUSTER_TYPE_UNSPECIFIED', 'STANDARD', 'ZERO_SCALE']
+      value:
+        minInstances: {{ minInstances }}
+        maxInstances: {{ maxInstances }}
+        weight: {{ weight }}
     - name: secondaryWorkerConfig
-      value: object
-      description: >
+      description: |
         Optional. Describes how the autoscaler will operate for secondary workers.
-        
-```
+      value:
+        minInstances: {{ minInstances }}
+        maxInstances: {{ maxInstances }}
+        weight: {{ weight }}
+    - name: clusterType
+      value: "{{ clusterType }}"
+      description: |
+        Optional. The type of the clusters for which this autoscaling policy is to be configured.
+      valid_values: ['CLUSTER_TYPE_UNSPECIFIED', 'STANDARD', 'ZERO_SCALE']
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels to associate with this autoscaling policy. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling policy.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Required. The policy id.The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters.
+    - name: basicAlgorithm
+      description: |
+        Basic algorithm for autoscaling.
+      value:
+        sparkStandaloneConfig:
+          scaleUpMinWorkerFraction: {{ scaleUpMinWorkerFraction }}
+          removeOnlyIdleWorkers: {{ removeOnlyIdleWorkers }}
+          scaleUpFactor: {{ scaleUpFactor }}
+          scaleDownFactor: {{ scaleDownFactor }}
+          scaleDownMinWorkerFraction: {{ scaleDownMinWorkerFraction }}
+          gracefulDecommissionTimeout: "{{ gracefulDecommissionTimeout }}"
+        yarnConfig:
+          scaleUpFactor: {{ scaleUpFactor }}
+          scaleDownFactor: {{ scaleDownFactor }}
+          scaleDownMinWorkerFraction: {{ scaleDownMinWorkerFraction }}
+          gracefulDecommissionTimeout: "{{ gracefulDecommissionTimeout }}"
+          scaleUpMinWorkerFraction: {{ scaleUpMinWorkerFraction }}
+        cooldownPeriod: "{{ cooldownPeriod }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -602,28 +617,28 @@ workerConfig
 ## `REPLACE` examples
 
 <Tabs
-    defaultValue="projects_regions_autoscaling_policies_update"
+    defaultValue="projects_locations_autoscaling_policies_update"
     values={[
-        { label: 'projects_regions_autoscaling_policies_update', value: 'projects_regions_autoscaling_policies_update' },
-        { label: 'projects_locations_autoscaling_policies_update', value: 'projects_locations_autoscaling_policies_update' }
+        { label: 'projects_locations_autoscaling_policies_update', value: 'projects_locations_autoscaling_policies_update' },
+        { label: 'projects_regions_autoscaling_policies_update', value: 'projects_regions_autoscaling_policies_update' }
     ]}
 >
-<TabItem value="projects_regions_autoscaling_policies_update">
+<TabItem value="projects_locations_autoscaling_policies_update">
 
 Updates (replaces) autoscaling policy.Disabled check for update_mask, because all updates will be full replacements.
 
 ```sql
 REPLACE google.dataproc.autoscaling_policies
 SET 
-data__id = '{{ id }}',
-data__basicAlgorithm = '{{ basicAlgorithm }}',
-data__labels = '{{ labels }}',
 data__workerConfig = '{{ workerConfig }}',
+data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}',
 data__clusterType = '{{ clusterType }}',
-data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}'
+data__labels = '{{ labels }}',
+data__id = '{{ id }}',
+data__basicAlgorithm = '{{ basicAlgorithm }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
-AND regionsId = '{{ regionsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
 AND autoscalingPoliciesId = '{{ autoscalingPoliciesId }}' --required
 RETURNING
 id,
@@ -635,22 +650,22 @@ secondaryWorkerConfig,
 workerConfig;
 ```
 </TabItem>
-<TabItem value="projects_locations_autoscaling_policies_update">
+<TabItem value="projects_regions_autoscaling_policies_update">
 
 Updates (replaces) autoscaling policy.Disabled check for update_mask, because all updates will be full replacements.
 
 ```sql
 REPLACE google.dataproc.autoscaling_policies
 SET 
-data__id = '{{ id }}',
-data__basicAlgorithm = '{{ basicAlgorithm }}',
-data__labels = '{{ labels }}',
 data__workerConfig = '{{ workerConfig }}',
+data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}',
 data__clusterType = '{{ clusterType }}',
-data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}'
+data__labels = '{{ labels }}',
+data__id = '{{ id }}',
+data__basicAlgorithm = '{{ basicAlgorithm }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
+AND regionsId = '{{ regionsId }}' --required
 AND autoscalingPoliciesId = '{{ autoscalingPoliciesId }}' --required
 RETURNING
 id,
@@ -668,24 +683,12 @@ workerConfig;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_regions_autoscaling_policies_delete"
+    defaultValue="projects_locations_autoscaling_policies_delete"
     values={[
-        { label: 'projects_regions_autoscaling_policies_delete', value: 'projects_regions_autoscaling_policies_delete' },
-        { label: 'projects_locations_autoscaling_policies_delete', value: 'projects_locations_autoscaling_policies_delete' }
+        { label: 'projects_locations_autoscaling_policies_delete', value: 'projects_locations_autoscaling_policies_delete' },
+        { label: 'projects_regions_autoscaling_policies_delete', value: 'projects_regions_autoscaling_policies_delete' }
     ]}
 >
-<TabItem value="projects_regions_autoscaling_policies_delete">
-
-Deletes an autoscaling policy. It is an error to delete an autoscaling policy that is in use by one or more clusters.
-
-```sql
-DELETE FROM google.dataproc.autoscaling_policies
-WHERE projectsId = '{{ projectsId }}' --required
-AND regionsId = '{{ regionsId }}' --required
-AND autoscalingPoliciesId = '{{ autoscalingPoliciesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_autoscaling_policies_delete">
 
 Deletes an autoscaling policy. It is an error to delete an autoscaling policy that is in use by one or more clusters.
@@ -694,6 +697,18 @@ Deletes an autoscaling policy. It is an error to delete an autoscaling policy th
 DELETE FROM google.dataproc.autoscaling_policies
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
+AND autoscalingPoliciesId = '{{ autoscalingPoliciesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_regions_autoscaling_policies_delete">
+
+Deletes an autoscaling policy. It is an error to delete an autoscaling policy that is in use by one or more clusters.
+
+```sql
+DELETE FROM google.dataproc.autoscaling_policies
+WHERE projectsId = '{{ projectsId }}' --required
+AND regionsId = '{{ regionsId }}' --required
 AND autoscalingPoliciesId = '{{ autoscalingPoliciesId }}' --required
 ;
 ```

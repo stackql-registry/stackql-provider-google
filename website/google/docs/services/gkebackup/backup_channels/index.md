@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backup_channels</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backup_channels</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backup_channels" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.backup_channels" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists BackupChannels in a given location.</td>
 </tr>
 <tr>
@@ -331,9 +332,9 @@ updateTime
 FROM google.gkebackup.backup_channels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -357,8 +358,8 @@ Creates a new BackupChannel in a given location.
 ```sql
 INSERT INTO google.gkebackup.backup_channels (
 data__name,
-data__destinationProject,
 data__labels,
+data__destinationProject,
 data__description,
 projectsId,
 locationsId,
@@ -366,8 +367,8 @@ backupChannelId
 )
 SELECT 
 '{{ name }}',
-'{{ destinationProject }}',
 '{{ labels }}',
+'{{ destinationProject }}',
 '{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -383,39 +384,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backup_channels
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backup_channels resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backup_channels resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The fully qualified name of the BackupChannel. `projects/*/locations/*/backupChannels/*`
-        
-    - name: destinationProject
-      value: string
-      description: >
-        Required. Immutable. The project where Backups are allowed to be stored. The format is `projects/{projectId}` or `projects/{projectNumber}`.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The fully qualified name of the BackupChannel. \`projects/*/locations/*/backupChannels/*\`
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. A set of custom labels supplied by user.
-        
+    - name: destinationProject
+      value: "{{ destinationProject }}"
+      description: |
+        Required. Immutable. The project where Backups are allowed to be stored. The format is \`projects/{projectId}\` or \`projects/{projectNumber}\`.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User specified descriptive string for this BackupChannel.
-        
     - name: backupChannelId
-      value: string
-```
+      value: "{{ backupChannelId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -436,8 +433,8 @@ Update a BackupChannel.
 UPDATE google.gkebackup.backup_channels
 SET 
 data__name = '{{ name }}',
-data__destinationProject = '{{ destinationProject }}',
 data__labels = '{{ labels }}',
+data__destinationProject = '{{ destinationProject }}',
 data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

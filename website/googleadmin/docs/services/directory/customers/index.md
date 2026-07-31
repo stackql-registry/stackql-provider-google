@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>customers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>customers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="customers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.customers" /></td></tr>
 </tbody></table>
@@ -204,15 +205,15 @@ Patches a customer.
 ```sql
 UPDATE googleadmin.directory.customers
 SET 
-data__id = '{{ id }}',
-data__customerDomain = '{{ customerDomain }}',
 data__kind = '{{ kind }}',
+data__customerDomain = '{{ customerDomain }}',
 data__etag = '{{ etag }}',
-data__alternateEmail = '{{ alternateEmail }}',
 data__customerCreationTime = '{{ customerCreationTime }}',
 data__postalAddress = '{{ postalAddress }}',
 data__phoneNumber = '{{ phoneNumber }}',
-data__language = '{{ language }}'
+data__id = '{{ id }}',
+data__language = '{{ language }}',
+data__alternateEmail = '{{ alternateEmail }}'
 WHERE 
 customerKey = '{{ customerKey }}' --required
 RETURNING
@@ -245,15 +246,15 @@ Updates a customer.
 ```sql
 REPLACE googleadmin.directory.customers
 SET 
-data__id = '{{ id }}',
-data__customerDomain = '{{ customerDomain }}',
 data__kind = '{{ kind }}',
+data__customerDomain = '{{ customerDomain }}',
 data__etag = '{{ etag }}',
-data__alternateEmail = '{{ alternateEmail }}',
 data__customerCreationTime = '{{ customerCreationTime }}',
 data__postalAddress = '{{ postalAddress }}',
 data__phoneNumber = '{{ phoneNumber }}',
-data__language = '{{ language }}'
+data__id = '{{ id }}',
+data__language = '{{ language }}',
+data__alternateEmail = '{{ alternateEmail }}'
 WHERE 
 customerKey = '{{ customerKey }}' --required
 RETURNING

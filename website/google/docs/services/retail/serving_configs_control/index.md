@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>serving_configs_control</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>serving_configs_control</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="serving_configs_control" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.serving_configs_control" /></td></tr>
 </tbody></table>
@@ -155,28 +156,27 @@ twowaySynonymsControlIds
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: serving_configs_control
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the serving_configs_control resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the serving_configs_control resource.
     - name: catalogsId
-      value: string
+      value: "{{ catalogsId }}"
       description: Required parameter for the serving_configs_control resource.
     - name: servingConfigsId
-      value: string
+      value: "{{ servingConfigsId }}"
       description: Required parameter for the serving_configs_control resource.
     - name: controlId
-      value: string
-      description: >
+      value: "{{ controlId }}"
+      description: |
         Required. The id of the control to apply. Assumed to be in the same catalog as the serving config - if id is not found a NOT_FOUND error is returned.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

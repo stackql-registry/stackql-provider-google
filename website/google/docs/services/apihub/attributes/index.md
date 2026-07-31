@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>attributes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>attributes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="attributes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.attributes" /></td></tr>
 </tbody></table>
@@ -72,12 +73,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of the data of the attribute.</td>
+    <td>Required. The type of the data of the attribute. (DATA_TYPE_UNSPECIFIED, ENUM, JSON, STRING, URI)</td>
 </tr>
 <tr>
     <td><CopyableCode code="definitionType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The definition type of the attribute.</td>
+    <td>Output only. The definition type of the attribute. (DEFINITION_TYPE_UNSPECIFIED, SYSTEM_DEFINED, USER_DEFINED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Required. The scope of the attribute. It represents the resource in the API Hub to which the attribute can be linked.</td>
+    <td>Required. The scope of the attribute. It represents the resource in the API Hub to which the attribute can be linked. (SCOPE_UNSPECIFIED, API, VERSION, SPEC, API_OPERATION, DEPLOYMENT, DEPENDENCY, DEFINITION, EXTERNAL_API, PLUGIN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -141,12 +142,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of the data of the attribute.</td>
+    <td>Required. The type of the data of the attribute. (DATA_TYPE_UNSPECIFIED, ENUM, JSON, STRING, URI)</td>
 </tr>
 <tr>
     <td><CopyableCode code="definitionType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The definition type of the attribute.</td>
+    <td>Output only. The definition type of the attribute. (DEFINITION_TYPE_UNSPECIFIED, SYSTEM_DEFINED, USER_DEFINED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Required. The scope of the attribute. It represents the resource in the API Hub to which the attribute can be linked.</td>
+    <td>Required. The scope of the attribute. It represents the resource in the API Hub to which the attribute can be linked. (SCOPE_UNSPECIFIED, API, VERSION, SPEC, API_OPERATION, DEPLOYMENT, DEPENDENCY, DEFINITION, EXTERNAL_API, PLUGIN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -364,25 +365,25 @@ Create a user defined attribute. Certain pre defined attributes are already crea
 
 ```sql
 INSERT INTO google.apihub.attributes (
-data__name,
-data__displayName,
 data__description,
 data__scope,
 data__dataType,
-data__allowedValues,
 data__cardinality,
+data__name,
+data__displayName,
+data__allowedValues,
 projectsId,
 locationsId,
 attributeId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
 '{{ scope }}',
 '{{ dataType }}',
-'{{ allowedValues }}',
 {{ cardinality }},
+'{{ name }}',
+'{{ displayName }}',
+'{{ allowedValues }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ attributeId }}'
@@ -403,56 +404,53 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: attributes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the attributes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the attributes resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the attribute in the API Hub. Format: `projects/{project}/locations/{location}/attributes/{attribute}`
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the attribute.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. The description of the attribute.
-        
     - name: scope
-      value: string
-      description: >
+      value: "{{ scope }}"
+      description: |
         Required. The scope of the attribute. It represents the resource in the API Hub to which the attribute can be linked.
-        
       valid_values: ['SCOPE_UNSPECIFIED', 'API', 'VERSION', 'SPEC', 'API_OPERATION', 'DEPLOYMENT', 'DEPENDENCY', 'DEFINITION', 'EXTERNAL_API', 'PLUGIN']
     - name: dataType
-      value: string
-      description: >
+      value: "{{ dataType }}"
+      description: |
         Required. The type of the data of the attribute.
-        
       valid_values: ['DATA_TYPE_UNSPECIFIED', 'ENUM', 'JSON', 'STRING', 'URI']
-    - name: allowedValues
-      value: array
-      description: >
-        Optional. The list of allowed values when the attribute value is of type enum. This is required when the data_type of the attribute is ENUM. The maximum number of allowed values of an attribute will be 1000.
-        
     - name: cardinality
-      value: integer
-      description: >
+      value: {{ cardinality }}
+      description: |
         Optional. The maximum number of values that the attribute can have when associated with an API Hub resource. Cardinality 1 would represent a single-valued attribute. It must not be less than 1 or greater than 20. If not specified, the cardinality would be set to 1 by default and represent a single-valued attribute.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the attribute in the API Hub. Format: \`projects/{project}/locations/{location}/attributes/{attribute}\`
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the attribute.
+    - name: allowedValues
+      description: |
+        Optional. The list of allowed values when the attribute value is of type enum. This is required when the data_type of the attribute is ENUM. The maximum number of allowed values of an attribute will be 1000.
+      value:
+        - description: "{{ description }}"
+          id: "{{ id }}"
+          displayName: "{{ displayName }}"
+          immutable: {{ immutable }}
     - name: attributeId
-      value: string
-```
+      value: "{{ attributeId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -472,13 +470,13 @@ Update the attribute. The following fields in the Attribute resource can be upda
 ```sql
 UPDATE google.apihub.attributes
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
 data__scope = '{{ scope }}',
 data__dataType = '{{ dataType }}',
-data__allowedValues = '{{ allowedValues }}',
-data__cardinality = {{ cardinality }}
+data__cardinality = {{ cardinality }},
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
+data__allowedValues = '{{ allowedValues }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

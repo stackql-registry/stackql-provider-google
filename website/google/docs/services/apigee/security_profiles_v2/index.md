@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_profiles_v2</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_profiles_v2</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_profiles_v2" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.security_profiles_v2" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="riskAssessmentType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.</td>
+    <td>Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY. (RISK_ASSESSMENT_TYPE_UNSPECIFIED, APIGEE, API_HUB)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="riskAssessmentType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.</td>
+    <td>Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY. (RISK_ASSESSMENT_TYPE_UNSPECIFIED, APIGEE, API_HUB)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_security_profiles_v2_list"><CopyableCode code="organizations_security_profiles_v2_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
     <td>List security profiles v2.</td>
 </tr>
 <tr>
@@ -286,8 +287,8 @@ riskAssessmentType,
 updateTime
 FROM google.apigee.security_profiles_v2
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND riskAssessmentType = '{{ riskAssessmentType }}'
 ;
 ```
@@ -310,18 +311,18 @@ Create a security profile v2.
 
 ```sql
 INSERT INTO google.apigee.security_profiles_v2 (
-data__description,
-data__profileAssessmentConfigs,
-data__riskAssessmentType,
 data__name,
+data__riskAssessmentType,
+data__profileAssessmentConfigs,
+data__description,
 organizationsId,
 securityProfileV2Id
 )
 SELECT 
-'{{ description }}',
-'{{ profileAssessmentConfigs }}',
-'{{ riskAssessmentType }}',
 '{{ name }}',
+'{{ riskAssessmentType }}',
+'{{ profileAssessmentConfigs }}',
+'{{ description }}',
 '{{ organizationsId }}',
 '{{ securityProfileV2Id }}'
 RETURNING
@@ -337,37 +338,33 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: security_profiles_v2
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the security_profiles_v2 resource.
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the security profile.
-        
-    - name: profileAssessmentConfigs
-      value: object
-      description: >
-        Required. The configuration for each assessment in this profile. Key is the name/id of the assessment.
-        
-    - name: riskAssessmentType
-      value: string
-      description: >
-        Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.
-        
-      valid_values: ['RISK_ASSESSMENT_TYPE_UNSPECIFIED', 'APIGEE', 'API_HUB']
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. Name of the security profile v2 resource. Format: organizations/{org}/securityProfilesV2/{profile}
-        
+    - name: riskAssessmentType
+      value: "{{ riskAssessmentType }}"
+      description: |
+        Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.
+      valid_values: ['RISK_ASSESSMENT_TYPE_UNSPECIFIED', 'APIGEE', 'API_HUB']
+    - name: profileAssessmentConfigs
+      value: "{{ profileAssessmentConfigs }}"
+      description: |
+        Required. The configuration for each assessment in this profile. Key is the name/id of the assessment.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the security profile.
     - name: securityProfileV2Id
-      value: string
-```
+      value: "{{ securityProfileV2Id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -387,10 +384,10 @@ Update a security profile V2.
 ```sql
 UPDATE google.apigee.security_profiles_v2
 SET 
-data__description = '{{ description }}',
-data__profileAssessmentConfigs = '{{ profileAssessmentConfigs }}',
+data__name = '{{ name }}',
 data__riskAssessmentType = '{{ riskAssessmentType }}',
-data__name = '{{ name }}'
+data__profileAssessmentConfigs = '{{ profileAssessmentConfigs }}',
+data__description = '{{ description }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityProfilesV2Id = '{{ securityProfilesV2Id }}' --required

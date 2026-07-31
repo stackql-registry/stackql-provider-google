@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>devices_signed</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>devices_signed</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="devices_signed" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.prod_tt_sasportal.devices_signed" /></td></tr>
 </tbody></table>
@@ -92,16 +93,16 @@ The following methods are available for this resource:
     <td>Creates a signed device under a node or customer.</td>
 </tr>
 <tr>
-    <td><a href="#customers_devices_update_signed"><CopyableCode code="customers_devices_update_signed" /></a></td>
+    <td><a href="#deployments_devices_update_signed"><CopyableCode code="deployments_devices_update_signed" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td><a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
     <td></td>
     <td>Updates a signed device.</td>
 </tr>
 <tr>
-    <td><a href="#deployments_devices_update_signed"><CopyableCode code="deployments_devices_update_signed" /></a></td>
+    <td><a href="#customers_devices_update_signed"><CopyableCode code="customers_devices_update_signed" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
     <td></td>
     <td>Updates a signed device.</td>
 </tr>
@@ -354,33 +355,31 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: devices_signed
   props:
     - name: customersId
-      value: string
+      value: "{{ customersId }}"
       description: Required parameter for the devices_signed resource.
     - name: nodesId
-      value: string
+      value: "{{ nodesId }}"
       description: Required parameter for the devices_signed resource.
     - name: deploymentsId
-      value: string
+      value: "{{ deploymentsId }}"
       description: Required parameter for the devices_signed resource.
     - name: nodesId1
-      value: string
+      value: "{{ nodesId1 }}"
       description: Required parameter for the devices_signed resource.
     - name: encodedDevice
-      value: string
-      description: >
+      value: "{{ encodedDevice }}"
+      description: |
         Required. JSON Web Token signed using a CPI private key. Payload must be the JSON encoding of the device. The user_id field must be set.
-        
     - name: installerId
-      value: string
-      description: >
+      value: "{{ installerId }}"
+      description: |
         Required. Unique installer id (CPI ID) from the Certified Professional Installers database.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -388,14 +387,14 @@ state
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="customers_devices_update_signed"
+    defaultValue="deployments_devices_update_signed"
     values={[
-        { label: 'customers_devices_update_signed', value: 'customers_devices_update_signed' },
         { label: 'deployments_devices_update_signed', value: 'deployments_devices_update_signed' },
+        { label: 'customers_devices_update_signed', value: 'customers_devices_update_signed' },
         { label: 'nodes_devices_update_signed', value: 'nodes_devices_update_signed' }
     ]}
 >
-<TabItem value="customers_devices_update_signed">
+<TabItem value="deployments_devices_update_signed">
 
 Updates a signed device.
 
@@ -405,7 +404,7 @@ SET
 data__encodedDevice = '{{ encodedDevice }}',
 data__installerId = '{{ installerId }}'
 WHERE 
-customersId = '{{ customersId }}' --required
+deploymentsId = '{{ deploymentsId }}' --required
 AND devicesId = '{{ devicesId }}' --required
 RETURNING
 name,
@@ -421,7 +420,7 @@ serialNumber,
 state;
 ```
 </TabItem>
-<TabItem value="deployments_devices_update_signed">
+<TabItem value="customers_devices_update_signed">
 
 Updates a signed device.
 
@@ -431,7 +430,7 @@ SET
 data__encodedDevice = '{{ encodedDevice }}',
 data__installerId = '{{ installerId }}'
 WHERE 
-deploymentsId = '{{ deploymentsId }}' --required
+customersId = '{{ customersId }}' --required
 AND devicesId = '{{ devicesId }}' --required
 RETURNING
 name,

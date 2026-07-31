@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>unit_kinds</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>unit_kinds</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="unit_kinds" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.saasservicemgmt.unit_kinds" /></td></tr>
 </tbody></table>
@@ -60,9 +61,19 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations</td>
 </tr>
 <tr>
+    <td><CopyableCode code="boundaryType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Output only. BoundaryType describes the type of boundary the Unit Kind represents. (BOUNDARY_TYPE_UNSPECIFIED, BOUNDARY_TYPE_TENANT_PROJECT, BOUNDARY_TYPE_MANAGED_PROJECT)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="defaultFlagRevisions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Default revisions of flags for this UnitKind. Newly created units will use the flag default_flag_revisions present at the time of creation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultRelease" /></td>
@@ -82,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="inputVariableMappings" /></td>
     <td><code>array</code></td>
-    <td>Optional. List of inputVariables for this release that will either be retrieved from a dependency’s outputVariables, or will be passed on to a dependency’s inputVariables. Maximum 100.</td>
+    <td>Optional. List of inputVariables for this release that will either be retrieved from a dependency's outputVariables, or will be passed on to a dependency's inputVariables. Maximum 100.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -97,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="saas" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with SaaS Runtime. Part of the SaaS Runtime common data model. Immutable once set.</td>
+    <td>Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with App Lifecycle Manager. Part of the App Lifecycle Manager common data model. Immutable once set.</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -134,9 +145,19 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations</td>
 </tr>
 <tr>
+    <td><CopyableCode code="boundaryType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Output only. BoundaryType describes the type of boundary the Unit Kind represents. (BOUNDARY_TYPE_UNSPECIFIED, BOUNDARY_TYPE_TENANT_PROJECT, BOUNDARY_TYPE_MANAGED_PROJECT)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="defaultFlagRevisions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Default revisions of flags for this UnitKind. Newly created units will use the flag default_flag_revisions present at the time of creation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultRelease" /></td>
@@ -156,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="inputVariableMappings" /></td>
     <td><code>array</code></td>
-    <td>Optional. List of inputVariables for this release that will either be retrieved from a dependency’s outputVariables, or will be passed on to a dependency’s inputVariables. Maximum 100.</td>
+    <td>Optional. List of inputVariables for this release that will either be retrieved from a dependency's outputVariables, or will be passed on to a dependency's inputVariables. Maximum 100.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -171,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="saas" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with SaaS Runtime. Part of the SaaS Runtime common data model. Immutable once set.</td>
+    <td>Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with App Lifecycle Manager. Part of the App Lifecycle Manager common data model. Immutable once set.</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -214,28 +235,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve a collection of unit kinds.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-unitKindId"><code>unitKindId</code></a></td>
+    <td><a href="#parameter-unitKindId"><code>unitKindId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a new unit kind.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitKindsId"><code>unitKindsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Update a single unit kind.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitKindsId"><code>unitKindsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Delete a single unit kind.</td>
 </tr>
 </tbody>
@@ -334,7 +355,9 @@ Retrieve a single unit kind.
 SELECT
 name,
 annotations,
+boundaryType,
 createTime,
+defaultFlagRevisions,
 defaultRelease,
 dependencies,
 etag,
@@ -359,7 +382,9 @@ Retrieve a collection of unit kinds.
 SELECT
 name,
 annotations,
+boundaryType,
 createTime,
+defaultFlagRevisions,
 defaultRelease,
 dependencies,
 etag,
@@ -372,9 +397,9 @@ updateTime
 FROM google.saasservicemgmt.unit_kinds
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -397,38 +422,42 @@ Create a new unit kind.
 
 ```sql
 INSERT INTO google.saasservicemgmt.unit_kinds (
-data__annotations,
 data__defaultRelease,
-data__outputVariableMappings,
-data__name,
+data__defaultFlagRevisions,
 data__labels,
-data__saas,
+data__name,
 data__dependencies,
+data__saas,
+data__outputVariableMappings,
+data__annotations,
 data__inputVariableMappings,
 projectsId,
 locationsId,
-requestId,
+unitKindId,
 validateOnly,
-unitKindId
+requestId
 )
 SELECT 
-'{{ annotations }}',
 '{{ defaultRelease }}',
-'{{ outputVariableMappings }}',
-'{{ name }}',
+'{{ defaultFlagRevisions }}',
 '{{ labels }}',
-'{{ saas }}',
+'{{ name }}',
 '{{ dependencies }}',
+'{{ saas }}',
+'{{ outputVariableMappings }}',
+'{{ annotations }}',
 '{{ inputVariableMappings }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
+'{{ unitKindId }}',
 '{{ validateOnly }}',
-'{{ unitKindId }}'
+'{{ requestId }}'
 RETURNING
 name,
 annotations,
+boundaryType,
 createTime,
+defaultFlagRevisions,
 defaultRelease,
 dependencies,
 etag,
@@ -443,63 +472,78 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: unit_kinds
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the unit_kinds resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the unit_kinds resource.
-    - name: annotations
-      value: object
-      description: >
-        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-        
     - name: defaultRelease
-      value: string
-      description: >
+      value: "{{ defaultRelease }}"
+      description: |
         Optional. A reference to the Release object to use as default for creating new units of this UnitKind (optional). If not specified, a new unit must explicitly reference which release to use for its creation.
-        
-    - name: outputVariableMappings
-      value: array
-      description: >
-        Optional. List of outputVariables for this unit kind will be passed to this unit's outputVariables. Maximum 100.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitKinds/{unitKind}"
-        
+    - name: defaultFlagRevisions
+      value:
+        - "{{ defaultFlagRevisions }}"
+      description: |
+        Optional. Default revisions of flags for this UnitKind. Newly created units will use the flag default_flag_revisions present at the time of creation.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-        
-    - name: saas
-      value: string
-      description: >
-        Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with SaaS Runtime. Part of the SaaS Runtime common data model. Immutable once set.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitKinds/{unitKind}"
     - name: dependencies
-      value: array
-      description: >
+      description: |
         Optional. Immutable. List of other unit kinds that this release will depend on. Dependencies will be automatically provisioned if not found. Maximum 10.
-        
+      value:
+        - unitKind: "{{ unitKind }}"
+          alias: "{{ alias }}"
+    - name: saas
+      value: "{{ saas }}"
+      description: |
+        Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with App Lifecycle Manager. Part of the App Lifecycle Manager common data model. Immutable once set.
+    - name: outputVariableMappings
+      description: |
+        Optional. List of outputVariables for this unit kind will be passed to this unit's outputVariables. Maximum 100.
+      value:
+        - from:
+            dependency: "{{ dependency }}"
+            outputVariable: "{{ outputVariable }}"
+          variable: "{{ variable }}"
+          to:
+            inputVariable: "{{ inputVariable }}"
+            dependency: "{{ dependency }}"
+            ignoreForLookup: {{ ignoreForLookup }}
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
     - name: inputVariableMappings
-      value: array
-      description: >
-        Optional. List of inputVariables for this release that will either be retrieved from a dependency’s outputVariables, or will be passed on to a dependency’s inputVariables. Maximum 100.
-        
-    - name: requestId
-      value: string
-    - name: validateOnly
-      value: boolean
+      description: |
+        Optional. List of inputVariables for this release that will either be retrieved from a dependency's outputVariables, or will be passed on to a dependency's inputVariables. Maximum 100.
+      value:
+        - from:
+            dependency: "{{ dependency }}"
+            outputVariable: "{{ outputVariable }}"
+          variable: "{{ variable }}"
+          to:
+            inputVariable: "{{ inputVariable }}"
+            dependency: "{{ dependency }}"
+            ignoreForLookup: {{ ignoreForLookup }}
     - name: unitKindId
-      value: string
-```
+      value: "{{ unitKindId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -519,25 +563,28 @@ Update a single unit kind.
 ```sql
 UPDATE google.saasservicemgmt.unit_kinds
 SET 
-data__annotations = '{{ annotations }}',
 data__defaultRelease = '{{ defaultRelease }}',
-data__outputVariableMappings = '{{ outputVariableMappings }}',
-data__name = '{{ name }}',
+data__defaultFlagRevisions = '{{ defaultFlagRevisions }}',
 data__labels = '{{ labels }}',
-data__saas = '{{ saas }}',
+data__name = '{{ name }}',
 data__dependencies = '{{ dependencies }}',
+data__saas = '{{ saas }}',
+data__outputVariableMappings = '{{ outputVariableMappings }}',
+data__annotations = '{{ annotations }}',
 data__inputVariableMappings = '{{ inputVariableMappings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitKindsId = '{{ unitKindsId }}' --required
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
-AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 annotations,
+boundaryType,
 createTime,
+defaultFlagRevisions,
 defaultRelease,
 dependencies,
 etag,
@@ -569,9 +616,9 @@ DELETE FROM google.saasservicemgmt.unit_kinds
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitKindsId = '{{ unitKindsId }}' --required
-AND requestId = '{{ requestId }}'
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>intercept_endpoint_group_assoc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>intercept_endpoint_group_associations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="intercept_endpoint_group_associations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.intercept_endpoint_group_associations" /></td></tr>
 </tbody></table>
@@ -85,6 +86,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="networkCookie" /></td>
+    <td><code>integer (uint32)</code></td>
+    <td>Output only. Identifier used by the data-path. See the NSI GENEVE format for more details: https://docs.cloud.google.com/network-security-integration/docs/understand-geneve#network_id</td>
+</tr>
+<tr>
     <td><CopyableCode code="reconciling" /></td>
     <td><code>boolean</code></td>
     <td>Output only. The current state of the resource does not match the user's intended state, and the system is working to reconcile them. This part of the normal operation (e.g. adding a new location to the target deployment group). See https://google.aip.dev/128.</td>
@@ -92,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the endpoint group association.</td>
+    <td>Output only. Current state of the endpoint group association. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, CLOSED, OUT_OF_SYNC, DELETE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -149,6 +155,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="networkCookie" /></td>
+    <td><code>integer (uint32)</code></td>
+    <td>Output only. Identifier used by the data-path. See the NSI GENEVE format for more details: https://docs.cloud.google.com/network-security-integration/docs/understand-geneve#network_id</td>
+</tr>
+<tr>
     <td><CopyableCode code="reconciling" /></td>
     <td><code>boolean</code></td>
     <td>Output only. The current state of the resource does not match the user's intended state, and the system is working to reconcile them. This part of the normal operation (e.g. adding a new location to the target deployment group). See https://google.aip.dev/128.</td>
@@ -156,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the endpoint group association.</td>
+    <td>Output only. Current state of the endpoint group association. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, CLOSED, OUT_OF_SYNC, DELETE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -194,14 +205,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_intercept_endpoint_group_associations_list"><CopyableCode code="projects_locations_intercept_endpoint_group_associations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists associations in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_intercept_endpoint_group_associations_create"><CopyableCode code="projects_locations_intercept_endpoint_group_associations_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-interceptEndpointGroupAssociationId"><code>interceptEndpointGroupAssociationId</code></a></td>
+    <td><a href="#parameter-interceptEndpointGroupAssociationId"><code>interceptEndpointGroupAssociationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates an association in a given project and location. See https://google.aip.dev/133.</td>
 </tr>
 <tr>
@@ -309,6 +320,7 @@ labels,
 locations,
 locationsDetails,
 network,
+networkCookie,
 reconciling,
 state,
 updateTime
@@ -332,16 +344,17 @@ labels,
 locations,
 locationsDetails,
 network,
+networkCookie,
 reconciling,
 state,
 updateTime
 FROM google.networksecurity.intercept_endpoint_group_associations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -363,24 +376,24 @@ Creates an association in a given project and location. See https://google.aip.d
 
 ```sql
 INSERT INTO google.networksecurity.intercept_endpoint_group_associations (
-data__labels,
 data__interceptEndpointGroup,
 data__network,
 data__name,
+data__labels,
 projectsId,
 locationsId,
-requestId,
-interceptEndpointGroupAssociationId
+interceptEndpointGroupAssociationId,
+requestId
 )
 SELECT 
-'{{ labels }}',
 '{{ interceptEndpointGroup }}',
 '{{ network }}',
 '{{ name }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ interceptEndpointGroupAssociationId }}'
+'{{ interceptEndpointGroupAssociationId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -392,41 +405,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: intercept_endpoint_group_associations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the intercept_endpoint_group_associations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the intercept_endpoint_group_associations resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels are key/value pairs that help to organize and filter resources.
-        
     - name: interceptEndpointGroup
-      value: string
-      description: >
-        Required. Immutable. The endpoint group that this association is connected to, for example: `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See https://google.aip.dev/124.
-        
+      value: "{{ interceptEndpointGroup }}"
+      description: |
+        Required. Immutable. The endpoint group that this association is connected to, for example: \`projects/123456789/locations/global/interceptEndpointGroups/my-eg\`. See https://google.aip.dev/124.
     - name: network
-      value: string
-      description: >
-        Required. Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.
-        
+      value: "{{ network }}"
+      description: |
+        Required. Immutable. The VPC network that is associated. for example: \`projects/123456789/global/networks/my-network\`. See https://google.aip.dev/124.
     - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this endpoint group association, for example: `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg-association`. See https://google.aip.dev/122 for more details.
-        
-    - name: requestId
-      value: string
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of this endpoint group association, for example: \`projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg-association\`. See https://google.aip.dev/122 for more details.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels are key/value pairs that help to organize and filter resources.
     - name: interceptEndpointGroupAssociationId
-      value: string
-```
+      value: "{{ interceptEndpointGroupAssociationId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -446,10 +455,10 @@ Updates an association. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.intercept_endpoint_group_associations
 SET 
-data__labels = '{{ labels }}',
 data__interceptEndpointGroup = '{{ interceptEndpointGroup }}',
 data__network = '{{ network }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

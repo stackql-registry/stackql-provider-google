@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entry_types</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entry_types</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entry_types" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.entry_types" /></td></tr>
 </tbody></table>
@@ -128,71 +129,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The relative resource name of the EntryType, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/entryTypes/&#123;entry_type_id&#125;.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="authorization" /></td>
-    <td><code>object</code></td>
-    <td>Immutable. Authorization defined for this type. (id: GoogleCloudDataplexV1EntryTypeAuthorization)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the EntryType was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Description of the EntryType.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. User friendly display name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Optional. This checksum is computed by the service, and might be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. User-defined labels for the EntryType.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="platform" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The platform that Entries of this type belongs to.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="requiredAspects" /></td>
-    <td><code>array</code></td>
-    <td>AspectInfo for the entry type.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="system" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The system that Entries of this type belongs to. Examples include CloudSQL, MariaDB etc</td>
-</tr>
-<tr>
-    <td><CopyableCode code="typeAliases" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Indicates the classes this Entry Type belongs to, for example, TABLE, DATABASE, MODEL.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System generated globally unique ID for the EntryType. This ID will be different if the EntryType is deleted and re-created with the same name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the EntryType was last updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -224,14 +160,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_entry_types_list"><CopyableCode code="projects_locations_entry_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists EntryType resources in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_entry_types_create"><CopyableCode code="projects_locations_entry_types_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-entryTypeId"><code>entryTypeId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-entryTypeId"><code>entryTypeId</code></a></td>
     <td>Creates an EntryType.</td>
 </tr>
 <tr>
@@ -363,26 +299,14 @@ Lists EntryType resources in a project and location.
 
 ```sql
 SELECT
-name,
-authorization,
-createTime,
-description,
-displayName,
-etag,
-labels,
-platform,
-requiredAspects,
-system,
-typeAliases,
-uid,
-updateTime
+*
 FROM google.dataplex.entry_types
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -404,34 +328,34 @@ Creates an EntryType.
 
 ```sql
 INSERT INTO google.dataplex.entry_types (
-data__description,
 data__displayName,
+data__typeAliases,
+data__system,
 data__labels,
 data__etag,
-data__typeAliases,
 data__platform,
-data__system,
+data__description,
 data__requiredAspects,
 data__authorization,
 projectsId,
 locationsId,
-entryTypeId,
-validateOnly
+validateOnly,
+entryTypeId
 )
 SELECT 
-'{{ description }}',
 '{{ displayName }}',
+'{{ typeAliases }}',
+'{{ system }}',
 '{{ labels }}',
 '{{ etag }}',
-'{{ typeAliases }}',
 '{{ platform }}',
-'{{ system }}',
+'{{ description }}',
 '{{ requiredAspects }}',
 '{{ authorization }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ entryTypeId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ entryTypeId }}'
 RETURNING
 name,
 done,
@@ -443,66 +367,60 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: entry_types
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the entry_types resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the entry_types resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the EntryType.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. User friendly display name.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels for the EntryType.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. This checksum is computed by the service, and might be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
     - name: typeAliases
-      value: array
-      description: >
+      value:
+        - "{{ typeAliases }}"
+      description: |
         Optional. Indicates the classes this Entry Type belongs to, for example, TABLE, DATABASE, MODEL.
-        
-    - name: platform
-      value: string
-      description: >
-        Optional. The platform that Entries of this type belongs to.
-        
     - name: system
-      value: string
-      description: >
+      value: "{{ system }}"
+      description: |
         Optional. The system that Entries of this type belongs to. Examples include CloudSQL, MariaDB etc
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the EntryType.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. This checksum is computed by the service, and might be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: platform
+      value: "{{ platform }}"
+      description: |
+        Optional. The platform that Entries of this type belongs to.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the EntryType.
     - name: requiredAspects
-      value: array
-      description: >
+      description: |
         AspectInfo for the entry type.
-        
+      value:
+        - type: "{{ type }}"
     - name: authorization
-      value: object
-      description: >
+      description: |
         Immutable. Authorization defined for this type.
-        
-    - name: entryTypeId
-      value: string
+      value:
+        alternateUsePermission: "{{ alternateUsePermission }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: entryTypeId
+      value: "{{ entryTypeId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -522,13 +440,13 @@ Updates an EntryType.
 ```sql
 UPDATE google.dataplex.entry_types
 SET 
-data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
+data__typeAliases = '{{ typeAliases }}',
+data__system = '{{ system }}',
 data__labels = '{{ labels }}',
 data__etag = '{{ etag }}',
-data__typeAliases = '{{ typeAliases }}',
 data__platform = '{{ platform }}',
-data__system = '{{ system }}',
+data__description = '{{ description }}',
 data__requiredAspects = '{{ requiredAspects }}',
 data__authorization = '{{ authorization }}'
 WHERE 

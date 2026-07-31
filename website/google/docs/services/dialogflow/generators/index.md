@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>generators</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>generators</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="generators" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.generators" /></td></tr>
 </tbody></table>
@@ -52,32 +53,32 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the generator. Must be set for the Generators.UpdateGenerator method. Generators.CreateGenerate populates the name automatically. Format: `projects//locations//agents//generators/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the generator, unique within the agent. The prompt contains pre-defined parameters such as $conversation, $last-user-utterance, etc. populated by Dialogflow. It can also contain custom placeholders which will be resolved during fulfillment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="llmModelSettings" /></td>
     <td><code>object</code></td>
-    <td>The LLM model settings. (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="modelParameter" /></td>
     <td><code>object</code></td>
-    <td>Parameters passed to the LLM to configure its behavior. (id: GoogleCloudDialogflowCxV3GeneratorModelParameter)</td>
+    <td> (id: GoogleCloudDialogflowCxV3GeneratorModelParameter)</td>
 </tr>
 <tr>
     <td><CopyableCode code="placeholders" /></td>
     <td><code>array</code></td>
-    <td>Optional. List of custom placeholders in the prompt text.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="promptText" /></td>
     <td><code>object</code></td>
-    <td>Required. Prompt for the LLM model. (id: GoogleCloudDialogflowCxV3Phrase)</td>
+    <td> (id: GoogleCloudDialogflowCxV3Phrase)</td>
 </tr>
 </tbody>
 </table>
@@ -96,32 +97,32 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the generator. Must be set for the Generators.UpdateGenerator method. Generators.CreateGenerate populates the name automatically. Format: `projects//locations//agents//generators/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the generator, unique within the agent. The prompt contains pre-defined parameters such as $conversation, $last-user-utterance, etc. populated by Dialogflow. It can also contain custom placeholders which will be resolved during fulfillment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="llmModelSettings" /></td>
     <td><code>object</code></td>
-    <td>The LLM model settings. (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="modelParameter" /></td>
     <td><code>object</code></td>
-    <td>Parameters passed to the LLM to configure its behavior. (id: GoogleCloudDialogflowCxV3GeneratorModelParameter)</td>
+    <td> (id: GoogleCloudDialogflowCxV3GeneratorModelParameter)</td>
 </tr>
 <tr>
     <td><CopyableCode code="placeholders" /></td>
     <td><code>array</code></td>
-    <td>Optional. List of custom placeholders in the prompt text.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="promptText" /></td>
     <td><code>object</code></td>
-    <td>Required. Prompt for the LLM model. (id: GoogleCloudDialogflowCxV3Phrase)</td>
+    <td> (id: GoogleCloudDialogflowCxV3Phrase)</td>
 </tr>
 </tbody>
 </table>
@@ -148,35 +149,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-generatorsId"><code>generatorsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Retrieves the specified generator.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_generators_list"><CopyableCode code="projects_locations_agents_generators_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns the list of all generators in the specified agent.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_generators_create"><CopyableCode code="projects_locations_agents_generators_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Creates a generator in the specified agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_generators_patch"><CopyableCode code="projects_locations_agents_generators_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-generatorsId"><code>generatorsId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Update the specified generator.</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_generators_delete"><CopyableCode code="projects_locations_agents_generators_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-generatorsId"><code>generatorsId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
-    <td>Deletes the specified generators.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -253,7 +254,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_generators_get">
 
-Retrieves the specified generator.
+Successful response
 
 ```sql
 SELECT
@@ -274,7 +275,7 @@ AND languageCode = '{{ languageCode }}'
 </TabItem>
 <TabItem value="projects_locations_agents_generators_list">
 
-Returns the list of all generators in the specified agent.
+Successful response
 
 ```sql
 SELECT
@@ -288,9 +289,9 @@ FROM google.dialogflow.generators
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND languageCode = '{{ languageCode }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -308,28 +309,28 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_agents_generators_create">
 
-Creates a generator in the specified agent.
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.generators (
+data__modelParameter,
 data__name,
-data__displayName,
 data__promptText,
+data__displayName,
 data__placeholders,
 data__llmModelSettings,
-data__modelParameter,
 projectsId,
 locationsId,
 agentsId,
 languageCode
 )
 SELECT 
+'{{ modelParameter }}',
 '{{ name }}',
-'{{ displayName }}',
 '{{ promptText }}',
+'{{ displayName }}',
 '{{ placeholders }}',
 '{{ llmModelSettings }}',
-'{{ modelParameter }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -346,52 +347,43 @@ promptText
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: generators
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the generators resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the generators resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the generators resource.
-    - name: name
-      value: string
-      description: >
-        The unique identifier of the generator. Must be set for the Generators.UpdateGenerator method. Generators.CreateGenerate populates the name automatically. Format: `projects//locations//agents//generators/`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the generator, unique within the agent. The prompt contains pre-defined parameters such as $conversation, $last-user-utterance, etc. populated by Dialogflow. It can also contain custom placeholders which will be resolved during fulfillment.
-        
-    - name: promptText
-      value: object
-      description: >
-        Required. Prompt for the LLM model.
-        
-    - name: placeholders
-      value: array
-      description: >
-        Optional. List of custom placeholders in the prompt text.
-        
-    - name: llmModelSettings
-      value: object
-      description: >
-        The LLM model settings.
-        
     - name: modelParameter
-      value: object
-      description: >
-        Parameters passed to the LLM to configure its behavior.
-        
+      value:
+        maxDecodeSteps: {{ maxDecodeSteps }}
+        temperature: {{ temperature }}
+        topP: {{ topP }}
+        topK: {{ topK }}
+    - name: name
+      value: "{{ name }}"
+    - name: promptText
+      value:
+        text: "{{ text }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: placeholders
+      value:
+        - id: "{{ id }}"
+          name: "{{ name }}"
+    - name: llmModelSettings
+      value:
+        model: "{{ model }}"
+        promptText: "{{ promptText }}"
     - name: languageCode
-      value: string
-```
+      value: "{{ languageCode }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -406,24 +398,24 @@ promptText
 >
 <TabItem value="projects_locations_agents_generators_patch">
 
-Update the specified generator.
+No description available.
 
 ```sql
 UPDATE google.dialogflow.generators
 SET 
+data__modelParameter = '{{ modelParameter }}',
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__promptText = '{{ promptText }}',
+data__displayName = '{{ displayName }}',
 data__placeholders = '{{ placeholders }}',
-data__llmModelSettings = '{{ llmModelSettings }}',
-data__modelParameter = '{{ modelParameter }}'
+data__llmModelSettings = '{{ llmModelSettings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND agentsId = '{{ agentsId }}' --required
 AND generatorsId = '{{ generatorsId }}' --required
-AND languageCode = '{{ languageCode}}'
 AND updateMask = '{{ updateMask}}'
+AND languageCode = '{{ languageCode}}'
 RETURNING
 name,
 displayName,
@@ -446,7 +438,7 @@ promptText;
 >
 <TabItem value="projects_locations_agents_generators_delete">
 
-Deletes the specified generators.
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.generators

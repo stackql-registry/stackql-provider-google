@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>routes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>routes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="routes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datastream.routes" /></td></tr>
 </tbody></table>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateConnectionsId"><code>privateConnectionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Use this method to list routes created for a private connectivity configuration in a project and location.</td>
 </tr>
 <tr>
@@ -297,10 +298,10 @@ FROM google.datastream.routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateConnectionsId = '{{ privateConnectionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -323,9 +324,9 @@ Use this method to create a route for a private connectivity configuration in a 
 ```sql
 INSERT INTO google.datastream.routes (
 data__labels,
+data__destinationPort,
 data__displayName,
 data__destinationAddress,
-data__destinationPort,
 projectsId,
 locationsId,
 privateConnectionsId,
@@ -334,9 +335,9 @@ requestId
 )
 SELECT 
 '{{ labels }}',
+{{ destinationPort }},
 '{{ displayName }}',
 '{{ destinationAddress }}',
-{{ destinationPort }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateConnectionsId }}',
@@ -353,44 +354,40 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: routes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the routes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the routes resource.
     - name: privateConnectionsId
-      value: string
+      value: "{{ privateConnectionsId }}"
       description: Required parameter for the routes resource.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Labels.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. Display name.
-        
-    - name: destinationAddress
-      value: string
-      description: >
-        Required. Destination address for connection
-        
     - name: destinationPort
-      value: integer
-      description: >
+      value: {{ destinationPort }}
+      description: |
         Destination port for connection
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name.
+    - name: destinationAddress
+      value: "{{ destinationAddress }}"
+      description: |
+        Required. Destination address for connection
     - name: routeId
-      value: string
+      value: "{{ routeId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

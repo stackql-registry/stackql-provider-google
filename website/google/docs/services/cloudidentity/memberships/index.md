@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>memberships</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>memberships</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="memberships" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.memberships" /></td></tr>
 </tbody></table>
@@ -62,12 +63,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deliverySetting" /></td>
     <td><code>string</code></td>
-    <td>Output only. Delivery setting associated with the membership.</td>
+    <td>Output only. Delivery setting associated with the membership. (DELIVERY_SETTING_UNSPECIFIED, ALL_MAIL, DIGEST, DAILY, NONE, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="preferredMemberKey" /></td>
     <td><code>object</code></td>
-    <td>A unique identifier for an entity in the Cloud Identity Groups API. An entity can represent either a group with an optional `namespace` or a user without a `namespace`. The combination of `id` and `namespace` must be unique; however, the same `id` can be used with different `namespace`s. (id: EntityKey)</td>
+    <td>Required. Immutable. The `EntityKey` of the member. (id: EntityKey)</td>
 </tr>
 <tr>
     <td><CopyableCode code="roles" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the membership.</td>
+    <td>Output only. The type of the membership. (TYPE_UNSPECIFIED, USER, SERVICE_ACCOUNT, GROUP, SHARED_DRIVE, CBCM_BROWSER, CHROME_OS_DEVICE, OTHER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -111,12 +112,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deliverySetting" /></td>
     <td><code>string</code></td>
-    <td>Output only. Delivery setting associated with the membership.</td>
+    <td>Output only. Delivery setting associated with the membership. (DELIVERY_SETTING_UNSPECIFIED, ALL_MAIL, DIGEST, DAILY, NONE, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="preferredMemberKey" /></td>
     <td><code>object</code></td>
-    <td>A unique identifier for an entity in the Cloud Identity Groups API. An entity can represent either a group with an optional `namespace` or a user without a `namespace`. The combination of `id` and `namespace` must be unique; however, the same `id` can be used with different `namespace`s. (id: EntityKey)</td>
+    <td>Required. Immutable. The `EntityKey` of the member. (id: EntityKey)</td>
 </tr>
 <tr>
     <td><CopyableCode code="roles" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the membership.</td>
+    <td>Output only. The type of the membership. (TYPE_UNSPECIFIED, USER, SERVICE_ACCOUNT, GROUP, SHARED_DRIVE, CBCM_BROWSER, CHROME_OS_DEVICE, OTHER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -182,11 +183,18 @@ The following methods are available for this resource:
     <td>Deletes a `Membership`.</td>
 </tr>
 <tr>
-    <td><a href="#search_transitive_groups"><CopyableCode code="search_transitive_groups" /></a></td>
+    <td><a href="#check_transitive_membership"><CopyableCode code="check_transitive_membership" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a></td>
-    <td>Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.</td>
+    <td><a href="#parameter-query"><code>query</code></a></td>
+    <td>Check a potential member for membership in a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A member has membership to a group as long as there is a single viewable transitive membership between the group and the member. The actor must have view permissions to at least one transitive membership between the member and group.</td>
+</tr>
+<tr>
+    <td><a href="#search_direct_groups"><CopyableCode code="search_direct_groups" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td>Searches direct groups of a member. Groups for which the actor does not have the permission to view memberships are silently filtered out.</td>
 </tr>
 <tr>
     <td><a href="#search_transitive_memberships"><CopyableCode code="search_transitive_memberships" /></a></td>
@@ -194,6 +202,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Search transitive memberships of a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the group is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive membership is any direct or indirect membership of a group. Actor must have view permissions to all transitive memberships.</td>
+</tr>
+<tr>
+    <td><a href="#search_transitive_groups"><CopyableCode code="search_transitive_groups" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
+    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.</td>
 </tr>
 <tr>
     <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
@@ -208,20 +223,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-groupsId"><code>groupsId</code></a>, <a href="#parameter-membershipsId"><code>membershipsId</code></a></td>
     <td></td>
     <td>Modifies the `MembershipRole`s of a `Membership`.</td>
-</tr>
-<tr>
-    <td><a href="#check_transitive_membership"><CopyableCode code="check_transitive_membership" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-query"><code>query</code></a></td>
-    <td>Check a potential member for membership in a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A member has membership to a group as long as there is a single viewable transitive membership between the group and the member. The actor must have view permissions to at least one transitive membership between the member and group.</td>
-</tr>
-<tr>
-    <td><a href="#search_direct_groups"><CopyableCode code="search_direct_groups" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Searches direct groups of a member.</td>
 </tr>
 </tbody>
 </table>
@@ -373,24 +374,30 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: memberships
   props:
     - name: groupsId
-      value: string
+      value: "{{ groupsId }}"
       description: Required parameter for the memberships resource.
     - name: preferredMemberKey
-      value: object
-      description: >
-        A unique identifier for an entity in the Cloud Identity Groups API. An entity can represent either a group with an optional `namespace` or a user without a `namespace`. The combination of `id` and `namespace` must be unique; however, the same `id` can be used with different `namespace`s.
-        
+      description: |
+        Required. Immutable. The \`EntityKey\` of the member.
+      value:
+        namespace: "{{ namespace }}"
+        id: "{{ id }}"
     - name: roles
-      value: array
-      description: >
-        The `MembershipRole`s that apply to the `Membership`. If unspecified, defaults to a single `MembershipRole` with `name` `MEMBER`. Must not contain duplicate `MembershipRole`s with the same `name`.
-        
-```
+      description: |
+        The \`MembershipRole\`s that apply to the \`Membership\`. If unspecified, defaults to a single \`MembershipRole\` with \`name\` \`MEMBER\`. Must not contain duplicate \`MembershipRole\`s with the same \`name\`.
+      value:
+        - restrictionEvaluations:
+            memberRestrictionEvaluation:
+              state: "{{ state }}"
+          name: "{{ name }}"
+          expiryDetail:
+            expireTime: "{{ expireTime }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -420,25 +427,37 @@ AND membershipsId = '{{ membershipsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search_transitive_groups"
+    defaultValue="check_transitive_membership"
     values={[
-        { label: 'search_transitive_groups', value: 'search_transitive_groups' },
-        { label: 'search_transitive_memberships', value: 'search_transitive_memberships' },
-        { label: 'lookup', value: 'lookup' },
-        { label: 'modify_membership_roles', value: 'modify_membership_roles' },
         { label: 'check_transitive_membership', value: 'check_transitive_membership' },
-        { label: 'search_direct_groups', value: 'search_direct_groups' }
+        { label: 'search_direct_groups', value: 'search_direct_groups' },
+        { label: 'search_transitive_memberships', value: 'search_transitive_memberships' },
+        { label: 'search_transitive_groups', value: 'search_transitive_groups' },
+        { label: 'lookup', value: 'lookup' },
+        { label: 'modify_membership_roles', value: 'modify_membership_roles' }
     ]}
 >
-<TabItem value="search_transitive_groups">
+<TabItem value="check_transitive_membership">
 
-Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.
+Check a potential member for membership in a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A member has membership to a group as long as there is a single viewable transitive membership between the group and the member. The actor must have view permissions to at least one transitive membership between the member and group.
 
 ```sql
-EXEC google.cloudidentity.memberships.search_transitive_groups 
+EXEC google.cloudidentity.memberships.check_transitive_membership 
+@groupsId='{{ groupsId }}' --required, 
+@query='{{ query }}'
+;
+```
+</TabItem>
+<TabItem value="search_direct_groups">
+
+Searches direct groups of a member. Groups for which the actor does not have the permission to view memberships are silently filtered out.
+
+```sql
+EXEC google.cloudidentity.memberships.search_direct_groups 
 @groupsId='{{ groupsId }}' --required, 
 @pageToken='{{ pageToken }}', 
 @pageSize='{{ pageSize }}', 
+@orderBy='{{ orderBy }}', 
 @query='{{ query }}'
 ;
 ```
@@ -450,6 +469,19 @@ Search transitive memberships of a group. **Note:** This feature is only availab
 ```sql
 EXEC google.cloudidentity.memberships.search_transitive_memberships 
 @groupsId='{{ groupsId }}' --required, 
+@pageToken='{{ pageToken }}', 
+@pageSize='{{ pageSize }}'
+;
+```
+</TabItem>
+<TabItem value="search_transitive_groups">
+
+Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.
+
+```sql
+EXEC google.cloudidentity.memberships.search_transitive_groups 
+@groupsId='{{ groupsId }}' --required, 
+@query='{{ query }}', 
 @pageToken='{{ pageToken }}', 
 @pageSize='{{ pageSize }}'
 ;
@@ -477,35 +509,10 @@ EXEC google.cloudidentity.memberships.modify_membership_roles
 @membershipsId='{{ membershipsId }}' --required 
 @@json=
 '{
-"removeRoles": "{{ removeRoles }}", 
 "addRoles": "{{ addRoles }}", 
+"removeRoles": "{{ removeRoles }}", 
 "updateRolesParams": "{{ updateRolesParams }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="check_transitive_membership">
-
-Check a potential member for membership in a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A member has membership to a group as long as there is a single viewable transitive membership between the group and the member. The actor must have view permissions to at least one transitive membership between the member and group.
-
-```sql
-EXEC google.cloudidentity.memberships.check_transitive_membership 
-@groupsId='{{ groupsId }}' --required, 
-@query='{{ query }}'
-;
-```
-</TabItem>
-<TabItem value="search_direct_groups">
-
-Searches direct groups of a member.
-
-```sql
-EXEC google.cloudidentity.memberships.search_direct_groups 
-@groupsId='{{ groupsId }}' --required, 
-@orderBy='{{ orderBy }}', 
-@pageSize='{{ pageSize }}', 
-@query='{{ query }}', 
-@pageToken='{{ pageToken }}'
 ;
 ```
 </TabItem>

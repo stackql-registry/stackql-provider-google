@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>test_cases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>test_cases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="test_cases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.test_cases" /></td></tr>
 </tbody></table>
@@ -52,42 +53,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the test case. TestCases.CreateTestCase will populate the name automatically. Otherwise use format: `projects//locations//agents//testCases/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. When the test was created.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the test case, unique within the agent. Limit of 200 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="lastTestResult" /></td>
     <td><code>object</code></td>
-    <td>The latest test result. (id: GoogleCloudDialogflowCxV3TestCaseResult)</td>
+    <td> (id: GoogleCloudDialogflowCxV3TestCaseResult)</td>
 </tr>
 <tr>
     <td><CopyableCode code="notes" /></td>
     <td><code>string</code></td>
-    <td>Additional freeform notes about the test case. Limit of 400 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
     <td><code>array</code></td>
-    <td>Tags are short descriptions that users may apply to test cases for organizational and filtering purposes. Each tag should start with "#" and has a limit of 30 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="testCaseConversationTurns" /></td>
     <td><code>array</code></td>
-    <td>The conversation turns uttered when the test case was created, in chronological order. These include the canonical set of agent utterances that should occur when the agent is working properly.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="testConfig" /></td>
     <td><code>object</code></td>
-    <td>Config for the test case. (id: GoogleCloudDialogflowCxV3TestConfig)</td>
+    <td> (id: GoogleCloudDialogflowCxV3TestConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -106,42 +107,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the test case. TestCases.CreateTestCase will populate the name automatically. Otherwise use format: `projects//locations//agents//testCases/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. When the test was created.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the test case, unique within the agent. Limit of 200 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="lastTestResult" /></td>
     <td><code>object</code></td>
-    <td>The latest test result. (id: GoogleCloudDialogflowCxV3TestCaseResult)</td>
+    <td> (id: GoogleCloudDialogflowCxV3TestCaseResult)</td>
 </tr>
 <tr>
     <td><CopyableCode code="notes" /></td>
     <td><code>string</code></td>
-    <td>Additional freeform notes about the test case. Limit of 400 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
     <td><code>array</code></td>
-    <td>Tags are short descriptions that users may apply to test cases for organizational and filtering purposes. Each tag should start with "#" and has a limit of 30 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="testCaseConversationTurns" /></td>
     <td><code>array</code></td>
-    <td>The conversation turns uttered when the test case was created, in chronological order. These include the canonical set of agent utterances that should occur when the agent is working properly.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="testConfig" /></td>
     <td><code>object</code></td>
-    <td>Config for the test case. (id: GoogleCloudDialogflowCxV3TestConfig)</td>
+    <td> (id: GoogleCloudDialogflowCxV3TestConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -168,70 +169,70 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a></td>
     <td></td>
-    <td>Gets a test case.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_test_cases_list"><CopyableCode code="projects_locations_agents_test_cases_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
-    <td>Fetches a list of test cases for a given agent.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_test_cases_create"><CopyableCode code="projects_locations_agents_test_cases_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Creates a test case for the given agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_test_cases_patch"><CopyableCode code="projects_locations_agents_test_cases_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the specified test case.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_test_cases_batch_delete"><CopyableCode code="projects_locations_agents_test_cases_batch_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Batch deletes test cases.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_test_cases_run"><CopyableCode code="projects_locations_agents_test_cases_run" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a></td>
     <td></td>
-    <td>Kicks off a test case run. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: RunTestCaseMetadata - `response`: RunTestCaseResponse</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_test_cases_batch_run"><CopyableCode code="projects_locations_agents_test_cases_batch_run" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td></td>
-    <td>Kicks off a batch run of test cases. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: BatchRunTestCasesMetadata - `response`: BatchRunTestCasesResponse</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_test_cases_calculate_coverage"><CopyableCode code="projects_locations_agents_test_cases_calculate_coverage" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-type"><code>type</code></a></td>
-    <td>Calculates the test coverage for an agent.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_test_cases_import"><CopyableCode code="projects_locations_agents_test_cases_import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Imports the test cases from a Cloud Storage bucket or a local file. It always creates new test cases and won't overwrite any existing ones. The provided ID in the imported test case is neglected. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportTestCasesMetadata - `response`: ImportTestCasesResponse</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_test_cases_export"><CopyableCode code="projects_locations_agents_test_cases_export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Exports the test cases under the agent to a Cloud Storage bucket or a local file. Filter can be applied to export a subset of test cases. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ExportTestCasesMetadata - `response`: ExportTestCasesResponse</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_test_cases_calculate_coverage"><CopyableCode code="projects_locations_agents_test_cases_calculate_coverage" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
+    <td><a href="#parameter-type"><code>type</code></a></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_test_cases_run"><CopyableCode code="projects_locations_agents_test_cases_run" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_test_cases_batch_run"><CopyableCode code="projects_locations_agents_test_cases_batch_run" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -308,7 +309,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_test_cases_get">
 
-Gets a test case.
+Successful response
 
 ```sql
 SELECT
@@ -330,7 +331,7 @@ AND testCasesId = '{{ testCasesId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_test_cases_list">
 
-Fetches a list of test cases for a given agent.
+Successful response
 
 ```sql
 SELECT
@@ -347,8 +348,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -366,29 +367,29 @@ AND view = '{{ view }}'
 >
 <TabItem value="projects_locations_agents_test_cases_create">
 
-Creates a test case for the given agent.
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.test_cases (
-data__name,
 data__tags,
-data__displayName,
 data__notes,
-data__testConfig,
+data__name,
 data__testCaseConversationTurns,
 data__lastTestResult,
+data__testConfig,
+data__displayName,
 projectsId,
 locationsId,
 agentsId
 )
 SELECT 
-'{{ name }}',
 '{{ tags }}',
-'{{ displayName }}',
 '{{ notes }}',
-'{{ testConfig }}',
+'{{ name }}',
 '{{ testCaseConversationTurns }}',
 '{{ lastTestResult }}',
+'{{ testConfig }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}'
@@ -406,55 +407,360 @@ testConfig
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: test_cases
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the test_cases resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the test_cases resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the test_cases resource.
-    - name: name
-      value: string
-      description: >
-        The unique identifier of the test case. TestCases.CreateTestCase will populate the name automatically. Otherwise use format: `projects//locations//agents//testCases/`.
-        
     - name: tags
-      value: array
-      description: >
-        Tags are short descriptions that users may apply to test cases for organizational and filtering purposes. Each tag should start with "#" and has a limit of 30 characters.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the test case, unique within the agent. Limit of 200 characters.
-        
+      value:
+        - "{{ tags }}"
     - name: notes
-      value: string
-      description: >
-        Additional freeform notes about the test case. Limit of 400 characters.
-        
-    - name: testConfig
-      value: object
-      description: >
-        Config for the test case.
-        
+      value: "{{ notes }}"
+    - name: name
+      value: "{{ name }}"
     - name: testCaseConversationTurns
-      value: array
-      description: >
-        The conversation turns uttered when the test case was created, in chronological order. These include the canonical set of agent utterances that should occur when the agent is working properly.
-        
+      value:
+        - userInput:
+            isWebhookEnabled: {{ isWebhookEnabled }}
+            injectedParameters: "{{ injectedParameters }}"
+            enableSentimentAnalysis: {{ enableSentimentAnalysis }}
+            input:
+              text:
+                text: "{{ text }}"
+              audio:
+                config:
+                  sampleRateHertz: {{ sampleRateHertz }}
+                  model: "{{ model }}"
+                  bargeInConfig: "{{ bargeInConfig }}"
+                  audioEncoding: "{{ audioEncoding }}"
+                  enableWordInfo: {{ enableWordInfo }}
+                  singleUtterance: {{ singleUtterance }}
+                  modelVariant: "{{ modelVariant }}"
+                  optOutConformerModelMigration: {{ optOutConformerModelMigration }}
+                  phraseHints: "{{ phraseHints }}"
+                audio: "{{ audio }}"
+              dtmf:
+                finishDigit: "{{ finishDigit }}"
+                digits: "{{ digits }}"
+              intent:
+                intent: "{{ intent }}"
+              toolCallResult:
+                tool: "{{ tool }}"
+                action: "{{ action }}"
+                error:
+                  message: "{{ message }}"
+                outputParameters: "{{ outputParameters }}"
+              languageCode: "{{ languageCode }}"
+              event:
+                event: "{{ event }}"
+          virtualAgentOutput:
+            differences:
+              - description: "{{ description }}"
+                type: "{{ type }}"
+            triggeredIntent:
+              trainingPhrases:
+                - parts: "{{ parts }}"
+                  repeatCount: {{ repeatCount }}
+                  id: "{{ id }}"
+              priority: {{ priority }}
+              displayName: "{{ displayName }}"
+              parameters:
+                - entityType: "{{ entityType }}"
+                  redact: {{ redact }}
+                  id: "{{ id }}"
+                  isList: {{ isList }}
+              isFallback: {{ isFallback }}
+              dtmfPattern: "{{ dtmfPattern }}"
+              name: "{{ name }}"
+              labels: "{{ labels }}"
+              description: "{{ description }}"
+            sessionParameters: "{{ sessionParameters }}"
+            currentPage:
+              eventHandlers:
+                - name: "{{ name }}"
+                  event: "{{ event }}"
+                  targetPage: "{{ targetPage }}"
+                  triggerFulfillment:
+                    returnPartialResponses: {{ returnPartialResponses }}
+                    generators: "{{ generators }}"
+                    webhook: "{{ webhook }}"
+                    enableGenerativeFallback: {{ enableGenerativeFallback }}
+                    setParameterActions: "{{ setParameterActions }}"
+                    tag: "{{ tag }}"
+                    advancedSettings: "{{ advancedSettings }}"
+                    messages: "{{ messages }}"
+                    conditionalCases: "{{ conditionalCases }}"
+                  targetFlow: "{{ targetFlow }}"
+                  targetPlaybook: "{{ targetPlaybook }}"
+              form:
+                parameters:
+                  - required: {{ required }}
+                    isList: {{ isList }}
+                    redact: {{ redact }}
+                    displayName: "{{ displayName }}"
+                    advancedSettings:
+                      loggingSettings: "{{ loggingSettings }}"
+                      audioExportGcsDestination: "{{ audioExportGcsDestination }}"
+                      speechSettings: "{{ speechSettings }}"
+                      dtmfSettings: "{{ dtmfSettings }}"
+                    entityType: "{{ entityType }}"
+                    fillBehavior:
+                      initialPromptFulfillment: "{{ initialPromptFulfillment }}"
+                      repromptEventHandlers: "{{ repromptEventHandlers }}"
+                    defaultValue: "{{ defaultValue }}"
+              displayName: "{{ displayName }}"
+              transitionRouteGroups:
+                - "{{ transitionRouteGroups }}"
+              knowledgeConnectorSettings:
+                targetFlow: "{{ targetFlow }}"
+                dataStoreConnections:
+                  - dataStore: "{{ dataStore }}"
+                    documentProcessingMode: "{{ documentProcessingMode }}"
+                    dataStoreType: "{{ dataStoreType }}"
+                triggerFulfillment:
+                  returnPartialResponses: {{ returnPartialResponses }}
+                  generators: "{{ generators }}"
+                  webhook: "{{ webhook }}"
+                  enableGenerativeFallback: {{ enableGenerativeFallback }}
+                  setParameterActions: "{{ setParameterActions }}"
+                  tag: "{{ tag }}"
+                  advancedSettings: "{{ advancedSettings }}"
+                  messages: "{{ messages }}"
+                  conditionalCases: "{{ conditionalCases }}"
+                enabled: {{ enabled }}
+                targetPage: "{{ targetPage }}"
+              name: "{{ name }}"
+              transitionRoutes:
+                - name: "{{ name }}"
+                  targetPage: "{{ targetPage }}"
+                  condition: "{{ condition }}"
+                  description: "{{ description }}"
+                  targetFlow: "{{ targetFlow }}"
+                  intent: "{{ intent }}"
+                  triggerFulfillment:
+                    returnPartialResponses: {{ returnPartialResponses }}
+                    generators: "{{ generators }}"
+                    webhook: "{{ webhook }}"
+                    enableGenerativeFallback: {{ enableGenerativeFallback }}
+                    setParameterActions: "{{ setParameterActions }}"
+                    tag: "{{ tag }}"
+                    advancedSettings: "{{ advancedSettings }}"
+                    messages: "{{ messages }}"
+                    conditionalCases: "{{ conditionalCases }}"
+              description: "{{ description }}"
+              entryFulfillment:
+                returnPartialResponses: {{ returnPartialResponses }}
+                generators:
+                  - inputParameters: "{{ inputParameters }}"
+                    generator: "{{ generator }}"
+                    outputParameter: "{{ outputParameter }}"
+                webhook: "{{ webhook }}"
+                enableGenerativeFallback: {{ enableGenerativeFallback }}
+                setParameterActions:
+                  - parameter: "{{ parameter }}"
+                    value: "{{ value }}"
+                tag: "{{ tag }}"
+                advancedSettings:
+                  loggingSettings: "{{ loggingSettings }}"
+                  audioExportGcsDestination: "{{ audioExportGcsDestination }}"
+                  speechSettings: "{{ speechSettings }}"
+                  dtmfSettings: "{{ dtmfSettings }}"
+                messages:
+                  - playAudio:
+                      audioUri: "{{ audioUri }}"
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    toolCall:
+                      tool: "{{ tool }}"
+                      action: "{{ action }}"
+                      inputParameters: "{{ inputParameters }}"
+                    knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                    endInteraction: "{{ endInteraction }}"
+                    conversationSuccess:
+                      metadata: "{{ metadata }}"
+                    channel: "{{ channel }}"
+                    text:
+                      text: "{{ text }}"
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    telephonyTransferCall:
+                      phoneNumber: "{{ phoneNumber }}"
+                    responseType: "{{ responseType }}"
+                    payload: "{{ payload }}"
+                    outputAudioText:
+                      text: "{{ text }}"
+                      ssml: "{{ ssml }}"
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    mixedAudio:
+                      segments: "{{ segments }}"
+                    liveAgentHandoff:
+                      metadata: "{{ metadata }}"
+                conditionalCases:
+                  - cases: "{{ cases }}"
+              advancedSettings:
+                loggingSettings:
+                  enableInteractionLogging: {{ enableInteractionLogging }}
+                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                  enableStackdriverLogging: {{ enableStackdriverLogging }}
+                audioExportGcsDestination:
+                  uri: "{{ uri }}"
+                speechSettings:
+                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+                  models: "{{ models }}"
+                  endpointerSensitivity: {{ endpointerSensitivity }}
+                  noSpeechTimeout: "{{ noSpeechTimeout }}"
+                dtmfSettings:
+                  maxDigits: {{ maxDigits }}
+                  finishDigit: "{{ finishDigit }}"
+                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                  enabled: {{ enabled }}
+                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+            textResponses:
+              - text: "{{ text }}"
+                allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+            status:
+              code: {{ code }}
+              message: "{{ message }}"
+              details: "{{ details }}"
+            diagnosticInfo: "{{ diagnosticInfo }}"
     - name: lastTestResult
-      value: object
-      description: >
-        The latest test result.
-        
-```
+      value:
+        testResult: "{{ testResult }}"
+        testTime: "{{ testTime }}"
+        conversationTurns:
+          - userInput:
+              isWebhookEnabled: {{ isWebhookEnabled }}
+              injectedParameters: "{{ injectedParameters }}"
+              enableSentimentAnalysis: {{ enableSentimentAnalysis }}
+              input:
+                text:
+                  text: "{{ text }}"
+                audio:
+                  config: "{{ config }}"
+                  audio: "{{ audio }}"
+                dtmf:
+                  finishDigit: "{{ finishDigit }}"
+                  digits: "{{ digits }}"
+                intent:
+                  intent: "{{ intent }}"
+                toolCallResult:
+                  tool: "{{ tool }}"
+                  action: "{{ action }}"
+                  error: "{{ error }}"
+                  outputParameters: "{{ outputParameters }}"
+                languageCode: "{{ languageCode }}"
+                event:
+                  event: "{{ event }}"
+            virtualAgentOutput:
+              differences:
+                - description: "{{ description }}"
+                  type: "{{ type }}"
+              triggeredIntent:
+                trainingPhrases:
+                  - parts: "{{ parts }}"
+                    repeatCount: {{ repeatCount }}
+                    id: "{{ id }}"
+                priority: {{ priority }}
+                displayName: "{{ displayName }}"
+                parameters:
+                  - entityType: "{{ entityType }}"
+                    redact: {{ redact }}
+                    id: "{{ id }}"
+                    isList: {{ isList }}
+                isFallback: {{ isFallback }}
+                dtmfPattern: "{{ dtmfPattern }}"
+                name: "{{ name }}"
+                labels: "{{ labels }}"
+                description: "{{ description }}"
+              sessionParameters: "{{ sessionParameters }}"
+              currentPage:
+                eventHandlers:
+                  - name: "{{ name }}"
+                    event: "{{ event }}"
+                    targetPage: "{{ targetPage }}"
+                    triggerFulfillment:
+                      returnPartialResponses: {{ returnPartialResponses }}
+                      generators: "{{ generators }}"
+                      webhook: "{{ webhook }}"
+                      enableGenerativeFallback: {{ enableGenerativeFallback }}
+                      setParameterActions: "{{ setParameterActions }}"
+                      tag: "{{ tag }}"
+                      advancedSettings: "{{ advancedSettings }}"
+                      messages: "{{ messages }}"
+                      conditionalCases: "{{ conditionalCases }}"
+                    targetFlow: "{{ targetFlow }}"
+                    targetPlaybook: "{{ targetPlaybook }}"
+                form:
+                  parameters: "{{ parameters }}"
+                displayName: "{{ displayName }}"
+                transitionRouteGroups:
+                  - "{{ transitionRouteGroups }}"
+                knowledgeConnectorSettings:
+                  targetFlow: "{{ targetFlow }}"
+                  dataStoreConnections: "{{ dataStoreConnections }}"
+                  triggerFulfillment: "{{ triggerFulfillment }}"
+                  enabled: {{ enabled }}
+                  targetPage: "{{ targetPage }}"
+                name: "{{ name }}"
+                transitionRoutes:
+                  - name: "{{ name }}"
+                    targetPage: "{{ targetPage }}"
+                    condition: "{{ condition }}"
+                    description: "{{ description }}"
+                    targetFlow: "{{ targetFlow }}"
+                    intent: "{{ intent }}"
+                    triggerFulfillment:
+                      returnPartialResponses: {{ returnPartialResponses }}
+                      generators: "{{ generators }}"
+                      webhook: "{{ webhook }}"
+                      enableGenerativeFallback: {{ enableGenerativeFallback }}
+                      setParameterActions: "{{ setParameterActions }}"
+                      tag: "{{ tag }}"
+                      advancedSettings: "{{ advancedSettings }}"
+                      messages: "{{ messages }}"
+                      conditionalCases: "{{ conditionalCases }}"
+                description: "{{ description }}"
+                entryFulfillment:
+                  returnPartialResponses: {{ returnPartialResponses }}
+                  generators: "{{ generators }}"
+                  webhook: "{{ webhook }}"
+                  enableGenerativeFallback: {{ enableGenerativeFallback }}
+                  setParameterActions: "{{ setParameterActions }}"
+                  tag: "{{ tag }}"
+                  advancedSettings: "{{ advancedSettings }}"
+                  messages: "{{ messages }}"
+                  conditionalCases: "{{ conditionalCases }}"
+                advancedSettings:
+                  loggingSettings: "{{ loggingSettings }}"
+                  audioExportGcsDestination: "{{ audioExportGcsDestination }}"
+                  speechSettings: "{{ speechSettings }}"
+                  dtmfSettings: "{{ dtmfSettings }}"
+              textResponses:
+                - text: "{{ text }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+              status:
+                code: {{ code }}
+                message: "{{ message }}"
+                details: "{{ details }}"
+              diagnosticInfo: "{{ diagnosticInfo }}"
+        environment: "{{ environment }}"
+        name: "{{ name }}"
+    - name: testConfig
+      value:
+        page: "{{ page }}"
+        flow: "{{ flow }}"
+        trackingParameters:
+          - "{{ trackingParameters }}"
+    - name: displayName
+      value: "{{ displayName }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -469,18 +775,18 @@ testConfig
 >
 <TabItem value="projects_locations_agents_test_cases_patch">
 
-Updates the specified test case.
+No description available.
 
 ```sql
 UPDATE google.dialogflow.test_cases
 SET 
-data__name = '{{ name }}',
 data__tags = '{{ tags }}',
-data__displayName = '{{ displayName }}',
 data__notes = '{{ notes }}',
-data__testConfig = '{{ testConfig }}',
+data__name = '{{ name }}',
 data__testCaseConversationTurns = '{{ testCaseConversationTurns }}',
-data__lastTestResult = '{{ lastTestResult }}'
+data__lastTestResult = '{{ lastTestResult }}',
+data__testConfig = '{{ testConfig }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -511,7 +817,7 @@ testConfig;
 >
 <TabItem value="projects_locations_agents_test_cases_batch_delete">
 
-Batch deletes test cases.
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.test_cases
@@ -527,65 +833,18 @@ AND agentsId = '{{ agentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_agents_test_cases_run"
+    defaultValue="projects_locations_agents_test_cases_import"
     values={[
-        { label: 'projects_locations_agents_test_cases_run', value: 'projects_locations_agents_test_cases_run' },
-        { label: 'projects_locations_agents_test_cases_batch_run', value: 'projects_locations_agents_test_cases_batch_run' },
-        { label: 'projects_locations_agents_test_cases_calculate_coverage', value: 'projects_locations_agents_test_cases_calculate_coverage' },
         { label: 'projects_locations_agents_test_cases_import', value: 'projects_locations_agents_test_cases_import' },
-        { label: 'projects_locations_agents_test_cases_export', value: 'projects_locations_agents_test_cases_export' }
+        { label: 'projects_locations_agents_test_cases_export', value: 'projects_locations_agents_test_cases_export' },
+        { label: 'projects_locations_agents_test_cases_calculate_coverage', value: 'projects_locations_agents_test_cases_calculate_coverage' },
+        { label: 'projects_locations_agents_test_cases_run', value: 'projects_locations_agents_test_cases_run' },
+        { label: 'projects_locations_agents_test_cases_batch_run', value: 'projects_locations_agents_test_cases_batch_run' }
     ]}
 >
-<TabItem value="projects_locations_agents_test_cases_run">
-
-Kicks off a test case run. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: RunTestCaseMetadata - `response`: RunTestCaseResponse
-
-```sql
-EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_run 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required, 
-@testCasesId='{{ testCasesId }}' --required 
-@@json=
-'{
-"environment": "{{ environment }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_test_cases_batch_run">
-
-Kicks off a batch run of test cases. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: BatchRunTestCasesMetadata - `response`: BatchRunTestCasesResponse
-
-```sql
-EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_batch_run 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required 
-@@json=
-'{
-"environment": "{{ environment }}", 
-"testCases": "{{ testCases }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_test_cases_calculate_coverage">
-
-Calculates the test coverage for an agent.
-
-```sql
-EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_calculate_coverage 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required, 
-@type='{{ type }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_agents_test_cases_import">
 
-Imports the test cases from a Cloud Storage bucket or a local file. It always creates new test cases and won't overwrite any existing ones. The provided ID in the imported test case is neglected. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportTestCasesMetadata - `response`: ImportTestCasesResponse
+Successful response
 
 ```sql
 EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_import 
@@ -602,7 +861,7 @@ EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_import
 </TabItem>
 <TabItem value="projects_locations_agents_test_cases_export">
 
-Exports the test cases under the agent to a Cloud Storage bucket or a local file. Filter can be applied to export a subset of test cases. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ExportTestCasesMetadata - `response`: ExportTestCasesResponse
+Successful response
 
 ```sql
 EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_export 
@@ -611,9 +870,56 @@ EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_export
 @agentsId='{{ agentsId }}' --required 
 @@json=
 '{
-"gcsUri": "{{ gcsUri }}", 
 "dataFormat": "{{ dataFormat }}", 
-"filter": "{{ filter }}"
+"filter": "{{ filter }}", 
+"gcsUri": "{{ gcsUri }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_test_cases_calculate_coverage">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_calculate_coverage 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required, 
+@type='{{ type }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_test_cases_run">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_run 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required, 
+@testCasesId='{{ testCasesId }}' --required 
+@@json=
+'{
+"environment": "{{ environment }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_test_cases_batch_run">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_batch_run 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required 
+@@json=
+'{
+"environment": "{{ environment }}", 
+"testCases": "{{ testCases }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>network_endpoint_groups</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>network_endpoint_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="network_endpoint_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.network_endpoint_groups" /></td></tr>
 </tbody></table>
@@ -53,12 +54,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
+    <td>Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
@@ -68,27 +69,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="appEngine" /></td>
     <td><code>object</code></td>
-    <td>Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set. (id: NetworkEndpointGroupAppEngine)</td>
+    <td>Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set. (id: NetworkEndpointGroupAppEngine)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudFunction" /></td>
     <td><code>object</code></td>
-    <td>Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set. (id: NetworkEndpointGroupCloudFunction)</td>
+    <td>Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set. (id: NetworkEndpointGroupCloudFunction)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudRun" /></td>
     <td><code>object</code></td>
-    <td>Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set. (id: NetworkEndpointGroupCloudRun)</td>
+    <td>Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set. (id: NetworkEndpointGroupCloudRun)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultPort" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The default port used if the port number is not specified in the network endpoint. Optional. If the network endpoint type is either GCE_VM_IP, SERVERLESS or PRIVATE_SERVICE_CONNECT, this field must not be specified.</td>
+    <td>The default port used if the port number is not specified in the network endpoint.  Optional. If the network endpoint type is either GCE_VM_IP,SERVERLESS or PRIVATE_SERVICE_CONNECT, this field must not be specified.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -98,42 +99,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#networkEndpointGroup for network endpoint group. (default: compute#networkEndpointGroup)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#networkEndpointGroup for network endpoint group. (default: compute#networkEndpointGroup)</td>
 </tr>
 <tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
-    <td>The URL of the network to which all network endpoints in the NEG belong. Uses default project network if unspecified.</td>
+    <td>The URL of the network to which all network endpoints in the NEG belong. For networkEndpointType GCE_VM_IP_PORT,GCE_VM_IP_PORTMAP or NON_GCP_PRIVATE_IP_PORT, if this field is not specified, a default network will be used. This field cannot be set for NEGs with networkEndpointType set toSERVERLESS or PRIVATE_SERVICE_CONNECT and for global NEGs. For all other network endpoint types, this field is required.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkEndpointType" /></td>
     <td><code>string</code></td>
-    <td>Type of network endpoints in this network endpoint group. Can be one of GCE_VM_IP, GCE_VM_IP_PORT, NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT, INTERNET_IP_PORT, SERVERLESS, PRIVATE_SERVICE_CONNECT, GCE_VM_IP_PORTMAP.</td>
+    <td>Type of network endpoints in this network endpoint group. Can be one ofGCE_VM_IP, GCE_VM_IP_PORT,NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT,INTERNET_IP_PORT, SERVERLESS,PRIVATE_SERVICE_CONNECT, GCE_VM_IP_PORTMAP. (GCE_VM_IP, GCE_VM_IP_PORT, GCE_VM_IP_PORTMAP, INTERNET_FQDN_PORT, INTERNET_IP_PORT, NON_GCP_PRIVATE_IP_PORT, PRIVATE_SERVICE_CONNECT, SERVERLESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pscData" /></td>
     <td><code>object</code></td>
-    <td>Optional. Only valid when networkEndpointType is PRIVATE_SERVICE_CONNECT. (id: NetworkEndpointGroupPscData)</td>
+    <td>Optional. Only valid when networkEndpointType isPRIVATE_SERVICE_CONNECT. (id: NetworkEndpointGroupPscData)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pscTargetService" /></td>
     <td><code>string</code></td>
-    <td>The target service url used to set up private service connection to a Google API or a PSC Producer Service Attachment. An example value is: asia-northeast3-cloudkms.googleapis.com. Optional. Only valid when networkEndpointType is PRIVATE_SERVICE_CONNECT.</td>
+    <td>The target service url used to set up private service connection to a Google API or a PSC Producer Service Attachment. An example value is: asia-northeast3-cloudkms.googleapis.com.  Optional. Only valid when networkEndpointType isPRIVATE_SERVICE_CONNECT.</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The URL of the region where the network endpoint group is located.</td>
+    <td>Output only. [Output Only] The URL of theregion where the network endpoint group is located.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="size" /></td>
     <td><code>integer (int32)</code></td>
-    <td>[Output only] Number of network endpoints in the network endpoint group.</td>
+    <td>Output only. [Output only] Number of network endpoints in the network endpoint group.</td>
 </tr>
 <tr>
     <td><CopyableCode code="subnetwork" /></td>
@@ -143,7 +144,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The URL of the zone where the network endpoint group is located.</td>
+    <td>Output only. [Output Only] The URL of thezone where the network endpoint group is located.</td>
 </tr>
 </tbody>
 </table>
@@ -172,17 +173,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The resource type, which is always compute#networkEndpointGroupList for network endpoint group lists. (default: compute#networkEndpointGroupList)</td>
+    <td>Output only. [Output Only] The resource type, which is alwayscompute#networkEndpointGroupList for network endpoint group lists. (default: compute#networkEndpointGroupList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -206,12 +207,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
+    <td>Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
@@ -221,27 +222,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="appEngine" /></td>
     <td><code>object</code></td>
-    <td>Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set. (id: NetworkEndpointGroupAppEngine)</td>
+    <td>Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set. (id: NetworkEndpointGroupAppEngine)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudFunction" /></td>
     <td><code>object</code></td>
-    <td>Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set. (id: NetworkEndpointGroupCloudFunction)</td>
+    <td>Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set. (id: NetworkEndpointGroupCloudFunction)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudRun" /></td>
     <td><code>object</code></td>
-    <td>Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set. (id: NetworkEndpointGroupCloudRun)</td>
+    <td>Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set. (id: NetworkEndpointGroupCloudRun)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultPort" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The default port used if the port number is not specified in the network endpoint. Optional. If the network endpoint type is either GCE_VM_IP, SERVERLESS or PRIVATE_SERVICE_CONNECT, this field must not be specified.</td>
+    <td>The default port used if the port number is not specified in the network endpoint.  Optional. If the network endpoint type is either GCE_VM_IP,SERVERLESS or PRIVATE_SERVICE_CONNECT, this field must not be specified.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -251,42 +252,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#networkEndpointGroup for network endpoint group. (default: compute#networkEndpointGroup)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#networkEndpointGroup for network endpoint group. (default: compute#networkEndpointGroup)</td>
 </tr>
 <tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
-    <td>The URL of the network to which all network endpoints in the NEG belong. Uses default project network if unspecified.</td>
+    <td>The URL of the network to which all network endpoints in the NEG belong. For networkEndpointType GCE_VM_IP_PORT,GCE_VM_IP_PORTMAP or NON_GCP_PRIVATE_IP_PORT, if this field is not specified, a default network will be used. This field cannot be set for NEGs with networkEndpointType set toSERVERLESS or PRIVATE_SERVICE_CONNECT and for global NEGs. For all other network endpoint types, this field is required.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkEndpointType" /></td>
     <td><code>string</code></td>
-    <td>Type of network endpoints in this network endpoint group. Can be one of GCE_VM_IP, GCE_VM_IP_PORT, NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT, INTERNET_IP_PORT, SERVERLESS, PRIVATE_SERVICE_CONNECT, GCE_VM_IP_PORTMAP.</td>
+    <td>Type of network endpoints in this network endpoint group. Can be one ofGCE_VM_IP, GCE_VM_IP_PORT,NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT,INTERNET_IP_PORT, SERVERLESS,PRIVATE_SERVICE_CONNECT, GCE_VM_IP_PORTMAP. (GCE_VM_IP, GCE_VM_IP_PORT, GCE_VM_IP_PORTMAP, INTERNET_FQDN_PORT, INTERNET_IP_PORT, NON_GCP_PRIVATE_IP_PORT, PRIVATE_SERVICE_CONNECT, SERVERLESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pscData" /></td>
     <td><code>object</code></td>
-    <td>Optional. Only valid when networkEndpointType is PRIVATE_SERVICE_CONNECT. (id: NetworkEndpointGroupPscData)</td>
+    <td>Optional. Only valid when networkEndpointType isPRIVATE_SERVICE_CONNECT. (id: NetworkEndpointGroupPscData)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pscTargetService" /></td>
     <td><code>string</code></td>
-    <td>The target service url used to set up private service connection to a Google API or a PSC Producer Service Attachment. An example value is: asia-northeast3-cloudkms.googleapis.com. Optional. Only valid when networkEndpointType is PRIVATE_SERVICE_CONNECT.</td>
+    <td>The target service url used to set up private service connection to a Google API or a PSC Producer Service Attachment. An example value is: asia-northeast3-cloudkms.googleapis.com.  Optional. Only valid when networkEndpointType isPRIVATE_SERVICE_CONNECT.</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The URL of the region where the network endpoint group is located.</td>
+    <td>Output only. [Output Only] The URL of theregion where the network endpoint group is located.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="size" /></td>
     <td><code>integer (int32)</code></td>
-    <td>[Output only] Number of network endpoints in the network endpoint group.</td>
+    <td>Output only. [Output only] Number of network endpoints in the network endpoint group.</td>
 </tr>
 <tr>
     <td><CopyableCode code="subnetwork" /></td>
@@ -296,7 +297,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The URL of the zone where the network endpoint group is located.</td>
+    <td>Output only. [Output Only] The URL of thezone where the network endpoint group is located.</td>
 </tr>
 </tbody>
 </table>
@@ -321,51 +322,51 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
     <td></td>
     <td>Returns the specified network endpoint group.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves the list of regional network endpoint groups available to the specified project in the given region.</td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of network endpoint groups that are located in the<br />specified project and zone.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves the list of network endpoint groups and sorts them by zone. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of network endpoint groups and sorts them by zone.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a network endpoint group in the specified project using the parameters that are included in the request.</td>
+    <td>Creates a network endpoint group in the specified project using the<br />parameters that are included in the request.<br /><br />Note: Use the following APIs to manage network endpoint groups:<br />   <br />   - <br />   To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity<br />   NEGs): zonal<br />   API<br />   - <br />   To manage NEGs with regional scope (such as regional internet NEGs,<br />   serverless NEGs, Private Service Connect NEGs): regional<br />   API<br />   - <br />   To manage NEGs with global scope (such as global internet NEGs):global<br />   API</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Deletes the specified network endpoint group. Note that the NEG cannot be deleted if it is configured as a backend of a backend service.</td>
+    <td>Deletes the specified network endpoint group. The network endpoints in the<br />NEG and the VM instances they belong to are not terminated when the NEG is<br />deleted. Note that the NEG cannot be deleted if there are backend services<br />referencing it.</td>
 </tr>
 <tr>
     <td><a href="#attach_network_endpoints"><CopyableCode code="attach_network_endpoints" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Attach a list of network endpoints to the specified network endpoint group.</td>
 </tr>
 <tr>
     <td><a href="#detach_network_endpoints"><CopyableCode code="detach_network_endpoints" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Detach the network endpoint from the specified network endpoint group.</td>
+    <td>Detach a list of network endpoints from the specified network endpoint<br />group.</td>
 </tr>
 </tbody>
 </table>
@@ -393,8 +394,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
+<tr id="parameter-zone">
+    <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -478,14 +479,14 @@ subnetwork,
 zone
 FROM google.compute.network_endpoint_groups
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
+AND zone = '{{ zone }}' -- required
 AND networkEndpointGroup = '{{ networkEndpointGroup }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of regional network endpoint groups available to the specified project in the given region.
+Retrieves the list of network endpoint groups that are located in the<br />specified project and zone.
 
 ```sql
 SELECT
@@ -497,10 +498,10 @@ selfLink,
 warning
 FROM google.compute.network_endpoint_groups
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
+AND zone = '{{ zone }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -508,7 +509,7 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves the list of network endpoint groups and sorts them by zone. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves the list of network endpoint groups and sorts them by zone.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -533,13 +534,13 @@ subnetwork,
 zone
 FROM google.compute.network_endpoint_groups
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND filter = '{{ filter }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -557,55 +558,41 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates a network endpoint group in the specified project using the parameters that are included in the request.
+Creates a network endpoint group in the specified project using the<br />parameters that are included in the request.<br /><br />Note: Use the following APIs to manage network endpoint groups:<br />   <br />   - <br />   To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity<br />   NEGs): zonal<br />   API<br />   - <br />   To manage NEGs with regional scope (such as regional internet NEGs,<br />   serverless NEGs, Private Service Connect NEGs): regional<br />   API<br />   - <br />   To manage NEGs with global scope (such as global internet NEGs):global<br />   API
 
 ```sql
 INSERT INTO google.compute.network_endpoint_groups (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__selfLink,
-data__name,
-data__description,
-data__networkEndpointType,
-data__size,
-data__region,
-data__zone,
-data__network,
-data__subnetwork,
-data__defaultPort,
-data__annotations,
-data__cloudRun,
-data__appEngine,
 data__cloudFunction,
-data__pscTargetService,
+data__description,
+data__name,
+data__defaultPort,
+data__network,
+data__annotations,
+data__appEngine,
 data__pscData,
+data__networkEndpointType,
+data__subnetwork,
+data__cloudRun,
+data__pscTargetService,
 project,
-region,
+zone,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ selfLink }}',
-'{{ name }}',
-'{{ description }}',
-'{{ networkEndpointType }}',
-{{ size }},
-'{{ region }}',
-'{{ zone }}',
-'{{ network }}',
-'{{ subnetwork }}',
-{{ defaultPort }},
-'{{ annotations }}',
-'{{ cloudRun }}',
-'{{ appEngine }}',
 '{{ cloudFunction }}',
-'{{ pscTargetService }}',
+'{{ description }}',
+'{{ name }}',
+{{ defaultPort }},
+'{{ network }}',
+'{{ annotations }}',
+'{{ appEngine }}',
 '{{ pscData }}',
+'{{ networkEndpointType }}',
+'{{ subnetwork }}',
+'{{ cloudRun }}',
+'{{ pscTargetService }}',
 '{{ project }}',
-'{{ region }}',
+'{{ zone }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -615,6 +602,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -639,116 +627,99 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: network_endpoint_groups
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the network_endpoint_groups resource.
-    - name: region
-      value: string
-      description: Required parameter for the network_endpoint_groups resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#networkEndpointGroup for network endpoint group.
-        
-      default: compute#networkEndpointGroup
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: networkEndpointType
-      value: string
-      description: >
-        Type of network endpoints in this network endpoint group. Can be one of GCE_VM_IP, GCE_VM_IP_PORT, NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT, INTERNET_IP_PORT, SERVERLESS, PRIVATE_SERVICE_CONNECT, GCE_VM_IP_PORTMAP.
-        
-      valid_values: ['GCE_VM_IP', 'GCE_VM_IP_PORT', 'GCE_VM_IP_PORTMAP', 'INTERNET_FQDN_PORT', 'INTERNET_IP_PORT', 'NON_GCP_PRIVATE_IP_PORT', 'PRIVATE_SERVICE_CONNECT', 'SERVERLESS']
-    - name: size
-      value: integer
-      description: >
-        [Output only] Number of network endpoints in the network endpoint group.
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] The URL of the region where the network endpoint group is located.
-        
     - name: zone
-      value: string
-      description: >
-        [Output Only] The URL of the zone where the network endpoint group is located.
-        
-    - name: network
-      value: string
-      description: >
-        The URL of the network to which all network endpoints in the NEG belong. Uses default project network if unspecified.
-        
-    - name: subnetwork
-      value: string
-      description: >
-        Optional URL of the subnetwork to which all network endpoints in the NEG belong.
-        
-    - name: defaultPort
-      value: integer
-      description: >
-        The default port used if the port number is not specified in the network endpoint. Optional. If the network endpoint type is either GCE_VM_IP, SERVERLESS or PRIVATE_SERVICE_CONNECT, this field must not be specified.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Metadata defined as annotations on the network endpoint group.
-        
-    - name: cloudRun
-      value: object
-      description: >
-        Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set.
-        
-    - name: appEngine
-      value: object
-      description: >
-        Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set.
-        
+      value: "{{ zone }}"
+      description: Required parameter for the network_endpoint_groups resource.
     - name: cloudFunction
-      value: object
-      description: >
-        Optional. Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun, appEngine or cloudFunction may be set.
-        
-    - name: pscTargetService
-      value: string
-      description: >
-        The target service url used to set up private service connection to a Google API or a PSC Producer Service Attachment. An example value is: asia-northeast3-cloudkms.googleapis.com. Optional. Only valid when networkEndpointType is PRIVATE_SERVICE_CONNECT.
-        
+      description: |
+        Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set.
+      value:
+        function: "{{ function }}"
+        urlMask: "{{ urlMask }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource; provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: defaultPort
+      value: {{ defaultPort }}
+      description: |
+        The default port used if the port number is not specified in the network
+        endpoint.
+        Optional. If the network endpoint type is either GCE_VM_IP,SERVERLESS or PRIVATE_SERVICE_CONNECT, this
+        field must not be specified.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        The URL of the network to which all network endpoints in the NEG belong.
+        For networkEndpointType GCE_VM_IP_PORT,GCE_VM_IP_PORTMAP or NON_GCP_PRIVATE_IP_PORT,
+        if this field is not specified, a default network will be used.
+        This field cannot be set for NEGs with networkEndpointType set toSERVERLESS or PRIVATE_SERVICE_CONNECT and for
+        global NEGs.
+        For all other network endpoint types, this field is required.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Metadata defined as annotations on the network endpoint group.
+    - name: appEngine
+      description: |
+        Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set.
+      value:
+        urlMask: "{{ urlMask }}"
+        version: "{{ version }}"
+        service: "{{ service }}"
     - name: pscData
-      value: object
-      description: >
-        Optional. Only valid when networkEndpointType is PRIVATE_SERVICE_CONNECT.
-        
+      description: |
+        Optional. Only valid when networkEndpointType isPRIVATE_SERVICE_CONNECT.
+      value:
+        consumerPscAddress: "{{ consumerPscAddress }}"
+        producerPort: {{ producerPort }}
+        pscConnectionId: "{{ pscConnectionId }}"
+        pscConnectionStatus: "{{ pscConnectionStatus }}"
+    - name: networkEndpointType
+      value: "{{ networkEndpointType }}"
+      description: |
+        Type of network endpoints in this network endpoint group. Can be one ofGCE_VM_IP, GCE_VM_IP_PORT,NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT,INTERNET_IP_PORT, SERVERLESS,PRIVATE_SERVICE_CONNECT, GCE_VM_IP_PORTMAP.
+      valid_values: ['GCE_VM_IP', 'GCE_VM_IP_PORT', 'GCE_VM_IP_PORTMAP', 'INTERNET_FQDN_PORT', 'INTERNET_IP_PORT', 'NON_GCP_PRIVATE_IP_PORT', 'PRIVATE_SERVICE_CONNECT', 'SERVERLESS']
+    - name: subnetwork
+      value: "{{ subnetwork }}"
+      description: |
+        Optional URL of the subnetwork to which all network endpoints in the NEG
+        belong.
+    - name: cloudRun
+      description: |
+        Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set.
+      value:
+        service: "{{ service }}"
+        tag: "{{ tag }}"
+        urlMask: "{{ urlMask }}"
+    - name: pscTargetService
+      value: "{{ pscTargetService }}"
+      description: |
+        The target service url used to set up private service connection to
+        a Google API or a PSC Producer Service Attachment.
+        An example value is: asia-northeast3-cloudkms.googleapis.com.
+        Optional. Only valid when networkEndpointType isPRIVATE_SERVICE_CONNECT.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -763,12 +734,12 @@ zone
 >
 <TabItem value="delete">
 
-Deletes the specified network endpoint group. Note that the NEG cannot be deleted if it is configured as a backend of a backend service.
+Deletes the specified network endpoint group. The network endpoints in the<br />NEG and the VM instances they belong to are not terminated when the NEG is<br />deleted. Note that the NEG cannot be deleted if there are backend services<br />referencing it.
 
 ```sql
 DELETE FROM google.compute.network_endpoint_groups
 WHERE project = '{{ project }}' --required
-AND region = '{{ region }}' --required
+AND zone = '{{ zone }}' --required
 AND networkEndpointGroup = '{{ networkEndpointGroup }}' --required
 AND requestId = '{{ requestId }}'
 ;
@@ -793,7 +764,7 @@ Attach a list of network endpoints to the specified network endpoint group.
 ```sql
 EXEC google.compute.network_endpoint_groups.attach_network_endpoints 
 @project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
+@zone='{{ zone }}' --required, 
 @networkEndpointGroup='{{ networkEndpointGroup }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
@@ -805,12 +776,12 @@ EXEC google.compute.network_endpoint_groups.attach_network_endpoints
 </TabItem>
 <TabItem value="detach_network_endpoints">
 
-Detach the network endpoint from the specified network endpoint group.
+Detach a list of network endpoints from the specified network endpoint<br />group.
 
 ```sql
 EXEC google.compute.network_endpoint_groups.detach_network_endpoints 
 @project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
+@zone='{{ zone }}' --required, 
 @networkEndpointGroup='{{ networkEndpointGroup }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=

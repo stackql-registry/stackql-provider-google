@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backends</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backends</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backends" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.apphosting.backends" /></td></tr>
 </tbody></table>
@@ -115,6 +116,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. A field that, if true, indicates that the system is working to make adjustments to the backend during a LRO.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="requestLogsDisabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. A field that, if true, indicates that incoming request logs are disabled for this backend. Incoming request logs are enabled by default.</td>
+</tr>
+<tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
     <td>Required. The name of the service account used for Cloud Build and Cloud Run. Should have the role roles/firebaseapphosting.computeRunner or equivalent permissions.</td>
@@ -122,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="servingLocality" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. Specifies how App Hosting will serve the content for this backend. It will either be contained to a single region (REGIONAL_STRICT) or allowed to use App Hosting's global-replicated serving infrastructure (GLOBAL_ACCESS).</td>
+    <td>Required. Immutable. Specifies how App Hosting will serve the content for this backend. It will either be contained to a single region (REGIONAL_STRICT) or allowed to use App Hosting's global-replicated serving infrastructure (GLOBAL_ACCESS). (SERVING_LOCALITY_UNSPECIFIED, REGIONAL_STRICT, GLOBAL_ACCESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -219,6 +225,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. A field that, if true, indicates that the system is working to make adjustments to the backend during a LRO.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="requestLogsDisabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. A field that, if true, indicates that incoming request logs are disabled for this backend. Incoming request logs are enabled by default.</td>
+</tr>
+<tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
     <td>Required. The name of the service account used for Cloud Build and Cloud Run. Should have the role roles/firebaseapphosting.computeRunner or equivalent permissions.</td>
@@ -226,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="servingLocality" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. Specifies how App Hosting will serve the content for this backend. It will either be contained to a single region (REGIONAL_STRICT) or allowed to use App Hosting's global-replicated serving infrastructure (GLOBAL_ACCESS).</td>
+    <td>Required. Immutable. Specifies how App Hosting will serve the content for this backend. It will either be contained to a single region (REGIONAL_STRICT) or allowed to use App Hosting's global-replicated serving infrastructure (GLOBAL_ACCESS). (SERVING_LOCALITY_UNSPECIFIED, REGIONAL_STRICT, GLOBAL_ACCESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -274,14 +285,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists backends in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-backendId"><code>backendId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-backendId"><code>backendId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new backend in a given project and location.</td>
 </tr>
 <tr>
@@ -295,7 +306,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backendsId"><code>backendsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single backend.</td>
 </tr>
 </tbody>
@@ -420,6 +431,7 @@ labels,
 managedResources,
 mode,
 reconciling,
+requestLogsDisabled,
 serviceAccount,
 servingLocality,
 uid,
@@ -451,6 +463,7 @@ labels,
 managedResources,
 mode,
 reconciling,
+requestLogsDisabled,
 serviceAccount,
 servingLocality,
 uid,
@@ -462,8 +475,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND showDeleted = '{{ showDeleted }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -485,38 +498,40 @@ Creates a new backend in a given project and location.
 
 ```sql
 INSERT INTO firebase.apphosting.backends (
+data__annotations,
 data__name,
 data__displayName,
-data__mode,
-data__servingLocality,
-data__codebase,
-data__serviceAccount,
-data__appId,
 data__environment,
+data__mode,
+data__requestLogsDisabled,
+data__serviceAccount,
+data__codebase,
+data__appId,
 data__labels,
-data__annotations,
+data__servingLocality,
 projectsId,
 locationsId,
+validateOnly,
 backendId,
-requestId,
-validateOnly
+requestId
 )
 SELECT 
+'{{ annotations }}',
 '{{ name }}',
 '{{ displayName }}',
-'{{ mode }}',
-'{{ servingLocality }}',
-'{{ codebase }}',
-'{{ serviceAccount }}',
-'{{ appId }}',
 '{{ environment }}',
+'{{ mode }}',
+{{ requestLogsDisabled }},
+'{{ serviceAccount }}',
+'{{ codebase }}',
+'{{ appId }}',
 '{{ labels }}',
-'{{ annotations }}',
+'{{ servingLocality }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ validateOnly }}',
 '{{ backendId }}',
-'{{ requestId }}',
-'{{ validateOnly }}'
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -528,74 +543,70 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backends
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backends resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backends resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the backend. Format: `projects/{project}/locations/{locationId}/backends/{backendId}`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Human-readable name. 63 character limit.
-        
-    - name: mode
-      value: string
-      description: >
-        Optional. Deprecated: Use `environment` instead.
-        
-    - name: servingLocality
-      value: string
-      description: >
-        Required. Immutable. Specifies how App Hosting will serve the content for this backend. It will either be contained to a single region (REGIONAL_STRICT) or allowed to use App Hosting's global-replicated serving infrastructure (GLOBAL_ACCESS).
-        
-      valid_values: ['SERVING_LOCALITY_UNSPECIFIED', 'REGIONAL_STRICT', 'GLOBAL_ACCESS']
-    - name: codebase
-      value: object
-      description: >
-        Optional. If specified, the connection to an external source repository to watch for event-driven updates to the backend.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Required. The name of the service account used for Cloud Build and Cloud Run. Should have the role roles/firebaseapphosting.computeRunner or equivalent permissions.
-        
-    - name: appId
-      value: string
-      description: >
-        Optional. The [ID of a Web App](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id) associated with the backend.
-        
-    - name: environment
-      value: string
-      description: >
-        Optional. The environment name of the backend, used to load environment variables from environment specific configuration.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Unstructured key value map that can be used to organize and categorize objects.
-        
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.
-        
-    - name: backendId
-      value: string
-    - name: requestId
-      value: string
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the backend. Format: \`projects/{project}/locations/{locationId}/backends/{backendId}\`.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Human-readable name. 63 character limit.
+    - name: environment
+      value: "{{ environment }}"
+      description: |
+        Optional. The environment name of the backend, used to load environment variables from environment specific configuration.
+    - name: mode
+      value: "{{ mode }}"
+      description: |
+        Optional. Deprecated: Use \`environment\` instead.
+    - name: requestLogsDisabled
+      value: {{ requestLogsDisabled }}
+      description: |
+        Optional. A field that, if true, indicates that incoming request logs are disabled for this backend. Incoming request logs are enabled by default.
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Required. The name of the service account used for Cloud Build and Cloud Run. Should have the role roles/firebaseapphosting.computeRunner or equivalent permissions.
+    - name: codebase
+      description: |
+        Optional. If specified, the connection to an external source repository to watch for event-driven updates to the backend.
+      value:
+        repository: "{{ repository }}"
+        rootDirectory: "{{ rootDirectory }}"
+    - name: appId
+      value: "{{ appId }}"
+      description: |
+        Optional. The [ID of a Web App](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id) associated with the backend.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Unstructured key value map that can be used to organize and categorize objects.
+    - name: servingLocality
+      value: "{{ servingLocality }}"
+      description: |
+        Required. Immutable. Specifies how App Hosting will serve the content for this backend. It will either be contained to a single region (REGIONAL_STRICT) or allowed to use App Hosting's global-replicated serving infrastructure (GLOBAL_ACCESS).
+      valid_values: ['SERVING_LOCALITY_UNSPECIFIED', 'REGIONAL_STRICT', 'GLOBAL_ACCESS']
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: backendId
+      value: "{{ backendId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -615,16 +626,17 @@ Updates the information for a single backend.
 ```sql
 UPDATE firebase.apphosting.backends
 SET 
+data__annotations = '{{ annotations }}',
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__mode = '{{ mode }}',
-data__servingLocality = '{{ servingLocality }}',
-data__codebase = '{{ codebase }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__appId = '{{ appId }}',
 data__environment = '{{ environment }}',
+data__mode = '{{ mode }}',
+data__requestLogsDisabled = {{ requestLogsDisabled }},
+data__serviceAccount = '{{ serviceAccount }}',
+data__codebase = '{{ codebase }}',
+data__appId = '{{ appId }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__servingLocality = '{{ servingLocality }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -663,8 +675,8 @@ AND locationsId = '{{ locationsId }}' --required
 AND backendsId = '{{ backendsId }}' --required
 AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

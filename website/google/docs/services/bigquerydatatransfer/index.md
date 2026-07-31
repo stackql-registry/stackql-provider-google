@@ -18,7 +18,7 @@ bigquerydatatransfer service documentation.
 
 :::info[Service Summary]
 
-total resources: __5__  
+total resources: __6__  
 
 :::
 
@@ -31,6 +31,7 @@ total resources: __5__
 </div>
 <div class="providerDocColumn">
 <a href="/services/bigquerydatatransfer/transfer_configs/">transfer_configs</a><br />
-<a href="/services/bigquerydatatransfer/transfer_logs/">transfer_logs</a>
+<a href="/services/bigquerydatatransfer/transfer_logs/">transfer_logs</a><br />
+<a href="/services/bigquerydatatransfer/transfer_resources/">transfer_resources</a>
 </div>
 </div>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>lineage_events</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>lineage_events</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="lineage_events" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datalineage.lineage_events" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processesId"><code>processesId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists lineage events in the given project and location. The list order is not defined.</td>
 </tr>
 <tr>
@@ -258,8 +259,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND processesId = '{{ processesId }}' -- required
 AND runsId = '{{ runsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -281,10 +282,10 @@ Creates a new lineage event.
 
 ```sql
 INSERT INTO google.datalineage.lineage_events (
+data__name,
+data__links,
 data__startTime,
 data__endTime,
-data__links,
-data__name,
 projectsId,
 locationsId,
 processesId,
@@ -292,10 +293,10 @@ runsId,
 requestId
 )
 SELECT 
+'{{ name }}',
+'{{ links }}',
 '{{ startTime }}',
 '{{ endTime }}',
-'{{ links }}',
-'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ processesId }}',
@@ -311,45 +312,51 @@ startTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: lineage_events
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the lineage_events resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the lineage_events resource.
     - name: processesId
-      value: string
+      value: "{{ processesId }}"
       description: Required parameter for the lineage_events resource.
     - name: runsId
-      value: string
+      value: "{{ runsId }}"
       description: Required parameter for the lineage_events resource.
-    - name: startTime
-      value: string
-      description: >
-        Required. The beginning of the transformation which resulted in this lineage event. For streaming scenarios, it should be the beginning of the period from which the lineage is being reported.
-        
-    - name: endTime
-      value: string
-      description: >
-        Optional. The end of the transformation which resulted in this lineage event. For streaming scenarios, it should be the end of the period from which the lineage is being reported.
-        
-    - name: links
-      value: array
-      description: >
-        Optional. List of source-target pairs. Can't contain more than 100 tuples.
-        
     - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the lineage event. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}/lineageEvents/{lineage_event}`. Can be specified or auto-assigned. {lineage_event} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the lineage event. Format: \`projects/{project}/locations/{location}/processes/{process}/runs/{run}/lineageEvents/{lineage_event}\`. Can be specified or auto-assigned. {lineage_event} must be not longer than 200 characters and only contain characters in a set: \`a-zA-Z0-9_-:.\`
+    - name: links
+      description: |
+        Optional. List of source-target pairs. Can't contain more than 100 tuples.
+      value:
+        - source:
+            fullyQualifiedName: "{{ fullyQualifiedName }}"
+            field:
+              - "{{ field }}"
+          target:
+            fullyQualifiedName: "{{ fullyQualifiedName }}"
+            field:
+              - "{{ field }}"
+          dependencyInfo:
+            dependencyType: "{{ dependencyType }}"
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Required. The beginning of the transformation which resulted in this lineage event. For streaming scenarios, it should be the beginning of the period from which the lineage is being reported.
+    - name: endTime
+      value: "{{ endTime }}"
+      description: |
+        Optional. The end of the transformation which resulted in this lineage event. For streaming scenarios, it should be the end of the period from which the lineage is being reported.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

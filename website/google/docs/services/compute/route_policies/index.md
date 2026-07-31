@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>route_policies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>route_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="route_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.route_policies" /></td></tr>
 </tbody></table>
@@ -81,12 +82,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#routersListRoutePolicies for lists of route policies. (default: compute#routersListRoutePolicies)</td>
+    <td>Output only. [Output Only] Type of resource. Alwayscompute#routersListRoutePolicies for lists of route policies. (default: compute#routersListRoutePolicies)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="result" /></td>
@@ -96,12 +97,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="unreachables" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Unreachable resources.</td>
+    <td>Output only. [Output Only] Unreachable resources.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -139,8 +140,8 @@ The following methods are available for this resource:
     <td><a href="#list_route_policies"><CopyableCode code="list_route_policies" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of router route policy subresources available to the specified project.</td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves a list of router route policy subresources available to the<br />specified project.</td>
 </tr>
 <tr>
     <td><a href="#update_route_policy"><CopyableCode code="update_route_policy" /></a></td>
@@ -153,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#delete_route_policy"><CopyableCode code="delete_route_policy" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
-    <td><a href="#parameter-policy"><code>policy</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-policy"><code>policy</code></a></td>
     <td>Deletes Route Policy</td>
 </tr>
 </tbody>
@@ -251,7 +252,7 @@ AND policy = '{{ policy }}'
 </TabItem>
 <TabItem value="list_route_policies">
 
-Retrieves a list of router route policy subresources available to the specified project.
+Retrieves a list of router route policy subresources available to the<br />specified project.
 
 ```sql
 SELECT
@@ -267,10 +268,10 @@ FROM google.compute.route_policies
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND router = '{{ router }}' -- required
-AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -294,10 +295,10 @@ Updates or creates new Route Policy
 UPDATE google.compute.route_policies
 SET 
 data__name = '{{ name }}',
-data__type = '{{ type }}',
+data__description = '{{ description }}',
 data__terms = '{{ terms }}',
-data__fingerprint = '{{ fingerprint }}',
-data__description = '{{ description }}'
+data__type = '{{ type }}',
+data__fingerprint = '{{ fingerprint }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -311,6 +312,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -352,8 +354,8 @@ DELETE FROM google.compute.route_policies
 WHERE project = '{{ project }}' --required
 AND region = '{{ region }}' --required
 AND router = '{{ router }}' --required
-AND policy = '{{ policy }}'
 AND requestId = '{{ requestId }}'
+AND policy = '{{ policy }}'
 ;
 ```
 </TabItem>

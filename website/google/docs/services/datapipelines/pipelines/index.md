@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>pipelines</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>pipelines</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="pipelines" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datapipelines.pipelines" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="pipelineSources" /></td>
     <td><code>object</code></td>
-    <td>Immutable. The sources of the pipeline (for example, Dataplex). The keys and values are set by the corresponding sources during pipeline creation.</td>
+    <td>Immutable. The sources of the pipeline (for example, Knowledge Catalog). The keys and values are set by the corresponding sources during pipeline creation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="scheduleInfo" /></td>
@@ -92,12 +93,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The state of the pipeline. When the pipeline is created, the state is set to 'PIPELINE_STATE_ACTIVE' by default. State changes can be requested by setting the state to stopping, paused, or resuming. State cannot be changed through UpdatePipeline requests.</td>
+    <td>Required. The state of the pipeline. When the pipeline is created, the state is set to 'PIPELINE_STATE_ACTIVE' by default. State changes can be requested by setting the state to stopping, paused, or resuming. State cannot be changed through UpdatePipeline requests. (STATE_UNSPECIFIED, STATE_RESUMING, STATE_ACTIVE, STATE_STOPPING, STATE_ARCHIVED, STATE_PAUSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of the pipeline. This field affects the scheduling of the pipeline and the type of metrics to show for the pipeline.</td>
+    <td>Required. The type of the pipeline. This field affects the scheduling of the pipeline and the type of metrics to show for the pipeline. (PIPELINE_TYPE_UNSPECIFIED, PIPELINE_TYPE_BATCH, PIPELINE_TYPE_STREAMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workload" /></td>
@@ -146,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="pipelineSources" /></td>
     <td><code>object</code></td>
-    <td>Immutable. The sources of the pipeline (for example, Dataplex). The keys and values are set by the corresponding sources during pipeline creation.</td>
+    <td>Immutable. The sources of the pipeline (for example, Knowledge Catalog). The keys and values are set by the corresponding sources during pipeline creation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="scheduleInfo" /></td>
@@ -161,12 +162,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The state of the pipeline. When the pipeline is created, the state is set to 'PIPELINE_STATE_ACTIVE' by default. State changes can be requested by setting the state to stopping, paused, or resuming. State cannot be changed through UpdatePipeline requests.</td>
+    <td>Required. The state of the pipeline. When the pipeline is created, the state is set to 'PIPELINE_STATE_ACTIVE' by default. State changes can be requested by setting the state to stopping, paused, or resuming. State cannot be changed through UpdatePipeline requests. (STATE_UNSPECIFIED, STATE_RESUMING, STATE_ACTIVE, STATE_STOPPING, STATE_ARCHIVED, STATE_PAUSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of the pipeline. This field affects the scheduling of the pipeline and the type of metrics to show for the pipeline.</td>
+    <td>Required. The type of the pipeline. This field affects the scheduling of the pipeline and the type of metrics to show for the pipeline. (PIPELINE_TYPE_UNSPECIFIED, PIPELINE_TYPE_BATCH, PIPELINE_TYPE_STREAMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workload" /></td>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists pipelines. Returns a "FORBIDDEN" error if the caller doesn't have permission to access it.</td>
 </tr>
 <tr>
@@ -349,9 +350,9 @@ workload
 FROM google.datapipelines.pipelines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -373,26 +374,26 @@ Creates a pipeline. For a batch pipeline, you can pass scheduler information. Da
 
 ```sql
 INSERT INTO google.datapipelines.pipelines (
-data__name,
-data__displayName,
-data__type,
 data__state,
+data__type,
+data__pipelineSources,
+data__name,
 data__workload,
+data__displayName,
 data__scheduleInfo,
 data__schedulerServiceAccountEmail,
-data__pipelineSources,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ type }}',
 '{{ state }}',
+'{{ type }}',
+'{{ pipelineSources }}',
+'{{ name }}',
 '{{ workload }}',
+'{{ displayName }}',
 '{{ scheduleInfo }}',
 '{{ schedulerServiceAccountEmail }}',
-'{{ pipelineSources }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -412,59 +413,111 @@ workload
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: pipelines
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the pipelines resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the pipelines resource.
-    - name: name
-      value: string
-      description: >
-        The pipeline name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`. * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), and periods (.). For more information, see [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects). * `LOCATION_ID` is the canonical ID for the pipeline's location. The list of available locations can be obtained by calling `google.cloud.location.Locations.ListLocations`. Note that the Data Pipelines service is not available in all regions. It depends on Cloud Scheduler, an App Engine application, so it's only available in [App Engine regions](https://cloud.google.com/about/locations#region). * `PIPELINE_ID` is the ID of the pipeline. Must be unique for the selected project and location.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the pipeline. It can contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), and underscores (_).
-        
-    - name: type
-      value: string
-      description: >
-        Required. The type of the pipeline. This field affects the scheduling of the pipeline and the type of metrics to show for the pipeline.
-        
-      valid_values: ['PIPELINE_TYPE_UNSPECIFIED', 'PIPELINE_TYPE_BATCH', 'PIPELINE_TYPE_STREAMING']
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         Required. The state of the pipeline. When the pipeline is created, the state is set to 'PIPELINE_STATE_ACTIVE' by default. State changes can be requested by setting the state to stopping, paused, or resuming. State cannot be changed through UpdatePipeline requests.
-        
       valid_values: ['STATE_UNSPECIFIED', 'STATE_RESUMING', 'STATE_ACTIVE', 'STATE_STOPPING', 'STATE_ARCHIVED', 'STATE_PAUSED']
-    - name: workload
-      value: object
-      description: >
-        Workload information for creating new jobs.
-        
-    - name: scheduleInfo
-      value: object
-      description: >
-        Internal scheduling information for a pipeline. If this information is provided, periodic jobs will be created per the schedule. If not, users are responsible for creating jobs externally.
-        
-    - name: schedulerServiceAccountEmail
-      value: string
-      description: >
-        Optional. A service account email to be used with the Cloud Scheduler job. If not specified, the default compute engine service account will be used.
-        
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The type of the pipeline. This field affects the scheduling of the pipeline and the type of metrics to show for the pipeline.
+      valid_values: ['PIPELINE_TYPE_UNSPECIFIED', 'PIPELINE_TYPE_BATCH', 'PIPELINE_TYPE_STREAMING']
     - name: pipelineSources
-      value: object
-      description: >
-        Immutable. The sources of the pipeline (for example, Dataplex). The keys and values are set by the corresponding sources during pipeline creation.
-        
-```
+      value: "{{ pipelineSources }}"
+      description: |
+        Immutable. The sources of the pipeline (for example, Knowledge Catalog). The keys and values are set by the corresponding sources during pipeline creation.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The pipeline name. For example: \`projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID\`. * \`PROJECT_ID\` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), and periods (.). For more information, see [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects). * \`LOCATION_ID\` is the canonical ID for the pipeline's location. The list of available locations can be obtained by calling \`google.cloud.location.Locations.ListLocations\`. Note that the Data Pipelines service is not available in all regions. It depends on Cloud Scheduler, an App Engine application, so it's only available in [App Engine regions](https://cloud.google.com/about/locations#region). * \`PIPELINE_ID\` is the ID of the pipeline. Must be unique for the selected project and location.
+    - name: workload
+      description: |
+        Workload information for creating new jobs.
+      value:
+        dataflowLaunchTemplateRequest:
+          launchParameters:
+            parameters: "{{ parameters }}"
+            environment:
+              zone: "{{ zone }}"
+              workerZone: "{{ workerZone }}"
+              numWorkers: {{ numWorkers }}
+              tempLocation: "{{ tempLocation }}"
+              workerRegion: "{{ workerRegion }}"
+              enableStreamingEngine: {{ enableStreamingEngine }}
+              bypassTempDirValidation: {{ bypassTempDirValidation }}
+              subnetwork: "{{ subnetwork }}"
+              serviceAccountEmail: "{{ serviceAccountEmail }}"
+              additionalExperiments:
+                - "{{ additionalExperiments }}"
+              maxWorkers: {{ maxWorkers }}
+              additionalUserLabels: "{{ additionalUserLabels }}"
+              kmsKeyName: "{{ kmsKeyName }}"
+              machineType: "{{ machineType }}"
+              ipConfiguration: "{{ ipConfiguration }}"
+              network: "{{ network }}"
+            jobName: "{{ jobName }}"
+            update: {{ update }}
+            transformNameMapping: "{{ transformNameMapping }}"
+          location: "{{ location }}"
+          gcsPath: "{{ gcsPath }}"
+          projectId: "{{ projectId }}"
+          validateOnly: {{ validateOnly }}
+        dataflowFlexTemplateRequest:
+          projectId: "{{ projectId }}"
+          validateOnly: {{ validateOnly }}
+          launchParameter:
+            jobName: "{{ jobName }}"
+            containerSpecGcsPath: "{{ containerSpecGcsPath }}"
+            update: {{ update }}
+            transformNameMappings: "{{ transformNameMappings }}"
+            parameters: "{{ parameters }}"
+            launchOptions: "{{ launchOptions }}"
+            environment:
+              flexrsGoal: "{{ flexrsGoal }}"
+              serviceAccountEmail: "{{ serviceAccountEmail }}"
+              additionalExperiments:
+                - "{{ additionalExperiments }}"
+              subnetwork: "{{ subnetwork }}"
+              maxWorkers: {{ maxWorkers }}
+              machineType: "{{ machineType }}"
+              ipConfiguration: "{{ ipConfiguration }}"
+              network: "{{ network }}"
+              additionalUserLabels: "{{ additionalUserLabels }}"
+              kmsKeyName: "{{ kmsKeyName }}"
+              zone: "{{ zone }}"
+              workerZone: "{{ workerZone }}"
+              numWorkers: {{ numWorkers }}
+              tempLocation: "{{ tempLocation }}"
+              workerRegion: "{{ workerRegion }}"
+              enableStreamingEngine: {{ enableStreamingEngine }}
+          location: "{{ location }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the pipeline. It can contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), and underscores (_).
+    - name: scheduleInfo
+      description: |
+        Internal scheduling information for a pipeline. If this information is provided, periodic jobs will be created per the schedule. If not, users are responsible for creating jobs externally.
+      value:
+        timeZone: "{{ timeZone }}"
+        schedule: "{{ schedule }}"
+        nextJobTime: "{{ nextJobTime }}"
+    - name: schedulerServiceAccountEmail
+      value: "{{ schedulerServiceAccountEmail }}"
+      description: |
+        Optional. A service account email to be used with the Cloud Scheduler job. If not specified, the default compute engine service account will be used.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -484,14 +537,14 @@ Updates a pipeline. If successful, the updated Pipeline is returned. Returns `NO
 ```sql
 UPDATE google.datapipelines.pipelines
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__type = '{{ type }}',
 data__state = '{{ state }}',
+data__type = '{{ type }}',
+data__pipelineSources = '{{ pipelineSources }}',
+data__name = '{{ name }}',
 data__workload = '{{ workload }}',
+data__displayName = '{{ displayName }}',
 data__scheduleInfo = '{{ scheduleInfo }}',
-data__schedulerServiceAccountEmail = '{{ schedulerServiceAccountEmail }}',
-data__pipelineSources = '{{ pipelineSources }}'
+data__schedulerServiceAccountEmail = '{{ schedulerServiceAccountEmail }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

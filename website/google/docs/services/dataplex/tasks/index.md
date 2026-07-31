@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tasks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tasks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tasks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.tasks" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the task.</td>
+    <td>Output only. Current state of the task. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="triggerSpec" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the task.</td>
+    <td>Output only. Current state of the task. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="triggerSpec" /></td>
@@ -224,14 +225,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_tasks_list"><CopyableCode code="projects_locations_lakes_tasks_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists tasks under the given lake.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_lakes_tasks_create"><CopyableCode code="projects_locations_lakes_tasks_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-taskId"><code>taskId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-taskId"><code>taskId</code></a></td>
     <td>Creates a task resource within a lake.</td>
 </tr>
 <tr>
@@ -388,9 +389,9 @@ FROM google.dataplex.tasks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -413,32 +414,32 @@ Creates a task resource within a lake.
 
 ```sql
 INSERT INTO google.dataplex.tasks (
-data__description,
-data__displayName,
-data__labels,
-data__triggerSpec,
-data__executionSpec,
 data__spark,
+data__executionSpec,
+data__displayName,
+data__description,
+data__triggerSpec,
 data__notebook,
+data__labels,
 projectsId,
 locationsId,
 lakesId,
-taskId,
-validateOnly
+validateOnly,
+taskId
 )
 SELECT 
-'{{ description }}',
-'{{ displayName }}',
-'{{ labels }}',
-'{{ triggerSpec }}',
-'{{ executionSpec }}',
 '{{ spark }}',
+'{{ executionSpec }}',
+'{{ displayName }}',
+'{{ description }}',
+'{{ triggerSpec }}',
 '{{ notebook }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakesId }}',
-'{{ taskId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ taskId }}'
 RETURNING
 name,
 done,
@@ -450,59 +451,108 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tasks
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tasks resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tasks resource.
     - name: lakesId
-      value: string
+      value: "{{ lakesId }}"
       description: Required parameter for the tasks resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the task.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly display name.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels for the task.
-        
-    - name: triggerSpec
-      value: object
-      description: >
-        Required. Spec related to how often and when a task should be triggered.
-        
-    - name: executionSpec
-      value: object
-      description: >
-        Required. Spec related to how a task is executed.
-        
     - name: spark
-      value: object
-      description: >
+      description: |
         Config related to running custom Spark tasks.
-        
+      value:
+        fileUris:
+          - "{{ fileUris }}"
+        sqlScript: "{{ sqlScript }}"
+        infrastructureSpec:
+          containerImage:
+            pythonPackages:
+              - "{{ pythonPackages }}"
+            properties: "{{ properties }}"
+            image: "{{ image }}"
+            javaJars:
+              - "{{ javaJars }}"
+          batch:
+            executorsCount: {{ executorsCount }}
+            maxExecutorsCount: {{ maxExecutorsCount }}
+          vpcNetwork:
+            subNetwork: "{{ subNetwork }}"
+            networkTags:
+              - "{{ networkTags }}"
+            network: "{{ network }}"
+        mainJarFileUri: "{{ mainJarFileUri }}"
+        mainClass: "{{ mainClass }}"
+        sqlScriptFile: "{{ sqlScriptFile }}"
+        archiveUris:
+          - "{{ archiveUris }}"
+        pythonScriptFile: "{{ pythonScriptFile }}"
+    - name: executionSpec
+      description: |
+        Required. Spec related to how a task is executed.
+      value:
+        args: "{{ args }}"
+        maxJobExecutionLifetime: "{{ maxJobExecutionLifetime }}"
+        project: "{{ project }}"
+        kmsKey: "{{ kmsKey }}"
+        serviceAccount: "{{ serviceAccount }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the task.
+    - name: triggerSpec
+      description: |
+        Required. Spec related to how often and when a task should be triggered.
+      value:
+        type: "{{ type }}"
+        startTime: "{{ startTime }}"
+        disabled: {{ disabled }}
+        maxRetries: {{ maxRetries }}
+        schedule: "{{ schedule }}"
     - name: notebook
-      value: object
-      description: >
+      description: |
         Config related to running scheduled Notebooks.
-        
-    - name: taskId
-      value: string
+      value:
+        notebook: "{{ notebook }}"
+        fileUris:
+          - "{{ fileUris }}"
+        archiveUris:
+          - "{{ archiveUris }}"
+        infrastructureSpec:
+          containerImage:
+            pythonPackages:
+              - "{{ pythonPackages }}"
+            properties: "{{ properties }}"
+            image: "{{ image }}"
+            javaJars:
+              - "{{ javaJars }}"
+          batch:
+            executorsCount: {{ executorsCount }}
+            maxExecutorsCount: {{ maxExecutorsCount }}
+          vpcNetwork:
+            subNetwork: "{{ subNetwork }}"
+            networkTags:
+              - "{{ networkTags }}"
+            network: "{{ network }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the task.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: taskId
+      value: "{{ taskId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -522,13 +572,13 @@ Update the task resource.
 ```sql
 UPDATE google.dataplex.tasks
 SET 
-data__description = '{{ description }}',
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
-data__triggerSpec = '{{ triggerSpec }}',
-data__executionSpec = '{{ executionSpec }}',
 data__spark = '{{ spark }}',
-data__notebook = '{{ notebook }}'
+data__executionSpec = '{{ executionSpec }}',
+data__displayName = '{{ displayName }}',
+data__description = '{{ description }}',
+data__triggerSpec = '{{ triggerSpec }}',
+data__notebook = '{{ notebook }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>identity_mapping_stores</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>identity_mapping_stores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="identity_mapping_stores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.identity_mapping_stores" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Output only. CMEK-related information for the Identity Mapping Store. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKeyName" /></td>
@@ -86,7 +87,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Output only. CMEK-related information for the Identity Mapping Store. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKeyName" /></td>
@@ -131,7 +132,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_identity_mapping_stores_create"><CopyableCode code="projects_locations_identity_mapping_stores_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-identityMappingStoreId"><code>identityMappingStoreId</code></a>, <a href="#parameter-disableCmek"><code>disableCmek</code></a>, <a href="#parameter-cmekConfigName"><code>cmekConfigName</code></a></td>
+    <td><a href="#parameter-identityMappingStoreId"><code>identityMappingStoreId</code></a>, <a href="#parameter-cmekConfigName"><code>cmekConfigName</code></a>, <a href="#parameter-disableCmek"><code>disableCmek</code></a></td>
     <td>Creates a new Identity Mapping Store.</td>
 </tr>
 <tr>
@@ -274,22 +275,22 @@ Creates a new Identity Mapping Store.
 
 ```sql
 INSERT INTO google.discoveryengine.identity_mapping_stores (
-data__name,
 data__kmsKeyName,
+data__name,
 projectsId,
 locationsId,
 identityMappingStoreId,
-disableCmek,
-cmekConfigName
+cmekConfigName,
+disableCmek
 )
 SELECT 
-'{{ name }}',
 '{{ kmsKeyName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ identityMappingStoreId }}',
-'{{ disableCmek }}',
-'{{ cmekConfigName }}'
+'{{ cmekConfigName }}',
+'{{ disableCmek }}'
 RETURNING
 name,
 cmekConfig,
@@ -299,33 +300,31 @@ kmsKeyName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: identity_mapping_stores
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the identity_mapping_stores resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the identity_mapping_stores resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The full resource name of the identity mapping store. Format: `projects/{project}/locations/{location}/identityMappingStores/{identity_mapping_store}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
-        
     - name: kmsKeyName
-      value: string
-      description: >
+      value: "{{ kmsKeyName }}"
+      description: |
         Input only. The KMS key to be used to protect this Identity Mapping Store at creation time. Must be set for requests that need to comply with CMEK Org Policy protections. If this field is set and processed successfully, the Identity Mapping Store will be protected by the KMS key, as indicated in the cmek_config field.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The full resource name of the identity mapping store. Format: \`projects/{project}/locations/{location}/identityMappingStores/{identity_mapping_store}\`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
     - name: identityMappingStoreId
-      value: string
-    - name: disableCmek
-      value: boolean
+      value: "{{ identityMappingStoreId }}"
     - name: cmekConfigName
-      value: string
-```
+      value: "{{ cmekConfigName }}"
+    - name: disableCmek
+      value: {{ disableCmek }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

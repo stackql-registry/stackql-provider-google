@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>odb_networks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>odb_networks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="odb_networks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.odb_networks" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the ODB Network.</td>
+    <td>Output only. State of the ODB Network. (STATE_UNSPECIFIED, PROVISIONING, AVAILABLE, TERMINATING, FAILED)</td>
 </tr>
 </tbody>
 </table>
@@ -98,41 +99,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The name of the OdbNetwork resource in the following format: projects/&#123;project&#125;/locations/&#123;region&#125;/odbNetworks/&#123;odb_network&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The date and time that the OdbNetwork was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="entitlementId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The ID of the subscription entitlement associated with the OdbNetwork.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gcpOracleZone" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The GCP Oracle zone where OdbNetwork is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels or tags associated with the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="network" /></td>
-    <td><code>string</code></td>
-    <td>Required. The name of the VPC network in the following format: projects/&#123;project&#125;/global/networks/&#123;network&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. State of the ODB Network.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -164,7 +130,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists the ODB Networks in a given project and location.</td>
 </tr>
 <tr>
@@ -280,19 +246,13 @@ Lists the ODB Networks in a given project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-entitlementId,
-gcpOracleZone,
-labels,
-network,
-state
+*
 FROM google.oracledatabase.odb_networks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -315,9 +275,9 @@ Creates a new ODB Network in a given project and location.
 
 ```sql
 INSERT INTO google.oracledatabase.odb_networks (
-data__name,
 data__network,
 data__labels,
+data__name,
 data__gcpOracleZone,
 projectsId,
 locationsId,
@@ -325,9 +285,9 @@ odbNetworkId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ network }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ gcpOracleZone }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -344,41 +304,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: odb_networks
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the odb_networks resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the odb_networks resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the OdbNetwork resource in the following format: projects/{project}/locations/{region}/odbNetworks/{odb_network}
-        
     - name: network
-      value: string
-      description: >
+      value: "{{ network }}"
+      description: |
         Required. The name of the VPC network in the following format: projects/{project}/global/networks/{network}
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels or tags associated with the resource.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the OdbNetwork resource in the following format: projects/{project}/locations/{region}/odbNetworks/{odb_network}
     - name: gcpOracleZone
-      value: string
-      description: >
+      value: "{{ gcpOracleZone }}"
+      description: |
         Optional. The GCP Oracle zone where OdbNetwork is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
-        
     - name: odbNetworkId
-      value: string
+      value: "{{ odbNetworkId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>topics_iam_policies</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>topics_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="topics_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsub.topics_iam_policies" /></td></tr>
 </tbody></table>

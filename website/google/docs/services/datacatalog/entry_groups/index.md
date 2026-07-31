@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entry_groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entry_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entry_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datacatalog.entry_groups" /></td></tr>
 </tbody></table>
@@ -324,39 +325,35 @@ transferredToDataplex
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: entry_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the entry_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the entry_groups resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         A short name to identify the entry group, for example, "analytics data - jan 2011". Default value is an empty string.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Entry group description. Can consist of several sentences or paragraphs that describe the entry group contents. Default value is an empty string.
-        
     - name: transferredToDataplex
-      value: boolean
-      description: >
+      value: {{ transferredToDataplex }}
+      description: |
         Optional. When set to [true], it means DataCatalog EntryGroup was transferred to Dataplex Universal Catalog. It makes EntryGroup and its Entries to be read-only in DataCatalog. However, new Tags on EntryGroup and its Entries can be created. After setting the flag to [true] it cannot be unset.
-        
     - name: entryGroupId
-      value: string
-```
+      value: "{{ entryGroupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

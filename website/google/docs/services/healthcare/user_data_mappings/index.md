@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>user_data_mappings</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>user_data_mappings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="user_data_mappings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.healthcare.user_data_mappings" /></td></tr>
 </tbody></table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the User data mappings in the specified consent store.</td>
 </tr>
 <tr>
@@ -296,9 +297,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND consentStoresId = '{{ consentStoresId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -320,20 +321,20 @@ Creates a new User data mapping in the parent consent store.
 
 ```sql
 INSERT INTO google.healthcare.user_data_mappings (
-data__resourceAttributes,
-data__name,
 data__dataId,
 data__userId,
+data__resourceAttributes,
+data__name,
 projectsId,
 locationsId,
 datasetsId,
 consentStoresId
 )
 SELECT 
-'{{ resourceAttributes }}',
-'{{ name }}',
 '{{ dataId }}',
 '{{ userId }}',
+'{{ resourceAttributes }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -350,43 +351,41 @@ userId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: user_data_mappings
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the user_data_mappings resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the user_data_mappings resource.
     - name: datasetsId
-      value: string
+      value: "{{ datasetsId }}"
       description: Required parameter for the user_data_mappings resource.
     - name: consentStoresId
-      value: string
+      value: "{{ consentStoresId }}"
       description: Required parameter for the user_data_mappings resource.
-    - name: resourceAttributes
-      value: array
-      description: >
-        Attributes of the resource. Only explicitly set attributes are displayed here. Attribute definitions with defaults set implicitly apply to these User data mappings. Attributes listed here must be single valued, that is, exactly one value is specified for the field "values" in each Attribute.
-        
-    - name: name
-      value: string
-      description: >
-        Resource name of the User data mapping, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/userDataMappings/{user_data_mapping_id}`.
-        
     - name: dataId
-      value: string
-      description: >
+      value: "{{ dataId }}"
+      description: |
         Required. A unique identifier for the mapped resource.
-        
     - name: userId
-      value: string
-      description: >
+      value: "{{ userId }}"
+      description: |
         Required. User's UUID provided by the client.
-        
-```
+    - name: resourceAttributes
+      description: |
+        Attributes of the resource. Only explicitly set attributes are displayed here. Attribute definitions with defaults set implicitly apply to these User data mappings. Attributes listed here must be single valued, that is, exactly one value is specified for the field "values" in each Attribute.
+      value:
+        - attributeDefinitionId: "{{ attributeDefinitionId }}"
+          values: "{{ values }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Resource name of the User data mapping, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/userDataMappings/{user_data_mapping_id}\`.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -406,10 +405,10 @@ Updates the specified User data mapping.
 ```sql
 UPDATE google.healthcare.user_data_mappings
 SET 
-data__resourceAttributes = '{{ resourceAttributes }}',
-data__name = '{{ name }}',
 data__dataId = '{{ dataId }}',
-data__userId = '{{ userId }}'
+data__userId = '{{ userId }}',
+data__resourceAttributes = '{{ resourceAttributes }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

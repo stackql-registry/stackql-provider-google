@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>versions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>versions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="versions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigeeregistry.versions" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_versions_list"><CopyableCode code="projects_locations_apis_versions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns matching versions.</td>
 </tr>
 <tr>
@@ -338,8 +339,8 @@ FROM google.apigeeregistry.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 ;
@@ -363,26 +364,26 @@ Creates a specified version.
 
 ```sql
 INSERT INTO google.apigeeregistry.versions (
-data__name,
-data__state,
-data__labels,
-data__annotations,
-data__description,
-data__primarySpec,
 data__displayName,
+data__name,
+data__labels,
+data__state,
+data__annotations,
+data__primarySpec,
+data__description,
 projectsId,
 locationsId,
 apisId,
 apiVersionId
 )
 SELECT 
-'{{ name }}',
-'{{ state }}',
-'{{ labels }}',
-'{{ annotations }}',
-'{{ description }}',
-'{{ primarySpec }}',
 '{{ displayName }}',
+'{{ name }}',
+'{{ labels }}',
+'{{ state }}',
+'{{ annotations }}',
+'{{ primarySpec }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -402,57 +403,50 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: versions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the versions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the versions resource.
     - name: apisId
-      value: string
+      value: "{{ apisId }}"
       description: Required parameter for the versions resource.
-    - name: name
-      value: string
-      description: >
-        Resource name.
-        
-    - name: state
-      value: string
-      description: >
-        A user-definable description of the lifecycle phase of this API version. Format: free-form, but we expect single words that describe API maturity, e.g., "CONCEPT", "DESIGN", "DEVELOPMENT", "STAGING", "PRODUCTION", "DEPRECATED", "RETIRED".
-        
-    - name: labels
-      value: object
-      description: >
-        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `apigeeregistry.googleapis.com/` and cannot be changed.
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
-        
-    - name: description
-      value: string
-      description: >
-        A detailed description.
-        
-    - name: primarySpec
-      value: string
-      description: >
-        The primary spec for this version. Format: projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec}
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Human-meaningful name.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Resource name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \`apigeeregistry.googleapis.com/\` and cannot be changed.
+    - name: state
+      value: "{{ state }}"
+      description: |
+        A user-definable description of the lifecycle phase of this API version. Format: free-form, but we expect single words that describe API maturity, e.g., "CONCEPT", "DESIGN", "DEVELOPMENT", "STAGING", "PRODUCTION", "DEPRECATED", "RETIRED".
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
+    - name: primarySpec
+      value: "{{ primarySpec }}"
+      description: |
+        The primary spec for this version. Format: projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A detailed description.
     - name: apiVersionId
-      value: string
-```
+      value: "{{ apiVersionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -472,13 +466,13 @@ Used to modify a specified version.
 ```sql
 UPDATE google.apigeeregistry.versions
 SET 
+data__displayName = '{{ displayName }}',
 data__name = '{{ name }}',
-data__state = '{{ state }}',
 data__labels = '{{ labels }}',
+data__state = '{{ state }}',
 data__annotations = '{{ annotations }}',
-data__description = '{{ description }}',
 data__primarySpec = '{{ primarySpec }}',
-data__displayName = '{{ displayName }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

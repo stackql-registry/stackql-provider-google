@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>internal_ranges</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>internal_ranges</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="internal_ranges" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.internal_ranges" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the internal range was created.</td>
+    <td>Output only. Time when the internal range was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="peering" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of peering set for this internal range.</td>
+    <td>Optional. The type of peering set for this internal range. (PEERING_UNSPECIFIED, FOR_SELF, FOR_PEER, NOT_SHARED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="prefixLength" /></td>
@@ -122,12 +123,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the internal range was updated.</td>
+    <td>Output only. Time when the internal range was updated.</td>
 </tr>
 <tr>
     <td><CopyableCode code="usage" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of usage set for this InternalRange.</td>
+    <td>Optional. The type of usage set for this InternalRange. (USAGE_UNSPECIFIED, FOR_VPC, EXTERNAL_TO_VPC, FOR_MIGRATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="users" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the internal range was created.</td>
+    <td>Output only. Time when the internal range was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -206,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="peering" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of peering set for this internal range.</td>
+    <td>Optional. The type of peering set for this internal range. (PEERING_UNSPECIFIED, FOR_SELF, FOR_PEER, NOT_SHARED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="prefixLength" /></td>
@@ -221,12 +222,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the internal range was updated.</td>
+    <td>Output only. Time when the internal range was updated.</td>
 </tr>
 <tr>
     <td><CopyableCode code="usage" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of usage set for this InternalRange.</td>
+    <td>Optional. The type of usage set for this InternalRange. (USAGE_UNSPECIFIED, FOR_VPC, EXTERNAL_TO_VPC, FOR_MIGRATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="users" /></td>
@@ -264,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists internal ranges in a given project and location.</td>
 </tr>
 <tr>
@@ -422,10 +423,10 @@ users
 FROM google.networkconnectivity.internal_ranges
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -447,21 +448,19 @@ Creates a new internal range in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.internal_ranges (
-data__network,
-data__createTime,
-data__targetCidrRange,
-data__peering,
-data__labels,
-data__migration,
-data__name,
-data__updateTime,
-data__ipCidrRange,
-data__immutable,
+data__description,
 data__overlaps,
-data__usage,
+data__immutable,
+data__name,
+data__network,
 data__prefixLength,
 data__allocationOptions,
-data__description,
+data__targetCidrRange,
+data__usage,
+data__peering,
+data__ipCidrRange,
+data__labels,
+data__migration,
 data__excludeCidrRanges,
 projectsId,
 locationsId,
@@ -469,21 +468,19 @@ requestId,
 internalRangeId
 )
 SELECT 
-'{{ network }}',
-'{{ createTime }}',
-'{{ targetCidrRange }}',
-'{{ peering }}',
-'{{ labels }}',
-'{{ migration }}',
-'{{ name }}',
-'{{ updateTime }}',
-'{{ ipCidrRange }}',
-{{ immutable }},
+'{{ description }}',
 '{{ overlaps }}',
-'{{ usage }}',
+{{ immutable }},
+'{{ name }}',
+'{{ network }}',
 {{ prefixLength }},
 '{{ allocationOptions }}',
-'{{ description }}',
+'{{ targetCidrRange }}',
+'{{ usage }}',
+'{{ peering }}',
+'{{ ipCidrRange }}',
+'{{ labels }}',
+'{{ migration }}',
 '{{ excludeCidrRanges }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -500,103 +497,86 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: internal_ranges
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the internal_ranges resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the internal_ranges resource.
-    - name: network
-      value: string
-      description: >
-        Immutable. The URL or resource ID of the network in which to reserve the internal range. The network cannot be deleted if there are any reserved internal ranges referring to it. Legacy networks are not supported. For example: https://www.googleapis.com/compute/v1/projects/{project}/locations/global/networks/{network} projects/{project}/locations/global/networks/{network} {network}
-        
-    - name: createTime
-      value: string
-      description: >
-        Time when the internal range was created.
-        
-    - name: targetCidrRange
-      value: array
-      description: >
-        Optional. Can be set to narrow down or pick a different address space while searching for a free range. If not set, defaults to the ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"] address space (for auto-mode networks, the "10.0.0.0/9" range is used instead of "10.0.0.0/8"). This can be used to target the search in other rfc-1918 address spaces like "172.16.0.0/12" and "192.168.0.0/16" or non-rfc-1918 address spaces used in the VPC.
-        
-    - name: peering
-      value: string
-      description: >
-        Optional. The type of peering set for this internal range.
-        
-      valid_values: ['PEERING_UNSPECIFIED', 'FOR_SELF', 'FOR_PEER', 'NOT_SHARED']
-    - name: labels
-      value: object
-      description: >
-        User-defined labels.
-        
-    - name: migration
-      value: object
-      description: >
-        Optional. Must be present if usage is set to FOR_MIGRATION.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of an internal range. Format: projects/{project}/locations/{location}/internalRanges/{internal_range} See: https://google.aip.dev/122#fields-representing-resource-names
-        
-    - name: updateTime
-      value: string
-      description: >
-        Time when the internal range was updated.
-        
-    - name: ipCidrRange
-      value: string
-      description: >
-        Optional. The IP range that this internal range defines. NOTE: IPv6 ranges are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE: For IPv6 Ranges this field is compulsory, i.e. the address range must be specified explicitly.
-        
-    - name: immutable
-      value: boolean
-      description: >
-        Optional. Immutable ranges cannot have their fields modified, except for labels and description.
-        
-    - name: overlaps
-      value: array
-      description: >
-        Optional. Types of resources that are allowed to overlap with the current internal range.
-        
-    - name: usage
-      value: string
-      description: >
-        Optional. The type of usage set for this InternalRange.
-        
-      valid_values: ['USAGE_UNSPECIFIED', 'FOR_VPC', 'EXTERNAL_TO_VPC', 'FOR_MIGRATION']
-    - name: prefixLength
-      value: integer
-      description: >
-        Optional. An alternate to ip_cidr_range. Can be set when trying to create an IPv4 reservation that automatically finds a free range of the given size. If both ip_cidr_range and prefix_length are set, there is an error if the range sizes do not match. Can also be used during updates to change the range size. NOTE: For IPv6 this field only works if ip_cidr_range is set as well, and both fields must match. In other words, with IPv6 this field only works as a redundant parameter.
-        
-    - name: allocationOptions
-      value: object
-      description: >
-        Optional. Range auto-allocation options, may be set only when auto-allocation is selected by not setting ip_cidr_range (and setting prefix_length).
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A description of this resource.
-        
+    - name: overlaps
+      value:
+        - "{{ overlaps }}"
+      description: |
+        Optional. Types of resources that are allowed to overlap with the current internal range.
+    - name: immutable
+      value: {{ immutable }}
+      description: |
+        Optional. Immutable ranges cannot have their fields modified, except for labels and description.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of an internal range. Format: projects/{project}/locations/{location}/internalRanges/{internal_range} See: https://google.aip.dev/122#fields-representing-resource-names
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Immutable. The URL or resource ID of the network in which to reserve the internal range. The network cannot be deleted if there are any reserved internal ranges referring to it. Legacy networks are not supported. For example: https://www.googleapis.com/compute/v1/projects/{project}/locations/global/networks/{network} projects/{project}/locations/global/networks/{network} {network}
+    - name: prefixLength
+      value: {{ prefixLength }}
+      description: |
+        Optional. An alternate to ip_cidr_range. Can be set when trying to create an IPv4 reservation that automatically finds a free range of the given size. If both ip_cidr_range and prefix_length are set, there is an error if the range sizes do not match. Can also be used during updates to change the range size. NOTE: For IPv6 this field only works if ip_cidr_range is set as well, and both fields must match. In other words, with IPv6 this field only works as a redundant parameter.
+    - name: allocationOptions
+      description: |
+        Optional. Range auto-allocation options, may be set only when auto-allocation is selected by not setting ip_cidr_range (and setting prefix_length).
+      value:
+        allocationStrategy: "{{ allocationStrategy }}"
+        firstAvailableRangesLookupSize: {{ firstAvailableRangesLookupSize }}
+    - name: targetCidrRange
+      value:
+        - "{{ targetCidrRange }}"
+      description: |
+        Optional. Can be set to narrow down or pick a different address space while searching for a free range. If not set, defaults to the ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"] address space (for auto-mode networks, the "10.0.0.0/9" range is used instead of "10.0.0.0/8"). This can be used to target the search in other rfc-1918 address spaces like "172.16.0.0/12" and "192.168.0.0/16" or non-rfc-1918 address spaces used in the VPC.
+    - name: usage
+      value: "{{ usage }}"
+      description: |
+        Optional. The type of usage set for this InternalRange.
+      valid_values: ['USAGE_UNSPECIFIED', 'FOR_VPC', 'EXTERNAL_TO_VPC', 'FOR_MIGRATION']
+    - name: peering
+      value: "{{ peering }}"
+      description: |
+        Optional. The type of peering set for this internal range.
+      valid_values: ['PEERING_UNSPECIFIED', 'FOR_SELF', 'FOR_PEER', 'NOT_SHARED']
+    - name: ipCidrRange
+      value: "{{ ipCidrRange }}"
+      description: |
+        Optional. The IP range that this internal range defines. NOTE: IPv6 ranges are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE: For IPv6 Ranges this field is compulsory, i.e. the address range must be specified explicitly.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels.
+    - name: migration
+      description: |
+        Optional. Must be present if usage is set to FOR_MIGRATION.
+      value:
+        source: "{{ source }}"
+        target: "{{ target }}"
     - name: excludeCidrRanges
-      value: array
-      description: >
+      value:
+        - "{{ excludeCidrRanges }}"
+      description: |
         Optional. ExcludeCidrRanges flag. Specifies a set of CIDR blocks that allows exclusion of particular CIDR ranges from the auto-allocation process, without having to reserve these blocks
-        
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: internalRangeId
-      value: string
-```
+      value: "{{ internalRangeId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -616,21 +596,19 @@ Updates the parameters of a single internal range.
 ```sql
 UPDATE google.networkconnectivity.internal_ranges
 SET 
-data__network = '{{ network }}',
-data__createTime = '{{ createTime }}',
-data__targetCidrRange = '{{ targetCidrRange }}',
-data__peering = '{{ peering }}',
-data__labels = '{{ labels }}',
-data__migration = '{{ migration }}',
-data__name = '{{ name }}',
-data__updateTime = '{{ updateTime }}',
-data__ipCidrRange = '{{ ipCidrRange }}',
-data__immutable = {{ immutable }},
+data__description = '{{ description }}',
 data__overlaps = '{{ overlaps }}',
-data__usage = '{{ usage }}',
+data__immutable = {{ immutable }},
+data__name = '{{ name }}',
+data__network = '{{ network }}',
 data__prefixLength = {{ prefixLength }},
 data__allocationOptions = '{{ allocationOptions }}',
-data__description = '{{ description }}',
+data__targetCidrRange = '{{ targetCidrRange }}',
+data__usage = '{{ usage }}',
+data__peering = '{{ peering }}',
+data__ipCidrRange = '{{ ipCidrRange }}',
+data__labels = '{{ labels }}',
+data__migration = '{{ migration }}',
 data__excludeCidrRanges = '{{ excludeCidrRanges }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

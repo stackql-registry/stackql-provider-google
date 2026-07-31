@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>capacity_commitments</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>capacity_commitments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="capacity_commitments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigqueryreservation.capacity_commitments" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="edition" /></td>
     <td><code>string</code></td>
-    <td>Optional. Edition of the capacity commitment.</td>
+    <td>Optional. Edition of the capacity commitment. (EDITION_UNSPECIFIED, STANDARD, ENTERPRISE, ENTERPRISE_PLUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="failureStatus" /></td>
@@ -87,12 +88,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="plan" /></td>
     <td><code>string</code></td>
-    <td>Optional. Capacity commitment commitment plan.</td>
+    <td>Optional. Capacity commitment commitment plan. (COMMITMENT_PLAN_UNSPECIFIED, FLEX, FLEX_FLAT_RATE, TRIAL, MONTHLY, MONTHLY_FLAT_RATE, ANNUAL, ANNUAL_FLAT_RATE, THREE_YEAR, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="renewalPlan" /></td>
     <td><code>string</code></td>
-    <td>Optional. The plan this capacity commitment is converted to after commitment_end_time passes. Once the plan is changed, committed period is extended according to commitment plan. Only applicable for ANNUAL and TRIAL commitments.</td>
+    <td>Optional. The plan this capacity commitment is converted to after commitment_end_time passes. Once the plan is changed, committed period is extended according to commitment plan. Only applicable for ANNUAL and TRIAL commitments. (COMMITMENT_PLAN_UNSPECIFIED, FLEX, FLEX_FLAT_RATE, TRIAL, MONTHLY, MONTHLY_FLAT_RATE, ANNUAL, ANNUAL_FLAT_RATE, THREE_YEAR, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="slotCount" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the commitment.</td>
+    <td>Output only. State of the commitment. (STATE_UNSPECIFIED, PENDING, ACTIVE, FAILED)</td>
 </tr>
 </tbody>
 </table>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="edition" /></td>
     <td><code>string</code></td>
-    <td>Optional. Edition of the capacity commitment.</td>
+    <td>Optional. Edition of the capacity commitment. (EDITION_UNSPECIFIED, STANDARD, ENTERPRISE, ENTERPRISE_PLUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="failureStatus" /></td>
@@ -156,12 +157,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="plan" /></td>
     <td><code>string</code></td>
-    <td>Optional. Capacity commitment commitment plan.</td>
+    <td>Optional. Capacity commitment commitment plan. (COMMITMENT_PLAN_UNSPECIFIED, FLEX, FLEX_FLAT_RATE, TRIAL, MONTHLY, MONTHLY_FLAT_RATE, ANNUAL, ANNUAL_FLAT_RATE, THREE_YEAR, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="renewalPlan" /></td>
     <td><code>string</code></td>
-    <td>Optional. The plan this capacity commitment is converted to after commitment_end_time passes. Once the plan is changed, committed period is extended according to commitment plan. Only applicable for ANNUAL and TRIAL commitments.</td>
+    <td>Optional. The plan this capacity commitment is converted to after commitment_end_time passes. Once the plan is changed, committed period is extended according to commitment plan. Only applicable for ANNUAL and TRIAL commitments. (COMMITMENT_PLAN_UNSPECIFIED, FLEX, FLEX_FLAT_RATE, TRIAL, MONTHLY, MONTHLY_FLAT_RATE, ANNUAL, ANNUAL_FLAT_RATE, THREE_YEAR, NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="slotCount" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the commitment.</td>
+    <td>Output only. State of the commitment. (STATE_UNSPECIFIED, PENDING, ACTIVE, FAILED)</td>
 </tr>
 </tbody>
 </table>
@@ -211,7 +212,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-enforceSingleAdminProjectPerOrg"><code>enforceSingleAdminProjectPerOrg</code></a>, <a href="#parameter-capacityCommitmentId"><code>capacityCommitmentId</code></a></td>
+    <td><a href="#parameter-capacityCommitmentId"><code>capacityCommitmentId</code></a>, <a href="#parameter-enforceSingleAdminProjectPerOrg"><code>enforceSingleAdminProjectPerOrg</code></a></td>
     <td>Creates a new capacity commitment resource.</td>
 </tr>
 <tr>
@@ -229,18 +230,18 @@ The following methods are available for this resource:
     <td>Deletes a capacity commitment. Attempting to delete capacity commitment before its commitment_end_time will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.</td>
 </tr>
 <tr>
-    <td><a href="#merge"><CopyableCode code="merge" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Merges capacity commitments of the same plan into a single commitment. The resulting capacity commitment has the greater commitment_end_time out of the to-be-merged capacity commitments. Attempting to merge capacity commitments of different plan will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.</td>
-</tr>
-<tr>
     <td><a href="#split"><CopyableCode code="split" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-capacityCommitmentsId"><code>capacityCommitmentsId</code></a></td>
     <td></td>
     <td>Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you delete the first one after the commitment end time passes.</td>
+</tr>
+<tr>
+    <td><a href="#merge"><CopyableCode code="merge" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Merges capacity commitments of the same plan into a single commitment. The resulting capacity commitment has the greater commitment_end_time out of the to-be-merged capacity commitments. Attempting to merge capacity commitments of different plan will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.</td>
 </tr>
 </tbody>
 </table>
@@ -382,26 +383,26 @@ Creates a new capacity commitment resource.
 
 ```sql
 INSERT INTO google.bigqueryreservation.capacity_commitments (
-data__slotCount,
-data__multiRegionAuxiliary,
-data__plan,
-data__edition,
 data__renewalPlan,
+data__edition,
+data__slotCount,
+data__plan,
+data__multiRegionAuxiliary,
 projectsId,
 locationsId,
-enforceSingleAdminProjectPerOrg,
-capacityCommitmentId
+capacityCommitmentId,
+enforceSingleAdminProjectPerOrg
 )
 SELECT 
-'{{ slotCount }}',
-{{ multiRegionAuxiliary }},
-'{{ plan }}',
-'{{ edition }}',
 '{{ renewalPlan }}',
+'{{ edition }}',
+'{{ slotCount }}',
+'{{ plan }}',
+{{ multiRegionAuxiliary }},
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ enforceSingleAdminProjectPerOrg }}',
-'{{ capacityCommitmentId }}'
+'{{ capacityCommitmentId }}',
+'{{ enforceSingleAdminProjectPerOrg }}'
 RETURNING
 name,
 commitmentEndTime,
@@ -419,49 +420,44 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: capacity_commitments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the capacity_commitments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the capacity_commitments resource.
-    - name: slotCount
-      value: string
-      description: >
-        Optional. Number of slots in this commitment.
-        
-    - name: multiRegionAuxiliary
-      value: boolean
-      description: >
-        Applicable only for commitments located within one of the BigQuery multi-regions (US or EU). If set to true, this commitment is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this commitment is placed in the organization's default region. NOTE: this is a preview feature. Project must be allow-listed in order to set this field.
-        
-    - name: plan
-      value: string
-      description: >
-        Optional. Capacity commitment commitment plan.
-        
+    - name: renewalPlan
+      value: "{{ renewalPlan }}"
+      description: |
+        Optional. The plan this capacity commitment is converted to after commitment_end_time passes. Once the plan is changed, committed period is extended according to commitment plan. Only applicable for ANNUAL and TRIAL commitments.
       valid_values: ['COMMITMENT_PLAN_UNSPECIFIED', 'FLEX', 'FLEX_FLAT_RATE', 'TRIAL', 'MONTHLY', 'MONTHLY_FLAT_RATE', 'ANNUAL', 'ANNUAL_FLAT_RATE', 'THREE_YEAR', 'NONE']
     - name: edition
-      value: string
-      description: >
+      value: "{{ edition }}"
+      description: |
         Optional. Edition of the capacity commitment.
-        
       valid_values: ['EDITION_UNSPECIFIED', 'STANDARD', 'ENTERPRISE', 'ENTERPRISE_PLUS']
-    - name: renewalPlan
-      value: string
-      description: >
-        Optional. The plan this capacity commitment is converted to after commitment_end_time passes. Once the plan is changed, committed period is extended according to commitment plan. Only applicable for ANNUAL and TRIAL commitments.
-        
+    - name: slotCount
+      value: "{{ slotCount }}"
+      description: |
+        Optional. Number of slots in this commitment.
+    - name: plan
+      value: "{{ plan }}"
+      description: |
+        Optional. Capacity commitment commitment plan.
       valid_values: ['COMMITMENT_PLAN_UNSPECIFIED', 'FLEX', 'FLEX_FLAT_RATE', 'TRIAL', 'MONTHLY', 'MONTHLY_FLAT_RATE', 'ANNUAL', 'ANNUAL_FLAT_RATE', 'THREE_YEAR', 'NONE']
-    - name: enforceSingleAdminProjectPerOrg
-      value: boolean
+    - name: multiRegionAuxiliary
+      value: {{ multiRegionAuxiliary }}
+      description: |
+        Applicable only for commitments located within one of the BigQuery multi-regions (US or EU). If set to true, this commitment is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this commitment is placed in the organization's default region. NOTE: this is a preview feature. Project must be allow-listed in order to set this field.
     - name: capacityCommitmentId
-      value: string
-```
+      value: "{{ capacityCommitmentId }}"
+    - name: enforceSingleAdminProjectPerOrg
+      value: {{ enforceSingleAdminProjectPerOrg }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -481,11 +477,11 @@ Updates an existing capacity commitment. Only `plan` and `renewal_plan` fields c
 ```sql
 UPDATE google.bigqueryreservation.capacity_commitments
 SET 
-data__slotCount = '{{ slotCount }}',
-data__multiRegionAuxiliary = {{ multiRegionAuxiliary }},
-data__plan = '{{ plan }}',
+data__renewalPlan = '{{ renewalPlan }}',
 data__edition = '{{ edition }}',
-data__renewalPlan = '{{ renewalPlan }}'
+data__slotCount = '{{ slotCount }}',
+data__plan = '{{ plan }}',
+data__multiRegionAuxiliary = {{ multiRegionAuxiliary }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -535,28 +531,12 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="merge"
+    defaultValue="split"
     values={[
-        { label: 'merge', value: 'merge' },
-        { label: 'split', value: 'split' }
+        { label: 'split', value: 'split' },
+        { label: 'merge', value: 'merge' }
     ]}
 >
-<TabItem value="merge">
-
-Merges capacity commitments of the same plan into a single commitment. The resulting capacity commitment has the greater commitment_end_time out of the to-be-merged capacity commitments. Attempting to merge capacity commitments of different plan will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.
-
-```sql
-EXEC google.bigqueryreservation.capacity_commitments.merge 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"capacityCommitmentId": "{{ capacityCommitmentId }}", 
-"capacityCommitmentIds": "{{ capacityCommitmentIds }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="split">
 
 Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you delete the first one after the commitment end time passes.
@@ -569,6 +549,22 @@ EXEC google.bigqueryreservation.capacity_commitments.split
 @@json=
 '{
 "slotCount": "{{ slotCount }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="merge">
+
+Merges capacity commitments of the same plan into a single commitment. The resulting capacity commitment has the greater commitment_end_time out of the to-be-merged capacity commitments. Attempting to merge capacity commitments of different plan will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.
+
+```sql
+EXEC google.bigqueryreservation.capacity_commitments.merge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"capacityCommitmentId": "{{ capacityCommitmentId }}", 
+"capacityCommitmentIds": "{{ capacityCommitmentIds }}"
 }'
 ;
 ```

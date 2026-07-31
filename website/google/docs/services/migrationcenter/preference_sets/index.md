@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>preference_sets</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>preference_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="preference_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.migrationcenter.preference_sets" /></td></tr>
 </tbody></table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all the preference sets in a given project and location.</td>
 </tr>
 <tr>
@@ -285,9 +286,9 @@ virtualMachinePreferences
 FROM google.migrationcenter.preference_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -310,8 +311,8 @@ Creates a new preference set in a given project and location.
 ```sql
 INSERT INTO google.migrationcenter.preference_sets (
 data__displayName,
-data__virtualMachinePreferences,
 data__description,
+data__virtualMachinePreferences,
 projectsId,
 locationsId,
 preferenceSetId,
@@ -319,8 +320,8 @@ requestId
 )
 SELECT 
 '{{ displayName }}',
-'{{ virtualMachinePreferences }}',
 '{{ description }}',
+'{{ virtualMachinePreferences }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ preferenceSetId }}',
@@ -336,36 +337,56 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: preference_sets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the preference_sets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the preference_sets resource.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         User-friendly display name. Maximum length is 63 characters.
-        
-    - name: virtualMachinePreferences
-      value: object
-      description: >
-        Optional. A set of preferences that applies to all virtual machines in the context.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         A description of the preference set.
-        
+    - name: virtualMachinePreferences
+      description: |
+        Optional. A set of preferences that applies to all virtual machines in the context.
+      value:
+        soleTenancyPreferences:
+          nodeTypes:
+            - nodeName: "{{ nodeName }}"
+          hostMaintenancePolicy: "{{ hostMaintenancePolicy }}"
+          commitmentPlan: "{{ commitmentPlan }}"
+          cpuOvercommitRatio: {{ cpuOvercommitRatio }}
+        computeEnginePreferences:
+          persistentDiskType: "{{ persistentDiskType }}"
+          machinePreferences:
+            allowedMachineSeries:
+              - code: "{{ code }}"
+          licenseType: "{{ licenseType }}"
+        targetProduct: "{{ targetProduct }}"
+        commitmentPlan: "{{ commitmentPlan }}"
+        vmwareEnginePreferences:
+          storageDeduplicationCompressionRatio: {{ storageDeduplicationCompressionRatio }}
+          memoryOvercommitRatio: {{ memoryOvercommitRatio }}
+          commitmentPlan: "{{ commitmentPlan }}"
+          cpuOvercommitRatio: {{ cpuOvercommitRatio }}
+        regionPreferences:
+          preferredRegions:
+            - "{{ preferredRegions }}"
+        sizingOptimizationStrategy: "{{ sizingOptimizationStrategy }}"
     - name: preferenceSetId
-      value: string
+      value: "{{ preferenceSetId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -386,8 +407,8 @@ Updates the parameters of a preference set.
 UPDATE google.migrationcenter.preference_sets
 SET 
 data__displayName = '{{ displayName }}',
-data__virtualMachinePreferences = '{{ virtualMachinePreferences }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__virtualMachinePreferences = '{{ virtualMachinePreferences }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>managed_identities</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>managed_identities</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="managed_identities" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.managed_identities" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the managed identity.</td>
+    <td>Identifier. The resource name of the managed identity.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the managed identity.</td>
+    <td>Output only. The state of the managed identity. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the managed identity.</td>
+    <td>Identifier. The resource name of the managed identity.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -111,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the managed identity.</td>
+    <td>Output only. The state of the managed identity. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -169,18 +170,18 @@ The following methods are available for this resource:
     <td>Deletes a WorkloadIdentityPoolManagedIdentity. You can undelete a managed identity for 30 days. After 30 days, deletion is permanent.</td>
 </tr>
 <tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a>, <a href="#parameter-namespacesId"><code>namespacesId</code></a>, <a href="#parameter-managedIdentitiesId"><code>managedIdentitiesId</code></a></td>
-    <td></td>
-    <td>Undeletes a WorkloadIdentityPoolManagedIdentity, as long as it was deleted fewer than 30 days ago.</td>
-</tr>
-<tr>
     <td><a href="#set_attestation_rules"><CopyableCode code="set_attestation_rules" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a>, <a href="#parameter-namespacesId"><code>namespacesId</code></a>, <a href="#parameter-managedIdentitiesId"><code>managedIdentitiesId</code></a></td>
     <td></td>
     <td>Set all AttestationRule on a WorkloadIdentityPoolManagedIdentity. A maximum of 50 AttestationRules can be set.</td>
+</tr>
+<tr>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a>, <a href="#parameter-namespacesId"><code>namespacesId</code></a>, <a href="#parameter-managedIdentitiesId"><code>managedIdentitiesId</code></a></td>
+    <td></td>
+    <td>Undeletes a WorkloadIdentityPoolManagedIdentity, as long as it was deleted fewer than 30 days ago.</td>
 </tr>
 </tbody>
 </table>
@@ -320,8 +321,9 @@ Creates a new WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoolNames
 
 ```sql
 INSERT INTO google.iam.managed_identities (
-data__description,
 data__disabled,
+data__description,
+data__name,
 projectsId,
 locationsId,
 workloadIdentityPoolsId,
@@ -329,8 +331,9 @@ namespacesId,
 workloadIdentityPoolManagedIdentityId
 )
 SELECT 
-'{{ description }}',
 {{ disabled }},
+'{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workloadIdentityPoolsId }}',
@@ -347,35 +350,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: managed_identities
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the managed_identities resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the managed_identities resource.
     - name: workloadIdentityPoolsId
-      value: string
+      value: "{{ workloadIdentityPoolsId }}"
       description: Required parameter for the managed_identities resource.
     - name: namespacesId
-      value: string
+      value: "{{ namespacesId }}"
       description: Required parameter for the managed_identities resource.
-    - name: description
-      value: string
-      description: >
-        Optional. A description of the managed identity. Cannot exceed 256 characters.
-        
     - name: disabled
-      value: boolean
-      description: >
+      value: {{ disabled }}
+      description: |
         Optional. Whether the managed identity is disabled. If disabled, credentials may no longer be issued for the identity, however existing credentials will still be accepted until they expire.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of the managed identity. Cannot exceed 256 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the managed identity.
     - name: workloadIdentityPoolManagedIdentityId
-      value: string
-```
+      value: "{{ workloadIdentityPoolManagedIdentityId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -395,8 +400,9 @@ Updates an existing WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoo
 ```sql
 UPDATE google.iam.managed_identities
 SET 
+data__disabled = {{ disabled }},
 data__description = '{{ description }}',
-data__disabled = {{ disabled }}
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -443,26 +449,12 @@ AND managedIdentitiesId = '{{ managedIdentitiesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="set_attestation_rules"
     values={[
-        { label: 'undelete', value: 'undelete' },
-        { label: 'set_attestation_rules', value: 'set_attestation_rules' }
+        { label: 'set_attestation_rules', value: 'set_attestation_rules' },
+        { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="undelete">
-
-Undeletes a WorkloadIdentityPoolManagedIdentity, as long as it was deleted fewer than 30 days ago.
-
-```sql
-EXEC google.iam.managed_identities.undelete 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@workloadIdentityPoolsId='{{ workloadIdentityPoolsId }}' --required, 
-@namespacesId='{{ namespacesId }}' --required, 
-@managedIdentitiesId='{{ managedIdentitiesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="set_attestation_rules">
 
 Set all AttestationRule on a WorkloadIdentityPoolManagedIdentity. A maximum of 50 AttestationRules can be set.
@@ -478,6 +470,20 @@ EXEC google.iam.managed_identities.set_attestation_rules
 '{
 "attestationRules": "{{ attestationRules }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="undelete">
+
+Undeletes a WorkloadIdentityPoolManagedIdentity, as long as it was deleted fewer than 30 days ago.
+
+```sql
+EXEC google.iam.managed_identities.undelete 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@workloadIdentityPoolsId='{{ workloadIdentityPoolsId }}' --required, 
+@namespacesId='{{ namespacesId }}' --required, 
+@managedIdentitiesId='{{ managedIdentitiesId }}' --required
 ;
 ```
 </TabItem>

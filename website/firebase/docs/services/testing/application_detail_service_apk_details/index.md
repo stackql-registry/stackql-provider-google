@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>application_detail_service_apk
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>application_detail_service_apk_details</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="application_detail_service_apk_details" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.testing.application_detail_service_apk_details" /></td></tr>
 </tbody></table>

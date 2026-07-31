@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>print_servers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>print_servers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="print_servers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.print_servers" /></td></tr>
 </tbody></table>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orgUnitId"><code>orgUnitId</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orgUnitId"><code>orgUnitId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists print server configurations.</td>
 </tr>
 <tr>
@@ -304,11 +305,11 @@ orgUnitId,
 uri
 FROM googleadmin.directory.print_servers
 WHERE customersId = '{{ customersId }}' -- required
+AND orgUnitId = '{{ orgUnitId }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orgUnitId = '{{ orgUnitId }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -331,20 +332,20 @@ Creates a print server.
 
 ```sql
 INSERT INTO googleadmin.directory.print_servers (
-data__name,
+data__uri,
 data__id,
 data__displayName,
 data__description,
-data__uri,
+data__name,
 data__orgUnitId,
 customersId
 )
 SELECT 
-'{{ name }}',
+'{{ uri }}',
 '{{ id }}',
 '{{ displayName }}',
 '{{ description }}',
-'{{ uri }}',
+'{{ name }}',
 '{{ orgUnitId }}',
 '{{ customersId }}'
 RETURNING
@@ -378,49 +379,51 @@ printServers
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: print_servers
   props:
     - name: customersId
-      value: string
+      value: "{{ customersId }}"
       description: Required parameter for the print_servers resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the print server. Leave empty when creating. Format: `customers/{customer.id}/printServers/{print_server.id}`
-        
-    - name: id
-      value: string
-      description: >
-        Immutable. ID of the print server. Leave empty when creating.
-        
-    - name: displayName
-      value: string
-      description: >
-        Editable. Display name of the print server (as shown in the Admin console).
-        
-    - name: description
-      value: string
-      description: >
-        Editable. Description of the print server (as shown in the Admin console).
-        
     - name: uri
-      value: string
-      description: >
+      value: "{{ uri }}"
+      description: |
         Editable. Print server URI.
-        
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Immutable. ID of the print server. Leave empty when creating.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Editable. Display name of the print server (as shown in the Admin console).
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Editable. Description of the print server (as shown in the Admin console).
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the print server. Leave empty when creating. Format: \`customers/{customer.id}/printServers/{print_server.id}\`
     - name: orgUnitId
-      value: string
-      description: >
-        ID of the organization unit (OU) that owns this print server. This value can only be set when the print server is initially created. If it's not populated, the print server is placed under the root OU. The `org_unit_id` can be retrieved using the [Directory API](https://developers.google.com/workspace/admin/directory/reference/rest/v1/orgunits).
-        
+      value: "{{ orgUnitId }}"
+      description: |
+        ID of the organization unit (OU) that owns this print server. This value can only be set when the print server is initially created. If it's not populated, the print server is placed under the root OU. The \`org_unit_id\` can be retrieved using the [Directory API](https://developers.google.com/workspace/admin/directory/reference/rest/v1/orgunits).
     - name: requests
-      value: array
-      description: >
-        Required. A list of `PrintServer` resources to be created (max `50` per batch).
-        
-```
+      description: |
+        Required. A list of \`PrintServer\` resources to be created (max \`50\` per batch).
+      value:
+        - parent: "{{ parent }}"
+          printServer:
+            uri: "{{ uri }}"
+            id: "{{ id }}"
+            displayName: "{{ displayName }}"
+            description: "{{ description }}"
+            name: "{{ name }}"
+            orgUnitId: "{{ orgUnitId }}"
+            createTime: "{{ createTime }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -440,11 +443,11 @@ Updates a print server's configuration.
 ```sql
 UPDATE googleadmin.directory.print_servers
 SET 
-data__name = '{{ name }}',
+data__uri = '{{ uri }}',
 data__id = '{{ id }}',
 data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__uri = '{{ uri }}',
+data__name = '{{ name }}',
 data__orgUnitId = '{{ orgUnitId }}'
 WHERE 
 customersId = '{{ customersId }}' --required

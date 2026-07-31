@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>buckets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>buckets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="buckets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storage.buckets" /></td></tr>
 </tbody></table>
@@ -902,215 +903,278 @@ website
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: buckets
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the buckets resource.
     - name: acl
-      value: array
-      description: >
+      description: |
         Access controls on the bucket.
-        
+      value:
+        - bucket: "{{ bucket }}"
+          domain: "{{ domain }}"
+          email: "{{ email }}"
+          entity: "{{ entity }}"
+          entityId: "{{ entityId }}"
+          etag: "{{ etag }}"
+          id: "{{ id }}"
+          kind: "{{ kind }}"
+          projectTeam:
+            projectNumber: "{{ projectNumber }}"
+            team: "{{ team }}"
+          role: "{{ role }}"
+          selfLink: "{{ selfLink }}"
     - name: billing
-      value: object
-      description: >
+      description: |
         The bucket's billing configuration.
-        
+      value:
+        requesterPays: {{ requesterPays }}
     - name: cors
-      value: array
-      description: >
+      description: |
         The bucket's Cross-Origin Resource Sharing (CORS) configuration.
-        
+      value:
+        - maxAgeSeconds: {{ maxAgeSeconds }}
+          method: "{{ method }}"
+          origin: "{{ origin }}"
+          responseHeader: "{{ responseHeader }}"
     - name: customPlacementConfig
-      value: object
-      description: >
+      description: |
         The bucket's custom placement configuration for Custom Dual Regions.
-        
+      value:
+        dataLocations:
+          - "{{ dataLocations }}"
     - name: defaultEventBasedHold
-      value: boolean
-      description: >
+      value: {{ defaultEventBasedHold }}
+      description: |
         The default value for event-based hold on newly created objects in this bucket. Event-based hold is a way to retain objects indefinitely until an event occurs, signified by the hold's release. After being released, such objects will be subject to bucket-level retention (if any). One sample use case of this flag is for banks to hold loan documents for at least 3 years after loan is paid in full. Here, bucket-level retention is 3 years and the event is loan being paid in full. In this example, these objects will be held intact for any number of years until the event has occurred (event-based hold on the object is released) and then 3 more years after that. That means retention duration of the objects begins from the moment event-based hold transitioned from true to false. Objects under event-based hold cannot be deleted, overwritten or archived until the hold is removed.
-        
     - name: defaultObjectAcl
-      value: array
-      description: >
+      description: |
         Default access controls to apply to new objects when no ACL is provided.
-        
+      value:
+        - bucket: "{{ bucket }}"
+          domain: "{{ domain }}"
+          email: "{{ email }}"
+          entity: "{{ entity }}"
+          entityId: "{{ entityId }}"
+          etag: "{{ etag }}"
+          generation: "{{ generation }}"
+          id: "{{ id }}"
+          kind: "{{ kind }}"
+          object: "{{ object }}"
+          projectTeam:
+            projectNumber: "{{ projectNumber }}"
+            team: "{{ team }}"
+          role: "{{ role }}"
+          selfLink: "{{ selfLink }}"
     - name: encryption
-      value: object
-      description: >
+      description: |
         Encryption configuration for a bucket.
-        
+      value:
+        defaultKmsKeyName: "{{ defaultKmsKeyName }}"
+        googleManagedEncryptionEnforcementConfig:
+          restrictionMode: "{{ restrictionMode }}"
+          effectiveTime: "{{ effectiveTime }}"
+        customerManagedEncryptionEnforcementConfig:
+          restrictionMode: "{{ restrictionMode }}"
+          effectiveTime: "{{ effectiveTime }}"
+        customerSuppliedEncryptionEnforcementConfig:
+          restrictionMode: "{{ restrictionMode }}"
+          effectiveTime: "{{ effectiveTime }}"
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         HTTP 1.1 Entity tag for the bucket.
-        
     - name: hierarchicalNamespace
-      value: object
-      description: >
+      description: |
         The bucket's hierarchical namespace configuration.
-        
+      value:
+        enabled: {{ enabled }}
     - name: iamConfiguration
-      value: object
-      description: >
+      description: |
         The bucket's IAM configuration.
-        
+      value:
+        bucketPolicyOnly:
+          enabled: {{ enabled }}
+          lockedTime: "{{ lockedTime }}"
+        uniformBucketLevelAccess:
+          enabled: {{ enabled }}
+          lockedTime: "{{ lockedTime }}"
+        publicAccessPrevention: "{{ publicAccessPrevention }}"
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         The ID of the bucket. For buckets, the id and name properties are the same.
-        
     - name: ipFilter
-      value: object
-      description: >
+      description: |
         The bucket's IP filter configuration. Specifies the network sources that are allowed to access the operations on the bucket, as well as its underlying objects. Only enforced when the mode is set to 'Enabled'.
-        
+      value:
+        mode: "{{ mode }}"
+        publicNetworkSource:
+          allowedIpCidrRanges:
+            - "{{ allowedIpCidrRanges }}"
+        vpcNetworkSources:
+          - network: "{{ network }}"
+            allowedIpCidrRanges: "{{ allowedIpCidrRanges }}"
+        allowCrossOrgVpcs: {{ allowCrossOrgVpcs }}
+        allowAllServiceAgentAccess: {{ allowAllServiceAgentAccess }}
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         The kind of item this is. For buckets, this is always storage#bucket.
-        
       default: storage#bucket
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         User-provided labels, in key/value pairs.
-        
     - name: lifecycle
-      value: object
-      description: >
+      description: |
         The bucket's lifecycle configuration. See [Lifecycle Management](https://cloud.google.com/storage/docs/lifecycle) for more information.
-        
+      value:
+        rule:
+          - action:
+              storageClass: "{{ storageClass }}"
+              type: "{{ type }}"
+            condition:
+              age: {{ age }}
+              createdBefore: "{{ createdBefore }}"
+              customTimeBefore: "{{ customTimeBefore }}"
+              daysSinceCustomTime: {{ daysSinceCustomTime }}
+              daysSinceNoncurrentTime: {{ daysSinceNoncurrentTime }}
+              isLive: {{ isLive }}
+              matchesPattern: "{{ matchesPattern }}"
+              matchesPrefix:
+                - "{{ matchesPrefix }}"
+              matchesSuffix:
+                - "{{ matchesSuffix }}"
+              matchesStorageClass:
+                - "{{ matchesStorageClass }}"
+              noncurrentTimeBefore: "{{ noncurrentTimeBefore }}"
+              sizeAboveBytes: "{{ sizeAboveBytes }}"
+              sizeBelowBytes: "{{ sizeBelowBytes }}"
+              numNewerVersions: {{ numNewerVersions }}
     - name: autoclass
-      value: object
-      description: >
+      description: |
         The bucket's Autoclass configuration.
-        
+      value:
+        enabled: {{ enabled }}
+        toggleTime: "{{ toggleTime }}"
+        terminalStorageClass: "{{ terminalStorageClass }}"
+        terminalStorageClassUpdateTime: "{{ terminalStorageClassUpdateTime }}"
     - name: location
-      value: string
-      description: >
+      value: "{{ location }}"
+      description: |
         The location of the bucket. Object data for objects in the bucket resides in physical storage within this region. Defaults to US. See the [Developer's Guide](https://cloud.google.com/storage/docs/locations) for the authoritative list.
-        
     - name: locationType
-      value: string
-      description: >
+      value: "{{ locationType }}"
+      description: |
         The type of the bucket location.
-        
     - name: logging
-      value: object
-      description: >
+      description: |
         The bucket's logging configuration, which defines the destination bucket and optional name prefix for the current bucket's logs.
-        
+      value:
+        logBucket: "{{ logBucket }}"
+        logObjectPrefix: "{{ logObjectPrefix }}"
     - name: generation
-      value: string
-      description: >
+      value: "{{ generation }}"
+      description: |
         The generation of this bucket.
-        
     - name: metageneration
-      value: string
-      description: >
+      value: "{{ metageneration }}"
+      description: |
         The metadata generation of this bucket.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the bucket.
-        
     - name: owner
-      value: object
-      description: >
+      description: |
         The owner of the bucket. This is always the project team's owner group.
-        
+      value:
+        entity: "{{ entity }}"
+        entityId: "{{ entityId }}"
     - name: projectNumber
-      value: string
-      description: >
+      value: "{{ projectNumber }}"
+      description: |
         The project number of the project the bucket belongs to.
-        
     - name: retentionPolicy
-      value: object
-      description: >
+      description: |
         The bucket's retention policy. The retention policy enforces a minimum retention time for all objects contained in the bucket, based on their creation time. Any attempt to overwrite or delete objects younger than the retention period will result in a PERMISSION_DENIED error. An unlocked retention policy can be modified or removed from the bucket via a storage.buckets.update operation. A locked retention policy cannot be removed or shortened in duration for the lifetime of the bucket. Attempting to remove or decrease period of a locked retention policy will result in a PERMISSION_DENIED error.
-        
+      value:
+        effectiveTime: "{{ effectiveTime }}"
+        isLocked: {{ isLocked }}
+        retentionPeriod: "{{ retentionPeriod }}"
     - name: objectRetention
-      value: object
-      description: >
+      description: |
         The bucket's object retention config.
-        
+      value:
+        mode: "{{ mode }}"
     - name: rpo
-      value: string
-      description: >
+      value: "{{ rpo }}"
+      description: |
         The Recovery Point Objective (RPO) of this bucket. Set to ASYNC_TURBO to turn on Turbo Replication on a bucket.
-        
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         The URI of this bucket.
-        
     - name: softDeletePolicy
-      value: object
-      description: >
+      description: |
         The bucket's soft delete policy, which defines the period of time that soft-deleted objects will be retained, and cannot be permanently deleted.
-        
+      value:
+        retentionDurationSeconds: "{{ retentionDurationSeconds }}"
+        effectiveTime: "{{ effectiveTime }}"
     - name: storageClass
-      value: string
-      description: >
+      value: "{{ storageClass }}"
+      description: |
         The bucket's default storage class, used whenever no storageClass is specified for a newly-created object. This defines how objects in the bucket are stored and determines the SLA and the cost of storage. Values include MULTI_REGIONAL, REGIONAL, STANDARD, NEARLINE, COLDLINE, ARCHIVE, and DURABLE_REDUCED_AVAILABILITY. If this value is not specified when the bucket is created, it will default to STANDARD. For more information, see [Storage Classes](https://cloud.google.com/storage/docs/storage-classes).
-        
     - name: timeCreated
-      value: string
-      description: >
+      value: "{{ timeCreated }}"
+      description: |
         The creation time of the bucket in RFC 3339 format.
-        
     - name: updated
-      value: string
-      description: >
+      value: "{{ updated }}"
+      description: |
         The modification time of the bucket in RFC 3339 format.
-        
     - name: softDeleteTime
-      value: string
-      description: >
+      value: "{{ softDeleteTime }}"
+      description: |
         The soft delete time of the bucket in RFC 3339 format.
-        
     - name: hardDeleteTime
-      value: string
-      description: >
+      value: "{{ hardDeleteTime }}"
+      description: |
         The hard delete time of the bucket in RFC 3339 format.
-        
     - name: versioning
-      value: object
-      description: >
+      description: |
         The bucket's versioning configuration.
-        
+      value:
+        enabled: {{ enabled }}
     - name: website
-      value: object
-      description: >
+      description: |
         The bucket's website configuration, controlling how the service behaves when accessing bucket contents as a web site. See the [Static Website Examples](https://cloud.google.com/storage/docs/static-website) for more information.
-        
+      value:
+        mainPageSuffix: "{{ mainPageSuffix }}"
+        notFoundPage: "{{ notFoundPage }}"
     - name: satisfiesPZS
-      value: boolean
-      description: >
+      value: {{ satisfiesPZS }}
+      description: |
         Reserved for future use.
-        
     - name: satisfiesPZI
-      value: boolean
-      description: >
+      value: {{ satisfiesPZI }}
+      description: |
         Reserved for future use.
-        
     - name: predefinedAcl
-      value: string
+      value: "{{ predefinedAcl }}"
     - name: predefinedDefaultObjectAcl
-      value: string
+      value: "{{ predefinedDefaultObjectAcl }}"
     - name: projection
-      value: string
+      value: "{{ projection }}"
     - name: userProject
-      value: string
+      value: "{{ userProject }}"
     - name: enableObjectRetention
-      value: boolean
-```
+      value: {{ enableObjectRetention }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1383,7 +1447,8 @@ EXEC google.storage.buckets.relocate
 '{
 "destinationLocation": "{{ destinationLocation }}", 
 "destinationCustomPlacementConfig": "{{ destinationCustomPlacementConfig }}", 
-"validateOnly": {{ validateOnly }}
+"validateOnly": {{ validateOnly }}, 
+"destinationKmsKeyName": "{{ destinationKmsKeyName }}"
 }'
 ;
 ```

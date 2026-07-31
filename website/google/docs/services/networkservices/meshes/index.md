@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>meshes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>meshes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="meshes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkservices.meshes" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="envoyHeaders" /></td>
     <td><code>string</code></td>
-    <td>Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.</td>
+    <td>Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers. (ENVOY_HEADERS_UNSPECIFIED, NONE, DEBUG_HEADERS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="interceptionPort" /></td>
@@ -103,6 +104,46 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Name of the Mesh resource. It matches pattern `projects/*/locations/*/meshes/`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A free-text description of the resource. Max length 1024 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="envoyHeaders" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers. (ENVOY_HEADERS_UNSPECIFIED, NONE, DEBUG_HEADERS)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="interceptionPort" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Optional. If set to a valid TCP port (1-65535), instructs the SIDECAR proxy to listen on the specified port of localhost (127.0.0.1) address. The SIDECAR proxy will expect all traffic to be redirected to this port regardless of its actual ip:port destination. If unset, a port '15001' is used as the interception port. This is applicable only for sidecar proxy deployments.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Set of label tags associated with the Mesh resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Server-defined URL of this resource</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -134,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists Meshes in a given project and location.</td>
 </tr>
 <tr>
@@ -253,13 +294,20 @@ Lists Meshes in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+envoyHeaders,
+interceptionPort,
+labels,
+selfLink,
+updateTime
 FROM google.networkservices.meshes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -281,20 +329,20 @@ Creates a new Mesh in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.meshes (
+data__name,
+data__labels,
 data__description,
 data__interceptionPort,
-data__labels,
-data__name,
 data__envoyHeaders,
 projectsId,
 locationsId,
 meshId
 )
 SELECT 
+'{{ name }}',
+'{{ labels }}',
 '{{ description }}',
 {{ interceptionPort }},
-'{{ labels }}',
-'{{ name }}',
 '{{ envoyHeaders }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -310,45 +358,40 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: meshes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the meshes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the meshes resource.
-    - name: description
-      value: string
-      description: >
-        Optional. A free-text description of the resource. Max length 1024 characters.
-        
-    - name: interceptionPort
-      value: integer
-      description: >
-        Optional. If set to a valid TCP port (1-65535), instructs the SIDECAR proxy to listen on the specified port of localhost (127.0.0.1) address. The SIDECAR proxy will expect all traffic to be redirected to this port regardless of its actual ip:port destination. If unset, a port '15001' is used as the interception port. This is applicable only for sidecar proxy deployments.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the Mesh resource.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. Name of the Mesh resource. It matches pattern `projects/*/locations/*/meshes/`.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the Mesh resource. It matches pattern \`projects/*/locations/*/meshes/\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the Mesh resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A free-text description of the resource. Max length 1024 characters.
+    - name: interceptionPort
+      value: {{ interceptionPort }}
+      description: |
+        Optional. If set to a valid TCP port (1-65535), instructs the SIDECAR proxy to listen on the specified port of localhost (127.0.0.1) address. The SIDECAR proxy will expect all traffic to be redirected to this port regardless of its actual ip:port destination. If unset, a port '15001' is used as the interception port. This is applicable only for sidecar proxy deployments.
     - name: envoyHeaders
-      value: string
-      description: >
+      value: "{{ envoyHeaders }}"
+      description: |
         Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.
-        
       valid_values: ['ENVOY_HEADERS_UNSPECIFIED', 'NONE', 'DEBUG_HEADERS']
     - name: meshId
-      value: string
-```
+      value: "{{ meshId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -368,10 +411,10 @@ Updates the parameters of a single Mesh.
 ```sql
 UPDATE google.networkservices.meshes
 SET 
+data__name = '{{ name }}',
+data__labels = '{{ labels }}',
 data__description = '{{ description }}',
 data__interceptionPort = {{ interceptionPort }},
-data__labels = '{{ labels }}',
-data__name = '{{ name }}',
 data__envoyHeaders = '{{ envoyHeaders }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

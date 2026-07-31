@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>blockchain_nodes</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>blockchain_nodes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="blockchain_nodes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.blockchainnodeengine.blockchain_nodes" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="blockchainType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The blockchain type of the node.</td>
+    <td>Immutable. The blockchain type of the node. (BLOCKCHAIN_TYPE_UNSPECIFIED, ETHEREUM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="connectionInfo" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. A status representing the state of the node.</td>
+    <td>Output only. A status representing the state of the node. (STATE_UNSPECIFIED, CREATING, DELETING, RUNNING, ERROR, UPDATING, REPAIRING, RECONCILING, SYNCING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="blockchainType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The blockchain type of the node.</td>
+    <td>Immutable. The blockchain type of the node. (BLOCKCHAIN_TYPE_UNSPECIFIED, ETHEREUM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="connectionInfo" /></td>
@@ -146,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. A status representing the state of the node.</td>
+    <td>Output only. A status representing the state of the node. (STATE_UNSPECIFIED, CREATING, DELETING, RUNNING, ERROR, UPDATING, REPAIRING, RECONCILING, SYNCING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -184,14 +185,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists blockchain nodes in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-blockchainNodeId"><code>blockchainNodeId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-blockchainNodeId"><code>blockchainNodeId</code></a></td>
     <td>Creates a new blockchain node in a given project and location.</td>
 </tr>
 <tr>
@@ -326,10 +327,10 @@ updateTime
 FROM google.blockchainnodeengine.blockchain_nodes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -351,24 +352,24 @@ Creates a new blockchain node in a given project and location.
 
 ```sql
 INSERT INTO google.blockchainnodeengine.blockchain_nodes (
-data__ethereumDetails,
 data__labels,
-data__blockchainType,
+data__ethereumDetails,
 data__privateServiceConnectEnabled,
+data__blockchainType,
 projectsId,
 locationsId,
-blockchainNodeId,
-requestId
+requestId,
+blockchainNodeId
 )
 SELECT 
-'{{ ethereumDetails }}',
 '{{ labels }}',
-'{{ blockchainType }}',
+'{{ ethereumDetails }}',
 {{ privateServiceConnectEnabled }},
+'{{ blockchainType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ blockchainNodeId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ blockchainNodeId }}'
 RETURNING
 name,
 done,
@@ -380,42 +381,55 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: blockchain_nodes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the blockchain_nodes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the blockchain_nodes resource.
-    - name: ethereumDetails
-      value: object
-      description: >
-        Ethereum-specific blockchain node details.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         User-provided key-value pairs.
-        
-    - name: blockchainType
-      value: string
-      description: >
-        Immutable. The blockchain type of the node.
-        
-      valid_values: ['BLOCKCHAIN_TYPE_UNSPECIFIED', 'ETHEREUM']
+    - name: ethereumDetails
+      description: |
+        Ethereum-specific blockchain node details.
+      value:
+        consensusClient: "{{ consensusClient }}"
+        network: "{{ network }}"
+        apiEnableDebug: {{ apiEnableDebug }}
+        executionClient: "{{ executionClient }}"
+        apiEnableAdmin: {{ apiEnableAdmin }}
+        additionalEndpoints:
+          executionClientPrometheusMetricsApiEndpoint: "{{ executionClientPrometheusMetricsApiEndpoint }}"
+          beaconPrometheusMetricsApiEndpoint: "{{ beaconPrometheusMetricsApiEndpoint }}"
+          beaconApiEndpoint: "{{ beaconApiEndpoint }}"
+        validatorConfig:
+          mevRelayUrls:
+            - "{{ mevRelayUrls }}"
+          managedValidatorClient: {{ managedValidatorClient }}
+          beaconFeeRecipient: "{{ beaconFeeRecipient }}"
+        gethDetails:
+          garbageCollectionMode: "{{ garbageCollectionMode }}"
+        nodeType: "{{ nodeType }}"
     - name: privateServiceConnectEnabled
-      value: boolean
-      description: >
+      value: {{ privateServiceConnectEnabled }}
+      description: |
         Optional. When true, the node is only accessible via Private Service Connect; no public endpoints are exposed. Otherwise, the node is only accessible via public endpoints. Warning: These nodes are deprecated, please use public endpoints instead.
-        
-    - name: blockchainNodeId
-      value: string
+    - name: blockchainType
+      value: "{{ blockchainType }}"
+      description: |
+        Immutable. The blockchain type of the node.
+      valid_values: ['BLOCKCHAIN_TYPE_UNSPECIFIED', 'ETHEREUM']
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: blockchainNodeId
+      value: "{{ blockchainNodeId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -435,10 +449,10 @@ Updates the parameters of a single blockchain node.
 ```sql
 UPDATE google.blockchainnodeengine.blockchain_nodes
 SET 
-data__ethereumDetails = '{{ ethereumDetails }}',
 data__labels = '{{ labels }}',
-data__blockchainType = '{{ blockchainType }}',
-data__privateServiceConnectEnabled = {{ privateServiceConnectEnabled }}
+data__ethereumDetails = '{{ ethereumDetails }}',
+data__privateServiceConnectEnabled = {{ privateServiceConnectEnabled }},
+data__blockchainType = '{{ blockchainType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

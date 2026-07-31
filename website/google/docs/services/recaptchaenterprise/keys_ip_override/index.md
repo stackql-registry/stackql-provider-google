@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>keys_ip_override</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>keys_ip_override</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="keys_ip_override" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.recaptchaenterprise.keys_ip_override" /></td></tr>
 </tbody></table>
@@ -120,22 +121,23 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: keys_ip_override
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the keys_ip_override resource.
     - name: keysId
-      value: string
+      value: "{{ keysId }}"
       description: Required parameter for the keys_ip_override resource.
     - name: ipOverrideData
-      value: object
-      description: >
+      description: |
         Required. IP override added to the key.
-        
-```
+      value:
+        ip: "{{ ip }}"
+        overrideType: "{{ overrideType }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

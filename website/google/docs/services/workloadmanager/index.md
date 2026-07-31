@@ -18,20 +18,23 @@ workloadmanager service documentation.
 
 :::info[Service Summary]
 
-total resources: __9__  
+total resources: __12__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/workloadmanager/actuations/">actuations</a><br />
+<a href="/services/workloadmanager/deployments/">deployments</a><br />
 <a href="/services/workloadmanager/discoveredprofiles/">discoveredprofiles</a><br />
 <a href="/services/workloadmanager/evaluations/">evaluations</a><br />
 <a href="/services/workloadmanager/executions/">executions</a><br />
-<a href="/services/workloadmanager/insights/">insights</a><br />
-<a href="/services/workloadmanager/locations/">locations</a>
+<a href="/services/workloadmanager/health/">health</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/workloadmanager/insights/">insights</a><br />
+<a href="/services/workloadmanager/locations/">locations</a><br />
 <a href="/services/workloadmanager/operations/">operations</a><br />
 <a href="/services/workloadmanager/results/">results</a><br />
 <a href="/services/workloadmanager/rules/">rules</a><br />

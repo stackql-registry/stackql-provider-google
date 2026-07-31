@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>response_policy_rules</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>response_policy_rules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="response_policy_rules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dns.response_policy_rules" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="behavior" /></td>
     <td><code>string</code></td>
-    <td>Answer this query with a behavior rather than DNS data.</td>
+    <td>Answer this query with a behavior rather than DNS data. (behaviorUnspecified, bypassResponsePolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dnsName" /></td>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="behavior" /></td>
     <td><code>string</code></td>
-    <td>Answer this query with a behavior rather than DNS data.</td>
+    <td>Answer this query with a behavior rather than DNS data. (behaviorUnspecified, bypassResponsePolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dnsName" /></td>
@@ -289,21 +290,21 @@ Creates a new Response Policy Rule.
 
 ```sql
 INSERT INTO google.dns.response_policy_rules (
+data__behavior,
+data__kind,
 data__ruleName,
 data__dnsName,
 data__localData,
-data__behavior,
-data__kind,
 project,
 responsePolicy,
 clientOperationId
 )
 SELECT 
+'{{ behavior }}',
+'{{ kind }}',
 '{{ ruleName }}',
 '{{ dnsName }}',
 '{{ localData }}',
-'{{ behavior }}',
-'{{ kind }}',
 '{{ project }}',
 '{{ responsePolicy }}',
 '{{ clientOperationId }}'
@@ -318,43 +319,80 @@ ruleName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: response_policy_rules
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the response_policy_rules resource.
     - name: responsePolicy
-      value: string
+      value: "{{ responsePolicy }}"
       description: Required parameter for the response_policy_rules resource.
-    - name: ruleName
-      value: string
-      description: >
-        An identifier for this rule. Must be unique with the ResponsePolicy.
-        
-    - name: dnsName
-      value: string
-      description: >
-        The DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule.
-        
-    - name: localData
-      value: object
-      description: >
-        Answer this query directly with DNS data. These ResourceRecordSets override any other DNS behavior for the matched name; in particular they override private zones, the public internet, and GCP internal DNS. No SOA nor NS types are allowed.
-        
     - name: behavior
-      value: string
-      description: >
+      value: "{{ behavior }}"
+      description: |
         Answer this query with a behavior rather than DNS data.
-        
       valid_values: ['behaviorUnspecified', 'bypassResponsePolicy']
     - name: kind
-      value: string
+      value: "{{ kind }}"
       default: dns#responsePolicyRule
+    - name: ruleName
+      value: "{{ ruleName }}"
+      description: |
+        An identifier for this rule. Must be unique with the ResponsePolicy.
+    - name: dnsName
+      value: "{{ dnsName }}"
+      description: |
+        The DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule.
+    - name: localData
+      description: |
+        Answer this query directly with DNS data. These ResourceRecordSets override any other DNS behavior for the matched name; in particular they override private zones, the public internet, and GCP internal DNS. No SOA nor NS types are allowed.
+      value:
+        localDatas:
+          - routingPolicy:
+              geo:
+                enableFencing: {{ enableFencing }}
+                kind: "{{ kind }}"
+                items:
+                  - kind: "{{ kind }}"
+                    location: "{{ location }}"
+                    rrdatas: "{{ rrdatas }}"
+                    signatureRrdatas: "{{ signatureRrdatas }}"
+                    healthCheckedTargets:
+                      internalLoadBalancers: "{{ internalLoadBalancers }}"
+                      externalEndpoints: "{{ externalEndpoints }}"
+              primaryBackup:
+                primaryTargets:
+                  internalLoadBalancers: "{{ internalLoadBalancers }}"
+                  externalEndpoints: "{{ externalEndpoints }}"
+                kind: "{{ kind }}"
+                trickleTraffic: {{ trickleTraffic }}
+                backupGeoTargets:
+                  enableFencing: {{ enableFencing }}
+                  kind: "{{ kind }}"
+                  items: "{{ items }}"
+              healthCheck: "{{ healthCheck }}"
+              kind: "{{ kind }}"
+              wrr:
+                items:
+                  - weight: {{ weight }}
+                    kind: "{{ kind }}"
+                    rrdatas: "{{ rrdatas }}"
+                    signatureRrdatas: "{{ signatureRrdatas }}"
+                    healthCheckedTargets:
+                      internalLoadBalancers: "{{ internalLoadBalancers }}"
+                      externalEndpoints: "{{ externalEndpoints }}"
+                kind: "{{ kind }}"
+            kind: "{{ kind }}"
+            ttl: {{ ttl }}
+            rrdatas: "{{ rrdatas }}"
+            signatureRrdatas: "{{ signatureRrdatas }}"
+            type: "{{ type }}"
+            name: "{{ name }}"
     - name: clientOperationId
-      value: string
-```
+      value: "{{ clientOperationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -374,11 +412,11 @@ Applies a partial update to an existing Response Policy Rule.
 ```sql
 UPDATE google.dns.response_policy_rules
 SET 
+data__behavior = '{{ behavior }}',
+data__kind = '{{ kind }}',
 data__ruleName = '{{ ruleName }}',
 data__dnsName = '{{ dnsName }}',
-data__localData = '{{ localData }}',
-data__behavior = '{{ behavior }}',
-data__kind = '{{ kind }}'
+data__localData = '{{ localData }}'
 WHERE 
 project = '{{ project }}' --required
 AND responsePolicy = '{{ responsePolicy }}' --required
@@ -406,11 +444,11 @@ Updates an existing Response Policy Rule.
 ```sql
 REPLACE google.dns.response_policy_rules
 SET 
+data__behavior = '{{ behavior }}',
+data__kind = '{{ kind }}',
 data__ruleName = '{{ ruleName }}',
 data__dnsName = '{{ dnsName }}',
-data__localData = '{{ localData }}',
-data__behavior = '{{ behavior }}',
-data__kind = '{{ kind }}'
+data__localData = '{{ localData }}'
 WHERE 
 project = '{{ project }}' --required
 AND responsePolicy = '{{ responsePolicy }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dns_bind_permission</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dns_bind_permission</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dns_bind_permission" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.dns_bind_permission" /></td></tr>
 </tbody></table>
@@ -86,18 +87,18 @@ The following methods are available for this resource:
     <td>Gets all the principals having bind permission on the intranet VPC associated with the consumer project granted by the Grant API. DnsBindPermission is a global resource and location can only be global.</td>
 </tr>
 <tr>
-    <td><a href="#grant"><CopyableCode code="grant" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Grants the bind permission to the customer provided principal(user / service account) to bind their DNS zone with the intranet VPC associated with the project. DnsBindPermission is a global resource and location can only be global.</td>
-</tr>
-<tr>
     <td><a href="#revoke"><CopyableCode code="revoke" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Revokes the bind permission from the customer provided principal(user / service account) on the intranet VPC associated with the consumer project. DnsBindPermission is a global resource and location can only be global.</td>
+</tr>
+<tr>
+    <td><a href="#grant"><CopyableCode code="grant" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Grants the bind permission to the customer provided principal(user / service account) to bind their DNS zone with the intranet VPC associated with the project. DnsBindPermission is a global resource and location can only be global.</td>
 </tr>
 </tbody>
 </table>
@@ -156,12 +157,28 @@ AND locationsId = '{{ locationsId }}' -- required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="grant"
+    defaultValue="revoke"
     values={[
-        { label: 'grant', value: 'grant' },
-        { label: 'revoke', value: 'revoke' }
+        { label: 'revoke', value: 'revoke' },
+        { label: 'grant', value: 'grant' }
     ]}
 >
+<TabItem value="revoke">
+
+Revokes the bind permission from the customer provided principal(user / service account) on the intranet VPC associated with the consumer project. DnsBindPermission is a global resource and location can only be global.
+
+```sql
+EXEC google.vmwareengine.dns_bind_permission.revoke 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"principal": "{{ principal }}", 
+"requestId": "{{ requestId }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="grant">
 
 Grants the bind permission to the customer provided principal(user / service account) to bind their DNS zone with the intranet VPC associated with the project. DnsBindPermission is a global resource and location can only be global.
@@ -174,22 +191,6 @@ EXEC google.vmwareengine.dns_bind_permission.grant
 '{
 "principal": "{{ principal }}", 
 "requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="revoke">
-
-Revokes the bind permission from the customer provided principal(user / service account) on the intranet VPC associated with the consumer project. DnsBindPermission is a global resource and location can only be global.
-
-```sql
-EXEC google.vmwareengine.dns_bind_permission.revoke 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"requestId": "{{ requestId }}", 
-"principal": "{{ principal }}"
 }'
 ;
 ```

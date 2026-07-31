@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>deployments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>deployments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="deployments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sasportal.deployments" /></td></tr>
 </tbody></table>
@@ -32,85 +33,17 @@ Creates, updates, deletes, gets or lists a <code>deployments</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="customers_nodes_deployments_list"
+    defaultValue="nodes_nodes_deployments_list"
     values={[
-        { label: 'customers_nodes_deployments_list', value: 'customers_nodes_deployments_list' },
-        { label: 'customers_deployments_get', value: 'customers_deployments_get' },
         { label: 'nodes_nodes_deployments_list', value: 'nodes_nodes_deployments_list' },
         { label: 'nodes_deployments_get', value: 'nodes_deployments_get' },
-        { label: 'customers_deployments_list', value: 'customers_deployments_list' },
+        { label: 'customers_deployments_get', value: 'customers_deployments_get' },
+        { label: 'customers_nodes_deployments_list', value: 'customers_nodes_deployments_list' },
         { label: 'deployments_get', value: 'deployments_get' },
-        { label: 'nodes_deployments_list', value: 'nodes_deployments_list' }
+        { label: 'nodes_deployments_list', value: 'nodes_deployments_list' },
+        { label: 'customers_deployments_list', value: 'customers_deployments_list' }
     ]}
 >
-<TabItem value="customers_nodes_deployments_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Resource name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The deployment's display name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="frns" /></td>
-    <td><code>array</code></td>
-    <td>Output only. The FCC Registration Numbers (FRNs) copied from its direct parent.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sasUserIds" /></td>
-    <td><code>array</code></td>
-    <td>User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="customers_deployments_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Resource name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The deployment's display name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="frns" /></td>
-    <td><code>array</code></td>
-    <td>Output only. The FCC Registration Numbers (FRNs) copied from its direct parent.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sasUserIds" /></td>
-    <td><code>array</code></td>
-    <td>User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="nodes_nodes_deployments_list">
 
 <table>
@@ -179,7 +112,41 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="customers_deployments_list">
+<TabItem value="customers_deployments_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Resource name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The deployment's display name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="frns" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The FCC Registration Numbers (FRNs) copied from its direct parent.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sasUserIds" /></td>
+    <td><code>array</code></td>
+    <td>User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="customers_nodes_deployments_list">
 
 <table>
 <thead>
@@ -281,6 +248,40 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="customers_deployments_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Resource name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The deployment's display name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="frns" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The FCC Registration Numbers (FRNs) copied from its direct parent.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sasUserIds" /></td>
+    <td><code>array</code></td>
+    <td>User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 </Tabs>
 
 ## Methods
@@ -299,24 +300,10 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#customers_nodes_deployments_list"><CopyableCode code="customers_nodes_deployments_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists deployments.</td>
-</tr>
-<tr>
-    <td><a href="#customers_deployments_get"><CopyableCode code="customers_deployments_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td></td>
-    <td>Returns a requested deployment.</td>
-</tr>
-<tr>
     <td><a href="#nodes_nodes_deployments_list"><CopyableCode code="nodes_nodes_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployments.</td>
 </tr>
 <tr>
@@ -327,10 +314,17 @@ The following methods are available for this resource:
     <td>Returns a requested deployment.</td>
 </tr>
 <tr>
-    <td><a href="#customers_deployments_list"><CopyableCode code="customers_deployments_list" /></a></td>
+    <td><a href="#customers_deployments_get"><CopyableCode code="customers_deployments_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
+    <td></td>
+    <td>Returns a requested deployment.</td>
+</tr>
+<tr>
+    <td><a href="#customers_nodes_deployments_list"><CopyableCode code="customers_nodes_deployments_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployments.</td>
 </tr>
 <tr>
@@ -344,20 +338,27 @@ The following methods are available for this resource:
     <td><a href="#nodes_deployments_list"><CopyableCode code="nodes_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployments.</td>
 </tr>
 <tr>
-    <td><a href="#customers_nodes_deployments_create"><CopyableCode code="customers_nodes_deployments_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td></td>
-    <td>Creates a new deployment.</td>
+    <td><a href="#customers_deployments_list"><CopyableCode code="customers_deployments_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists deployments.</td>
 </tr>
 <tr>
     <td><a href="#nodes_nodes_deployments_create"><CopyableCode code="nodes_nodes_deployments_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
+    <td></td>
+    <td>Creates a new deployment.</td>
+</tr>
+<tr>
+    <td><a href="#customers_nodes_deployments_create"><CopyableCode code="customers_nodes_deployments_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
     <td></td>
     <td>Creates a new deployment.</td>
 </tr>
@@ -369,13 +370,6 @@ The following methods are available for this resource:
     <td>Creates a new deployment.</td>
 </tr>
 <tr>
-    <td><a href="#customers_deployments_patch"><CopyableCode code="customers_deployments_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates an existing deployment.</td>
-</tr>
-<tr>
     <td><a href="#nodes_deployments_patch"><CopyableCode code="nodes_deployments_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
@@ -383,11 +377,11 @@ The following methods are available for this resource:
     <td>Updates an existing deployment.</td>
 </tr>
 <tr>
-    <td><a href="#customers_deployments_delete"><CopyableCode code="customers_deployments_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#customers_deployments_patch"><CopyableCode code="customers_deployments_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td></td>
-    <td>Deletes a deployment.</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates an existing deployment.</td>
 </tr>
 <tr>
     <td><a href="#nodes_deployments_delete"><CopyableCode code="nodes_deployments_delete" /></a></td>
@@ -397,16 +391,23 @@ The following methods are available for this resource:
     <td>Deletes a deployment.</td>
 </tr>
 <tr>
-    <td><a href="#customers_deployments_move"><CopyableCode code="customers_deployments_move" /></a></td>
-    <td><CopyableCode code="exec" /></td>
+    <td><a href="#customers_deployments_delete"><CopyableCode code="customers_deployments_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
     <td></td>
-    <td>Moves a deployment under another node or customer.</td>
+    <td>Deletes a deployment.</td>
 </tr>
 <tr>
     <td><a href="#nodes_deployments_move"><CopyableCode code="nodes_deployments_move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
+    <td></td>
+    <td>Moves a deployment under another node or customer.</td>
+</tr>
+<tr>
+    <td><a href="#customers_deployments_move"><CopyableCode code="customers_deployments_move" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
     <td></td>
     <td>Moves a deployment under another node or customer.</td>
 </tr>
@@ -472,52 +473,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="customers_nodes_deployments_list"
+    defaultValue="nodes_nodes_deployments_list"
     values={[
-        { label: 'customers_nodes_deployments_list', value: 'customers_nodes_deployments_list' },
-        { label: 'customers_deployments_get', value: 'customers_deployments_get' },
         { label: 'nodes_nodes_deployments_list', value: 'nodes_nodes_deployments_list' },
         { label: 'nodes_deployments_get', value: 'nodes_deployments_get' },
-        { label: 'customers_deployments_list', value: 'customers_deployments_list' },
+        { label: 'customers_deployments_get', value: 'customers_deployments_get' },
+        { label: 'customers_nodes_deployments_list', value: 'customers_nodes_deployments_list' },
         { label: 'deployments_get', value: 'deployments_get' },
-        { label: 'nodes_deployments_list', value: 'nodes_deployments_list' }
+        { label: 'nodes_deployments_list', value: 'nodes_deployments_list' },
+        { label: 'customers_deployments_list', value: 'customers_deployments_list' }
     ]}
 >
-<TabItem value="customers_nodes_deployments_list">
-
-Lists deployments.
-
-```sql
-SELECT
-name,
-displayName,
-frns,
-sasUserIds
-FROM google.sasportal.deployments
-WHERE customersId = '{{ customersId }}' -- required
-AND nodesId = '{{ nodesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="customers_deployments_get">
-
-Returns a requested deployment.
-
-```sql
-SELECT
-name,
-displayName,
-frns,
-sasUserIds
-FROM google.sasportal.deployments
-WHERE customersId = '{{ customersId }}' -- required
-AND deploymentsId = '{{ deploymentsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="nodes_nodes_deployments_list">
 
 Lists deployments.
@@ -531,9 +497,9 @@ sasUserIds
 FROM google.sasportal.deployments
 WHERE nodesId = '{{ nodesId }}' -- required
 AND nodesId1 = '{{ nodesId1 }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -553,7 +519,23 @@ AND deploymentsId = '{{ deploymentsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="customers_deployments_list">
+<TabItem value="customers_deployments_get">
+
+Returns a requested deployment.
+
+```sql
+SELECT
+name,
+displayName,
+frns,
+sasUserIds
+FROM google.sasportal.deployments
+WHERE customersId = '{{ customersId }}' -- required
+AND deploymentsId = '{{ deploymentsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="customers_nodes_deployments_list">
 
 Lists deployments.
 
@@ -565,9 +547,10 @@ frns,
 sasUserIds
 FROM google.sasportal.deployments
 WHERE customersId = '{{ customersId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND nodesId = '{{ nodesId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -598,8 +581,26 @@ frns,
 sasUserIds
 FROM google.sasportal.deployments
 WHERE nodesId = '{{ nodesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="customers_deployments_list">
+
+Lists deployments.
+
+```sql
+SELECT
+name,
+displayName,
+frns,
+sasUserIds
+FROM google.sasportal.deployments
+WHERE customersId = '{{ customersId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -610,38 +611,14 @@ AND pageToken = '{{ pageToken }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="customers_nodes_deployments_create"
+    defaultValue="nodes_nodes_deployments_create"
     values={[
-        { label: 'customers_nodes_deployments_create', value: 'customers_nodes_deployments_create' },
         { label: 'nodes_nodes_deployments_create', value: 'nodes_nodes_deployments_create' },
+        { label: 'customers_nodes_deployments_create', value: 'customers_nodes_deployments_create' },
         { label: 'customers_deployments_create', value: 'customers_deployments_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="customers_nodes_deployments_create">
-
-Creates a new deployment.
-
-```sql
-INSERT INTO google.sasportal.deployments (
-data__displayName,
-data__sasUserIds,
-customersId,
-nodesId
-)
-SELECT 
-'{{ displayName }}',
-'{{ sasUserIds }}',
-'{{ customersId }}',
-'{{ nodesId }}'
-RETURNING
-name,
-displayName,
-frns,
-sasUserIds
-;
-```
-</TabItem>
 <TabItem value="nodes_nodes_deployments_create">
 
 Creates a new deployment.
@@ -658,6 +635,30 @@ SELECT
 '{{ sasUserIds }}',
 '{{ nodesId }}',
 '{{ nodesId1 }}'
+RETURNING
+name,
+displayName,
+frns,
+sasUserIds
+;
+```
+</TabItem>
+<TabItem value="customers_nodes_deployments_create">
+
+Creates a new deployment.
+
+```sql
+INSERT INTO google.sasportal.deployments (
+data__displayName,
+data__sasUserIds,
+customersId,
+nodesId
+)
+SELECT 
+'{{ displayName }}',
+'{{ sasUserIds }}',
+'{{ customersId }}',
+'{{ nodesId }}'
 RETURNING
 name,
 displayName,
@@ -690,30 +691,29 @@ sasUserIds
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: deployments
   props:
-    - name: customersId
-      value: string
-      description: Required parameter for the deployments resource.
     - name: nodesId
-      value: string
+      value: "{{ nodesId }}"
       description: Required parameter for the deployments resource.
     - name: nodesId1
-      value: string
+      value: "{{ nodesId1 }}"
+      description: Required parameter for the deployments resource.
+    - name: customersId
+      value: "{{ customersId }}"
       description: Required parameter for the deployments resource.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         The deployment's display name.
-        
     - name: sasUserIds
-      value: array
-      description: >
+      value:
+        - "{{ sasUserIds }}"
+      description: |
         User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -721,32 +721,12 @@ sasUserIds
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="customers_deployments_patch"
+    defaultValue="nodes_deployments_patch"
     values={[
-        { label: 'customers_deployments_patch', value: 'customers_deployments_patch' },
-        { label: 'nodes_deployments_patch', value: 'nodes_deployments_patch' }
+        { label: 'nodes_deployments_patch', value: 'nodes_deployments_patch' },
+        { label: 'customers_deployments_patch', value: 'customers_deployments_patch' }
     ]}
 >
-<TabItem value="customers_deployments_patch">
-
-Updates an existing deployment.
-
-```sql
-UPDATE google.sasportal.deployments
-SET 
-data__displayName = '{{ displayName }}',
-data__sasUserIds = '{{ sasUserIds }}'
-WHERE 
-customersId = '{{ customersId }}' --required
-AND deploymentsId = '{{ deploymentsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-displayName,
-frns,
-sasUserIds;
-```
-</TabItem>
 <TabItem value="nodes_deployments_patch">
 
 Updates an existing deployment.
@@ -767,29 +747,38 @@ frns,
 sasUserIds;
 ```
 </TabItem>
+<TabItem value="customers_deployments_patch">
+
+Updates an existing deployment.
+
+```sql
+UPDATE google.sasportal.deployments
+SET 
+data__displayName = '{{ displayName }}',
+data__sasUserIds = '{{ sasUserIds }}'
+WHERE 
+customersId = '{{ customersId }}' --required
+AND deploymentsId = '{{ deploymentsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+displayName,
+frns,
+sasUserIds;
+```
+</TabItem>
 </Tabs>
 
 
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="customers_deployments_delete"
+    defaultValue="nodes_deployments_delete"
     values={[
-        { label: 'customers_deployments_delete', value: 'customers_deployments_delete' },
-        { label: 'nodes_deployments_delete', value: 'nodes_deployments_delete' }
+        { label: 'nodes_deployments_delete', value: 'nodes_deployments_delete' },
+        { label: 'customers_deployments_delete', value: 'customers_deployments_delete' }
     ]}
 >
-<TabItem value="customers_deployments_delete">
-
-Deletes a deployment.
-
-```sql
-DELETE FROM google.sasportal.deployments
-WHERE customersId = '{{ customersId }}' --required
-AND deploymentsId = '{{ deploymentsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="nodes_deployments_delete">
 
 Deletes a deployment.
@@ -801,25 +790,36 @@ AND deploymentsId = '{{ deploymentsId }}' --required
 ;
 ```
 </TabItem>
+<TabItem value="customers_deployments_delete">
+
+Deletes a deployment.
+
+```sql
+DELETE FROM google.sasportal.deployments
+WHERE customersId = '{{ customersId }}' --required
+AND deploymentsId = '{{ deploymentsId }}' --required
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="customers_deployments_move"
+    defaultValue="nodes_deployments_move"
     values={[
-        { label: 'customers_deployments_move', value: 'customers_deployments_move' },
-        { label: 'nodes_deployments_move', value: 'nodes_deployments_move' }
+        { label: 'nodes_deployments_move', value: 'nodes_deployments_move' },
+        { label: 'customers_deployments_move', value: 'customers_deployments_move' }
     ]}
 >
-<TabItem value="customers_deployments_move">
+<TabItem value="nodes_deployments_move">
 
 Moves a deployment under another node or customer.
 
 ```sql
-EXEC google.sasportal.deployments.customers_deployments_move 
-@customersId='{{ customersId }}' --required, 
+EXEC google.sasportal.deployments.nodes_deployments_move 
+@nodesId='{{ nodesId }}' --required, 
 @deploymentsId='{{ deploymentsId }}' --required 
 @@json=
 '{
@@ -828,13 +828,13 @@ EXEC google.sasportal.deployments.customers_deployments_move
 ;
 ```
 </TabItem>
-<TabItem value="nodes_deployments_move">
+<TabItem value="customers_deployments_move">
 
 Moves a deployment under another node or customer.
 
 ```sql
-EXEC google.sasportal.deployments.nodes_deployments_move 
-@nodesId='{{ nodesId }}' --required, 
+EXEC google.sasportal.deployments.customers_deployments_move 
+@customersId='{{ customersId }}' --required, 
 @deploymentsId='{{ deploymentsId }}' --required 
 @@json=
 '{

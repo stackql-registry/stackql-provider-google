@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>releases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>releases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="releases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appdistribution.releases" /></td></tr>
 </tbody></table>
@@ -52,12 +53,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the release resource. Format: `projects/&#123;project_number&#125;/apps/&#123;app_id&#125;/releases/&#123;release_id&#125;`</td>
+    <td>The name of the release resource. Format: `projects/&#123;project_number&#125;/apps/&#123;app&#125;/releases/&#123;release&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="acceptedInvitationCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of testers with accepted invitations.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="androidPackageRegistrationState" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Registration state of the Android package (BinaryType.APK). (ANDROID_PACKAGE_REGISTRATION_STATE_UNSPECIFIED, REGISTERED, NOT_REGISTERED, REGISTERED_WITH_ANOTHER_CERTIFICATE_FINGERPRINT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="binaryDownloadUri" /></td>
     <td><code>string</code></td>
     <td>Output only. A signed link (which expires in one hour) to directly download the app binary (IPA/APK/AAB) file.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="binaryType" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Type of binary. (BINARY_TYPE_UNSPECIFIED, IPA, APK, AAB)</td>
 </tr>
 <tr>
     <td><CopyableCode code="buildVersion" /></td>
@@ -80,14 +96,34 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The time the release will expire.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="feedbackCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of feedback reports left by testers.</td>
+</tr>
+<tr>
     <td><CopyableCode code="firebaseConsoleUri" /></td>
     <td><code>string</code></td>
     <td>Output only. A link to the Firebase console displaying a single release.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="installationCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of testers who have downloaded this release.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="openInvitationCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of testers who were invited (incl. expired invitations), but did not (yet) accept the invitation.</td>
+</tr>
+<tr>
     <td><CopyableCode code="releaseNotes" /></td>
     <td><code>object</code></td>
-    <td>Notes of the release. (id: GoogleFirebaseAppdistroV1ReleaseNotes)</td>
+    <td>Notes about the release. (id: GoogleFirebaseAppdistroV1ReleaseNotes)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="testState" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The overall state of tests run on this release (TEST_STATE_UNSPECIFIED, NO_TESTS_REQUESTED, IN_PROGRESS, PASSED, FAILED, INCONCLUSIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="testingUri" /></td>
@@ -116,12 +152,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the release resource. Format: `projects/&#123;project_number&#125;/apps/&#123;app_id&#125;/releases/&#123;release_id&#125;`</td>
+    <td>The name of the release resource. Format: `projects/&#123;project_number&#125;/apps/&#123;app&#125;/releases/&#123;release&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="acceptedInvitationCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of testers with accepted invitations.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="androidPackageRegistrationState" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Registration state of the Android package (BinaryType.APK). (ANDROID_PACKAGE_REGISTRATION_STATE_UNSPECIFIED, REGISTERED, NOT_REGISTERED, REGISTERED_WITH_ANOTHER_CERTIFICATE_FINGERPRINT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="binaryDownloadUri" /></td>
     <td><code>string</code></td>
     <td>Output only. A signed link (which expires in one hour) to directly download the app binary (IPA/APK/AAB) file.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="binaryType" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Type of binary. (BINARY_TYPE_UNSPECIFIED, IPA, APK, AAB)</td>
 </tr>
 <tr>
     <td><CopyableCode code="buildVersion" /></td>
@@ -144,14 +195,34 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The time the release will expire.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="feedbackCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of feedback reports left by testers.</td>
+</tr>
+<tr>
     <td><CopyableCode code="firebaseConsoleUri" /></td>
     <td><code>string</code></td>
     <td>Output only. A link to the Firebase console displaying a single release.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="installationCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of testers who have downloaded this release.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="openInvitationCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of testers who were invited (incl. expired invitations), but did not (yet) accept the invitation.</td>
+</tr>
+<tr>
     <td><CopyableCode code="releaseNotes" /></td>
     <td><code>object</code></td>
-    <td>Notes of the release. (id: GoogleFirebaseAppdistroV1ReleaseNotes)</td>
+    <td>Notes about the release. (id: GoogleFirebaseAppdistroV1ReleaseNotes)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="testState" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The overall state of tests run on this release (TEST_STATE_UNSPECIFIED, NO_TESTS_REQUESTED, IN_PROGRESS, PASSED, FAILED, INCONCLUSIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="testingUri" /></td>
@@ -194,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists releases. By default, sorts by `createTime` in descending order.</td>
 </tr>
 <tr>
@@ -293,13 +364,20 @@ Gets a release.
 ```sql
 SELECT
 name,
+acceptedInvitationCount,
+androidPackageRegistrationState,
 binaryDownloadUri,
+binaryType,
 buildVersion,
 createTime,
 displayVersion,
 expireTime,
+feedbackCount,
 firebaseConsoleUri,
+installationCount,
+openInvitationCount,
 releaseNotes,
+testState,
 testingUri,
 updateTime
 FROM firebase.appdistribution.releases
@@ -316,13 +394,20 @@ Lists releases. By default, sorts by `createTime` in descending order.
 ```sql
 SELECT
 name,
+acceptedInvitationCount,
+androidPackageRegistrationState,
 binaryDownloadUri,
+binaryType,
 buildVersion,
 createTime,
 displayVersion,
 expireTime,
+feedbackCount,
 firebaseConsoleUri,
+installationCount,
+openInvitationCount,
 releaseNotes,
+testState,
 testingUri,
 updateTime
 FROM firebase.appdistribution.releases
@@ -330,8 +415,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND appsId = '{{ appsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -353,8 +438,8 @@ Updates a release.
 ```sql
 UPDATE firebase.appdistribution.releases
 SET 
-data__name = '{{ name }}',
-data__releaseNotes = '{{ releaseNotes }}'
+data__releaseNotes = '{{ releaseNotes }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND appsId = '{{ appsId }}' --required
@@ -362,13 +447,20 @@ AND releasesId = '{{ releasesId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+acceptedInvitationCount,
+androidPackageRegistrationState,
 binaryDownloadUri,
+binaryType,
 buildVersion,
 createTime,
 displayVersion,
 expireTime,
+feedbackCount,
 firebaseConsoleUri,
+installationCount,
+openInvitationCount,
 releaseNotes,
+testState,
 testingUri,
 updateTime;
 ```

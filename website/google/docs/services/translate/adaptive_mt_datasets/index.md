@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>adaptive_mt_datasets</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>adaptive_mt_datasets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="adaptive_mt_datasets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.adaptive_mt_datasets" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The resource name of the dataset, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/adaptiveMtDatasets/&#123;dataset_id&#125;`</td>
+    <td>Identifier. The resource name of the dataset, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/adaptiveMtDatasets/&#123;dataset_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -101,7 +102,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The resource name of the dataset, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/adaptiveMtDatasets/&#123;dataset_id&#125;`</td>
+    <td>Identifier. The resource name of the dataset, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/adaptiveMtDatasets/&#123;dataset_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -306,20 +307,20 @@ Creates an Adaptive MT dataset.
 
 ```sql
 INSERT INTO google.translate.adaptive_mt_datasets (
-data__name,
 data__displayName,
 data__sourceLanguageCode,
-data__targetLanguageCode,
 data__exampleCount,
+data__name,
+data__targetLanguageCode,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
 '{{ sourceLanguageCode }}',
-'{{ targetLanguageCode }}',
 {{ exampleCount }},
+'{{ name }}',
+'{{ targetLanguageCode }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -335,42 +336,37 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: adaptive_mt_datasets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the adaptive_mt_datasets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the adaptive_mt_datasets resource.
-    - name: name
-      value: string
-      description: >
-        Required. The resource name of the dataset, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset_id}`
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         The name of the dataset to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
-        
     - name: sourceLanguageCode
-      value: string
-      description: >
+      value: "{{ sourceLanguageCode }}"
+      description: |
         The BCP-47 language code of the source language.
-        
-    - name: targetLanguageCode
-      value: string
-      description: >
-        The BCP-47 language code of the target language.
-        
     - name: exampleCount
-      value: integer
-      description: >
+      value: {{ exampleCount }}
+      description: |
         The number of examples in the dataset.
-        
-```
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the dataset, in form of \`projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset_id}\`
+    - name: targetLanguageCode
+      value: "{{ targetLanguageCode }}"
+      description: |
+        The BCP-47 language code of the target language.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

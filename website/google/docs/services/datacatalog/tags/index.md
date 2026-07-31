@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tags</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tags</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tags" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datacatalog.tags" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataplexTransferStatus" /></td>
     <td><code>string</code></td>
-    <td>Output only. Denotes the transfer status of the Tag Template.</td>
+    <td>Output only. Denotes the transfer status of the Tag Template. (DATAPLEX_TRANSFER_STATUS_UNSPECIFIED, MIGRATED, TRANSFERRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="fields" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataplexTransferStatus" /></td>
     <td><code>string</code></td>
-    <td>Output only. Denotes the transfer status of the Tag Template.</td>
+    <td>Output only. Denotes the transfer status of the Tag Template. (DATAPLEX_TRANSFER_STATUS_UNSPECIFIED, MIGRATED, TRANSFERRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="fields" /></td>
@@ -398,43 +399,39 @@ templateDisplayName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tags
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tags resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tags resource.
     - name: entryGroupsId
-      value: string
+      value: "{{ entryGroupsId }}"
       description: Required parameter for the tags resource.
     - name: entriesId
-      value: string
+      value: "{{ entriesId }}"
       description: Required parameter for the tags resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.
-        
     - name: template
-      value: string
-      description: >
-        Required. The resource name of the tag template this tag uses. Example: `projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE_ID}` This field cannot be modified after creation.
-        
+      value: "{{ template }}"
+      description: |
+        Required. The resource name of the tag template this tag uses. Example: \`projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE_ID}\` This field cannot be modified after creation.
     - name: column
-      value: string
-      description: >
-        Resources like entry can have schemas associated with them. This scope allows you to attach tags to an individual column based on that schema. To attach a tag to a nested column, separate column names with a dot (`.`). Example: `column.nested_column`.
-        
+      value: "{{ column }}"
+      description: |
+        Resources like entry can have schemas associated with them. This scope allows you to attach tags to an individual column based on that schema. To attach a tag to a nested column, separate column names with a dot (\`.\`). Example: \`column.nested_column\`.
     - name: fields
-      value: object
-      description: >
+      value: "{{ fields }}"
+      description: |
         Required. Maps the ID of a tag field to its value and additional information about that field. Tag template defines valid field IDs. A tag must have at least 1 field and at most 500 fields.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

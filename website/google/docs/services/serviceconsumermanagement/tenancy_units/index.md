@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tenancy_units</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tenancy_units</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tenancy_units" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.serviceconsumermanagement.tenancy_units" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-servicesId1"><code>servicesId1</code></a>, <a href="#parameter-servicesId2"><code>servicesId2</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Find the tenancy unit for a managed service and service consumer. This method shouldn't be used in a service producer's runtime path, for example to find the tenant project number when creating VMs. Service producers must persist the tenant project's information after the project is created.</td>
 </tr>
 <tr>
@@ -212,9 +213,9 @@ FROM google.serviceconsumermanagement.tenancy_units
 WHERE servicesId = '{{ servicesId }}' -- required
 AND servicesId1 = '{{ servicesId1 }}' -- required
 AND servicesId2 = '{{ servicesId2 }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -257,25 +258,24 @@ tenantResources
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tenancy_units
   props:
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the tenancy_units resource.
     - name: servicesId1
-      value: string
+      value: "{{ servicesId1 }}"
       description: Required parameter for the tenancy_units resource.
     - name: servicesId2
-      value: string
+      value: "{{ servicesId2 }}"
       description: Required parameter for the tenancy_units resource.
     - name: tenancyUnitId
-      value: string
-      description: >
-        Optional. Optional service producer-provided identifier of the tenancy unit. Must be no longer than 40 characters and preferably URI friendly. If it isn't provided, a UID for the tenancy unit is automatically generated. The identifier must be unique across a managed service. If the tenancy unit already exists for the managed service and service consumer pair, calling `CreateTenancyUnit` returns the existing tenancy unit if the provided identifier is identical or empty, otherwise the call fails.
-        
-```
+      value: "{{ tenancyUnitId }}"
+      description: |
+        Optional. Optional service producer-provided identifier of the tenancy unit. Must be no longer than 40 characters and preferably URI friendly. If it isn't provided, a UID for the tenancy unit is automatically generated. The identifier must be unique across a managed service. If the tenancy unit already exists for the managed service and service consumer pair, calling \`CreateTenancyUnit\` returns the existing tenancy unit if the provided identifier is identical or empty, otherwise the call fails.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -326,8 +326,8 @@ EXEC google.serviceconsumermanagement.tenancy_units.apply_project_config
 @tenancyUnitsId='{{ tenancyUnitsId }}' --required 
 @@json=
 '{
-"tag": "{{ tag }}", 
-"projectConfig": "{{ projectConfig }}"
+"projectConfig": "{{ projectConfig }}", 
+"tag": "{{ tag }}"
 }'
 ;
 ```
@@ -344,9 +344,9 @@ EXEC google.serviceconsumermanagement.tenancy_units.attach_project
 @tenancyUnitsId='{{ tenancyUnitsId }}' --required 
 @@json=
 '{
+"reservedResource": "{{ reservedResource }}", 
 "tag": "{{ tag }}", 
-"externalResource": "{{ externalResource }}", 
-"reservedResource": "{{ reservedResource }}"
+"externalResource": "{{ externalResource }}"
 }'
 ;
 ```

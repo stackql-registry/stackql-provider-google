@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudscheduler.jobs" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the job.</td>
+    <td>Output only. State of the job. (STATE_UNSPECIFIED, ENABLED, PAUSED, DISABLED, UPDATE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the job.</td>
+    <td>Output only. State of the job. (STATE_UNSPECIFIED, ENABLED, PAUSED, DISABLED, UPDATE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -269,11 +270,11 @@ The following methods are available for this resource:
     <td>Deletes a job.</td>
 </tr>
 <tr>
-    <td><a href="#run"><CopyableCode code="run" /></a></td>
+    <td><a href="#pause"><CopyableCode code="pause" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
     <td></td>
-    <td>Forces a job to run now. When this method is called, Cloud Scheduler will dispatch the job, even if the job is already running.</td>
+    <td>Pauses a job. If a job is paused then the system will stop executing the job until it is re-enabled via ResumeJob. The state of the job is stored in state; if paused it will be set to Job.State.PAUSED. A job must be in Job.State.ENABLED to be paused.</td>
 </tr>
 <tr>
     <td><a href="#resume"><CopyableCode code="resume" /></a></td>
@@ -283,11 +284,11 @@ The following methods are available for this resource:
     <td>Resume a job. This method reenables a job after it has been Job.State.PAUSED. The state of a job is stored in Job.state; after calling this method it will be set to Job.State.ENABLED. A job must be in Job.State.PAUSED to be resumed.</td>
 </tr>
 <tr>
-    <td><a href="#pause"><CopyableCode code="pause" /></a></td>
+    <td><a href="#run"><CopyableCode code="run" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
     <td></td>
-    <td>Pauses a job. If a job is paused then the system will stop executing the job until it is re-enabled via ResumeJob. The state of the job is stored in state; if paused it will be set to Job.State.PAUSED. A job must be in Job.State.ENABLED to be paused.</td>
+    <td>Forces a job to run now. When this method is called, Cloud Scheduler will dispatch the job, even if the job is already running.</td>
 </tr>
 </tbody>
 </table>
@@ -422,27 +423,27 @@ Creates a job.
 
 ```sql
 INSERT INTO google.cloudscheduler.jobs (
-data__schedule,
+data__name,
 data__retryConfig,
 data__timeZone,
 data__description,
-data__attemptDeadline,
-data__appEngineHttpTarget,
-data__name,
 data__httpTarget,
+data__appEngineHttpTarget,
+data__schedule,
+data__attemptDeadline,
 data__pubsubTarget,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ schedule }}',
+'{{ name }}',
 '{{ retryConfig }}',
 '{{ timeZone }}',
 '{{ description }}',
-'{{ attemptDeadline }}',
-'{{ appEngineHttpTarget }}',
-'{{ name }}',
 '{{ httpTarget }}',
+'{{ appEngineHttpTarget }}',
+'{{ schedule }}',
+'{{ attemptDeadline }}',
 '{{ pubsubTarget }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -467,62 +468,80 @@ userUpdateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the jobs resource.
-    - name: schedule
-      value: string
-      description: >
-        Required, except when used with UpdateJob. Describes the schedule on which the job will be executed. The schedule can be either of the following types: * [Crontab](https://en.wikipedia.org/wiki/Cron#Overview) * English-like [schedule](/scheduler/docs/configuring/cron-job-schedules) As a general rule, execution `n + 1` of a job will not begin until execution `n` has finished. Cloud Scheduler will never allow two simultaneously outstanding executions. For example, this implies that if the `n+1`th execution is scheduled to run at 16:00 but the `n`th execution takes until 16:15, the `n+1`th execution will not start until `16:15`. A scheduled start time will be delayed if the previous execution has not ended when its scheduled time occurs. If retry_count > 0 and a job attempt fails, the job will be tried a total of retry_count times, with exponential backoff, until the next scheduled start time. If retry_count is 0, a job attempt will not be retried if it fails. Instead the Cloud Scheduler system will wait for the next scheduled execution time. Setting retry_count to 0 does not prevent failed jobs from running according to schedule after the failure.
-        
-    - name: retryConfig
-      value: object
-      description: >
-        Settings that determine the retry behavior.
-        
-    - name: timeZone
-      value: string
-      description: >
-        Specifies the time zone to be used in interpreting schedule. The value of this field must be a time zone name from the [tz database](http://en.wikipedia.org/wiki/Tz_database). Note that some time zones include a provision for daylight savings time. The rules for daylight saving time are determined by the chosen tz. For UTC use the string "utc". If a time zone is not specified, the default will be in UTC (also known as GMT).
-        
-    - name: description
-      value: string
-      description: >
-        Optionally caller-specified in CreateJob or UpdateJob. A human-readable description for the job. This string must not contain more than 500 characters.
-        
-    - name: attemptDeadline
-      value: string
-      description: >
-        The deadline for job attempts. If the request handler does not respond by this deadline then the request is cancelled and the attempt is marked as a `DEADLINE_EXCEEDED` failure. The failed attempt can be viewed in execution logs. Cloud Scheduler will retry the job according to the RetryConfig. The default and the allowed values depend on the type of target: * For HTTP targets, the default is 3 minutes. The deadline must be in the interval [15 seconds, 30 minutes]. * For App Engine HTTP targets, 0 indicates that the request has the default deadline. The default deadline depends on the scaling type of the service: 10 minutes for standard apps with automatic scaling, 24 hours for standard apps with manual and basic scaling, and 60 minutes for flex apps. If the request deadline is set, it must be in the interval [15 seconds, 24 hours 15 seconds]. * For Pub/Sub targets, this field is ignored.
-        
-    - name: appEngineHttpTarget
-      value: object
-      description: >
-        App Engine HTTP target.
-        
     - name: name
-      value: string
-      description: >
-        Optionally caller-specified in CreateJob, after which it becomes output only. The job name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`. * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), or periods (.). For more information, see [Identifying projects](/resource-manager/docs/creating-managing-projects#identifying_projects) * `LOCATION_ID` is the canonical ID for the job's location. The list of available locations can be obtained by calling [locations.list](/scheduler/docs/reference/rest/v1/projects.locations/list). For more information, see [Cloud Scheduler locations](/scheduler/docs/locations). * `JOB_ID` can contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or underscores (_). The maximum length is 500 characters.
-        
+      value: "{{ name }}"
+      description: |
+        Optionally caller-specified in CreateJob, after which it becomes output only. The job name. For example: \`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID\`. * \`PROJECT_ID\` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), or periods (.). For more information, see [Identifying projects](/resource-manager/docs/creating-managing-projects#identifying_projects) * \`LOCATION_ID\` is the canonical ID for the job's location. The list of available locations can be obtained by calling [locations.list](/scheduler/docs/reference/rest/v1/projects.locations/list). For more information, see [Cloud Scheduler locations](/scheduler/docs/locations). * \`JOB_ID\` can contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or underscores (_). The maximum length is 500 characters.
+    - name: retryConfig
+      description: |
+        Settings that determine the retry behavior.
+      value:
+        retryCount: {{ retryCount }}
+        maxRetryDuration: "{{ maxRetryDuration }}"
+        maxBackoffDuration: "{{ maxBackoffDuration }}"
+        maxDoublings: {{ maxDoublings }}
+        minBackoffDuration: "{{ minBackoffDuration }}"
+    - name: timeZone
+      value: "{{ timeZone }}"
+      description: |
+        Specifies the time zone to be used in interpreting schedule. The value of this field must be a time zone name from the [tz database](http://en.wikipedia.org/wiki/Tz_database). Note that some time zones include a provision for daylight savings time. The rules for daylight saving time are determined by the chosen tz. For UTC use the string "utc". If a time zone is not specified, the default will be in UTC (also known as GMT).
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optionally caller-specified in CreateJob or UpdateJob. A human-readable description for the job. This string must not contain more than 500 characters.
     - name: httpTarget
-      value: object
-      description: >
+      description: |
         HTTP target.
-        
+      value:
+        headers: "{{ headers }}"
+        uri: "{{ uri }}"
+        httpMethod: "{{ httpMethod }}"
+        oidcToken:
+          serviceAccountEmail: "{{ serviceAccountEmail }}"
+          audience: "{{ audience }}"
+        oauthToken:
+          scope: "{{ scope }}"
+          serviceAccountEmail: "{{ serviceAccountEmail }}"
+        body: "{{ body }}"
+    - name: appEngineHttpTarget
+      description: |
+        App Engine HTTP target.
+      value:
+        body: "{{ body }}"
+        relativeUri: "{{ relativeUri }}"
+        httpMethod: "{{ httpMethod }}"
+        appEngineRouting:
+          service: "{{ service }}"
+          host: "{{ host }}"
+          version: "{{ version }}"
+          instance: "{{ instance }}"
+        headers: "{{ headers }}"
+    - name: schedule
+      value: "{{ schedule }}"
+      description: |
+        Required, except when used with UpdateJob. Describes the schedule on which the job will be executed. The schedule can be either of the following types: * [Crontab](https://en.wikipedia.org/wiki/Cron#Overview) * English-like [schedule](/scheduler/docs/configuring/cron-job-schedules) As a general rule, execution \`n + 1\` of a job will not begin until execution \`n\` has finished. Cloud Scheduler will never allow two simultaneously outstanding executions. For example, this implies that if the \`n+1\`th execution is scheduled to run at 16:00 but the \`n\`th execution takes until 16:15, the \`n+1\`th execution will not start until \`16:15\`. A scheduled start time will be delayed if the previous execution has not ended when its scheduled time occurs. If retry_count > 0 and a job attempt fails, the job will be tried a total of retry_count times, with exponential backoff, until the next scheduled start time. If retry_count is 0, a job attempt will not be retried if it fails. Instead the Cloud Scheduler system will wait for the next scheduled execution time. Setting retry_count to 0 does not prevent failed jobs from running according to schedule after the failure.
+    - name: attemptDeadline
+      value: "{{ attemptDeadline }}"
+      description: |
+        The deadline for job attempts. If the request handler does not respond by this deadline then the request is cancelled and the attempt is marked as a \`DEADLINE_EXCEEDED\` failure. The failed attempt can be viewed in execution logs. Cloud Scheduler will retry the job according to the RetryConfig. The default and the allowed values depend on the type of target: * For HTTP targets, the default is 3 minutes. The deadline must be in the interval [15 seconds, 30 minutes]. * For App Engine HTTP targets, 0 indicates that the request has the default deadline. The default deadline depends on the scaling type of the service: 10 minutes for standard apps with automatic scaling, 24 hours for standard apps with manual and basic scaling, and 60 minutes for flex apps. If the request deadline is set, it must be in the interval [15 seconds, 24 hours 15 seconds]. * For Pub/Sub targets, this field is ignored.
     - name: pubsubTarget
-      value: object
-      description: >
+      description: |
         Pub/Sub target.
-        
-```
+      value:
+        attributes: "{{ attributes }}"
+        topicName: "{{ topicName }}"
+        data: "{{ data }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -542,14 +561,14 @@ Updates a job. If successful, the updated Job is returned. If the job does not e
 ```sql
 UPDATE google.cloudscheduler.jobs
 SET 
-data__schedule = '{{ schedule }}',
+data__name = '{{ name }}',
 data__retryConfig = '{{ retryConfig }}',
 data__timeZone = '{{ timeZone }}',
 data__description = '{{ description }}',
-data__attemptDeadline = '{{ attemptDeadline }}',
-data__appEngineHttpTarget = '{{ appEngineHttpTarget }}',
-data__name = '{{ name }}',
 data__httpTarget = '{{ httpTarget }}',
+data__appEngineHttpTarget = '{{ appEngineHttpTarget }}',
+data__schedule = '{{ schedule }}',
+data__attemptDeadline = '{{ attemptDeadline }}',
 data__pubsubTarget = '{{ pubsubTarget }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -603,19 +622,19 @@ AND jobsId = '{{ jobsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="run"
+    defaultValue="pause"
     values={[
-        { label: 'run', value: 'run' },
+        { label: 'pause', value: 'pause' },
         { label: 'resume', value: 'resume' },
-        { label: 'pause', value: 'pause' }
+        { label: 'run', value: 'run' }
     ]}
 >
-<TabItem value="run">
+<TabItem value="pause">
 
-Forces a job to run now. When this method is called, Cloud Scheduler will dispatch the job, even if the job is already running.
+Pauses a job. If a job is paused then the system will stop executing the job until it is re-enabled via ResumeJob. The state of the job is stored in state; if paused it will be set to Job.State.PAUSED. A job must be in Job.State.ENABLED to be paused.
 
 ```sql
-EXEC google.cloudscheduler.jobs.run 
+EXEC google.cloudscheduler.jobs.pause 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @jobsId='{{ jobsId }}' --required
@@ -634,12 +653,12 @@ EXEC google.cloudscheduler.jobs.resume
 ;
 ```
 </TabItem>
-<TabItem value="pause">
+<TabItem value="run">
 
-Pauses a job. If a job is paused then the system will stop executing the job until it is re-enabled via ResumeJob. The state of the job is stored in state; if paused it will be set to Job.State.PAUSED. A job must be in Job.State.ENABLED to be paused.
+Forces a job to run now. When this method is called, Cloud Scheduler will dispatch the job, even if the job is already running.
 
 ```sql
-EXEC google.cloudscheduler.jobs.pause 
+EXEC google.cloudscheduler.jobs.run 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @jobsId='{{ jobsId }}' --required

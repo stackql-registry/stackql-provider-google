@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_policies_rule</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_policies_rule</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_policies_rule" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.security_policies_rule" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>The Action to perform when the rule is matched. The following are the valid actions: - allow: allow access to target. - deny(STATUS): deny access to target, returns the HTTP response code specified. Valid values for `STATUS` are 403, 404, and 502. - rate_based_ban: limit client traffic to the configured threshold and ban the client if the traffic exceeds the threshold. Configure parameters for this action in RateLimitOptions. Requires rate_limit_options to be set. - redirect: redirect to a different target. This can either be an internal reCAPTCHA redirect, or an external URL-based redirect via a 302 response. Parameters for this action can be configured via redirectOptions. This action is only supported in Global Security Policies of type CLOUD_ARMOR. - throttle: limit client traffic to the configured threshold. Configure parameters for this action in rateLimitOptions. Requires rate_limit_options to be set for this. - fairshare (preview only): when traffic reaches the threshold limit, requests from the clients matching this rule begin to be rate-limited using the Fair Share algorithm. This action is only allowed in security policies of type `CLOUD_ARMOR_INTERNAL_SERVICE`. </td>
+    <td>The Action to perform when the rule is matched. The following are the valid actions:        - allow: allow access to target.    - deny(STATUS): deny access to target, returns the    HTTP response code specified. Valid values for `STATUS`    are 403, 404, and 502.    - rate_based_ban: limit client traffic to the configured    threshold and ban the client if the traffic exceeds the threshold.    Configure parameters for this action in RateLimitOptions. Requires    rate_limit_options to be set.    - redirect: redirect to a different target. This can    either be an internal reCAPTCHA redirect, or an external URL-based    redirect via a 302 response. Parameters for this action can be configured    via redirectOptions. This action is only supported in Global Security    Policies of type CLOUD_ARMOR.    - throttle: limit    client traffic to the configured threshold. Configure parameters for this    action in rateLimitOptions. Requires rate_limit_options to be set for    this.    - fairshare (preview only): when traffic reaches the    threshold limit, requests from the clients matching this rule begin to be    rate-limited using the Fair Share algorithm. This action is only allowed    in security policies of type `CLOUD_ARMOR_INTERNAL_SERVICE`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -66,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output only] Type of the resource. Always compute#securityPolicyRule for security policy rules (default: compute#securityPolicyRule)</td>
+    <td>Output only. [Output only] Type of the resource. Alwayscompute#securityPolicyRule for security policy rules (default: compute#securityPolicyRule)</td>
 </tr>
 <tr>
     <td><CopyableCode code="match" /></td>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="networkMatch" /></td>
     <td><code>object</code></td>
-    <td>A match condition that incoming packets are evaluated against for CLOUD_ARMOR_NETWORK security policies. If it matches, the corresponding 'action' is enforced. The match criteria for a rule consists of built-in match fields (like 'srcIpRanges') and potentially multiple user-defined match fields ('userDefinedFields'). Field values may be extracted directly from the packet or derived from it (e.g. 'srcRegionCodes'). Some fields may not be present in every packet (e.g. 'srcPorts'). A user-defined field is only present if the base header is found in the packet and the entire field is in bounds. Each match field may specify which values can match it, listing one or more ranges, prefixes, or exact values that are considered a match for the field. A field value must be present in order to match a specified match field. If no match values are specified for a match field, then any field value is considered to match it, and it's not required to be present. For strings specifying '*' is also equivalent to match all. For a packet to match a rule, all specified match fields must match the corresponding field values derived from the packet. Example: networkMatch: srcIpRanges: - "192.0.2.0/24" - "198.51.100.0/24" userDefinedFields: - name: "ipv4_fragment_offset" values: - "1-0x1fff" The above match condition matches packets with a source IP in 192.0.2.0/24 or 198.51.100.0/24 and a user-defined field named "ipv4_fragment_offset" with a value between 1 and 0x1fff inclusive. (id: SecurityPolicyRuleNetworkMatcher)</td>
+    <td>A match condition that incoming packets are evaluated against for CLOUD_ARMOR_NETWORK security policies. If it matches, the corresponding 'action' is enforced.  The match criteria for a rule consists of built-in match fields (like 'srcIpRanges') and potentially multiple user-defined match fields ('userDefinedFields').  Field values may be extracted directly from the packet or derived from it (e.g. 'srcRegionCodes'). Some fields may not be present in every packet (e.g. 'srcPorts'). A user-defined field is only present if the base header is found in the packet and the entire field is in bounds.  Each match field may specify which values can match it, listing one or more ranges, prefixes, or exact values that are considered a match for the field. A field value must be present in order to match a specified match field. If no match values are specified for a match field, then any field value is considered to match it, and it's not required to be present. For strings specifying '*' is also equivalent to match all.  For a packet to match a rule, all specified match fields must match the corresponding field values derived from the packet.  Example:  networkMatch:   srcIpRanges:   - "192.0.2.0/24"   - "198.51.100.0/24"   userDefinedFields:   - name: "ipv4_fragment_offset"     values:     - "1-0x1fff"  The above match condition matches packets with a source IP in 192.0.2.0/24 or 198.51.100.0/24 and a user-defined field named "ipv4_fragment_offset" with a value between 1 and 0x1fff inclusive. (id: SecurityPolicyRuleNetworkMatcher)</td>
 </tr>
 <tr>
     <td><CopyableCode code="preconfiguredWafConfig" /></td>
@@ -126,21 +127,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_rule"><CopyableCode code="get_rule" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
     <td><a href="#parameter-priority"><code>priority</code></a></td>
     <td>Gets a rule at the specified priority.</td>
 </tr>
 <tr>
     <td><a href="#add_rule"><CopyableCode code="add_rule" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
     <td><a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Inserts a rule into a security policy.</td>
 </tr>
 <tr>
     <td><a href="#remove_rule"><CopyableCode code="remove_rule" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-securityPolicy"><code>securityPolicy</code></a></td>
     <td><a href="#parameter-priority"><code>priority</code></a></td>
     <td>Deletes a rule at the specified priority.</td>
 </tr>
@@ -162,11 +163,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -215,7 +211,6 @@ rateLimitOptions,
 redirectOptions
 FROM google.compute.security_policies_rule
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
 AND securityPolicy = '{{ securityPolicy }}' -- required
 AND priority = '{{ priority }}'
 ;
@@ -239,36 +234,32 @@ Inserts a rule into a security policy.
 
 ```sql
 INSERT INTO google.compute.security_policies_rule (
-data__kind,
-data__description,
-data__priority,
-data__match,
 data__networkMatch,
-data__action,
+data__description,
+data__match,
 data__preview,
-data__rateLimitOptions,
-data__headerAction,
-data__redirectOptions,
 data__preconfiguredWafConfig,
+data__priority,
+data__rateLimitOptions,
+data__redirectOptions,
+data__action,
+data__headerAction,
 project,
-region,
 securityPolicy,
 validateOnly
 )
 SELECT 
-'{{ kind }}',
-'{{ description }}',
-{{ priority }},
-'{{ match }}',
 '{{ networkMatch }}',
-'{{ action }}',
+'{{ description }}',
+'{{ match }}',
 {{ preview }},
-'{{ rateLimitOptions }}',
-'{{ headerAction }}',
-'{{ redirectOptions }}',
 '{{ preconfiguredWafConfig }}',
+{{ priority }},
+'{{ rateLimitOptions }}',
+'{{ redirectOptions }}',
+'{{ action }}',
+'{{ headerAction }}',
 '{{ project }}',
-'{{ region }}',
 '{{ securityPolicy }}',
 '{{ validateOnly }}'
 RETURNING
@@ -279,6 +270,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -303,78 +295,184 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: security_policies_rule
   props:
     - name: project
-      value: string
-      description: Required parameter for the security_policies_rule resource.
-    - name: region
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the security_policies_rule resource.
     - name: securityPolicy
-      value: string
+      value: "{{ securityPolicy }}"
       description: Required parameter for the security_policies_rule resource.
-    - name: kind
-      value: string
-      description: >
-        [Output only] Type of the resource. Always compute#securityPolicyRule for security policy rules
-        
-      default: compute#securityPolicyRule
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: priority
-      value: integer
-      description: >
-        An integer indicating the priority of a rule in the list. The priority must be a positive value between 0 and 2147483647. Rules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest priority.
-        
-    - name: match
-      value: object
-      description: >
-        A match condition that incoming traffic is evaluated against. If it evaluates to true, the corresponding 'action' is enforced.
-        
     - name: networkMatch
-      value: object
-      description: >
-        A match condition that incoming packets are evaluated against for CLOUD_ARMOR_NETWORK security policies. If it matches, the corresponding 'action' is enforced. The match criteria for a rule consists of built-in match fields (like 'srcIpRanges') and potentially multiple user-defined match fields ('userDefinedFields'). Field values may be extracted directly from the packet or derived from it (e.g. 'srcRegionCodes'). Some fields may not be present in every packet (e.g. 'srcPorts'). A user-defined field is only present if the base header is found in the packet and the entire field is in bounds. Each match field may specify which values can match it, listing one or more ranges, prefixes, or exact values that are considered a match for the field. A field value must be present in order to match a specified match field. If no match values are specified for a match field, then any field value is considered to match it, and it's not required to be present. For strings specifying '*' is also equivalent to match all. For a packet to match a rule, all specified match fields must match the corresponding field values derived from the packet. Example: networkMatch: srcIpRanges: - "192.0.2.0/24" - "198.51.100.0/24" userDefinedFields: - name: "ipv4_fragment_offset" values: - "1-0x1fff" The above match condition matches packets with a source IP in 192.0.2.0/24 or 198.51.100.0/24 and a user-defined field named "ipv4_fragment_offset" with a value between 1 and 0x1fff inclusive.
-        
-    - name: action
-      value: string
-      description: >
-        The Action to perform when the rule is matched. The following are the valid actions: - allow: allow access to target. - deny(STATUS): deny access to target, returns the HTTP response code specified. Valid values for `STATUS` are 403, 404, and 502. - rate_based_ban: limit client traffic to the configured threshold and ban the client if the traffic exceeds the threshold. Configure parameters for this action in RateLimitOptions. Requires rate_limit_options to be set. - redirect: redirect to a different target. This can either be an internal reCAPTCHA redirect, or an external URL-based redirect via a 302 response. Parameters for this action can be configured via redirectOptions. This action is only supported in Global Security Policies of type CLOUD_ARMOR. - throttle: limit client traffic to the configured threshold. Configure parameters for this action in rateLimitOptions. Requires rate_limit_options to be set for this. - fairshare (preview only): when traffic reaches the threshold limit, requests from the clients matching this rule begin to be rate-limited using the Fair Share algorithm. This action is only allowed in security policies of type `CLOUD_ARMOR_INTERNAL_SERVICE`. 
-        
+      description: |
+        A match condition that incoming packets are evaluated against for
+        CLOUD_ARMOR_NETWORK security policies. If it matches, the corresponding
+        'action' is enforced.
+        The match criteria for a rule consists of built-in match fields (like
+        'srcIpRanges') and potentially multiple user-defined match fields
+        ('userDefinedFields').
+        Field values may be extracted directly from the packet or derived from it
+        (e.g. 'srcRegionCodes'). Some fields may not be present in every packet
+        (e.g. 'srcPorts'). A user-defined field is only present if the base
+        header is found in the packet and the entire field is in bounds.
+        Each match field may specify which values can match it, listing one or
+        more ranges, prefixes, or exact values that are considered a match for
+        the field. A field value must be present in order to match a specified
+        match field. If no match values are specified for a match field, then any
+        field value is considered to match it, and it's not required to be
+        present. For strings specifying '*' is also equivalent to match all.
+        For a packet to match a rule, all specified match fields must match the
+        corresponding field values derived from the packet.
+        Example:
+        networkMatch:
+        srcIpRanges:
+        - "192.0.2.0/24"
+        - "198.51.100.0/24"
+        userDefinedFields:
+        - name: "ipv4_fragment_offset"
+        values:
+        - "1-0x1fff"
+        The above match condition matches packets with a source IP in
+        192.0.2.0/24 or 198.51.100.0/24 and a user-defined field named
+        "ipv4_fragment_offset" with a value between 1 and 0x1fff inclusive.
+      value:
+        srcIpRanges:
+          - "{{ srcIpRanges }}"
+        userDefinedFields:
+          - name: "{{ name }}"
+            values: "{{ values }}"
+        srcRegionCodes:
+          - "{{ srcRegionCodes }}"
+        destIpRanges:
+          - "{{ destIpRanges }}"
+        srcAsns:
+          - {{ srcAsns }}
+        srcPorts:
+          - "{{ srcPorts }}"
+        destPorts:
+          - "{{ destPorts }}"
+        ipProtocols:
+          - "{{ ipProtocols }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: match
+      description: |
+        A match condition that incoming traffic is evaluated against.
+        If it evaluates to true, the corresponding 'action' is enforced.
+      value:
+        expr:
+          expression: "{{ expression }}"
+          title: "{{ title }}"
+          description: "{{ description }}"
+          location: "{{ location }}"
+        exprOptions:
+          recaptchaOptions:
+            sessionTokenSiteKeys:
+              - "{{ sessionTokenSiteKeys }}"
+            actionTokenSiteKeys:
+              - "{{ actionTokenSiteKeys }}"
+        versionedExpr: "{{ versionedExpr }}"
+        config:
+          srcIpRanges:
+            - "{{ srcIpRanges }}"
     - name: preview
-      value: boolean
-      description: >
+      value: {{ preview }}
+      description: |
         If set to true, the specified action is not enforced.
-        
-    - name: rateLimitOptions
-      value: object
-      description: >
-        Must be specified if the action is "rate_based_ban" or "throttle" or "fairshare". Cannot be specified for any other actions.
-        
-    - name: headerAction
-      value: object
-      description: >
-        Optional, additional actions that are performed on headers. This field is only supported in Global Security Policies of type CLOUD_ARMOR.
-        
-    - name: redirectOptions
-      value: object
-      description: >
-        Parameters defining the redirect action. Cannot be specified for any other actions. This field is only supported in Global Security Policies of type CLOUD_ARMOR.
-        
     - name: preconfiguredWafConfig
-      value: object
-      description: >
-        Preconfigured WAF configuration to be applied for the rule. If the rule does not evaluate preconfigured WAF rules, i.e., if evaluatePreconfiguredWaf() is not used, this field will have no effect.
-        
+      description: |
+        Preconfigured WAF configuration to be applied for the rule. If the rule
+        does not evaluate preconfigured WAF rules, i.e., if
+        evaluatePreconfiguredWaf() is not used, this field will have no effect.
+      value:
+        exclusions:
+          - targetRuleIds: "{{ targetRuleIds }}"
+            requestHeadersToExclude: "{{ requestHeadersToExclude }}"
+            requestQueryParamsToExclude: "{{ requestQueryParamsToExclude }}"
+            targetRuleSet: "{{ targetRuleSet }}"
+            requestUrisToExclude: "{{ requestUrisToExclude }}"
+            requestCookiesToExclude: "{{ requestCookiesToExclude }}"
+    - name: priority
+      value: {{ priority }}
+      description: |
+        An integer indicating the priority of a rule in the list. The priority
+        must be a positive value between 0 and 2147483647.
+        Rules are evaluated from highest to lowest priority where 0 is the
+        highest priority and 2147483647 is the lowest priority.
+    - name: rateLimitOptions
+      description: |
+        Must be specified if the action is "rate_based_ban" or "throttle" or
+        "fairshare". Cannot be specified for any other actions.
+      value:
+        exceedAction: "{{ exceedAction }}"
+        banDurationSec: {{ banDurationSec }}
+        exceedRedirectOptions:
+          target: "{{ target }}"
+          type: "{{ type }}"
+        enforceOnKey: "{{ enforceOnKey }}"
+        enforceOnKeyName: "{{ enforceOnKeyName }}"
+        banThreshold:
+          count: {{ count }}
+          intervalSec: {{ intervalSec }}
+        rateLimitThreshold:
+          count: {{ count }}
+          intervalSec: {{ intervalSec }}
+        conformAction: "{{ conformAction }}"
+        enforceOnKeyConfigs:
+          - enforceOnKeyType: "{{ enforceOnKeyType }}"
+            enforceOnKeyName: "{{ enforceOnKeyName }}"
+    - name: redirectOptions
+      description: |
+        Parameters defining the redirect action. Cannot be specified for any
+        other actions.
+        This field is only supported in Global Security Policies of type
+        CLOUD_ARMOR.
+      value:
+        target: "{{ target }}"
+        type: "{{ type }}"
+    - name: action
+      value: "{{ action }}"
+      description: |
+        The Action to perform when the rule is matched.
+        The following are the valid actions:
+        - allow: allow access to target.
+        - deny(STATUS): deny access to target, returns the
+        HTTP response code specified. Valid values for \`STATUS\`
+        are 403, 404, and 502.
+        - rate_based_ban: limit client traffic to the configured
+        threshold and ban the client if the traffic exceeds the threshold.
+        Configure parameters for this action in RateLimitOptions. Requires
+        rate_limit_options to be set.
+        - redirect: redirect to a different target. This can
+        either be an internal reCAPTCHA redirect, or an external URL-based
+        redirect via a 302 response. Parameters for this action can be configured
+        via redirectOptions. This action is only supported in Global Security
+        Policies of type CLOUD_ARMOR.
+        - throttle: limit
+        client traffic to the configured threshold. Configure parameters for this
+        action in rateLimitOptions. Requires rate_limit_options to be set for
+        this.
+        - fairshare (preview only): when traffic reaches the
+        threshold limit, requests from the clients matching this rule begin to be
+        rate-limited using the Fair Share algorithm. This action is only allowed
+        in security policies of type \`CLOUD_ARMOR_INTERNAL_SERVICE\`.
+    - name: headerAction
+      description: |
+        Optional, additional actions that are performed on headers.
+        This field is only supported in Global Security Policies of type
+        CLOUD_ARMOR.
+      value:
+        requestHeadersToAdds:
+          - headerName: "{{ headerName }}"
+            headerValue: "{{ headerValue }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -394,7 +492,6 @@ Deletes a rule at the specified priority.
 ```sql
 DELETE FROM google.compute.security_policies_rule
 WHERE project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND securityPolicy = '{{ securityPolicy }}' --required
 AND priority = '{{ priority }}'
 ;

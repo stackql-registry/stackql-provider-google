@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>snapshot_settings</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>snapshot_settings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="snapshot_settings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.snapshot_settings" /></td></tr>
 </tbody></table>
@@ -48,6 +49,11 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="accessLocation" /></td>
+    <td><code>object</code></td>
+    <td>(Regional snapshots use only)Policy of which location is allowed to access snapshot. (id: SnapshotSettingsAccessLocation)</td>
+</tr>
 <tr>
     <td><CopyableCode code="storageLocation" /></td>
     <td><code>object</code></td>
@@ -135,6 +141,7 @@ Get snapshot settings.
 
 ```sql
 SELECT
+accessLocation,
 storageLocation
 FROM google.compute.snapshot_settings
 WHERE project = '{{ project }}' -- required
@@ -159,7 +166,8 @@ Patch snapshot settings.
 ```sql
 UPDATE google.compute.snapshot_settings
 SET 
-data__storageLocation = '{{ storageLocation }}'
+data__storageLocation = '{{ storageLocation }}',
+data__accessLocation = '{{ accessLocation }}'
 WHERE 
 project = '{{ project }}' --required
 AND requestId = '{{ requestId}}'
@@ -172,6 +180,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,

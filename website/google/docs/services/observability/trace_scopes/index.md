@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>trace_scopes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>trace_scopes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="trace_scopes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.observability.trace_scopes" /></td></tr>
 </tbody></table>
@@ -286,17 +287,17 @@ Create a new TraceScope.
 
 ```sql
 INSERT INTO google.observability.trace_scopes (
+data__description,
 data__name,
 data__resourceNames,
-data__description,
 projectsId,
 locationsId,
 traceScopeId
 )
 SELECT 
+'{{ description }}',
 '{{ name }}',
 '{{ resourceNames }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ traceScopeId }}'
@@ -311,34 +312,32 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: trace_scopes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the trace_scopes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the trace_scopes resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the trace scope. For example: projects/my-project/locations/global/traceScopes/my-trace-scope
-        
-    - name: resourceNames
-      value: array
-      description: >
-        Required. Names of the projects that are included in this trace scope. * `projects/[PROJECT_ID]` A trace scope can include a maximum of 20 projects.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Describes this trace scope. The maximum length of the description is 8000 characters.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the trace scope. For example: projects/my-project/locations/global/traceScopes/my-trace-scope
+    - name: resourceNames
+      value:
+        - "{{ resourceNames }}"
+      description: |
+        Required. Names of the projects that are included in this trace scope. * \`projects/[PROJECT_ID]\` A trace scope can include a maximum of 20 projects.
     - name: traceScopeId
-      value: string
-```
+      value: "{{ traceScopeId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -358,9 +357,9 @@ Update a TraceScope.
 ```sql
 UPDATE google.observability.trace_scopes
 SET 
+data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__resourceNames = '{{ resourceNames }}',
-data__description = '{{ description }}'
+data__resourceNames = '{{ resourceNames }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>peerings</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>peerings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="peerings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedidentities.peerings" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this Peering.</td>
+    <td>Output only. The current state of this Peering. (STATE_UNSPECIFIED, CREATING, CONNECTED, DISCONNECTED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this Peering.</td>
+    <td>Output only. The current state of this Peering. (STATE_UNSPECIFIED, CREATING, CONNECTED, DISCONNECTED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Peerings in a given project.</td>
 </tr>
 <tr>
@@ -302,10 +303,10 @@ statusMessage,
 updateTime
 FROM google.managedidentities.peerings
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -350,31 +351,28 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: peerings
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the peerings resource.
     - name: authorizedNetwork
-      value: string
-      description: >
+      value: "{{ authorizedNetwork }}"
+      description: |
         Required. The full names of the Google Compute Engine [networks](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the instance is connected. Caller needs to make sure that CIDR subnets do not overlap between networks, else peering creation will fail.
-        
     - name: domainResource
-      value: string
-      description: >
-        Required. Full domain resource path for the Managed AD Domain involved in peering. The resource path should be in the form: `projects/{project_id}/locations/global/domains/{domain_name}`
-        
+      value: "{{ domainResource }}"
+      description: |
+        Required. Full domain resource path for the Managed AD Domain involved in peering. The resource path should be in the form: \`projects/{project_id}/locations/global/domains/{domain_name}\`
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Resource labels to represent user-provided metadata.
-        
     - name: peeringId
-      value: string
-```
+      value: "{{ peeringId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

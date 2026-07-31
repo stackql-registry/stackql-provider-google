@@ -18,13 +18,14 @@ networkservices service documentation.
 
 :::info[Service Summary]
 
-total resources: __21__  
+total resources: __24__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/networkservices/agent_gateways/">agent_gateways</a><br />
 <a href="/services/networkservices/authz_extensions/">authz_extensions</a><br />
 <a href="/services/networkservices/edge_cache_keysets_iam_policies/">edge_cache_keysets_iam_policies</a><br />
 <a href="/services/networkservices/edge_cache_origins_iam_policies/">edge_cache_origins_iam_policies</a><br />
@@ -40,6 +41,8 @@ total resources: __21__
 <div class="providerDocColumn">
 <a href="/services/networkservices/locations/">locations</a><br />
 <a href="/services/networkservices/meshes/">meshes</a><br />
+<a href="/services/networkservices/multicast_consumer_associations/">multicast_consumer_associations</a><br />
+<a href="/services/networkservices/multicast_group_consumer_activations/">multicast_group_consumer_activations</a><br />
 <a href="/services/networkservices/operations/">operations</a><br />
 <a href="/services/networkservices/route_views/">route_views</a><br />
 <a href="/services/networkservices/service_bindings/">service_bindings</a><br />

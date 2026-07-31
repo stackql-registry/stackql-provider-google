@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schemas</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schemas</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schemas" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.schemas" /></td></tr>
 </tbody></table>
@@ -35,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_collections_data_stores_schemas_get"
     values={[
         { label: 'projects_locations_collections_data_stores_schemas_get', value: 'projects_locations_collections_data_stores_schemas_get' },
-        { label: 'projects_locations_collections_data_stores_schemas_list', value: 'projects_locations_collections_data_stores_schemas_list' },
         { label: 'projects_locations_data_stores_schemas_get', value: 'projects_locations_data_stores_schemas_get' },
+        { label: 'projects_locations_collections_data_stores_schemas_list', value: 'projects_locations_collections_data_stores_schemas_list' },
         { label: 'projects_locations_data_stores_schemas_list', value: 'projects_locations_data_stores_schemas_list' }
     ]}
 >
@@ -69,7 +70,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_collections_data_stores_schemas_list">
+<TabItem value="projects_locations_data_stores_schemas_get">
 
 <table>
 <thead>
@@ -98,7 +99,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_data_stores_schemas_get">
+<TabItem value="projects_locations_collections_data_stores_schemas_list">
 
 <table>
 <thead>
@@ -181,18 +182,18 @@ The following methods are available for this resource:
     <td>Gets a Schema.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_schemas_list"><CopyableCode code="projects_locations_collections_data_stores_schemas_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Gets a list of Schemas.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_stores_schemas_get"><CopyableCode code="projects_locations_data_stores_schemas_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
     <td></td>
     <td>Gets a Schema.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_stores_schemas_list"><CopyableCode code="projects_locations_collections_data_stores_schemas_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Gets a list of Schemas.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_stores_schemas_list"><CopyableCode code="projects_locations_data_stores_schemas_list" /></a></td>
@@ -313,8 +314,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_collections_data_stores_schemas_get"
     values={[
         { label: 'projects_locations_collections_data_stores_schemas_get', value: 'projects_locations_collections_data_stores_schemas_get' },
-        { label: 'projects_locations_collections_data_stores_schemas_list', value: 'projects_locations_collections_data_stores_schemas_list' },
         { label: 'projects_locations_data_stores_schemas_get', value: 'projects_locations_data_stores_schemas_get' },
+        { label: 'projects_locations_collections_data_stores_schemas_list', value: 'projects_locations_collections_data_stores_schemas_list' },
         { label: 'projects_locations_data_stores_schemas_list', value: 'projects_locations_data_stores_schemas_list' }
     ]}
 >
@@ -336,6 +337,23 @@ AND schemasId = '{{ schemasId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_data_stores_schemas_get">
+
+Gets a Schema.
+
+```sql
+SELECT
+name,
+jsonSchema,
+structSchema
+FROM google.discoveryengine.schemas
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND schemasId = '{{ schemasId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="projects_locations_collections_data_stores_schemas_list">
 
 Gets a list of Schemas.
@@ -352,23 +370,6 @@ AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_schemas_get">
-
-Gets a Schema.
-
-```sql
-SELECT
-name,
-jsonSchema,
-structSchema
-FROM google.discoveryengine.schemas
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND schemasId = '{{ schemasId }}' -- required
 ;
 ```
 </TabItem>
@@ -410,8 +411,8 @@ Creates a Schema.
 ```sql
 INSERT INTO google.discoveryengine.schemas (
 data__name,
-data__structSchema,
 data__jsonSchema,
+data__structSchema,
 projectsId,
 locationsId,
 collectionsId,
@@ -420,8 +421,8 @@ schemaId
 )
 SELECT 
 '{{ name }}',
-'{{ structSchema }}',
 '{{ jsonSchema }}',
+'{{ structSchema }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -443,8 +444,8 @@ Creates a Schema.
 ```sql
 INSERT INTO google.discoveryengine.schemas (
 data__name,
-data__structSchema,
 data__jsonSchema,
+data__structSchema,
 projectsId,
 locationsId,
 dataStoresId,
@@ -452,8 +453,8 @@ schemaId
 )
 SELECT 
 '{{ name }}',
-'{{ structSchema }}',
 '{{ jsonSchema }}',
+'{{ structSchema }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataStoresId }}',
@@ -469,40 +470,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: schemas
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the schemas resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the schemas resource.
     - name: collectionsId
-      value: string
+      value: "{{ collectionsId }}"
       description: Required parameter for the schemas resource.
     - name: dataStoresId
-      value: string
+      value: "{{ dataStoresId }}"
       description: Required parameter for the schemas resource.
     - name: name
-      value: string
-      description: >
-        Immutable. The full resource name of the schema, in the format of `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/schemas/{schema}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
-        
-    - name: structSchema
-      value: object
-      description: >
-        The structured representation of the schema.
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. The full resource name of the schema, in the format of \`projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/schemas/{schema}\`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
     - name: jsonSchema
-      value: string
-      description: >
+      value: "{{ jsonSchema }}"
+      description: |
         The JSON representation of the schema.
-        
+    - name: structSchema
+      value: "{{ structSchema }}"
+      description: |
+        The structured representation of the schema.
     - name: schemaId
-      value: string
-```
+      value: "{{ schemaId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -524,8 +522,8 @@ Updates a Schema.
 UPDATE google.discoveryengine.schemas
 SET 
 data__name = '{{ name }}',
-data__structSchema = '{{ structSchema }}',
-data__jsonSchema = '{{ jsonSchema }}'
+data__jsonSchema = '{{ jsonSchema }}',
+data__structSchema = '{{ structSchema }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -549,8 +547,8 @@ Updates a Schema.
 UPDATE google.discoveryengine.schemas
 SET 
 data__name = '{{ name }}',
-data__structSchema = '{{ structSchema }}',
-data__jsonSchema = '{{ jsonSchema }}'
+data__jsonSchema = '{{ jsonSchema }}',
+data__structSchema = '{{ structSchema }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

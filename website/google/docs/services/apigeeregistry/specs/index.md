@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>specs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>specs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="specs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigeeregistry.specs" /></td></tr>
 </tbody></table>
@@ -234,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_versions_specs_list"><CopyableCode code="projects_locations_apis_versions_specs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Returns matching specs.</td>
 </tr>
 <tr>
@@ -419,10 +420,10 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -444,14 +445,14 @@ Creates a specified spec.
 
 ```sql
 INSERT INTO google.apigeeregistry.specs (
-data__sourceUri,
-data__mimeType,
-data__contents,
-data__filename,
-data__labels,
-data__annotations,
 data__name,
+data__labels,
 data__description,
+data__contents,
+data__annotations,
+data__sourceUri,
+data__filename,
+data__mimeType,
 projectsId,
 locationsId,
 apisId,
@@ -459,14 +460,14 @@ versionsId,
 apiSpecId
 )
 SELECT 
-'{{ sourceUri }}',
-'{{ mimeType }}',
-'{{ contents }}',
-'{{ filename }}',
-'{{ labels }}',
-'{{ annotations }}',
 '{{ name }}',
+'{{ labels }}',
 '{{ description }}',
+'{{ contents }}',
+'{{ annotations }}',
+'{{ sourceUri }}',
+'{{ filename }}',
+'{{ mimeType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -492,65 +493,57 @@ sourceUri
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: specs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the specs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the specs resource.
     - name: apisId
-      value: string
+      value: "{{ apisId }}"
       description: Required parameter for the specs resource.
     - name: versionsId
-      value: string
+      value: "{{ versionsId }}"
       description: Required parameter for the specs resource.
-    - name: sourceUri
-      value: string
-      description: >
-        The original source URI of the spec (if one exists). This is an external location that can be used for reference purposes but which may not be authoritative since this external resource may change after the spec is retrieved.
-        
-    - name: mimeType
-      value: string
-      description: >
-        A style (format) descriptor for this spec that is specified as a [Media Type](https://en.wikipedia.org/wiki/Media_type). Possible values include `application/vnd.apigee.proto`, `application/vnd.apigee.openapi`, and `application/vnd.apigee.graphql`, with possible suffixes representing compression types. These hypothetical names are defined in the vendor tree defined in RFC6838 (https://tools.ietf.org/html/rfc6838) and are not final. Content types can specify compression. Currently only GZip compression is supported (indicated with "+gzip").
-        
-    - name: contents
-      value: string
-      description: >
-        Input only. The contents of the spec. Provided by API callers when specs are created or updated. To access the contents of a spec, use GetApiSpecContents.
-        
-    - name: filename
-      value: string
-      description: >
-        A possibly-hierarchical name used to refer to the spec from other specs.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `apigeeregistry.googleapis.com/` and cannot be changed.
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Resource name.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \`apigeeregistry.googleapis.com/\` and cannot be changed.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         A detailed description.
-        
+    - name: contents
+      value: "{{ contents }}"
+      description: |
+        Input only. The contents of the spec. Provided by API callers when specs are created or updated. To access the contents of a spec, use GetApiSpecContents.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
+    - name: sourceUri
+      value: "{{ sourceUri }}"
+      description: |
+        The original source URI of the spec (if one exists). This is an external location that can be used for reference purposes but which may not be authoritative since this external resource may change after the spec is retrieved.
+    - name: filename
+      value: "{{ filename }}"
+      description: |
+        A possibly-hierarchical name used to refer to the spec from other specs.
+    - name: mimeType
+      value: "{{ mimeType }}"
+      description: |
+        A style (format) descriptor for this spec that is specified as a [Media Type](https://en.wikipedia.org/wiki/Media_type). Possible values include \`application/vnd.apigee.proto\`, \`application/vnd.apigee.openapi\`, and \`application/vnd.apigee.graphql\`, with possible suffixes representing compression types. These hypothetical names are defined in the vendor tree defined in RFC6838 (https://tools.ietf.org/html/rfc6838) and are not final. Content types can specify compression. Currently only GZip compression is supported (indicated with "+gzip").
     - name: apiSpecId
-      value: string
-```
+      value: "{{ apiSpecId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -570,14 +563,14 @@ Used to modify a specified spec.
 ```sql
 UPDATE google.apigeeregistry.specs
 SET 
-data__sourceUri = '{{ sourceUri }}',
-data__mimeType = '{{ mimeType }}',
-data__contents = '{{ contents }}',
-data__filename = '{{ filename }}',
-data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__labels = '{{ labels }}',
+data__description = '{{ description }}',
+data__contents = '{{ contents }}',
+data__annotations = '{{ annotations }}',
+data__sourceUri = '{{ sourceUri }}',
+data__filename = '{{ filename }}',
+data__mimeType = '{{ mimeType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

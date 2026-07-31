@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resources</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.containeranalysis.resources" /></td></tr>
 </tbody></table>
@@ -50,16 +51,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_resources_export_sbom"><CopyableCode code="projects_resources_export_sbom" /></a></td>
+    <td><a href="#projects_locations_resources_export_sbom"><CopyableCode code="projects_locations_resources_export_sbom" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
     <td></td>
     <td>Generates an SBOM for the given resource.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_resources_export_sbom"><CopyableCode code="projects_locations_resources_export_sbom" /></a></td>
+    <td><a href="#projects_resources_export_sbom"><CopyableCode code="projects_resources_export_sbom" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
     <td></td>
     <td>Generates an SBOM for the given resource.</td>
 </tr>
@@ -100,27 +101,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_resources_export_sbom"
+    defaultValue="projects_locations_resources_export_sbom"
     values={[
-        { label: 'projects_resources_export_sbom', value: 'projects_resources_export_sbom' },
-        { label: 'projects_locations_resources_export_sbom', value: 'projects_locations_resources_export_sbom' }
+        { label: 'projects_locations_resources_export_sbom', value: 'projects_locations_resources_export_sbom' },
+        { label: 'projects_resources_export_sbom', value: 'projects_resources_export_sbom' }
     ]}
 >
-<TabItem value="projects_resources_export_sbom">
-
-Generates an SBOM for the given resource.
-
-```sql
-EXEC google.containeranalysis.resources.projects_resources_export_sbom 
-@projectsId='{{ projectsId }}' --required, 
-@resourcesId='{{ resourcesId }}' --required 
-@@json=
-'{
-"cloudStorageLocation": "{{ cloudStorageLocation }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_resources_export_sbom">
 
 Generates an SBOM for the given resource.
@@ -129,6 +115,21 @@ Generates an SBOM for the given resource.
 EXEC google.containeranalysis.resources.projects_locations_resources_export_sbom 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@resourcesId='{{ resourcesId }}' --required 
+@@json=
+'{
+"cloudStorageLocation": "{{ cloudStorageLocation }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_resources_export_sbom">
+
+Generates an SBOM for the given resource.
+
+```sql
+EXEC google.containeranalysis.resources.projects_resources_export_sbom 
+@projectsId='{{ projectsId }}' --required, 
 @resourcesId='{{ resourcesId }}' --required 
 @@json=
 '{

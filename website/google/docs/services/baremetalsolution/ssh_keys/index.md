@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>ssh_keys</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>ssh_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="ssh_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.baremetalsolution.ssh_keys" /></td></tr>
 </tbody></table>
@@ -208,24 +209,23 @@ publicKey
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: ssh_keys
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the ssh_keys resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the ssh_keys resource.
     - name: publicKey
-      value: string
-      description: >
+      value: "{{ publicKey }}"
+      description: |
         The public SSH key. This must be in OpenSSH .authorized_keys format.
-        
     - name: sshKeyId
-      value: string
-```
+      value: "{{ sshKeyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>adaptive_mt_files</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>adaptive_mt_files</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="adaptive_mt_files" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.adaptive_mt_files" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The resource name of the file, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/adaptiveMtDatasets/&#123;dataset&#125;/adaptiveMtFiles/&#123;file&#125;`</td>
+    <td>Identifier. The resource name of the file, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/adaptiveMtDatasets/&#123;dataset&#125;/adaptiveMtFiles/&#123;file&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The resource name of the file, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/adaptiveMtDatasets/&#123;dataset&#125;/adaptiveMtFiles/&#123;file&#125;`</td>
+    <td>Identifier. The resource name of the file, in form of `projects/&#123;project-number-or-id&#125;/locations/&#123;location_id&#125;/adaptiveMtDatasets/&#123;dataset&#125;/adaptiveMtFiles/&#123;file&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>

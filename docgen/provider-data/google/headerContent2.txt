@@ -62,3 +62,119 @@ or using PowerShell:
 $Auth = "{ 'google': { 'type': 'interactive' }}"
 stackql.exe shell --auth=$Auth
 ```
+## Compute inventory
+
+All virtual machines in a project across every zone, with their state:
+
+```sql
+SELECT
+  name,
+  status,
+  machineType,
+  zone
+FROM google.compute.instances
+WHERE project = 'my-project';
+```
+
+Instance counts by status - a one-line capacity/spend sanity check:
+
+```sql
+SELECT status, count(*) AS instances
+FROM google.compute.instances
+WHERE project = 'my-project'
+GROUP BY status;
+```
+
+## Open firewall audit
+
+Ingress rules open to the entire internet, and what they allow:
+
+```sql
+SELECT
+  name,
+  direction,
+  sourceRanges,
+  allowed
+FROM google.compute.firewalls
+WHERE project = 'my-project'
+AND sourceRanges LIKE '%0.0.0.0/0%';
+```
+
+## Storage bucket estate
+
+Buckets by age, with location and storage class:
+
+```sql
+SELECT
+  name,
+  location,
+  storageClass,
+  timeCreated
+FROM google.storage.buckets
+WHERE project = 'my-project'
+ORDER BY timeCreated DESC;
+```
+
+## Service accounts
+
+Every service account in the project - review this list regularly:
+
+```sql
+SELECT
+  email,
+  displayName,
+  disabled
+FROM google.iam.service_accounts
+WHERE projectsId = 'my-project';
+```
+
+## Enabled APIs
+
+Which services are switched on in the project (filtered server-side):
+
+```sql
+SELECT
+  json_extract(config, '$.name') AS api,
+  state
+FROM google.serviceusage.services
+WHERE parent = 'my-project'
+AND parentType = 'projects'
+AND filter = 'state:ENABLED';
+```
+
+## Project metadata
+
+```sql
+SELECT projectId, displayName, state
+FROM google.cloudresourcemanager.projects
+WHERE projectsId = 'my-project';
+```
+
+## Provision, mutate and tear down
+
+Mutations use the same SQL grammar - `INSERT` creates a resource, `UPDATE` patches it, `EXEC` invokes lifecycle methods and `DELETE` removes it. A bucket end to end:
+
+```sql
+-- create
+INSERT INTO google.storage.buckets (project, data__name, data__location, data__storageClass)
+SELECT 'my-project', 'my-unique-bucket-name', 'US', 'STANDARD';
+
+-- label it
+UPDATE google.storage.buckets
+SET data__labels = '{"env": "dev", "provisioner": "stackql"}'
+WHERE bucket = 'my-unique-bucket-name';
+
+-- remove it
+DELETE FROM google.storage.buckets
+WHERE bucket = 'my-unique-bucket-name';
+```
+
+Lifecycle operations, like stopping and starting a VM, are invoked with `EXEC`:
+
+```sql
+EXEC google.compute.instances.stop
+  @instance = 'my-vm', @project = 'my-project', @zone = 'us-central1-a';
+
+EXEC google.compute.instances.start
+  @instance = 'my-vm', @project = 'my-project', @zone = 'us-central1-a';
+```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>odb_subnets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>odb_subnets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="odb_subnets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.odb_subnets" /></td></tr>
 </tbody></table>
@@ -72,12 +73,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="purpose" /></td>
     <td><code>string</code></td>
-    <td>Required. Purpose of the subnet.</td>
+    <td>Required. Purpose of the subnet. (PURPOSE_UNSPECIFIED, CLIENT_SUBNET, BACKUP_SUBNET)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the ODB Subnet.</td>
+    <td>Output only. State of the ODB Subnet. (STATE_UNSPECIFIED, PROVISIONING, AVAILABLE, TERMINATING, FAILED)</td>
 </tr>
 </tbody>
 </table>
@@ -93,36 +94,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The name of the OdbSubnet resource in the following format: projects/&#123;project&#125;/locations/&#123;location&#125;/odbNetworks/&#123;odb_network&#125;/odbSubnets/&#123;odb_subnet&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cidrRange" /></td>
-    <td><code>string</code></td>
-    <td>Required. The CIDR range of the subnet.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The date and time that the OdbNetwork was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels or tags associated with the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="purpose" /></td>
-    <td><code>string</code></td>
-    <td>Required. Purpose of the subnet.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. State of the ODB Subnet.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -154,14 +125,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-odbNetworksId"><code>odbNetworksId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all the ODB Subnets in a given ODB Network.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-odbNetworksId"><code>odbNetworksId</code></a></td>
-    <td><a href="#parameter-odbSubnetId"><code>odbSubnetId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-odbSubnetId"><code>odbSubnetId</code></a></td>
     <td>Creates a new ODB Subnet in a given ODB Network.</td>
 </tr>
 <tr>
@@ -275,20 +246,15 @@ Lists all the ODB Subnets in a given ODB Network.
 
 ```sql
 SELECT
-name,
-cidrRange,
-createTime,
-labels,
-purpose,
-state
+*
 FROM google.oracledatabase.odb_subnets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND odbNetworksId = '{{ odbNetworksId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -311,25 +277,25 @@ Creates a new ODB Subnet in a given ODB Network.
 ```sql
 INSERT INTO google.oracledatabase.odb_subnets (
 data__name,
-data__cidrRange,
-data__purpose,
 data__labels,
+data__purpose,
+data__cidrRange,
 projectsId,
 locationsId,
 odbNetworksId,
-odbSubnetId,
-requestId
+requestId,
+odbSubnetId
 )
 SELECT 
 '{{ name }}',
-'{{ cidrRange }}',
-'{{ purpose }}',
 '{{ labels }}',
+'{{ purpose }}',
+'{{ cidrRange }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ odbNetworksId }}',
-'{{ odbSubnetId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ odbSubnetId }}'
 RETURNING
 name,
 done,
@@ -341,45 +307,41 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: odb_subnets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the odb_subnets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the odb_subnets resource.
     - name: odbNetworksId
-      value: string
+      value: "{{ odbNetworksId }}"
       description: Required parameter for the odb_subnets resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The name of the OdbSubnet resource in the following format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
-        
-    - name: cidrRange
-      value: string
-      description: >
-        Required. The CIDR range of the subnet.
-        
-    - name: purpose
-      value: string
-      description: >
-        Required. Purpose of the subnet.
-        
-      valid_values: ['PURPOSE_UNSPECIFIED', 'CLIENT_SUBNET', 'BACKUP_SUBNET']
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels or tags associated with the resource.
-        
-    - name: odbSubnetId
-      value: string
+    - name: purpose
+      value: "{{ purpose }}"
+      description: |
+        Required. Purpose of the subnet.
+      valid_values: ['PURPOSE_UNSPECIFIED', 'CLIENT_SUBNET', 'BACKUP_SUBNET']
+    - name: cidrRange
+      value: "{{ cidrRange }}"
+      description: |
+        Required. The CIDR range of the subnet.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: odbSubnetId
+      value: "{{ odbSubnetId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

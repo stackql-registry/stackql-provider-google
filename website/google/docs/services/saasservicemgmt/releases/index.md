@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>releases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>releases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="releases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.saasservicemgmt.releases" /></td></tr>
 </tbody></table>
@@ -166,14 +167,14 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-releaseId"><code>releaseId</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-releaseId"><code>releaseId</code></a></td>
     <td>Create a new release.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a single release.</td>
 </tr>
 <tr>
@@ -332,31 +333,31 @@ Create a new release.
 
 ```sql
 INSERT INTO google.saasservicemgmt.releases (
+data__inputVariableDefaults,
+data__labels,
 data__name,
 data__unitKind,
-data__labels,
-data__releaseRequirements,
-data__annotations,
-data__inputVariableDefaults,
 data__blueprint,
+data__annotations,
+data__releaseRequirements,
 projectsId,
 locationsId,
-requestId,
 validateOnly,
+requestId,
 releaseId
 )
 SELECT 
+'{{ inputVariableDefaults }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ unitKind }}',
-'{{ labels }}',
-'{{ releaseRequirements }}',
-'{{ annotations }}',
-'{{ inputVariableDefaults }}',
 '{{ blueprint }}',
+'{{ annotations }}',
+'{{ releaseRequirements }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
 '{{ validateOnly }}',
+'{{ requestId }}',
 '{{ releaseId }}'
 RETURNING
 name,
@@ -377,58 +378,59 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: releases
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the releases resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the releases resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/releases/{release}"
-        
-    - name: unitKind
-      value: string
-      description: >
-        Required. Immutable. Reference to the UnitKind this Release corresponds to (required and immutable once created).
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-        
-    - name: releaseRequirements
-      value: object
-      description: >
-        Optional. Set of requirements to be fulfilled on the Unit when using this Release.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-        
     - name: inputVariableDefaults
-      value: array
-      description: >
+      description: |
         Optional. Mapping of input variables to default values. Maximum 100
-        
+      value:
+        - variable: "{{ variable }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/releases/{release}"
+    - name: unitKind
+      value: "{{ unitKind }}"
+      description: |
+        Required. Immutable. Reference to the UnitKind this Release corresponds to (required and immutable once created).
     - name: blueprint
-      value: object
-      description: >
+      description: |
         Optional. Blueprints are OCI Images that contain all of the artifacts needed to provision a unit.
-        
-    - name: requestId
-      value: string
+      value:
+        package: "{{ package }}"
+        engine: "{{ engine }}"
+        version: "{{ version }}"
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
+    - name: releaseRequirements
+      description: |
+        Optional. Set of requirements to be fulfilled on the Unit when using this Release.
+      value:
+        upgradeableFromReleases:
+          - "{{ upgradeableFromReleases }}"
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
+    - name: requestId
+      value: "{{ requestId }}"
     - name: releaseId
-      value: string
-```
+      value: "{{ releaseId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -448,20 +450,20 @@ Update a single release.
 ```sql
 UPDATE google.saasservicemgmt.releases
 SET 
+data__inputVariableDefaults = '{{ inputVariableDefaults }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
 data__unitKind = '{{ unitKind }}',
-data__labels = '{{ labels }}',
-data__releaseRequirements = '{{ releaseRequirements }}',
+data__blueprint = '{{ blueprint }}',
 data__annotations = '{{ annotations }}',
-data__inputVariableDefaults = '{{ inputVariableDefaults }}',
-data__blueprint = '{{ blueprint }}'
+data__releaseRequirements = '{{ releaseRequirements }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND releasesId = '{{ releasesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 annotations,

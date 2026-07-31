@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apps</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apps</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apps" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.apps" /></td></tr>
 </tbody></table>
@@ -36,9 +37,9 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'organizations_developers_apps_get', value: 'organizations_developers_apps_get' },
         { label: 'organizations_appgroups_apps_get', value: 'organizations_appgroups_apps_get' },
+        { label: 'organizations_apps_get', value: 'organizations_apps_get' },
         { label: 'organizations_developers_apps_list', value: 'organizations_developers_apps_list' },
         { label: 'organizations_appgroups_apps_list', value: 'organizations_appgroups_apps_list' },
-        { label: 'organizations_apps_get', value: 'organizations_apps_get' },
         { label: 'organizations_apps_list', value: 'organizations_apps_list' }
     ]}
 >
@@ -122,99 +123,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_appgroups_apps_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Name of the AppGroup app whose resource name format is of syntax (organizations/*/appgroups/*/apps/*).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="apiProducts" /></td>
-    <td><code>array</code></td>
-    <td>List of API products associated with the AppGroup app.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="appGroup" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Name of the parent AppGroup whose resource name format is of syntax (organizations/*/appgroups/*).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="appId" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. ID of the AppGroup app.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="attributes" /></td>
-    <td><code>array</code></td>
-    <td>List of attributes for the AppGroup app.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="callbackUrl" /></td>
-    <td><code>string</code></td>
-    <td>Callback URL used by OAuth 2.0 authorization servers to communicate authorization codes back to AppGroup apps.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createdAt" /></td>
-    <td><code>string (int64)</code></td>
-    <td>Output only. Time the AppGroup app was created in milliseconds since epoch.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="credentials" /></td>
-    <td><code>array</code></td>
-    <td>Output only. Set of credentials for the AppGroup app consisting of the consumer key/secret pairs associated with the API products.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="keyExpiresIn" /></td>
-    <td><code>string (int64)</code></td>
-    <td>Immutable. Expiration time, in seconds, for the consumer key that is generated for the AppGroup app. If not set or left to the default value of `-1`, the API key never expires. The expiration time can't be updated after it is set.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastModifiedAt" /></td>
-    <td><code>string (int64)</code></td>
-    <td>Output only. Time the AppGroup app was modified in milliseconds since epoch.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="scopes" /></td>
-    <td><code>array</code></td>
-    <td>Scopes to apply to the AppGroup app. The specified scopes must already exist for the API product that you associate with the AppGroup app.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="status" /></td>
-    <td><code>string</code></td>
-    <td>Status of the App. Valid values include `approved` or `revoked`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="organizations_developers_apps_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="app" /></td>
-    <td><code>array</code></td>
-    <td>List of developer apps and their credentials.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="organizations_appgroups_apps_list">
 
 <table>
 <thead>
@@ -377,6 +285,99 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="organizations_developers_apps_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="app" /></td>
+    <td><code>array</code></td>
+    <td>List of developer apps and their credentials.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_appgroups_apps_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Name of the AppGroup app whose resource name format is of syntax (organizations/*/appgroups/*/apps/*).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="apiProducts" /></td>
+    <td><code>array</code></td>
+    <td>List of API products associated with the AppGroup app.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="appGroup" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Name of the parent AppGroup whose resource name format is of syntax (organizations/*/appgroups/*).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="appId" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. ID of the AppGroup app.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="attributes" /></td>
+    <td><code>array</code></td>
+    <td>List of attributes for the AppGroup app.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="callbackUrl" /></td>
+    <td><code>string</code></td>
+    <td>Callback URL used by OAuth 2.0 authorization servers to communicate authorization codes back to AppGroup apps.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createdAt" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time the AppGroup app was created in milliseconds since epoch.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="credentials" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Set of credentials for the AppGroup app consisting of the consumer key/secret pairs associated with the API products.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="keyExpiresIn" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Immutable. Expiration time, in seconds, for the consumer key that is generated for the AppGroup app. If not set or left to the default value of `-1`, the API key never expires. The expiration time can't be updated after it is set.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastModifiedAt" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time the AppGroup app was modified in milliseconds since epoch.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scopes" /></td>
+    <td><code>array</code></td>
+    <td>Scopes to apply to the AppGroup app. The specified scopes must already exist for the API product that you associate with the AppGroup app.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="status" /></td>
+    <td><code>string</code></td>
+    <td>Status of the App. Valid values include `approved` or `revoked`.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_apps_list">
 
 <table>
@@ -487,7 +488,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_developers_apps_get"><CopyableCode code="organizations_developers_apps_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td><a href="#parameter-entity"><code>entity</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-entity"><code>entity</code></a></td>
     <td>Returns the details for a developer app.</td>
 </tr>
 <tr>
@@ -498,10 +499,17 @@ The following methods are available for this resource:
     <td>Returns the details for an AppGroup app.</td>
 </tr>
 <tr>
+    <td><a href="#organizations_apps_get"><CopyableCode code="organizations_apps_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
+    <td></td>
+    <td>Gets the app profile for the specified app ID.</td>
+</tr>
+<tr>
     <td><a href="#organizations_developers_apps_list"><CopyableCode code="organizations_developers_apps_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a></td>
-    <td><a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-count"><code>count</code></a>, <a href="#parameter-shallowExpand"><code>shallowExpand</code></a></td>
+    <td><a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-count"><code>count</code></a>, <a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-shallowExpand"><code>shallowExpand</code></a></td>
     <td>Lists all apps created by a developer in an Apigee organization. Optionally, you can request an expanded view of the developer apps. A maximum of 100 developer apps are returned per API call. You can paginate the list of deveoper apps returned using the `startKey` and `count` query parameters.</td>
 </tr>
 <tr>
@@ -512,17 +520,10 @@ The following methods are available for this resource:
     <td>Lists all apps created by an AppGroup in an Apigee organization. Optionally, you can request an expanded view of the AppGroup apps. Lists all AppGroupApps in an AppGroup. A maximum of 1000 AppGroup apps are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apps_get"><CopyableCode code="organizations_apps_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td></td>
-    <td>Gets the app profile for the specified app ID.</td>
-</tr>
-<tr>
     <td><a href="#organizations_apps_list"><CopyableCode code="organizations_apps_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-apptype"><code>apptype</code></a>, <a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-keyStatus"><code>keyStatus</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeCred"><code>includeCred</code></a>, <a href="#parameter-apiProduct"><code>apiProduct</code></a>, <a href="#parameter-rows"><code>rows</code></a>, <a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-ids"><code>ids</code></a>, <a href="#parameter-status"><code>status</code></a></td>
+    <td><a href="#parameter-apiProduct"><code>apiProduct</code></a>, <a href="#parameter-rows"><code>rows</code></a>, <a href="#parameter-ids"><code>ids</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-keyStatus"><code>keyStatus</code></a>, <a href="#parameter-apptype"><code>apptype</code></a>, <a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-includeCred"><code>includeCred</code></a></td>
     <td>Lists IDs of apps within an organization that have the specified app status (approved or revoked) or are of the specified app type (developer or company).</td>
 </tr>
 <tr>
@@ -544,14 +545,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
     <td></td>
-    <td>Updates the details for a developer app. In addition, you can add an API product to a developer app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateDeveloperAppKey API. Using this API, you cannot update the following: * App name as it is the primary key used to identify the app and cannot be changed. * Scopes associated with the app. Instead, use the ReplaceDeveloperAppKey API. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively.</td>
+    <td>Updates the details for a developer app. In addition, you can add an API product to a developer app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateDeveloperAppKey API. Using this API, you cannot update the following: * App name as it is the primary key used to identify the app and cannot be changed. * Scopes associated with the app. Instead, use the ReplaceDeveloperAppKey API. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. **Note:** We recommend that you avoid making concurrent update requests for the same resource. Near-simultaneous writes to the same entity can result in conflicts and unexpected behavior. Ensure operations are sequential when modifying a single resource.</td>
 </tr>
 <tr>
     <td><a href="#organizations_appgroups_apps_update"><CopyableCode code="organizations_appgroups_apps_update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
     <td><a href="#parameter-action"><code>action</code></a></td>
-    <td>Updates the details for an AppGroup app. In addition, you can add an API product to an AppGroup app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateAppGroupAppKey API. Using this API, you cannot update the app name, as it is the primary key used to identify the app and cannot be changed. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively.</td>
+    <td>Updates the details for an AppGroup app. In addition, you can add an API product to an AppGroup app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateAppGroupAppKey API. Using this API, you cannot update the app name, as it is the primary key used to identify the app and cannot be changed. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. **Note:** We recommend that you avoid making concurrent update requests for the same resource. Near-simultaneous writes to the same entity can result in conflicts and unexpected behavior. Ensure operations are sequential when modifying a single resource.</td>
 </tr>
 <tr>
     <td><a href="#organizations_developers_apps_delete"><CopyableCode code="organizations_developers_apps_delete" /></a></td>
@@ -712,9 +713,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'organizations_developers_apps_get', value: 'organizations_developers_apps_get' },
         { label: 'organizations_appgroups_apps_get', value: 'organizations_appgroups_apps_get' },
+        { label: 'organizations_apps_get', value: 'organizations_apps_get' },
         { label: 'organizations_developers_apps_list', value: 'organizations_developers_apps_list' },
         { label: 'organizations_appgroups_apps_list', value: 'organizations_appgroups_apps_list' },
-        { label: 'organizations_apps_get', value: 'organizations_apps_get' },
         { label: 'organizations_apps_list', value: 'organizations_apps_list' }
     ]}
 >
@@ -741,8 +742,8 @@ FROM google.apigee.apps
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND developersId = '{{ developersId }}' -- required
 AND appsId = '{{ appsId }}' -- required
-AND entity = '{{ entity }}'
 AND query = '{{ query }}'
+AND entity = '{{ entity }}'
 ;
 ```
 </TabItem>
@@ -768,49 +769,6 @@ FROM google.apigee.apps
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND appgroupsId = '{{ appgroupsId }}' -- required
 AND appsId = '{{ appsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="organizations_developers_apps_list">
-
-Lists all apps created by a developer in an Apigee organization. Optionally, you can request an expanded view of the developer apps. A maximum of 100 developer apps are returned per API call. You can paginate the list of deveoper apps returned using the `startKey` and `count` query parameters.
-
-```sql
-SELECT
-app
-FROM google.apigee.apps
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND developersId = '{{ developersId }}' -- required
-AND expand = '{{ expand }}'
-AND startKey = '{{ startKey }}'
-AND count = '{{ count }}'
-AND shallowExpand = '{{ shallowExpand }}'
-;
-```
-</TabItem>
-<TabItem value="organizations_appgroups_apps_list">
-
-Lists all apps created by an AppGroup in an Apigee organization. Optionally, you can request an expanded view of the AppGroup apps. Lists all AppGroupApps in an AppGroup. A maximum of 1000 AppGroup apps are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.
-
-```sql
-SELECT
-name,
-apiProducts,
-appGroup,
-appId,
-attributes,
-callbackUrl,
-createdAt,
-credentials,
-keyExpiresIn,
-lastModifiedAt,
-scopes,
-status
-FROM google.apigee.apps
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND appgroupsId = '{{ appgroupsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -841,6 +799,49 @@ AND appsId = '{{ appsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="organizations_developers_apps_list">
+
+Lists all apps created by a developer in an Apigee organization. Optionally, you can request an expanded view of the developer apps. A maximum of 100 developer apps are returned per API call. You can paginate the list of deveoper apps returned using the `startKey` and `count` query parameters.
+
+```sql
+SELECT
+app
+FROM google.apigee.apps
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND developersId = '{{ developersId }}' -- required
+AND expand = '{{ expand }}'
+AND count = '{{ count }}'
+AND startKey = '{{ startKey }}'
+AND shallowExpand = '{{ shallowExpand }}'
+;
+```
+</TabItem>
+<TabItem value="organizations_appgroups_apps_list">
+
+Lists all apps created by an AppGroup in an Apigee organization. Optionally, you can request an expanded view of the AppGroup apps. Lists all AppGroupApps in an AppGroup. A maximum of 1000 AppGroup apps are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.
+
+```sql
+SELECT
+name,
+apiProducts,
+appGroup,
+appId,
+attributes,
+callbackUrl,
+createdAt,
+credentials,
+keyExpiresIn,
+lastModifiedAt,
+scopes,
+status
+FROM google.apigee.apps
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND appgroupsId = '{{ appgroupsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_apps_list">
 
 Lists IDs of apps within an organization that have the specified app status (approved or revoked) or are of the specified app type (developer or company).
@@ -864,18 +865,18 @@ scopes,
 status
 FROM google.apigee.apps
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND apptype = '{{ apptype }}'
-AND startKey = '{{ startKey }}'
-AND keyStatus = '{{ keyStatus }}'
-AND pageToken = '{{ pageToken }}'
-AND includeCred = '{{ includeCred }}'
 AND apiProduct = '{{ apiProduct }}'
 AND rows = '{{ rows }}'
-AND expand = '{{ expand }}'
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND ids = '{{ ids }}'
+AND pageToken = '{{ pageToken }}'
+AND keyStatus = '{{ keyStatus }}'
+AND apptype = '{{ apptype }}'
+AND startKey = '{{ startKey }}'
+AND pageSize = '{{ pageSize }}'
 AND status = '{{ status }}'
+AND filter = '{{ filter }}'
+AND expand = '{{ expand }}'
+AND includeCred = '{{ includeCred }}'
 ;
 ```
 </TabItem>
@@ -898,30 +899,30 @@ Creates an app associated with a developer. This API associates the developer ap
 
 ```sql
 INSERT INTO google.apigee.apps (
-data__callbackUrl,
-data__appFamily,
-data__keyExpiresIn,
 data__scopes,
-data__name,
-data__appId,
-data__status,
+data__keyExpiresIn,
+data__appFamily,
 data__developerId,
 data__apiProducts,
+data__status,
+data__name,
 data__attributes,
+data__appId,
+data__callbackUrl,
 organizationsId,
 developersId
 )
 SELECT 
-'{{ callbackUrl }}',
-'{{ appFamily }}',
-'{{ keyExpiresIn }}',
 '{{ scopes }}',
-'{{ name }}',
-'{{ appId }}',
-'{{ status }}',
+'{{ keyExpiresIn }}',
+'{{ appFamily }}',
 '{{ developerId }}',
 '{{ apiProducts }}',
+'{{ status }}',
+'{{ name }}',
 '{{ attributes }}',
+'{{ appId }}',
+'{{ callbackUrl }}',
 '{{ organizationsId }}',
 '{{ developersId }}'
 RETURNING
@@ -947,28 +948,28 @@ Creates an app and associates it with an AppGroup. This API associates the AppGr
 
 ```sql
 INSERT INTO google.apigee.apps (
-data__attributes,
-data__appGroup,
-data__apiProducts,
-data__appId,
 data__status,
+data__callbackUrl,
 data__scopes,
 data__name,
-data__callbackUrl,
+data__attributes,
 data__keyExpiresIn,
+data__apiProducts,
+data__appId,
+data__appGroup,
 organizationsId,
 appgroupsId
 )
 SELECT 
-'{{ attributes }}',
-'{{ appGroup }}',
-'{{ apiProducts }}',
-'{{ appId }}',
 '{{ status }}',
+'{{ callbackUrl }}',
 '{{ scopes }}',
 '{{ name }}',
-'{{ callbackUrl }}',
+'{{ attributes }}',
 '{{ keyExpiresIn }}',
+'{{ apiProducts }}',
+'{{ appId }}',
+'{{ appGroup }}',
 '{{ organizationsId }}',
 '{{ appgroupsId }}'
 RETURNING
@@ -989,75 +990,68 @@ status
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: apps
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the apps resource.
     - name: developersId
-      value: string
+      value: "{{ developersId }}"
       description: Required parameter for the apps resource.
     - name: appgroupsId
-      value: string
+      value: "{{ appgroupsId }}"
       description: Required parameter for the apps resource.
-    - name: callbackUrl
-      value: string
-      description: >
-        Callback URL used by OAuth 2.0 authorization servers to communicate authorization codes back to AppGroup apps.
-        
-    - name: appFamily
-      value: string
-      description: >
-        Developer app family.
-        
-    - name: keyExpiresIn
-      value: string
-      description: >
-        Immutable. Expiration time, in seconds, for the consumer key that is generated for the AppGroup app. If not set or left to the default value of `-1`, the API key never expires. The expiration time can't be updated after it is set.
-        
     - name: scopes
-      value: array
-      description: >
+      value:
+        - "{{ scopes }}"
+      description: |
         Scopes to apply to the AppGroup app. The specified scopes must already exist for the API product that you associate with the AppGroup app.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. Name of the AppGroup app whose resource name format is of syntax (organizations/*/appgroups/*/apps/*).
-        
-    - name: appId
-      value: string
-      description: >
-        Immutable. ID of the AppGroup app.
-        
-    - name: status
-      value: string
-      description: >
-        Status of the App. Valid values include `approved` or `revoked`.
-        
+    - name: keyExpiresIn
+      value: "{{ keyExpiresIn }}"
+      description: |
+        Immutable. Expiration time, in seconds, for the consumer key that is generated for the AppGroup app. If not set or left to the default value of \`-1\`, the API key never expires. The expiration time can't be updated after it is set.
+    - name: appFamily
+      value: "{{ appFamily }}"
+      description: |
+        Developer app family.
     - name: developerId
-      value: string
-      description: >
+      value: "{{ developerId }}"
+      description: |
         ID of the developer.
-        
     - name: apiProducts
-      value: array
-      description: >
+      value:
+        - "{{ apiProducts }}"
+      description: |
         List of API products associated with the AppGroup app.
-        
+    - name: status
+      value: "{{ status }}"
+      description: |
+        Status of the App. Valid values include \`approved\` or \`revoked\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Name of the AppGroup app whose resource name format is of syntax (organizations/*/appgroups/*/apps/*).
     - name: attributes
-      value: array
-      description: >
+      description: |
         List of attributes for the AppGroup app.
-        
+      value:
+        - name: "{{ name }}"
+          value: "{{ value }}"
+    - name: appId
+      value: "{{ appId }}"
+      description: |
+        Immutable. ID of the AppGroup app.
+    - name: callbackUrl
+      value: "{{ callbackUrl }}"
+      description: |
+        Callback URL used by OAuth 2.0 authorization servers to communicate authorization codes back to AppGroup apps.
     - name: appGroup
-      value: string
-      description: >
+      value: "{{ appGroup }}"
+      description: |
         Immutable. Name of the parent AppGroup whose resource name format is of syntax (organizations/*/appgroups/*).
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1073,21 +1067,21 @@ status
 >
 <TabItem value="organizations_developers_apps_update">
 
-Updates the details for a developer app. In addition, you can add an API product to a developer app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateDeveloperAppKey API. Using this API, you cannot update the following: * App name as it is the primary key used to identify the app and cannot be changed. * Scopes associated with the app. Instead, use the ReplaceDeveloperAppKey API. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively.
+Updates the details for a developer app. In addition, you can add an API product to a developer app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateDeveloperAppKey API. Using this API, you cannot update the following: * App name as it is the primary key used to identify the app and cannot be changed. * Scopes associated with the app. Instead, use the ReplaceDeveloperAppKey API. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. **Note:** We recommend that you avoid making concurrent update requests for the same resource. Near-simultaneous writes to the same entity can result in conflicts and unexpected behavior. Ensure operations are sequential when modifying a single resource.
 
 ```sql
 REPLACE google.apigee.apps
 SET 
-data__callbackUrl = '{{ callbackUrl }}',
-data__appFamily = '{{ appFamily }}',
-data__keyExpiresIn = '{{ keyExpiresIn }}',
 data__scopes = '{{ scopes }}',
-data__name = '{{ name }}',
-data__appId = '{{ appId }}',
-data__status = '{{ status }}',
+data__keyExpiresIn = '{{ keyExpiresIn }}',
+data__appFamily = '{{ appFamily }}',
 data__developerId = '{{ developerId }}',
 data__apiProducts = '{{ apiProducts }}',
-data__attributes = '{{ attributes }}'
+data__status = '{{ status }}',
+data__name = '{{ name }}',
+data__attributes = '{{ attributes }}',
+data__appId = '{{ appId }}',
+data__callbackUrl = '{{ callbackUrl }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND developersId = '{{ developersId }}' --required
@@ -1110,20 +1104,20 @@ status;
 </TabItem>
 <TabItem value="organizations_appgroups_apps_update">
 
-Updates the details for an AppGroup app. In addition, you can add an API product to an AppGroup app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateAppGroupAppKey API. Using this API, you cannot update the app name, as it is the primary key used to identify the app and cannot be changed. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively.
+Updates the details for an AppGroup app. In addition, you can add an API product to an AppGroup app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateAppGroupAppKey API. Using this API, you cannot update the app name, as it is the primary key used to identify the app and cannot be changed. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. **Note:** We recommend that you avoid making concurrent update requests for the same resource. Near-simultaneous writes to the same entity can result in conflicts and unexpected behavior. Ensure operations are sequential when modifying a single resource.
 
 ```sql
 REPLACE google.apigee.apps
 SET 
-data__attributes = '{{ attributes }}',
-data__appGroup = '{{ appGroup }}',
-data__apiProducts = '{{ apiProducts }}',
-data__appId = '{{ appId }}',
 data__status = '{{ status }}',
+data__callbackUrl = '{{ callbackUrl }}',
 data__scopes = '{{ scopes }}',
 data__name = '{{ name }}',
-data__callbackUrl = '{{ callbackUrl }}',
-data__keyExpiresIn = '{{ keyExpiresIn }}'
+data__attributes = '{{ attributes }}',
+data__keyExpiresIn = '{{ keyExpiresIn }}',
+data__apiProducts = '{{ apiProducts }}',
+data__appId = '{{ appId }}',
+data__appGroup = '{{ appGroup }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND appgroupsId = '{{ appgroupsId }}' --required
@@ -1220,16 +1214,16 @@ EXEC google.apigee.apps.organizations_developers_apps_generate_key_pair_or_updat
 @action='{{ action }}' 
 @@json=
 '{
-"callbackUrl": "{{ callbackUrl }}", 
-"appFamily": "{{ appFamily }}", 
-"keyExpiresIn": "{{ keyExpiresIn }}", 
 "scopes": "{{ scopes }}", 
-"name": "{{ name }}", 
-"appId": "{{ appId }}", 
-"status": "{{ status }}", 
+"keyExpiresIn": "{{ keyExpiresIn }}", 
+"appFamily": "{{ appFamily }}", 
 "developerId": "{{ developerId }}", 
 "apiProducts": "{{ apiProducts }}", 
-"attributes": "{{ attributes }}"
+"status": "{{ status }}", 
+"name": "{{ name }}", 
+"attributes": "{{ attributes }}", 
+"appId": "{{ appId }}", 
+"callbackUrl": "{{ callbackUrl }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>domain_aliases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>domain_aliases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="domain_aliases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.domain_aliases" /></td></tr>
 </tbody></table>
@@ -250,21 +251,21 @@ Inserts a domain alias of the customer.
 
 ```sql
 INSERT INTO googleadmin.directory.domain_aliases (
+data__creationTime,
+data__domainAliasName,
 data__kind,
 data__parentDomainName,
 data__verified,
-data__creationTime,
 data__etag,
-data__domainAliasName,
 customer
 )
 SELECT 
+'{{ creationTime }}',
+'{{ domainAliasName }}',
 '{{ kind }}',
 '{{ parentDomainName }}',
 {{ verified }},
-'{{ creationTime }}',
 '{{ etag }}',
-'{{ domainAliasName }}',
 '{{ customer }}'
 RETURNING
 creationTime,
@@ -278,45 +279,39 @@ verified
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: domain_aliases
   props:
     - name: customer
-      value: string
+      value: "{{ customer }}"
       description: Required parameter for the domain_aliases resource.
+    - name: creationTime
+      value: "{{ creationTime }}"
+      description: |
+        The creation time of the domain alias. (Read-only).
+    - name: domainAliasName
+      value: "{{ domainAliasName }}"
+      description: |
+        The domain alias name.
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         Kind of resource this is.
-        
       default: admin#directory#domainAlias
     - name: parentDomainName
-      value: string
-      description: >
+      value: "{{ parentDomainName }}"
+      description: |
         The parent domain name that the domain alias is associated with. This can either be a primary or secondary domain name within a customer.
-        
     - name: verified
-      value: boolean
-      description: >
+      value: {{ verified }}
+      description: |
         Indicates the verification state of a domain alias. (Read-only)
-        
-    - name: creationTime
-      value: string
-      description: >
-        The creation time of the domain alias. (Read-only).
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         ETag of the resource.
-        
-    - name: domainAliasName
-      value: string
-      description: >
-        The domain alias name.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

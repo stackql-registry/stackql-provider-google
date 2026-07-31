@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reservations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reservations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reservations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigqueryreservation.reservations" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="edition" /></td>
     <td><code>string</code></td>
-    <td>Optional. Edition of the reservation.</td>
+    <td>Optional. Edition of the reservation. (EDITION_UNSPECIFIED, STANDARD, ENTERPRISE, ENTERPRISE_PLUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ignoreIdleSlots" /></td>
@@ -115,9 +116,14 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. The reservation group that this reservation belongs to. You can set this property when you create or update a reservation. Reservations do not need to belong to a reservation group. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/reservationGroups/&#123;reservation_group&#125; or just &#123;reservation_group&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="reservationGroupPath" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The reservation group path of the reservation from root to leaf. The order of elements matters: the first element is the top level group and the last element is the direct parent reservation group. For example, if a reservation is under group-1 -&gt; group-2 -&gt; group-3, then the reservation group path is ["group-1", "group-2", "group-3"].</td>
+</tr>
+<tr>
     <td><CopyableCode code="scalingMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The scaling mode for the reservation. If the field is present but max_slots is not present, requests will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.</td>
+    <td>Optional. The scaling mode for the reservation. If the field is present but max_slots is not present, requests will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. (SCALING_MODE_UNSPECIFIED, AUTOSCALE_ONLY, IDLE_SLOTS_ONLY, ALL_SLOTS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedulingPolicy" /></td>
@@ -176,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="edition" /></td>
     <td><code>string</code></td>
-    <td>Optional. Edition of the reservation.</td>
+    <td>Optional. Edition of the reservation. (EDITION_UNSPECIFIED, STANDARD, ENTERPRISE, ENTERPRISE_PLUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ignoreIdleSlots" /></td>
@@ -219,9 +225,14 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. The reservation group that this reservation belongs to. You can set this property when you create or update a reservation. Reservations do not need to belong to a reservation group. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/reservationGroups/&#123;reservation_group&#125; or just &#123;reservation_group&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="reservationGroupPath" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The reservation group path of the reservation from root to leaf. The order of elements matters: the first element is the top level group and the last element is the direct parent reservation group. For example, if a reservation is under group-1 -&gt; group-2 -&gt; group-3, then the reservation group path is ["group-1", "group-2", "group-3"].</td>
+</tr>
+<tr>
     <td><CopyableCode code="scalingMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The scaling mode for the reservation. If the field is present but max_slots is not present, requests will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.</td>
+    <td>Optional. The scaling mode for the reservation. If the field is present but max_slots is not present, requests will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. (SCALING_MODE_UNSPECIFIED, AUTOSCALE_ONLY, IDLE_SLOTS_ONLY, ALL_SLOTS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedulingPolicy" /></td>
@@ -274,7 +285,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the reservations for the project in the specified location.</td>
 </tr>
 <tr>
@@ -387,6 +398,7 @@ originalPrimaryLocation,
 primaryLocation,
 replicationStatus,
 reservationGroup,
+reservationGroupPath,
 scalingMode,
 schedulingPolicy,
 secondaryLocation,
@@ -418,6 +430,7 @@ originalPrimaryLocation,
 primaryLocation,
 replicationStatus,
 reservationGroup,
+reservationGroupPath,
 scalingMode,
 schedulingPolicy,
 secondaryLocation,
@@ -426,8 +439,8 @@ updateTime
 FROM google.bigqueryreservation.reservations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -449,37 +462,37 @@ Creates a new reservation resource.
 
 ```sql
 INSERT INTO google.bigqueryreservation.reservations (
-data__labels,
-data__name,
-data__multiRegionAuxiliary,
-data__schedulingPolicy,
-data__autoscale,
-data__secondaryLocation,
-data__edition,
 data__reservationGroup,
 data__maxSlots,
-data__ignoreIdleSlots,
-data__slotCapacity,
+data__labels,
+data__autoscale,
 data__scalingMode,
+data__schedulingPolicy,
+data__name,
+data__ignoreIdleSlots,
 data__concurrency,
+data__multiRegionAuxiliary,
+data__secondaryLocation,
+data__edition,
+data__slotCapacity,
 projectsId,
 locationsId,
 reservationId
 )
 SELECT 
-'{{ labels }}',
-'{{ name }}',
-{{ multiRegionAuxiliary }},
-'{{ schedulingPolicy }}',
-'{{ autoscale }}',
-'{{ secondaryLocation }}',
-'{{ edition }}',
 '{{ reservationGroup }}',
 '{{ maxSlots }}',
-{{ ignoreIdleSlots }},
-'{{ slotCapacity }}',
+'{{ labels }}',
+'{{ autoscale }}',
 '{{ scalingMode }}',
+'{{ schedulingPolicy }}',
+'{{ name }}',
+{{ ignoreIdleSlots }},
 '{{ concurrency }}',
+{{ multiRegionAuxiliary }},
+'{{ secondaryLocation }}',
+'{{ edition }}',
+'{{ slotCapacity }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ reservationId }}'
@@ -497,6 +510,7 @@ originalPrimaryLocation,
 primaryLocation,
 replicationStatus,
 reservationGroup,
+reservationGroupPath,
 scalingMode,
 schedulingPolicy,
 secondaryLocation,
@@ -507,86 +521,77 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reservations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the reservations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the reservations resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels associated with this reservation. You can use these to organize and group your reservations. You can set this property when you create or update a reservation.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the reservation, e.g., `projects/*/locations/*/reservations/team1-prod`. The reservation_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.
-        
-    - name: multiRegionAuxiliary
-      value: boolean
-      description: >
-        Applicable only for reservations located within one of the BigQuery multi-regions (US or EU). If set to true, this reservation is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this reservation is placed in the organization's default region. NOTE: this is a preview feature. Project must be allow-listed in order to set this field.
-        
-    - name: schedulingPolicy
-      value: object
-      description: >
-        Optional. The scheduling policy to use for jobs and queries running under this reservation. The scheduling policy controls how the reservation's resources are distributed. This feature is not yet generally available.
-        
-    - name: autoscale
-      value: object
-      description: >
-        Optional. The configuration parameters for the auto scaling feature.
-        
-    - name: secondaryLocation
-      value: string
-      description: >
-        Optional. The current location of the reservation's secondary replica. This field is only set for reservations using the managed disaster recovery feature. Users can set this in create reservation calls to create a failover reservation or in update reservation calls to convert a non-failover reservation to a failover reservation(or vice versa).
-        
-    - name: edition
-      value: string
-      description: >
-        Optional. Edition of the reservation.
-        
-      valid_values: ['EDITION_UNSPECIFIED', 'STANDARD', 'ENTERPRISE', 'ENTERPRISE_PLUS']
     - name: reservationGroup
-      value: string
-      description: >
+      value: "{{ reservationGroup }}"
+      description: |
         Optional. The reservation group that this reservation belongs to. You can set this property when you create or update a reservation. Reservations do not need to belong to a reservation group. Format: projects/{project}/locations/{location}/reservationGroups/{reservation_group} or just {reservation_group}
-        
     - name: maxSlots
-      value: string
-      description: >
-        Optional. The overall max slots for the reservation, covering slot_capacity (baseline), idle slots (if ignore_idle_slots is false) and scaled slots. If present, the reservation won't use more than the specified number of slots, even if there is demand and supply (from idle slots). NOTE: capping a reservation's idle slot usage is best effort and its usage may exceed the max_slots value. However, in terms of autoscale.current_slots (which accounts for the additional added slots), it will never exceed the max_slots - baseline. This field must be set together with the scaling_mode enum value, otherwise the request will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. If the max_slots and scaling_mode are set, the autoscale or autoscale.max_slots field must be unset. Otherwise the request will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. However, the autoscale field may still be in the output. The autopscale.max_slots will always show as 0 and the autoscaler.current_slots will represent the current slots from autoscaler excluding idle slots. For example, if the max_slots is 1000 and scaling_mode is AUTOSCALE_ONLY, then in the output, the autoscaler.max_slots will be 0 and the autoscaler.current_slots may be any value between 0 and 1000. If the max_slots is 1000, scaling_mode is ALL_SLOTS, the baseline is 100 and idle slots usage is 200, then in the output, the autoscaler.max_slots will be 0 and the autoscaler.current_slots will not be higher than 700. If the max_slots is 1000, scaling_mode is IDLE_SLOTS_ONLY, then in the output, the autoscaler field will be null. If the max_slots and scaling_mode are set, then the ignore_idle_slots field must be aligned with the scaling_mode enum value.(See details in ScalingMode comments). Otherwise the request will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. Please note, the max_slots is for user to manage the part of slots greater than the baseline. Therefore, we don't allow users to set max_slots smaller or equal to the baseline as it will not be meaningful. If the field is present and slot_capacity>=max_slots, requests will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. Please note that if max_slots is set to 0, we will treat it as unset. Customers can set max_slots to 0 and set scaling_mode to SCALING_MODE_UNSPECIFIED to disable the max_slots feature.
-        
-    - name: ignoreIdleSlots
-      value: boolean
-      description: >
-        Optional. If false, any query or pipeline job using this reservation will use idle slots from other reservations within the same admin project. If true, a query or pipeline job using this reservation will execute with the slot capacity specified in the slot_capacity field at most.
-        
-    - name: slotCapacity
-      value: string
-      description: >
-        Optional. Baseline slots available to this reservation. A slot is a unit of computational power in BigQuery, and serves as the unit of parallelism. Queries using this reservation might use more slots during runtime if ignore_idle_slots is set to false, or autoscaling is enabled. The total slot_capacity of the reservation and its siblings may exceed the total slot_count of capacity commitments. In that case, the exceeding slots will be charged with the autoscale SKU. You can increase the number of baseline slots in a reservation every few minutes. If you want to decrease your baseline slots, you are limited to once an hour if you have recently changed your baseline slot capacity and your baseline slots exceed your committed slots. Otherwise, you can decrease your baseline slots every few minutes.
-        
+      value: "{{ maxSlots }}"
+      description: |
+        Optional. The overall max slots for the reservation, covering slot_capacity (baseline), idle slots (if ignore_idle_slots is false) and scaled slots. If present, the reservation won't use more than the specified number of slots, even if there is demand and supply (from idle slots). NOTE: capping a reservation's idle slot usage is best effort and its usage may exceed the max_slots value. However, in terms of autoscale.current_slots (which accounts for the additional added slots), it will never exceed the max_slots - baseline. This field must be set together with the scaling_mode enum value, otherwise the request will be rejected with error code \`google.rpc.Code.INVALID_ARGUMENT\`. If the max_slots and scaling_mode are set, the autoscale or autoscale.max_slots field must be unset. Otherwise the request will be rejected with error code \`google.rpc.Code.INVALID_ARGUMENT\`. However, the autoscale field may still be in the output. The autopscale.max_slots will always show as 0 and the autoscaler.current_slots will represent the current slots from autoscaler excluding idle slots. For example, if the max_slots is 1000 and scaling_mode is AUTOSCALE_ONLY, then in the output, the autoscaler.max_slots will be 0 and the autoscaler.current_slots may be any value between 0 and 1000. If the max_slots is 1000, scaling_mode is ALL_SLOTS, the baseline is 100 and idle slots usage is 200, then in the output, the autoscaler.max_slots will be 0 and the autoscaler.current_slots will not be higher than 700. If the max_slots is 1000, scaling_mode is IDLE_SLOTS_ONLY, then in the output, the autoscaler field will be null. If the max_slots and scaling_mode are set, then the ignore_idle_slots field must be aligned with the scaling_mode enum value.(See details in ScalingMode comments). Otherwise the request will be rejected with error code \`google.rpc.Code.INVALID_ARGUMENT\`. Please note, the max_slots is for user to manage the part of slots greater than the baseline. Therefore, we don't allow users to set max_slots smaller or equal to the baseline as it will not be meaningful. If the field is present and slot_capacity>=max_slots, requests will be rejected with error code \`google.rpc.Code.INVALID_ARGUMENT\`. Please note that if max_slots is set to 0, we will treat it as unset. Customers can set max_slots to 0 and set scaling_mode to SCALING_MODE_UNSPECIFIED to disable the max_slots feature.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels associated with this reservation. You can use these to organize and group your reservations. You can set this property when you create or update a reservation.
+    - name: autoscale
+      description: |
+        Optional. The configuration parameters for the auto scaling feature.
+      value:
+        maxSlots: "{{ maxSlots }}"
+        currentSlots: "{{ currentSlots }}"
     - name: scalingMode
-      value: string
-      description: >
-        Optional. The scaling mode for the reservation. If the field is present but max_slots is not present, requests will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.
-        
+      value: "{{ scalingMode }}"
+      description: |
+        Optional. The scaling mode for the reservation. If the field is present but max_slots is not present, requests will be rejected with error code \`google.rpc.Code.INVALID_ARGUMENT\`.
       valid_values: ['SCALING_MODE_UNSPECIFIED', 'AUTOSCALE_ONLY', 'IDLE_SLOTS_ONLY', 'ALL_SLOTS']
+    - name: schedulingPolicy
+      description: |
+        Optional. The scheduling policy to use for jobs and queries running under this reservation. The scheduling policy controls how the reservation's resources are distributed. This feature is not yet generally available.
+      value:
+        concurrency: "{{ concurrency }}"
+        maxSlots: "{{ maxSlots }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the reservation, e.g., \`projects/*/locations/*/reservations/team1-prod\`. The reservation_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.
+    - name: ignoreIdleSlots
+      value: {{ ignoreIdleSlots }}
+      description: |
+        Optional. If false, any query or pipeline job using this reservation will use idle slots from other reservations within the same admin project. If true, a query or pipeline job using this reservation will execute with the slot capacity specified in the slot_capacity field at most.
     - name: concurrency
-      value: string
-      description: >
+      value: "{{ concurrency }}"
+      description: |
         Optional. Job concurrency target which sets a soft upper bound on the number of jobs that can run concurrently in this reservation. This is a soft target due to asynchronous nature of the system and various optimizations for small queries. Default value is 0 which means that concurrency target will be automatically computed by the system. NOTE: this field is exposed as target job concurrency in the Information Schema, DDL and BigQuery CLI.
-        
+    - name: multiRegionAuxiliary
+      value: {{ multiRegionAuxiliary }}
+      description: |
+        Applicable only for reservations located within one of the BigQuery multi-regions (US or EU). If set to true, this reservation is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this reservation is placed in the organization's default region. NOTE: this is a preview feature. Project must be allow-listed in order to set this field.
+    - name: secondaryLocation
+      value: "{{ secondaryLocation }}"
+      description: |
+        Optional. The current location of the reservation's secondary replica. This field is only set for reservations using the managed disaster recovery feature. Users can set this in create reservation calls to create a failover reservation or in update reservation calls to convert a non-failover reservation to a failover reservation(or vice versa).
+    - name: edition
+      value: "{{ edition }}"
+      description: |
+        Optional. Edition of the reservation.
+      valid_values: ['EDITION_UNSPECIFIED', 'STANDARD', 'ENTERPRISE', 'ENTERPRISE_PLUS']
+    - name: slotCapacity
+      value: "{{ slotCapacity }}"
+      description: |
+        Optional. Baseline slots available to this reservation. A slot is a unit of computational power in BigQuery, and serves as the unit of parallelism. Queries using this reservation might use more slots during runtime if ignore_idle_slots is set to false, or autoscaling is enabled. The total slot_capacity of the reservation and its siblings may exceed the total slot_count of capacity commitments. In that case, the exceeding slots will be charged with the autoscale SKU. You can increase the number of baseline slots in a reservation every few minutes. If you want to decrease your baseline slots, you are limited to once an hour if you have recently changed your baseline slot capacity and your baseline slots exceed your committed slots. Otherwise, you can decrease your baseline slots every few minutes.
     - name: reservationId
-      value: string
-```
+      value: "{{ reservationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -606,19 +611,19 @@ Updates an existing reservation resource.
 ```sql
 UPDATE google.bigqueryreservation.reservations
 SET 
-data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__multiRegionAuxiliary = {{ multiRegionAuxiliary }},
-data__schedulingPolicy = '{{ schedulingPolicy }}',
-data__autoscale = '{{ autoscale }}',
-data__secondaryLocation = '{{ secondaryLocation }}',
-data__edition = '{{ edition }}',
 data__reservationGroup = '{{ reservationGroup }}',
 data__maxSlots = '{{ maxSlots }}',
-data__ignoreIdleSlots = {{ ignoreIdleSlots }},
-data__slotCapacity = '{{ slotCapacity }}',
+data__labels = '{{ labels }}',
+data__autoscale = '{{ autoscale }}',
 data__scalingMode = '{{ scalingMode }}',
-data__concurrency = '{{ concurrency }}'
+data__schedulingPolicy = '{{ schedulingPolicy }}',
+data__name = '{{ name }}',
+data__ignoreIdleSlots = {{ ignoreIdleSlots }},
+data__concurrency = '{{ concurrency }}',
+data__multiRegionAuxiliary = {{ multiRegionAuxiliary }},
+data__secondaryLocation = '{{ secondaryLocation }}',
+data__edition = '{{ edition }}',
+data__slotCapacity = '{{ slotCapacity }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -638,6 +643,7 @@ originalPrimaryLocation,
 primaryLocation,
 replicationStatus,
 reservationGroup,
+reservationGroupPath,
 scalingMode,
 schedulingPolicy,
 secondaryLocation,

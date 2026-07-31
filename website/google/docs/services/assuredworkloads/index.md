@@ -18,17 +18,22 @@ assuredworkloads service documentation.
 
 :::info[Service Summary]
 
-total resources: __4__  
+total resources: __9__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
-<a href="/services/assuredworkloads/operations/">operations</a><br />
-<a href="/services/assuredworkloads/updates/">updates</a>
+<a href="/services/assuredworkloads/assuredworkloads/">assuredworkloads</a><br />
+<a href="/services/assuredworkloads/db_control_compliance_summaries/">db_control_compliance_summaries</a><br />
+<a href="/services/assuredworkloads/db_finding_summaries/">db_finding_summaries</a><br />
+<a href="/services/assuredworkloads/db_framework_compliance_reports/">db_framework_compliance_reports</a><br />
+<a href="/services/assuredworkloads/db_framework_compliance_summaries/">db_framework_compliance_summaries</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/assuredworkloads/operations/">operations</a><br />
+<a href="/services/assuredworkloads/updates/">updates</a><br />
 <a href="/services/assuredworkloads/violations/">violations</a><br />
 <a href="/services/assuredworkloads/workloads/">workloads</a>
 </div>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resource_backup_configs</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resource_backup_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resource_backup_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.backupdr.resource_backup_configs" /></td></tr>
 </tbody></table>
@@ -32,11 +33,36 @@ Creates, updates, deletes, gets or lists a <code>resource_backup_configs</code> 
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="list"
+    defaultValue="fetch"
     values={[
+        { label: 'fetch', value: 'fetch' },
         { label: 'list', value: 'list' }
     ]}
 >
+<TabItem value="fetch">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>A token identifying a page of results the server should return.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceBackupConfigs" /></td>
+    <td><code>array</code></td>
+    <td>The list of ResourceBackupConfigs for the specified scope.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="list">
 
 <table>
@@ -81,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="targetResourceType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the target resource.</td>
+    <td>Output only. The type of the target resource. (RESOURCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, COMPUTE_ENGINE_VM, COMPUTE_ENGINE_DISK, COMPUTE_ENGINE_REGIONAL_DISK, FILESTORE_INSTANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -91,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="vaulted" /></td>
     <td><code>boolean</code></td>
-    <td>Output only. Whether the target resource is protected by a backup vault. This is true if the backup_configs_details is not empty and any of the ResourceBackupConfig.backup_configs_details has a backup configuration with BackupConfigDetails.backup_vault set. set.</td>
+    <td>Output only. Whether the target resource is protected by a backup vault. This is true if the backup_configs_details is not empty and any of the ResourceBackupConfig.backup_configs_details has a backup configuration with BackupConfigDetails.backup_vault set.</td>
 </tr>
 </tbody>
 </table>
@@ -113,6 +139,13 @@ The following methods are available for this resource:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><a href="#fetch"><CopyableCode code="fetch" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Fetches ResourceBackupConfigs.</td>
+</tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
@@ -136,6 +169,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-foldersId">
+    <td><CopyableCode code="foldersId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-locationsId">
     <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
@@ -172,11 +210,30 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="list"
+    defaultValue="fetch"
     values={[
+        { label: 'fetch', value: 'fetch' },
         { label: 'list', value: 'list' }
     ]}
 >
+<TabItem value="fetch">
+
+Fetches ResourceBackupConfigs.
+
+```sql
+SELECT
+nextPageToken,
+resourceBackupConfigs
+FROM google.backupdr.resource_backup_configs
+WHERE foldersId = '{{ foldersId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+;
+```
+</TabItem>
 <TabItem value="list">
 
 Lists ResourceBackupConfigs.

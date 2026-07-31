@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>catalogs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>catalogs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="catalogs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.catalogs" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_catalogs_list"><CopyableCode code="projects_locations_catalogs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the Catalogs associated with the project.</td>
 </tr>
 <tr>
@@ -98,13 +99,6 @@ The following methods are available for this resource:
     <td>Updates the Catalogs.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_export_analytics_metrics"><CopyableCode code="projects_locations_catalogs_export_analytics_metrics" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td></td>
-    <td>Exports analytics metrics. `Operation.response` is of type `ExportAnalyticsMetricsResponse`. `Operation.metadata` is of type `ExportMetadata`.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_catalogs_set_default_branch"><CopyableCode code="projects_locations_catalogs_set_default_branch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
@@ -112,10 +106,17 @@ The following methods are available for this resource:
     <td>Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using "default_branch" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch &#123;newBranch&#125;. * SearchService will only return product IDs from branch &#123;newBranch&#125; (if branch is not explicitly set). * UserEventService will only join events with products from branch &#123;newBranch&#125;.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_catalogs_export_analytics_metrics"><CopyableCode code="projects_locations_catalogs_export_analytics_metrics" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
+    <td></td>
+    <td>Exports analytics metrics. `Operation.response` is of type `ExportAnalyticsMetricsResponse`. `Operation.metadata` is of type `ExportMetadata`.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_catalogs_complete_query"><CopyableCode code="projects_locations_catalogs_complete_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-enableAttributeSuggestions"><code>enableAttributeSuggestions</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-visitorId"><code>visitorId</code></a>, <a href="#parameter-deviceType"><code>deviceType</code></a>, <a href="#parameter-languageCodes"><code>languageCodes</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-maxSuggestions"><code>maxSuggestions</code></a>, <a href="#parameter-entity"><code>entity</code></a></td>
+    <td><a href="#parameter-entity"><code>entity</code></a>, <a href="#parameter-visitorId"><code>visitorId</code></a>, <a href="#parameter-deviceType"><code>deviceType</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-languageCodes"><code>languageCodes</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-enableAttributeSuggestions"><code>enableAttributeSuggestions</code></a>, <a href="#parameter-maxSuggestions"><code>maxSuggestions</code></a></td>
     <td>Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.</td>
 </tr>
 </tbody>
@@ -227,8 +228,8 @@ productLevelConfig
 FROM google.retail.catalogs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -250,9 +251,9 @@ Updates the Catalogs.
 ```sql
 UPDATE google.retail.catalogs
 SET 
-data__productLevelConfig = '{{ productLevelConfig }}',
+data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__name = '{{ name }}'
+data__productLevelConfig = '{{ productLevelConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -270,30 +271,13 @@ productLevelConfig;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_catalogs_export_analytics_metrics"
+    defaultValue="projects_locations_catalogs_set_default_branch"
     values={[
-        { label: 'projects_locations_catalogs_export_analytics_metrics', value: 'projects_locations_catalogs_export_analytics_metrics' },
         { label: 'projects_locations_catalogs_set_default_branch', value: 'projects_locations_catalogs_set_default_branch' },
+        { label: 'projects_locations_catalogs_export_analytics_metrics', value: 'projects_locations_catalogs_export_analytics_metrics' },
         { label: 'projects_locations_catalogs_complete_query', value: 'projects_locations_catalogs_complete_query' }
     ]}
 >
-<TabItem value="projects_locations_catalogs_export_analytics_metrics">
-
-Exports analytics metrics. `Operation.response` is of type `ExportAnalyticsMetricsResponse`. `Operation.metadata` is of type `ExportMetadata`.
-
-```sql
-EXEC google.retail.catalogs.projects_locations_catalogs_export_analytics_metrics 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"outputConfig": "{{ outputConfig }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_catalogs_set_default_branch">
 
 Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using "default_branch" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch &#123;newBranch&#125;. * SearchService will only return product IDs from branch &#123;newBranch&#125; (if branch is not explicitly set). * UserEventService will only join events with products from branch &#123;newBranch&#125;.
@@ -306,8 +290,25 @@ EXEC google.retail.catalogs.projects_locations_catalogs_set_default_branch
 @@json=
 '{
 "note": "{{ note }}", 
-"branchId": "{{ branchId }}", 
-"force": {{ force }}
+"force": {{ force }}, 
+"branchId": "{{ branchId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_export_analytics_metrics">
+
+Exports analytics metrics. `Operation.response` is of type `ExportAnalyticsMetricsResponse`. `Operation.metadata` is of type `ExportMetadata`.
+
+```sql
+EXEC google.retail.catalogs.projects_locations_catalogs_export_analytics_metrics 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required 
+@@json=
+'{
+"outputConfig": "{{ outputConfig }}", 
+"filter": "{{ filter }}"
 }'
 ;
 ```
@@ -321,14 +322,14 @@ EXEC google.retail.catalogs.projects_locations_catalogs_complete_query
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @catalogsId='{{ catalogsId }}' --required, 
-@enableAttributeSuggestions={{ enableAttributeSuggestions }}, 
-@query='{{ query }}', 
+@entity='{{ entity }}', 
 @visitorId='{{ visitorId }}', 
 @deviceType='{{ deviceType }}', 
-@languageCodes='{{ languageCodes }}', 
 @dataset='{{ dataset }}', 
-@maxSuggestions='{{ maxSuggestions }}', 
-@entity='{{ entity }}'
+@languageCodes='{{ languageCodes }}', 
+@query='{{ query }}', 
+@enableAttributeSuggestions={{ enableAttributeSuggestions }}, 
+@maxSuggestions='{{ maxSuggestions }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>children</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>children</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="children" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.children" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-folderId"><code>folderId</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-q"><code>q</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-q"><code>q</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists a folder's children.</td>
 </tr>
 <tr>
@@ -253,9 +254,9 @@ selfLink
 FROM googleworkspace.drivev2.children
 WHERE folderId = '{{ folderId }}' -- required
 AND maxResults = '{{ maxResults }}'
+AND q = '{{ q }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND q = '{{ q }}'
 ;
 ```
 </TabItem>
@@ -277,20 +278,20 @@ Inserts a file into a folder.
 
 ```sql
 INSERT INTO googleworkspace.drivev2.children (
-data__id,
-data__selfLink,
 data__kind,
 data__childLink,
+data__id,
+data__selfLink,
 folderId,
 enforceSingleParent,
 supportsAllDrives,
 supportsTeamDrives
 )
 SELECT 
-'{{ id }}',
-'{{ selfLink }}',
 '{{ kind }}',
 '{{ childLink }}',
+'{{ id }}',
+'{{ selfLink }}',
 '{{ folderId }}',
 '{{ enforceSingleParent }}',
 '{{ supportsAllDrives }}',
@@ -305,41 +306,37 @@ selfLink
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: children
   props:
     - name: folderId
-      value: string
+      value: "{{ folderId }}"
       description: Required parameter for the children resource.
-    - name: id
-      value: string
-      description: >
-        The ID of the child.
-        
-    - name: selfLink
-      value: string
-      description: >
-        Output only. A link back to this reference.
-        
     - name: kind
-      value: string
-      description: >
-        Output only. This is always `drive#childReference`.
-        
+      value: "{{ kind }}"
+      description: |
+        Output only. This is always \`drive#childReference\`.
       default: drive#childReference
     - name: childLink
-      value: string
-      description: >
+      value: "{{ childLink }}"
+      description: |
         Output only. A link to the child.
-        
+    - name: id
+      value: "{{ id }}"
+      description: |
+        The ID of the child.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        Output only. A link back to this reference.
     - name: enforceSingleParent
-      value: boolean
+      value: {{ enforceSingleParent }}
     - name: supportsAllDrives
-      value: boolean
+      value: {{ supportsAllDrives }}
     - name: supportsTeamDrives
-      value: boolean
-```
+      value: {{ supportsTeamDrives }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

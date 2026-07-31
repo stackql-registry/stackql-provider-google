@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>customers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>customers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="customers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudcontrolspartner.customers" /></td></tr>
 </tbody></table>
@@ -88,6 +89,31 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Format: `organizations/&#123;organization&#125;/locations/&#123;location&#125;/customers/&#123;customer&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customerOnboardingState" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Container for customer onboarding steps (id: CustomerOnboardingState)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Required. Display name for the customer</td>
+</tr>
+<tr>
+    <td><CopyableCode code="isOnboarded" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Indicates whether a customer is fully onboarded</td>
+</tr>
+<tr>
+    <td><CopyableCode code="organizationDomain" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The customer organization domain, extracted from CRM Organization’s display_name field. e.g. "google.com"</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -119,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists customers of a partner identified by its Google Cloud organization ID</td>
 </tr>
 <tr>
@@ -240,14 +266,18 @@ Lists customers of a partner identified by its Google Cloud organization ID
 
 ```sql
 SELECT
-*
+name,
+customerOnboardingState,
+displayName,
+isOnboarded,
+organizationDomain
 FROM google.cloudcontrolspartner.customers
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -269,15 +299,15 @@ Creates a new customer.
 
 ```sql
 INSERT INTO google.cloudcontrolspartner.customers (
-data__displayName,
 data__name,
+data__displayName,
 organizationsId,
 locationsId,
 customerId
 )
 SELECT 
-'{{ displayName }}',
 '{{ name }}',
+'{{ displayName }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ customerId }}'
@@ -292,29 +322,27 @@ organizationDomain
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: customers
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the customers resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the customers resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. Display name for the customer
-        
     - name: name
-      value: string
-      description: >
-        Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Format: \`organizations/{organization}/locations/{location}/customers/{customer}\`
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name for the customer
     - name: customerId
-      value: string
-```
+      value: "{{ customerId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -334,8 +362,8 @@ Update details of a single customer
 ```sql
 UPDATE google.cloudcontrolspartner.customers
 SET 
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

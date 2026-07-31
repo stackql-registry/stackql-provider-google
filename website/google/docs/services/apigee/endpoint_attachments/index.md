@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>endpoint_attachments</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>endpoint_attachments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="endpoint_attachments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.endpoint_attachments" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="connectionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the endpoint attachment connection to the service attachment.</td>
+    <td>Output only. State of the endpoint attachment connection to the service attachment. (CONNECTION_STATE_UNSPECIFIED, UNAVAILABLE, PENDING, ACCEPTED, REJECTED, CLOSED, FROZEN, NEEDS_ATTENTION, ACCEPTED_LIMITED_CAPACITY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="host" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the endpoint attachment. Values other than `ACTIVE` mean the resource is not ready to use.</td>
+    <td>Output only. State of the endpoint attachment. Values other than `ACTIVE` mean the resource is not ready to use. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
 </tr>
 </tbody>
 </table>
@@ -101,7 +102,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="connectionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the endpoint attachment connection to the service attachment.</td>
+    <td>Output only. State of the endpoint attachment connection to the service attachment. (CONNECTION_STATE_UNSPECIFIED, UNAVAILABLE, PENDING, ACCEPTED, REJECTED, CLOSED, FROZEN, NEEDS_ATTENTION, ACCEPTED_LIMITED_CAPACITY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="host" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the endpoint attachment. Values other than `ACTIVE` mean the resource is not ready to use.</td>
+    <td>Output only. State of the endpoint attachment. Values other than `ACTIVE` mean the resource is not ready to use. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
 </tr>
 </tbody>
 </table>
@@ -279,16 +280,16 @@ Creates an endpoint attachment. **Note:** Not supported for Apigee hybrid.
 
 ```sql
 INSERT INTO google.apigee.endpoint_attachments (
-data__serviceAttachment,
 data__name,
 data__location,
+data__serviceAttachment,
 organizationsId,
 endpointAttachmentId
 )
 SELECT 
-'{{ serviceAttachment }}',
 '{{ name }}',
 '{{ location }}',
+'{{ serviceAttachment }}',
 '{{ organizationsId }}',
 '{{ endpointAttachmentId }}'
 RETURNING
@@ -302,31 +303,28 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: endpoint_attachments
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the endpoint_attachments resource.
-    - name: serviceAttachment
-      value: string
-      description: >
-        Format: projects/*/regions/*/serviceAttachments/*
-        
     - name: name
-      value: string
-      description: >
-        Name of the endpoint attachment. Use the following structure in your request: `organizations/{org}/endpointAttachments/{endpoint_attachment}`
-        
+      value: "{{ name }}"
+      description: |
+        Name of the endpoint attachment. Use the following structure in your request: \`organizations/{org}/endpointAttachments/{endpoint_attachment}\`
     - name: location
-      value: string
-      description: >
+      value: "{{ location }}"
+      description: |
         Required. Location of the endpoint attachment.
-        
+    - name: serviceAttachment
+      value: "{{ serviceAttachment }}"
+      description: |
+        Format: projects/*/regions/*/serviceAttachments/*
     - name: endpointAttachmentId
-      value: string
-```
+      value: "{{ endpointAttachmentId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>api_hub_instances</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>api_hub_instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="api_hub_instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.api_hub_instances" /></td></tr>
 </tbody></table>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the ApiHub instance.</td>
+    <td>Output only. The current state of the ApiHub instance. (STATE_UNSPECIFIED, INACTIVE, CREATING, ACTIVE, UPDATING, DELETING, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateMessage" /></td>
@@ -123,6 +124,13 @@ The following methods are available for this resource:
     <td>Provisions instance resources for the API Hub.</td>
 </tr>
 <tr>
+    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apiHubInstancesId"><code>apiHubInstancesId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Update an Api Hub instance. The following fields in the ApiHubInstance can be updated: * disable_search * vertex_location * agent_registry_sync_config The update_mask should be used to specify the fields being updated.</td>
+</tr>
+<tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apiHubInstancesId"><code>apiHubInstancesId</code></a></td>
@@ -134,7 +142,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Looks up an Api Hub instance in a given GCP project. There will always be only one Api Hub instance for a GCP project across all locations.</td>
+    <td>Looks up an Api Hub instance in a given Google Cloud project. There will always be only one Api Hub instance for a Google Cloud project across all locations.</td>
 </tr>
 </tbody>
 </table>
@@ -170,6 +178,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-apiHubInstanceId">
     <td><CopyableCode code="apiHubInstanceId" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-updateMask">
+    <td><CopyableCode code="updateMask" /></td>
+    <td><code>string (google-fieldmask)</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -222,19 +235,19 @@ Provisions instance resources for the API Hub.
 
 ```sql
 INSERT INTO google.apihub.api_hub_instances (
-data__name,
-data__config,
-data__labels,
 data__description,
+data__name,
+data__labels,
+data__config,
 projectsId,
 locationsId,
 apiHubInstanceId
 )
 SELECT 
-'{{ name }}',
-'{{ config }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ name }}',
+'{{ labels }}',
+'{{ config }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apiHubInstanceId }}'
@@ -249,38 +262,75 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: api_hub_instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the api_hub_instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the api_hub_instances resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Format: `projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}`.
-        
-    - name: config
-      value: object
-      description: >
-        Required. Config of the ApiHub instance.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Instance labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the ApiHub instance.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Format: \`projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Instance labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
+    - name: config
+      description: |
+        Required. Config of the ApiHub instance.
+      value:
+        vertexLocation: "{{ vertexLocation }}"
+        disableSearch: {{ disableSearch }}
+        cmekKeyName: "{{ cmekKeyName }}"
+        encryptionType: "{{ encryptionType }}"
+        agentRegistrySyncConfig:
+          disabled: {{ disabled }}
     - name: apiHubInstanceId
-      value: string
+      value: "{{ apiHubInstanceId }}"
+`}</CodeBlock>
+
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="patch"
+    values={[
+        { label: 'patch', value: 'patch' }
+    ]}
+>
+<TabItem value="patch">
+
+Update an Api Hub instance. The following fields in the ApiHubInstance can be updated: * disable_search * vertex_location * agent_registry_sync_config The update_mask should be used to specify the fields being updated.
+
+```sql
+UPDATE google.apihub.api_hub_instances
+SET 
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__labels = '{{ labels }}',
+data__config = '{{ config }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND apiHubInstancesId = '{{ apiHubInstancesId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
 ```
 </TabItem>
 </Tabs>
@@ -319,7 +369,7 @@ AND apiHubInstancesId = '{{ apiHubInstancesId }}' --required
 >
 <TabItem value="lookup">
 
-Looks up an Api Hub instance in a given GCP project. There will always be only one Api Hub instance for a GCP project across all locations.
+Looks up an Api Hub instance in a given Google Cloud project. There will always be only one Api Hub instance for a Google Cloud project across all locations.
 
 ```sql
 EXEC google.apihub.api_hub_instances.lookup 

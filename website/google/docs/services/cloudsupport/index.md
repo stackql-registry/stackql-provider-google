@@ -18,7 +18,7 @@ cloudsupport service documentation.
 
 :::info[Service Summary]
 
-total resources: __4__  
+total resources: __5__  
 
 :::
 
@@ -26,10 +26,11 @@ total resources: __4__
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/cloudsupport/attachments/">attachments</a><br />
-<a href="/services/cloudsupport/cases/">cases</a>
+<a href="/services/cloudsupport/cases/">cases</a><br />
+<a href="/services/cloudsupport/comments/">comments</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/cloudsupport/comments/">comments</a><br />
-<a href="/services/cloudsupport/media/">media</a>
+<a href="/services/cloudsupport/media/">media</a><br />
+<a href="/services/cloudsupport/support_event_subscriptions/">support_event_subscriptions</a>
 </div>
 </div>

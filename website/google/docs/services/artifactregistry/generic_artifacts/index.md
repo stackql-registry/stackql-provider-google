@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>generic_artifacts</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>generic_artifacts</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="generic_artifacts" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.artifactregistry.generic_artifacts" /></td></tr>
 </tbody></table>
@@ -109,9 +110,9 @@ EXEC google.artifactregistry.generic_artifacts.upload
 @repositoriesId='{{ repositoriesId }}' --required 
 @@json=
 '{
-"filename": "{{ filename }}", 
+"versionId": "{{ versionId }}", 
 "packageId": "{{ packageId }}", 
-"versionId": "{{ versionId }}"
+"filename": "{{ filename }}"
 }'
 ;
 ```

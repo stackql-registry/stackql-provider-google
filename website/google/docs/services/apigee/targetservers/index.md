@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>targetservers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>targetservers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="targetservers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.targetservers" /></td></tr>
 </tbody></table>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protocol" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The protocol used by this TargetServer.</td>
+    <td>Immutable. The protocol used by this TargetServer. (PROTOCOL_UNSPECIFIED, HTTP, HTTP2, GRPC_TARGET, GRPC, EXTERNAL_CALLOUT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sSLInfo" /></td>
@@ -216,24 +217,24 @@ Creates a TargetServer in the specified environment.
 
 ```sql
 INSERT INTO google.apigee.targetservers (
-data__sSLInfo,
-data__description,
 data__name,
-data__isEnabled,
 data__port,
+data__sSLInfo,
+data__isEnabled,
 data__protocol,
+data__description,
 data__host,
 organizationsId,
 environmentsId,
 name
 )
 SELECT 
-'{{ sSLInfo }}',
-'{{ description }}',
 '{{ name }}',
-{{ isEnabled }},
 {{ port }},
+'{{ sSLInfo }}',
+{{ isEnabled }},
 '{{ protocol }}',
+'{{ description }}',
 '{{ host }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
@@ -251,55 +252,62 @@ sSLInfo
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: targetservers
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the targetservers resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the targetservers resource.
-    - name: sSLInfo
-      value: object
-      description: >
-        Optional. Specifies TLS configuration info for this TargetServer. The JSON name is `sSLInfo` for legacy/backwards compatibility reasons -- Edge originally supported SSL, and the name is still used for TLS configuration.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A human-readable description of this TargetServer.
-        
     - name: name
-      value: string
-      description: >
-        Required. The resource id of this target server. Values must match the regular expression 
-        
-    - name: isEnabled
-      value: boolean
-      description: >
-        Optional. Enabling/disabling a TargetServer is useful when TargetServers are used in load balancing configurations, and one or more TargetServers need to taken out of rotation periodically. Defaults to true.
-        
+      value: "{{ name }}"
+      description: |
+        Required. The resource id of this target server. Values must match the regular expression
     - name: port
-      value: integer
-      description: >
+      value: {{ port }}
+      description: |
         Required. The port number this target connects to on the given host. Value must be between 1 and 65535, inclusive.
-        
+    - name: sSLInfo
+      description: |
+        Optional. Specifies TLS configuration info for this TargetServer. The JSON name is \`sSLInfo\` for legacy/backwards compatibility reasons -- Edge originally supported SSL, and the name is still used for TLS configuration.
+      value:
+        keyStore: "{{ keyStore }}"
+        trustStore: "{{ trustStore }}"
+        ignoreValidationErrors: {{ ignoreValidationErrors }}
+        commonName:
+          wildcardMatch: {{ wildcardMatch }}
+          value: "{{ value }}"
+        clientAuthEnabled: {{ clientAuthEnabled }}
+        keyAlias: "{{ keyAlias }}"
+        enabled: {{ enabled }}
+        protocols:
+          - "{{ protocols }}"
+        ciphers:
+          - "{{ ciphers }}"
+        enforce: {{ enforce }}
+    - name: isEnabled
+      value: {{ isEnabled }}
+      description: |
+        Optional. Enabling/disabling a TargetServer is useful when TargetServers are used in load balancing configurations, and one or more TargetServers need to taken out of rotation periodically. Defaults to true.
     - name: protocol
-      value: string
-      description: >
+      value: "{{ protocol }}"
+      description: |
         Immutable. The protocol used by this TargetServer.
-        
       valid_values: ['PROTOCOL_UNSPECIFIED', 'HTTP', 'HTTP2', 'GRPC_TARGET', 'GRPC', 'EXTERNAL_CALLOUT']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A human-readable description of this TargetServer.
     - name: host
-      value: string
-      description: >
+      value: "{{ host }}"
+      description: |
         Required. The host name this target connects to. Value must be a valid hostname as described by RFC-1123.
-        
     - name: name
-      value: string
-```
+      value: "{{ name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -319,12 +327,12 @@ Updates an existing TargetServer. Note that this operation has PUT semantics; it
 ```sql
 REPLACE google.apigee.targetservers
 SET 
-data__sSLInfo = '{{ sSLInfo }}',
-data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__isEnabled = {{ isEnabled }},
 data__port = {{ port }},
+data__sSLInfo = '{{ sSLInfo }}',
+data__isEnabled = {{ isEnabled }},
 data__protocol = '{{ protocol }}',
+data__description = '{{ description }}',
 data__host = '{{ host }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

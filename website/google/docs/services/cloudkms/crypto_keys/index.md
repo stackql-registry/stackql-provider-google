@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>crypto_keys</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>crypto_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="crypto_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudkms.crypto_keys" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="keyAccessJustificationsPolicy" /></td>
     <td><code>object</code></td>
-    <td>Optional. The policy used for Key Access Justifications Policy Enforcement. If this field is present and this key is enrolled in Key Access Justifications Policy Enforcement, the policy will be evaluated in encrypt, decrypt, and sign operations, and the operation will fail if rejected by the policy. The policy is defined by specifying zero or more allowed justification codes. https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes By default, this field is absent, and all justification codes are allowed. (id: KeyAccessJustificationsPolicy)</td>
+    <td>Optional. The policy used for Key Access Justifications Policy Enforcement. If this field is present and this key is enrolled in Key Access Justifications Policy Enforcement, the policy will be evaluated in encrypt, decrypt, and sign operations, and the operation will fail if rejected by the policy. The policy is defined by specifying zero or more allowed justification codes. https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes By default, this field is absent, and all justification codes are allowed. If the `key_access_justifications_policy.allowed_access_reasons` is empty (zero allowed justification code), all encrypt, decrypt, and sign operations will fail. (id: KeyAccessJustificationsPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -92,12 +93,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="primary" /></td>
     <td><code>object</code></td>
-    <td>A CryptoKeyVersion represents an individual cryptographic key, and the associated key material. An ENABLED version can be used for cryptographic operations. For security reasons, the raw cryptographic key material represented by a CryptoKeyVersion can never be viewed or exported. It can only be used to encrypt, decrypt, or sign data when an authorized user or application invokes Cloud KMS. (id: CryptoKeyVersion)</td>
+    <td>Output only. A copy of the "primary" CryptoKeyVersion that will be used by Encrypt when this CryptoKey is given in EncryptRequest.name. The CryptoKey's primary version can be updated via UpdateCryptoKeyPrimaryVersion. Keys with purpose ENCRYPT_DECRYPT may have a primary. For other keys, this field will be omitted. (id: CryptoKeyVersion)</td>
 </tr>
 <tr>
     <td><CopyableCode code="purpose" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The immutable purpose of this CryptoKey.</td>
+    <td>Immutable. The immutable purpose of this CryptoKey. (CRYPTO_KEY_PURPOSE_UNSPECIFIED, ENCRYPT_DECRYPT, ASYMMETRIC_SIGN, ASYMMETRIC_DECRYPT, RAW_ENCRYPT_DECRYPT, MAC, KEY_ENCAPSULATION, AES_WRAPPING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rotationPeriod" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="keyAccessJustificationsPolicy" /></td>
     <td><code>object</code></td>
-    <td>Optional. The policy used for Key Access Justifications Policy Enforcement. If this field is present and this key is enrolled in Key Access Justifications Policy Enforcement, the policy will be evaluated in encrypt, decrypt, and sign operations, and the operation will fail if rejected by the policy. The policy is defined by specifying zero or more allowed justification codes. https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes By default, this field is absent, and all justification codes are allowed. (id: KeyAccessJustificationsPolicy)</td>
+    <td>Optional. The policy used for Key Access Justifications Policy Enforcement. If this field is present and this key is enrolled in Key Access Justifications Policy Enforcement, the policy will be evaluated in encrypt, decrypt, and sign operations, and the operation will fail if rejected by the policy. The policy is defined by specifying zero or more allowed justification codes. https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes By default, this field is absent, and all justification codes are allowed. If the `key_access_justifications_policy.allowed_access_reasons` is empty (zero allowed justification code), all encrypt, decrypt, and sign operations will fail. (id: KeyAccessJustificationsPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -166,12 +167,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="primary" /></td>
     <td><code>object</code></td>
-    <td>A CryptoKeyVersion represents an individual cryptographic key, and the associated key material. An ENABLED version can be used for cryptographic operations. For security reasons, the raw cryptographic key material represented by a CryptoKeyVersion can never be viewed or exported. It can only be used to encrypt, decrypt, or sign data when an authorized user or application invokes Cloud KMS. (id: CryptoKeyVersion)</td>
+    <td>Output only. A copy of the "primary" CryptoKeyVersion that will be used by Encrypt when this CryptoKey is given in EncryptRequest.name. The CryptoKey's primary version can be updated via UpdateCryptoKeyPrimaryVersion. Keys with purpose ENCRYPT_DECRYPT may have a primary. For other keys, this field will be omitted. (id: CryptoKeyVersion)</td>
 </tr>
 <tr>
     <td><CopyableCode code="purpose" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The immutable purpose of this CryptoKey.</td>
+    <td>Immutable. The immutable purpose of this CryptoKey. (CRYPTO_KEY_PURPOSE_UNSPECIFIED, ENCRYPT_DECRYPT, ASYMMETRIC_SIGN, ASYMMETRIC_DECRYPT, RAW_ENCRYPT_DECRYPT, MAC, KEY_ENCAPSULATION, AES_WRAPPING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rotationPeriod" /></td>
@@ -214,14 +215,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a></td>
-    <td><a href="#parameter-versionView"><code>versionView</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-versionView"><code>versionView</code></a></td>
     <td>Lists CryptoKeys.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a></td>
-    <td><a href="#parameter-skipInitialVersionCreation"><code>skipInitialVersionCreation</code></a>, <a href="#parameter-cryptoKeyId"><code>cryptoKeyId</code></a></td>
+    <td><a href="#parameter-trustedWrappingEnabled"><code>trustedWrappingEnabled</code></a>, <a href="#parameter-cryptoKeyId"><code>cryptoKeyId</code></a>, <a href="#parameter-skipInitialVersionCreation"><code>skipInitialVersionCreation</code></a></td>
     <td>Create a new CryptoKey within a KeyRing. CryptoKey.purpose and CryptoKey.version_template.algorithm are required.</td>
 </tr>
 <tr>
@@ -232,11 +233,18 @@ The following methods are available for this resource:
     <td>Update a CryptoKey.</td>
 </tr>
 <tr>
-    <td><a href="#encrypt"><CopyableCode code="encrypt" /></a></td>
+    <td><a href="#delete"><CopyableCode code="delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
+    <td></td>
+    <td>Permanently deletes the given CryptoKey. All child CryptoKeyVersions must have been previously deleted using KeyManagementService.DeleteCryptoKeyVersion. The specified crypto key will be immediately and permanently deleted upon calling this method. This action cannot be undone.</td>
+</tr>
+<tr>
+    <td><a href="#update_primary_version"><CopyableCode code="update_primary_version" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
     <td></td>
-    <td>Encrypts data, so that it can only be recovered by a call to Decrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.</td>
+    <td>Update the version of a CryptoKey that will be used in Encrypt. Returns an error if called on a key whose purpose is not ENCRYPT_DECRYPT.</td>
 </tr>
 <tr>
     <td><a href="#decrypt"><CopyableCode code="decrypt" /></a></td>
@@ -246,11 +254,11 @@ The following methods are available for this resource:
     <td>Decrypts data that was protected by Encrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.</td>
 </tr>
 <tr>
-    <td><a href="#update_primary_version"><CopyableCode code="update_primary_version" /></a></td>
+    <td><a href="#encrypt"><CopyableCode code="encrypt" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
     <td></td>
-    <td>Update the version of a CryptoKey that will be used in Encrypt. Returns an error if called on a key whose purpose is not ENCRYPT_DECRYPT.</td>
+    <td>Encrypts data, so that it can only be recovered by a call to Decrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.</td>
 </tr>
 </tbody>
 </table>
@@ -315,6 +323,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-skipInitialVersionCreation">
     <td><CopyableCode code="skipInitialVersionCreation" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-trustedWrappingEnabled">
+    <td><CopyableCode code="trustedWrappingEnabled" /></td>
     <td><code>boolean</code></td>
     <td></td>
 </tr>
@@ -388,11 +401,11 @@ FROM google.cloudkms.crypto_keys
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND keyRingsId = '{{ keyRingsId }}' -- required
-AND versionView = '{{ versionView }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND versionView = '{{ versionView }}'
 ;
 ```
 </TabItem>
@@ -414,36 +427,38 @@ Create a new CryptoKey within a KeyRing. CryptoKey.purpose and CryptoKey.version
 
 ```sql
 INSERT INTO google.cloudkms.crypto_keys (
-data__nextRotationTime,
 data__rotationPeriod,
 data__labels,
-data__destroyScheduledDuration,
-data__importOnly,
-data__purpose,
 data__versionTemplate,
+data__purpose,
+data__importOnly,
 data__keyAccessJustificationsPolicy,
+data__nextRotationTime,
+data__destroyScheduledDuration,
 data__cryptoKeyBackend,
 projectsId,
 locationsId,
 keyRingsId,
-skipInitialVersionCreation,
-cryptoKeyId
+trustedWrappingEnabled,
+cryptoKeyId,
+skipInitialVersionCreation
 )
 SELECT 
-'{{ nextRotationTime }}',
 '{{ rotationPeriod }}',
 '{{ labels }}',
-'{{ destroyScheduledDuration }}',
-{{ importOnly }},
-'{{ purpose }}',
 '{{ versionTemplate }}',
+'{{ purpose }}',
+{{ importOnly }},
 '{{ keyAccessJustificationsPolicy }}',
+'{{ nextRotationTime }}',
+'{{ destroyScheduledDuration }}',
 '{{ cryptoKeyBackend }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyRingsId }}',
-'{{ skipInitialVersionCreation }}',
-'{{ cryptoKeyId }}'
+'{{ trustedWrappingEnabled }}',
+'{{ cryptoKeyId }}',
+'{{ skipInitialVersionCreation }}'
 RETURNING
 name,
 createTime,
@@ -462,70 +477,67 @@ versionTemplate
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: crypto_keys
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the crypto_keys resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the crypto_keys resource.
     - name: keyRingsId
-      value: string
+      value: "{{ keyRingsId }}"
       description: Required parameter for the crypto_keys resource.
-    - name: nextRotationTime
-      value: string
-      description: >
-        At next_rotation_time, the Key Management Service will automatically: 1. Create a new version of this CryptoKey. 2. Mark the new version as primary. Key rotations performed manually via CreateCryptoKeyVersion and UpdateCryptoKeyPrimaryVersion do not affect next_rotation_time. Keys with purpose ENCRYPT_DECRYPT support automatic rotation. For other keys, this field must be omitted.
-        
     - name: rotationPeriod
-      value: string
-      description: >
+      value: "{{ rotationPeriod }}"
+      description: |
         next_rotation_time will be advanced by this period when the service automatically rotates a key. Must be at least 24 hours and at most 876,000 hours. If rotation_period is set, next_rotation_time must also be set. Keys with purpose ENCRYPT_DECRYPT support automatic rotation. For other keys, this field must be omitted.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Labels with user-defined metadata. For more information, see [Labeling Keys](https://cloud.google.com/kms/docs/labeling-keys).
-        
-    - name: destroyScheduledDuration
-      value: string
-      description: >
-        Immutable. The period of time that versions of this key spend in the DESTROY_SCHEDULED state before transitioning to DESTROYED. If not specified at creation time, the default duration is 30 days.
-        
-    - name: importOnly
-      value: boolean
-      description: >
-        Immutable. Whether this key may contain imported versions only.
-        
-    - name: purpose
-      value: string
-      description: >
-        Immutable. The immutable purpose of this CryptoKey.
-        
-      valid_values: ['CRYPTO_KEY_PURPOSE_UNSPECIFIED', 'ENCRYPT_DECRYPT', 'ASYMMETRIC_SIGN', 'ASYMMETRIC_DECRYPT', 'RAW_ENCRYPT_DECRYPT', 'MAC', 'KEY_ENCAPSULATION']
     - name: versionTemplate
-      value: object
-      description: >
+      description: |
         A template describing settings for new CryptoKeyVersion instances. The properties of new CryptoKeyVersion instances created by either CreateCryptoKeyVersion or auto-rotation are controlled by this template.
-        
+      value:
+        algorithm: "{{ algorithm }}"
+        protectionLevel: "{{ protectionLevel }}"
+    - name: purpose
+      value: "{{ purpose }}"
+      description: |
+        Immutable. The immutable purpose of this CryptoKey.
+      valid_values: ['CRYPTO_KEY_PURPOSE_UNSPECIFIED', 'ENCRYPT_DECRYPT', 'ASYMMETRIC_SIGN', 'ASYMMETRIC_DECRYPT', 'RAW_ENCRYPT_DECRYPT', 'MAC', 'KEY_ENCAPSULATION', 'AES_WRAPPING']
+    - name: importOnly
+      value: {{ importOnly }}
+      description: |
+        Immutable. Whether this key may contain imported versions only.
     - name: keyAccessJustificationsPolicy
-      value: object
-      description: >
-        Optional. The policy used for Key Access Justifications Policy Enforcement. If this field is present and this key is enrolled in Key Access Justifications Policy Enforcement, the policy will be evaluated in encrypt, decrypt, and sign operations, and the operation will fail if rejected by the policy. The policy is defined by specifying zero or more allowed justification codes. https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes By default, this field is absent, and all justification codes are allowed.
-        
+      description: |
+        Optional. The policy used for Key Access Justifications Policy Enforcement. If this field is present and this key is enrolled in Key Access Justifications Policy Enforcement, the policy will be evaluated in encrypt, decrypt, and sign operations, and the operation will fail if rejected by the policy. The policy is defined by specifying zero or more allowed justification codes. https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes By default, this field is absent, and all justification codes are allowed. If the \`key_access_justifications_policy.allowed_access_reasons\` is empty (zero allowed justification code), all encrypt, decrypt, and sign operations will fail.
+      value:
+        allowedAccessReasons:
+          - "{{ allowedAccessReasons }}"
+    - name: nextRotationTime
+      value: "{{ nextRotationTime }}"
+      description: |
+        At next_rotation_time, the Key Management Service will automatically: 1. Create a new version of this CryptoKey. 2. Mark the new version as primary. Key rotations performed manually via CreateCryptoKeyVersion and UpdateCryptoKeyPrimaryVersion do not affect next_rotation_time. Keys with purpose ENCRYPT_DECRYPT support automatic rotation. For other keys, this field must be omitted.
+    - name: destroyScheduledDuration
+      value: "{{ destroyScheduledDuration }}"
+      description: |
+        Immutable. The period of time that versions of this key spend in the DESTROY_SCHEDULED state before transitioning to DESTROYED. If not specified at creation time, the default duration is 30 days.
     - name: cryptoKeyBackend
-      value: string
-      description: >
-        Immutable. The resource name of the backend environment where the key material for all CryptoKeyVersions associated with this CryptoKey reside and where all related cryptographic operations are performed. Only applicable if CryptoKeyVersions have a ProtectionLevel of EXTERNAL_VPC, with the resource name in the format `projects/*/locations/*/ekmConnections/*`. Only applicable if CryptoKeyVersions have a ProtectionLevel of HSM_SINGLE_TENANT, with the resource name in the format `projects/*/locations/*/singleTenantHsmInstances/*`. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.
-        
-    - name: skipInitialVersionCreation
-      value: boolean
+      value: "{{ cryptoKeyBackend }}"
+      description: |
+        Immutable. The resource name of the backend environment where the key material for all CryptoKeyVersions associated with this CryptoKey reside and where all related cryptographic operations are performed. Only applicable if CryptoKeyVersions have a ProtectionLevel of EXTERNAL_VPC, with the resource name in the format \`projects/*/locations/*/ekmConnections/*\`. Only applicable if CryptoKeyVersions have a ProtectionLevel of HSM_SINGLE_TENANT, with the resource name in the format \`projects/*/locations/*/singleTenantHsmInstances/*\`. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.
+    - name: trustedWrappingEnabled
+      value: {{ trustedWrappingEnabled }}
     - name: cryptoKeyId
-      value: string
-```
+      value: "{{ cryptoKeyId }}"
+    - name: skipInitialVersionCreation
+      value: {{ skipInitialVersionCreation }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -545,14 +557,14 @@ Update a CryptoKey.
 ```sql
 UPDATE google.cloudkms.crypto_keys
 SET 
-data__nextRotationTime = '{{ nextRotationTime }}',
 data__rotationPeriod = '{{ rotationPeriod }}',
 data__labels = '{{ labels }}',
-data__destroyScheduledDuration = '{{ destroyScheduledDuration }}',
-data__importOnly = {{ importOnly }},
-data__purpose = '{{ purpose }}',
 data__versionTemplate = '{{ versionTemplate }}',
+data__purpose = '{{ purpose }}',
+data__importOnly = {{ importOnly }},
 data__keyAccessJustificationsPolicy = '{{ keyAccessJustificationsPolicy }}',
+data__nextRotationTime = '{{ nextRotationTime }}',
+data__destroyScheduledDuration = '{{ destroyScheduledDuration }}',
 data__cryptoKeyBackend = '{{ cryptoKeyBackend }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -578,32 +590,53 @@ versionTemplate;
 </Tabs>
 
 
+## `DELETE` examples
+
+<Tabs
+    defaultValue="delete"
+    values={[
+        { label: 'delete', value: 'delete' }
+    ]}
+>
+<TabItem value="delete">
+
+Permanently deletes the given CryptoKey. All child CryptoKeyVersions must have been previously deleted using KeyManagementService.DeleteCryptoKeyVersion. The specified crypto key will be immediately and permanently deleted upon calling this method. This action cannot be undone.
+
+```sql
+DELETE FROM google.cloudkms.crypto_keys
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND keyRingsId = '{{ keyRingsId }}' --required
+AND cryptoKeysId = '{{ cryptoKeysId }}' --required
+;
+```
+</TabItem>
+</Tabs>
+
+
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="encrypt"
+    defaultValue="update_primary_version"
     values={[
-        { label: 'encrypt', value: 'encrypt' },
+        { label: 'update_primary_version', value: 'update_primary_version' },
         { label: 'decrypt', value: 'decrypt' },
-        { label: 'update_primary_version', value: 'update_primary_version' }
+        { label: 'encrypt', value: 'encrypt' }
     ]}
 >
-<TabItem value="encrypt">
+<TabItem value="update_primary_version">
 
-Encrypts data, so that it can only be recovered by a call to Decrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.
+Update the version of a CryptoKey that will be used in Encrypt. Returns an error if called on a key whose purpose is not ENCRYPT_DECRYPT.
 
 ```sql
-EXEC google.cloudkms.crypto_keys.encrypt 
+EXEC google.cloudkms.crypto_keys.update_primary_version 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @keyRingsId='{{ keyRingsId }}' --required, 
 @cryptoKeysId='{{ cryptoKeysId }}' --required 
 @@json=
 '{
-"plaintext": "{{ plaintext }}", 
-"plaintextCrc32c": "{{ plaintextCrc32c }}", 
-"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}", 
-"additionalAuthenticatedData": "{{ additionalAuthenticatedData }}"
+"cryptoKeyVersionId": "{{ cryptoKeyVersionId }}"
 }'
 ;
 ```
@@ -620,27 +653,30 @@ EXEC google.cloudkms.crypto_keys.decrypt
 @cryptoKeysId='{{ cryptoKeysId }}' --required 
 @@json=
 '{
-"additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
 "ciphertext": "{{ ciphertext }}", 
-"ciphertextCrc32c": "{{ ciphertextCrc32c }}", 
-"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}"
+"additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
+"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}", 
+"ciphertextCrc32c": "{{ ciphertextCrc32c }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="update_primary_version">
+<TabItem value="encrypt">
 
-Update the version of a CryptoKey that will be used in Encrypt. Returns an error if called on a key whose purpose is not ENCRYPT_DECRYPT.
+Encrypts data, so that it can only be recovered by a call to Decrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.
 
 ```sql
-EXEC google.cloudkms.crypto_keys.update_primary_version 
+EXEC google.cloudkms.crypto_keys.encrypt 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @keyRingsId='{{ keyRingsId }}' --required, 
 @cryptoKeysId='{{ cryptoKeysId }}' --required 
 @@json=
 '{
-"cryptoKeyVersionId": "{{ cryptoKeyVersionId }}"
+"plaintext": "{{ plaintext }}", 
+"additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
+"plaintextCrc32c": "{{ plaintextCrc32c }}", 
+"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}"
 }'
 ;
 ```

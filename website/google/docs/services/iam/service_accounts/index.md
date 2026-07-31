@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_accounts</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_accounts</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_accounts" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.service_accounts" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists every ServiceAccount that belongs to a specific project.</td>
 </tr>
 <tr>
@@ -216,6 +217,13 @@ The following methods are available for this resource:
     <td>Deletes a ServiceAccount. **Warning:** After you delete a service account, you might not be able to undelete it. If you know that you need to re-enable the service account in the future, use DisableServiceAccount instead. If you delete a service account, IAM permanently removes the service account 30 days later. Google Cloud cannot recover the service account after it is permanently removed, even if you file a support request. To help avoid unplanned outages, we recommend that you disable the service account before you delete it. Use DisableServiceAccount to disable the service account, then wait at least 24 hours and watch for unintended consequences. If there are no unintended consequences, you can delete the service account.</td>
 </tr>
 <tr>
+    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
+    <td></td>
+    <td>Enables a ServiceAccount that was disabled by DisableServiceAccount. If the service account is already enabled, then this method has no effect. If the service account was disabled by other means—for example, if Google disabled the service account because it was compromised—you cannot use this method to enable the service account.</td>
+</tr>
+<tr>
     <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
@@ -223,11 +231,11 @@ The following methods are available for this resource:
     <td>Restores a deleted ServiceAccount. **Important:** It is not always possible to restore a deleted service account. Use this method only as a last resort. After you delete a service account, IAM permanently removes the service account 30 days later. There is no way to restore a deleted service account that has been permanently removed.</td>
 </tr>
 <tr>
-    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
+    <td><a href="#sign_jwt"><CopyableCode code="sign_jwt" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
     <td></td>
-    <td>Enables a ServiceAccount that was disabled by DisableServiceAccount. If the service account is already enabled, then this method has no effect. If the service account was disabled by other means—for example, if Google disabled the service account because it was compromised—you cannot use this method to enable the service account.</td>
+    <td> Signs a JSON Web Token (JWT) using the system-managed private key for a ServiceAccount.</td>
 </tr>
 <tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
@@ -242,13 +250,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
     <td></td>
     <td> Signs a blob using the system-managed private key for a ServiceAccount.</td>
-</tr>
-<tr>
-    <td><a href="#sign_jwt"><CopyableCode code="sign_jwt" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
-    <td></td>
-    <td> Signs a JSON Web Token (JWT) using the system-managed private key for a ServiceAccount.</td>
 </tr>
 </tbody>
 </table>
@@ -336,8 +337,8 @@ projectId,
 uniqueId
 FROM google.iam.service_accounts
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -382,24 +383,31 @@ uniqueId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: service_accounts
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the service_accounts resource.
     - name: accountId
-      value: string
-      description: >
-        Required. The account id that is used to generate the service account email address and a stable unique id. It is unique within a project, must be 6-30 characters long, and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])` to comply with RFC1035.
-        
+      value: "{{ accountId }}"
+      description: |
+        Required. The account id that is used to generate the service account email address and a stable unique id. It is unique within a project, must be 6-30 characters long, and match the regular expression \`[a-z]([-a-z0-9]*[a-z0-9])\` to comply with RFC1035.
     - name: serviceAccount
-      value: object
-      description: >
+      description: |
         An IAM service account. A service account is an account for an application or a virtual machine (VM) instance, not a person. You can use a service account to call Google APIs. To learn more, read the [overview of service accounts](https://cloud.google.com/iam/help/service-accounts/overview). When you create a service account, you specify the project ID that owns the service account, as well as a name that must be unique within the project. IAM uses these values to create an email address that identifies the service account. //
-        
-```
+      value:
+        name: "{{ name }}"
+        projectId: "{{ projectId }}"
+        displayName: "{{ displayName }}"
+        etag: "{{ etag }}"
+        email: "{{ email }}"
+        oauth2ClientId: "{{ oauth2ClientId }}"
+        description: "{{ description }}"
+        uniqueId: "{{ uniqueId }}"
+        disabled: {{ disabled }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -501,15 +509,26 @@ AND serviceAccountsId = '{{ serviceAccountsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="enable"
     values={[
-        { label: 'undelete', value: 'undelete' },
         { label: 'enable', value: 'enable' },
+        { label: 'undelete', value: 'undelete' },
+        { label: 'sign_jwt', value: 'sign_jwt' },
         { label: 'disable', value: 'disable' },
-        { label: 'sign_blob', value: 'sign_blob' },
-        { label: 'sign_jwt', value: 'sign_jwt' }
+        { label: 'sign_blob', value: 'sign_blob' }
     ]}
 >
+<TabItem value="enable">
+
+Enables a ServiceAccount that was disabled by DisableServiceAccount. If the service account is already enabled, then this method has no effect. If the service account was disabled by other means—for example, if Google disabled the service account because it was compromised—you cannot use this method to enable the service account.
+
+```sql
+EXEC google.iam.service_accounts.enable 
+@projectsId='{{ projectsId }}' --required, 
+@serviceAccountsId='{{ serviceAccountsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="undelete">
 
 Restores a deleted ServiceAccount. **Important:** It is not always possible to restore a deleted service account. Use this method only as a last resort. After you delete a service account, IAM permanently removes the service account 30 days later. There is no way to restore a deleted service account that has been permanently removed.
@@ -521,14 +540,18 @@ EXEC google.iam.service_accounts.undelete
 ;
 ```
 </TabItem>
-<TabItem value="enable">
+<TabItem value="sign_jwt">
 
-Enables a ServiceAccount that was disabled by DisableServiceAccount. If the service account is already enabled, then this method has no effect. If the service account was disabled by other means—for example, if Google disabled the service account because it was compromised—you cannot use this method to enable the service account.
+ Signs a JSON Web Token (JWT) using the system-managed private key for a ServiceAccount.
 
 ```sql
-EXEC google.iam.service_accounts.enable 
+EXEC google.iam.service_accounts.sign_jwt 
 @projectsId='{{ projectsId }}' --required, 
-@serviceAccountsId='{{ serviceAccountsId }}' --required
+@serviceAccountsId='{{ serviceAccountsId }}' --required 
+@@json=
+'{
+"payload": "{{ payload }}"
+}'
 ;
 ```
 </TabItem>
@@ -554,21 +577,6 @@ EXEC google.iam.service_accounts.sign_blob
 @@json=
 '{
 "bytesToSign": "{{ bytesToSign }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="sign_jwt">
-
- Signs a JSON Web Token (JWT) using the system-managed private key for a ServiceAccount.
-
-```sql
-EXEC google.iam.service_accounts.sign_jwt 
-@projectsId='{{ projectsId }}' --required, 
-@serviceAccountsId='{{ serviceAccountsId }}' --required 
-@@json=
-'{
-"payload": "{{ payload }}"
 }'
 ;
 ```

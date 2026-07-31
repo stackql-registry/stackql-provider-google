@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>settings</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>settings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="settings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.settings" /></td></tr>
 </tbody></table>
@@ -69,6 +70,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The time at which the settings was created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="diagnosticMetricConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for diagnostic metrics. (id: GoogleCloudContactcenterinsightsV1SettingsDiagnosticMetricConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="languageCode" /></td>
     <td><code>string</code></td>
     <td>A language code to be applied to each transcript segment unless the segment already specifies a language code. Language code defaults to "en-US" if it is neither specified on the segment nor here.</td>
@@ -92,6 +98,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="speechConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Default Speech-to-Text resources to use while ingesting audio files. Optional, CCAI Insights will create a default if not provided. This applies to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversations coming from CCAI Platform. (id: GoogleCloudContactcenterinsightsV1SpeechConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="timeZone" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The time zone applied to the project. This is a string representation of the time zone, for example, "America/New_York". This field follows the IANA TZ database format. See https://www.iana.org/time-zones for a list of valid values. If no value is set the user time zone will be used.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -184,11 +195,13 @@ name,
 analysisConfig,
 conversationTtl,
 createTime,
+diagnosticMetricConfig,
 languageCode,
 pubsubNotificationSettings,
 redactionConfig,
 screenRecordingBucketUri,
 speechConfig,
+timeZone,
 updateTime
 FROM google.contactcenterinsights.settings
 WHERE projectsId = '{{ projectsId }}' -- required
@@ -214,14 +227,16 @@ Updates project-level settings.
 ```sql
 UPDATE google.contactcenterinsights.settings
 SET 
-data__conversationTtl = '{{ conversationTtl }}',
-data__analysisConfig = '{{ analysisConfig }}',
 data__name = '{{ name }}',
-data__redactionConfig = '{{ redactionConfig }}',
 data__pubsubNotificationSettings = '{{ pubsubNotificationSettings }}',
-data__screenRecordingBucketUri = '{{ screenRecordingBucketUri }}',
+data__redactionConfig = '{{ redactionConfig }}',
+data__timeZone = '{{ timeZone }}',
+data__speechConfig = '{{ speechConfig }}',
+data__conversationTtl = '{{ conversationTtl }}',
 data__languageCode = '{{ languageCode }}',
-data__speechConfig = '{{ speechConfig }}'
+data__diagnosticMetricConfig = '{{ diagnosticMetricConfig }}',
+data__screenRecordingBucketUri = '{{ screenRecordingBucketUri }}',
+data__analysisConfig = '{{ analysisConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -231,11 +246,13 @@ name,
 analysisConfig,
 conversationTtl,
 createTime,
+diagnosticMetricConfig,
 languageCode,
 pubsubNotificationSettings,
 redactionConfig,
 screenRecordingBucketUri,
 speechConfig,
+timeZone,
 updateTime;
 ```
 </TabItem>

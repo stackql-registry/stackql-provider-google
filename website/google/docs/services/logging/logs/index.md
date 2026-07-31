@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>logs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>logs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="logs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.logging.logs" /></td></tr>
 </tbody></table>
@@ -32,48 +33,20 @@ Creates, updates, deletes, gets or lists a <code>logs</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_locations_buckets_views_logs_list"
+    defaultValue="billing_accounts_locations_buckets_views_logs_list"
     values={[
-        { label: 'organizations_locations_buckets_views_logs_list', value: 'organizations_locations_buckets_views_logs_list' },
         { label: 'billing_accounts_locations_buckets_views_logs_list', value: 'billing_accounts_locations_buckets_views_logs_list' },
-        { label: 'projects_locations_buckets_views_logs_list', value: 'projects_locations_buckets_views_logs_list' },
         { label: 'folders_locations_buckets_views_logs_list', value: 'folders_locations_buckets_views_logs_list' },
+        { label: 'projects_locations_buckets_views_logs_list', value: 'projects_locations_buckets_views_logs_list' },
+        { label: 'organizations_locations_buckets_views_logs_list', value: 'organizations_locations_buckets_views_logs_list' },
         { label: 'logs_list', value: 'logs_list' },
-        { label: 'organizations_logs_list', value: 'organizations_logs_list' },
         { label: 'billing_accounts_logs_list', value: 'billing_accounts_logs_list' },
+        { label: 'folders_logs_list', value: 'folders_logs_list' },
         { label: 'projects_logs_list', value: 'projects_logs_list' },
-        { label: 'folders_logs_list', value: 'folders_logs_list' }
+        { label: 'organizations_logs_list', value: 'organizations_logs_list' }
     ]}
 >
-<TabItem value="organizations_locations_buckets_views_logs_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="billing_accounts_locations_buckets_views_logs_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_buckets_views_logs_list">
 
 <table>
 <thead>
@@ -101,7 +74,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="logs_list">
+<TabItem value="projects_locations_buckets_views_logs_list">
 
 <table>
 <thead>
@@ -115,7 +88,21 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_logs_list">
+<TabItem value="organizations_locations_buckets_views_logs_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="logs_list">
 
 <table>
 <thead>
@@ -143,6 +130,20 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="folders_logs_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="projects_logs_list">
 
 <table>
@@ -157,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_logs_list">
+<TabItem value="organizations_logs_list">
 
 <table>
 <thead>
@@ -189,6 +190,27 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#billing_accounts_locations_buckets_views_logs_list"><CopyableCode code="billing_accounts_locations_buckets_views_logs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td><a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_buckets_views_logs_list"><CopyableCode code="folders_locations_buckets_views_logs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td><a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_buckets_views_logs_list"><CopyableCode code="projects_locations_buckets_views_logs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td><a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
+</tr>
+<tr>
     <td><a href="#organizations_locations_buckets_views_logs_list"><CopyableCode code="organizations_locations_buckets_views_logs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
@@ -196,52 +218,17 @@ The following methods are available for this resource:
     <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
 </tr>
 <tr>
-    <td><a href="#billing_accounts_locations_buckets_views_logs_list"><CopyableCode code="billing_accounts_locations_buckets_views_logs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-resourceNames"><code>resourceNames</code></a></td>
-    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_buckets_views_logs_list"><CopyableCode code="projects_locations_buckets_views_logs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-resourceNames"><code>resourceNames</code></a></td>
-    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_buckets_views_logs_list"><CopyableCode code="folders_locations_buckets_views_logs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
-</tr>
-<tr>
     <td><a href="#logs_list"><CopyableCode code="logs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_logs_list"><CopyableCode code="organizations_logs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_logs_list"><CopyableCode code="billing_accounts_logs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
-</tr>
-<tr>
-    <td><a href="#projects_logs_list"><CopyableCode code="projects_logs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-resourceNames"><code>resourceNames</code></a></td>
+    <td><a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
 </tr>
 <tr>
@@ -252,16 +239,30 @@ The following methods are available for this resource:
     <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_logs_delete"><CopyableCode code="organizations_logs_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-logsId"><code>logsId</code></a></td>
-    <td></td>
-    <td>Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.</td>
+    <td><a href="#projects_logs_list"><CopyableCode code="projects_logs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_logs_list"><CopyableCode code="organizations_logs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-resourceNames"><code>resourceNames</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_logs_delete"><CopyableCode code="billing_accounts_logs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-logsId"><code>logsId</code></a></td>
+    <td></td>
+    <td>Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.</td>
+</tr>
+<tr>
+    <td><a href="#folders_logs_delete"><CopyableCode code="folders_logs_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-logsId"><code>logsId</code></a></td>
     <td></td>
     <td>Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.</td>
 </tr>
@@ -273,9 +274,9 @@ The following methods are available for this resource:
     <td>Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.</td>
 </tr>
 <tr>
-    <td><a href="#folders_logs_delete"><CopyableCode code="folders_logs_delete" /></a></td>
+    <td><a href="#organizations_logs_delete"><CopyableCode code="organizations_logs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-logsId"><code>logsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-logsId"><code>logsId</code></a></td>
     <td></td>
     <td>Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.</td>
 </tr>
@@ -378,19 +379,73 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_locations_buckets_views_logs_list"
+    defaultValue="billing_accounts_locations_buckets_views_logs_list"
     values={[
-        { label: 'organizations_locations_buckets_views_logs_list', value: 'organizations_locations_buckets_views_logs_list' },
         { label: 'billing_accounts_locations_buckets_views_logs_list', value: 'billing_accounts_locations_buckets_views_logs_list' },
-        { label: 'projects_locations_buckets_views_logs_list', value: 'projects_locations_buckets_views_logs_list' },
         { label: 'folders_locations_buckets_views_logs_list', value: 'folders_locations_buckets_views_logs_list' },
+        { label: 'projects_locations_buckets_views_logs_list', value: 'projects_locations_buckets_views_logs_list' },
+        { label: 'organizations_locations_buckets_views_logs_list', value: 'organizations_locations_buckets_views_logs_list' },
         { label: 'logs_list', value: 'logs_list' },
-        { label: 'organizations_logs_list', value: 'organizations_logs_list' },
         { label: 'billing_accounts_logs_list', value: 'billing_accounts_logs_list' },
+        { label: 'folders_logs_list', value: 'folders_logs_list' },
         { label: 'projects_logs_list', value: 'projects_logs_list' },
-        { label: 'folders_logs_list', value: 'folders_logs_list' }
+        { label: 'organizations_logs_list', value: 'organizations_logs_list' }
     ]}
 >
+<TabItem value="billing_accounts_locations_buckets_views_logs_list">
+
+Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
+
+```sql
+SELECT
+*
+FROM google.logging.logs
+WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND bucketsId = '{{ bucketsId }}' -- required
+AND viewsId = '{{ viewsId }}' -- required
+AND resourceNames = '{{ resourceNames }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="folders_locations_buckets_views_logs_list">
+
+Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
+
+```sql
+SELECT
+*
+FROM google.logging.logs
+WHERE foldersId = '{{ foldersId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND bucketsId = '{{ bucketsId }}' -- required
+AND viewsId = '{{ viewsId }}' -- required
+AND resourceNames = '{{ resourceNames }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_buckets_views_logs_list">
+
+Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
+
+```sql
+SELECT
+*
+FROM google.logging.logs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND bucketsId = '{{ bucketsId }}' -- required
+AND viewsId = '{{ viewsId }}' -- required
+AND resourceNames = '{{ resourceNames }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_locations_buckets_views_logs_list">
 
 Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
@@ -409,60 +464,6 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="billing_accounts_locations_buckets_views_logs_list">
-
-Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
-
-```sql
-SELECT
-*
-FROM google.logging.logs
-WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND bucketsId = '{{ bucketsId }}' -- required
-AND viewsId = '{{ viewsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND resourceNames = '{{ resourceNames }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_buckets_views_logs_list">
-
-Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
-
-```sql
-SELECT
-*
-FROM google.logging.logs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND bucketsId = '{{ bucketsId }}' -- required
-AND viewsId = '{{ viewsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND resourceNames = '{{ resourceNames }}'
-;
-```
-</TabItem>
-<TabItem value="folders_locations_buckets_views_logs_list">
-
-Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
-
-```sql
-SELECT
-*
-FROM google.logging.logs
-WHERE foldersId = '{{ foldersId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND bucketsId = '{{ bucketsId }}' -- required
-AND viewsId = '{{ viewsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND resourceNames = '{{ resourceNames }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="logs_list">
 
 Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
@@ -473,24 +474,9 @@ SELECT
 FROM google.logging.logs
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND resourceNames = '{{ resourceNames }}'
 AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="organizations_logs_list">
-
-Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
-
-```sql
-SELECT
-*
-FROM google.logging.logs
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND resourceNames = '{{ resourceNames }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -503,24 +489,9 @@ SELECT
 *
 FROM google.logging.logs
 WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND resourceNames = '{{ resourceNames }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_logs_list">
-
-Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
-
-```sql
-SELECT
-*
-FROM google.logging.logs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND resourceNames = '{{ resourceNames }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -539,32 +510,51 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_logs_list">
+
+Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
+
+```sql
+SELECT
+*
+FROM google.logging.logs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND resourceNames = '{{ resourceNames }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="organizations_logs_list">
+
+Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.
+
+```sql
+SELECT
+*
+FROM google.logging.logs
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND resourceNames = '{{ resourceNames }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="organizations_logs_delete"
+    defaultValue="billing_accounts_logs_delete"
     values={[
-        { label: 'organizations_logs_delete', value: 'organizations_logs_delete' },
         { label: 'billing_accounts_logs_delete', value: 'billing_accounts_logs_delete' },
-        { label: 'projects_logs_delete', value: 'projects_logs_delete' },
         { label: 'folders_logs_delete', value: 'folders_logs_delete' },
+        { label: 'projects_logs_delete', value: 'projects_logs_delete' },
+        { label: 'organizations_logs_delete', value: 'organizations_logs_delete' },
         { label: 'logs_delete', value: 'logs_delete' }
     ]}
 >
-<TabItem value="organizations_logs_delete">
-
-Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.
-
-```sql
-DELETE FROM google.logging.logs
-WHERE organizationsId = '{{ organizationsId }}' --required
-AND logsId = '{{ logsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="billing_accounts_logs_delete">
 
 Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.
@@ -572,6 +562,17 @@ Deletes all the log entries in a log for the global _Default Log Bucket. The log
 ```sql
 DELETE FROM google.logging.logs
 WHERE billingAccountsId = '{{ billingAccountsId }}' --required
+AND logsId = '{{ logsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="folders_logs_delete">
+
+Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.
+
+```sql
+DELETE FROM google.logging.logs
+WHERE foldersId = '{{ foldersId }}' --required
 AND logsId = '{{ logsId }}' --required
 ;
 ```
@@ -587,13 +588,13 @@ AND logsId = '{{ logsId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="folders_logs_delete">
+<TabItem value="organizations_logs_delete">
 
 Deletes all the log entries in a log for the global _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.
 
 ```sql
 DELETE FROM google.logging.logs
-WHERE foldersId = '{{ foldersId }}' --required
+WHERE organizationsId = '{{ organizationsId }}' --required
 AND logsId = '{{ logsId }}' --required
 ;
 ```

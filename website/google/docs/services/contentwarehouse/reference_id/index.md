@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reference_id</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reference_id</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reference_id" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contentwarehouse.reference_id" /></td></tr>
 </tbody></table>
@@ -61,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="contentCategory" /></td>
     <td><code>string</code></td>
-    <td>Indicates the category (image, audio, video etc.) of the original content.</td>
+    <td>Indicates the category (image, audio, video etc.) of the original content. (CONTENT_CATEGORY_UNSPECIFIED, CONTENT_CATEGORY_IMAGE, CONTENT_CATEGORY_AUDIO, CONTENT_CATEGORY_VIDEO)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="rawDocumentFileType" /></td>
     <td><code>string</code></td>
-    <td>This is used when DocAI was not used to load the document and parsing/ extracting is needed for the inline_raw_document. For example, if inline_raw_document is the byte representation of a PDF file, then this should be set to: RAW_DOCUMENT_FILE_TYPE_PDF.</td>
+    <td>This is used when DocAI was not used to load the document and parsing/ extracting is needed for the inline_raw_document. For example, if inline_raw_document is the byte representation of a PDF file, then this should be set to: RAW_DOCUMENT_FILE_TYPE_PDF. (RAW_DOCUMENT_FILE_TYPE_UNSPECIFIED, RAW_DOCUMENT_FILE_TYPE_PDF, RAW_DOCUMENT_FILE_TYPE_DOCX, RAW_DOCUMENT_FILE_TYPE_XLSX, RAW_DOCUMENT_FILE_TYPE_PPTX, RAW_DOCUMENT_FILE_TYPE_TEXT, RAW_DOCUMENT_FILE_TYPE_TIFF)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rawDocumentPath" /></td>
@@ -289,9 +290,9 @@ Updates a document. Returns INVALID_ARGUMENT if the name of the document is non-
 UPDATE google.contentwarehouse.reference_id
 SET 
 data__cloudAiDocumentOption = '{{ cloudAiDocumentOption }}',
-data__document = '{{ document }}',
 data__requestMetadata = '{{ requestMetadata }}',
-data__updateOptions = '{{ updateOptions }}'
+data__updateOptions = '{{ updateOptions }}',
+data__document = '{{ document }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

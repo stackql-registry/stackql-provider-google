@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>host_project_registrations</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>host_project_registrations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="host_project_registrations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.host_project_registrations" /></td></tr>
 </tbody></table>
@@ -124,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists host project registrations.</td>
 </tr>
 <tr>
@@ -230,9 +231,9 @@ gcpProject
 FROM google.apihub.host_project_registrations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -255,15 +256,15 @@ Create a host project registration. A Google cloud project can be registered as 
 
 ```sql
 INSERT INTO google.apihub.host_project_registrations (
-data__name,
 data__gcpProject,
+data__name,
 projectsId,
 locationsId,
 hostProjectRegistrationId
 )
 SELECT 
-'{{ name }}',
 '{{ gcpProject }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ hostProjectRegistrationId }}'
@@ -276,28 +277,26 @@ gcpProject
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: host_project_registrations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the host_project_registrations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the host_project_registrations resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the host project registration. Format: "projects/{project}/locations/{location}/hostProjectRegistrations/{host_project_registration}".
-        
     - name: gcpProject
-      value: string
-      description: >
+      value: "{{ gcpProject }}"
+      description: |
         Required. Immutable. Google cloud project name in the format: "projects/abc" or "projects/123". As input, project name with either project id or number are accepted. As output, this field will contain project number.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the host project registration. Format: "projects/{project}/locations/{location}/hostProjectRegistrations/{host_project_registration}".
     - name: hostProjectRegistrationId
-      value: string
-```
+      value: "{{ hostProjectRegistrationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

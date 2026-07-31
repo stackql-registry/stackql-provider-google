@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>changelogs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>changelogs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="changelogs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.changelogs" /></td></tr>
 </tbody></table>
@@ -52,42 +53,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the changelog. Format: `projects//locations//agents//changelogs/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>The action of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>The timestamp of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>The affected resource display name of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="languageCode" /></td>
     <td><code>string</code></td>
-    <td>The affected language code of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
-    <td>The affected resource name of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The affected resource type.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="userEmail" /></td>
     <td><code>string</code></td>
-    <td>Email address of the authenticated user.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -106,42 +107,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the changelog. Format: `projects//locations//agents//changelogs/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>The action of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>The timestamp of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>The affected resource display name of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="languageCode" /></td>
     <td><code>string</code></td>
-    <td>The affected language code of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
-    <td>The affected resource name of the change.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The affected resource type.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="userEmail" /></td>
     <td><code>string</code></td>
-    <td>Email address of the authenticated user.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -168,14 +169,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-changelogsId"><code>changelogsId</code></a></td>
     <td></td>
-    <td>Retrieves the specified Changelog.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_changelogs_list"><CopyableCode code="projects_locations_agents_changelogs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns the list of Changelogs.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -242,7 +243,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_changelogs_get">
 
-Retrieves the specified Changelog.
+Successful response
 
 ```sql
 SELECT
@@ -264,7 +265,7 @@ AND changelogsId = '{{ changelogsId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_changelogs_list">
 
-Returns the list of Changelogs.
+Successful response
 
 ```sql
 SELECT

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>persistent_resources</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>persistent_resources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="persistent_resources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.persistent_resources" /></td></tr>
 </tbody></table>
@@ -127,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of a Study.</td>
+    <td>Output only. The detailed state of a Study. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, STOPPING, ERROR, REBOOTING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -226,7 +227,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of a Study.</td>
+    <td>Output only. The detailed state of a Study. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, STOPPING, ERROR, REBOOTING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -264,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists PersistentResources in a Location.</td>
 </tr>
 <tr>
@@ -414,8 +415,8 @@ updateTime
 FROM google.aiplatform.persistent_resources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -437,29 +438,29 @@ Creates a PersistentResource.
 
 ```sql
 INSERT INTO google.aiplatform.persistent_resources (
+data__labels,
+data__name,
 data__encryptionSpec,
+data__resourcePools,
+data__network,
+data__resourceRuntimeSpec,
+data__pscInterfaceConfig,
 data__displayName,
 data__reservedIpRanges,
-data__resourceRuntimeSpec,
-data__labels,
-data__network,
-data__resourcePools,
-data__pscInterfaceConfig,
-data__name,
 projectsId,
 locationsId,
 persistentResourceId
 )
 SELECT 
+'{{ labels }}',
+'{{ name }}',
 '{{ encryptionSpec }}',
+'{{ resourcePools }}',
+'{{ network }}',
+'{{ resourceRuntimeSpec }}',
+'{{ pscInterfaceConfig }}',
 '{{ displayName }}',
 '{{ reservedIpRanges }}',
-'{{ resourceRuntimeSpec }}',
-'{{ labels }}',
-'{{ network }}',
-'{{ resourcePools }}',
-'{{ pscInterfaceConfig }}',
-'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ persistentResourceId }}'
@@ -474,64 +475,93 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: persistent_resources
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the persistent_resources resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the persistent_resources resource.
-    - name: encryptionSpec
-      value: object
-      description: >
-        Optional. Customer-managed encryption key spec for a PersistentResource. If set, this PersistentResource and all sub-resources of this PersistentResource will be secured by this key.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. The display name of the PersistentResource. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-    - name: reservedIpRanges
-      value: array
-      description: >
-        Optional. A list of names for the reserved IP ranges under the VPC network that can be used for this persistent resource. If set, we will deploy the persistent resource within the provided IP ranges. Otherwise, the persistent resource is deployed to any IP ranges under the provided VPC network. Example: ['vertex-ai-ip-range'].
-        
-    - name: resourceRuntimeSpec
-      value: object
-      description: >
-        Optional. Persistent Resource runtime spec. For example, used for Ray cluster configuration.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. The labels with user-defined metadata to organize PersistentResource. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
-    - name: network
-      value: string
-      description: >
-        Optional. The full name of the Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to peered with Vertex AI to host the persistent resources. For example, `projects/12345/global/networks/myVPC`. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert) is of the form `projects/{project}/global/networks/{network}`. Where {project} is a project number, as in `12345`, and {network} is a network name. To specify this field, you must have already [configured VPC Network Peering for Vertex AI](https://cloud.google.com/vertex-ai/docs/general/vpc-peering). If this field is left unspecified, the resources aren't peered with any network.
-        
-    - name: resourcePools
-      value: array
-      description: >
-        Required. The spec of the pools of different resources.
-        
-    - name: pscInterfaceConfig
-      value: object
-      description: >
-        Optional. Configuration for PSC-I for PersistentResource.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. Resource name of a PersistentResource.
-        
+    - name: encryptionSpec
+      description: |
+        Optional. Customer-managed encryption key spec for a PersistentResource. If set, this PersistentResource and all sub-resources of this PersistentResource will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: resourcePools
+      description: |
+        Required. The spec of the pools of different resources.
+      value:
+        - usedReplicaCount: "{{ usedReplicaCount }}"
+          id: "{{ id }}"
+          machineSpec:
+            machineType: "{{ machineType }}"
+            tpuTopology: "{{ tpuTopology }}"
+            reservationAffinity:
+              reservationAffinityType: "{{ reservationAffinityType }}"
+              key: "{{ key }}"
+              values:
+                - "{{ values }}"
+            acceleratorCount: {{ acceleratorCount }}
+            acceleratorType: "{{ acceleratorType }}"
+            gpuPartitionSize: "{{ gpuPartitionSize }}"
+          replicaCount: "{{ replicaCount }}"
+          diskSpec:
+            bootDiskType: "{{ bootDiskType }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+          autoscalingSpec:
+            maxReplicaCount: "{{ maxReplicaCount }}"
+            minReplicaCount: "{{ minReplicaCount }}"
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Optional. The full name of the Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to peered with Vertex AI to host the persistent resources. For example, \`projects/12345/global/networks/myVPC\`. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert) is of the form \`projects/{project}/global/networks/{network}\`. Where {project} is a project number, as in \`12345\`, and {network} is a network name. To specify this field, you must have already [configured VPC Network Peering for Vertex AI](https://cloud.google.com/vertex-ai/docs/general/vpc-peering). If this field is left unspecified, the resources aren't peered with any network.
+    - name: resourceRuntimeSpec
+      description: |
+        Optional. Persistent Resource runtime spec. For example, used for Ray cluster configuration.
+      value:
+        raySpec:
+          headNodeResourcePoolId: "{{ headNodeResourcePoolId }}"
+          rayLogsSpec:
+            disabled: {{ disabled }}
+          resourcePoolImages: "{{ resourcePoolImages }}"
+          rayMetricSpec:
+            disabled: {{ disabled }}
+          imageUri: "{{ imageUri }}"
+        serviceAccountSpec:
+          enableCustomServiceAccount: {{ enableCustomServiceAccount }}
+          serviceAccount: "{{ serviceAccount }}"
+    - name: pscInterfaceConfig
+      description: |
+        Optional. Configuration for PSC-I for PersistentResource.
+      value:
+        networkAttachment: "{{ networkAttachment }}"
+        dnsPeeringConfigs:
+          - targetNetwork: "{{ targetNetwork }}"
+            domain: "{{ domain }}"
+            targetProject: "{{ targetProject }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the PersistentResource. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: reservedIpRanges
+      value:
+        - "{{ reservedIpRanges }}"
+      description: |
+        Optional. A list of names for the reserved IP ranges under the VPC network that can be used for this persistent resource. If set, we will deploy the persistent resource within the provided IP ranges. Otherwise, the persistent resource is deployed to any IP ranges under the provided VPC network. Example: ['vertex-ai-ip-range'].
     - name: persistentResourceId
-      value: string
-```
+      value: "{{ persistentResourceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -551,15 +581,15 @@ Updates a PersistentResource.
 ```sql
 UPDATE google.aiplatform.persistent_resources
 SET 
-data__encryptionSpec = '{{ encryptionSpec }}',
-data__displayName = '{{ displayName }}',
-data__reservedIpRanges = '{{ reservedIpRanges }}',
-data__resourceRuntimeSpec = '{{ resourceRuntimeSpec }}',
 data__labels = '{{ labels }}',
-data__network = '{{ network }}',
+data__name = '{{ name }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__resourcePools = '{{ resourcePools }}',
+data__network = '{{ network }}',
+data__resourceRuntimeSpec = '{{ resourceRuntimeSpec }}',
 data__pscInterfaceConfig = '{{ pscInterfaceConfig }}',
-data__name = '{{ name }}'
+data__displayName = '{{ displayName }}',
+data__reservedIpRanges = '{{ reservedIpRanges }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

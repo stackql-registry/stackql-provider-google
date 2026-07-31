@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workflows_revisions</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workflows_revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workflows_revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.workflows.workflows_revisions" /></td></tr>
 </tbody></table>
@@ -66,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="callLogLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence.</td>
+    <td>Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence. (CALL_LOG_LEVEL_UNSPECIFIED, LOG_ALL_CALLS, LOG_ERRORS_ONLY, LOG_NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionHistoryLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes the execution history level to apply to this workflow.</td>
+    <td>Optional. Describes the execution history level to apply to this workflow. (EXECUTION_HISTORY_LEVEL_UNSPECIFIED, EXECUTION_HISTORY_BASIC, EXECUTION_HISTORY_DETAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the workflow deployment.</td>
+    <td>Output only. State of the workflow deployment. (STATE_UNSPECIFIED, ACTIVE, UNAVAILABLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateError" /></td>
@@ -167,7 +168,7 @@ The following methods are available for this resource:
     <td><a href="#list_revisions"><CopyableCode code="list_revisions" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workflowsId"><code>workflowsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists revisions for a given workflow.</td>
 </tr>
 </tbody>
@@ -251,8 +252,8 @@ FROM google.workflows.workflows_revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workflowsId = '{{ workflowsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

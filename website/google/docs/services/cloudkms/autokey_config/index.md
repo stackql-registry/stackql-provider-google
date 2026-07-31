@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>autokey_config</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>autokey_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="autokey_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudkms.autokey_config" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. Name of the AutokeyConfig resource, e.g. `folders/&#123;FOLDER_NUMBER&#125;/autokeyConfig`</td>
+    <td>Identifier. Name of the AutokeyConfig resource, e.g. `folders/&#123;FOLDER_NUMBER&#125;/autokeyConfig`, `projects/&#123;PROJECT_NUMBER&#125;/autokeyConfig`, or `projects/&#123;PROJECT_ID&#125;/autokeyConfig`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -64,9 +65,14 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Name of the key project, e.g. `projects/&#123;PROJECT_ID&#125;` or `projects/&#123;PROJECT_NUMBER&#125;`, where Cloud KMS Autokey will provision a new CryptoKey when a KeyHandle is created. On UpdateAutokeyConfig, the caller will require `cloudkms.cryptoKeys.setIamPolicy` permission on this key project. Once configured, for Cloud KMS Autokey to function properly, this key project must have the Cloud KMS API activated and the Cloud KMS Service Agent for this key project must be granted the `cloudkms.admin` role (or pertinent permissions). A request with an empty key project field will clear the configuration.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="keyProjectResolutionMode" /></td>
+    <td><code>string</code></td>
+    <td>Optional. KeyProjectResolutionMode for the AutokeyConfig. Valid values are `DEDICATED_KEY_PROJECT`, `RESOURCE_PROJECT`, or `DISABLED`. (KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED, DEDICATED_KEY_PROJECT, RESOURCE_PROJECT, DISABLED)</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state for the AutokeyConfig.</td>
+    <td>Output only. The state for the AutokeyConfig. (STATE_UNSPECIFIED, ACTIVE, KEY_PROJECT_DELETED, UNINITIALIZED, KEY_PROJECT_PERMISSION_DENIED)</td>
 </tr>
 </tbody>
 </table>
@@ -91,16 +97,16 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_autokey_config"><CopyableCode code="get_autokey_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Returns the AutokeyConfig for a folder.</td>
+    <td>Returns the AutokeyConfig for a folder or project.</td>
 </tr>
 <tr>
     <td><a href="#update_autokey_config"><CopyableCode code="update_autokey_config" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the AutokeyConfig for a folder. The caller must have both `cloudkms.autokeyConfigs.update` permission on the parent folder and `cloudkms.cryptoKeys.setIamPolicy` permission on the provided key project. A KeyHandle creation in the folder's descendant projects will use this configuration to determine where to create the resulting CryptoKey.</td>
+    <td>Updates the AutokeyConfig for a folder or a project. The caller must have both `cloudkms.autokeyConfigs.update` permission on the parent folder and `cloudkms.cryptoKeys.setIamPolicy` permission on the provided key project. A KeyHandle creation in the folder's descendant projects will use this configuration to determine where to create the resulting CryptoKey.</td>
 </tr>
 </tbody>
 </table>
@@ -118,8 +124,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-foldersId">
-    <td><CopyableCode code="foldersId" /></td>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -141,16 +147,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_autokey_config">
 
-Returns the AutokeyConfig for a folder.
+Returns the AutokeyConfig for a folder or project.
 
 ```sql
 SELECT
 name,
 etag,
 keyProject,
+keyProjectResolutionMode,
 state
 FROM google.cloudkms.autokey_config
-WHERE foldersId = '{{ foldersId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 ;
 ```
 </TabItem>
@@ -167,21 +174,23 @@ WHERE foldersId = '{{ foldersId }}' -- required
 >
 <TabItem value="update_autokey_config">
 
-Updates the AutokeyConfig for a folder. The caller must have both `cloudkms.autokeyConfigs.update` permission on the parent folder and `cloudkms.cryptoKeys.setIamPolicy` permission on the provided key project. A KeyHandle creation in the folder's descendant projects will use this configuration to determine where to create the resulting CryptoKey.
+Updates the AutokeyConfig for a folder or a project. The caller must have both `cloudkms.autokeyConfigs.update` permission on the parent folder and `cloudkms.cryptoKeys.setIamPolicy` permission on the provided key project. A KeyHandle creation in the folder's descendant projects will use this configuration to determine where to create the resulting CryptoKey.
 
 ```sql
 UPDATE google.cloudkms.autokey_config
 SET 
-data__name = '{{ name }}',
+data__etag = '{{ etag }}',
 data__keyProject = '{{ keyProject }}',
-data__etag = '{{ etag }}'
+data__keyProjectResolutionMode = '{{ keyProjectResolutionMode }}',
+data__name = '{{ name }}'
 WHERE 
-foldersId = '{{ foldersId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 etag,
 keyProject,
+keyProjectResolutionMode,
 state;
 ```
 </TabItem>

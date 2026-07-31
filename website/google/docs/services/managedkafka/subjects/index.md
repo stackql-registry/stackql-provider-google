@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>subjects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>subjects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="subjects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.subjects" /></td></tr>
 </tbody></table>
@@ -86,21 +87,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
-    <td><a href="#parameter-subject"><code>subject</code></a>, <a href="#parameter-deleted"><code>deleted</code></a></td>
-    <td>List subjects which reference a particular schema id. The response will be an array of subject names.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a></td>
+    <td><a href="#parameter-subjectPrefix"><code>subjectPrefix</code></a>, <a href="#parameter-deleted"><code>deleted</code></a></td>
+    <td>List subjects in the schema registry. The response will be an array of subject names.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a></td>
     <td><a href="#parameter-permanent"><code>permanent</code></a></td>
     <td>Delete a subject. The response will be an array of versions of the deleted subject.</td>
 </tr>
 <tr>
     <td><a href="#lookup_version"><CopyableCode code="lookup_version" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a></td>
     <td></td>
     <td>Lookup a schema under the specified subject.</td>
 </tr>
@@ -120,11 +121,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-contextsId">
-    <td><CopyableCode code="contextsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-locationsId">
     <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
@@ -137,11 +133,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-schemaRegistriesId">
     <td><CopyableCode code="schemaRegistriesId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-schemasId">
-    <td><CopyableCode code="schemasId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -160,8 +151,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>boolean</code></td>
     <td></td>
 </tr>
-<tr id="parameter-subject">
-    <td><CopyableCode code="subject" /></td>
+<tr id="parameter-subjectPrefix">
+    <td><CopyableCode code="subjectPrefix" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -178,7 +169,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list">
 
-List subjects which reference a particular schema id. The response will be an array of subject names.
+List subjects in the schema registry. The response will be an array of subject names.
 
 ```sql
 SELECT
@@ -189,8 +180,7 @@ FROM google.managedkafka.subjects
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' -- required
-AND schemasId = '{{ schemasId }}' -- required
-AND subject = '{{ subject }}'
+AND subjectPrefix = '{{ subjectPrefix }}'
 AND deleted = '{{ deleted }}'
 ;
 ```
@@ -215,7 +205,6 @@ DELETE FROM google.managedkafka.subjects
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' --required
-AND contextsId = '{{ contextsId }}' --required
 AND subjectsId = '{{ subjectsId }}' --required
 AND permanent = '{{ permanent }}'
 ;
@@ -241,12 +230,11 @@ EXEC google.managedkafka.subjects.lookup_version
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @schemaRegistriesId='{{ schemaRegistriesId }}' --required, 
-@contextsId='{{ contextsId }}' --required, 
 @subjectsId='{{ subjectsId }}' --required 
 @@json=
 '{
-"schemaType": "{{ schemaType }}", 
 "normalize": {{ normalize }}, 
+"schemaType": "{{ schemaType }}", 
 "references": "{{ references }}", 
 "deleted": {{ deleted }}, 
 "schema": "{{ schema }}"

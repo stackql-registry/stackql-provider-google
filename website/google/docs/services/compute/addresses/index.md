@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>addresses</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>addresses</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="addresses" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.addresses" /></td></tr>
 </tbody></table>
@@ -53,12 +54,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be a lowercase letter, and all following characters (except for the last character) must be a dash, lowercase letter, or digit. The last character must be a lowercase letter or digit. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be a lowercase letter, and all following characters (except for the last character) must be a dash, lowercase letter, or digit. The last character must be a lowercase letter or digit. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="address" /></td>
@@ -68,12 +69,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="addressType" /></td>
     <td><code>string</code></td>
-    <td>The type of address to reserve, either INTERNAL or EXTERNAL. If unspecified, defaults to EXTERNAL.</td>
+    <td>The type of address to reserve, either INTERNAL orEXTERNAL. If unspecified, defaults to EXTERNAL. (EXTERNAL, INTERNAL, UNSPECIFIED_TYPE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -81,39 +82,44 @@ The following fields are returned by `SELECT` queries:
     <td>An optional description of this resource. Provide this field when you create the resource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="ipCollection" /></td>
+    <td><code>string</code></td>
+    <td>Reference to the source of IP addresses.  It supports the following cases:        -       Case 1: PublicDelegatedPrefix (PDP) for BYOIP external      addresses. If an IPv4 PDP is used, the PDP must support enhanced IPv4      allocations. If an IPv6 PDP is used, the PDP must be in      EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.    -       Case 2: Internal Range for global internal addresses.    Use one of the following formats to specify the resource:  For a Public Delegated Prefix:        -     Full resource URL:https://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/pdp    - Partial URL:       - projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name       - regions/region/publicDelegatedPrefixes/pdp-name       For an Internal Range:        - Full URL:https://networkconnectivity.googleapis.com/v1/projects/project/locations/global/internalRanges/internal-range    - Partial URL:projects/project/locations/global/internalRanges/internal-range</td>
+</tr>
+<tr>
     <td><CopyableCode code="ipVersion" /></td>
     <td><code>string</code></td>
-    <td>The IP version that will be used by this address. Valid options are IPV4 or IPV6.</td>
+    <td>The IP version that will be used by this address. Valid options areIPV4 or IPV6. (IPV4, IPV6, UNSPECIFIED_VERSION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ipv6EndpointType" /></td>
     <td><code>string</code></td>
-    <td>The endpoint type of this address, which should be VM or NETLB. This is used for deciding which type of endpoint this address can be used after the external IPv6 address reservation.</td>
+    <td>The endpoint type of this address, which should be VM or NETLB. This is used for deciding which type of endpoint this address can be used after the external IPv6 address reservation. (NETLB, VM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#address for addresses. (default: compute#address)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#address for addresses. (default: compute#address)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labelFingerprint" /></td>
     <td><code>string (byte)</code></td>
-    <td>A fingerprint for the labels being applied to this Address, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve an Address.</td>
+    <td>A fingerprint for the labels being applied to this Address, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels, otherwise the request will fail with error412 conditionNotMet.  To see the latest fingerprint, make a get() request to retrieve an Address.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.</td>
+    <td>Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035. Label values may be empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
-    <td>The URL of the network in which to reserve the address. This field can only be used with INTERNAL type with the VPC_PEERING purpose.</td>
+    <td>The URL of the network in which to reserve the address. This field can only be used with INTERNAL type with theVPC_PEERING purpose.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkTier" /></td>
     <td><code>string</code></td>
-    <td>This signifies the networking tier used for configuring this address and can only take the following values: PREMIUM or STANDARD. Internal IP addresses are always Premium Tier; global external IP addresses are always Premium Tier; regional external IP addresses can be either Standard or Premium Tier. If this field is not specified, it is assumed to be PREMIUM.</td>
+    <td>This signifies the networking tier used for configuring this address and can only take the following values: PREMIUM orSTANDARD. Internal IP addresses are always Premium Tier; global external IP addresses are always Premium Tier; regional external IP addresses can be either Standard or Premium Tier.  If this field is not specified, it is assumed to be PREMIUM. (FIXED_STANDARD, PREMIUM, STANDARD, STANDARD_OVERRIDES_FIXED_STANDARD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="prefixLength" /></td>
@@ -123,12 +129,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="purpose" /></td>
     <td><code>string</code></td>
-    <td>The purpose of this resource, which can be one of the following values: - GCE_ENDPOINT for addresses that are used by VM instances, alias IP ranges, load balancers, and similar resources. - DNS_RESOLVER for a DNS resolver address in a subnetwork for a Cloud DNS inbound forwarder IP addresses (regional internal IP address in a subnet of a VPC network) - VPC_PEERING for global internal IP addresses used for private services access allocated ranges. - NAT_AUTO for the regional external IP addresses used by Cloud NAT when allocating addresses using automatic NAT IP address allocation. - IPSEC_INTERCONNECT for addresses created from a private IP range that are reserved for a VLAN attachment in an *HA VPN over Cloud Interconnect* configuration. These addresses are regional resources. - `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned to multiple internal forwarding rules. - `PRIVATE_SERVICE_CONNECT` for a private network address that is used to configure Private Service Connect. Only global internal addresses can use this purpose. </td>
+    <td>The purpose of this resource, which can be one of the following values:              - GCE_ENDPOINT for addresses that are used by VM      instances, alias IP ranges, load balancers, and similar resources.      - DNS_RESOLVER for a DNS resolver address in a subnetwork        for a Cloud DNS  inbound        forwarder IP addresses (regional internal IP address in a subnet of        a VPC network)      - VPC_PEERING for global internal IP addresses used for                  private services access allocated ranges.      - NAT_AUTO for the regional external IP addresses used by           Cloud NAT when allocating addresses using                      automatic NAT IP address allocation.      - IPSEC_INTERCONNECT for addresses created from a private      IP range that are reserved for a VLAN attachment in an      *HA VPN over Cloud Interconnect* configuration. These addresses      are regional resources.      - `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned      to multiple internal forwarding rules.      - `PRIVATE_SERVICE_CONNECT` for a private network address that is      used to configure Private Service Connect. Only global internal addresses      can use this purpose.      - `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0` for addresses      that can only be assigned to global external Passthrough Network Load      Balancer forwarding rules, as an Availability Group 0 address.      - `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1` for addresses that      can only be assigned to global external Passthrough Network Load Balancer      forwarding rules, as an Availability Group 1 address. (DNS_RESOLVER, GCE_ENDPOINT, IPSEC_INTERCONNECT, NAT_AUTO, PRIVATE_SERVICE_CONNECT, SERVERLESS, SHARED_LOADBALANCER_VIP, VPC_PEERING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The URL of the region where a regional address resides. For regional addresses, you must specify the region as a path parameter in the HTTP request URL. *This field is not applicable to global addresses.*</td>
+    <td>Output only. [Output Only] The URL of the region where a regional address resides. For regional addresses, you must specify the region as a path parameter in the HTTP request URL. *This field is not applicable to global addresses.*</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -138,12 +144,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the address, which can be one of RESERVING, RESERVED, or IN_USE. An address that is RESERVING is currently in the process of being reserved. A RESERVED address is currently reserved and available to use. An IN_USE address is currently being used by another resource and is not available.</td>
+    <td>Output only. [Output Only] The status of the address, which can be one ofRESERVING, RESERVED, or IN_USE. An address that is RESERVING is currently in the process of being reserved. A RESERVED address is currently reserved and available to use. An IN_USE address is currently being used by another resource and is not available. (IN_USE, RESERVED, RESERVING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subnetwork" /></td>
     <td><code>string</code></td>
-    <td>The URL of the subnetwork in which to reserve the address. If an IP address is specified, it must be within the subnetwork's IP range. This field can only be used with INTERNAL type with a GCE_ENDPOINT or DNS_RESOLVER purpose.</td>
+    <td>The URL of the subnetwork in which to reserve the address. If an IP address is specified, it must be within the subnetwork's IP range. This field can only be used with INTERNAL type with aGCE_ENDPOINT or DNS_RESOLVER purpose.</td>
 </tr>
 <tr>
     <td><CopyableCode code="users" /></td>
@@ -177,17 +183,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#addressList for lists of addresses. (default: compute#addressList)</td>
+    <td>Output only. [Output Only] Type of resource. Always compute#addressList for lists of addresses. (default: compute#addressList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -211,12 +217,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be a lowercase letter, and all following characters (except for the last character) must be a dash, lowercase letter, or digit. The last character must be a lowercase letter or digit. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be a lowercase letter, and all following characters (except for the last character) must be a dash, lowercase letter, or digit. The last character must be a lowercase letter or digit. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="address" /></td>
@@ -226,12 +232,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="addressType" /></td>
     <td><code>string</code></td>
-    <td>The type of address to reserve, either INTERNAL or EXTERNAL. If unspecified, defaults to EXTERNAL.</td>
+    <td>The type of address to reserve, either INTERNAL orEXTERNAL. If unspecified, defaults to EXTERNAL. (EXTERNAL, INTERNAL, UNSPECIFIED_TYPE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -239,39 +245,44 @@ The following fields are returned by `SELECT` queries:
     <td>An optional description of this resource. Provide this field when you create the resource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="ipCollection" /></td>
+    <td><code>string</code></td>
+    <td>Reference to the source of IP addresses.  It supports the following cases:        -       Case 1: PublicDelegatedPrefix (PDP) for BYOIP external      addresses. If an IPv4 PDP is used, the PDP must support enhanced IPv4      allocations. If an IPv6 PDP is used, the PDP must be in      EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.    -       Case 2: Internal Range for global internal addresses.    Use one of the following formats to specify the resource:  For a Public Delegated Prefix:        -     Full resource URL:https://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/pdp    - Partial URL:       - projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name       - regions/region/publicDelegatedPrefixes/pdp-name       For an Internal Range:        - Full URL:https://networkconnectivity.googleapis.com/v1/projects/project/locations/global/internalRanges/internal-range    - Partial URL:projects/project/locations/global/internalRanges/internal-range</td>
+</tr>
+<tr>
     <td><CopyableCode code="ipVersion" /></td>
     <td><code>string</code></td>
-    <td>The IP version that will be used by this address. Valid options are IPV4 or IPV6.</td>
+    <td>The IP version that will be used by this address. Valid options areIPV4 or IPV6. (IPV4, IPV6, UNSPECIFIED_VERSION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ipv6EndpointType" /></td>
     <td><code>string</code></td>
-    <td>The endpoint type of this address, which should be VM or NETLB. This is used for deciding which type of endpoint this address can be used after the external IPv6 address reservation.</td>
+    <td>The endpoint type of this address, which should be VM or NETLB. This is used for deciding which type of endpoint this address can be used after the external IPv6 address reservation. (NETLB, VM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#address for addresses. (default: compute#address)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#address for addresses. (default: compute#address)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labelFingerprint" /></td>
     <td><code>string (byte)</code></td>
-    <td>A fingerprint for the labels being applied to this Address, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve an Address.</td>
+    <td>A fingerprint for the labels being applied to this Address, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels, otherwise the request will fail with error412 conditionNotMet.  To see the latest fingerprint, make a get() request to retrieve an Address.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.</td>
+    <td>Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035. Label values may be empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
-    <td>The URL of the network in which to reserve the address. This field can only be used with INTERNAL type with the VPC_PEERING purpose.</td>
+    <td>The URL of the network in which to reserve the address. This field can only be used with INTERNAL type with theVPC_PEERING purpose.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkTier" /></td>
     <td><code>string</code></td>
-    <td>This signifies the networking tier used for configuring this address and can only take the following values: PREMIUM or STANDARD. Internal IP addresses are always Premium Tier; global external IP addresses are always Premium Tier; regional external IP addresses can be either Standard or Premium Tier. If this field is not specified, it is assumed to be PREMIUM.</td>
+    <td>This signifies the networking tier used for configuring this address and can only take the following values: PREMIUM orSTANDARD. Internal IP addresses are always Premium Tier; global external IP addresses are always Premium Tier; regional external IP addresses can be either Standard or Premium Tier.  If this field is not specified, it is assumed to be PREMIUM. (FIXED_STANDARD, PREMIUM, STANDARD, STANDARD_OVERRIDES_FIXED_STANDARD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="prefixLength" /></td>
@@ -281,12 +292,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="purpose" /></td>
     <td><code>string</code></td>
-    <td>The purpose of this resource, which can be one of the following values: - GCE_ENDPOINT for addresses that are used by VM instances, alias IP ranges, load balancers, and similar resources. - DNS_RESOLVER for a DNS resolver address in a subnetwork for a Cloud DNS inbound forwarder IP addresses (regional internal IP address in a subnet of a VPC network) - VPC_PEERING for global internal IP addresses used for private services access allocated ranges. - NAT_AUTO for the regional external IP addresses used by Cloud NAT when allocating addresses using automatic NAT IP address allocation. - IPSEC_INTERCONNECT for addresses created from a private IP range that are reserved for a VLAN attachment in an *HA VPN over Cloud Interconnect* configuration. These addresses are regional resources. - `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned to multiple internal forwarding rules. - `PRIVATE_SERVICE_CONNECT` for a private network address that is used to configure Private Service Connect. Only global internal addresses can use this purpose. </td>
+    <td>The purpose of this resource, which can be one of the following values:              - GCE_ENDPOINT for addresses that are used by VM      instances, alias IP ranges, load balancers, and similar resources.      - DNS_RESOLVER for a DNS resolver address in a subnetwork        for a Cloud DNS  inbound        forwarder IP addresses (regional internal IP address in a subnet of        a VPC network)      - VPC_PEERING for global internal IP addresses used for                  private services access allocated ranges.      - NAT_AUTO for the regional external IP addresses used by           Cloud NAT when allocating addresses using                      automatic NAT IP address allocation.      - IPSEC_INTERCONNECT for addresses created from a private      IP range that are reserved for a VLAN attachment in an      *HA VPN over Cloud Interconnect* configuration. These addresses      are regional resources.      - `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned      to multiple internal forwarding rules.      - `PRIVATE_SERVICE_CONNECT` for a private network address that is      used to configure Private Service Connect. Only global internal addresses      can use this purpose.      - `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0` for addresses      that can only be assigned to global external Passthrough Network Load      Balancer forwarding rules, as an Availability Group 0 address.      - `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1` for addresses that      can only be assigned to global external Passthrough Network Load Balancer      forwarding rules, as an Availability Group 1 address. (DNS_RESOLVER, GCE_ENDPOINT, IPSEC_INTERCONNECT, NAT_AUTO, PRIVATE_SERVICE_CONNECT, SERVERLESS, SHARED_LOADBALANCER_VIP, VPC_PEERING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The URL of the region where a regional address resides. For regional addresses, you must specify the region as a path parameter in the HTTP request URL. *This field is not applicable to global addresses.*</td>
+    <td>Output only. [Output Only] The URL of the region where a regional address resides. For regional addresses, you must specify the region as a path parameter in the HTTP request URL. *This field is not applicable to global addresses.*</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -296,12 +307,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the address, which can be one of RESERVING, RESERVED, or IN_USE. An address that is RESERVING is currently in the process of being reserved. A RESERVED address is currently reserved and available to use. An IN_USE address is currently being used by another resource and is not available.</td>
+    <td>Output only. [Output Only] The status of the address, which can be one ofRESERVING, RESERVED, or IN_USE. An address that is RESERVING is currently in the process of being reserved. A RESERVED address is currently reserved and available to use. An IN_USE address is currently being used by another resource and is not available. (IN_USE, RESERVED, RESERVING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subnetwork" /></td>
     <td><code>string</code></td>
-    <td>The URL of the subnetwork in which to reserve the address. If an IP address is specified, it must be within the subnetwork's IP range. This field can only be used with INTERNAL type with a GCE_ENDPOINT or DNS_RESOLVER purpose.</td>
+    <td>The URL of the subnetwork in which to reserve the address. If an IP address is specified, it must be within the subnetwork's IP range. This field can only be used with INTERNAL type with aGCE_ENDPOINT or DNS_RESOLVER purpose.</td>
 </tr>
 <tr>
     <td><CopyableCode code="users" /></td>
@@ -339,22 +350,22 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of addresses contained within the specified region.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves a list of addresses contained within<br />the specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves an aggregated list of addresses. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves an aggregated list of addresses.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates an address resource in the specified project by using the data included in the request.</td>
+    <td>Creates an address resource in the specified project by using the data<br />included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -364,18 +375,18 @@ The following methods are available for this resource:
     <td>Deletes the specified address resource.</td>
 </tr>
 <tr>
+    <td><a href="#set_labels"><CopyableCode code="set_labels" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the labels on an Address. To learn more about labels, read theLabeling<br />Resources documentation.</td>
+</tr>
+<tr>
     <td><a href="#move"><CopyableCode code="move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-address"><code>address</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Moves the specified address resource.</td>
-</tr>
-<tr>
-    <td><a href="#set_labels"><CopyableCode code="set_labels" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the labels on an Address. To learn more about labels, read the Labeling Resources documentation.</td>
 </tr>
 </tbody>
 </table>
@@ -478,6 +489,7 @@ address,
 addressType,
 creationTimestamp,
 description,
+ipCollection,
 ipVersion,
 ipv6EndpointType,
 kind,
@@ -501,7 +513,7 @@ AND address = '{{ address }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of addresses contained within the specified region.
+Retrieves a list of addresses contained within<br />the specified region.
 
 ```sql
 SELECT
@@ -514,17 +526,17 @@ warning
 FROM google.compute.addresses
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves an aggregated list of addresses. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves an aggregated list of addresses.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -534,6 +546,7 @@ address,
 addressType,
 creationTimestamp,
 description,
+ipCollection,
 ipVersion,
 ipv6EndpointType,
 kind,
@@ -551,12 +564,12 @@ users
 FROM google.compute.addresses
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -574,55 +587,47 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates an address resource in the specified project by using the data included in the request.
+Creates an address resource in the specified project by using the data<br />included in the request.
 
 ```sql
 INSERT INTO google.compute.addresses (
-data__kind,
-data__id,
-data__creationTimestamp,
 data__name,
-data__description,
-data__address,
-data__prefixLength,
-data__status,
-data__region,
-data__selfLink,
-data__users,
-data__networkTier,
-data__labels,
-data__labelFingerprint,
 data__ipVersion,
-data__addressType,
 data__purpose,
+data__addressType,
+data__labelFingerprint,
+data__labels,
+data__description,
+data__networkTier,
+data__ipCollection,
+data__selfLink,
+data__address,
+data__users,
+data__prefixLength,
+data__ipv6EndpointType,
 data__subnetwork,
 data__network,
-data__ipv6EndpointType,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
 '{{ name }}',
-'{{ description }}',
-'{{ address }}',
-{{ prefixLength }},
-'{{ status }}',
-'{{ region }}',
-'{{ selfLink }}',
-'{{ users }}',
-'{{ networkTier }}',
-'{{ labels }}',
-'{{ labelFingerprint }}',
 '{{ ipVersion }}',
-'{{ addressType }}',
 '{{ purpose }}',
+'{{ addressType }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ description }}',
+'{{ networkTier }}',
+'{{ ipCollection }}',
+'{{ selfLink }}',
+'{{ address }}',
+'{{ users }}',
+{{ prefixLength }},
+'{{ ipv6EndpointType }}',
 '{{ subnetwork }}',
 '{{ network }}',
-'{{ ipv6EndpointType }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -634,6 +639,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -658,126 +664,157 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: addresses
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the addresses resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the addresses resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#address for addresses.
-        
-      default: compute#address
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
     - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be a lowercase letter, and all following characters (except for the last character) must be a dash, lowercase letter, or digit. The last character must be a lowercase letter or digit.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this field when you create the resource.
-        
-    - name: address
-      value: string
-      description: >
-        The static IP address represented by this resource.
-        
-    - name: prefixLength
-      value: integer
-      description: >
-        The prefix length if the resource represents an IP range.
-        
-    - name: status
-      value: string
-      description: >
-        [Output Only] The status of the address, which can be one of RESERVING, RESERVED, or IN_USE. An address that is RESERVING is currently in the process of being reserved. A RESERVED address is currently reserved and available to use. An IN_USE address is currently being used by another resource and is not available.
-        
-      valid_values: ['IN_USE', 'RESERVED', 'RESERVING']
-    - name: region
-      value: string
-      description: >
-        [Output Only] The URL of the region where a regional address resides. For regional addresses, you must specify the region as a path parameter in the HTTP request URL. *This field is not applicable to global addresses.*
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: users
-      value: array
-      description: >
-        [Output Only] The URLs of the resources that are using this address.
-        
-    - name: networkTier
-      value: string
-      description: >
-        This signifies the networking tier used for configuring this address and can only take the following values: PREMIUM or STANDARD. Internal IP addresses are always Premium Tier; global external IP addresses are always Premium Tier; regional external IP addresses can be either Standard or Premium Tier. If this field is not specified, it is assumed to be PREMIUM.
-        
-      valid_values: ['FIXED_STANDARD', 'PREMIUM', 'STANDARD', 'STANDARD_OVERRIDES_FIXED_STANDARD']
-    - name: labels
-      value: object
-      description: >
-        Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.
-        
-    - name: labelFingerprint
-      value: string
-      description: >
-        A fingerprint for the labels being applied to this Address, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve an Address.
-        
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`. The first character
+        must be a lowercase letter, and all following characters (except for the
+        last character) must be a dash, lowercase letter, or digit. The last
+        character must be a lowercase letter or digit.
     - name: ipVersion
-      value: string
-      description: >
-        The IP version that will be used by this address. Valid options are IPV4 or IPV6.
-        
+      value: "{{ ipVersion }}"
+      description: |
+        The IP version that will be used by this address. Valid options areIPV4 or IPV6.
       valid_values: ['IPV4', 'IPV6', 'UNSPECIFIED_VERSION']
-    - name: addressType
-      value: string
-      description: >
-        The type of address to reserve, either INTERNAL or EXTERNAL. If unspecified, defaults to EXTERNAL.
-        
-      valid_values: ['EXTERNAL', 'INTERNAL', 'UNSPECIFIED_TYPE']
     - name: purpose
-      value: string
-      description: >
-        The purpose of this resource, which can be one of the following values: - GCE_ENDPOINT for addresses that are used by VM instances, alias IP ranges, load balancers, and similar resources. - DNS_RESOLVER for a DNS resolver address in a subnetwork for a Cloud DNS inbound forwarder IP addresses (regional internal IP address in a subnet of a VPC network) - VPC_PEERING for global internal IP addresses used for private services access allocated ranges. - NAT_AUTO for the regional external IP addresses used by Cloud NAT when allocating addresses using automatic NAT IP address allocation. - IPSEC_INTERCONNECT for addresses created from a private IP range that are reserved for a VLAN attachment in an *HA VPN over Cloud Interconnect* configuration. These addresses are regional resources. - `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned to multiple internal forwarding rules. - `PRIVATE_SERVICE_CONNECT` for a private network address that is used to configure Private Service Connect. Only global internal addresses can use this purpose. 
-        
+      value: "{{ purpose }}"
+      description: |
+        The purpose of this resource, which can be one of the following values:
+        - GCE_ENDPOINT for addresses that are used by VM
+        instances, alias IP ranges, load balancers, and similar resources.
+        - DNS_RESOLVER for a DNS resolver address in a subnetwork
+        for a Cloud DNS  inbound
+        forwarder IP addresses (regional internal IP address in a subnet of
+        a VPC network)
+        - VPC_PEERING for global internal IP addresses used for
+        private services access allocated ranges.
+        - NAT_AUTO for the regional external IP addresses used by
+        Cloud NAT when allocating addresses using
+        automatic NAT IP address allocation.
+        - IPSEC_INTERCONNECT for addresses created from a private
+        IP range that are reserved for a VLAN attachment in an
+        *HA VPN over Cloud Interconnect* configuration. These addresses
+        are regional resources.
+        - \`SHARED_LOADBALANCER_VIP\` for an internal IP address that is assigned
+        to multiple internal forwarding rules.
+        - \`PRIVATE_SERVICE_CONNECT\` for a private network address that is
+        used to configure Private Service Connect. Only global internal addresses
+        can use this purpose.
+        - \`PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0\` for addresses
+        that can only be assigned to global external Passthrough Network Load
+        Balancer forwarding rules, as an Availability Group 0 address.
+        - \`PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1\` for addresses that
+        can only be assigned to global external Passthrough Network Load Balancer
+        forwarding rules, as an Availability Group 1 address.
       valid_values: ['DNS_RESOLVER', 'GCE_ENDPOINT', 'IPSEC_INTERCONNECT', 'NAT_AUTO', 'PRIVATE_SERVICE_CONNECT', 'SERVERLESS', 'SHARED_LOADBALANCER_VIP', 'VPC_PEERING']
-    - name: subnetwork
-      value: string
-      description: >
-        The URL of the subnetwork in which to reserve the address. If an IP address is specified, it must be within the subnetwork's IP range. This field can only be used with INTERNAL type with a GCE_ENDPOINT or DNS_RESOLVER purpose.
-        
-    - name: network
-      value: string
-      description: >
-        The URL of the network in which to reserve the address. This field can only be used with INTERNAL type with the VPC_PEERING purpose.
-        
+    - name: addressType
+      value: "{{ addressType }}"
+      description: |
+        The type of address to reserve, either INTERNAL orEXTERNAL. If unspecified, defaults to EXTERNAL.
+      valid_values: ['EXTERNAL', 'INTERNAL', 'UNSPECIFIED_TYPE']
+    - name: labelFingerprint
+      value: "{{ labelFingerprint }}"
+      description: |
+        A fingerprint for the labels being applied to this Address, which is
+        essentially a hash of the labels set used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update labels. You must always provide an
+        up-to-date fingerprint hash in order to update or change labels,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve an Address.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
+        Label values may be empty.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this field when you
+        create the resource.
+    - name: networkTier
+      value: "{{ networkTier }}"
+      description: |
+        This signifies the networking tier used for configuring this address and
+        can only take the following values: PREMIUM orSTANDARD. Internal IP addresses are always Premium Tier;
+        global external IP addresses are always Premium Tier; regional external IP
+        addresses can be either Standard or Premium Tier.
+        If this field is not specified, it is assumed to be PREMIUM.
+      valid_values: ['FIXED_STANDARD', 'PREMIUM', 'STANDARD', 'STANDARD_OVERRIDES_FIXED_STANDARD']
+    - name: ipCollection
+      value: "{{ ipCollection }}"
+      description: |
+        Reference to the source of IP addresses.
+        It supports the following cases:
+        -
+        Case 1: PublicDelegatedPrefix (PDP) for BYOIP external
+        addresses. If an IPv4 PDP is used, the PDP must support enhanced IPv4
+        allocations. If an IPv6 PDP is used, the PDP must be in
+        EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.
+        -
+        Case 2: Internal Range for global internal addresses.
+        Use one of the following formats to specify the resource:
+        For a Public Delegated Prefix:
+        -
+        Full resource URL:https://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/pdp
+        - Partial URL:
+        - projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
+        - regions/region/publicDelegatedPrefixes/pdp-name
+        For an Internal Range:
+        - Full URL:https://networkconnectivity.googleapis.com/v1/projects/project/locations/global/internalRanges/internal-range
+        - Partial URL:projects/project/locations/global/internalRanges/internal-range
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: address
+      value: "{{ address }}"
+      description: |
+        The static IP address represented by this resource.
+    - name: users
+      value:
+        - "{{ users }}"
+      description: |
+        [Output Only] The URLs of the resources that are using this address.
+    - name: prefixLength
+      value: {{ prefixLength }}
+      description: |
+        The prefix length if the resource represents an IP range.
     - name: ipv6EndpointType
-      value: string
-      description: >
-        The endpoint type of this address, which should be VM or NETLB. This is used for deciding which type of endpoint this address can be used after the external IPv6 address reservation.
-        
+      value: "{{ ipv6EndpointType }}"
+      description: |
+        The endpoint type of this address, which should be VM
+        or NETLB. This is used for deciding which type of endpoint
+        this address can be used after the external IPv6 address reservation.
       valid_values: ['NETLB', 'VM']
+    - name: subnetwork
+      value: "{{ subnetwork }}"
+      description: |
+        The URL of the subnetwork in which to reserve the address. If an IP address
+        is specified, it must be within the subnetwork's IP range. This field can
+        only be used with INTERNAL type with aGCE_ENDPOINT or DNS_RESOLVER purpose.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        The URL of the network in which to reserve the address. This field can
+        only be used with INTERNAL type with theVPC_PEERING purpose.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -809,12 +846,30 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="move"
+    defaultValue="set_labels"
     values={[
-        { label: 'move', value: 'move' },
-        { label: 'set_labels', value: 'set_labels' }
+        { label: 'set_labels', value: 'set_labels' },
+        { label: 'move', value: 'move' }
     ]}
 >
+<TabItem value="set_labels">
+
+Sets the labels on an Address. To learn more about labels, read theLabeling<br />Resources documentation.
+
+```sql
+EXEC google.compute.addresses.set_labels 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@resource='{{ resource }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"labelFingerprint": "{{ labelFingerprint }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="move">
 
 Moves the specified address resource.
@@ -829,24 +884,6 @@ EXEC google.compute.addresses.move
 '{
 "destinationAddress": "{{ destinationAddress }}", 
 "description": "{{ description }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_labels">
-
-Sets the labels on an Address. To learn more about labels, read the Labeling Resources documentation.
-
-```sql
-EXEC google.compute.addresses.set_labels 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@resource='{{ resource }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
 }'
 ;
 ```

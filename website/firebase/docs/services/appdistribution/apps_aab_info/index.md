@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apps_aab_info</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apps_aab_info</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apps_aab_info" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appdistribution.apps_aab_info" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="integrationState" /></td>
     <td><code>string</code></td>
-    <td>App bundle integration state. Only valid for android apps.</td>
+    <td>App bundle integration state. Only valid for android apps. (AAB_INTEGRATION_STATE_UNSPECIFIED, INTEGRATED, PLAY_ACCOUNT_NOT_LINKED, NO_APP_WITH_GIVEN_BUNDLE_ID_IN_PLAY_ACCOUNT, APP_NOT_PUBLISHED, AAB_STATE_UNAVAILABLE, PLAY_IAS_TERMS_NOT_ACCEPTED, ADHOC_SHARING_KEY_NOT_GENERATED, ADHOC_SHARING_KEY_NOT_REGISTERED, PLAY_ANDROID_DEVELOPER_CONSOLE_ACCOUNT_NOT_FOUND)</td>
 </tr>
 <tr>
     <td><CopyableCode code="testCertificate" /></td>

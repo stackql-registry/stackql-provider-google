@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rag_corpora</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rag_corpora</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rag_corpora" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.rag_corpora" /></td></tr>
 </tbody></table>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists RagCorpora in a Location.</td>
 </tr>
 <tr>
@@ -330,8 +331,8 @@ vertexAiSearchConfig
 FROM google.aiplatform.rag_corpora
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -354,19 +355,19 @@ Creates a RagCorpus.
 ```sql
 INSERT INTO google.aiplatform.rag_corpora (
 data__encryptionSpec,
-data__vectorDbConfig,
-data__displayName,
 data__description,
 data__vertexAiSearchConfig,
+data__displayName,
+data__vectorDbConfig,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ encryptionSpec }}',
-'{{ vectorDbConfig }}',
-'{{ displayName }}',
 '{{ description }}',
 '{{ vertexAiSearchConfig }}',
+'{{ displayName }}',
+'{{ vectorDbConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -380,42 +381,58 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rag_corpora
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the rag_corpora resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the rag_corpora resource.
     - name: encryptionSpec
-      value: object
-      description: >
+      description: |
         Optional. Immutable. The CMEK key name used to encrypt at-rest data related to this Corpus. Only applicable to RagManagedDb option for Vector DB. This field can only be set at corpus creation time, and cannot be updated or deleted.
-        
-    - name: vectorDbConfig
-      value: object
-      description: >
-        Optional. Immutable. The config for the Vector DBs.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the RagCorpus. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. The description of the RagCorpus.
-        
     - name: vertexAiSearchConfig
-      value: object
-      description: >
+      description: |
         Optional. Immutable. The config for the Vertex AI Search.
-        
-```
+      value:
+        servingConfig: "{{ servingConfig }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the RagCorpus. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: vectorDbConfig
+      description: |
+        Optional. Immutable. The config for the Vector DBs.
+      value:
+        vertexVectorSearch:
+          indexEndpoint: "{{ indexEndpoint }}"
+          index: "{{ index }}"
+        ragManagedDb:
+          knn: "{{ knn }}"
+          ann:
+            treeDepth: {{ treeDepth }}
+            leafCount: {{ leafCount }}
+        ragEmbeddingModelConfig:
+          vertexPredictionEndpoint:
+            model: "{{ model }}"
+            endpoint: "{{ endpoint }}"
+            modelVersionId: "{{ modelVersionId }}"
+        pinecone:
+          indexName: "{{ indexName }}"
+        apiAuth:
+          apiKeyConfig:
+            apiKeySecretVersion: "{{ apiKeySecretVersion }}"
+            apiKeyString: "{{ apiKeyString }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -436,10 +453,10 @@ Updates a RagCorpus.
 UPDATE google.aiplatform.rag_corpora
 SET 
 data__encryptionSpec = '{{ encryptionSpec }}',
-data__vectorDbConfig = '{{ vectorDbConfig }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__vertexAiSearchConfig = '{{ vertexAiSearchConfig }}'
+data__vertexAiSearchConfig = '{{ vertexAiSearchConfig }}',
+data__displayName = '{{ displayName }}',
+data__vectorDbConfig = '{{ vectorDbConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

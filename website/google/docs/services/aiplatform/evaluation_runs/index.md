@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>evaluation_runs</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>evaluation_runs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="evaluation_runs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.evaluation_runs" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="evaluationConfig" /></td>
     <td><code>object</code></td>
-    <td>Required. The configuration used for the evaluation. (id: GoogleCloudAiplatformV1EvaluationRunEvaluationConfig)</td>
+    <td>Optional. The configuration used for the evaluation. Optional when analysis_configs is provided. (id: GoogleCloudAiplatformV1EvaluationRunEvaluationConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="evaluationResults" /></td>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the evaluation run.</td>
+    <td>Output only. The state of the evaluation run. (STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED, INFERENCE, GENERATING_RUBRICS, GENERATING_LOSS_CLUSTERS)</td>
 </tr>
 </tbody>
 </table>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="evaluationConfig" /></td>
     <td><code>object</code></td>
-    <td>Required. The configuration used for the evaluation. (id: GoogleCloudAiplatformV1EvaluationRunEvaluationConfig)</td>
+    <td>Optional. The configuration used for the evaluation. Optional when analysis_configs is provided. (id: GoogleCloudAiplatformV1EvaluationRunEvaluationConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="evaluationResults" /></td>
@@ -191,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the evaluation run.</td>
+    <td>Output only. The state of the evaluation run. (STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED, INFERENCE, GENERATING_RUBRICS, GENERATING_LOSS_CLUSTERS)</td>
 </tr>
 </tbody>
 </table>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Evaluation Runs.</td>
 </tr>
 <tr>
@@ -359,10 +360,10 @@ state
 FROM google.aiplatform.evaluation_runs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -384,24 +385,24 @@ Creates an Evaluation Run.
 
 ```sql
 INSERT INTO google.aiplatform.evaluation_runs (
-data__inferenceConfigs,
 data__evaluationConfig,
-data__labels,
-data__displayName,
 data__name,
-data__dataSource,
+data__inferenceConfigs,
 data__metadata,
+data__labels,
+data__dataSource,
+data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ inferenceConfigs }}',
 '{{ evaluationConfig }}',
-'{{ labels }}',
-'{{ displayName }}',
 '{{ name }}',
-'{{ dataSource }}',
+'{{ inferenceConfigs }}',
 '{{ metadata }}',
+'{{ labels }}',
+'{{ dataSource }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -423,52 +424,457 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: evaluation_runs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the evaluation_runs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the evaluation_runs resource.
-    - name: inferenceConfigs
-      value: object
-      description: >
-        Optional. The candidate to inference config map for the evaluation run. The candidate can be up to 128 characters long and can consist of any UTF-8 characters.
-        
     - name: evaluationConfig
-      value: object
-      description: >
-        Required. The configuration used for the evaluation.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels for the evaluation run.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the Evaluation Run.
-        
+      description: |
+        Optional. The configuration used for the evaluation. Optional when analysis_configs is provided.
+      value:
+        outputConfig:
+          bigqueryDestination:
+            outputUri: "{{ outputUri }}"
+          gcsDestination:
+            outputUriPrefix: "{{ outputUriPrefix }}"
+        datasetCustomMetrics:
+          - displayName: "{{ displayName }}"
+            aggregationFunction: "{{ aggregationFunction }}"
+        autoraterConfig:
+          sampleCount: {{ sampleCount }}
+          autoraterModel: "{{ autoraterModel }}"
+          generationConfig:
+            speechConfig:
+              languageCode: "{{ languageCode }}"
+              multiSpeakerVoiceConfig:
+                speakerVoiceConfigs: "{{ speakerVoiceConfigs }}"
+              voiceConfig:
+                replicatedVoiceConfig: "{{ replicatedVoiceConfig }}"
+                prebuiltVoiceConfig: "{{ prebuiltVoiceConfig }}"
+            seed: {{ seed }}
+            imageConfig:
+              personGeneration: "{{ personGeneration }}"
+              aspectRatio: "{{ aspectRatio }}"
+              imageSize: "{{ imageSize }}"
+              prominentPeople: "{{ prominentPeople }}"
+              imageOutputOptions:
+                compressionQuality: {{ compressionQuality }}
+                mimeType: "{{ mimeType }}"
+            audioTranscriptionConfig:
+              customVocabulary:
+                - "{{ customVocabulary }}"
+              languageHints:
+                languageCodes: "{{ languageCodes }}"
+              diarization: {{ diarization }}
+              adaptationPhrases:
+                - "{{ adaptationPhrases }}"
+              languageAuto: "{{ languageAuto }}"
+              wordTimestamp: {{ wordTimestamp }}
+            maxOutputTokens: {{ maxOutputTokens }}
+            responseModalities:
+              - "{{ responseModalities }}"
+            topP: {{ topP }}
+            responseJsonSchema: "{{ responseJsonSchema }}"
+            responseFormat:
+              - audio:
+                  mimeType: "{{ mimeType }}"
+                  bitRate: {{ bitRate }}
+                  delivery: "{{ delivery }}"
+                  sampleRate: {{ sampleRate }}
+                text:
+                  mimeType: "{{ mimeType }}"
+                  schema: "{{ schema }}"
+                image:
+                  mimeType: "{{ mimeType }}"
+                  delivery: "{{ delivery }}"
+                  aspectRatio: "{{ aspectRatio }}"
+                  imageSize: "{{ imageSize }}"
+                video:
+                  delivery: "{{ delivery }}"
+                  aspectRatio: "{{ aspectRatio }}"
+                  gcsUri: "{{ gcsUri }}"
+                  duration: "{{ duration }}"
+            thinkingConfig:
+              includeThoughts: {{ includeThoughts }}
+              thinkingLevel: "{{ thinkingLevel }}"
+              thinkingBudget: {{ thinkingBudget }}
+            enableAffectiveDialog: {{ enableAffectiveDialog }}
+            topK: {{ topK }}
+            logprobs: {{ logprobs }}
+            presencePenalty: {{ presencePenalty }}
+            candidateCount: {{ candidateCount }}
+            responseSchema:
+              ref: "{{ ref }}"
+              enum:
+                - "{{ enum }}"
+              minLength: "{{ minLength }}"
+              title: "{{ title }}"
+              minimum: {{ minimum }}
+              maxProperties: "{{ maxProperties }}"
+              properties: "{{ properties }}"
+              nullable: {{ nullable }}
+              example: "{{ example }}"
+              minProperties: "{{ minProperties }}"
+              type: "{{ type }}"
+              pattern: "{{ pattern }}"
+              additionalProperties: "{{ additionalProperties }}"
+              format: "{{ format }}"
+              propertyOrdering:
+                - "{{ propertyOrdering }}"
+              minItems: "{{ minItems }}"
+              maximum: {{ maximum }}
+              maxLength: "{{ maxLength }}"
+              items:
+                ref: "{{ ref }}"
+                enum: "{{ enum }}"
+                minLength: "{{ minLength }}"
+                title: "{{ title }}"
+                minimum: {{ minimum }}
+                maxProperties: "{{ maxProperties }}"
+                properties: "{{ properties }}"
+                nullable: {{ nullable }}
+                example: "{{ example }}"
+                minProperties: "{{ minProperties }}"
+                type: "{{ type }}"
+                pattern: "{{ pattern }}"
+                additionalProperties: "{{ additionalProperties }}"
+                format: "{{ format }}"
+                propertyOrdering: "{{ propertyOrdering }}"
+                minItems: "{{ minItems }}"
+                maximum: {{ maximum }}
+                maxLength: "{{ maxLength }}"
+                items: "{{ items }}"
+                description: "{{ description }}"
+                required: "{{ required }}"
+                maxItems: "{{ maxItems }}"
+                defs: "{{ defs }}"
+                anyOf: "{{ anyOf }}"
+                default: "{{ default }}"
+              description: "{{ description }}"
+              required:
+                - "{{ required }}"
+              maxItems: "{{ maxItems }}"
+              defs: "{{ defs }}"
+              anyOf:
+                - ref: "{{ ref }}"
+                  enum: "{{ enum }}"
+                  minLength: "{{ minLength }}"
+                  title: "{{ title }}"
+                  minimum: {{ minimum }}
+                  maxProperties: "{{ maxProperties }}"
+                  properties: "{{ properties }}"
+                  nullable: {{ nullable }}
+                  example: "{{ example }}"
+                  minProperties: "{{ minProperties }}"
+                  type: "{{ type }}"
+                  pattern: "{{ pattern }}"
+                  additionalProperties: "{{ additionalProperties }}"
+                  format: "{{ format }}"
+                  propertyOrdering: "{{ propertyOrdering }}"
+                  minItems: "{{ minItems }}"
+                  maximum: {{ maximum }}
+                  maxLength: "{{ maxLength }}"
+                  items:
+                    ref: "{{ ref }}"
+                    enum: "{{ enum }}"
+                    minLength: "{{ minLength }}"
+                    title: "{{ title }}"
+                    minimum: {{ minimum }}
+                    maxProperties: "{{ maxProperties }}"
+                    properties: "{{ properties }}"
+                    nullable: {{ nullable }}
+                    example: "{{ example }}"
+                    minProperties: "{{ minProperties }}"
+                    type: "{{ type }}"
+                    pattern: "{{ pattern }}"
+                    additionalProperties: "{{ additionalProperties }}"
+                    format: "{{ format }}"
+                    propertyOrdering: "{{ propertyOrdering }}"
+                    minItems: "{{ minItems }}"
+                    maximum: {{ maximum }}
+                    maxLength: "{{ maxLength }}"
+                    items: "{{ items }}"
+                    description: "{{ description }}"
+                    required: "{{ required }}"
+                    maxItems: "{{ maxItems }}"
+                    defs: "{{ defs }}"
+                    anyOf: "{{ anyOf }}"
+                    default: "{{ default }}"
+                  description: "{{ description }}"
+                  required: "{{ required }}"
+                  maxItems: "{{ maxItems }}"
+                  defs: "{{ defs }}"
+                  anyOf: "{{ anyOf }}"
+                  default: "{{ default }}"
+              default: "{{ default }}"
+            routingConfig:
+              manualMode:
+                modelName: "{{ modelName }}"
+              autoMode:
+                modelRoutingPreference: "{{ modelRoutingPreference }}"
+            audioTimestamp: {{ audioTimestamp }}
+            temperature: {{ temperature }}
+            stopSequences:
+              - "{{ stopSequences }}"
+            responseLogprobs: {{ responseLogprobs }}
+            responseMimeType: "{{ responseMimeType }}"
+            mediaResolution: "{{ mediaResolution }}"
+            frequencyPenalty: {{ frequencyPenalty }}
+        promptTemplate:
+          gcsUri: "{{ gcsUri }}"
+          promptTemplate: "{{ promptTemplate }}"
+        cloudLoggingConfig:
+          project: "{{ project }}"
+          resourceLabels: "{{ resourceLabels }}"
+          tracingContext:
+            traceId: "{{ traceId }}"
+            conversationId: "{{ conversationId }}"
+            spanId: "{{ spanId }}"
+          resourceType: "{{ resourceType }}"
+        metrics:
+          - llmBasedMetricSpec:
+              metricPromptTemplate: "{{ metricPromptTemplate }}"
+              predefinedRubricGenerationSpec:
+                parameters: "{{ parameters }}"
+                metricSpecName: "{{ metricSpecName }}"
+              rubricGenerationSpec:
+                rubricContentType: "{{ rubricContentType }}"
+                promptTemplate: "{{ promptTemplate }}"
+                modelConfig:
+                  sampleCount: {{ sampleCount }}
+                  autoraterModel: "{{ autoraterModel }}"
+                  generationConfig: "{{ generationConfig }}"
+                rubricTypeOntology:
+                  - "{{ rubricTypeOntology }}"
+                metricResourceName: "{{ metricResourceName }}"
+              additionalConfig: "{{ additionalConfig }}"
+              systemInstruction: "{{ systemInstruction }}"
+              judgeAutoraterConfig:
+                sampleCount: {{ sampleCount }}
+                autoraterModel: "{{ autoraterModel }}"
+                generationConfig:
+                  speechConfig: "{{ speechConfig }}"
+                  seed: {{ seed }}
+                  imageConfig: "{{ imageConfig }}"
+                  audioTranscriptionConfig: "{{ audioTranscriptionConfig }}"
+                  maxOutputTokens: {{ maxOutputTokens }}
+                  responseModalities: "{{ responseModalities }}"
+                  topP: {{ topP }}
+                  responseJsonSchema: "{{ responseJsonSchema }}"
+                  responseFormat: "{{ responseFormat }}"
+                  thinkingConfig: "{{ thinkingConfig }}"
+                  enableAffectiveDialog: {{ enableAffectiveDialog }}
+                  topK: {{ topK }}
+                  logprobs: {{ logprobs }}
+                  presencePenalty: {{ presencePenalty }}
+                  candidateCount: {{ candidateCount }}
+                  responseSchema: "{{ responseSchema }}"
+                  routingConfig: "{{ routingConfig }}"
+                  audioTimestamp: {{ audioTimestamp }}
+                  temperature: {{ temperature }}
+                  stopSequences: "{{ stopSequences }}"
+                  responseLogprobs: {{ responseLogprobs }}
+                  responseMimeType: "{{ responseMimeType }}"
+                  mediaResolution: "{{ mediaResolution }}"
+                  frequencyPenalty: {{ frequencyPenalty }}
+              rubricGroupKey: "{{ rubricGroupKey }}"
+            predefinedMetricSpec:
+              parameters: "{{ parameters }}"
+              metricSpecName: "{{ metricSpecName }}"
+            metric: "{{ metric }}"
+            computationBasedMetricSpec:
+              type: "{{ type }}"
+              parameters: "{{ parameters }}"
+            metricResourceName: "{{ metricResourceName }}"
+            rubricBasedMetricSpec:
+              inlineRubrics:
+                rubrics:
+                  - type: "{{ type }}"
+                    importance: "{{ importance }}"
+                    rubricId: "{{ rubricId }}"
+                    content:
+                      property: "{{ property }}"
+              rubricGenerationSpec:
+                rubricContentType: "{{ rubricContentType }}"
+                promptTemplate: "{{ promptTemplate }}"
+                modelConfig:
+                  sampleCount: {{ sampleCount }}
+                  autoraterModel: "{{ autoraterModel }}"
+                  generationConfig: "{{ generationConfig }}"
+                rubricTypeOntology:
+                  - "{{ rubricTypeOntology }}"
+                metricResourceName: "{{ metricResourceName }}"
+              metricPromptTemplate: "{{ metricPromptTemplate }}"
+              rubricGroupKey: "{{ rubricGroupKey }}"
+              judgeAutoraterConfig:
+                sampleCount: {{ sampleCount }}
+                autoraterModel: "{{ autoraterModel }}"
+                generationConfig:
+                  speechConfig: "{{ speechConfig }}"
+                  seed: {{ seed }}
+                  imageConfig: "{{ imageConfig }}"
+                  audioTranscriptionConfig: "{{ audioTranscriptionConfig }}"
+                  maxOutputTokens: {{ maxOutputTokens }}
+                  responseModalities: "{{ responseModalities }}"
+                  topP: {{ topP }}
+                  responseJsonSchema: "{{ responseJsonSchema }}"
+                  responseFormat: "{{ responseFormat }}"
+                  thinkingConfig: "{{ thinkingConfig }}"
+                  enableAffectiveDialog: {{ enableAffectiveDialog }}
+                  topK: {{ topK }}
+                  logprobs: {{ logprobs }}
+                  presencePenalty: {{ presencePenalty }}
+                  candidateCount: {{ candidateCount }}
+                  responseSchema: "{{ responseSchema }}"
+                  routingConfig: "{{ routingConfig }}"
+                  audioTimestamp: {{ audioTimestamp }}
+                  temperature: {{ temperature }}
+                  stopSequences: "{{ stopSequences }}"
+                  responseLogprobs: {{ responseLogprobs }}
+                  responseMimeType: "{{ responseMimeType }}"
+                  mediaResolution: "{{ mediaResolution }}"
+                  frequencyPenalty: {{ frequencyPenalty }}
+            metricConfig:
+              pointwiseMetricSpec:
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                systemInstruction: "{{ systemInstruction }}"
+                customOutputFormatConfig:
+                  returnRawOutput: {{ returnRawOutput }}
+              bleuSpec:
+                useEffectiveOrder: {{ useEffectiveOrder }}
+              rougeSpec:
+                useStemmer: {{ useStemmer }}
+                rougeType: "{{ rougeType }}"
+                splitSummaries: {{ splitSummaries }}
+              exactMatchSpec: "{{ exactMatchSpec }}"
+              computationBasedMetricSpec:
+                type: "{{ type }}"
+                parameters: "{{ parameters }}"
+              predefinedMetricSpec:
+                metricSpecName: "{{ metricSpecName }}"
+                metricSpecParameters: "{{ metricSpecParameters }}"
+              metadata:
+                otherMetadata: "{{ otherMetadata }}"
+                title: "{{ title }}"
+                scoreRange:
+                  min: {{ min }}
+                  step: {{ step }}
+                  description: "{{ description }}"
+                  max: {{ max }}
+              customCodeExecutionSpec:
+                evaluationFunction: "{{ evaluationFunction }}"
+              pairwiseMetricSpec:
+                systemInstruction: "{{ systemInstruction }}"
+                baselineResponseFieldName: "{{ baselineResponseFieldName }}"
+                candidateResponseFieldName: "{{ candidateResponseFieldName }}"
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                customOutputFormatConfig:
+                  returnRawOutput: {{ returnRawOutput }}
+              aggregationMetrics:
+                - "{{ aggregationMetrics }}"
+              llmBasedMetricSpec:
+                systemInstruction: "{{ systemInstruction }}"
+                judgeAutoraterConfig:
+                  samplingCount: {{ samplingCount }}
+                  flipEnabled: {{ flipEnabled }}
+                  autoraterModel: "{{ autoraterModel }}"
+                  generationConfig: "{{ generationConfig }}"
+                rubricGroupKey: "{{ rubricGroupKey }}"
+                resultParserConfig:
+                  customCodeParserConfig: "{{ customCodeParserConfig }}"
+                predefinedRubricGenerationSpec:
+                  metricSpecName: "{{ metricSpecName }}"
+                  metricSpecParameters: "{{ metricSpecParameters }}"
+                metricPromptTemplate: "{{ metricPromptTemplate }}"
+                rubricGenerationSpec:
+                  promptTemplate: "{{ promptTemplate }}"
+                  modelConfig: "{{ modelConfig }}"
+                  rubricTypeOntology: "{{ rubricTypeOntology }}"
+                  rubricContentType: "{{ rubricContentType }}"
+                additionalConfig: "{{ additionalConfig }}"
+        rubricConfigs:
+          - predefinedRubricGenerationSpec:
+              parameters: "{{ parameters }}"
+              metricSpecName: "{{ metricSpecName }}"
+            rubricGroupKey: "{{ rubricGroupKey }}"
+            rubricGenerationSpec:
+              rubricContentType: "{{ rubricContentType }}"
+              promptTemplate: "{{ promptTemplate }}"
+              modelConfig:
+                sampleCount: {{ sampleCount }}
+                autoraterModel: "{{ autoraterModel }}"
+                generationConfig:
+                  speechConfig: "{{ speechConfig }}"
+                  seed: {{ seed }}
+                  imageConfig: "{{ imageConfig }}"
+                  audioTranscriptionConfig: "{{ audioTranscriptionConfig }}"
+                  maxOutputTokens: {{ maxOutputTokens }}
+                  responseModalities: "{{ responseModalities }}"
+                  topP: {{ topP }}
+                  responseJsonSchema: "{{ responseJsonSchema }}"
+                  responseFormat: "{{ responseFormat }}"
+                  thinkingConfig: "{{ thinkingConfig }}"
+                  enableAffectiveDialog: {{ enableAffectiveDialog }}
+                  topK: {{ topK }}
+                  logprobs: {{ logprobs }}
+                  presencePenalty: {{ presencePenalty }}
+                  candidateCount: {{ candidateCount }}
+                  responseSchema: "{{ responseSchema }}"
+                  routingConfig: "{{ routingConfig }}"
+                  audioTimestamp: {{ audioTimestamp }}
+                  temperature: {{ temperature }}
+                  stopSequences: "{{ stopSequences }}"
+                  responseLogprobs: {{ responseLogprobs }}
+                  responseMimeType: "{{ responseMimeType }}"
+                  mediaResolution: "{{ mediaResolution }}"
+                  frequencyPenalty: {{ frequencyPenalty }}
+              rubricTypeOntology:
+                - "{{ rubricTypeOntology }}"
+              metricResourceName: "{{ metricResourceName }}"
+        lossAnalysisConfig:
+          - metric: "{{ metric }}"
+            candidate: "{{ candidate }}"
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the EvaluationRun. This is a unique identifier. Format: `projects/{project}/locations/{location}/evaluationRuns/{evaluation_run}`
-        
-    - name: dataSource
-      value: object
-      description: >
-        Required. The data source for the evaluation run.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the EvaluationRun. This is a unique identifier. Format: \`projects/{project}/locations/{location}/evaluationRuns/{evaluation_run}\`
+    - name: inferenceConfigs
+      value: "{{ inferenceConfigs }}"
+      description: |
+        Optional. The candidate to inference config map for the evaluation run. The candidate can be up to 128 characters long and can consist of any UTF-8 characters.
     - name: metadata
-      value: any
-      description: >
+      value: "{{ metadata }}"
+      description: |
         Optional. Metadata about the evaluation run, can be used by the caller to store additional tracking information about the evaluation run.
-        
-```
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels for the evaluation run.
+    - name: dataSource
+      description: |
+        Required. The data source for the evaluation run.
+      value:
+        evaluationSet: "{{ evaluationSet }}"
+        bigqueryRequestSet:
+          rubricsColumn: "{{ rubricsColumn }}"
+          candidateResponseColumns: "{{ candidateResponseColumns }}"
+          samplingConfig:
+            samplingCount: {{ samplingCount }}
+            samplingMethod: "{{ samplingMethod }}"
+            samplingDuration: "{{ samplingDuration }}"
+          uri: "{{ uri }}"
+          promptColumn: "{{ promptColumn }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the Evaluation Run.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

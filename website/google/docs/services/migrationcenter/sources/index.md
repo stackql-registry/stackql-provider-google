@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sources</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.migrationcenter.sources" /></td></tr>
 </tbody></table>
@@ -92,12 +93,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the source.</td>
+    <td>Output only. The state of the source. (STATE_UNSPECIFIED, ACTIVE, DELETING, INVALID)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Data source type.</td>
+    <td>Data source type. (SOURCE_TYPE_UNKNOWN, SOURCE_TYPE_UPLOAD, SOURCE_TYPE_GUEST_OS_SCAN, SOURCE_TYPE_INVENTORY_SCAN, SOURCE_TYPE_CUSTOM, SOURCE_TYPE_DISCOVERY_CLIENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -161,12 +162,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the source.</td>
+    <td>Output only. The state of the source. (STATE_UNSPECIFIED, ACTIVE, DELETING, INVALID)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Data source type.</td>
+    <td>Data source type. (SOURCE_TYPE_UNKNOWN, SOURCE_TYPE_UPLOAD, SOURCE_TYPE_GUEST_OS_SCAN, SOURCE_TYPE_INVENTORY_SCAN, SOURCE_TYPE_CUSTOM, SOURCE_TYPE_DISCOVERY_CLIENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the sources in a given project and location.</td>
 </tr>
 <tr>
@@ -350,10 +351,10 @@ updateTime
 FROM google.migrationcenter.sources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -376,10 +377,10 @@ Creates a new source in a given project and location.
 ```sql
 INSERT INTO google.migrationcenter.sources (
 data__description,
-data__priority,
 data__displayName,
-data__managed,
+data__priority,
 data__type,
+data__managed,
 projectsId,
 locationsId,
 sourceId,
@@ -387,10 +388,10 @@ requestId
 )
 SELECT 
 '{{ description }}',
-{{ priority }},
 '{{ displayName }}',
-{{ managed }},
+{{ priority }},
 '{{ type }}',
+{{ managed }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourceId }}',
@@ -406,47 +407,42 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sources
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the sources resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the sources resource.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Free-text description.
-        
-    - name: priority
-      value: integer
-      description: >
-        The information confidence of the source. The higher the value, the higher the confidence.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         User-friendly display name.
-        
-    - name: managed
-      value: boolean
-      description: >
-        If `true`, the source is managed by other service(s).
-        
+    - name: priority
+      value: {{ priority }}
+      description: |
+        The information confidence of the source. The higher the value, the higher the confidence.
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Data source type.
-        
       valid_values: ['SOURCE_TYPE_UNKNOWN', 'SOURCE_TYPE_UPLOAD', 'SOURCE_TYPE_GUEST_OS_SCAN', 'SOURCE_TYPE_INVENTORY_SCAN', 'SOURCE_TYPE_CUSTOM', 'SOURCE_TYPE_DISCOVERY_CLIENT']
+    - name: managed
+      value: {{ managed }}
+      description: |
+        If \`true\`, the source is managed by other service(s).
     - name: sourceId
-      value: string
+      value: "{{ sourceId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -467,10 +463,10 @@ Updates the parameters of a source.
 UPDATE google.migrationcenter.sources
 SET 
 data__description = '{{ description }}',
-data__priority = {{ priority }},
 data__displayName = '{{ displayName }}',
-data__managed = {{ managed }},
-data__type = '{{ type }}'
+data__priority = {{ priority }},
+data__type = '{{ type }}',
+data__managed = {{ managed }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -18,7 +18,7 @@ gkebackup service documentation.
 
 :::info[Service Summary]
 
-total resources: __19__  
+total resources: __21__  
 
 :::
 
@@ -29,6 +29,7 @@ total resources: __19__
 <a href="/services/gkebackup/backup_plan_bindings/">backup_plan_bindings</a><br />
 <a href="/services/gkebackup/backup_plans/">backup_plans</a><br />
 <a href="/services/gkebackup/backup_plans_iam_policies/">backup_plans_iam_policies</a><br />
+<a href="/services/gkebackup/backup_plans_tags/">backup_plans_tags</a><br />
 <a href="/services/gkebackup/backups/">backups</a><br />
 <a href="/services/gkebackup/backups_backup_index_download_url/">backups_backup_index_download_url</a><br />
 <a href="/services/gkebackup/backups_iam_policies/">backups_iam_policies</a><br />
@@ -40,6 +41,7 @@ total resources: __19__
 <a href="/services/gkebackup/restore_plan_bindings/">restore_plan_bindings</a><br />
 <a href="/services/gkebackup/restore_plans/">restore_plans</a><br />
 <a href="/services/gkebackup/restore_plans_iam_policies/">restore_plans_iam_policies</a><br />
+<a href="/services/gkebackup/restore_plans_tags/">restore_plans_tags</a><br />
 <a href="/services/gkebackup/restores/">restores</a><br />
 <a href="/services/gkebackup/restores_iam_policies/">restores_iam_policies</a><br />
 <a href="/services/gkebackup/volume_backups/">volume_backups</a><br />

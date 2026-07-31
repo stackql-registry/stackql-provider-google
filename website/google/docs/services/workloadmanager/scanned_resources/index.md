@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>scanned_resources</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>scanned_resources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="scanned_resources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.workloadmanager.scanned_resources" /></td></tr>
 </tbody></table>
@@ -51,12 +52,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
-    <td>resource name</td>
+    <td>Resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>resource type</td>
+    <td>Resource type.</td>
 </tr>
 </tbody>
 </table>
@@ -82,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-evaluationsId"><code>evaluationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td><a href="#parameter-rule"><code>rule</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-rule"><code>rule</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List all scanned resources for a single Execution.</td>
 </tr>
 </tbody>
@@ -170,11 +171,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND evaluationsId = '{{ evaluationsId }}' -- required
 AND executionsId = '{{ executionsId }}' -- required
-AND rule = '{{ rule }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND rule = '{{ rule }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

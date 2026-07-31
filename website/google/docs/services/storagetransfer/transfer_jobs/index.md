@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>transfer_jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>transfer_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="transfer_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storagetransfer.transfer_jobs" /></td></tr>
 </tbody></table>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Status of the job. This value MUST be specified for `CreateTransferJobRequests`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation.</td>
+    <td>Status of the job. This value MUST be specified for `CreateTransferJobRequests`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation. (STATUS_UNSPECIFIED, ENABLED, DISABLED, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="transferSpec" /></td>
@@ -206,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Status of the job. This value MUST be specified for `CreateTransferJobRequests`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation.</td>
+    <td>Status of the job. This value MUST be specified for `CreateTransferJobRequests`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation. (STATUS_UNSPECIFIED, ENABLED, DISABLED, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="transferSpec" /></td>
@@ -401,32 +402,32 @@ Creates a transfer job that runs periodically.
 
 ```sql
 INSERT INTO google.storagetransfer.transfer_jobs (
+data__latestOperationName,
+data__loggingConfig,
 data__name,
 data__replicationSpec,
-data__status,
-data__description,
-data__notificationConfig,
-data__transferSpec,
-data__latestOperationName,
-data__schedule,
 data__eventStream,
-data__projectId,
+data__transferSpec,
+data__description,
 data__serviceAccount,
-data__loggingConfig
+data__status,
+data__projectId,
+data__notificationConfig,
+data__schedule
 )
 SELECT 
+'{{ latestOperationName }}',
+'{{ loggingConfig }}',
 '{{ name }}',
 '{{ replicationSpec }}',
-'{{ status }}',
-'{{ description }}',
-'{{ notificationConfig }}',
-'{{ transferSpec }}',
-'{{ latestOperationName }}',
-'{{ schedule }}',
 '{{ eventStream }}',
-'{{ projectId }}',
+'{{ transferSpec }}',
+'{{ description }}',
 '{{ serviceAccount }}',
-'{{ loggingConfig }}'
+'{{ status }}',
+'{{ projectId }}',
+'{{ notificationConfig }}',
+'{{ schedule }}'
 RETURNING
 name,
 creationTime,
@@ -448,72 +449,209 @@ transferSpec
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: transfer_jobs
   props:
-    - name: name
-      value: string
-      description: >
-        A unique name (within the transfer project) assigned when the job is created. If this field is empty in a CreateTransferJobRequest, Storage Transfer Service assigns a unique name. Otherwise, the specified name is used as the unique name for this job. If the specified name is in use by a job, the creation request fails with an ALREADY_EXISTS error. This name must start with `"transferJobs/"` prefix and end with a letter or a number, and should be no more than 128 characters. For transfers involving PosixFilesystem, this name must start with `transferJobs/OPI` specifically. For all other transfer types, this name must not start with `transferJobs/OPI`. Non-PosixFilesystem example: `"transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$"` PosixFilesystem example: `"transferJobs/OPI^[A-Za-z0-9-._~]*[A-Za-z0-9]$"` Applications must not rely on the enforcement of naming requirements involving OPI. Invalid job names fail with an INVALID_ARGUMENT error.
-        
-    - name: replicationSpec
-      value: object
-      description: >
-        Replication specification.
-        
-    - name: status
-      value: string
-      description: >
-        Status of the job. This value MUST be specified for `CreateTransferJobRequests`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation.
-        
-      valid_values: ['STATUS_UNSPECIFIED', 'ENABLED', 'DISABLED', 'DELETED']
-    - name: description
-      value: string
-      description: >
-        A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.
-        
-    - name: notificationConfig
-      value: object
-      description: >
-        Notification configuration.
-        
-    - name: transferSpec
-      value: object
-      description: >
-        Transfer specification.
-        
     - name: latestOperationName
-      value: string
-      description: >
+      value: "{{ latestOperationName }}"
+      description: |
         The name of the most recently started TransferOperation of this JobConfig. Present if a TransferOperation has been created for this JobConfig.
-        
-    - name: schedule
-      value: object
-      description: >
-        Specifies schedule for the transfer job. This is an optional field. When the field is not set, the job never executes a transfer, unless you invoke RunTransferJob or update the job to have a non-empty schedule.
-        
-    - name: eventStream
-      value: object
-      description: >
-        Specifies the event stream for the transfer job for event-driven transfers. When EventStream is specified, the Schedule fields are ignored.
-        
-    - name: projectId
-      value: string
-      description: >
-        The ID of the Google Cloud project that owns the job.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Optional. The user-managed service account to which to delegate service agent permissions. You can grant Cloud Storage bucket permissions to this service account instead of to the Transfer Service service agent. Either the service account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or the unique ID (`123456789012345678901`) are accepted. See https://docs.cloud.google.com/storage-transfer/docs/delegate-service-agent-permissions for required permissions.
-        
     - name: loggingConfig
-      value: object
-      description: >
+      description: |
         Logging configuration.
-        
-```
+      value:
+        enableOnpremGcsTransferLogs: {{ enableOnpremGcsTransferLogs }}
+        logActions:
+          - "{{ logActions }}"
+        logActionStates:
+          - "{{ logActionStates }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        A unique name (within the transfer project) assigned when the job is created. If this field is empty in a CreateTransferJobRequest, Storage Transfer Service assigns a unique name. Otherwise, the specified name is used as the unique name for this job. If the specified name is in use by a job, the creation request fails with an ALREADY_EXISTS error. This name must start with \`"transferJobs/"\` prefix and end with a letter or a number, and should be no more than 128 characters. For transfers involving PosixFilesystem, this name must start with \`transferJobs/OPI\` specifically. For all other transfer types, this name must not start with \`transferJobs/OPI\`. Non-PosixFilesystem example: \`"transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$"\` PosixFilesystem example: \`"transferJobs/OPI^[A-Za-z0-9-._~]*[A-Za-z0-9]$"\` Applications must not rely on the enforcement of naming requirements involving OPI. Invalid job names fail with an INVALID_ARGUMENT error.
+    - name: replicationSpec
+      description: |
+        Replication specification.
+      value:
+        transferOptions:
+          deleteObjectsUniqueInSink: {{ deleteObjectsUniqueInSink }}
+          overwriteObjectsAlreadyExistingInSink: {{ overwriteObjectsAlreadyExistingInSink }}
+          overwriteWhen: "{{ overwriteWhen }}"
+          metadataOptions:
+            acl: "{{ acl }}"
+            storageClass: "{{ storageClass }}"
+            temporaryHold: "{{ temporaryHold }}"
+            kmsKey: "{{ kmsKey }}"
+            gid: "{{ gid }}"
+            uid: "{{ uid }}"
+            timeCreated: "{{ timeCreated }}"
+            mode: "{{ mode }}"
+            symlink: "{{ symlink }}"
+          deleteObjectsFromSourceAfterTransfer: {{ deleteObjectsFromSourceAfterTransfer }}
+        gcsDataSource:
+          bucketName: "{{ bucketName }}"
+          path: "{{ path }}"
+          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
+        gcsDataSink:
+          bucketName: "{{ bucketName }}"
+          path: "{{ path }}"
+          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
+        objectConditions:
+          minTimeElapsedSinceLastModification: "{{ minTimeElapsedSinceLastModification }}"
+          maxTimeElapsedSinceLastModification: "{{ maxTimeElapsedSinceLastModification }}"
+          includePrefixes:
+            - "{{ includePrefixes }}"
+          excludePrefixes:
+            - "{{ excludePrefixes }}"
+          lastModifiedBefore: "{{ lastModifiedBefore }}"
+          includeStorageClasses:
+            - "{{ includeStorageClasses }}"
+          matchGlob: "{{ matchGlob }}"
+          lastModifiedSince: "{{ lastModifiedSince }}"
+    - name: eventStream
+      description: |
+        Specifies the event stream for the transfer job for event-driven transfers. When EventStream is specified, the Schedule fields are ignored.
+      value:
+        name: "{{ name }}"
+        eventStreamStartTime: "{{ eventStreamStartTime }}"
+        eventStreamExpirationTime: "{{ eventStreamExpirationTime }}"
+    - name: transferSpec
+      description: |
+        Transfer specification.
+      value:
+        gcsDataSource:
+          bucketName: "{{ bucketName }}"
+          path: "{{ path }}"
+          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
+        httpDataSource:
+          listUrl: "{{ listUrl }}"
+        azureBlobStorageDataSource:
+          azureCredentials:
+            sasToken: "{{ sasToken }}"
+          privateNetworkService: "{{ privateNetworkService }}"
+          storageAccount: "{{ storageAccount }}"
+          credentialsSecret: "{{ credentialsSecret }}"
+          container: "{{ container }}"
+          path: "{{ path }}"
+          federatedIdentityConfig:
+            clientId: "{{ clientId }}"
+            tenantId: "{{ tenantId }}"
+        gcsIntermediateDataLocation:
+          bucketName: "{{ bucketName }}"
+          path: "{{ path }}"
+          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
+        posixDataSource:
+          rootDirectory: "{{ rootDirectory }}"
+        awsS3DataSource:
+          managedPrivateNetwork: {{ managedPrivateNetwork }}
+          roleArn: "{{ roleArn }}"
+          cloudfrontDomain: "{{ cloudfrontDomain }}"
+          privateNetworkService: "{{ privateNetworkService }}"
+          credentialsSecret: "{{ credentialsSecret }}"
+          bucketName: "{{ bucketName }}"
+          awsAccessKey:
+            accessKeyId: "{{ accessKeyId }}"
+            secretAccessKey: "{{ secretAccessKey }}"
+          path: "{{ path }}"
+        transferManifest:
+          location: "{{ location }}"
+        gcsDataSink:
+          bucketName: "{{ bucketName }}"
+          path: "{{ path }}"
+          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
+        posixDataSink:
+          rootDirectory: "{{ rootDirectory }}"
+        sinkAgentPoolName: "{{ sinkAgentPoolName }}"
+        hdfsDataSource:
+          path: "{{ path }}"
+        awsS3CompatibleDataSource:
+          path: "{{ path }}"
+          s3Metadata:
+            authMethod: "{{ authMethod }}"
+            protocol: "{{ protocol }}"
+            listApi: "{{ listApi }}"
+            requestModel: "{{ requestModel }}"
+          bucketName: "{{ bucketName }}"
+          region: "{{ region }}"
+          endpoint: "{{ endpoint }}"
+        transferOptions:
+          deleteObjectsUniqueInSink: {{ deleteObjectsUniqueInSink }}
+          overwriteObjectsAlreadyExistingInSink: {{ overwriteObjectsAlreadyExistingInSink }}
+          overwriteWhen: "{{ overwriteWhen }}"
+          metadataOptions:
+            acl: "{{ acl }}"
+            storageClass: "{{ storageClass }}"
+            temporaryHold: "{{ temporaryHold }}"
+            kmsKey: "{{ kmsKey }}"
+            gid: "{{ gid }}"
+            uid: "{{ uid }}"
+            timeCreated: "{{ timeCreated }}"
+            mode: "{{ mode }}"
+            symlink: "{{ symlink }}"
+          deleteObjectsFromSourceAfterTransfer: {{ deleteObjectsFromSourceAfterTransfer }}
+        sourceAgentPoolName: "{{ sourceAgentPoolName }}"
+        objectConditions:
+          minTimeElapsedSinceLastModification: "{{ minTimeElapsedSinceLastModification }}"
+          maxTimeElapsedSinceLastModification: "{{ maxTimeElapsedSinceLastModification }}"
+          includePrefixes:
+            - "{{ includePrefixes }}"
+          excludePrefixes:
+            - "{{ excludePrefixes }}"
+          lastModifiedBefore: "{{ lastModifiedBefore }}"
+          includeStorageClasses:
+            - "{{ includeStorageClasses }}"
+          matchGlob: "{{ matchGlob }}"
+          lastModifiedSince: "{{ lastModifiedSince }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Optional. The user-managed service account to which to delegate service agent permissions. You can grant Cloud Storage bucket permissions to this service account instead of to the Transfer Service service agent. Either the service account email (\`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com\`) or the unique ID (\`123456789012345678901\`) are accepted. See https://docs.cloud.google.com/storage-transfer/docs/delegate-service-agent-permissions for required permissions.
+    - name: status
+      value: "{{ status }}"
+      description: |
+        Status of the job. This value MUST be specified for \`CreateTransferJobRequests\`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation.
+      valid_values: ['STATUS_UNSPECIFIED', 'ENABLED', 'DISABLED', 'DELETED']
+    - name: projectId
+      value: "{{ projectId }}"
+      description: |
+        The ID of the Google Cloud project that owns the job.
+    - name: notificationConfig
+      description: |
+        Notification configuration.
+      value:
+        eventTypes:
+          - "{{ eventTypes }}"
+        payloadFormat: "{{ payloadFormat }}"
+        pubsubTopic: "{{ pubsubTopic }}"
+    - name: schedule
+      description: |
+        Specifies schedule for the transfer job. This is an optional field. When the field is not set, the job never executes a transfer, unless you invoke RunTransferJob or update the job to have a non-empty schedule.
+      value:
+        startTimeOfDay:
+          hours: {{ hours }}
+          seconds: {{ seconds }}
+          nanos: {{ nanos }}
+          minutes: {{ minutes }}
+        scheduleEndDate:
+          month: {{ month }}
+          year: {{ year }}
+          day: {{ day }}
+        scheduleStartDate:
+          month: {{ month }}
+          year: {{ year }}
+          day: {{ day }}
+        endTimeOfDay:
+          hours: {{ hours }}
+          seconds: {{ seconds }}
+          nanos: {{ nanos }}
+          minutes: {{ minutes }}
+        repeatInterval: "{{ repeatInterval }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -533,9 +671,9 @@ Updates a transfer job. Updating a job's transfer spec does not affect transfer 
 ```sql
 UPDATE google.storagetransfer.transfer_jobs
 SET 
-data__updateTransferJobFieldMask = '{{ updateTransferJobFieldMask }}',
+data__projectId = '{{ projectId }}',
 data__transferJob = '{{ transferJob }}',
-data__projectId = '{{ projectId }}'
+data__updateTransferJobFieldMask = '{{ updateTransferJobFieldMask }}'
 WHERE 
 transferJobsId = '{{ transferJobsId }}' --required
 RETURNING

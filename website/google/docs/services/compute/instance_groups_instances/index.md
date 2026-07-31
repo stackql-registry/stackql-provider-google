@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instance_groups_instances</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instance_groups_instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instance_groups_instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.instance_groups_instances" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Unique identifier for the resource; defined by the server.</td>
+    <td>Output only. [Output Only] Unique identifier for the resource; defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="items" /></td>
@@ -61,22 +62,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>The resource type. (default: compute#regionInstanceGroupsListInstances)</td>
+    <td>Output only. The resource type. (default: compute#regionInstanceGroupsListInstances)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>Output only. [Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] Informational warning message.</td>
+    <td>Output only. [Output Only] Informational warning message.</td>
 </tr>
 </tbody>
 </table>
@@ -102,22 +103,22 @@ The following methods are available for this resource:
     <td><a href="#list_instances"><CopyableCode code="list_instances" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Lists the instances in the specified instance group and displays information about the named ports. Depending on the specified options, this method can list all instances or only the instances that are running. The orderBy query parameter is not supported.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the instances in the specified instance group and displays<br />information about the named ports. Depending on the specified options, this<br />method can list all instances or only the instances that are running.<br />The orderBy query parameter is not supported.</td>
 </tr>
 <tr>
     <td><a href="#add_instances"><CopyableCode code="add_instances" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork. Read Adding instances for more information.</td>
+    <td>Adds a list of instances to the specified instance group.  All of the<br />instances in the instance group must be in the same network/subnetwork.<br />Read <br />Adding instances for more information.</td>
 </tr>
 <tr>
     <td><a href="#remove_instances"><CopyableCode code="remove_instances" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Removes one or more instances from the specified instance group, but does not delete those instances. If the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration before the VM instance is removed or deleted.</td>
+    <td>Removes one or more instances from the specified instance group, but does<br />not delete those instances.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration before the VM instance is removed or deleted.</td>
 </tr>
 </tbody>
 </table>
@@ -198,7 +199,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list_instances">
 
-Lists the instances in the specified instance group and displays information about the named ports. Depending on the specified options, this method can list all instances or only the instances that are running. The orderBy query parameter is not supported.
+Lists the instances in the specified instance group and displays<br />information about the named ports. Depending on the specified options, this<br />method can list all instances or only the instances that are running.<br />The orderBy query parameter is not supported.
 
 ```sql
 SELECT
@@ -212,11 +213,11 @@ FROM google.compute.instance_groups_instances
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND instanceGroup = '{{ instanceGroup }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -234,7 +235,7 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="add_instances">
 
-Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork. Read Adding instances for more information.
+Adds a list of instances to the specified instance group.  All of the<br />instances in the instance group must be in the same network/subnetwork.<br />Read <br />Adding instances for more information.
 
 ```sql
 INSERT INTO google.compute.instance_groups_instances (
@@ -258,6 +259,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -282,27 +284,27 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instance_groups_instances
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the instance_groups_instances resource.
     - name: zone
-      value: string
+      value: "{{ zone }}"
       description: Required parameter for the instance_groups_instances resource.
     - name: instanceGroup
-      value: string
+      value: "{{ instanceGroup }}"
       description: Required parameter for the instance_groups_instances resource.
     - name: instances
-      value: array
-      description: >
+      description: |
         The list of instances to add to the instance group.
-        
+      value:
+        - instance: "{{ instance }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -317,7 +319,7 @@ zone
 >
 <TabItem value="remove_instances">
 
-Removes one or more instances from the specified instance group, but does not delete those instances. If the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration before the VM instance is removed or deleted.
+Removes one or more instances from the specified instance group, but does<br />not delete those instances.<br /><br />If the group is part of a backend<br />service that has enabled<br />connection draining, it can take up to 60 seconds after the connection<br />draining duration before the VM instance is removed or deleted.
 
 ```sql
 DELETE FROM google.compute.instance_groups_instances

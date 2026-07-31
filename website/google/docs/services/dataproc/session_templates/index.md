@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>session_templates</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>session_templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="session_templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataproc.session_templates" /></td></tr>
 </tbody></table>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_session_templates_list"><CopyableCode code="projects_locations_session_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists session templates.</td>
 </tr>
 <tr>
@@ -330,9 +331,9 @@ uuid
 FROM google.dataproc.session_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -354,24 +355,24 @@ Create a session template synchronously.
 
 ```sql
 INSERT INTO google.dataproc.session_templates (
-data__environmentConfig,
-data__description,
-data__labels,
-data__jupyterSession,
 data__name,
 data__runtimeConfig,
+data__environmentConfig,
 data__sparkConnectSession,
+data__jupyterSession,
+data__labels,
+data__description,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ environmentConfig }}',
-'{{ description }}',
-'{{ labels }}',
-'{{ jupyterSession }}',
 '{{ name }}',
 '{{ runtimeConfig }}',
+'{{ environmentConfig }}',
 '{{ sparkConnectSession }}',
+'{{ jupyterSession }}',
+'{{ labels }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -391,52 +392,74 @@ uuid
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: session_templates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the session_templates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the session_templates resource.
-    - name: environmentConfig
-      value: object
-      description: >
-        Optional. Environment configuration for session execution.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Brief description of the template.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels to associate with sessions created using this template. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty, but, if present, must contain 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
-        
-    - name: jupyterSession
-      value: object
-      description: >
-        Optional. Jupyter session config.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Required. Identifier. The resource name of the session template.
-        
     - name: runtimeConfig
-      value: object
-      description: >
+      description: |
         Optional. Runtime configuration for session execution.
-        
+      value:
+        properties: "{{ properties }}"
+        version: "{{ version }}"
+        repositoryConfig:
+          pypiRepositoryConfig:
+            pypiRepository: "{{ pypiRepository }}"
+        autotuningConfig:
+          scenarios:
+            - "{{ scenarios }}"
+        containerImage: "{{ containerImage }}"
+        cohort: "{{ cohort }}"
+    - name: environmentConfig
+      description: |
+        Optional. Environment configuration for session execution.
+      value:
+        peripheralsConfig:
+          metastoreService: "{{ metastoreService }}"
+          sparkHistoryServerConfig:
+            dataprocCluster: "{{ dataprocCluster }}"
+        executionConfig:
+          idleTtl: "{{ idleTtl }}"
+          authenticationConfig:
+            userWorkloadAuthenticationType: "{{ userWorkloadAuthenticationType }}"
+          subnetworkUri: "{{ subnetworkUri }}"
+          kmsKey: "{{ kmsKey }}"
+          networkTags:
+            - "{{ networkTags }}"
+          ttl: "{{ ttl }}"
+          serviceAccount: "{{ serviceAccount }}"
+          networkUri: "{{ networkUri }}"
+          resourceManagerTags: "{{ resourceManagerTags }}"
+          stagingBucket: "{{ stagingBucket }}"
     - name: sparkConnectSession
-      value: object
-      description: >
+      value: "{{ sparkConnectSession }}"
+      description: |
         Optional. Spark connect session config.
-        
-```
+    - name: jupyterSession
+      description: |
+        Optional. Jupyter session config.
+      value:
+        displayName: "{{ displayName }}"
+        kernel: "{{ kernel }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels to associate with sessions created using this template. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty, but, if present, must contain 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Brief description of the template.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -456,13 +479,13 @@ Updates the session template synchronously.
 ```sql
 UPDATE google.dataproc.session_templates
 SET 
-data__environmentConfig = '{{ environmentConfig }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__jupyterSession = '{{ jupyterSession }}',
 data__name = '{{ name }}',
 data__runtimeConfig = '{{ runtimeConfig }}',
-data__sparkConnectSession = '{{ sparkConnectSession }}'
+data__environmentConfig = '{{ environmentConfig }}',
+data__sparkConnectSession = '{{ sparkConnectSession }}',
+data__jupyterSession = '{{ jupyterSession }}',
+data__labels = '{{ labels }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

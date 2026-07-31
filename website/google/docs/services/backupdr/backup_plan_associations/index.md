@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backup_plan_associations</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backup_plan_associations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backup_plan_associations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.backupdr.backup_plan_associations" /></td></tr>
 </tbody></table>
@@ -55,6 +56,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Identifier. The resource name of BackupPlanAssociation in below format Format : projects/&#123;project&#125;/locations/&#123;location&#125;/backupPlanAssociations/&#123;backupPlanAssociationId&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="alloydbClusterBackupPlanAssociationProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. AlloyDB cluster's backup plan association properties. (id: AlloyDBClusterBackupPlanAssociationProperties)</td>
+</tr>
+<tr>
     <td><CopyableCode code="backupPlan" /></td>
     <td><code>string</code></td>
     <td>Required. Resource name of backup plan which needs to be applied on workload. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/backupPlans/&#123;backupPlanId&#125;</td>
@@ -85,6 +91,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Resource name of data source which will be used as storage location for backups taken. Format : projects/&#123;project&#125;/locations/&#123;location&#125;/backupVaults/&#123;backupvault&#125;/dataSources/&#123;datasource&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="filestoreInstanceBackupPlanAssociationProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Filestore instance's backup plan association properties. (id: FilestoreInstanceBackupPlanAssociationProperties)</td>
+</tr>
+<tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
     <td>Required. Immutable. Resource name of workload on which the backup plan is applied. The format can either be the resource name (e.g., "projects/my-project/zones/us-central1-a/instances/my-instance") or the full resource URI (e.g., "https://www.googleapis.com/compute/v1/projects/my-project/zones/us-central1-a/instances/my-instance").</td>
@@ -102,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The BackupPlanAssociation resource state.</td>
+    <td>Output only. The BackupPlanAssociation resource state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -129,6 +140,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Identifier. The resource name of BackupPlanAssociation in below format Format : projects/&#123;project&#125;/locations/&#123;location&#125;/backupPlanAssociations/&#123;backupPlanAssociationId&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="alloydbClusterBackupPlanAssociationProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. AlloyDB cluster's backup plan association properties. (id: AlloyDBClusterBackupPlanAssociationProperties)</td>
+</tr>
+<tr>
     <td><CopyableCode code="backupPlan" /></td>
     <td><code>string</code></td>
     <td>Required. Resource name of backup plan which needs to be applied on workload. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/backupPlans/&#123;backupPlanId&#125;</td>
@@ -159,6 +175,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Resource name of data source which will be used as storage location for backups taken. Format : projects/&#123;project&#125;/locations/&#123;location&#125;/backupVaults/&#123;backupvault&#125;/dataSources/&#123;datasource&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="filestoreInstanceBackupPlanAssociationProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Filestore instance's backup plan association properties. (id: FilestoreInstanceBackupPlanAssociationProperties)</td>
+</tr>
+<tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
     <td>Required. Immutable. Resource name of workload on which the backup plan is applied. The format can either be the resource name (e.g., "projects/my-project/zones/us-central1-a/instances/my-instance") or the full resource URI (e.g., "https://www.googleapis.com/compute/v1/projects/my-project/zones/us-central1-a/instances/my-instance").</td>
@@ -176,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The BackupPlanAssociation resource state.</td>
+    <td>Output only. The BackupPlanAssociation resource state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, INACTIVE, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -214,14 +235,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists BackupPlanAssociations in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-backupPlanAssociationId"><code>backupPlanAssociationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-backupPlanAssociationId"><code>backupPlanAssociationId</code></a></td>
     <td>Create a BackupPlanAssociation</td>
 </tr>
 <tr>
@@ -242,7 +263,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_for_resource_type"><CopyableCode code="fetch_for_resource_type" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-resourceType"><code>resourceType</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-resourceType"><code>resourceType</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List BackupPlanAssociations for a given resource type.</td>
 </tr>
 <tr>
@@ -342,12 +363,14 @@ Gets details of a single BackupPlanAssociation.
 ```sql
 SELECT
 name,
+alloydbClusterBackupPlanAssociationProperties,
 backupPlan,
 backupPlanRevisionId,
 backupPlanRevisionName,
 cloudSqlInstanceBackupPlanAssociationProperties,
 createTime,
 dataSource,
+filestoreInstanceBackupPlanAssociationProperties,
 resource,
 resourceType,
 rulesConfigInfo,
@@ -367,12 +390,14 @@ Lists BackupPlanAssociations in a given project and location.
 ```sql
 SELECT
 name,
+alloydbClusterBackupPlanAssociationProperties,
 backupPlan,
 backupPlanRevisionId,
 backupPlanRevisionName,
 cloudSqlInstanceBackupPlanAssociationProperties,
 createTime,
 dataSource,
+filestoreInstanceBackupPlanAssociationProperties,
 resource,
 resourceType,
 rulesConfigInfo,
@@ -381,9 +406,9 @@ updateTime
 FROM google.backupdr.backup_plan_associations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -405,22 +430,22 @@ Create a BackupPlanAssociation
 
 ```sql
 INSERT INTO google.backupdr.backup_plan_associations (
+data__backupPlan,
 data__resourceType,
 data__resource,
-data__backupPlan,
 projectsId,
 locationsId,
-backupPlanAssociationId,
-requestId
+requestId,
+backupPlanAssociationId
 )
 SELECT 
+'{{ backupPlan }}',
 '{{ resourceType }}',
 '{{ resource }}',
-'{{ backupPlan }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ backupPlanAssociationId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ backupPlanAssociationId }}'
 RETURNING
 name,
 done,
@@ -432,36 +457,33 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backup_plan_associations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backup_plan_associations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backup_plan_associations resource.
-    - name: resourceType
-      value: string
-      description: >
-        Required. Immutable. Resource type of workload on which backupplan is applied
-        
-    - name: resource
-      value: string
-      description: >
-        Required. Immutable. Resource name of workload on which the backup plan is applied. The format can either be the resource name (e.g., "projects/my-project/zones/us-central1-a/instances/my-instance") or the full resource URI (e.g., "https://www.googleapis.com/compute/v1/projects/my-project/zones/us-central1-a/instances/my-instance").
-        
     - name: backupPlan
-      value: string
-      description: >
+      value: "{{ backupPlan }}"
+      description: |
         Required. Resource name of backup plan which needs to be applied on workload. Format: projects/{project}/locations/{location}/backupPlans/{backupPlanId}
-        
-    - name: backupPlanAssociationId
-      value: string
+    - name: resourceType
+      value: "{{ resourceType }}"
+      description: |
+        Required. Immutable. Resource type of workload on which backupplan is applied
+    - name: resource
+      value: "{{ resource }}"
+      description: |
+        Required. Immutable. Resource name of workload on which the backup plan is applied. The format can either be the resource name (e.g., "projects/my-project/zones/us-central1-a/instances/my-instance") or the full resource URI (e.g., "https://www.googleapis.com/compute/v1/projects/my-project/zones/us-central1-a/instances/my-instance").
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: backupPlanAssociationId
+      value: "{{ backupPlanAssociationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -481,9 +503,9 @@ Update a BackupPlanAssociation.
 ```sql
 UPDATE google.backupdr.backup_plan_associations
 SET 
+data__backupPlan = '{{ backupPlan }}',
 data__resourceType = '{{ resourceType }}',
-data__resource = '{{ resource }}',
-data__backupPlan = '{{ backupPlan }}'
+data__resource = '{{ resource }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -543,10 +565,10 @@ EXEC google.backupdr.backup_plan_associations.fetch_for_resource_type
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @resourceType='{{ resourceType }}', 
+@orderBy='{{ orderBy }}', 
 @pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@filter='{{ filter }}', 
-@orderBy='{{ orderBy }}'
+@filter='{{ filter }}'
 ;
 ```
 </TabItem>
@@ -563,8 +585,8 @@ EXEC google.backupdr.backup_plan_associations.trigger_backup
 '{
 "ruleId": "{{ ruleId }}", 
 "requestId": "{{ requestId }}", 
-"customRetentionDays": {{ customRetentionDays }}, 
-"labels": "{{ labels }}"
+"labels": "{{ labels }}", 
+"customRetentionDays": {{ customRetentionDays }}
 }'
 ;
 ```

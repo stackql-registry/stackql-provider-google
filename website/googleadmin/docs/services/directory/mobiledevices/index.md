@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>mobiledevices</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>mobiledevices</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="mobiledevices" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.mobiledevices" /></td></tr>
 </tbody></table>
@@ -494,7 +495,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customerId"><code>customerId</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a></td>
+    <td><a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Retrieves a paginated list of all user-owned mobile devices for an account. To retrieve a list that includes company-owned devices, use the Cloud Identity [Devices API](https://cloud.google.com/identity/docs/concepts/overview-devices) instead. This method times out after 60 minutes. For more information, see [Troubleshoot error codes](https://developers.google.com/workspace/admin/directory/v1/guides/troubleshoot-error-codes).</td>
 </tr>
 <tr>
@@ -680,12 +681,12 @@ userAgent,
 wifiMacAddress
 FROM googleadmin.directory.mobiledevices
 WHERE customerId = '{{ customerId }}' -- required
-AND maxResults = '{{ maxResults }}'
+AND sortOrder = '{{ sortOrder }}'
+AND projection = '{{ projection }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND projection = '{{ projection }}'
 AND query = '{{ query }}'
-AND sortOrder = '{{ sortOrder }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>

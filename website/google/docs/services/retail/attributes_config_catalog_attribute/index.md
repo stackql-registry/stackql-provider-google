@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>attributes_config_catalog_attr
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>attributes_config_catalog_attribute</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="attributes_config_catalog_attribute" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.attributes_config_catalog_attribute" /></td></tr>
 </tbody></table>
@@ -131,25 +132,51 @@ catalogAttributes
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: attributes_config_catalog_attribute
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the attributes_config_catalog_attribute resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the attributes_config_catalog_attribute resource.
     - name: catalogsId
-      value: string
+      value: "{{ catalogsId }}"
       description: Required parameter for the attributes_config_catalog_attribute resource.
     - name: catalogAttribute
-      value: object
-      description: >
-        Catalog level attribute config for an attribute. For example, if customers want to enable/disable facet for a specific attribute.
-        
-```
+      description: |
+        Required. The CatalogAttribute to add.
+      value:
+        exactSearchableOption: "{{ exactSearchableOption }}"
+        inUse: {{ inUse }}
+        searchableOption: "{{ searchableOption }}"
+        key: "{{ key }}"
+        indexableOption: "{{ indexableOption }}"
+        type: "{{ type }}"
+        dynamicFacetableOption: "{{ dynamicFacetableOption }}"
+        retrievableOption: "{{ retrievableOption }}"
+        facetConfig:
+          ignoredFacetValues:
+            - startTime: "{{ startTime }}"
+              endTime: "{{ endTime }}"
+              values: "{{ values }}"
+          rerankConfig:
+            rerankFacet: {{ rerankFacet }}
+            facetValues:
+              - "{{ facetValues }}"
+          facetIntervals:
+            - minimum: {{ minimum }}
+              maximum: {{ maximum }}
+              exclusiveMaximum: {{ exclusiveMaximum }}
+              exclusiveMinimum: {{ exclusiveMinimum }}
+          mergedFacetValues:
+            - values: "{{ values }}"
+              mergedValue: "{{ mergedValue }}"
+          mergedFacet:
+            mergedFacetKey: "{{ mergedFacetKey }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

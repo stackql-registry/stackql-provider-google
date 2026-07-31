@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>hl7_v2_stores</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>hl7_v2_stores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="hl7_v2_stores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.healthcare.hl7_v2_stores" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the HL7v2 stores in the given dataset.</td>
 </tr>
 <tr>
@@ -296,9 +297,9 @@ FROM google.healthcare.hl7_v2_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -320,22 +321,22 @@ Creates a new HL7v2 store within the parent dataset.
 
 ```sql
 INSERT INTO google.healthcare.hl7_v2_stores (
-data__parserConfig,
 data__labels,
+data__rejectDuplicateMessage,
+data__parserConfig,
 data__name,
 data__notificationConfigs,
-data__rejectDuplicateMessage,
 projectsId,
 locationsId,
 datasetsId,
 hl7V2StoreId
 )
 SELECT 
-'{{ parserConfig }}',
 '{{ labels }}',
+{{ rejectDuplicateMessage }},
+'{{ parserConfig }}',
 '{{ name }}',
 '{{ notificationConfigs }}',
-{{ rejectDuplicateMessage }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -351,47 +352,57 @@ rejectDuplicateMessage
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: hl7_v2_stores
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the hl7_v2_stores resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the hl7_v2_stores resource.
     - name: datasetsId
-      value: string
+      value: "{{ datasetsId }}"
       description: Required parameter for the hl7_v2_stores resource.
-    - name: parserConfig
-      value: object
-      description: >
-        Optional. The configuration for the parser. It determines how the server parses the messages.
-        
     - name: labels
-      value: object
-      description: >
-        User-supplied key-value pairs used to organize HL7v2 stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \p{Ll}\p{Lo}{0,62} Label values are optional, must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64 labels can be associated with a given store.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.
-        
-    - name: notificationConfigs
-      value: array
-      description: >
-        Optional. A list of notification configs. Each configuration uses a filter to determine whether to publish a message (both Ingest & Create) on the corresponding notification destination. Only the message name is sent as part of the notification. Supplied by the client.
-        
+      value: "{{ labels }}"
+      description: |
+        User-supplied key-value pairs used to organize HL7v2 stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: p{Ll}p{Lo}{0,62} Label values are optional, must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [p{Ll}p{Lo}p{N}_-]{0,63} No more than 64 labels can be associated with a given store.
     - name: rejectDuplicateMessage
-      value: boolean
-      description: >
+      value: {{ rejectDuplicateMessage }}
+      description: |
         Optional. Determines whether to reject duplicate messages. A duplicate message is a message with the same raw bytes as a message that has already been ingested/created in this HL7v2 store. The default value is false, meaning that the store accepts the duplicate messages and it also returns the same ACK message in the IngestMessageResponse as has been returned previously. Note that only one resource is created in the store. When this field is set to true, CreateMessage/IngestMessage requests with a duplicate message will be rejected by the store, and IngestMessageErrorDetail returns a NACK message upon rejection.
-        
+    - name: parserConfig
+      description: |
+        Optional. The configuration for the parser. It determines how the server parses the messages.
+      value:
+        schema:
+          unexpectedSegmentHandling: "{{ unexpectedSegmentHandling }}"
+          ignoreMinOccurs: {{ ignoreMinOccurs }}
+          schemas:
+            - version: "{{ version }}"
+              messageSchemaConfigs: "{{ messageSchemaConfigs }}"
+          types:
+            - version: "{{ version }}"
+              type: "{{ type }}"
+          schematizedParsingType: "{{ schematizedParsingType }}"
+        allowNullHeader: {{ allowNullHeader }}
+        version: "{{ version }}"
+        segmentTerminator: "{{ segmentTerminator }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the HL7v2 store, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}\`.
+    - name: notificationConfigs
+      description: |
+        Optional. A list of notification configs. Each configuration uses a filter to determine whether to publish a message (both Ingest & Create) on the corresponding notification destination. Only the message name is sent as part of the notification. Supplied by the client.
+      value:
+        - pubsubTopic: "{{ pubsubTopic }}"
+          filter: "{{ filter }}"
     - name: hl7V2StoreId
-      value: string
-```
+      value: "{{ hl7V2StoreId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -411,11 +422,11 @@ Updates the HL7v2 store.
 ```sql
 UPDATE google.healthcare.hl7_v2_stores
 SET 
-data__parserConfig = '{{ parserConfig }}',
 data__labels = '{{ labels }}',
+data__rejectDuplicateMessage = {{ rejectDuplicateMessage }},
+data__parserConfig = '{{ parserConfig }}',
 data__name = '{{ name }}',
-data__notificationConfigs = '{{ notificationConfigs }}',
-data__rejectDuplicateMessage = {{ rejectDuplicateMessage }}
+data__notificationConfigs = '{{ notificationConfigs }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -496,12 +507,12 @@ EXEC google.healthcare.hl7_v2_stores.rollback
 @hl7V2StoresId='{{ hl7V2StoresId }}' --required 
 @@json=
 '{
-"rollbackTime": "{{ rollbackTime }}", 
-"changeType": "{{ changeType }}", 
+"force": {{ force }}, 
+"inputGcsObject": "{{ inputGcsObject }}", 
 "excludeRollbacks": {{ excludeRollbacks }}, 
 "resultGcsBucket": "{{ resultGcsBucket }}", 
-"inputGcsObject": "{{ inputGcsObject }}", 
-"force": {{ force }}, 
+"rollbackTime": "{{ rollbackTime }}", 
+"changeType": "{{ changeType }}", 
 "filteringFields": "{{ filteringFields }}"
 }'
 ;
@@ -519,11 +530,11 @@ EXEC google.healthcare.hl7_v2_stores.export
 @hl7V2StoresId='{{ hl7V2StoresId }}' --required 
 @@json=
 '{
+"filter": "{{ filter }}", 
 "gcsDestination": "{{ gcsDestination }}", 
 "endTime": "{{ endTime }}", 
-"startTime": "{{ startTime }}", 
-"filter": "{{ filter }}", 
-"pubsubDestination": "{{ pubsubDestination }}"
+"pubsubDestination": "{{ pubsubDestination }}", 
+"startTime": "{{ startTime }}"
 }'
 ;
 ```

@@ -18,7 +18,7 @@ apihub service documentation.
 
 :::info[Service Summary]
 
-total resources: __24__  
+total resources: __25__  
 
 :::
 
@@ -36,16 +36,17 @@ total resources: __24__
 <a href="/services/apihub/deployments/">deployments</a><br />
 <a href="/services/apihub/discovered_api_observations/">discovered_api_observations</a><br />
 <a href="/services/apihub/discovered_api_operations/">discovered_api_operations</a><br />
-<a href="/services/apihub/external_apis/">external_apis</a>
+<a href="/services/apihub/external_apis/">external_apis</a><br />
+<a href="/services/apihub/host_project_registrations/">host_project_registrations</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/apihub/host_project_registrations/">host_project_registrations</a><br />
 <a href="/services/apihub/instances/">instances</a><br />
 <a href="/services/apihub/locations/">locations</a><br />
 <a href="/services/apihub/operations/">operations</a><br />
 <a href="/services/apihub/plugins/">plugins</a><br />
 <a href="/services/apihub/plugins_style_guide/">plugins_style_guide</a><br />
 <a href="/services/apihub/runtime_project_attachments/">runtime_project_attachments</a><br />
+<a href="/services/apihub/servers/">servers</a><br />
 <a href="/services/apihub/specs/">specs</a><br />
 <a href="/services/apihub/specs_additional_spec_content/">specs_additional_spec_content</a><br />
 <a href="/services/apihub/specs_contents/">specs_contents</a><br />

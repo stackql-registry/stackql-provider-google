@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>profiles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>profiles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="profiles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudprofiler.profiles" /></td></tr>
 </tbody></table>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="profileType" /></td>
     <td><code>string</code></td>
-    <td>Type of profile. For offline mode, this must be specified when creating the profile. For online mode it is assigned and returned by the server.</td>
+    <td>Type of profile. For offline mode, this must be specified when creating the profile. For online mode it is assigned and returned by the server. (PROFILE_TYPE_UNSPECIFIED, CPU, WALL, HEAP, THREADS, CONTENTION, PEAK_HEAP, HEAP_ALLOC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="startTime" /></td>
@@ -107,7 +108,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists profiles which have been collected so far and for which the caller has permission to view.</td>
 </tr>
 <tr>
@@ -198,8 +199,8 @@ profileType,
 startTime
 FROM google.cloudprofiler.profiles
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -242,24 +243,26 @@ startTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: profiles
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the profiles resource.
     - name: deployment
-      value: object
-      description: >
+      description: |
         Deployment details.
-        
+      value:
+        target: "{{ target }}"
+        projectId: "{{ projectId }}"
+        labels: "{{ labels }}"
     - name: profileType
-      value: array
-      description: >
+      value:
+        - "{{ profileType }}"
+      description: |
         One or more profile types that the agent is capable of providing.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -281,8 +284,8 @@ UPDATE google.cloudprofiler.profiles
 SET 
 data__profileType = '{{ profileType }}',
 data__deployment = '{{ deployment }}',
-data__duration = '{{ duration }}',
 data__profileBytes = '{{ profileBytes }}',
+data__duration = '{{ duration }}',
 data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -320,8 +323,8 @@ EXEC google.cloudprofiler.profiles.create_offline
 '{
 "profileType": "{{ profileType }}", 
 "deployment": "{{ deployment }}", 
-"duration": "{{ duration }}", 
 "profileBytes": "{{ profileBytes }}", 
+"duration": "{{ duration }}", 
 "labels": "{{ labels }}"
 }'
 ;

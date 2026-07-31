@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>recognizers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>recognizers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="recognizers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.speechv2.recognizers" /></td></tr>
 </tbody></table>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Recognizer lifecycle state.</td>
+    <td>Output only. The Recognizer lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -211,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Recognizer lifecycle state.</td>
+    <td>Output only. The Recognizer lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -254,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Recognizers.</td>
 </tr>
 <tr>
@@ -268,22 +269,15 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recognizersId"><code>recognizersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the Recognizer.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recognizersId"><code>recognizersId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Deletes the Recognizer.</td>
-</tr>
-<tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recognizersId"><code>recognizersId</code></a></td>
-    <td></td>
-    <td>Undeletes the Recognizer.</td>
 </tr>
 <tr>
     <td><a href="#recognize"><CopyableCode code="recognize" /></a></td>
@@ -291,6 +285,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recognizersId"><code>recognizersId</code></a></td>
     <td></td>
     <td>Performs synchronous Speech recognition: receive results after all audio has been sent and processed.</td>
+</tr>
+<tr>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-recognizersId"><code>recognizersId</code></a></td>
+    <td></td>
+    <td>Undeletes the Recognizer.</td>
 </tr>
 <tr>
     <td><a href="#batch_recognize"><CopyableCode code="batch_recognize" /></a></td>
@@ -436,9 +437,9 @@ updateTime
 FROM google.speechv2.recognizers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND showDeleted = '{{ showDeleted }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -460,22 +461,22 @@ Creates a Recognizer.
 
 ```sql
 INSERT INTO google.speechv2.recognizers (
-data__displayName,
-data__model,
-data__languageCodes,
-data__defaultRecognitionConfig,
 data__annotations,
+data__languageCodes,
+data__displayName,
+data__defaultRecognitionConfig,
+data__model,
 projectsId,
 locationsId,
 validateOnly,
 recognizerId
 )
 SELECT 
-'{{ displayName }}',
-'{{ model }}',
-'{{ languageCodes }}',
-'{{ defaultRecognitionConfig }}',
 '{{ annotations }}',
+'{{ languageCodes }}',
+'{{ displayName }}',
+'{{ defaultRecognitionConfig }}',
+'{{ model }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ validateOnly }}',
@@ -491,46 +492,110 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: recognizers
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the recognizers resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the recognizers resource.
-    - name: displayName
-      value: string
-      description: >
-        User-settable, human-readable name for the Recognizer. Must be 63 characters or less.
-        
-    - name: model
-      value: string
-      description: >
-        Optional. This field is now deprecated. Prefer the `model` field in the `RecognitionConfig` message. Which model to use for recognition requests. Select the model best suited to your domain to get best results. Guidance for choosing which model to use can be found in the [Transcription Models Documentation](https://cloud.google.com/speech-to-text/v2/docs/transcription-model) and the models supported in each region can be found in the [Table Of Supported Models](https://cloud.google.com/speech-to-text/v2/docs/speech-to-text-supported-languages).
-        
-    - name: languageCodes
-      value: array
-      description: >
-        Optional. This field is now deprecated. Prefer the `language_codes` field in the `RecognitionConfig` message. The language of the supplied audio as a [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. Supported languages for each model are listed in the [Table of Supported Models](https://cloud.google.com/speech-to-text/v2/docs/speech-to-text-supported-languages). If additional languages are provided, recognition result will contain recognition in the most likely language detected. The recognition result will include the language tag of the language detected in the audio. When you create or update a Recognizer, these values are stored in normalized BCP-47 form. For example, "en-us" is stored as "en-US".
-        
-    - name: defaultRecognitionConfig
-      value: object
-      description: >
-        Default configuration to use for requests with this Recognizer. This can be overwritten by inline configuration in the RecognizeRequest.config field.
-        
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Allows users to store small amounts of arbitrary data. Both the key and the value must be 63 characters or less each. At most 100 annotations.
-        
+    - name: languageCodes
+      value:
+        - "{{ languageCodes }}"
+      description: |
+        Optional. This field is now deprecated. Prefer the \`language_codes\` field in the \`RecognitionConfig\` message. The language of the supplied audio as a [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. Supported languages for each model are listed in the [Table of Supported Models](https://cloud.google.com/speech-to-text/v2/docs/speech-to-text-supported-languages). If additional languages are provided, recognition result will contain recognition in the most likely language detected. The recognition result will include the language tag of the language detected in the audio. When you create or update a Recognizer, these values are stored in normalized BCP-47 form. For example, "en-us" is stored as "en-US".
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-settable, human-readable name for the Recognizer. Must be 63 characters or less.
+    - name: defaultRecognitionConfig
+      description: |
+        Default configuration to use for requests with this Recognizer. This can be overwritten by inline configuration in the RecognizeRequest.config field.
+      value:
+        features:
+          enableAutomaticPunctuation: {{ enableAutomaticPunctuation }}
+          multiChannelMode: "{{ multiChannelMode }}"
+          profanityFilter: {{ profanityFilter }}
+          enableWordConfidence: {{ enableWordConfidence }}
+          enableWordTimeOffsets: {{ enableWordTimeOffsets }}
+          diarizationConfig:
+            minSpeakerCount: {{ minSpeakerCount }}
+            maxSpeakerCount: {{ maxSpeakerCount }}
+          maxAlternatives: {{ maxAlternatives }}
+          customPromptConfig:
+            customPrompt: "{{ customPrompt }}"
+          enableSpokenPunctuation: {{ enableSpokenPunctuation }}
+          enableSpokenEmojis: {{ enableSpokenEmojis }}
+        languageCodes:
+          - "{{ languageCodes }}"
+        explicitDecodingConfig:
+          sampleRateHertz: {{ sampleRateHertz }}
+          audioChannelCount: {{ audioChannelCount }}
+          encoding: "{{ encoding }}"
+        model: "{{ model }}"
+        transcriptNormalization:
+          entries:
+            - search: "{{ search }}"
+              replace: "{{ replace }}"
+              caseSensitive: {{ caseSensitive }}
+        denoiserConfig:
+          denoiseAudio: {{ denoiseAudio }}
+          snrThreshold: {{ snrThreshold }}
+        adaptation:
+          customClasses:
+            - kmsKeyVersionName: "{{ kmsKeyVersionName }}"
+              createTime: "{{ createTime }}"
+              deleteTime: "{{ deleteTime }}"
+              kmsKeyName: "{{ kmsKeyName }}"
+              displayName: "{{ displayName }}"
+              state: "{{ state }}"
+              expireTime: "{{ expireTime }}"
+              etag: "{{ etag }}"
+              items: "{{ items }}"
+              uid: "{{ uid }}"
+              reconciling: {{ reconciling }}
+              updateTime: "{{ updateTime }}"
+              name: "{{ name }}"
+              annotations: "{{ annotations }}"
+          phraseSets:
+            - phraseSet: "{{ phraseSet }}"
+              inlinePhraseSet:
+                kmsKeyName: "{{ kmsKeyName }}"
+                displayName: "{{ displayName }}"
+                state: "{{ state }}"
+                createTime: "{{ createTime }}"
+                deleteTime: "{{ deleteTime }}"
+                kmsKeyVersionName: "{{ kmsKeyVersionName }}"
+                phrases:
+                  - value: "{{ value }}"
+                    boost: {{ boost }}
+                name: "{{ name }}"
+                annotations: "{{ annotations }}"
+                reconciling: {{ reconciling }}
+                boost: {{ boost }}
+                updateTime: "{{ updateTime }}"
+                uid: "{{ uid }}"
+                expireTime: "{{ expireTime }}"
+                etag: "{{ etag }}"
+        autoDecodingConfig: "{{ autoDecodingConfig }}"
+        translationConfig:
+          targetLanguage: "{{ targetLanguage }}"
+    - name: model
+      value: "{{ model }}"
+      description: |
+        Optional. This field is now deprecated. Prefer the \`model\` field in the \`RecognitionConfig\` message. Which model to use for recognition requests. Select the model best suited to your domain to get best results. Guidance for choosing which model to use can be found in the [Transcription Models Documentation](https://cloud.google.com/speech-to-text/v2/docs/transcription-model) and the models supported in each region can be found in the [Table Of Supported Models](https://cloud.google.com/speech-to-text/v2/docs/speech-to-text-supported-languages).
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
     - name: recognizerId
-      value: string
-```
+      value: "{{ recognizerId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -550,17 +615,17 @@ Updates the Recognizer.
 ```sql
 UPDATE google.speechv2.recognizers
 SET 
-data__displayName = '{{ displayName }}',
-data__model = '{{ model }}',
+data__annotations = '{{ annotations }}',
 data__languageCodes = '{{ languageCodes }}',
+data__displayName = '{{ displayName }}',
 data__defaultRecognitionConfig = '{{ defaultRecognitionConfig }}',
-data__annotations = '{{ annotations }}'
+data__model = '{{ model }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND recognizersId = '{{ recognizersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -589,9 +654,9 @@ DELETE FROM google.speechv2.recognizers
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND recognizersId = '{{ recognizersId }}' --required
+AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'
 AND allowMissing = '{{ allowMissing }}'
-AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>
@@ -601,31 +666,13 @@ AND etag = '{{ etag }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="recognize"
     values={[
-        { label: 'undelete', value: 'undelete' },
         { label: 'recognize', value: 'recognize' },
+        { label: 'undelete', value: 'undelete' },
         { label: 'batch_recognize', value: 'batch_recognize' }
     ]}
 >
-<TabItem value="undelete">
-
-Undeletes the Recognizer.
-
-```sql
-EXEC google.speechv2.recognizers.undelete 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@recognizersId='{{ recognizersId }}' --required 
-@@json=
-'{
-"name": "{{ name }}", 
-"validateOnly": {{ validateOnly }}, 
-"etag": "{{ etag }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="recognize">
 
 Performs synchronous Speech recognition: receive results after all audio has been sent and processed.
@@ -637,10 +684,28 @@ EXEC google.speechv2.recognizers.recognize
 @recognizersId='{{ recognizersId }}' --required 
 @@json=
 '{
-"config": "{{ config }}", 
+"uri": "{{ uri }}", 
 "configMask": "{{ configMask }}", 
 "content": "{{ content }}", 
-"uri": "{{ uri }}"
+"config": "{{ config }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="undelete">
+
+Undeletes the Recognizer.
+
+```sql
+EXEC google.speechv2.recognizers.undelete 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@recognizersId='{{ recognizersId }}' --required 
+@@json=
+'{
+"etag": "{{ etag }}", 
+"name": "{{ name }}", 
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```
@@ -656,12 +721,12 @@ EXEC google.speechv2.recognizers.batch_recognize
 @recognizersId='{{ recognizersId }}' --required 
 @@json=
 '{
-"recognizer": "{{ recognizer }}", 
 "config": "{{ config }}", 
+"processingStrategy": "{{ processingStrategy }}", 
+"recognizer": "{{ recognizer }}", 
 "configMask": "{{ configMask }}", 
-"files": "{{ files }}", 
 "recognitionOutputConfig": "{{ recognitionOutputConfig }}", 
-"processingStrategy": "{{ processingStrategy }}"
+"files": "{{ files }}"
 }'
 ;
 ```

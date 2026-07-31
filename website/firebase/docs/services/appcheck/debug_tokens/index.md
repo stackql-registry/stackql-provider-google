@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>debug_tokens</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>debug_tokens</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="debug_tokens" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appcheck.debug_tokens" /></td></tr>
 </tbody></table>
@@ -60,9 +61,14 @@ The following fields are returned by `SELECT` queries:
     <td>Required. A human readable display name used to identify this debug token.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. This etag is strongly validated as defined by RFC 7232.</td>
+</tr>
+<tr>
     <td><CopyableCode code="token" /></td>
     <td><code>string</code></td>
-    <td>Required. Input only. Immutable. The secret token itself. Must be provided during creation, and must be a UUID4, case insensitive. This field is immutable once set, and cannot be provided during an UpdateDebugToken request. You can, however, delete this debug token using DeleteDebugToken to revoke it. For security reasons, this field will never be populated in any response.</td>
+    <td>Required. Input only. Immutable. The secret token itself. Must be provided during creation, and must be a UUID4, case insensitive. This field is immutable once set, and cannot be provided during a UpdateDebugToken request. You can, however, delete this debug token using DeleteDebugToken to revoke it. For security reasons, this field will never be populated in any response.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -94,9 +100,14 @@ The following fields are returned by `SELECT` queries:
     <td>Required. A human readable display name used to identify this debug token.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. This etag is strongly validated as defined by RFC 7232.</td>
+</tr>
+<tr>
     <td><CopyableCode code="token" /></td>
     <td><code>string</code></td>
-    <td>Required. Input only. Immutable. The secret token itself. Must be provided during creation, and must be a UUID4, case insensitive. This field is immutable once set, and cannot be provided during an UpdateDebugToken request. You can, however, delete this debug token using DeleteDebugToken to revoke it. For security reasons, this field will never be populated in any response.</td>
+    <td>Required. Input only. Immutable. The secret token itself. Must be provided during creation, and must be a UUID4, case insensitive. This field is immutable once set, and cannot be provided during a UpdateDebugToken request. You can, however, delete this debug token using DeleteDebugToken to revoke it. For security reasons, this field will never be populated in any response.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -155,7 +166,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-debugTokensId"><code>debugTokensId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes the specified DebugToken. A deleted debug token cannot be used to exchange for an App Check token. Use this method when you suspect the secret `token` has been compromised or when you no longer need the debug token.</td>
 </tr>
 </tbody>
@@ -186,6 +197,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-etag">
+    <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -224,6 +240,7 @@ Gets the specified DebugToken. For security reasons, the `token` field is never 
 SELECT
 name,
 displayName,
+etag,
 token,
 updateTime
 FROM firebase.appcheck.debug_tokens
@@ -241,6 +258,7 @@ Lists all DebugTokens for the specified app. For security reasons, the `token` f
 SELECT
 name,
 displayName,
+etag,
 token,
 updateTime
 FROM firebase.appcheck.debug_tokens
@@ -271,6 +289,7 @@ Creates a new DebugToken for the specified app. For security reasons, after the 
 INSERT INTO firebase.appcheck.debug_tokens (
 data__name,
 data__displayName,
+data__etag,
 data__token,
 projectsId,
 appsId
@@ -278,12 +297,14 @@ appsId
 SELECT 
 '{{ name }}',
 '{{ displayName }}',
+'{{ etag }}',
 '{{ token }}',
 '{{ projectsId }}',
 '{{ appsId }}'
 RETURNING
 name,
 displayName,
+etag,
 token,
 updateTime
 ;
@@ -291,32 +312,33 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: debug_tokens
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the debug_tokens resource.
     - name: appsId
-      value: string
+      value: "{{ appsId }}"
       description: Required parameter for the debug_tokens resource.
     - name: name
-      value: string
-      description: >
-        Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```
-        
+      value: "{{ name }}"
+      description: |
+        Required. The relative resource name of the debug token, in the format: \`\`\` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} \`\`\`
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. A human readable display name used to identify this debug token.
-        
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. This etag is strongly validated as defined by RFC 7232.
     - name: token
-      value: string
-      description: >
-        Required. Input only. Immutable. The secret token itself. Must be provided during creation, and must be a UUID4, case insensitive. This field is immutable once set, and cannot be provided during an UpdateDebugToken request. You can, however, delete this debug token using DeleteDebugToken to revoke it. For security reasons, this field will never be populated in any response.
-        
-```
+      value: "{{ token }}"
+      description: |
+        Required. Input only. Immutable. The secret token itself. Must be provided during creation, and must be a UUID4, case insensitive. This field is immutable once set, and cannot be provided during a UpdateDebugToken request. You can, however, delete this debug token using DeleteDebugToken to revoke it. For security reasons, this field will never be populated in any response.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -338,6 +360,7 @@ UPDATE firebase.appcheck.debug_tokens
 SET 
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
 data__token = '{{ token }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -347,6 +370,7 @@ AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 displayName,
+etag,
 token,
 updateTime;
 ```
@@ -371,6 +395,7 @@ DELETE FROM firebase.appcheck.debug_tokens
 WHERE projectsId = '{{ projectsId }}' --required
 AND appsId = '{{ appsId }}' --required
 AND debugTokensId = '{{ debugTokensId }}' --required
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>trials</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>trials</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="trials" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.ml.trials" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="finalMeasurement" /></td>
     <td><code>object</code></td>
-    <td>The final measurement containing the objective value. (id: GoogleCloudMlV1__Measurement)</td>
+    <td>A message representing a measurement. (id: GoogleCloudMlV1__Measurement)</td>
 </tr>
 <tr>
     <td><CopyableCode code="infeasibleReason" /></td>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The detailed state of a trial.</td>
+    <td>The detailed state of a trial. (STATE_UNSPECIFIED, REQUESTED, ACTIVE, COMPLETED, STOPPING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trialInfeasible" /></td>
@@ -167,13 +168,6 @@ The following methods are available for this resource:
     <td>Deletes a trial.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_studies_trials_suggest"><CopyableCode code="projects_locations_studies_trials_suggest" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
-    <td></td>
-    <td>Adds one or more trials to a study, with parameter values suggested by AI Platform Vizier. Returns a long-running operation associated with the generation of trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_studies_trials_complete"><CopyableCode code="projects_locations_studies_trials_complete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
@@ -193,6 +187,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
     <td></td>
     <td>Stops a trial.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_studies_trials_suggest"><CopyableCode code="projects_locations_studies_trials_suggest" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
+    <td></td>
+    <td>Adds one or more trials to a study, with parameter values suggested by AI Platform Vizier. Returns a long-running operation associated with the generation of trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.</td>
 </tr>
 </tbody>
 </table>
@@ -298,19 +299,19 @@ Adds a user provided trial to a study.
 
 ```sql
 INSERT INTO google.ml.trials (
-data__state,
-data__parameters,
-data__finalMeasurement,
 data__measurements,
+data__finalMeasurement,
+data__parameters,
+data__state,
 projectsId,
 locationsId,
 studiesId
 )
 SELECT 
-'{{ state }}',
-'{{ parameters }}',
-'{{ finalMeasurement }}',
 '{{ measurements }}',
+'{{ finalMeasurement }}',
+'{{ parameters }}',
+'{{ state }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ studiesId }}'
@@ -330,41 +331,49 @@ trialInfeasible
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: trials
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the trials resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the trials resource.
     - name: studiesId
-      value: string
+      value: "{{ studiesId }}"
       description: Required parameter for the trials resource.
-    - name: state
-      value: string
-      description: >
-        The detailed state of a trial.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'REQUESTED', 'ACTIVE', 'COMPLETED', 'STOPPING']
-    - name: parameters
-      value: array
-      description: >
-        The parameters of the trial.
-        
-    - name: finalMeasurement
-      value: object
-      description: >
-        The final measurement containing the objective value.
-        
     - name: measurements
-      value: array
-      description: >
+      description: |
         A list of measurements that are strictly lexicographically ordered by their induced tuples (steps, elapsed_time). These are used for early stopping computations.
-        
-```
+      value:
+        - stepCount: "{{ stepCount }}"
+          elapsedTime: "{{ elapsedTime }}"
+          metrics: "{{ metrics }}"
+    - name: finalMeasurement
+      description: |
+        A message representing a measurement.
+      value:
+        stepCount: "{{ stepCount }}"
+        elapsedTime: "{{ elapsedTime }}"
+        metrics:
+          - value: {{ value }}
+            metric: "{{ metric }}"
+    - name: parameters
+      description: |
+        The parameters of the trial.
+      value:
+        - intValue: "{{ intValue }}"
+          floatValue: {{ floatValue }}
+          parameter: "{{ parameter }}"
+          stringValue: "{{ stringValue }}"
+    - name: state
+      value: "{{ state }}"
+      description: |
+        The detailed state of a trial.
+      valid_values: ['STATE_UNSPECIFIED', 'REQUESTED', 'ACTIVE', 'COMPLETED', 'STOPPING']
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -396,31 +405,14 @@ AND trialsId = '{{ trialsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_studies_trials_suggest"
+    defaultValue="projects_locations_studies_trials_complete"
     values={[
-        { label: 'projects_locations_studies_trials_suggest', value: 'projects_locations_studies_trials_suggest' },
         { label: 'projects_locations_studies_trials_complete', value: 'projects_locations_studies_trials_complete' },
         { label: 'projects_locations_studies_trials_check_early_stopping_state', value: 'projects_locations_studies_trials_check_early_stopping_state' },
-        { label: 'projects_locations_studies_trials_stop', value: 'projects_locations_studies_trials_stop' }
+        { label: 'projects_locations_studies_trials_stop', value: 'projects_locations_studies_trials_stop' },
+        { label: 'projects_locations_studies_trials_suggest', value: 'projects_locations_studies_trials_suggest' }
     ]}
 >
-<TabItem value="projects_locations_studies_trials_suggest">
-
-Adds one or more trials to a study, with parameter values suggested by AI Platform Vizier. Returns a long-running operation associated with the generation of trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.
-
-```sql
-EXEC google.ml.trials.projects_locations_studies_trials_suggest 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@studiesId='{{ studiesId }}' --required 
-@@json=
-'{
-"suggestionCount": {{ suggestionCount }}, 
-"clientId": "{{ clientId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_studies_trials_complete">
 
 Marks a trial as complete.
@@ -433,9 +425,9 @@ EXEC google.ml.trials.projects_locations_studies_trials_complete
 @trialsId='{{ trialsId }}' --required 
 @@json=
 '{
+"infeasibleReason": "{{ infeasibleReason }}", 
 "finalMeasurement": "{{ finalMeasurement }}", 
-"trialInfeasible": {{ trialInfeasible }}, 
-"infeasibleReason": "{{ infeasibleReason }}"
+"trialInfeasible": {{ trialInfeasible }}
 }'
 ;
 ```
@@ -463,6 +455,23 @@ EXEC google.ml.trials.projects_locations_studies_trials_stop
 @locationsId='{{ locationsId }}' --required, 
 @studiesId='{{ studiesId }}' --required, 
 @trialsId='{{ trialsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_studies_trials_suggest">
+
+Adds one or more trials to a study, with parameter values suggested by AI Platform Vizier. Returns a long-running operation associated with the generation of trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.
+
+```sql
+EXEC google.ml.trials.projects_locations_studies_trials_suggest 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@studiesId='{{ studiesId }}' --required 
+@@json=
+'{
+"suggestionCount": {{ suggestionCount }}, 
+"clientId": "{{ clientId }}"
+}'
 ;
 ```
 </TabItem>

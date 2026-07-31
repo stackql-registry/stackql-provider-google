@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>device_sessions</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>device_sessions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="device_sessions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.testing.device_sessions" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the DeviceSession.</td>
+    <td>Output only. Current state of the DeviceSession. (SESSION_STATE_UNSPECIFIED, REQUESTED, PENDING, ACTIVE, EXPIRED, FINISHED, UNAVAILABLE, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateHistories" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the DeviceSession.</td>
+    <td>Output only. Current state of the DeviceSession. (SESSION_STATE_UNSPECIFIED, REQUESTED, PENDING, ACTIVE, EXPIRED, FINISHED, UNAVAILABLE, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateHistories" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>GET /v1/projects/&#123;project_id&#125;/deviceSessions Lists device Sessions owned by the project user.</td>
 </tr>
 <tr>
@@ -316,8 +317,8 @@ stateHistories,
 ttl
 FROM firebase.testing.device_sessions
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -340,17 +341,17 @@ POST /v1/projects/&#123;project_id&#125;/deviceSessions
 
 ```sql
 INSERT INTO firebase.testing.device_sessions (
+data__androidDevice,
 data__name,
 data__ttl,
 data__expireTime,
-data__androidDevice,
 projectsId
 )
 SELECT 
+'{{ androidDevice }}',
 '{{ name }}',
 '{{ ttl }}',
 '{{ expireTime }}',
-'{{ androidDevice }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -368,34 +369,34 @@ ttl
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: device_sessions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the device_sessions resource.
-    - name: name
-      value: string
-      description: >
-        Optional. Name of the DeviceSession, e.g. "projects/{project_id}/deviceSessions/{session_id}"
-        
-    - name: ttl
-      value: string
-      description: >
-        Optional. The amount of time that a device will be initially allocated for. This can eventually be extended with the UpdateDeviceSession RPC. Default: 15 minutes.
-        
-    - name: expireTime
-      value: string
-      description: >
-        Optional. If the device is still in use at this time, any connections will be ended and the SessionState will transition from ACTIVE to FINISHED.
-        
     - name: androidDevice
-      value: object
-      description: >
+      description: |
         A single Android device.
-        
-```
+      value:
+        androidModelId: "{{ androidModelId }}"
+        androidVersionId: "{{ androidVersionId }}"
+        orientation: "{{ orientation }}"
+        locale: "{{ locale }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Optional. Name of the DeviceSession, e.g. "projects/{project_id}/deviceSessions/{session_id}"
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        Optional. The amount of time that a device will be initially allocated for. This can eventually be extended with the UpdateDeviceSession RPC. Default: 15 minutes.
+    - name: expireTime
+      value: "{{ expireTime }}"
+      description: |
+        Optional. If the device is still in use at this time, any connections will be ended and the SessionState will transition from ACTIVE to FINISHED.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -415,10 +416,10 @@ PATCH /v1/projects/&#123;projectId&#125;/deviceSessions/deviceSessionId&#125;:up
 ```sql
 UPDATE firebase.testing.device_sessions
 SET 
+data__androidDevice = '{{ androidDevice }}',
 data__name = '{{ name }}',
 data__ttl = '{{ ttl }}',
-data__expireTime = '{{ expireTime }}',
-data__androidDevice = '{{ androidDevice }}'
+data__expireTime = '{{ expireTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND deviceSessionsId = '{{ deviceSessionsId }}' --required

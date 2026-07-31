@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_connection_policies</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_connection_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_connection_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.service_connection_policies" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="infrastructure" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of underlying resources used to create the connection.</td>
+    <td>Output only. The type of underlying resources used to create the connection. (INFRASTRUCTURE_UNSPECIFIED, PSC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="infrastructure" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of underlying resources used to create the connection.</td>
+    <td>Output only. The type of underlying resources used to create the connection. (INFRASTRUCTURE_UNSPECIFIED, PSC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -214,28 +215,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists ServiceConnectionPolicies in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-subnetworkMode"><code>subnetworkMode</code></a>, <a href="#parameter-autoSubnetworkConfig.prefixLength"><code>autoSubnetworkConfig.prefixLength</code></a>, <a href="#parameter-autoSubnetworkConfig.ipStack"><code>autoSubnetworkConfig.ipStack</code></a>, <a href="#parameter-autoSubnetworkConfig.allocRangeSpace"><code>autoSubnetworkConfig.allocRangeSpace</code></a>, <a href="#parameter-serviceConnectionPolicyId"><code>serviceConnectionPolicyId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-autoSubnetworkConfig.allocRangeSpace"><code>autoSubnetworkConfig.allocRangeSpace</code></a>, <a href="#parameter-subnetworkMode"><code>subnetworkMode</code></a>, <a href="#parameter-autoSubnetworkConfig.ipStack"><code>autoSubnetworkConfig.ipStack</code></a>, <a href="#parameter-autoSubnetworkConfig.prefixLength"><code>autoSubnetworkConfig.prefixLength</code></a>, <a href="#parameter-serviceConnectionPolicyId"><code>serviceConnectionPolicyId</code></a></td>
     <td>Creates a new ServiceConnectionPolicy in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-serviceConnectionPoliciesId"><code>serviceConnectionPoliciesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single ServiceConnectionPolicy.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-serviceConnectionPoliciesId"><code>serviceConnectionPoliciesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single ServiceConnectionPolicy.</td>
 </tr>
 </tbody>
@@ -387,10 +388,10 @@ updateTime
 FROM google.networkconnectivity.service_connection_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -415,34 +416,34 @@ INSERT INTO google.networkconnectivity.service_connection_policies (
 data__name,
 data__network,
 data__pscConfig,
-data__labels,
 data__description,
+data__labels,
 data__serviceClass,
 data__etag,
 projectsId,
 locationsId,
 requestId,
-subnetworkMode,
-autoSubnetworkConfig.prefixLength,
-autoSubnetworkConfig.ipStack,
 autoSubnetworkConfig.allocRangeSpace,
+subnetworkMode,
+autoSubnetworkConfig.ipStack,
+autoSubnetworkConfig.prefixLength,
 serviceConnectionPolicyId
 )
 SELECT 
 '{{ name }}',
 '{{ network }}',
 '{{ pscConfig }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ labels }}',
 '{{ serviceClass }}',
 '{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
-'{{ subnetworkMode }}',
-'{{ autoSubnetworkConfig.prefixLength }}',
-'{{ autoSubnetworkConfig.ipStack }}',
 '{{ autoSubnetworkConfig.allocRangeSpace }}',
+'{{ subnetworkMode }}',
+'{{ autoSubnetworkConfig.ipStack }}',
+'{{ autoSubnetworkConfig.prefixLength }}',
 '{{ serviceConnectionPolicyId }}'
 RETURNING
 name,
@@ -455,64 +456,63 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: service_connection_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the service_connection_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the service_connection_policies resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. The name of a ServiceConnectionPolicy. Format: projects/{project}/locations/{location}/serviceConnectionPolicies/{service_connection_policy} See: https://google.aip.dev/122#fields-representing-resource-names
-        
     - name: network
-      value: string
-      description: >
+      value: "{{ network }}"
+      description: |
         The resource path of the consumer network. Example: - projects/{projectNumOrId}/global/networks/{resourceId}.
-        
     - name: pscConfig
-      value: object
-      description: >
+      description: |
         Configuration used for Private Service Connect connections. Used when Infrastructure is PSC.
-        
-    - name: labels
-      value: object
-      description: >
-        User-defined labels.
-        
+      value:
+        limit: "{{ limit }}"
+        producerInstanceLocation: "{{ producerInstanceLocation }}"
+        allowedGoogleProducersResourceHierarchyLevel:
+          - "{{ allowedGoogleProducersResourceHierarchyLevel }}"
+        subnetworks:
+          - "{{ subnetworks }}"
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         A description of this resource.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels.
     - name: serviceClass
-      value: string
-      description: >
+      value: "{{ serviceClass }}"
+      description: |
         The service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass. It is provided by the Service Producer. Google services have a prefix of gcp or google-cloud. For example, gcp-memorystore-redis or google-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
     - name: requestId
-      value: string
-    - name: subnetworkMode
-      value: string
-    - name: autoSubnetworkConfig.prefixLength
-      value: integer (int32)
-    - name: autoSubnetworkConfig.ipStack
-      value: string
+      value: "{{ requestId }}"
     - name: autoSubnetworkConfig.allocRangeSpace
-      value: string
+      value: "{{ autoSubnetworkConfig.allocRangeSpace }}"
+    - name: subnetworkMode
+      value: "{{ subnetworkMode }}"
+    - name: autoSubnetworkConfig.ipStack
+      value: "{{ autoSubnetworkConfig.ipStack }}"
+    - name: autoSubnetworkConfig.prefixLength
+      value: "{{ autoSubnetworkConfig.prefixLength }}"
     - name: serviceConnectionPolicyId
-      value: string
-```
+      value: "{{ serviceConnectionPolicyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -535,16 +535,16 @@ SET
 data__name = '{{ name }}',
 data__network = '{{ network }}',
 data__pscConfig = '{{ pscConfig }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
+data__labels = '{{ labels }}',
 data__serviceClass = '{{ serviceClass }}',
 data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND serviceConnectionPoliciesId = '{{ serviceConnectionPoliciesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -573,8 +573,8 @@ DELETE FROM google.networkconnectivity.service_connection_policies
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND serviceConnectionPoliciesId = '{{ serviceConnectionPoliciesId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

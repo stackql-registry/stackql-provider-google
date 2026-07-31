@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.locations" /></td></tr>
 </tbody></table>
@@ -144,22 +145,43 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_lookup_context"><CopyableCode code="projects_locations_lookup_context" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Looks up LLM Context for the specified resources.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_modify_entry"><CopyableCode code="projects_locations_modify_entry" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Modifies an entry using the permission on the source system.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_lookup_entry"><CopyableCode code="projects_locations_lookup_entry" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-paths"><code>paths</code></a>, <a href="#parameter-entry"><code>entry</code></a></td>
-    <td>Looks up an entry by name using the permission on the source system. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is changing. For more information, see Changes to metadata stored in Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).</td>
+    <td><a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-entry"><code>entry</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-paths"><code>paths</code></a></td>
+    <td>Looks up an entry by name using the permission on the source system.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_search_entries"><CopyableCode code="projects_locations_search_entries" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-scope"><code>scope</code></a>, <a href="#parameter-semanticSearch"><code>semanticSearch</code></a></td>
+    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-semanticSearch"><code>semanticSearch</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-scope"><code>scope</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Searches for Entries matching the given query and scope.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_lookup_entry_links"><CopyableCode code="projects_locations_lookup_entry_links" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-entryMode"><code>entryMode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-entry"><code>entry</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-entryLinkTypes"><code>entryLinkTypes</code></a></td>
+    <td>Looks up Entry Links referencing the specified Entry.</td>
 </tr>
 </tbody>
 </table>
@@ -194,6 +216,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-entry">
     <td><CopyableCode code="entry" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-entryLinkTypes">
+    <td><CopyableCode code="entryLinkTypes" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-entryMode">
+    <td><CopyableCode code="entryMode" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -278,7 +310,7 @@ AND locationsId = '{{ locationsId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_list">
 
-Lists information about the supported locations for this service.
+Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
 
 ```sql
 SELECT
@@ -289,10 +321,10 @@ locationId,
 metadata
 FROM google.dataplex.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -302,24 +334,61 @@ AND extraLocationTypes = '{{ extraLocationTypes }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_lookup_entry"
+    defaultValue="projects_locations_lookup_context"
     values={[
+        { label: 'projects_locations_lookup_context', value: 'projects_locations_lookup_context' },
+        { label: 'projects_locations_modify_entry', value: 'projects_locations_modify_entry' },
         { label: 'projects_locations_lookup_entry', value: 'projects_locations_lookup_entry' },
-        { label: 'projects_locations_search_entries', value: 'projects_locations_search_entries' }
+        { label: 'projects_locations_search_entries', value: 'projects_locations_search_entries' },
+        { label: 'projects_locations_lookup_entry_links', value: 'projects_locations_lookup_entry_links' }
     ]}
 >
+<TabItem value="projects_locations_lookup_context">
+
+Looks up LLM Context for the specified resources.
+
+```sql
+EXEC google.dataplex.locations.projects_locations_lookup_context 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"resources": "{{ resources }}", 
+"options": "{{ options }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_modify_entry">
+
+Modifies an entry using the permission on the source system.
+
+```sql
+EXEC google.dataplex.locations.projects_locations_modify_entry 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"updateMask": "{{ updateMask }}", 
+"deleteMissingAspects": {{ deleteMissingAspects }}, 
+"entry": "{{ entry }}", 
+"aspectKeys": "{{ aspectKeys }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_lookup_entry">
 
-Looks up an entry by name using the permission on the source system. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is changing. For more information, see Changes to metadata stored in Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).
+Looks up an entry by name using the permission on the source system.
 
 ```sql
 EXEC google.dataplex.locations.projects_locations_lookup_entry 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@view='{{ view }}', 
 @aspectTypes='{{ aspectTypes }}', 
-@paths='{{ paths }}', 
-@entry='{{ entry }}'
+@entry='{{ entry }}', 
+@view='{{ view }}', 
+@paths='{{ paths }}'
 ;
 ```
 </TabItem>
@@ -332,11 +401,27 @@ EXEC google.dataplex.locations.projects_locations_search_entries
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @query='{{ query }}', 
+@semanticSearch={{ semanticSearch }}, 
 @pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
 @orderBy='{{ orderBy }}', 
 @scope='{{ scope }}', 
-@semanticSearch={{ semanticSearch }}
+@pageToken='{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_lookup_entry_links">
+
+Looks up Entry Links referencing the specified Entry.
+
+```sql
+EXEC google.dataplex.locations.projects_locations_lookup_entry_links 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@entryMode='{{ entryMode }}', 
+@pageSize='{{ pageSize }}', 
+@entry='{{ entry }}', 
+@pageToken='{{ pageToken }}', 
+@entryLinkTypes='{{ entryLinkTypes }}'
 ;
 ```
 </TabItem>

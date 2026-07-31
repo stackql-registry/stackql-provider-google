@@ -92,3 +92,58 @@ stackql.exe shell --auth=$Auth
 ```
 
 </details>
+
+## Find files in Drive
+
+Drive queries are filtered server-side with the `q` parameter, using [Drive query syntax](https://developers.google.com/drive/api/guides/search-files):
+
+```sql
+SELECT
+  id,
+  name,
+  mimeType,
+  modifiedTime
+FROM googleworkspace.drivev3.files
+WHERE q = "modifiedTime > '2026-01-01T00:00:00' and trashed = false";
+```
+
+Folders only:
+
+```sql
+SELECT id, name, createdTime
+FROM googleworkspace.drivev3.files
+WHERE q = "mimeType = 'application/vnd.google-apps.folder'";
+```
+
+## Shared drives
+
+```sql
+SELECT id, name, createdTime
+FROM googleworkspace.drivev3.drives;
+```
+
+## Storage quota
+
+How much Drive storage is in use for the authenticated user:
+
+```sql
+SELECT
+  json_extract(storageQuota, '$.limit') AS quota_bytes,
+  json_extract(storageQuota, '$.usage') AS used_bytes,
+  json_extract(user, '$.emailAddress') AS user_email
+FROM googleworkspace.drivev3.about;
+```
+
+## File permissions
+
+Who has access to a file:
+
+```sql
+SELECT
+  id,
+  type,
+  role,
+  emailAddress
+FROM googleworkspace.drivev3.permissions
+WHERE fileId = 'your-file-id';
+```

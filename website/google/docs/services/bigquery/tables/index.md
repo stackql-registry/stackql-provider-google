@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tables</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tables</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tables" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquery.tables" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="defaultRoundingMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. Defines the default rounding mode specification of new decimal fields (NUMERIC OR BIGNUMERIC) in the table. During table creation or update, if a decimal field is added to this table without an explicit rounding mode specified, then the field inherits the table default rounding mode. Changing this field doesn't affect existing fields.</td>
+    <td>Optional. Defines the default rounding mode specification of new decimal fields (NUMERIC OR BIGNUMERIC) in the table. During table creation or update, if a decimal field is added to this table without an explicit rounding mode specified, then the field inherits the table default rounding mode. Changing this field doesn't affect existing fields. (ROUNDING_MODE_UNSPECIFIED, ROUND_HALF_AWAY_FROM_ZERO, ROUND_HALF_EVEN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -142,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managedTableType" /></td>
     <td><code>string</code></td>
-    <td>Optional. If set, overrides the default managed table type configured in the dataset.</td>
+    <td>Optional. If set, overrides the default managed table type configured in the dataset. (MANAGED_TABLE_TYPE_UNSPECIFIED, NATIVE, BIGLAKE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="materializedView" /></td>
@@ -412,43 +413,43 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
-    <td><a href="#parameter-selectedFields"><code>selectedFields</code></a>, <a href="#parameter-view"><code>view</code></a></td>
-    <td>Gets the specified table resource by table ID. This method does not return the data in the table, it only returns the table resource, which describes the structure of this table.</td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-selectedFields"><code>selectedFields</code></a></td>
+    <td>Gets the specified table resource by table ID. This method does not return the data in the table, it only returns the table resource, which describes the structure of this table. # IAM Permissions Requires the `bigquery.tables.get` permission on the table.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists all tables in the specified dataset. Requires the READER dataset role.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
+    <td>Lists all tables in the specified dataset. Requires the READER dataset role. # IAM Permissions Requires the `bigquery.tables.list` permission on the dataset.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a></td>
     <td></td>
-    <td>Creates a new, empty table in the dataset.</td>
+    <td>Creates a new, empty table in the dataset. # IAM Permissions Requires the `bigquery.tables.create` permission on the dataset.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
     <td><a href="#parameter-autodetect_schema"><code>autodetect_schema</code></a></td>
-    <td>Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports RFC5789 patch semantics.</td>
+    <td>Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports RFC5789 patch semantics. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.tables.update` - `bigquery.tables.get`</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
     <td><a href="#parameter-autodetect_schema"><code>autodetect_schema</code></a></td>
-    <td>Updates information in an existing table. The update method replaces the entire Table resource, whereas the patch method only replaces fields that are provided in the submitted Table resource.</td>
+    <td>Updates information in an existing table. The update method replaces the entire Table resource, whereas the patch method only replaces fields that are provided in the submitted Table resource. # IAM Permissions Requires the `bigquery.tables.update` permission on the table.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
     <td></td>
-    <td>Deletes the table specified by tableId from the dataset. If the table contains data, all the data will be deleted.</td>
+    <td>Deletes the table specified by tableId from the dataset. If the table contains data, all the data will be deleted. # IAM Permissions Requires the `bigquery.tables.delete` permission on the table.</td>
 </tr>
 </tbody>
 </table>
@@ -520,7 +521,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets the specified table resource by table ID. This method does not return the data in the table, it only returns the table resource, which describes the structure of this table.
+Gets the specified table resource by table ID. This method does not return the data in the table, it only returns the table resource, which describes the structure of this table. # IAM Permissions Requires the `bigquery.tables.get` permission on the table.
 
 ```sql
 SELECT
@@ -580,14 +581,14 @@ FROM google.bigquery.tables
 WHERE projectId = '{{ projectId }}' -- required
 AND +datasetId = '{{ +datasetId }}' -- required
 AND +tableId = '{{ +tableId }}' -- required
-AND selectedFields = '{{ selectedFields }}'
 AND view = '{{ view }}'
+AND selectedFields = '{{ selectedFields }}'
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Lists all tables in the specified dataset. Requires the READER dataset role.
+Lists all tables in the specified dataset. Requires the READER dataset role. # IAM Permissions Requires the `bigquery.tables.list` permission on the dataset.
 
 ```sql
 SELECT
@@ -607,8 +608,8 @@ view
 FROM google.bigquery.tables
 WHERE projectId = '{{ projectId }}' -- required
 AND +datasetId = '{{ +datasetId }}' -- required
-AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -626,66 +627,66 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="insert">
 
-Creates a new, empty table in the dataset.
+Creates a new, empty table in the dataset. # IAM Permissions Requires the `bigquery.tables.create` permission on the dataset.
 
 ```sql
 INSERT INTO google.bigquery.tables (
-data__encryptionConfiguration,
-data__schema,
-data__tableReplicationInfo,
-data__defaultCollation,
+data__requirePartitionFilter,
+data__rangePartitioning,
+data__managedTableType,
+data__view,
 data__materializedView,
 data__timePartitioning,
-data__labels,
-data__requirePartitionFilter,
+data__defaultRoundingMode,
+data__encryptionConfiguration,
 data__expirationTime,
 data__partitionDefinition,
-data__rangePartitioning,
-data__tableReference,
-data__defaultRoundingMode,
-data__description,
-data__tableConstraints,
-data__biglakeConfiguration,
-data__friendlyName,
-data__clustering,
-data__resourceTags,
-data__maxStaleness,
-data__model,
-data__view,
 data__kind,
-data__externalDataConfiguration,
+data__tableReference,
+data__maxStaleness,
+data__defaultCollation,
 data__externalCatalogTableOptions,
-data__managedTableType,
+data__labels,
+data__tableConstraints,
+data__clustering,
+data__model,
+data__friendlyName,
+data__externalDataConfiguration,
+data__biglakeConfiguration,
+data__resourceTags,
+data__description,
+data__tableReplicationInfo,
+data__schema,
 projectId,
 +datasetId
 )
 SELECT 
-'{{ encryptionConfiguration }}',
-'{{ schema }}',
-'{{ tableReplicationInfo }}',
-'{{ defaultCollation }}',
+{{ requirePartitionFilter }},
+'{{ rangePartitioning }}',
+'{{ managedTableType }}',
+'{{ view }}',
 '{{ materializedView }}',
 '{{ timePartitioning }}',
-'{{ labels }}',
-{{ requirePartitionFilter }},
+'{{ defaultRoundingMode }}',
+'{{ encryptionConfiguration }}',
 '{{ expirationTime }}',
 '{{ partitionDefinition }}',
-'{{ rangePartitioning }}',
-'{{ tableReference }}',
-'{{ defaultRoundingMode }}',
-'{{ description }}',
-'{{ tableConstraints }}',
-'{{ biglakeConfiguration }}',
-'{{ friendlyName }}',
-'{{ clustering }}',
-'{{ resourceTags }}',
-'{{ maxStaleness }}',
-'{{ model }}',
-'{{ view }}',
 '{{ kind }}',
-'{{ externalDataConfiguration }}',
+'{{ tableReference }}',
+'{{ maxStaleness }}',
+'{{ defaultCollation }}',
 '{{ externalCatalogTableOptions }}',
-'{{ managedTableType }}',
+'{{ labels }}',
+'{{ tableConstraints }}',
+'{{ clustering }}',
+'{{ model }}',
+'{{ friendlyName }}',
+'{{ externalDataConfiguration }}',
+'{{ biglakeConfiguration }}',
+'{{ resourceTags }}',
+'{{ description }}',
+'{{ tableReplicationInfo }}',
+'{{ schema }}',
 '{{ projectId }}',
 '{{ +datasetId }}'
 RETURNING
@@ -746,151 +747,367 @@ view
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tables
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the tables resource.
     - name: +datasetId
-      value: string
+      value: "{{ +datasetId }}"
       description: Required parameter for the tables resource.
-    - name: encryptionConfiguration
-      value: object
-      description: >
-        Custom encryption configuration (e.g., Cloud KMS keys).
-        
-    - name: schema
-      value: object
-      description: >
-        Optional. Describes the schema of this table.
-        
-    - name: tableReplicationInfo
-      value: object
-      description: >
-        Optional. Table replication info for table created `AS REPLICA` DDL like: `CREATE MATERIALIZED VIEW mv1 AS REPLICA OF src_mv`
-        
-    - name: defaultCollation
-      value: string
-      description: >
-        Optional. Defines the default collation specification of new STRING fields in the table. During table creation or update, if a STRING field is added to this table without explicit collation specified, then the table inherits the table default collation. A change to this field affects only fields added afterwards, and does not alter the existing fields. The following values are supported: * 'und:ci': undetermined locale, case insensitive. * '': empty string. Default to case-sensitive behavior.
-        
-    - name: materializedView
-      value: object
-      description: >
-        Optional. The materialized view definition.
-        
-    - name: timePartitioning
-      value: object
-      description: >
-        If specified, configures time-based partitioning for this table.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.
-        
     - name: requirePartitionFilter
-      value: boolean
-      description: >
+      value: {{ requirePartitionFilter }}
+      description: |
         Optional. If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified.
-        
       default: false
-    - name: expirationTime
-      value: string
-      description: >
-        Optional. The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. The defaultTableExpirationMs property of the encapsulating dataset can be used to set a default expirationTime on newly created tables.
-        
-    - name: partitionDefinition
-      value: object
-      description: >
-        Optional. The partition information for all table formats, including managed partitioned tables, hive partitioned tables, iceberg partitioned, and metastore partitioned tables. This field is only populated for metastore partitioned tables. For other table formats, this is an output only field.
-        
     - name: rangePartitioning
-      value: object
-      description: >
+      description: |
         If specified, configures range partitioning for this table.
-        
-    - name: tableReference
-      value: object
-      description: >
-        Required. Reference describing the ID of this table.
-        
-    - name: defaultRoundingMode
-      value: string
-      description: >
-        Optional. Defines the default rounding mode specification of new decimal fields (NUMERIC OR BIGNUMERIC) in the table. During table creation or update, if a decimal field is added to this table without an explicit rounding mode specified, then the field inherits the table default rounding mode. Changing this field doesn't affect existing fields.
-        
-      valid_values: ['ROUNDING_MODE_UNSPECIFIED', 'ROUND_HALF_AWAY_FROM_ZERO', 'ROUND_HALF_EVEN']
-    - name: description
-      value: string
-      description: >
-        Optional. A user-friendly description of this table.
-        
-    - name: tableConstraints
-      value: object
-      description: >
-        Optional. Tables Primary Key and Foreign Key information
-        
-    - name: biglakeConfiguration
-      value: object
-      description: >
-        Optional. Specifies the configuration of a BigQuery table for Apache Iceberg.
-        
-    - name: friendlyName
-      value: string
-      description: >
-        Optional. A descriptive name for this table.
-        
-    - name: clustering
-      value: object
-      description: >
-        Clustering specification for the table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered.
-        
-    - name: resourceTags
-      value: object
-      description: >
-        [Optional] The tags associated with this table. Tag keys are globally unique. See additional information on [tags](https://cloud.google.com/iam/docs/tags-access-control#definitions). An object containing a list of "key": value pairs. The key is the namespaced friendly name of the tag key, e.g. "12345/environment" where 12345 is parent id. The value is the friendly short name of the tag value, e.g. "production".
-        
-    - name: maxStaleness
-      value: string
-      description: >
-        Optional. The maximum staleness of data that could be returned when the table (or stale MV) is queried. Staleness encoded as a string encoding of sql IntervalValue type.
-        
-    - name: model
-      value: object
-      description: >
-        Deprecated.
-        
-    - name: view
-      value: object
-      description: >
-        Optional. The view definition.
-        
-    - name: kind
-      value: string
-      description: >
-        The type of resource ID.
-        
-      default: bigquery#table
-    - name: externalDataConfiguration
-      value: object
-      description: >
-        Optional. Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table.
-        
-    - name: externalCatalogTableOptions
-      value: object
-      description: >
-        Optional. Options defining open source compatible table.
-        
+      value:
+        field: "{{ field }}"
+        range:
+          interval: "{{ interval }}"
+          end: "{{ end }}"
+          start: "{{ start }}"
     - name: managedTableType
-      value: string
-      description: >
+      value: "{{ managedTableType }}"
+      description: |
         Optional. If set, overrides the default managed table type configured in the dataset.
-        
       valid_values: ['MANAGED_TABLE_TYPE_UNSPECIFIED', 'NATIVE', 'BIGLAKE']
-```
+    - name: view
+      description: |
+        Optional. The view definition.
+      value:
+        userDefinedFunctionResources:
+          - resourceUri: "{{ resourceUri }}"
+            inlineCode: "{{ inlineCode }}"
+        foreignDefinitions:
+          - dialect: "{{ dialect }}"
+            query: "{{ query }}"
+        privacyPolicy:
+          aggregationThresholdPolicy:
+            privacyUnitColumns:
+              - "{{ privacyUnitColumns }}"
+            threshold: "{{ threshold }}"
+          joinRestrictionPolicy:
+            joinAllowedColumns:
+              - "{{ joinAllowedColumns }}"
+            joinCondition: "{{ joinCondition }}"
+          differentialPrivacyPolicy:
+            epsilonBudgetRemaining: {{ epsilonBudgetRemaining }}
+            maxGroupsContributed: "{{ maxGroupsContributed }}"
+            deltaBudget: {{ deltaBudget }}
+            deltaBudgetRemaining: {{ deltaBudgetRemaining }}
+            epsilonBudget: {{ epsilonBudget }}
+            privacyUnitColumn: "{{ privacyUnitColumn }}"
+            deltaPerQuery: {{ deltaPerQuery }}
+            maxEpsilonPerQuery: {{ maxEpsilonPerQuery }}
+        query: "{{ query }}"
+        useLegacySql: {{ useLegacySql }}
+        useExplicitColumnNames: {{ useExplicitColumnNames }}
+    - name: materializedView
+      description: |
+        Optional. The materialized view definition.
+      value:
+        refreshIntervalMs: "{{ refreshIntervalMs }}"
+        lastRefreshTime: "{{ lastRefreshTime }}"
+        allowNonIncrementalDefinition: {{ allowNonIncrementalDefinition }}
+        enableRefresh: {{ enableRefresh }}
+        maxStaleness: "{{ maxStaleness }}"
+        query: "{{ query }}"
+    - name: timePartitioning
+      description: |
+        If specified, configures time-based partitioning for this table.
+      value:
+        expirationMs: "{{ expirationMs }}"
+        requirePartitionFilter: {{ requirePartitionFilter }}
+        field: "{{ field }}"
+        type: "{{ type }}"
+    - name: defaultRoundingMode
+      value: "{{ defaultRoundingMode }}"
+      description: |
+        Optional. Defines the default rounding mode specification of new decimal fields (NUMERIC OR BIGNUMERIC) in the table. During table creation or update, if a decimal field is added to this table without an explicit rounding mode specified, then the field inherits the table default rounding mode. Changing this field doesn't affect existing fields.
+      valid_values: ['ROUNDING_MODE_UNSPECIFIED', 'ROUND_HALF_AWAY_FROM_ZERO', 'ROUND_HALF_EVEN']
+    - name: encryptionConfiguration
+      description: |
+        Custom encryption configuration (e.g., Cloud KMS keys).
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: expirationTime
+      value: "{{ expirationTime }}"
+      description: |
+        Optional. The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. The defaultTableExpirationMs property of the encapsulating dataset can be used to set a default expirationTime on newly created tables.
+    - name: partitionDefinition
+      description: |
+        Optional. The partition information for all table formats, including managed partitioned tables, hive partitioned tables, iceberg partitioned, and metastore partitioned tables. This field is only populated for metastore partitioned tables. For other table formats, this is an output only field.
+      value:
+        partitionedColumn:
+          - field: "{{ field }}"
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        The type of resource ID.
+      default: bigquery#table
+    - name: tableReference
+      description: |
+        Required. Reference describing the ID of this table.
+      value:
+        tableId: "{{ tableId }}"
+        datasetId: "{{ datasetId }}"
+        projectId: "{{ projectId }}"
+    - name: maxStaleness
+      value: "{{ maxStaleness }}"
+      description: |
+        Optional. The maximum staleness of data that could be returned when the table (or stale MV) is queried. Staleness encoded as a string encoding of sql IntervalValue type.
+    - name: defaultCollation
+      value: "{{ defaultCollation }}"
+      description: |
+        Optional. Defines the default collation specification of new STRING fields in the table. During table creation or update, if a STRING field is added to this table without explicit collation specified, then the table inherits the table default collation. A change to this field affects only fields added afterwards, and does not alter the existing fields. The following values are supported: * 'und:ci': undetermined locale, case insensitive. * '': empty string. Default to case-sensitive behavior.
+    - name: externalCatalogTableOptions
+      description: |
+        Optional. Options defining open source compatible table.
+      value:
+        connectionId: "{{ connectionId }}"
+        parameters: "{{ parameters }}"
+        storageDescriptor:
+          outputFormat: "{{ outputFormat }}"
+          serdeInfo:
+            serializationLibrary: "{{ serializationLibrary }}"
+            name: "{{ name }}"
+            parameters: "{{ parameters }}"
+          inputFormat: "{{ inputFormat }}"
+          locationUri: "{{ locationUri }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.
+    - name: tableConstraints
+      description: |
+        Optional. Tables Primary Key and Foreign Key information
+      value:
+        foreignKeys:
+          - referencedTable:
+              projectId: "{{ projectId }}"
+              datasetId: "{{ datasetId }}"
+              tableId: "{{ tableId }}"
+            columnReferences: "{{ columnReferences }}"
+            name: "{{ name }}"
+        primaryKey:
+          columns:
+            - "{{ columns }}"
+    - name: clustering
+      description: |
+        Clustering specification for the table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered.
+      value:
+        fields:
+          - "{{ fields }}"
+    - name: model
+      description: |
+        Deprecated.
+      value:
+        modelOptions:
+          labels:
+            - "{{ labels }}"
+          modelType: "{{ modelType }}"
+          lossType: "{{ lossType }}"
+        trainingRuns:
+          - startTime: "{{ startTime }}"
+            trainingOptions:
+              warmStart: {{ warmStart }}
+              l2Reg: {{ l2Reg }}
+              maxIteration: "{{ maxIteration }}"
+              lineSearchInitLearnRate: {{ lineSearchInitLearnRate }}
+              earlyStop: {{ earlyStop }}
+              learnRate: {{ learnRate }}
+              learnRateStrategy: "{{ learnRateStrategy }}"
+              l1Reg: {{ l1Reg }}
+              minRelProgress: {{ minRelProgress }}
+            iterationResults: "{{ iterationResults }}"
+            state: "{{ state }}"
+    - name: friendlyName
+      value: "{{ friendlyName }}"
+      description: |
+        Optional. A descriptive name for this table.
+    - name: externalDataConfiguration
+      description: |
+        Optional. Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table.
+      value:
+        objectMetadata: "{{ objectMetadata }}"
+        sourceUris:
+          - "{{ sourceUris }}"
+        referenceFileSchemaUri: "{{ referenceFileSchemaUri }}"
+        jsonOptions:
+          encoding: "{{ encoding }}"
+        csvOptions:
+          quote: "{{ quote }}"
+          fieldDelimiter: "{{ fieldDelimiter }}"
+          nullMarker: "{{ nullMarker }}"
+          skipLeadingRows: "{{ skipLeadingRows }}"
+          sourceColumnMatch: "{{ sourceColumnMatch }}"
+          allowQuotedNewlines: {{ allowQuotedNewlines }}
+          nullMarkers:
+            - "{{ nullMarkers }}"
+          preserveAsciiControlCharacters: {{ preserveAsciiControlCharacters }}
+          allowJaggedRows: {{ allowJaggedRows }}
+          encoding: "{{ encoding }}"
+        compression: "{{ compression }}"
+        metadataCacheMode: "{{ metadataCacheMode }}"
+        timestampFormat: "{{ timestampFormat }}"
+        avroOptions:
+          useAvroLogicalTypes: {{ useAvroLogicalTypes }}
+        autodetect: {{ autodetect }}
+        dateFormat: "{{ dateFormat }}"
+        maxBadRecords: {{ maxBadRecords }}
+        ignoreUnknownValues: {{ ignoreUnknownValues }}
+        sourceFormat: "{{ sourceFormat }}"
+        timeFormat: "{{ timeFormat }}"
+        timestampTargetPrecision:
+          - {{ timestampTargetPrecision }}
+        timeZone: "{{ timeZone }}"
+        datetimeFormat: "{{ datetimeFormat }}"
+        jsonExtension: "{{ jsonExtension }}"
+        parquetOptions:
+          mapTargetType: "{{ mapTargetType }}"
+          enableListInference: {{ enableListInference }}
+          enumAsString: {{ enumAsString }}
+        decimalTargetTypes:
+          - "{{ decimalTargetTypes }}"
+        schema:
+          fields:
+            - categories:
+                names:
+                  - "{{ names }}"
+              scale: "{{ scale }}"
+              roundingMode: "{{ roundingMode }}"
+              foreignTypeDefinition: "{{ foreignTypeDefinition }}"
+              rangeElementType:
+                type: "{{ type }}"
+              type: "{{ type }}"
+              dataGovernanceTagsInfo:
+                dataGovernanceTags: "{{ dataGovernanceTags }}"
+              dataPolicies: "{{ dataPolicies }}"
+              timestampPrecision: "{{ timestampPrecision }}"
+              collation: "{{ collation }}"
+              dataPolicyList:
+                dataPolicies:
+                  - name: "{{ name }}"
+              name: "{{ name }}"
+              precision: "{{ precision }}"
+              defaultValueExpression: "{{ defaultValueExpression }}"
+              generatedColumn:
+                generatedExpressionInfo:
+                  stored: {{ stored }}
+                  asynchronous: {{ asynchronous }}
+                  generationExpression: "{{ generationExpression }}"
+                generatedMode: "{{ generatedMode }}"
+              fields: "{{ fields }}"
+              maxLength: "{{ maxLength }}"
+              mode: "{{ mode }}"
+              policyTags:
+                names:
+                  - "{{ names }}"
+              description: "{{ description }}"
+          foreignTypeInfo:
+            typeSystem: "{{ typeSystem }}"
+        hivePartitioningOptions:
+          mode: "{{ mode }}"
+          requirePartitionFilter: {{ requirePartitionFilter }}
+          sourceUriPrefix: "{{ sourceUriPrefix }}"
+          fields:
+            - "{{ fields }}"
+        connectionId: "{{ connectionId }}"
+        googleSheetsOptions:
+          range: "{{ range }}"
+          skipLeadingRows: "{{ skipLeadingRows }}"
+        bigtableOptions:
+          outputColumnFamiliesAsJson: {{ outputColumnFamiliesAsJson }}
+          readRowkeyAsString: {{ readRowkeyAsString }}
+          columnFamilies:
+            - columns: "{{ columns }}"
+              familyId: "{{ familyId }}"
+              protoConfig:
+                protoMessageName: "{{ protoMessageName }}"
+                schemaBundleId: "{{ schemaBundleId }}"
+              encoding: "{{ encoding }}"
+              onlyReadLatest: {{ onlyReadLatest }}
+              type: "{{ type }}"
+          ignoreUnspecifiedColumnFamilies: {{ ignoreUnspecifiedColumnFamilies }}
+        fileSetSpecType: "{{ fileSetSpecType }}"
+    - name: biglakeConfiguration
+      description: |
+        Optional. Specifies the configuration of a BigQuery table for Apache Iceberg.
+      value:
+        connectionId: "{{ connectionId }}"
+        fileFormat: "{{ fileFormat }}"
+        storageUri: "{{ storageUri }}"
+        tableFormat: "{{ tableFormat }}"
+    - name: resourceTags
+      value: "{{ resourceTags }}"
+      description: |
+        [Optional] The tags associated with this table. Tag keys are globally unique. See additional information on [tags](https://cloud.google.com/iam/docs/tags-access-control#definitions). An object containing a list of "key": value pairs. The key is the namespaced friendly name of the tag key, e.g. "12345/environment" where 12345 is parent id. The value is the friendly short name of the tag value, e.g. "production".
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A user-friendly description of this table.
+    - name: tableReplicationInfo
+      description: |
+        Optional. Table replication info for table created \`AS REPLICA\` DDL like: \`CREATE MATERIALIZED VIEW mv1 AS REPLICA OF src_mv\`
+      value:
+        replicatedSourceLastRefreshTime: "{{ replicatedSourceLastRefreshTime }}"
+        replicationIntervalMs: "{{ replicationIntervalMs }}"
+        replicationStatus: "{{ replicationStatus }}"
+        replicationError:
+          location: "{{ location }}"
+          message: "{{ message }}"
+          reason: "{{ reason }}"
+          debugInfo: "{{ debugInfo }}"
+        sourceTable:
+          tableId: "{{ tableId }}"
+          datasetId: "{{ datasetId }}"
+          projectId: "{{ projectId }}"
+    - name: schema
+      description: |
+        Optional. Describes the schema of this table.
+      value:
+        fields:
+          - categories:
+              names:
+                - "{{ names }}"
+            scale: "{{ scale }}"
+            roundingMode: "{{ roundingMode }}"
+            foreignTypeDefinition: "{{ foreignTypeDefinition }}"
+            rangeElementType:
+              type: "{{ type }}"
+            type: "{{ type }}"
+            dataGovernanceTagsInfo:
+              dataGovernanceTags: "{{ dataGovernanceTags }}"
+            dataPolicies: "{{ dataPolicies }}"
+            timestampPrecision: "{{ timestampPrecision }}"
+            collation: "{{ collation }}"
+            dataPolicyList:
+              dataPolicies:
+                - name: "{{ name }}"
+            name: "{{ name }}"
+            precision: "{{ precision }}"
+            defaultValueExpression: "{{ defaultValueExpression }}"
+            generatedColumn:
+              generatedExpressionInfo:
+                stored: {{ stored }}
+                asynchronous: {{ asynchronous }}
+                generationExpression: "{{ generationExpression }}"
+              generatedMode: "{{ generatedMode }}"
+            fields: "{{ fields }}"
+            maxLength: "{{ maxLength }}"
+            mode: "{{ mode }}"
+            policyTags:
+              names:
+                - "{{ names }}"
+            description: "{{ description }}"
+        foreignTypeInfo:
+          typeSystem: "{{ typeSystem }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -905,37 +1122,37 @@ view
 >
 <TabItem value="patch">
 
-Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports RFC5789 patch semantics.
+Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports RFC5789 patch semantics. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.tables.update` - `bigquery.tables.get`
 
 ```sql
 UPDATE google.bigquery.tables
 SET 
-data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__schema = '{{ schema }}',
-data__tableReplicationInfo = '{{ tableReplicationInfo }}',
-data__defaultCollation = '{{ defaultCollation }}',
+data__requirePartitionFilter = {{ requirePartitionFilter }},
+data__rangePartitioning = '{{ rangePartitioning }}',
+data__managedTableType = '{{ managedTableType }}',
+data__view = '{{ view }}',
 data__materializedView = '{{ materializedView }}',
 data__timePartitioning = '{{ timePartitioning }}',
-data__labels = '{{ labels }}',
-data__requirePartitionFilter = {{ requirePartitionFilter }},
+data__defaultRoundingMode = '{{ defaultRoundingMode }}',
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
 data__expirationTime = '{{ expirationTime }}',
 data__partitionDefinition = '{{ partitionDefinition }}',
-data__rangePartitioning = '{{ rangePartitioning }}',
-data__tableReference = '{{ tableReference }}',
-data__defaultRoundingMode = '{{ defaultRoundingMode }}',
-data__description = '{{ description }}',
-data__tableConstraints = '{{ tableConstraints }}',
-data__biglakeConfiguration = '{{ biglakeConfiguration }}',
-data__friendlyName = '{{ friendlyName }}',
-data__clustering = '{{ clustering }}',
-data__resourceTags = '{{ resourceTags }}',
-data__maxStaleness = '{{ maxStaleness }}',
-data__model = '{{ model }}',
-data__view = '{{ view }}',
 data__kind = '{{ kind }}',
-data__externalDataConfiguration = '{{ externalDataConfiguration }}',
+data__tableReference = '{{ tableReference }}',
+data__maxStaleness = '{{ maxStaleness }}',
+data__defaultCollation = '{{ defaultCollation }}',
 data__externalCatalogTableOptions = '{{ externalCatalogTableOptions }}',
-data__managedTableType = '{{ managedTableType }}'
+data__labels = '{{ labels }}',
+data__tableConstraints = '{{ tableConstraints }}',
+data__clustering = '{{ clustering }}',
+data__model = '{{ model }}',
+data__friendlyName = '{{ friendlyName }}',
+data__externalDataConfiguration = '{{ externalDataConfiguration }}',
+data__biglakeConfiguration = '{{ biglakeConfiguration }}',
+data__resourceTags = '{{ resourceTags }}',
+data__description = '{{ description }}',
+data__tableReplicationInfo = '{{ tableReplicationInfo }}',
+data__schema = '{{ schema }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND +datasetId = '{{ +datasetId }}' --required
@@ -1009,37 +1226,37 @@ view;
 >
 <TabItem value="update">
 
-Updates information in an existing table. The update method replaces the entire Table resource, whereas the patch method only replaces fields that are provided in the submitted Table resource.
+Updates information in an existing table. The update method replaces the entire Table resource, whereas the patch method only replaces fields that are provided in the submitted Table resource. # IAM Permissions Requires the `bigquery.tables.update` permission on the table.
 
 ```sql
 REPLACE google.bigquery.tables
 SET 
-data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__schema = '{{ schema }}',
-data__tableReplicationInfo = '{{ tableReplicationInfo }}',
-data__defaultCollation = '{{ defaultCollation }}',
+data__requirePartitionFilter = {{ requirePartitionFilter }},
+data__rangePartitioning = '{{ rangePartitioning }}',
+data__managedTableType = '{{ managedTableType }}',
+data__view = '{{ view }}',
 data__materializedView = '{{ materializedView }}',
 data__timePartitioning = '{{ timePartitioning }}',
-data__labels = '{{ labels }}',
-data__requirePartitionFilter = {{ requirePartitionFilter }},
+data__defaultRoundingMode = '{{ defaultRoundingMode }}',
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
 data__expirationTime = '{{ expirationTime }}',
 data__partitionDefinition = '{{ partitionDefinition }}',
-data__rangePartitioning = '{{ rangePartitioning }}',
-data__tableReference = '{{ tableReference }}',
-data__defaultRoundingMode = '{{ defaultRoundingMode }}',
-data__description = '{{ description }}',
-data__tableConstraints = '{{ tableConstraints }}',
-data__biglakeConfiguration = '{{ biglakeConfiguration }}',
-data__friendlyName = '{{ friendlyName }}',
-data__clustering = '{{ clustering }}',
-data__resourceTags = '{{ resourceTags }}',
-data__maxStaleness = '{{ maxStaleness }}',
-data__model = '{{ model }}',
-data__view = '{{ view }}',
 data__kind = '{{ kind }}',
-data__externalDataConfiguration = '{{ externalDataConfiguration }}',
+data__tableReference = '{{ tableReference }}',
+data__maxStaleness = '{{ maxStaleness }}',
+data__defaultCollation = '{{ defaultCollation }}',
 data__externalCatalogTableOptions = '{{ externalCatalogTableOptions }}',
-data__managedTableType = '{{ managedTableType }}'
+data__labels = '{{ labels }}',
+data__tableConstraints = '{{ tableConstraints }}',
+data__clustering = '{{ clustering }}',
+data__model = '{{ model }}',
+data__friendlyName = '{{ friendlyName }}',
+data__externalDataConfiguration = '{{ externalDataConfiguration }}',
+data__biglakeConfiguration = '{{ biglakeConfiguration }}',
+data__resourceTags = '{{ resourceTags }}',
+data__description = '{{ description }}',
+data__tableReplicationInfo = '{{ tableReplicationInfo }}',
+data__schema = '{{ schema }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND +datasetId = '{{ +datasetId }}' --required
@@ -1113,7 +1330,7 @@ view;
 >
 <TabItem value="delete">
 
-Deletes the table specified by tableId from the dataset. If the table contains data, all the data will be deleted.
+Deletes the table specified by tableId from the dataset. If the table contains data, all the data will be deleted. # IAM Permissions Requires the `bigquery.tables.delete` permission on the table.
 
 ```sql
 DELETE FROM google.bigquery.tables

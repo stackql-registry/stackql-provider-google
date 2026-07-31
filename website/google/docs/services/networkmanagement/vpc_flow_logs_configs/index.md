@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>vpc_flow_logs_configs</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>vpc_flow_logs_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="vpc_flow_logs_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkmanagement.vpc_flow_logs_configs" /></td></tr>
 </tbody></table>
@@ -58,7 +59,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="aggregationInterval" /></td>
     <td><code>string</code></td>
-    <td>Optional. The aggregation interval for the logs. Default value is INTERVAL_5_SEC.</td>
+    <td>Optional. The aggregation interval for the logs. Default value is INTERVAL_5_SEC. (AGGREGATION_INTERVAL_UNSPECIFIED, INTERVAL_5_SEC, INTERVAL_30_SEC, INTERVAL_1_MIN, INTERVAL_5_MIN, INTERVAL_10_MIN, INTERVAL_15_MIN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -68,7 +69,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="crossProjectMetadata" /></td>
     <td><code>string</code></td>
-    <td>Optional. Determines whether to include cross project annotations in the logs. This field is available only for organization configurations. If not specified in org configs will be set to CROSS_PROJECT_METADATA_ENABLED.</td>
+    <td>Optional. Determines whether to include cross project annotations in the logs. This field is available only for organization configurations. If not specified in org configs will be set to CROSS_PROJECT_METADATA_ENABLED. (CROSS_PROJECT_METADATA_UNSPECIFIED, CROSS_PROJECT_METADATA_ENABLED, CROSS_PROJECT_METADATA_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -98,7 +99,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="metadata" /></td>
     <td><code>string</code></td>
-    <td>Optional. Configures whether all, none or a subset of metadata fields should be added to the reported VPC flow logs. Default value is INCLUDE_ALL_METADATA.</td>
+    <td>Optional. Configures whether all, none or a subset of metadata fields should be added to the reported VPC flow logs. Default value is INCLUDE_ALL_METADATA. (METADATA_UNSPECIFIED, INCLUDE_ALL_METADATA, EXCLUDE_ALL_METADATA, CUSTOM_METADATA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadataFields" /></td>
@@ -113,7 +114,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Optional. The state of the VPC Flow Log configuration. Default value is ENABLED. When creating a new configuration, it must be enabled. Setting state=DISABLED will pause the log generation for this config.</td>
+    <td>Optional. The state of the VPC Flow Log configuration. Default value is ENABLED. When creating a new configuration, it must be enabled. Setting state=DISABLED will pause the log generation for this config. (STATE_UNSPECIFIED, ENABLED, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subnet" /></td>
@@ -123,7 +124,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="targetResourceState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Describes the state of the configured target resource for diagnostic purposes.</td>
+    <td>Output only. Describes the state of the configured target resource for diagnostic purposes. (TARGET_RESOURCE_STATE_UNSPECIFIED, TARGET_RESOURCE_EXISTS, TARGET_RESOURCE_DOES_NOT_EXIST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -157,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="aggregationInterval" /></td>
     <td><code>string</code></td>
-    <td>Optional. The aggregation interval for the logs. Default value is INTERVAL_5_SEC.</td>
+    <td>Optional. The aggregation interval for the logs. Default value is INTERVAL_5_SEC. (AGGREGATION_INTERVAL_UNSPECIFIED, INTERVAL_5_SEC, INTERVAL_30_SEC, INTERVAL_1_MIN, INTERVAL_5_MIN, INTERVAL_10_MIN, INTERVAL_15_MIN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -167,7 +168,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="crossProjectMetadata" /></td>
     <td><code>string</code></td>
-    <td>Optional. Determines whether to include cross project annotations in the logs. This field is available only for organization configurations. If not specified in org configs will be set to CROSS_PROJECT_METADATA_ENABLED.</td>
+    <td>Optional. Determines whether to include cross project annotations in the logs. This field is available only for organization configurations. If not specified in org configs will be set to CROSS_PROJECT_METADATA_ENABLED. (CROSS_PROJECT_METADATA_UNSPECIFIED, CROSS_PROJECT_METADATA_ENABLED, CROSS_PROJECT_METADATA_DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -197,7 +198,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="metadata" /></td>
     <td><code>string</code></td>
-    <td>Optional. Configures whether all, none or a subset of metadata fields should be added to the reported VPC flow logs. Default value is INCLUDE_ALL_METADATA.</td>
+    <td>Optional. Configures whether all, none or a subset of metadata fields should be added to the reported VPC flow logs. Default value is INCLUDE_ALL_METADATA. (METADATA_UNSPECIFIED, INCLUDE_ALL_METADATA, EXCLUDE_ALL_METADATA, CUSTOM_METADATA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadataFields" /></td>
@@ -212,7 +213,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Optional. The state of the VPC Flow Log configuration. Default value is ENABLED. When creating a new configuration, it must be enabled. Setting state=DISABLED will pause the log generation for this config.</td>
+    <td>Optional. The state of the VPC Flow Log configuration. Default value is ENABLED. When creating a new configuration, it must be enabled. Setting state=DISABLED will pause the log generation for this config. (STATE_UNSPECIFIED, ENABLED, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subnet" /></td>
@@ -222,7 +223,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="targetResourceState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Describes the state of the configured target resource for diagnostic purposes.</td>
+    <td>Output only. Describes the state of the configured target resource for diagnostic purposes. (TARGET_RESOURCE_STATE_UNSPECIFIED, TARGET_RESOURCE_EXISTS, TARGET_RESOURCE_DOES_NOT_EXIST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -286,42 +287,42 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vpcFlowLogsConfigsId"><code>vpcFlowLogsConfigsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vpcFlowLogsConfigsId"><code>vpcFlowLogsConfigsId</code></a></td>
     <td></td>
     <td>Gets the details of a specific `VpcFlowLogsConfig`.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists all `VpcFlowLogsConfigs` in a given organization.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Lists all `VpcFlowLogsConfigs` in a given project.</td>
 </tr>
 <tr>
     <td><a href="#query_org_vpc_flow_logs_configs"><CopyableCode code="query_org_vpc_flow_logs_configs" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>QueryOrgVpcFlowLogsConfigs returns a list of all organization-level VPC Flow Logs configurations applicable to the specified project.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-vpcFlowLogsConfigId"><code>vpcFlowLogsConfigId</code></a></td>
     <td>Creates a new `VpcFlowLogsConfig`. If a configuration with the exact same settings already exists (even if the ID is different), the creation fails. Notes: 1. Creating a configuration with `state=DISABLED` will fail 2. The following fields are not considered as settings for the purpose of the check mentioned above, therefore - creating another configuration with the same fields but different values for the following fields will fail as well: * name * create_time * update_time * labels * description</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vpcFlowLogsConfigsId"><code>vpcFlowLogsConfigsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vpcFlowLogsConfigsId"><code>vpcFlowLogsConfigsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates an existing `VpcFlowLogsConfig`. If a configuration with the exact same settings already exists (even if the ID is different), the creation fails. Notes: 1. Updating a configuration with `state=DISABLED` will fail 2. The following fields are not considered as settings for the purpose of the check mentioned above, therefore - updating another configuration with the same fields but different values for the following fields will fail as well: * name * create_time * update_time * labels * description</td>
+    <td>Updates an existing `VpcFlowLogsConfig`. If a configuration with the exact same settings already exists (even if the ID is different), the creation fails. Notes: 1. Updating a configuration with `state=DISABLED` will fail. 2. The following fields are not considered as settings for the purpose of the check mentioned above, therefore - updating another configuration with the same fields but different values for the following fields will fail as well: * name * create_time * update_time * labels * description</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vpcFlowLogsConfigsId"><code>vpcFlowLogsConfigsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vpcFlowLogsConfigsId"><code>vpcFlowLogsConfigsId</code></a></td>
     <td></td>
     <td>Deletes a specific `VpcFlowLogsConfig`.</td>
 </tr>
@@ -329,7 +330,7 @@ The following methods are available for this resource:
     <td><a href="#show_effective_flow_logs_configs"><CopyableCode code="show_effective_flow_logs_configs" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-resource"><code>resource</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-resource"><code>resource</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>ShowEffectiveFlowLogsConfigs returns a list of all VPC Flow Logs configurations applicable to a specified resource.</td>
 </tr>
 </tbody>
@@ -350,11 +351,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-locationsId">
     <td><CopyableCode code="locationsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-organizationsId">
-    <td><CopyableCode code="organizationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -440,7 +436,7 @@ targetResourceState,
 updateTime,
 vpnTunnel
 FROM google.networkmanagement.vpc_flow_logs_configs
-WHERE organizationsId = '{{ organizationsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND vpcFlowLogsConfigsId = '{{ vpcFlowLogsConfigsId }}' -- required
 ;
@@ -448,7 +444,7 @@ AND vpcFlowLogsConfigsId = '{{ vpcFlowLogsConfigsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists all `VpcFlowLogsConfigs` in a given organization.
+Lists all `VpcFlowLogsConfigs` in a given project.
 
 ```sql
 SELECT
@@ -470,12 +466,12 @@ targetResourceState,
 updateTime,
 vpnTunnel
 FROM google.networkmanagement.vpc_flow_logs_configs
-WHERE organizationsId = '{{ organizationsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -492,8 +488,8 @@ FROM google.networkmanagement.vpc_flow_logs_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -515,40 +511,40 @@ Creates a new `VpcFlowLogsConfig`. If a configuration with the exact same settin
 
 ```sql
 INSERT INTO google.networkmanagement.vpc_flow_logs_configs (
+data__metadata,
 data__labels,
+data__description,
+data__aggregationInterval,
+data__name,
+data__filterExpr,
+data__crossProjectMetadata,
+data__vpnTunnel,
 data__state,
 data__metadataFields,
-data__crossProjectMetadata,
 data__network,
-data__metadata,
-data__aggregationInterval,
-data__description,
-data__filterExpr,
-data__flowSampling,
 data__interconnectAttachment,
-data__vpnTunnel,
+data__flowSampling,
 data__subnet,
-data__name,
-organizationsId,
+projectsId,
 locationsId,
 vpcFlowLogsConfigId
 )
 SELECT 
+'{{ metadata }}',
 '{{ labels }}',
+'{{ description }}',
+'{{ aggregationInterval }}',
+'{{ name }}',
+'{{ filterExpr }}',
+'{{ crossProjectMetadata }}',
+'{{ vpnTunnel }}',
 '{{ state }}',
 '{{ metadataFields }}',
-'{{ crossProjectMetadata }}',
 '{{ network }}',
-'{{ metadata }}',
-'{{ aggregationInterval }}',
-'{{ description }}',
-'{{ filterExpr }}',
-{{ flowSampling }},
 '{{ interconnectAttachment }}',
-'{{ vpnTunnel }}',
+{{ flowSampling }},
 '{{ subnet }}',
-'{{ name }}',
-'{{ organizationsId }}',
+'{{ projectsId }}',
 '{{ locationsId }}',
 '{{ vpcFlowLogsConfigId }}'
 RETURNING
@@ -562,93 +558,80 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: vpc_flow_logs_configs
   props:
-    - name: organizationsId
-      value: string
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the vpc_flow_logs_configs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the vpc_flow_logs_configs resource.
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. Configures whether all, none or a subset of metadata fields should be added to the reported VPC flow logs. Default value is INCLUDE_ALL_METADATA.
+      valid_values: ['METADATA_UNSPECIFIED', 'INCLUDE_ALL_METADATA', 'EXCLUDE_ALL_METADATA', 'CUSTOM_METADATA']
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Resource labels to represent user-provided metadata.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The user-supplied description of the VPC Flow Logs configuration. Maximum of 512 characters.
+    - name: aggregationInterval
+      value: "{{ aggregationInterval }}"
+      description: |
+        Optional. The aggregation interval for the logs. Default value is INTERVAL_5_SEC.
+      valid_values: ['AGGREGATION_INTERVAL_UNSPECIFIED', 'INTERVAL_5_SEC', 'INTERVAL_30_SEC', 'INTERVAL_1_MIN', 'INTERVAL_5_MIN', 'INTERVAL_10_MIN', 'INTERVAL_15_MIN']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Unique name of the configuration. The name can have one of the following forms: - For project-level configurations: \`projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_config_id}\` - For organization-level configurations: \`organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_config_id}\`
+    - name: filterExpr
+      value: "{{ filterExpr }}"
+      description: |
+        Optional. Export filter used to define which VPC Flow Logs should be logged.
+    - name: crossProjectMetadata
+      value: "{{ crossProjectMetadata }}"
+      description: |
+        Optional. Determines whether to include cross project annotations in the logs. This field is available only for organization configurations. If not specified in org configs will be set to CROSS_PROJECT_METADATA_ENABLED.
+      valid_values: ['CROSS_PROJECT_METADATA_UNSPECIFIED', 'CROSS_PROJECT_METADATA_ENABLED', 'CROSS_PROJECT_METADATA_DISABLED']
+    - name: vpnTunnel
+      value: "{{ vpnTunnel }}"
+      description: |
+        Traffic will be logged from the VPN Tunnel. Format: projects/{project_id}/regions/{region}/vpnTunnels/{name}
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         Optional. The state of the VPC Flow Log configuration. Default value is ENABLED. When creating a new configuration, it must be enabled. Setting state=DISABLED will pause the log generation for this config.
-        
       valid_values: ['STATE_UNSPECIFIED', 'ENABLED', 'DISABLED']
     - name: metadataFields
-      value: array
-      description: >
+      value:
+        - "{{ metadataFields }}"
+      description: |
         Optional. Custom metadata fields to include in the reported VPC flow logs. Can only be specified if "metadata" was set to CUSTOM_METADATA.
-        
-    - name: crossProjectMetadata
-      value: string
-      description: >
-        Optional. Determines whether to include cross project annotations in the logs. This field is available only for organization configurations. If not specified in org configs will be set to CROSS_PROJECT_METADATA_ENABLED.
-        
-      valid_values: ['CROSS_PROJECT_METADATA_UNSPECIFIED', 'CROSS_PROJECT_METADATA_ENABLED', 'CROSS_PROJECT_METADATA_DISABLED']
     - name: network
-      value: string
-      description: >
+      value: "{{ network }}"
+      description: |
         Traffic will be logged from VMs, VPN tunnels and Interconnect Attachments within the network. Format: projects/{project_id}/global/networks/{name}
-        
-    - name: metadata
-      value: string
-      description: >
-        Optional. Configures whether all, none or a subset of metadata fields should be added to the reported VPC flow logs. Default value is INCLUDE_ALL_METADATA.
-        
-      valid_values: ['METADATA_UNSPECIFIED', 'INCLUDE_ALL_METADATA', 'EXCLUDE_ALL_METADATA', 'CUSTOM_METADATA']
-    - name: aggregationInterval
-      value: string
-      description: >
-        Optional. The aggregation interval for the logs. Default value is INTERVAL_5_SEC.
-        
-      valid_values: ['AGGREGATION_INTERVAL_UNSPECIFIED', 'INTERVAL_5_SEC', 'INTERVAL_30_SEC', 'INTERVAL_1_MIN', 'INTERVAL_5_MIN', 'INTERVAL_10_MIN', 'INTERVAL_15_MIN']
-    - name: description
-      value: string
-      description: >
-        Optional. The user-supplied description of the VPC Flow Logs configuration. Maximum of 512 characters.
-        
-    - name: filterExpr
-      value: string
-      description: >
-        Optional. Export filter used to define which VPC Flow Logs should be logged.
-        
-    - name: flowSampling
-      value: number
-      description: >
-        Optional. The value of the field must be in (0, 1]. The sampling rate of VPC Flow Logs where 1.0 means all collected logs are reported. Setting the sampling rate to 0.0 is not allowed. If you want to disable VPC Flow Logs, use the state field instead. Default value is 1.0.
-        
     - name: interconnectAttachment
-      value: string
-      description: >
+      value: "{{ interconnectAttachment }}"
+      description: |
         Traffic will be logged from the Interconnect Attachment. Format: projects/{project_id}/regions/{region}/interconnectAttachments/{name}
-        
-    - name: vpnTunnel
-      value: string
-      description: >
-        Traffic will be logged from the VPN Tunnel. Format: projects/{project_id}/regions/{region}/vpnTunnels/{name}
-        
+    - name: flowSampling
+      value: {{ flowSampling }}
+      description: |
+        Optional. The value of the field must be in (0, 1]. The sampling rate of VPC Flow Logs where 1.0 means all collected logs are reported. Setting the sampling rate to 0.0 is not allowed. If you want to disable VPC Flow Logs, use the state field instead. Default value is 1.0.
     - name: subnet
-      value: string
-      description: >
+      value: "{{ subnet }}"
+      description: |
         Traffic will be logged from VMs within the subnetwork. Format: projects/{project_id}/regions/{region}/subnetworks/{name}
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Unique name of the configuration. The name can have one of the following forms: - For project-level configurations: `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_config_id}` - For organization-level configurations: `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_config_id}`
-        
     - name: vpcFlowLogsConfigId
-      value: string
-```
+      value: "{{ vpcFlowLogsConfigId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -663,27 +646,27 @@ response
 >
 <TabItem value="patch">
 
-Updates an existing `VpcFlowLogsConfig`. If a configuration with the exact same settings already exists (even if the ID is different), the creation fails. Notes: 1. Updating a configuration with `state=DISABLED` will fail 2. The following fields are not considered as settings for the purpose of the check mentioned above, therefore - updating another configuration with the same fields but different values for the following fields will fail as well: * name * create_time * update_time * labels * description
+Updates an existing `VpcFlowLogsConfig`. If a configuration with the exact same settings already exists (even if the ID is different), the creation fails. Notes: 1. Updating a configuration with `state=DISABLED` will fail. 2. The following fields are not considered as settings for the purpose of the check mentioned above, therefore - updating another configuration with the same fields but different values for the following fields will fail as well: * name * create_time * update_time * labels * description
 
 ```sql
 UPDATE google.networkmanagement.vpc_flow_logs_configs
 SET 
+data__metadata = '{{ metadata }}',
 data__labels = '{{ labels }}',
+data__description = '{{ description }}',
+data__aggregationInterval = '{{ aggregationInterval }}',
+data__name = '{{ name }}',
+data__filterExpr = '{{ filterExpr }}',
+data__crossProjectMetadata = '{{ crossProjectMetadata }}',
+data__vpnTunnel = '{{ vpnTunnel }}',
 data__state = '{{ state }}',
 data__metadataFields = '{{ metadataFields }}',
-data__crossProjectMetadata = '{{ crossProjectMetadata }}',
 data__network = '{{ network }}',
-data__metadata = '{{ metadata }}',
-data__aggregationInterval = '{{ aggregationInterval }}',
-data__description = '{{ description }}',
-data__filterExpr = '{{ filterExpr }}',
-data__flowSampling = {{ flowSampling }},
 data__interconnectAttachment = '{{ interconnectAttachment }}',
-data__vpnTunnel = '{{ vpnTunnel }}',
-data__subnet = '{{ subnet }}',
-data__name = '{{ name }}'
+data__flowSampling = {{ flowSampling }},
+data__subnet = '{{ subnet }}'
 WHERE 
-organizationsId = '{{ organizationsId }}' --required
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND vpcFlowLogsConfigsId = '{{ vpcFlowLogsConfigsId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -712,7 +695,7 @@ Deletes a specific `VpcFlowLogsConfig`.
 
 ```sql
 DELETE FROM google.networkmanagement.vpc_flow_logs_configs
-WHERE organizationsId = '{{ organizationsId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND vpcFlowLogsConfigsId = '{{ vpcFlowLogsConfigsId }}' --required
 ;
@@ -737,10 +720,10 @@ ShowEffectiveFlowLogsConfigs returns a list of all VPC Flow Logs configurations 
 EXEC google.networkmanagement.vpc_flow_logs_configs.show_effective_flow_logs_configs 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@pageToken='{{ pageToken }}', 
+@filter='{{ filter }}', 
 @resource='{{ resource }}', 
 @pageSize='{{ pageSize }}', 
-@filter='{{ filter }}'
+@pageToken='{{ pageToken }}'
 ;
 ```
 </TabItem>

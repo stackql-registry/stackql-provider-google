@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>oauth_client_credentials</code
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>oauth_client_credentials</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="oauth_client_credentials" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.oauth_client_credentials" /></td></tr>
 </tbody></table>
@@ -251,8 +252,8 @@ Creates a new OauthClientCredential.
 
 ```sql
 INSERT INTO google.iam.oauth_client_credentials (
-data__name,
 data__disabled,
+data__name,
 data__displayName,
 projectsId,
 locationsId,
@@ -260,8 +261,8 @@ oauthClientsId,
 oauthClientCredentialId
 )
 SELECT 
-'{{ name }}',
 {{ disabled }},
+'{{ name }}',
 '{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -277,37 +278,34 @@ displayName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: oauth_client_credentials
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the oauth_client_credentials resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the oauth_client_credentials resource.
     - name: oauthClientsId
-      value: string
+      value: "{{ oauthClientsId }}"
       description: Required parameter for the oauth_client_credentials resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of the OauthClientCredential. Format: `projects/{project}/locations/{location}/oauthClients/{oauth_client}/credentials/{credential}`
-        
     - name: disabled
-      value: boolean
-      description: >
+      value: {{ disabled }}
+      description: |
         Optional. Whether the OauthClientCredential is disabled. You cannot use a disabled OauthClientCredential.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of the OauthClientCredential. Format: \`projects/{project}/locations/{location}/oauthClients/{oauth_client}/credentials/{credential}\`
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. A user-specified display name of the OauthClientCredential. Cannot exceed 32 characters.
-        
     - name: oauthClientCredentialId
-      value: string
-```
+      value: "{{ oauthClientCredentialId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -327,8 +325,8 @@ Updates an existing OauthClientCredential.
 ```sql
 UPDATE google.iam.oauth_client_credentials
 SET 
-data__name = '{{ name }}',
 data__disabled = {{ disabled }},
+data__name = '{{ name }}',
 data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

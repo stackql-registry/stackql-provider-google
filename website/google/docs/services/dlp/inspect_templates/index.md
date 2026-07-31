@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>inspect_templates</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>inspect_templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="inspect_templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dlp.inspect_templates" /></td></tr>
 </tbody></table>
@@ -36,8 +37,8 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_inspect_templates_get', value: 'projects_locations_inspect_templates_get' },
         { label: 'organizations_locations_inspect_templates_get', value: 'organizations_locations_inspect_templates_get' },
-        { label: 'projects_locations_inspect_templates_list', value: 'projects_locations_inspect_templates_list' },
         { label: 'projects_inspect_templates_get', value: 'projects_inspect_templates_get' },
+        { label: 'projects_locations_inspect_templates_list', value: 'projects_locations_inspect_templates_list' },
         { label: 'organizations_locations_inspect_templates_list', value: 'organizations_locations_inspect_templates_list' },
         { label: 'organizations_inspect_templates_get', value: 'organizations_inspect_templates_get' },
         { label: 'projects_inspect_templates_list', value: 'projects_inspect_templates_list' },
@@ -59,6 +60,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowLimitedAvailabilityInfoTypes" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -105,48 +111,9 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of an inspectTemplate.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Short description (max 256 chars).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Display name (max 256 chars).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="inspectConfig" /></td>
-    <td><code>object</code></td>
-    <td>The core content of the template. Configuration of the scanning process. (id: GooglePrivacyDlpV2InspectConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of an inspectTemplate.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_inspect_templates_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
+    <td><CopyableCode code="allowLimitedAvailabilityInfoTypes" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -193,6 +160,60 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="allowLimitedAvailabilityInfoTypes" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of an inspectTemplate.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Short description (max 256 chars).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Display name (max 256 chars).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="inspectConfig" /></td>
+    <td><code>object</code></td>
+    <td>The core content of the template. Configuration of the scanning process. (id: GooglePrivacyDlpV2InspectConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of an inspectTemplate.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_inspect_templates_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowLimitedAvailabilityInfoTypes" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The creation timestamp of an inspectTemplate.</td>
@@ -235,6 +256,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowLimitedAvailabilityInfoTypes" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -281,6 +307,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="allowLimitedAvailabilityInfoTypes" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The creation timestamp of an inspectTemplate.</td>
@@ -325,6 +356,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="allowLimitedAvailabilityInfoTypes" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The creation timestamp of an inspectTemplate.</td>
@@ -367,6 +403,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowLimitedAvailabilityInfoTypes" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -418,140 +459,140 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Gets an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Gets an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_inspect_templates_get"><CopyableCode code="organizations_locations_inspect_templates_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Gets an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_inspect_templates_list"><CopyableCode code="projects_locations_inspect_templates_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists InspectTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Gets an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_inspect_templates_get"><CopyableCode code="projects_inspect_templates_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Gets an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Gets an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_inspect_templates_list"><CopyableCode code="projects_locations_inspect_templates_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists InspectTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_inspect_templates_list"><CopyableCode code="organizations_locations_inspect_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists InspectTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists InspectTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_inspect_templates_get"><CopyableCode code="organizations_inspect_templates_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Gets an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Gets an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_inspect_templates_list"><CopyableCode code="projects_inspect_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists InspectTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists InspectTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_inspect_templates_list"><CopyableCode code="organizations_inspect_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists InspectTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Lists InspectTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_inspect_templates_create"><CopyableCode code="projects_locations_inspect_templates_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_inspect_templates_create"><CopyableCode code="organizations_locations_inspect_templates_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_inspect_templates_create"><CopyableCode code="projects_inspect_templates_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_inspect_templates_create"><CopyableCode code="organizations_inspect_templates_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_inspect_templates_patch"><CopyableCode code="projects_locations_inspect_templates_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Updates the InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Updates the InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_inspect_templates_patch"><CopyableCode code="organizations_locations_inspect_templates_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Updates the InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Updates the InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_inspect_templates_patch"><CopyableCode code="projects_inspect_templates_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Updates the InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Updates the InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_inspect_templates_patch"><CopyableCode code="organizations_inspect_templates_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Updates the InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Updates the InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_inspect_templates_delete"><CopyableCode code="projects_locations_inspect_templates_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Deletes an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Deletes an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_inspect_templates_delete"><CopyableCode code="organizations_locations_inspect_templates_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Deletes an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Deletes an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_inspect_templates_delete"><CopyableCode code="projects_inspect_templates_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Deletes an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Deletes an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_inspect_templates_delete"><CopyableCode code="organizations_inspect_templates_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-inspectTemplatesId"><code>inspectTemplatesId</code></a></td>
     <td></td>
-    <td>Deletes an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
+    <td>Deletes an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.</td>
 </tr>
 </tbody>
 </table>
@@ -619,8 +660,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_inspect_templates_get', value: 'projects_locations_inspect_templates_get' },
         { label: 'organizations_locations_inspect_templates_get', value: 'organizations_locations_inspect_templates_get' },
-        { label: 'projects_locations_inspect_templates_list', value: 'projects_locations_inspect_templates_list' },
         { label: 'projects_inspect_templates_get', value: 'projects_inspect_templates_get' },
+        { label: 'projects_locations_inspect_templates_list', value: 'projects_locations_inspect_templates_list' },
         { label: 'organizations_locations_inspect_templates_list', value: 'organizations_locations_inspect_templates_list' },
         { label: 'organizations_inspect_templates_get', value: 'organizations_inspect_templates_get' },
         { label: 'projects_inspect_templates_list', value: 'projects_inspect_templates_list' },
@@ -629,11 +670,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_inspect_templates_get">
 
-Gets an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Gets an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 SELECT
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -648,11 +690,12 @@ AND inspectTemplatesId = '{{ inspectTemplatesId }}' -- required
 </TabItem>
 <TabItem value="organizations_locations_inspect_templates_get">
 
-Gets an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Gets an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 SELECT
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -661,17 +704,37 @@ updateTime
 FROM google.dlp.inspect_templates
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND inspectTemplatesId = '{{ inspectTemplatesId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_inspect_templates_get">
+
+Gets an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+
+```sql
+SELECT
+name,
+allowLimitedAvailabilityInfoTypes,
+createTime,
+description,
+displayName,
+inspectConfig,
+updateTime
+FROM google.dlp.inspect_templates
+WHERE projectsId = '{{ projectsId }}' -- required
 AND inspectTemplatesId = '{{ inspectTemplatesId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="projects_locations_inspect_templates_list">
 
-Lists InspectTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Lists InspectTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 SELECT
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -681,37 +744,20 @@ FROM google.dlp.inspect_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND locationId = '{{ locationId }}'
 AND orderBy = '{{ orderBy }}'
-;
-```
-</TabItem>
-<TabItem value="projects_inspect_templates_get">
-
-Gets an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
-
-```sql
-SELECT
-name,
-createTime,
-description,
-displayName,
-inspectConfig,
-updateTime
-FROM google.dlp.inspect_templates
-WHERE projectsId = '{{ projectsId }}' -- required
-AND inspectTemplatesId = '{{ inspectTemplatesId }}' -- required
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_locations_inspect_templates_list">
 
-Lists InspectTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Lists InspectTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 SELECT
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -720,20 +766,21 @@ updateTime
 FROM google.dlp.inspect_templates
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND locationId = '{{ locationId }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND locationId = '{{ locationId }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_inspect_templates_get">
 
-Gets an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Gets an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 SELECT
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -747,11 +794,12 @@ AND inspectTemplatesId = '{{ inspectTemplatesId }}' -- required
 </TabItem>
 <TabItem value="projects_inspect_templates_list">
 
-Lists InspectTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Lists InspectTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 SELECT
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -759,20 +807,21 @@ inspectConfig,
 updateTime
 FROM google.dlp.inspect_templates
 WHERE projectsId = '{{ projectsId }}' -- required
-AND locationId = '{{ locationId }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND locationId = '{{ locationId }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_inspect_templates_list">
 
-Lists InspectTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Lists InspectTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 SELECT
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -780,10 +829,10 @@ inspectConfig,
 updateTime
 FROM google.dlp.inspect_templates
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND locationId = '{{ locationId }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -804,7 +853,7 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_inspect_templates_create">
 
-Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 INSERT INTO google.dlp.inspect_templates (
@@ -822,6 +871,7 @@ SELECT
 '{{ locationsId }}'
 RETURNING
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -832,7 +882,7 @@ updateTime
 </TabItem>
 <TabItem value="organizations_locations_inspect_templates_create">
 
-Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 INSERT INTO google.dlp.inspect_templates (
@@ -850,6 +900,7 @@ SELECT
 '{{ locationsId }}'
 RETURNING
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -860,7 +911,7 @@ updateTime
 </TabItem>
 <TabItem value="projects_inspect_templates_create">
 
-Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 INSERT INTO google.dlp.inspect_templates (
@@ -876,6 +927,7 @@ SELECT
 '{{ projectsId }}'
 RETURNING
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -886,7 +938,7 @@ updateTime
 </TabItem>
 <TabItem value="organizations_inspect_templates_create">
 
-Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 INSERT INTO google.dlp.inspect_templates (
@@ -902,6 +954,7 @@ SELECT
 '{{ organizationsId }}'
 RETURNING
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -912,35 +965,101 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: inspect_templates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the inspect_templates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the inspect_templates resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the inspect_templates resource.
     - name: inspectTemplate
-      value: object
-      description: >
+      description: |
         Required. The InspectTemplate to create.
-        
+      value:
+        updateTime: "{{ updateTime }}"
+        inspectConfig:
+          minLikelihoodPerInfoType:
+            - infoType:
+                name: "{{ name }}"
+                version: "{{ version }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+              minLikelihood: "{{ minLikelihood }}"
+          infoTypes:
+            - name: "{{ name }}"
+              version: "{{ version }}"
+              sensitivityScore:
+                score: "{{ score }}"
+          contentOptions:
+            - "{{ contentOptions }}"
+          minLikelihood: "{{ minLikelihood }}"
+          excludeInfoTypes: {{ excludeInfoTypes }}
+          customInfoTypes:
+            - likelihood: "{{ likelihood }}"
+              exclusionType: "{{ exclusionType }}"
+              surrogateType: "{{ surrogateType }}"
+              sensitivityScore:
+                score: "{{ score }}"
+              storedType:
+                name: "{{ name }}"
+                createTime: "{{ createTime }}"
+              metadataKeyValueExpression:
+                valueRegex: "{{ valueRegex }}"
+                keyRegex: "{{ keyRegex }}"
+              fileLabelInfoType:
+                sensitivityLabel:
+                  guid: "{{ guid }}"
+                googleDriveLabel:
+                  labelFieldsToMatch: "{{ labelFieldsToMatch }}"
+                  labelId: "{{ labelId }}"
+              detectionRules: "{{ detectionRules }}"
+              infoType:
+                name: "{{ name }}"
+                version: "{{ version }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+              regex:
+                pattern: "{{ pattern }}"
+                groupIndexes:
+                  - {{ groupIndexes }}
+              dictionary:
+                wordList:
+                  words: "{{ words }}"
+                cloudStoragePath:
+                  path: "{{ path }}"
+          limits:
+            maxFindingsPerInfoType:
+              - maxFindings: {{ maxFindings }}
+                infoType:
+                  name: "{{ name }}"
+                  version: "{{ version }}"
+                  sensitivityScore: "{{ sensitivityScore }}"
+            maxFindingsPerRequest: {{ maxFindingsPerRequest }}
+            maxFindingsPerItem: {{ maxFindingsPerItem }}
+          ruleSet:
+            - rules: "{{ rules }}"
+              infoTypes: "{{ infoTypes }}"
+          includeQuote: {{ includeQuote }}
+        description: "{{ description }}"
+        createTime: "{{ createTime }}"
+        displayName: "{{ displayName }}"
+        allowLimitedAvailabilityInfoTypes: {{ allowLimitedAvailabilityInfoTypes }}
+        name: "{{ name }}"
     - name: templateId
-      value: string
-      description: >
-        The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
-        
+      value: "{{ templateId }}"
+      description: |
+        The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: \`[a-zA-Zd-_]+\`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
     - name: locationId
-      value: string
-      description: >
+      value: "{{ locationId }}"
+      description: |
         Deprecated. This field has no effect.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -958,7 +1077,7 @@ updateTime
 >
 <TabItem value="projects_locations_inspect_templates_patch">
 
-Updates the InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Updates the InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 UPDATE google.dlp.inspect_templates
@@ -971,6 +1090,7 @@ AND locationsId = '{{ locationsId }}' --required
 AND inspectTemplatesId = '{{ inspectTemplatesId }}' --required
 RETURNING
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -980,7 +1100,7 @@ updateTime;
 </TabItem>
 <TabItem value="organizations_locations_inspect_templates_patch">
 
-Updates the InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Updates the InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 UPDATE google.dlp.inspect_templates
@@ -993,6 +1113,7 @@ AND locationsId = '{{ locationsId }}' --required
 AND inspectTemplatesId = '{{ inspectTemplatesId }}' --required
 RETURNING
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -1002,7 +1123,7 @@ updateTime;
 </TabItem>
 <TabItem value="projects_inspect_templates_patch">
 
-Updates the InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Updates the InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 UPDATE google.dlp.inspect_templates
@@ -1014,6 +1135,7 @@ projectsId = '{{ projectsId }}' --required
 AND inspectTemplatesId = '{{ inspectTemplatesId }}' --required
 RETURNING
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -1023,7 +1145,7 @@ updateTime;
 </TabItem>
 <TabItem value="organizations_inspect_templates_patch">
 
-Updates the InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Updates the InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 UPDATE google.dlp.inspect_templates
@@ -1035,6 +1157,7 @@ organizationsId = '{{ organizationsId }}' --required
 AND inspectTemplatesId = '{{ inspectTemplatesId }}' --required
 RETURNING
 name,
+allowLimitedAvailabilityInfoTypes,
 createTime,
 description,
 displayName,
@@ -1058,7 +1181,7 @@ updateTime;
 >
 <TabItem value="projects_locations_inspect_templates_delete">
 
-Deletes an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Deletes an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 DELETE FROM google.dlp.inspect_templates
@@ -1070,7 +1193,7 @@ AND inspectTemplatesId = '{{ inspectTemplatesId }}' --required
 </TabItem>
 <TabItem value="organizations_locations_inspect_templates_delete">
 
-Deletes an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Deletes an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 DELETE FROM google.dlp.inspect_templates
@@ -1082,7 +1205,7 @@ AND inspectTemplatesId = '{{ inspectTemplatesId }}' --required
 </TabItem>
 <TabItem value="projects_inspect_templates_delete">
 
-Deletes an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Deletes an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 DELETE FROM google.dlp.inspect_templates
@@ -1093,7 +1216,7 @@ AND inspectTemplatesId = '{{ inspectTemplatesId }}' --required
 </TabItem>
 <TabItem value="organizations_inspect_templates_delete">
 
-Deletes an InspectTemplate. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
+Deletes an InspectTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates to learn more.
 
 ```sql
 DELETE FROM google.dlp.inspect_templates

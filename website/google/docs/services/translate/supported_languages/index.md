@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>supported_languages</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>supported_languages</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="supported_languages" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.supported_languages" /></td></tr>
 </tbody></table>
@@ -97,14 +98,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_get_supported_languages"><CopyableCode code="projects_locations_get_supported_languages" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-displayLanguageCode"><code>displayLanguageCode</code></a>, <a href="#parameter-model"><code>model</code></a></td>
+    <td><a href="#parameter-model"><code>model</code></a>, <a href="#parameter-displayLanguageCode"><code>displayLanguageCode</code></a></td>
     <td>Returns a list of supported languages for translation.</td>
 </tr>
 <tr>
     <td><a href="#projects_get_supported_languages"><CopyableCode code="projects_get_supported_languages" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-displayLanguageCode"><code>displayLanguageCode</code></a>, <a href="#parameter-model"><code>model</code></a></td>
+    <td><a href="#parameter-model"><code>model</code></a>, <a href="#parameter-displayLanguageCode"><code>displayLanguageCode</code></a></td>
     <td>Returns a list of supported languages for translation.</td>
 </tr>
 </tbody>
@@ -165,8 +166,8 @@ languages
 FROM google.translate.supported_languages
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND displayLanguageCode = '{{ displayLanguageCode }}'
 AND model = '{{ model }}'
+AND displayLanguageCode = '{{ displayLanguageCode }}'
 ;
 ```
 </TabItem>
@@ -179,8 +180,8 @@ SELECT
 languages
 FROM google.translate.supported_languages
 WHERE projectsId = '{{ projectsId }}' -- required
-AND displayLanguageCode = '{{ displayLanguageCode }}'
 AND model = '{{ model }}'
+AND displayLanguageCode = '{{ displayLanguageCode }}'
 ;
 ```
 </TabItem>

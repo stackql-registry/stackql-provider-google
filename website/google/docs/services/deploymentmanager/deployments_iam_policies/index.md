@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>deployments_iam_policies</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>deployments_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="deployments_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.deploymentmanager.deployments_iam_policies" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#get_iam_policy"><CopyableCode code="get_iam_policy" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
-    <td><a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a>, <a href="#parameter-optionsRequestedPolicyVersion"><code>optionsRequestedPolicyVersion</code></a></td>
+    <td><a href="#parameter-optionsRequestedPolicyVersion"><code>optionsRequestedPolicyVersion</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a></td>
     <td>Gets the access control policy for a resource. May be empty if no such policy or resource exists.</td>
 </tr>
 <tr>
@@ -163,8 +164,8 @@ role
 FROM google.deploymentmanager.deployments_iam_policies
 WHERE project = '{{ project }}' -- required
 AND resource = '{{ resource }}' -- required
-AND header.bypassBillingFilter = '{{ header.bypassBillingFilter }}'
 AND optionsRequestedPolicyVersion = '{{ optionsRequestedPolicyVersion }}'
+AND header.bypassBillingFilter = '{{ header.bypassBillingFilter }}'
 ;
 ```
 </TabItem>
@@ -187,9 +188,9 @@ Sets the access control policy on the specified resource. Replaces any existing 
 REPLACE google.deploymentmanager.deployments_iam_policies
 SET 
 data__policy = '{{ policy }}',
-data__etag = '{{ etag }}',
+data__updateMask = '{{ updateMask }}',
 data__bindings = '{{ bindings }}',
-data__updateMask = '{{ updateMask }}'
+data__etag = '{{ etag }}'
 WHERE 
 project = '{{ project }}' --required
 AND resource = '{{ resource }}' --required

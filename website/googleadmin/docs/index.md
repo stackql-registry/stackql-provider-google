@@ -21,7 +21,7 @@ Google Workspace identity services.
 :::info[Provider Summary] 
 
 total services: __1__  
-total resources: __29__  
+total resources: __30__  
 
 :::
 
@@ -119,6 +119,68 @@ stackql.exe shell --auth=$Auth
 ```
 
 </details>
+
+## User inventory
+
+All users in a domain, with admin status and last login:
+
+```sql
+SELECT
+  primaryEmail,
+  json_extract(name, '$.fullName') AS full_name,
+  isAdmin,
+  suspended,
+  lastLoginTime
+FROM googleadmin.directory.users
+WHERE domain = 'example.com';
+```
+
+Dormant accounts - users who have not signed in this year:
+
+```sql
+SELECT primaryEmail, lastLoginTime
+FROM googleadmin.directory.users
+WHERE domain = 'example.com'
+AND lastLoginTime < '2026-01-01'
+ORDER BY lastLoginTime;
+```
+
+## Groups and membership
+
+Groups in the domain, largest first:
+
+```sql
+SELECT
+  email,
+  name,
+  directMembersCount
+FROM googleadmin.directory.groups
+WHERE domain = 'example.com'
+ORDER BY CAST(directMembersCount AS INTEGER) DESC;
+```
+
+Members of a group:
+
+```sql
+SELECT email, role, type, status
+FROM googleadmin.directory.members
+WHERE groupKey = 'group-email@example.com';
+```
+
+## User lifecycle
+
+`INSERT` creates a user, `UPDATE` patches, `EXEC` invokes directory actions:
+
+```sql
+-- suspend a user
+UPDATE googleadmin.directory.users
+SET data__suspended = true
+WHERE userKey = 'user@example.com';
+
+-- force sign-out on all sessions
+EXEC googleadmin.directory.users.sign_out @userKey = 'user@example.com';
+```
+
 
 ## Services
 <div class="row">

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>volumes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>volumes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="volumes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.baremetalsolution.volumes" /></td></tr>
 </tbody></table>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="performanceTier" /></td>
     <td><code>string</code></td>
-    <td>Immutable. Performance tier of the Volume. Default is SHARED.</td>
+    <td>Immutable. Performance tier of the Volume. Default is SHARED. (VOLUME_PERFORMANCE_TIER_UNSPECIFIED, VOLUME_PERFORMANCE_TIER_SHARED, VOLUME_PERFORMANCE_TIER_ASSIGNED, VOLUME_PERFORMANCE_TIER_HT, VOLUME_PERFORMANCE_TIER_QOS2_PERFORMANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pod" /></td>
@@ -127,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protocol" /></td>
     <td><code>string</code></td>
-    <td>Output only. Storage protocol for the Volume.</td>
+    <td>Output only. Storage protocol for the Volume. (PROTOCOL_UNSPECIFIED, FIBRE_CHANNEL, NFS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="remainingSpaceGib" /></td>
@@ -142,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshotAutoDeleteBehavior" /></td>
     <td><code>string</code></td>
-    <td>The behavior to use when snapshot reserved space is full.</td>
+    <td>The behavior to use when snapshot reserved space is full. (SNAPSHOT_AUTO_DELETE_BEHAVIOR_UNSPECIFIED, DISABLED, OLDEST_FIRST, NEWEST_FIRST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="snapshotEnabled" /></td>
@@ -157,17 +158,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of this storage volume.</td>
+    <td>The state of this storage volume. (STATE_UNSPECIFIED, CREATING, READY, DELETING, UPDATING, COOL_OFF)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageType" /></td>
     <td><code>string</code></td>
-    <td>The storage type for this volume.</td>
+    <td>The storage type for this volume. (STORAGE_TYPE_UNSPECIFIED, SSD, HDD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workloadProfile" /></td>
     <td><code>string</code></td>
-    <td>The workload profile for the volume.</td>
+    <td>The workload profile for the volume. (WORKLOAD_PROFILE_UNSPECIFIED, GENERIC, HANA)</td>
 </tr>
 </tbody>
 </table>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="performanceTier" /></td>
     <td><code>string</code></td>
-    <td>Immutable. Performance tier of the Volume. Default is SHARED.</td>
+    <td>Immutable. Performance tier of the Volume. Default is SHARED. (VOLUME_PERFORMANCE_TIER_UNSPECIFIED, VOLUME_PERFORMANCE_TIER_SHARED, VOLUME_PERFORMANCE_TIER_ASSIGNED, VOLUME_PERFORMANCE_TIER_HT, VOLUME_PERFORMANCE_TIER_QOS2_PERFORMANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pod" /></td>
@@ -261,7 +262,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protocol" /></td>
     <td><code>string</code></td>
-    <td>Output only. Storage protocol for the Volume.</td>
+    <td>Output only. Storage protocol for the Volume. (PROTOCOL_UNSPECIFIED, FIBRE_CHANNEL, NFS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="remainingSpaceGib" /></td>
@@ -276,7 +277,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshotAutoDeleteBehavior" /></td>
     <td><code>string</code></td>
-    <td>The behavior to use when snapshot reserved space is full.</td>
+    <td>The behavior to use when snapshot reserved space is full. (SNAPSHOT_AUTO_DELETE_BEHAVIOR_UNSPECIFIED, DISABLED, OLDEST_FIRST, NEWEST_FIRST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="snapshotEnabled" /></td>
@@ -291,17 +292,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of this storage volume.</td>
+    <td>The state of this storage volume. (STATE_UNSPECIFIED, CREATING, READY, DELETING, UPDATING, COOL_OFF)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageType" /></td>
     <td><code>string</code></td>
-    <td>The storage type for this volume.</td>
+    <td>The storage type for this volume. (STORAGE_TYPE_UNSPECIFIED, SSD, HDD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workloadProfile" /></td>
     <td><code>string</code></td>
-    <td>The workload profile for the volume.</td>
+    <td>The workload profile for the volume. (WORKLOAD_PROFILE_UNSPECIFIED, GENERIC, HANA)</td>
 </tr>
 </tbody>
 </table>
@@ -334,7 +335,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List storage volumes in a given project and location.</td>
 </tr>
 <tr>
@@ -343,13 +344,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update details of a single storage volume.</td>
-</tr>
-<tr>
-    <td><a href="#resize"><CopyableCode code="resize" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td></td>
-    <td>Emergency Volume resize.</td>
 </tr>
 <tr>
     <td><a href="#evict"><CopyableCode code="evict" /></a></td>
@@ -364,6 +358,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
     <td></td>
     <td>RenameVolume sets a new name for a volume. Use with caution, previous names become immediately invalidated.</td>
+</tr>
+<tr>
+    <td><a href="#resize"><CopyableCode code="resize" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
+    <td></td>
+    <td>Emergency Volume resize.</td>
 </tr>
 </tbody>
 </table>
@@ -498,9 +499,9 @@ workloadProfile
 FROM google.baremetalsolution.volumes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -522,24 +523,24 @@ Update details of a single storage volume.
 ```sql
 UPDATE google.baremetalsolution.volumes
 SET 
-data__id = '{{ id }}',
-data__storageType = '{{ storageType }}',
-data__originallyRequestedSizeGib = '{{ originallyRequestedSizeGib }}',
-data__snapshotReservationDetail = '{{ snapshotReservationDetail }}',
-data__state = '{{ state }}',
-data__remainingSpaceGib = '{{ remainingSpaceGib }}',
-data__performanceTier = '{{ performanceTier }}',
-data__emergencySizeGib = '{{ emergencySizeGib }}',
-data__requestedSizeGib = '{{ requestedSizeGib }}',
-data__notes = '{{ notes }}',
 data__labels = '{{ labels }}',
-data__snapshotAutoDeleteBehavior = '{{ snapshotAutoDeleteBehavior }}',
 data__maxSizeGib = '{{ maxSizeGib }}',
+data__notes = '{{ notes }}',
+data__snapshotReservationDetail = '{{ snapshotReservationDetail }}',
+data__currentSizeGib = '{{ currentSizeGib }}',
 data__autoGrownSizeGib = '{{ autoGrownSizeGib }}',
+data__emergencySizeGib = '{{ emergencySizeGib }}',
+data__performanceTier = '{{ performanceTier }}',
+data__requestedSizeGib = '{{ requestedSizeGib }}',
+data__snapshotAutoDeleteBehavior = '{{ snapshotAutoDeleteBehavior }}',
+data__originallyRequestedSizeGib = '{{ originallyRequestedSizeGib }}',
 data__workloadProfile = '{{ workloadProfile }}',
-data__snapshotEnabled = {{ snapshotEnabled }},
 data__pod = '{{ pod }}',
-data__currentSizeGib = '{{ currentSizeGib }}'
+data__snapshotEnabled = {{ snapshotEnabled }},
+data__remainingSpaceGib = '{{ remainingSpaceGib }}',
+data__storageType = '{{ storageType }}',
+data__state = '{{ state }}',
+data__id = '{{ id }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -559,29 +560,13 @@ response;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="resize"
+    defaultValue="evict"
     values={[
-        { label: 'resize', value: 'resize' },
         { label: 'evict', value: 'evict' },
-        { label: 'rename', value: 'rename' }
+        { label: 'rename', value: 'rename' },
+        { label: 'resize', value: 'resize' }
     ]}
 >
-<TabItem value="resize">
-
-Emergency Volume resize.
-
-```sql
-EXEC google.baremetalsolution.volumes.resize 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@volumesId='{{ volumesId }}' --required 
-@@json=
-'{
-"sizeGib": "{{ sizeGib }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="evict">
 
 Skips volume's cooloff and deletes it now. Volume must be in cooloff state.
@@ -606,6 +591,22 @@ EXEC google.baremetalsolution.volumes.rename
 @@json=
 '{
 "newVolumeId": "{{ newVolumeId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="resize">
+
+Emergency Volume resize.
+
+```sql
+EXEC google.baremetalsolution.volumes.resize 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@volumesId='{{ volumesId }}' --required 
+@@json=
+'{
+"sizeGib": "{{ sizeGib }}"
 }'
 ;
 ```

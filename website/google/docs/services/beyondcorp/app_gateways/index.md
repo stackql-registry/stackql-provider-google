@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>app_gateways</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>app_gateways</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="app_gateways" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.beyondcorp.app_gateways" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="hostType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of hosting used by the AppGateway.</td>
+    <td>Required. The type of hosting used by the AppGateway. (HOST_TYPE_UNSPECIFIED, GCP_REGIONAL_MIG)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -92,12 +93,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the AppGateway.</td>
+    <td>Output only. The current state of the AppGateway. (STATE_UNSPECIFIED, CREATING, CREATED, UPDATING, DELETING, DOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of network connectivity used by the AppGateway.</td>
+    <td>Required. The type of network connectivity used by the AppGateway. (TYPE_UNSPECIFIED, TCP_PROXY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="hostType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of hosting used by the AppGateway.</td>
+    <td>Required. The type of hosting used by the AppGateway. (HOST_TYPE_UNSPECIFIED, GCP_REGIONAL_MIG)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -171,12 +172,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the AppGateway.</td>
+    <td>Output only. The current state of the AppGateway. (STATE_UNSPECIFIED, CREATING, CREATED, UPDATING, DELETING, DOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of network connectivity used by the AppGateway.</td>
+    <td>Required. The type of network connectivity used by the AppGateway. (TYPE_UNSPECIFIED, TCP_PROXY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -224,21 +225,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_app_gateways_list"><CopyableCode code="projects_locations_app_gateways_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists AppGateways in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_gateways_create"><CopyableCode code="projects_locations_app_gateways_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-appGatewayId"><code>appGatewayId</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-appGatewayId"><code>appGatewayId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new AppGateway in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_gateways_delete"><CopyableCode code="projects_locations_app_gateways_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appGatewaysId"><code>appGatewaysId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single AppGateway.</td>
 </tr>
 </tbody>
@@ -367,10 +368,10 @@ uri
 FROM google.beyondcorp.app_gateways
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -392,28 +393,28 @@ Creates a new AppGateway in a given project and location.
 
 ```sql
 INSERT INTO google.beyondcorp.app_gateways (
-data__name,
-data__labels,
 data__displayName,
-data__type,
 data__hostType,
+data__type,
+data__labels,
+data__name,
 projectsId,
 locationsId,
-requestId,
 validateOnly,
-appGatewayId
+appGatewayId,
+requestId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
 '{{ displayName }}',
-'{{ type }}',
 '{{ hostType }}',
+'{{ type }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
 '{{ validateOnly }}',
-'{{ appGatewayId }}'
+'{{ appGatewayId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -425,50 +426,45 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: app_gateways
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the app_gateways resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the app_gateways resource.
-    - name: name
-      value: string
-      description: >
-        Required. Unique resource name of the AppGateway. The name is ignored when creating an AppGateway.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels to represent user provided metadata.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. An arbitrary user-provided name for the AppGateway. Cannot exceed 64 characters.
-        
-    - name: type
-      value: string
-      description: >
-        Required. The type of network connectivity used by the AppGateway.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'TCP_PROXY']
     - name: hostType
-      value: string
-      description: >
+      value: "{{ hostType }}"
+      description: |
         Required. The type of hosting used by the AppGateway.
-        
       valid_values: ['HOST_TYPE_UNSPECIFIED', 'GCP_REGIONAL_MIG']
-    - name: requestId
-      value: string
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The type of network connectivity used by the AppGateway.
+      valid_values: ['TYPE_UNSPECIFIED', 'TCP_PROXY']
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels to represent user provided metadata.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Unique resource name of the AppGateway. The name is ignored when creating an AppGateway.
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
     - name: appGatewayId
-      value: string
-```
+      value: "{{ appGatewayId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -490,8 +486,8 @@ DELETE FROM google.beyondcorp.app_gateways
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND appGatewaysId = '{{ appGatewaysId }}' --required
-AND requestId = '{{ requestId }}'
 AND validateOnly = '{{ validateOnly }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

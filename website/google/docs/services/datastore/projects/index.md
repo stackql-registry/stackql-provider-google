@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>projects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>projects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="projects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datastore.projects" /></td></tr>
 </tbody></table>
@@ -57,20 +58,6 @@ The following methods are available for this resource:
     <td>Exports a copy of all or a subset of entities from Google Cloud Datastore to another storage system, such as Google Cloud Storage. Recent updates to entities may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.</td>
 </tr>
 <tr>
-    <td><a href="#run_aggregation_query"><CopyableCode code="run_aggregation_query" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td></td>
-    <td>Runs an aggregation query.</td>
-</tr>
-<tr>
-    <td><a href="#begin_transaction"><CopyableCode code="begin_transaction" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td></td>
-    <td>Begins a new transaction.</td>
-</tr>
-<tr>
     <td><a href="#import"><CopyableCode code="import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
@@ -78,11 +65,11 @@ The following methods are available for this resource:
     <td>Imports entities into Google Cloud Datastore. Existing entities with the same key are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportEntities operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Datastore.</td>
 </tr>
 <tr>
-    <td><a href="#allocate_ids"><CopyableCode code="allocate_ids" /></a></td>
+    <td><a href="#run_aggregation_query"><CopyableCode code="run_aggregation_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
-    <td>Allocates IDs for the given keys, which is useful for referencing an entity before it is inserted.</td>
+    <td>Runs an aggregation query.</td>
 </tr>
 <tr>
     <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
@@ -92,11 +79,18 @@ The following methods are available for this resource:
     <td>Looks up entities by key.</td>
 </tr>
 <tr>
-    <td><a href="#reserve_ids"><CopyableCode code="reserve_ids" /></a></td>
+    <td><a href="#allocate_ids"><CopyableCode code="allocate_ids" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
-    <td>Prevents the supplied keys' IDs from being auto-allocated by Cloud Datastore.</td>
+    <td>Allocates IDs for the given keys, which is useful for referencing an entity before it is inserted.</td>
+</tr>
+<tr>
+    <td><a href="#begin_transaction"><CopyableCode code="begin_transaction" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
+    <td></td>
+    <td>Begins a new transaction.</td>
 </tr>
 <tr>
     <td><a href="#rollback"><CopyableCode code="rollback" /></a></td>
@@ -111,6 +105,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
     <td>Queries for entities.</td>
+</tr>
+<tr>
+    <td><a href="#reserve_ids"><CopyableCode code="reserve_ids" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
+    <td></td>
+    <td>Prevents the supplied keys' IDs from being auto-allocated by Cloud Datastore.</td>
 </tr>
 <tr>
     <td><a href="#commit"><CopyableCode code="commit" /></a></td>
@@ -149,14 +150,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="export"
     values={[
         { label: 'export', value: 'export' },
-        { label: 'run_aggregation_query', value: 'run_aggregation_query' },
-        { label: 'begin_transaction', value: 'begin_transaction' },
         { label: 'import', value: 'import' },
-        { label: 'allocate_ids', value: 'allocate_ids' },
+        { label: 'run_aggregation_query', value: 'run_aggregation_query' },
         { label: 'lookup', value: 'lookup' },
-        { label: 'reserve_ids', value: 'reserve_ids' },
+        { label: 'allocate_ids', value: 'allocate_ids' },
+        { label: 'begin_transaction', value: 'begin_transaction' },
         { label: 'rollback', value: 'rollback' },
         { label: 'run_query', value: 'run_query' },
+        { label: 'reserve_ids', value: 'reserve_ids' },
         { label: 'commit', value: 'commit' }
     ]}
 >
@@ -172,40 +173,6 @@ EXEC google.datastore.projects.export
 "labels": "{{ labels }}", 
 "outputUrlPrefix": "{{ outputUrlPrefix }}", 
 "entityFilter": "{{ entityFilter }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="run_aggregation_query">
-
-Runs an aggregation query.
-
-```sql
-EXEC google.datastore.projects.run_aggregation_query 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
-"databaseId": "{{ databaseId }}", 
-"aggregationQuery": "{{ aggregationQuery }}", 
-"readOptions": "{{ readOptions }}", 
-"explainOptions": "{{ explainOptions }}", 
-"gqlQuery": "{{ gqlQuery }}", 
-"partitionId": "{{ partitionId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="begin_transaction">
-
-Begins a new transaction.
-
-```sql
-EXEC google.datastore.projects.begin_transaction 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
-"databaseId": "{{ databaseId }}", 
-"transactionOptions": "{{ transactionOptions }}"
 }'
 ;
 ```
@@ -226,17 +193,22 @@ EXEC google.datastore.projects.import
 ;
 ```
 </TabItem>
-<TabItem value="allocate_ids">
+<TabItem value="run_aggregation_query">
 
-Allocates IDs for the given keys, which is useful for referencing an entity before it is inserted.
+Runs an aggregation query.
 
 ```sql
-EXEC google.datastore.projects.allocate_ids 
+EXEC google.datastore.projects.run_aggregation_query 
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"keys": "{{ keys }}", 
-"databaseId": "{{ databaseId }}"
+"gqlQuery": "{{ gqlQuery }}", 
+"requestOptions": "{{ requestOptions }}", 
+"readOptions": "{{ readOptions }}", 
+"databaseId": "{{ databaseId }}", 
+"partitionId": "{{ partitionId }}", 
+"aggregationQuery": "{{ aggregationQuery }}", 
+"explainOptions": "{{ explainOptions }}"
 }'
 ;
 ```
@@ -250,24 +222,42 @@ EXEC google.datastore.projects.lookup
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"databaseId": "{{ databaseId }}", 
 "readOptions": "{{ readOptions }}", 
+"propertyMask": "{{ propertyMask }}", 
 "keys": "{{ keys }}", 
-"propertyMask": "{{ propertyMask }}"
+"databaseId": "{{ databaseId }}", 
+"requestOptions": "{{ requestOptions }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="reserve_ids">
+<TabItem value="allocate_ids">
 
-Prevents the supplied keys' IDs from being auto-allocated by Cloud Datastore.
+Allocates IDs for the given keys, which is useful for referencing an entity before it is inserted.
 
 ```sql
-EXEC google.datastore.projects.reserve_ids 
+EXEC google.datastore.projects.allocate_ids 
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"keys": "{{ keys }}", 
+"requestOptions": "{{ requestOptions }}", 
+"databaseId": "{{ databaseId }}", 
+"keys": "{{ keys }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="begin_transaction">
+
+Begins a new transaction.
+
+```sql
+EXEC google.datastore.projects.begin_transaction 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"transactionOptions": "{{ transactionOptions }}", 
+"requestOptions": "{{ requestOptions }}", 
 "databaseId": "{{ databaseId }}"
 }'
 ;
@@ -282,8 +272,9 @@ EXEC google.datastore.projects.rollback
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"databaseId": "{{ databaseId }}", 
-"transaction": "{{ transaction }}"
+"requestOptions": "{{ requestOptions }}", 
+"transaction": "{{ transaction }}", 
+"databaseId": "{{ databaseId }}"
 }'
 ;
 ```
@@ -297,13 +288,30 @@ EXEC google.datastore.projects.run_query
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"readOptions": "{{ readOptions }}", 
-"propertyMask": "{{ propertyMask }}", 
+"gqlQuery": "{{ gqlQuery }}", 
+"requestOptions": "{{ requestOptions }}", 
+"query": "{{ query }}", 
 "databaseId": "{{ databaseId }}", 
 "partitionId": "{{ partitionId }}", 
-"query": "{{ query }}", 
 "explainOptions": "{{ explainOptions }}", 
-"gqlQuery": "{{ gqlQuery }}"
+"readOptions": "{{ readOptions }}", 
+"propertyMask": "{{ propertyMask }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reserve_ids">
+
+Prevents the supplied keys' IDs from being auto-allocated by Cloud Datastore.
+
+```sql
+EXEC google.datastore.projects.reserve_ids 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"requestOptions": "{{ requestOptions }}", 
+"databaseId": "{{ databaseId }}", 
+"keys": "{{ keys }}"
 }'
 ;
 ```
@@ -317,11 +325,12 @@ EXEC google.datastore.projects.commit
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"mode": "{{ mode }}", 
-"singleUseTransaction": "{{ singleUseTransaction }}", 
-"databaseId": "{{ databaseId }}", 
+"mutations": "{{ mutations }}", 
+"requestOptions": "{{ requestOptions }}", 
 "transaction": "{{ transaction }}", 
-"mutations": "{{ mutations }}"
+"singleUseTransaction": "{{ singleUseTransaction }}", 
+"mode": "{{ mode }}", 
+"databaseId": "{{ databaseId }}"
 }'
 ;
 ```

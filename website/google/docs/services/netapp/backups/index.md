@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.netapp.backups" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of backup, manually created or created by a backup policy.</td>
+    <td>Output only. Type of backup, manually created or created by a backup policy. (TYPE_UNSPECIFIED, MANUAL, SCHEDULED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="chainStorageBytes" /></td>
@@ -90,6 +91,11 @@ The following fields are returned by `SELECT` queries:
     <td>Resource labels to represent user provided metadata.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="ontapSource" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Represents source details for ONTAP backups. Either source_volume or ontap_source should be provided. (id: OntapSource)</td>
+</tr>
+<tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Reserved for future use</td>
@@ -107,12 +113,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="sourceVolume" /></td>
     <td><code>string</code></td>
-    <td>Volume full name of this backup belongs to. Format: `projects/&#123;projects_id&#125;/locations/&#123;location&#125;/volumes/&#123;volume_id&#125;`</td>
+    <td>The resource name of the volume that this backup belongs to. You must provide either `source_volume` or `ontap_source`. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/volumes/&#123;volume_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The backup state.</td>
+    <td>Output only. The backup state. (STATE_UNSPECIFIED, CREATING, UPLOADING, READY, DELETING, ERROR, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="volumeRegion" /></td>
@@ -169,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Returns descriptions of all backups for a backupVault.</td>
 </tr>
 <tr>
@@ -285,6 +291,7 @@ createTime,
 description,
 enforcedRetentionEndTime,
 labels,
+ontapSource,
 satisfiesPzi,
 satisfiesPzs,
 sourceSnapshot,
@@ -312,9 +319,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupVaultsId = '{{ backupVaultsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -337,10 +344,11 @@ Creates a backup from the volume specified in the request The backup can be crea
 ```sql
 INSERT INTO google.netapp.backups (
 data__name,
+data__sourceSnapshot,
+data__labels,
 data__description,
 data__sourceVolume,
-data__labels,
-data__sourceSnapshot,
+data__ontapSource,
 projectsId,
 locationsId,
 backupVaultsId,
@@ -348,10 +356,11 @@ backupId
 )
 SELECT 
 '{{ name }}',
+'{{ sourceSnapshot }}',
+'{{ labels }}',
 '{{ description }}',
 '{{ sourceVolume }}',
-'{{ labels }}',
-'{{ sourceSnapshot }}',
+'{{ ontapSource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupVaultsId }}',
@@ -367,47 +376,49 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backups resource.
     - name: backupVaultsId
-      value: string
+      value: "{{ backupVaultsId }}"
       description: Required parameter for the backups resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the backup. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}`.
-        
-    - name: description
-      value: string
-      description: >
-        A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.
-        
-    - name: sourceVolume
-      value: string
-      description: >
-        Volume full name of this backup belongs to. Format: `projects/{projects_id}/locations/{location}/volumes/{volume_id}`
-        
-    - name: labels
-      value: object
-      description: >
-        Resource labels to represent user provided metadata.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the backup. Format: \`projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}\`.
     - name: sourceSnapshot
-      value: string
-      description: >
-        If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}`
-        
+      value: "{{ sourceSnapshot }}"
+      description: |
+        If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}\`
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user provided metadata.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.
+    - name: sourceVolume
+      value: "{{ sourceVolume }}"
+      description: |
+        The resource name of the volume that this backup belongs to. You must provide either \`source_volume\` or \`ontap_source\`. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}\`
+    - name: ontapSource
+      description: |
+        Optional. Represents source details for ONTAP backups. Either source_volume or ontap_source should be provided.
+      value:
+        volumeUuid: "{{ volumeUuid }}"
+        storagePool: "{{ storagePool }}"
+        snapshotUuid: "{{ snapshotUuid }}"
     - name: backupId
-      value: string
-```
+      value: "{{ backupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -428,10 +439,11 @@ Update backup with full spec.
 UPDATE google.netapp.backups
 SET 
 data__name = '{{ name }}',
+data__sourceSnapshot = '{{ sourceSnapshot }}',
+data__labels = '{{ labels }}',
 data__description = '{{ description }}',
 data__sourceVolume = '{{ sourceVolume }}',
-data__labels = '{{ labels }}',
-data__sourceSnapshot = '{{ sourceSnapshot }}'
+data__ontapSource = '{{ ontapSource }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

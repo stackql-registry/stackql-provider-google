@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>evaluation_items</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>evaluation_items</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="evaluation_items" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.evaluation_items" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="evaluationItemType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of the EvaluationItem.</td>
+    <td>Required. The type of the EvaluationItem. (EVALUATION_ITEM_TYPE_UNSPECIFIED, REQUEST, RESULT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="evaluationRequest" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="evaluationItemType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of the EvaluationItem.</td>
+    <td>Required. The type of the EvaluationItem. (EVALUATION_ITEM_TYPE_UNSPECIFIED, REQUEST, RESULT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="evaluationRequest" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Evaluation Items.</td>
 </tr>
 <tr>
@@ -316,10 +317,10 @@ metadata
 FROM google.aiplatform.evaluation_items
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -341,24 +342,24 @@ Creates an Evaluation Item.
 
 ```sql
 INSERT INTO google.aiplatform.evaluation_items (
-data__gcsUri,
-data__metadata,
-data__evaluationRequest,
 data__displayName,
 data__name,
 data__labels,
 data__evaluationItemType,
+data__evaluationRequest,
+data__gcsUri,
+data__metadata,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ gcsUri }}',
-'{{ metadata }}',
-'{{ evaluationRequest }}',
 '{{ displayName }}',
 '{{ name }}',
 '{{ labels }}',
 '{{ evaluationItemType }}',
+'{{ evaluationRequest }}',
+'{{ gcsUri }}',
+'{{ metadata }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -377,53 +378,89 @@ metadata
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: evaluation_items
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the evaluation_items resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the evaluation_items resource.
-    - name: gcsUri
-      value: string
-      description: >
-        The Cloud Storage object where the request or response is stored.
-        
-    - name: metadata
-      value: any
-      description: >
-        Optional. Metadata for the EvaluationItem.
-        
-    - name: evaluationRequest
-      value: object
-      description: >
-        The request to evaluate.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The display name of the EvaluationItem.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the EvaluationItem. Format: `projects/{project}/locations/{location}/evaluationItems/{evaluation_item}`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the EvaluationItem. Format: \`projects/{project}/locations/{location}/evaluationItems/{evaluation_item}\`
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels for the EvaluationItem.
-        
     - name: evaluationItemType
-      value: string
-      description: >
+      value: "{{ evaluationItemType }}"
+      description: |
         Required. The type of the EvaluationItem.
-        
       valid_values: ['EVALUATION_ITEM_TYPE_UNSPECIFIED', 'REQUEST', 'RESULT']
-```
+    - name: evaluationRequest
+      description: |
+        The request to evaluate.
+      value:
+        goldenResponse:
+          error:
+            message: "{{ message }}"
+            details: "{{ details }}"
+            code: {{ code }}
+          text: "{{ text }}"
+          candidate: "{{ candidate }}"
+          value: "{{ value }}"
+          agentData:
+            turns:
+              - turnIndex: {{ turnIndex }}
+                events: "{{ events }}"
+                turnId: "{{ turnId }}"
+            agents: "{{ agents }}"
+        candidateResponses:
+          - error:
+              message: "{{ message }}"
+              details: "{{ details }}"
+              code: {{ code }}
+            text: "{{ text }}"
+            candidate: "{{ candidate }}"
+            value: "{{ value }}"
+            agentData:
+              turns:
+                - turnIndex: {{ turnIndex }}
+                  events: "{{ events }}"
+                  turnId: "{{ turnId }}"
+              agents: "{{ agents }}"
+        rubrics: "{{ rubrics }}"
+        prompt:
+          promptTemplateData:
+            values: "{{ values }}"
+          value: "{{ value }}"
+          agentData:
+            turns:
+              - turnIndex: {{ turnIndex }}
+                events: "{{ events }}"
+                turnId: "{{ turnId }}"
+            agents: "{{ agents }}"
+          userScenario:
+            conversationPlan: "{{ conversationPlan }}"
+            startingPrompt: "{{ startingPrompt }}"
+          text: "{{ text }}"
+    - name: gcsUri
+      value: "{{ gcsUri }}"
+      description: |
+        The Cloud Storage object where the request or response is stored.
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. Metadata for the EvaluationItem.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

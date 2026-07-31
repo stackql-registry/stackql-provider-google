@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>services_config</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>services_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="services_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicemanagement.services_config" /></td></tr>
 </tbody></table>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="monitoredResources" /></td>
     <td><code>array</code></td>
-    <td>Defines the monitored resources used by this service. This is required by the Service.monitoring and Service.logging configurations.</td>
+    <td>Defines the monitored resources used by this service. This is required by the `Service.monitoring` and `Service.logging` configurations.</td>
 </tr>
 <tr>
     <td><CopyableCode code="monitoring" /></td>

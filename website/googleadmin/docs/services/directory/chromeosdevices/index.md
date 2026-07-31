@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>chromeosdevices</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>chromeosdevices</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="chromeosdevices" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.chromeosdevices" /></td></tr>
 </tbody></table>
@@ -85,6 +86,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Contains backlight information for the device.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="bluetoothAdapterInfo" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Information about Bluetooth adapters of the device.</td>
+</tr>
+<tr>
     <td><CopyableCode code="bootMode" /></td>
     <td><code>string</code></td>
     <td>The boot mode for the device. The possible values are: * `Verified`: The device is running a valid version of the Chrome OS. * `Dev`: The devices's developer hardware switch is enabled. When booted, the device has a command line shell. For an example of a developer switch, see the [Chromebook developer information](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).</td>
@@ -92,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="chromeOsType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Chrome OS type of the device.</td>
+    <td>Output only. Chrome OS type of the device. (chromeOsTypeUnspecified, chromeOsFlex, chromeOs)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cpuInfo" /></td>
@@ -107,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deprovisionReason" /></td>
     <td><code>string</code></td>
-    <td>(Read-only) Deprovision reason.</td>
+    <td>(Read-only) Deprovision reason. (DEPROVISION_REASON_UNSPECIFIED, DEPROVISION_REASON_SAME_MODEL_REPLACEMENT, DEPROVISION_REASON_UPGRADE, DEPROVISION_REASON_DOMAIN_MOVE, DEPROVISION_REASON_SERVICE_EXPIRATION, DEPROVISION_REASON_OTHER, DEPROVISION_REASON_DIFFERENT_MODEL_REPLACEMENT, DEPROVISION_REASON_RETIRING_DEVICE, DEPROVISION_REASON_UPGRADE_TRANSFER, DEPROVISION_REASON_NOT_REQUIRED, DEPROVISION_REASON_REPAIR_CENTER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deviceFiles" /></td>
@@ -122,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deviceLicenseType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Device license type.</td>
+    <td>Output only. Device license type. (deviceLicenseTypeUnspecified, enterprise, enterpriseUpgrade, educationUpgrade, education, kioskUpgrade, enterpriseUpgradePerpetual, enterpriseUpgradeFixedTerm, educationUpgradePerpetual, educationUpgradeFixedTerm)</td>
 </tr>
 <tr>
     <td><CopyableCode code="diskSpaceUsage" /></td>
@@ -262,7 +268,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="osVersionCompliance" /></td>
     <td><code>string</code></td>
-    <td>Output only. Compliance status of the OS version.</td>
+    <td>Output only. Device policy compliance status of the OS version. (complianceUnspecified, compliant, pending, notCompliant)</td>
 </tr>
 <tr>
     <td><CopyableCode code="platformVersion" /></td>
@@ -364,6 +370,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Contains backlight information for the device.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="bluetoothAdapterInfo" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Information about Bluetooth adapters of the device.</td>
+</tr>
+<tr>
     <td><CopyableCode code="bootMode" /></td>
     <td><code>string</code></td>
     <td>The boot mode for the device. The possible values are: * `Verified`: The device is running a valid version of the Chrome OS. * `Dev`: The devices's developer hardware switch is enabled. When booted, the device has a command line shell. For an example of a developer switch, see the [Chromebook developer information](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).</td>
@@ -371,7 +382,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="chromeOsType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Chrome OS type of the device.</td>
+    <td>Output only. Chrome OS type of the device. (chromeOsTypeUnspecified, chromeOsFlex, chromeOs)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cpuInfo" /></td>
@@ -386,7 +397,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deprovisionReason" /></td>
     <td><code>string</code></td>
-    <td>(Read-only) Deprovision reason.</td>
+    <td>(Read-only) Deprovision reason. (DEPROVISION_REASON_UNSPECIFIED, DEPROVISION_REASON_SAME_MODEL_REPLACEMENT, DEPROVISION_REASON_UPGRADE, DEPROVISION_REASON_DOMAIN_MOVE, DEPROVISION_REASON_SERVICE_EXPIRATION, DEPROVISION_REASON_OTHER, DEPROVISION_REASON_DIFFERENT_MODEL_REPLACEMENT, DEPROVISION_REASON_RETIRING_DEVICE, DEPROVISION_REASON_UPGRADE_TRANSFER, DEPROVISION_REASON_NOT_REQUIRED, DEPROVISION_REASON_REPAIR_CENTER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deviceFiles" /></td>
@@ -401,7 +412,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deviceLicenseType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Device license type.</td>
+    <td>Output only. Device license type. (deviceLicenseTypeUnspecified, enterprise, enterpriseUpgrade, educationUpgrade, education, kioskUpgrade, enterpriseUpgradePerpetual, enterpriseUpgradeFixedTerm, educationUpgradePerpetual, educationUpgradeFixedTerm)</td>
 </tr>
 <tr>
     <td><CopyableCode code="diskSpaceUsage" /></td>
@@ -541,7 +552,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="osVersionCompliance" /></td>
     <td><code>string</code></td>
-    <td>Output only. Compliance status of the OS version.</td>
+    <td>Output only. Device policy compliance status of the OS version. (complianceUnspecified, compliant, pending, notCompliant)</td>
 </tr>
 <tr>
     <td><CopyableCode code="platformVersion" /></td>
@@ -624,7 +635,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customerId"><code>customerId</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-orgUnitPath"><code>orgUnitPath</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-includeChildOrgunits"><code>includeChildOrgunits</code></a></td>
+    <td><a href="#parameter-orgUnitPath"><code>orgUnitPath</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-includeChildOrgunits"><code>includeChildOrgunits</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Retrieves a paginated list of Chrome OS devices within an account.</td>
 </tr>
 <tr>
@@ -756,6 +767,7 @@ annotatedUser,
 autoUpdateExpiration,
 autoUpdateThrough,
 backlightInfo,
+bluetoothAdapterInfo,
 bootMode,
 chromeOsType,
 cpuInfo,
@@ -822,6 +834,7 @@ annotatedUser,
 autoUpdateExpiration,
 autoUpdateThrough,
 backlightInfo,
+bluetoothAdapterInfo,
 bootMode,
 chromeOsType,
 cpuInfo,
@@ -870,14 +883,14 @@ tpmVersionInfo,
 willAutoRenew
 FROM googleadmin.directory.chromeosdevices
 WHERE customerId = '{{ customerId }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND orgUnitPath = '{{ orgUnitPath }}'
+AND orderBy = '{{ orderBy }}'
+AND sortOrder = '{{ sortOrder }}'
+AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND projection = '{{ projection }}'
-AND query = '{{ query }}'
-AND sortOrder = '{{ sortOrder }}'
 AND includeChildOrgunits = '{{ includeChildOrgunits }}'
+AND query = '{{ query }}'
 ;
 ```
 </TabItem>
@@ -899,49 +912,49 @@ Updates a device's updatable properties, such as `annotatedUser`, `annotatedLoca
 ```sql
 UPDATE googleadmin.directory.chromeosdevices
 SET 
-data__deviceId = '{{ deviceId }}',
-data__serialNumber = '{{ serialNumber }}',
+data__lastDeprovisionTimestamp = '{{ lastDeprovisionTimestamp }}',
 data__status = '{{ status }}',
-data__lastSync = '{{ lastSync }}',
-data__supportEndDate = '{{ supportEndDate }}',
-data__annotatedUser = '{{ annotatedUser }}',
-data__annotatedLocation = '{{ annotatedLocation }}',
-data__notes = '{{ notes }}',
-data__model = '{{ model }}',
-data__meid = '{{ meid }}',
 data__orderNumber = '{{ orderNumber }}',
-data__willAutoRenew = {{ willAutoRenew }},
+data__orgUnitPath = '{{ orgUnitPath }}',
+data__annotatedUser = '{{ annotatedUser }}',
+data__serialNumber = '{{ serialNumber }}',
+data__autoUpdateExpiration = '{{ autoUpdateExpiration }}',
 data__osVersion = '{{ osVersion }}',
+data__deprovisionReason = '{{ deprovisionReason }}',
+data__cpuStatusReports = '{{ cpuStatusReports }}',
+data__lastKnownNetwork = '{{ lastKnownNetwork }}',
+data__cpuInfo = '{{ cpuInfo }}',
+data__meid = '{{ meid }}',
+data__lastEnrollmentTime = '{{ lastEnrollmentTime }}',
+data__ethernetMacAddress0 = '{{ ethernetMacAddress0 }}',
+data__orgUnitId = '{{ orgUnitId }}',
+data__deviceFiles = '{{ deviceFiles }}',
+data__annotatedAssetId = '{{ annotatedAssetId }}',
+data__notes = '{{ notes }}',
 data__platformVersion = '{{ platformVersion }}',
 data__firmwareVersion = '{{ firmwareVersion }}',
-data__macAddress = '{{ macAddress }}',
-data__bootMode = '{{ bootMode }}',
-data__lastEnrollmentTime = '{{ lastEnrollmentTime }}',
-data__kind = '{{ kind }}',
-data__recentUsers = '{{ recentUsers }}',
 data__activeTimeRanges = '{{ activeTimeRanges }}',
-data__ethernetMacAddress = '{{ ethernetMacAddress }}',
-data__annotatedAssetId = '{{ annotatedAssetId }}',
-data__etag = '{{ etag }}',
+data__screenshotFiles = '{{ screenshotFiles }}',
 data__diskVolumeReports = '{{ diskVolumeReports }}',
 data__systemRamTotal = '{{ systemRamTotal }}',
-data__cpuStatusReports = '{{ cpuStatusReports }}',
-data__cpuInfo = '{{ cpuInfo }}',
-data__deviceFiles = '{{ deviceFiles }}',
-data__systemRamFreeReports = '{{ systemRamFreeReports }}',
-data__lastKnownNetwork = '{{ lastKnownNetwork }}',
-data__autoUpdateExpiration = '{{ autoUpdateExpiration }}',
-data__ethernetMacAddress0 = '{{ ethernetMacAddress0 }}',
-data__dockMacAddress = '{{ dockMacAddress }}',
+data__supportEndDate = '{{ supportEndDate }}',
+data__recentUsers = '{{ recentUsers }}',
+data__annotatedLocation = '{{ annotatedLocation }}',
+data__deviceId = '{{ deviceId }}',
+data__model = '{{ model }}',
 data__manufactureDate = '{{ manufactureDate }}',
-data__orgUnitPath = '{{ orgUnitPath }}',
-data__tpmVersionInfo = '{{ tpmVersionInfo }}',
-data__screenshotFiles = '{{ screenshotFiles }}',
-data__orgUnitId = '{{ orgUnitId }}',
+data__dockMacAddress = '{{ dockMacAddress }}',
+data__lastSync = '{{ lastSync }}',
+data__kind = '{{ kind }}',
 data__osUpdateStatus = '{{ osUpdateStatus }}',
 data__firstEnrollmentTime = '{{ firstEnrollmentTime }}',
-data__lastDeprovisionTimestamp = '{{ lastDeprovisionTimestamp }}',
-data__deprovisionReason = '{{ deprovisionReason }}'
+data__willAutoRenew = {{ willAutoRenew }},
+data__macAddress = '{{ macAddress }}',
+data__bootMode = '{{ bootMode }}',
+data__etag = '{{ etag }}',
+data__systemRamFreeReports = '{{ systemRamFreeReports }}',
+data__ethernetMacAddress = '{{ ethernetMacAddress }}',
+data__tpmVersionInfo = '{{ tpmVersionInfo }}'
 WHERE 
 customerId = '{{ customerId }}' --required
 AND deviceId = '{{ deviceId }}' --required
@@ -954,6 +967,7 @@ annotatedUser,
 autoUpdateExpiration,
 autoUpdateThrough,
 backlightInfo,
+bluetoothAdapterInfo,
 bootMode,
 chromeOsType,
 cpuInfo,
@@ -1020,49 +1034,49 @@ Updates a device's updatable properties, such as `annotatedUser`, `annotatedLoca
 ```sql
 REPLACE googleadmin.directory.chromeosdevices
 SET 
-data__deviceId = '{{ deviceId }}',
-data__serialNumber = '{{ serialNumber }}',
+data__lastDeprovisionTimestamp = '{{ lastDeprovisionTimestamp }}',
 data__status = '{{ status }}',
-data__lastSync = '{{ lastSync }}',
-data__supportEndDate = '{{ supportEndDate }}',
-data__annotatedUser = '{{ annotatedUser }}',
-data__annotatedLocation = '{{ annotatedLocation }}',
-data__notes = '{{ notes }}',
-data__model = '{{ model }}',
-data__meid = '{{ meid }}',
 data__orderNumber = '{{ orderNumber }}',
-data__willAutoRenew = {{ willAutoRenew }},
+data__orgUnitPath = '{{ orgUnitPath }}',
+data__annotatedUser = '{{ annotatedUser }}',
+data__serialNumber = '{{ serialNumber }}',
+data__autoUpdateExpiration = '{{ autoUpdateExpiration }}',
 data__osVersion = '{{ osVersion }}',
+data__deprovisionReason = '{{ deprovisionReason }}',
+data__cpuStatusReports = '{{ cpuStatusReports }}',
+data__lastKnownNetwork = '{{ lastKnownNetwork }}',
+data__cpuInfo = '{{ cpuInfo }}',
+data__meid = '{{ meid }}',
+data__lastEnrollmentTime = '{{ lastEnrollmentTime }}',
+data__ethernetMacAddress0 = '{{ ethernetMacAddress0 }}',
+data__orgUnitId = '{{ orgUnitId }}',
+data__deviceFiles = '{{ deviceFiles }}',
+data__annotatedAssetId = '{{ annotatedAssetId }}',
+data__notes = '{{ notes }}',
 data__platformVersion = '{{ platformVersion }}',
 data__firmwareVersion = '{{ firmwareVersion }}',
-data__macAddress = '{{ macAddress }}',
-data__bootMode = '{{ bootMode }}',
-data__lastEnrollmentTime = '{{ lastEnrollmentTime }}',
-data__kind = '{{ kind }}',
-data__recentUsers = '{{ recentUsers }}',
 data__activeTimeRanges = '{{ activeTimeRanges }}',
-data__ethernetMacAddress = '{{ ethernetMacAddress }}',
-data__annotatedAssetId = '{{ annotatedAssetId }}',
-data__etag = '{{ etag }}',
+data__screenshotFiles = '{{ screenshotFiles }}',
 data__diskVolumeReports = '{{ diskVolumeReports }}',
 data__systemRamTotal = '{{ systemRamTotal }}',
-data__cpuStatusReports = '{{ cpuStatusReports }}',
-data__cpuInfo = '{{ cpuInfo }}',
-data__deviceFiles = '{{ deviceFiles }}',
-data__systemRamFreeReports = '{{ systemRamFreeReports }}',
-data__lastKnownNetwork = '{{ lastKnownNetwork }}',
-data__autoUpdateExpiration = '{{ autoUpdateExpiration }}',
-data__ethernetMacAddress0 = '{{ ethernetMacAddress0 }}',
-data__dockMacAddress = '{{ dockMacAddress }}',
+data__supportEndDate = '{{ supportEndDate }}',
+data__recentUsers = '{{ recentUsers }}',
+data__annotatedLocation = '{{ annotatedLocation }}',
+data__deviceId = '{{ deviceId }}',
+data__model = '{{ model }}',
 data__manufactureDate = '{{ manufactureDate }}',
-data__orgUnitPath = '{{ orgUnitPath }}',
-data__tpmVersionInfo = '{{ tpmVersionInfo }}',
-data__screenshotFiles = '{{ screenshotFiles }}',
-data__orgUnitId = '{{ orgUnitId }}',
+data__dockMacAddress = '{{ dockMacAddress }}',
+data__lastSync = '{{ lastSync }}',
+data__kind = '{{ kind }}',
 data__osUpdateStatus = '{{ osUpdateStatus }}',
 data__firstEnrollmentTime = '{{ firstEnrollmentTime }}',
-data__lastDeprovisionTimestamp = '{{ lastDeprovisionTimestamp }}',
-data__deprovisionReason = '{{ deprovisionReason }}'
+data__willAutoRenew = {{ willAutoRenew }},
+data__macAddress = '{{ macAddress }}',
+data__bootMode = '{{ bootMode }}',
+data__etag = '{{ etag }}',
+data__systemRamFreeReports = '{{ systemRamFreeReports }}',
+data__ethernetMacAddress = '{{ ethernetMacAddress }}',
+data__tpmVersionInfo = '{{ tpmVersionInfo }}'
 WHERE 
 customerId = '{{ customerId }}' --required
 AND deviceId = '{{ deviceId }}' --required
@@ -1075,6 +1089,7 @@ annotatedUser,
 autoUpdateExpiration,
 autoUpdateThrough,
 backlightInfo,
+bluetoothAdapterInfo,
 bootMode,
 chromeOsType,
 cpuInfo,

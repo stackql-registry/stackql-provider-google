@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>systempolicy_policy</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>systempolicy_policy</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="systempolicy_policy" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.binaryauthorization.systempolicy_policy" /></td></tr>
 </tbody></table>
@@ -81,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="globalPolicyEvaluationMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. Controls the evaluation of a Google-maintained global admission policy for common system-level images. Images not covered by the global policy will be subject to the project admission policy. This setting has no effect when specified inside a global admission policy.</td>
+    <td>Optional. Controls the evaluation of a Google-maintained global admission policy for common system-level images. Images not covered by the global policy will be subject to the project admission policy. This setting has no effect when specified inside a global admission policy. (GLOBAL_POLICY_EVALUATION_MODE_UNSPECIFIED, ENABLE, DISABLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="istioServiceIdentityAdmissionRules" /></td>

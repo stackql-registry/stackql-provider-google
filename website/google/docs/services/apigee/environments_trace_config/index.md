@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>environments_trace_config</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>environments_trace_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="environments_trace_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.environments_trace_config" /></td></tr>
 </tbody></table>
@@ -56,12 +57,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="exporter" /></td>
     <td><code>string</code></td>
-    <td>Required. Exporter that is used to view the distributed trace captured using OpenCensus. An exporter sends traces to any backend that is capable of consuming them. Recorded spans can be exported by registered exporters.</td>
+    <td>Required. Exporter that is used to view the distributed trace captured using the chosen trace protocol. An exporter sends traces to any backend that is capable of consuming them. Recorded spans can be exported by registered exporters. (EXPORTER_UNSPECIFIED, JAEGER, CLOUD_TRACE, OPEN_TELEMETRY_COLLECTOR, OPEN_TELEMETRY_CLOUD_TRACE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="samplingConfig" /></td>
     <td><code>object</code></td>
     <td>Distributed trace configuration for all API proxies in an environment. You can also override the configuration for a specific API proxy using the distributed trace configuration overrides API. (id: GoogleCloudApigeeV1TraceSamplingConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="spanSemantics" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The span semantics to use. Configuration Requirements (if span_semantics is OTEL): - trace_protocol must be OTLP. (SPAN_SEMANTICS_UNSPECIFIED, LEGACY, OTEL)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="traceProtocol" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The trace protocol to use. Configuration Requirements (if trace_protocol is OTLP): - Allowed Exporters: CLOUD_TRACE or OPEN_TELEMETRY_COLLECTOR. - If Exporter is OPEN_TELEMETRY_COLLECTOR: - endpoint refers to a valid OTLP collector URL. - If Exporter is CLOUD_TRACE: - endpoint refers to a valid project ID. (TRACE_PROTOCOL_UNSPECIFIED, OPEN_CENSUS, OTLP)</td>
 </tr>
 </tbody>
 </table>
@@ -147,7 +158,9 @@ Get distributed trace configuration in an environment.
 SELECT
 endpoint,
 exporter,
-samplingConfig
+samplingConfig,
+spanSemantics,
+traceProtocol
 FROM google.apigee.environments_trace_config
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
@@ -172,9 +185,11 @@ Updates the trace configurations in an environment. Note that the repeated field
 ```sql
 UPDATE google.apigee.environments_trace_config
 SET 
+data__traceProtocol = '{{ traceProtocol }}',
 data__endpoint = '{{ endpoint }}',
-data__exporter = '{{ exporter }}',
-data__samplingConfig = '{{ samplingConfig }}'
+data__samplingConfig = '{{ samplingConfig }}',
+data__spanSemantics = '{{ spanSemantics }}',
+data__exporter = '{{ exporter }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -182,7 +197,9 @@ AND updateMask = '{{ updateMask}}'
 RETURNING
 endpoint,
 exporter,
-samplingConfig;
+samplingConfig,
+spanSemantics,
+traceProtocol;
 ```
 </TabItem>
 </Tabs>

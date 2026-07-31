@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>objects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>objects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="objects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datastream.objects" /></td></tr>
 </tbody></table>
@@ -174,8 +175,15 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-streamsId"><code>streamsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Use this method to list the objects of a specific stream.</td>
+</tr>
+<tr>
+    <td><a href="#stop_backfill_job"><CopyableCode code="stop_backfill_job" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-streamsId"><code>streamsId</code></a>, <a href="#parameter-objectsId"><code>objectsId</code></a></td>
+    <td></td>
+    <td>Use this method to stop a backfill job for the specified stream object.</td>
 </tr>
 <tr>
     <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
@@ -190,13 +198,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-streamsId"><code>streamsId</code></a>, <a href="#parameter-objectsId"><code>objectsId</code></a></td>
     <td></td>
     <td>Use this method to start a backfill job for the specified stream object.</td>
-</tr>
-<tr>
-    <td><a href="#stop_backfill_job"><CopyableCode code="stop_backfill_job" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-streamsId"><code>streamsId</code></a>, <a href="#parameter-objectsId"><code>objectsId</code></a></td>
-    <td></td>
-    <td>Use this method to stop a backfill job for the specified stream object.</td>
 </tr>
 </tbody>
 </table>
@@ -296,8 +297,8 @@ FROM google.datastream.objects
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND streamsId = '{{ streamsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -307,13 +308,26 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="lookup"
+    defaultValue="stop_backfill_job"
     values={[
+        { label: 'stop_backfill_job', value: 'stop_backfill_job' },
         { label: 'lookup', value: 'lookup' },
-        { label: 'start_backfill_job', value: 'start_backfill_job' },
-        { label: 'stop_backfill_job', value: 'stop_backfill_job' }
+        { label: 'start_backfill_job', value: 'start_backfill_job' }
     ]}
 >
+<TabItem value="stop_backfill_job">
+
+Use this method to stop a backfill job for the specified stream object.
+
+```sql
+EXEC google.datastream.objects.stop_backfill_job 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@streamsId='{{ streamsId }}' --required, 
+@objectsId='{{ objectsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="lookup">
 
 Use this method to look up a stream object by its source object identifier.
@@ -344,19 +358,6 @@ EXEC google.datastream.objects.start_backfill_job
 '{
 "eventFilter": "{{ eventFilter }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="stop_backfill_job">
-
-Use this method to stop a backfill job for the specified stream object.
-
-```sql
-EXEC google.datastream.objects.stop_backfill_job 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@streamsId='{{ streamsId }}' --required, 
-@objectsId='{{ objectsId }}' --required
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>assessment_rules</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>assessment_rules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="assessment_rules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.assessment_rules" /></td></tr>
 </tbody></table>
@@ -310,21 +311,21 @@ Creates an assessment rule.
 
 ```sql
 INSERT INTO google.contactcenterinsights.assessment_rules (
-data__sampleRule,
 data__name,
 data__displayName,
-data__active,
+data__sampleRule,
 data__scheduleInfo,
+data__active,
 projectsId,
 locationsId,
 assessmentRuleId
 )
 SELECT 
-'{{ sampleRule }}',
 '{{ name }}',
 '{{ displayName }}',
-{{ active }},
+'{{ sampleRule }}',
 '{{ scheduleInfo }}',
+{{ active }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ assessmentRuleId }}'
@@ -341,44 +342,47 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: assessment_rules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the assessment_rules resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the assessment_rules resource.
-    - name: sampleRule
-      value: object
-      description: >
-        The sample rule for the assessment rule.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the assessment rule. Format: projects/{project}/locations/{location}/assessmentRules/{assessment_rule}
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Display Name of the assessment rule.
-        
-    - name: active
-      value: boolean
-      description: >
-        If true, apply this rule to conversations. Otherwise, this rule is inactive.
-        
+    - name: sampleRule
+      description: |
+        The sample rule for the assessment rule.
+      value:
+        sampleRow: "{{ sampleRow }}"
+        conversationFilter: "{{ conversationFilter }}"
+        samplePercentage: {{ samplePercentage }}
+        dimension: "{{ dimension }}"
     - name: scheduleInfo
-      value: object
-      description: >
+      description: |
         Schedule info for the assessment rule.
-        
+      value:
+        startTime: "{{ startTime }}"
+        endTime: "{{ endTime }}"
+        schedule: "{{ schedule }}"
+        timeZone: "{{ timeZone }}"
+    - name: active
+      value: {{ active }}
+      description: |
+        If true, apply this rule to conversations. Otherwise, this rule is inactive.
     - name: assessmentRuleId
-      value: string
-```
+      value: "{{ assessmentRuleId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -398,11 +402,11 @@ Updates an assessment rule.
 ```sql
 UPDATE google.contactcenterinsights.assessment_rules
 SET 
-data__sampleRule = '{{ sampleRule }}',
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__active = {{ active }},
-data__scheduleInfo = '{{ scheduleInfo }}'
+data__sampleRule = '{{ sampleRule }}',
+data__scheduleInfo = '{{ scheduleInfo }}',
+data__active = {{ active }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>services</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>services</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="services" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.monitoring.services" /></td></tr>
 </tbody></table>
@@ -147,7 +148,7 @@ The following methods are available for this resource:
     <td><a href="#services_list"><CopyableCode code="services_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List Services for this Metrics Scope.</td>
 </tr>
 <tr>
@@ -238,9 +239,9 @@ userLabels
 FROM google.monitoring.services
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -262,41 +263,41 @@ Create a Service.
 
 ```sql
 INSERT INTO google.monitoring.services (
-data__name,
-data__displayName,
-data__custom,
-data__appEngine,
-data__cloudEndpoints,
-data__clusterIstio,
-data__meshIstio,
-data__istioCanonicalService,
-data__cloudRun,
-data__gkeNamespace,
-data__gkeWorkload,
-data__gkeService,
 data__basicService,
+data__name,
+data__istioCanonicalService,
+data__cloudEndpoints,
+data__custom,
 data__telemetry,
 data__userLabels,
+data__clusterIstio,
+data__appEngine,
+data__gkeNamespace,
+data__cloudRun,
+data__gkeService,
+data__displayName,
+data__meshIstio,
+data__gkeWorkload,
 parentType,
 parent,
 serviceId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ custom }}',
-'{{ appEngine }}',
-'{{ cloudEndpoints }}',
-'{{ clusterIstio }}',
-'{{ meshIstio }}',
-'{{ istioCanonicalService }}',
-'{{ cloudRun }}',
-'{{ gkeNamespace }}',
-'{{ gkeWorkload }}',
-'{{ gkeService }}',
 '{{ basicService }}',
+'{{ name }}',
+'{{ istioCanonicalService }}',
+'{{ cloudEndpoints }}',
+'{{ custom }}',
 '{{ telemetry }}',
 '{{ userLabels }}',
+'{{ clusterIstio }}',
+'{{ appEngine }}',
+'{{ gkeNamespace }}',
+'{{ cloudRun }}',
+'{{ gkeService }}',
+'{{ displayName }}',
+'{{ meshIstio }}',
+'{{ gkeWorkload }}',
 '{{ parentType }}',
 '{{ parent }}',
 '{{ serviceId }}'
@@ -321,93 +322,110 @@ userLabels
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: services
   props:
     - name: parentType
-      value: string
+      value: "{{ parentType }}"
       description: Required parameter for the services resource.
     - name: parent
-      value: string
+      value: "{{ parent }}"
       description: Required parameter for the services resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name for this Service. The format is: projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID] 
-        
-    - name: displayName
-      value: string
-      description: >
-        Name used for UI elements listing this Service.
-        
-    - name: custom
-      value: object
-      description: >
-        Custom service type.
-        
-    - name: appEngine
-      value: object
-      description: >
-        Type used for App Engine services.
-        
-    - name: cloudEndpoints
-      value: object
-      description: >
-        Type used for Cloud Endpoints services.
-        
-    - name: clusterIstio
-      value: object
-      description: >
-        Type used for Istio services that live in a Kubernetes cluster.
-        
-    - name: meshIstio
-      value: object
-      description: >
-        Type used for Istio services scoped to an Istio mesh.
-        
-    - name: istioCanonicalService
-      value: object
-      description: >
-        Type used for canonical services scoped to an Istio mesh. Metrics for Istio are documented here (https://istio.io/latest/docs/reference/config/metrics/)
-        
-    - name: cloudRun
-      value: object
-      description: >
-        Type used for Cloud Run services.
-        
-    - name: gkeNamespace
-      value: object
-      description: >
-        Type used for GKE Namespaces.
-        
-    - name: gkeWorkload
-      value: object
-      description: >
-        Type used for GKE Workloads.
-        
-    - name: gkeService
-      value: object
-      description: >
-        Type used for GKE Services (the Kubernetes concept of a service).
-        
     - name: basicService
-      value: object
-      description: >
+      description: |
         Message that contains the service type and service labels of this service if it is a basic service. Documentation and examples here (https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring/api/api-structures#basic-svc-w-basic-sli).
-        
+      value:
+        serviceType: "{{ serviceType }}"
+        serviceLabels: "{{ serviceLabels }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name for this Service. The format is: projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
+    - name: istioCanonicalService
+      description: |
+        Type used for canonical services scoped to an Istio mesh. Metrics for Istio are documented here (https://istio.io/latest/docs/reference/config/metrics/)
+      value:
+        canonicalServiceNamespace: "{{ canonicalServiceNamespace }}"
+        canonicalService: "{{ canonicalService }}"
+        meshUid: "{{ meshUid }}"
+    - name: cloudEndpoints
+      description: |
+        Type used for Cloud Endpoints services.
+      value:
+        service: "{{ service }}"
+    - name: custom
+      value: "{{ custom }}"
+      description: |
+        Custom service type.
     - name: telemetry
-      value: object
-      description: >
+      description: |
         Configuration for how to query telemetry on a Service.
-        
+      value:
+        resourceName: "{{ resourceName }}"
     - name: userLabels
-      value: object
-      description: >
+      value: "{{ userLabels }}"
+      description: |
         Labels which have been used to annotate the service. Label keys must start with a letter. Label keys and values may contain lowercase letters, numbers, underscores, and dashes. Label keys and values have a maximum length of 63 characters, and must be less than 128 bytes in size. Up to 64 label entries may be stored. For labels which do not have a semantic value, the empty string may be supplied for the label value.
-        
+    - name: clusterIstio
+      description: |
+        Type used for Istio services that live in a Kubernetes cluster.
+      value:
+        serviceName: "{{ serviceName }}"
+        location: "{{ location }}"
+        clusterName: "{{ clusterName }}"
+        serviceNamespace: "{{ serviceNamespace }}"
+    - name: appEngine
+      description: |
+        Type used for App Engine services.
+      value:
+        moduleId: "{{ moduleId }}"
+    - name: gkeNamespace
+      description: |
+        Type used for GKE Namespaces.
+      value:
+        projectId: "{{ projectId }}"
+        location: "{{ location }}"
+        clusterName: "{{ clusterName }}"
+        namespaceName: "{{ namespaceName }}"
+    - name: cloudRun
+      description: |
+        Type used for Cloud Run services.
+      value:
+        serviceName: "{{ serviceName }}"
+        location: "{{ location }}"
+    - name: gkeService
+      description: |
+        Type used for GKE Services (the Kubernetes concept of a service).
+      value:
+        projectId: "{{ projectId }}"
+        location: "{{ location }}"
+        namespaceName: "{{ namespaceName }}"
+        clusterName: "{{ clusterName }}"
+        serviceName: "{{ serviceName }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Name used for UI elements listing this Service.
+    - name: meshIstio
+      description: |
+        Type used for Istio services scoped to an Istio mesh.
+      value:
+        serviceName: "{{ serviceName }}"
+        meshUid: "{{ meshUid }}"
+        serviceNamespace: "{{ serviceNamespace }}"
+    - name: gkeWorkload
+      description: |
+        Type used for GKE Workloads.
+      value:
+        clusterName: "{{ clusterName }}"
+        topLevelControllerName: "{{ topLevelControllerName }}"
+        projectId: "{{ projectId }}"
+        location: "{{ location }}"
+        namespaceName: "{{ namespaceName }}"
+        topLevelControllerType: "{{ topLevelControllerType }}"
     - name: serviceId
-      value: string
-```
+      value: "{{ serviceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

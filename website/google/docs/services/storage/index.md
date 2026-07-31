@@ -18,7 +18,7 @@ storage service documentation.
 
 :::info[Service Summary]
 
-total resources: __17__  
+total resources: __18__  
 
 :::
 
@@ -43,6 +43,7 @@ total resources: __17__
 <a href="/services/storage/objects/">objects</a><br />
 <a href="/services/storage/objects_iam_policies/">objects_iam_policies</a><br />
 <a href="/services/storage/operations/">operations</a><br />
+<a href="/services/storage/recursive/">recursive</a><br />
 <a href="/services/storage/service_account/">service_account</a>
 </div>
 </div>

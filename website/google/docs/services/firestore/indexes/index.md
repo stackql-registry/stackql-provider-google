@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>indexes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>indexes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="indexes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.firestore.indexes" /></td></tr>
 </tbody></table>
@@ -57,12 +58,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="apiScope" /></td>
     <td><code>string</code></td>
-    <td>The API scope supported by this index.</td>
+    <td>The API scope supported by this index. (ANY_API, DATASTORE_MODE_API, MONGODB_COMPATIBLE_API)</td>
 </tr>
 <tr>
     <td><CopyableCode code="density" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The density configuration of the index.</td>
+    <td>Immutable. The density configuration of the index. (DENSITY_UNSPECIFIED, SPARSE_ALL, SPARSE_ANY, DENSE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="fields" /></td>
@@ -77,7 +78,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="queryScope" /></td>
     <td><code>string</code></td>
-    <td>Indexes with a collection query scope specified allow queries against a collection that is the child of a specific document, specified at query time, and that has the same collection ID. Indexes with a collection group query scope specified allow queries against all collections descended from a specific document, specified at query time, and that have the same collection ID as this index.</td>
+    <td>Indexes with a collection query scope specified allow queries against a collection that is the child of a specific document, specified at query time, and that has the same collection ID. Indexes with a collection group query scope specified allow queries against all collections descended from a specific document, specified at query time, and that have the same collection ID as this index. (QUERY_SCOPE_UNSPECIFIED, COLLECTION, COLLECTION_GROUP, COLLECTION_RECURSIVE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="searchIndexOptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Options for search indexes that are at the index definition level. This field is only currently supported for indexes with MONGODB_COMPATIBLE_API ApiScope. (id: GoogleFirestoreAdminV1SearchIndexOptions)</td>
 </tr>
 <tr>
     <td><CopyableCode code="shardCount" /></td>
@@ -87,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The serving state of the index.</td>
+    <td>Output only. The serving state of the index. (STATE_UNSPECIFIED, CREATING, READY, NEEDS_REPAIR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="unique" /></td>
@@ -116,12 +122,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="apiScope" /></td>
     <td><code>string</code></td>
-    <td>The API scope supported by this index.</td>
+    <td>The API scope supported by this index. (ANY_API, DATASTORE_MODE_API, MONGODB_COMPATIBLE_API)</td>
 </tr>
 <tr>
     <td><CopyableCode code="density" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The density configuration of the index.</td>
+    <td>Immutable. The density configuration of the index. (DENSITY_UNSPECIFIED, SPARSE_ALL, SPARSE_ANY, DENSE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="fields" /></td>
@@ -136,7 +142,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="queryScope" /></td>
     <td><code>string</code></td>
-    <td>Indexes with a collection query scope specified allow queries against a collection that is the child of a specific document, specified at query time, and that has the same collection ID. Indexes with a collection group query scope specified allow queries against all collections descended from a specific document, specified at query time, and that have the same collection ID as this index.</td>
+    <td>Indexes with a collection query scope specified allow queries against a collection that is the child of a specific document, specified at query time, and that has the same collection ID. Indexes with a collection group query scope specified allow queries against all collections descended from a specific document, specified at query time, and that have the same collection ID as this index. (QUERY_SCOPE_UNSPECIFIED, COLLECTION, COLLECTION_GROUP, COLLECTION_RECURSIVE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="searchIndexOptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Options for search indexes that are at the index definition level. This field is only currently supported for indexes with MONGODB_COMPATIBLE_API ApiScope. (id: GoogleFirestoreAdminV1SearchIndexOptions)</td>
 </tr>
 <tr>
     <td><CopyableCode code="shardCount" /></td>
@@ -146,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The serving state of the index.</td>
+    <td>Output only. The serving state of the index. (STATE_UNSPECIFIED, CREATING, READY, NEEDS_REPAIR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="unique" /></td>
@@ -184,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-collectionGroupsId"><code>collectionGroupsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists composite indexes.</td>
 </tr>
 <tr>
@@ -276,6 +287,7 @@ density,
 fields,
 multikey,
 queryScope,
+searchIndexOptions,
 shardCount,
 state,
 unique
@@ -299,6 +311,7 @@ density,
 fields,
 multikey,
 queryScope,
+searchIndexOptions,
 shardCount,
 state,
 unique
@@ -306,9 +319,9 @@ FROM google.firestore.indexes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
 AND collectionGroupsId = '{{ collectionGroupsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -330,29 +343,31 @@ Creates a composite index. This returns a google.longrunning.Operation which may
 
 ```sql
 INSERT INTO google.firestore.indexes (
-data__state,
 data__fields,
-data__multikey,
-data__apiScope,
 data__queryScope,
-data__unique,
-data__name,
+data__multikey,
 data__shardCount,
+data__name,
+data__apiScope,
 data__density,
+data__unique,
+data__searchIndexOptions,
+data__state,
 projectsId,
 databasesId,
 collectionGroupsId
 )
 SELECT 
-'{{ state }}',
 '{{ fields }}',
-{{ multikey }},
-'{{ apiScope }}',
 '{{ queryScope }}',
-{{ unique }},
-'{{ name }}',
+{{ multikey }},
 {{ shardCount }},
+'{{ name }}',
+'{{ apiScope }}',
 '{{ density }}',
+{{ unique }},
+'{{ searchIndexOptions }}',
+'{{ state }}',
 '{{ projectsId }}',
 '{{ databasesId }}',
 '{{ collectionGroupsId }}'
@@ -367,69 +382,79 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: indexes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the indexes resource.
     - name: databasesId
-      value: string
+      value: "{{ databasesId }}"
       description: Required parameter for the indexes resource.
     - name: collectionGroupsId
-      value: string
+      value: "{{ collectionGroupsId }}"
       description: Required parameter for the indexes resource.
-    - name: state
-      value: string
-      description: >
-        Output only. The serving state of the index.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'CREATING', 'READY', 'NEEDS_REPAIR']
     - name: fields
-      value: array
-      description: >
-        The fields supported by this index. For composite indexes, this requires a minimum of 2 and a maximum of 100 fields. The last field entry is always for the field path `__name__`. If, on creation, `__name__` was not specified as the last field, it will be added automatically with the same direction as that of the last field defined. If the final field in a composite index is not directional, the `__name__` will be ordered ASCENDING (unless explicitly specified). For single field indexes, this will always be exactly one entry with a field path equal to the field path of the associated field.
-        
-    - name: multikey
-      value: boolean
-      description: >
-        Optional. Whether the index is multikey. By default, the index is not multikey. For non-multikey indexes, none of the paths in the index definition reach or traverse an array, except via an explicit array index. For multikey indexes, at most one of the paths in the index definition reach or traverse an array, except via an explicit array index. Violations will result in errors. Note this field only applies to index with MONGODB_COMPATIBLE_API ApiScope.
-        
-    - name: apiScope
-      value: string
-      description: >
-        The API scope supported by this index.
-        
-      valid_values: ['ANY_API', 'DATASTORE_MODE_API', 'MONGODB_COMPATIBLE_API']
+      description: |
+        The fields supported by this index. For composite indexes, this requires a minimum of 2 and a maximum of 100 fields. The last field entry is always for the field path \`__name__\`. If, on creation, \`__name__\` was not specified as the last field, it will be added automatically with the same direction as that of the last field defined. If the final field in a composite index is not directional, the \`__name__\` will be ordered ASCENDING (unless explicitly specified). For single field indexes, this will always be exactly one entry with a field path equal to the field path of the associated field.
+      value:
+        - order: "{{ order }}"
+          arrayConfig: "{{ arrayConfig }}"
+          fieldPath: "{{ fieldPath }}"
+          vectorConfig:
+            flat: "{{ flat }}"
+            dimension: {{ dimension }}
+          searchConfig:
+            textSpec:
+              indexSpecs:
+                - indexType: "{{ indexType }}"
+                  matchType: "{{ matchType }}"
+            geoSpec:
+              geoJsonIndexingDisabled: {{ geoJsonIndexingDisabled }}
     - name: queryScope
-      value: string
-      description: >
+      value: "{{ queryScope }}"
+      description: |
         Indexes with a collection query scope specified allow queries against a collection that is the child of a specific document, specified at query time, and that has the same collection ID. Indexes with a collection group query scope specified allow queries against all collections descended from a specific document, specified at query time, and that have the same collection ID as this index.
-        
       valid_values: ['QUERY_SCOPE_UNSPECIFIED', 'COLLECTION', 'COLLECTION_GROUP', 'COLLECTION_RECURSIVE']
-    - name: unique
-      value: boolean
-      description: >
-        Optional. Whether it is an unique index. Unique index ensures all values for the indexed field(s) are unique across documents.
-        
-    - name: name
-      value: string
-      description: >
-        Output only. A server defined name for this index. The form of this name for composite indexes will be: `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{composite_index_id}` For single field indexes, this field will be empty.
-        
+    - name: multikey
+      value: {{ multikey }}
+      description: |
+        Optional. Whether the index is multikey. By default, the index is not multikey. For non-multikey indexes, none of the paths in the index definition reach or traverse an array, except via an explicit array index. For multikey indexes, at most one of the paths in the index definition reach or traverse an array, except via an explicit array index. Violations will result in errors. Note this field only applies to index with MONGODB_COMPATIBLE_API ApiScope.
     - name: shardCount
-      value: integer
-      description: >
+      value: {{ shardCount }}
+      description: |
         Optional. The number of shards for the index.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Output only. A server defined name for this index. The form of this name for composite indexes will be: \`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{composite_index_id}\` For single field indexes, this field will be empty.
+    - name: apiScope
+      value: "{{ apiScope }}"
+      description: |
+        The API scope supported by this index.
+      valid_values: ['ANY_API', 'DATASTORE_MODE_API', 'MONGODB_COMPATIBLE_API']
     - name: density
-      value: string
-      description: >
+      value: "{{ density }}"
+      description: |
         Immutable. The density configuration of the index.
-        
       valid_values: ['DENSITY_UNSPECIFIED', 'SPARSE_ALL', 'SPARSE_ANY', 'DENSE']
-```
+    - name: unique
+      value: {{ unique }}
+      description: |
+        Optional. Whether it is an unique index. Unique index ensures all values for the indexed field(s) are unique across documents.
+    - name: searchIndexOptions
+      description: |
+        Optional. Options for search indexes that are at the index definition level. This field is only currently supported for indexes with MONGODB_COMPATIBLE_API ApiScope.
+      value:
+        textLanguageOverrideFieldPath: "{{ textLanguageOverrideFieldPath }}"
+        textLanguage: "{{ textLanguage }}"
+    - name: state
+      value: "{{ state }}"
+      description: |
+        Output only. The serving state of the index.
+      valid_values: ['STATE_UNSPECIFIED', 'CREATING', 'READY', 'NEEDS_REPAIR']
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

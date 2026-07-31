@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schemas</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schemas</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schemas" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsub.schemas" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of the schema definition.</td>
+    <td>The type of the schema definition. (TYPE_UNSPECIFIED, PROTOCOL_BUFFER, AVRO)</td>
 </tr>
 </tbody>
 </table>
@@ -111,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of the schema definition.</td>
+    <td>The type of the schema definition. (TYPE_UNSPECIFIED, PROTOCOL_BUFFER, AVRO)</td>
 </tr>
 </tbody>
 </table>
@@ -169,18 +170,18 @@ The following methods are available for this resource:
     <td>Validates a schema.</td>
 </tr>
 <tr>
-    <td><a href="#projects_schemas_rollback"><CopyableCode code="projects_schemas_rollback" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
-    <td></td>
-    <td>Creates a new schema revision that is a copy of the provided revision_id.</td>
-</tr>
-<tr>
     <td><a href="#projects_schemas_validate_message"><CopyableCode code="projects_schemas_validate_message" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Validates a message against a schema.</td>
+</tr>
+<tr>
+    <td><a href="#projects_schemas_rollback"><CopyableCode code="projects_schemas_rollback" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
+    <td></td>
+    <td>Creates a new schema revision that is a copy of the provided revision_id.</td>
 </tr>
 <tr>
     <td><a href="#projects_schemas_commit"><CopyableCode code="projects_schemas_commit" /></a></td>
@@ -325,32 +326,29 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: schemas
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the schemas resource.
     - name: definition
-      value: string
-      description: >
-        The definition of the schema. This should contain a string representing the full definition of the schema that is a valid schema definition of the type specified in `type`.
-        
+      value: "{{ definition }}"
+      description: |
+        The definition of the schema. This should contain a string representing the full definition of the schema that is a valid schema definition of the type specified in \`type\`.
     - name: name
-      value: string
-      description: >
-        Required. Name of the schema. Format is `projects/{project}/schemas/{schema}`.
-        
+      value: "{{ name }}"
+      description: |
+        Required. Name of the schema. Format is \`projects/{project}/schemas/{schema}\`.
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         The type of the schema definition.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'PROTOCOL_BUFFER', 'AVRO']
     - name: schemaId
-      value: string
-```
+      value: "{{ schemaId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -383,8 +381,8 @@ AND schemasId = '{{ schemasId }}' --required
     defaultValue="projects_schemas_validate"
     values={[
         { label: 'projects_schemas_validate', value: 'projects_schemas_validate' },
-        { label: 'projects_schemas_rollback', value: 'projects_schemas_rollback' },
         { label: 'projects_schemas_validate_message', value: 'projects_schemas_validate_message' },
+        { label: 'projects_schemas_rollback', value: 'projects_schemas_rollback' },
         { label: 'projects_schemas_commit', value: 'projects_schemas_commit' }
     ]}
 >
@@ -402,6 +400,23 @@ EXEC google.pubsub.schemas.projects_schemas_validate
 ;
 ```
 </TabItem>
+<TabItem value="projects_schemas_validate_message">
+
+Validates a message against a schema.
+
+```sql
+EXEC google.pubsub.schemas.projects_schemas_validate_message 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"message": "{{ message }}", 
+"encoding": "{{ encoding }}", 
+"name": "{{ name }}", 
+"schema": "{{ schema }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_schemas_rollback">
 
 Creates a new schema revision that is a copy of the provided revision_id.
@@ -413,23 +428,6 @@ EXEC google.pubsub.schemas.projects_schemas_rollback
 @@json=
 '{
 "revisionId": "{{ revisionId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_schemas_validate_message">
-
-Validates a message against a schema.
-
-```sql
-EXEC google.pubsub.schemas.projects_schemas_validate_message 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"schema": "{{ schema }}", 
-"message": "{{ message }}", 
-"name": "{{ name }}", 
-"encoding": "{{ encoding }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>operations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>operations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="operations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.deploymentmanager.operations" /></td></tr>
 </tbody></table>
@@ -88,6 +89,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="firewallPolicyRuleOperationMetadata" /></td>
     <td><code>object</code></td>
     <td> (id: FirewallPolicyRuleOperationMetadata)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="getVersionOperationMetadata" /></td>
+    <td><code>object</code></td>
+    <td> (id: GetVersionOperationMetadata)</td>
 </tr>
 <tr>
     <td><CopyableCode code="httpErrorMessage" /></td>
@@ -162,7 +168,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the operation, which can be one of the following: `PENDING`, `RUNNING`, or `DONE`.</td>
+    <td>[Output Only] The status of the operation, which can be one of the following: `PENDING`, `RUNNING`, or `DONE`. (PENDING, RUNNING, DONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
@@ -249,6 +255,11 @@ The following fields are returned by `SELECT` queries:
     <td> (id: FirewallPolicyRuleOperationMetadata)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="getVersionOperationMetadata" /></td>
+    <td><code>object</code></td>
+    <td> (id: GetVersionOperationMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="httpErrorMessage" /></td>
     <td><code>string</code></td>
     <td>[Output Only] If the operation fails, this field contains the HTTP error message that was returned, such as `NOT FOUND`.</td>
@@ -321,7 +332,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the operation, which can be one of the following: `PENDING`, `RUNNING`, or `DONE`.</td>
+    <td>[Output Only] The status of the operation, which can be one of the following: `PENDING`, `RUNNING`, or `DONE`. (PENDING, RUNNING, DONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
@@ -384,7 +395,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists all operations for a project.</td>
 </tr>
 </tbody>
@@ -464,6 +475,7 @@ description,
 endTime,
 error,
 firewallPolicyRuleOperationMetadata,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -506,6 +518,7 @@ description,
 endTime,
 error,
 firewallPolicyRuleOperationMetadata,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -529,10 +542,10 @@ warnings,
 zone
 FROM google.deploymentmanager.operations
 WHERE project = '{{ project }}' -- required
+AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>

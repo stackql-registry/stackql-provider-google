@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>actions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>actions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="actions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.connectors.actions" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="inputJsonSchema" /></td>
     <td><code>object</code></td>
-    <td>JsonSchema representation of this actions's input schema (id: JsonSchema)</td>
+    <td>JsonSchema representation of schema metadata (id: JsonSchema)</td>
 </tr>
 <tr>
     <td><CopyableCode code="inputParameters" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="inputJsonSchema" /></td>
     <td><code>object</code></td>
-    <td>JsonSchema representation of this actions's input schema (id: JsonSchema)</td>
+    <td>JsonSchema representation of schema metadata (id: JsonSchema)</td>
 </tr>
 <tr>
     <td><CopyableCode code="inputParameters" /></td>
@@ -167,14 +168,14 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-actionsId"><code>actionsId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Gets the schema of the given action.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Gets the schema of all the actions supported by the connector.</td>
 </tr>
 <tr>
@@ -217,6 +218,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-executionConfig.headers">
+    <td><CopyableCode code="executionConfig.headers" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -267,6 +273,7 @@ AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
 AND actionsId = '{{ actionsId }}' -- required
 AND view = '{{ view }}'
+AND executionConfig.headers = '{{ executionConfig.headers }}'
 ;
 ```
 </TabItem>
@@ -288,8 +295,9 @@ FROM google.connectors.actions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND view = '{{ view }}'
+AND executionConfig.headers = '{{ executionConfig.headers }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -317,7 +325,8 @@ EXEC google.connectors.actions.execute
 @actionsId='{{ actionsId }}' --required 
 @@json=
 '{
-"parameters": "{{ parameters }}"
+"parameters": "{{ parameters }}", 
+"executionConfig": "{{ executionConfig }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>databases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>databases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="databases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.databases" /></td></tr>
 </tbody></table>
@@ -57,7 +58,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="adminPassword" /></td>
     <td><code>string</code></td>
-    <td>Required. The password for the default ADMIN user.</td>
+    <td>Optional. The password for the default ADMIN user. Note: Only one of `admin_password_secret_version` or `admin_password` can be populated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="adminPasswordSecretVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The resource name of a secret version in Secret Manager which contains the database admin user's password. Format: projects/&#123;project&#125;/secrets/&#123;secret&#125;/versions/&#123;version&#125;. Note: Only one of `admin_password_secret_version` or `admin_password` can be populated.</td>
 </tr>
 <tr>
     <td><CopyableCode code="characterSet" /></td>
@@ -107,7 +113,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="opsInsightsStatus" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Status of Operations Insights for this Database.</td>
+    <td>Output only. The Status of Operations Insights for this Database. (OPERATIONS_INSIGHTS_STATUS_UNSPECIFIED, ENABLING, ENABLED, DISABLING, NOT_ENABLED, FAILED_ENABLING, FAILED_DISABLING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="pluggableDatabaseId" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The ID of the pluggable database associated with the Database. The ID must be unique within the project and location.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="pluggableDatabaseName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The pluggable database associated with the Database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="properties" /></td>
@@ -117,7 +133,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tdeWalletPassword" /></td>
     <td><code>string</code></td>
-    <td>Optional. The TDE wallet password for the database.</td>
+    <td>Optional. The TDE wallet password for the database. Note: Only one of `tde_wallet_password_secret_version` or `tde_wallet_password` can be populated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tdeWalletPasswordSecretVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The resource name of a secret version in Secret Manager which contains the TDE wallet password for the database. Format: projects/&#123;project&#125;/secrets/&#123;secret&#125;/versions/&#123;version&#125;. Note: Only one of `tde_wallet_password_secret_version` or `tde_wallet_password` can be populated.</td>
 </tr>
 </tbody>
 </table>
@@ -141,7 +162,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="adminPassword" /></td>
     <td><code>string</code></td>
-    <td>Required. The password for the default ADMIN user.</td>
+    <td>Optional. The password for the default ADMIN user. Note: Only one of `admin_password_secret_version` or `admin_password` can be populated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="adminPasswordSecretVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The resource name of a secret version in Secret Manager which contains the database admin user's password. Format: projects/&#123;project&#125;/secrets/&#123;secret&#125;/versions/&#123;version&#125;. Note: Only one of `admin_password_secret_version` or `admin_password` can be populated.</td>
 </tr>
 <tr>
     <td><CopyableCode code="characterSet" /></td>
@@ -191,7 +217,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="opsInsightsStatus" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Status of Operations Insights for this Database.</td>
+    <td>Output only. The Status of Operations Insights for this Database. (OPERATIONS_INSIGHTS_STATUS_UNSPECIFIED, ENABLING, ENABLED, DISABLING, NOT_ENABLED, FAILED_ENABLING, FAILED_DISABLING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="pluggableDatabaseId" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The ID of the pluggable database associated with the Database. The ID must be unique within the project and location.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="pluggableDatabaseName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The pluggable database associated with the Database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="properties" /></td>
@@ -201,7 +237,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tdeWalletPassword" /></td>
     <td><code>string</code></td>
-    <td>Optional. The TDE wallet password for the database.</td>
+    <td>Optional. The TDE wallet password for the database. Note: Only one of `tde_wallet_password_secret_version` or `tde_wallet_password` can be populated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tdeWalletPasswordSecretVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The resource name of a secret version in Secret Manager which contains the TDE wallet password for the database. Format: projects/&#123;project&#125;/secrets/&#123;secret&#125;/versions/&#123;version&#125;. Note: Only one of `tde_wallet_password_secret_version` or `tde_wallet_password` can be populated.</td>
 </tr>
 </tbody>
 </table>
@@ -234,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all the Databases for the given project, location and DbSystem.</td>
 </tr>
 </tbody>
@@ -303,6 +344,7 @@ Gets details of a single Database.
 SELECT
 name,
 adminPassword,
+adminPasswordSecretVersion,
 characterSet,
 createTime,
 databaseId,
@@ -313,8 +355,11 @@ gcpOracleZone,
 ncharacterSet,
 ociUrl,
 opsInsightsStatus,
+pluggableDatabaseId,
+pluggableDatabaseName,
 properties,
-tdeWalletPassword
+tdeWalletPassword,
+tdeWalletPasswordSecretVersion
 FROM google.oracledatabase.databases
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -330,6 +375,7 @@ Lists all the Databases for the given project, location and DbSystem.
 SELECT
 name,
 adminPassword,
+adminPasswordSecretVersion,
 characterSet,
 createTime,
 databaseId,
@@ -340,14 +386,17 @@ gcpOracleZone,
 ncharacterSet,
 ociUrl,
 opsInsightsStatus,
+pluggableDatabaseId,
+pluggableDatabaseName,
 properties,
-tdeWalletPassword
+tdeWalletPassword,
+tdeWalletPasswordSecretVersion
 FROM google.oracledatabase.databases
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

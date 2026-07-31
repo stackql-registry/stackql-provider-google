@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>address_groups_iam_policies</c
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>address_groups_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="address_groups_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.address_groups_iam_policies" /></td></tr>
 </tbody></table>
@@ -104,6 +105,13 @@ The following methods are available for this resource:
     <td></td>
     <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
 </tr>
+<tr>
+    <td><a href="#organizations_locations_address_groups_test_iam_permissions"><CopyableCode code="organizations_locations_address_groups_test_iam_permissions" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
+    <td></td>
+    <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
+</tr>
 </tbody>
 </table>
 
@@ -127,6 +135,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-locationsId">
     <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-organizationsId">
+    <td><CopyableCode code="organizationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -207,7 +220,8 @@ version;
 <Tabs
     defaultValue="projects_locations_address_groups_test_iam_permissions"
     values={[
-        { label: 'projects_locations_address_groups_test_iam_permissions', value: 'projects_locations_address_groups_test_iam_permissions' }
+        { label: 'projects_locations_address_groups_test_iam_permissions', value: 'projects_locations_address_groups_test_iam_permissions' },
+        { label: 'organizations_locations_address_groups_test_iam_permissions', value: 'organizations_locations_address_groups_test_iam_permissions' }
     ]}
 >
 <TabItem value="projects_locations_address_groups_test_iam_permissions">
@@ -217,6 +231,22 @@ Returns permissions that a caller has on the specified resource. If the resource
 ```sql
 EXEC google.networksecurity.address_groups_iam_policies.projects_locations_address_groups_test_iam_permissions 
 @projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@addressGroupsId='{{ addressGroupsId }}' --required 
+@@json=
+'{
+"permissions": "{{ permissions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="organizations_locations_address_groups_test_iam_permissions">
+
+Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
+
+```sql
+EXEC google.networksecurity.address_groups_iam_policies.organizations_locations_address_groups_test_iam_permissions 
+@organizationsId='{{ organizationsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @addressGroupsId='{{ addressGroupsId }}' --required 
 @@json=

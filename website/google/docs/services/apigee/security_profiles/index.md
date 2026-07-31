@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_profiles</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_profiles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_profiles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.security_profiles" /></td></tr>
 </tbody></table>
@@ -363,22 +364,22 @@ CreateSecurityProfile create a new custom security profile.
 
 ```sql
 INSERT INTO google.apigee.security_profiles (
-data__name,
 data__environments,
-data__displayName,
+data__name,
+data__profileConfig,
 data__scoringConfigs,
 data__description,
-data__profileConfig,
+data__displayName,
 organizationsId,
 securityProfileId
 )
 SELECT 
-'{{ name }}',
 '{{ environments }}',
-'{{ displayName }}',
+'{{ name }}',
+'{{ profileConfig }}',
 '{{ scoringConfigs }}',
 '{{ description }}',
-'{{ profileConfig }}',
+'{{ displayName }}',
 '{{ organizationsId }}',
 '{{ securityProfileId }}'
 RETURNING
@@ -399,46 +400,52 @@ scoringConfigs
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: security_profiles
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the security_profiles resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Name of the security profile resource. Format: organizations/{org}/securityProfiles/{profile}
-        
     - name: environments
-      value: array
-      description: >
+      description: |
         List of environments attached to security profile.
-        
-    - name: displayName
-      value: string
-      description: >
-        DEPRECATED: DO NOT USE Display name of the security profile.
-        
-    - name: scoringConfigs
-      value: array
-      description: >
-        List of profile scoring configs in this revision.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the security profile.
-        
+      value:
+        - environment: "{{ environment }}"
+          attachTime: "{{ attachTime }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Name of the security profile resource. Format: organizations/{org}/securityProfiles/{profile}
     - name: profileConfig
-      value: object
-      description: >
+      description: |
         Required. Customized profile configuration that computes the security score.
-        
+      value:
+        categories:
+          - cors: "{{ cors }}"
+            mediation: "{{ mediation }}"
+            mtls: "{{ mtls }}"
+            abuse: "{{ abuse }}"
+            authorization: "{{ authorization }}"
+            threat: "{{ threat }}"
+    - name: scoringConfigs
+      description: |
+        List of profile scoring configs in this revision.
+      value:
+        - description: "{{ description }}"
+          title: "{{ title }}"
+          scorePath: "{{ scorePath }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the security profile.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        DEPRECATED: DO NOT USE Display name of the security profile.
     - name: securityProfileId
-      value: string
-```
+      value: "{{ securityProfileId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -458,12 +465,12 @@ UpdateSecurityProfile update the metadata of security profile.
 ```sql
 UPDATE google.apigee.security_profiles
 SET 
-data__name = '{{ name }}',
 data__environments = '{{ environments }}',
-data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__profileConfig = '{{ profileConfig }}',
 data__scoringConfigs = '{{ scoringConfigs }}',
 data__description = '{{ description }}',
-data__profileConfig = '{{ profileConfig }}'
+data__displayName = '{{ displayName }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityProfilesId = '{{ securityProfilesId }}' --required

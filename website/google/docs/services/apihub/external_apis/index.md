@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>external_apis</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>external_apis</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="external_apis" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.external_apis" /></td></tr>
 </tbody></table>
@@ -334,25 +335,25 @@ Create an External API resource in the API hub.
 
 ```sql
 INSERT INTO google.apihub.external_apis (
-data__name,
 data__displayName,
+data__name,
 data__description,
+data__attributes,
+data__documentation,
 data__endpoints,
 data__paths,
-data__documentation,
-data__attributes,
 projectsId,
 locationsId,
 externalApiId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ description }}',
+'{{ attributes }}',
+'{{ documentation }}',
 '{{ endpoints }}',
 '{{ paths }}',
-'{{ documentation }}',
-'{{ attributes }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ externalApiId }}'
@@ -371,54 +372,50 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: external_apis
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the external_apis resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the external_apis resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Format: `projects/{project}/locations/{location}/externalApi/{externalApi}`.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. Display name of the external API. Max length is 63 characters (Unicode Code Points).
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Format: \`projects/{project}/locations/{location}/externalApi/{externalApi}\`.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the external API. Max length is 2000 characters (Unicode Code Points).
-        
-    - name: endpoints
-      value: array
-      description: >
-        Optional. List of endpoints on which this API is accessible.
-        
-    - name: paths
-      value: array
-      description: >
-        Optional. List of paths served by this API.
-        
-    - name: documentation
-      value: object
-      description: >
-        Optional. Documentation of the external API.
-        
     - name: attributes
-      value: object
-      description: >
-        Optional. The list of user defined attributes associated with the Version resource. The key is the attribute name. It will be of the format: `projects/{project}/locations/{location}/attributes/{attribute}`. The value is the attribute values associated with the resource.
-        
+      value: "{{ attributes }}"
+      description: |
+        Optional. The list of user defined attributes associated with the Version resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
+    - name: documentation
+      description: |
+        Optional. Documentation of the external API.
+      value:
+        externalUri: "{{ externalUri }}"
+    - name: endpoints
+      value:
+        - "{{ endpoints }}"
+      description: |
+        Optional. List of endpoints on which this API is accessible.
+    - name: paths
+      value:
+        - "{{ paths }}"
+      description: |
+        Optional. List of paths served by this API.
     - name: externalApiId
-      value: string
-```
+      value: "{{ externalApiId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -438,13 +435,13 @@ Update an External API resource in the API hub. The following fields can be upda
 ```sql
 UPDATE google.apihub.external_apis
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__endpoints = '{{ endpoints }}',
-data__paths = '{{ paths }}',
+data__attributes = '{{ attributes }}',
 data__documentation = '{{ documentation }}',
-data__attributes = '{{ attributes }}'
+data__endpoints = '{{ endpoints }}',
+data__paths = '{{ paths }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

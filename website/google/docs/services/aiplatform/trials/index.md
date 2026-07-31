@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>trials</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>trials</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="trials" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.trials" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the Trial.</td>
+    <td>Output only. The detailed state of the Trial. (STATE_UNSPECIFIED, REQUESTED, ACTIVE, STOPPING, SUCCEEDED, INFEASIBLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="webAccessUris" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the Trial.</td>
+    <td>Output only. The detailed state of the Trial. (STATE_UNSPECIFIED, REQUESTED, ACTIVE, STOPPING, SUCCEEDED, INFEASIBLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="webAccessUris" /></td>
@@ -232,25 +233,11 @@ The following methods are available for this resource:
     <td>Deletes a Trial.</td>
 </tr>
 <tr>
-    <td><a href="#add_trial_measurement"><CopyableCode code="add_trial_measurement" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
-    <td></td>
-    <td>Adds a measurement of the objective metrics to a Trial. This measurement is assumed to have been taken before the Trial is complete.</td>
-</tr>
-<tr>
     <td><a href="#check_trial_early_stopping_state"><CopyableCode code="check_trial_early_stopping_state" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
     <td></td>
     <td>Checks whether a Trial should stop or not. Returns a long-running operation. When the operation is successful, it will contain a CheckTrialEarlyStoppingStateResponse.</td>
-</tr>
-<tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
-    <td></td>
-    <td>Stops a Trial.</td>
 </tr>
 <tr>
     <td><a href="#complete"><CopyableCode code="complete" /></a></td>
@@ -265,6 +252,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
     <td></td>
     <td>Adds one or more Trials to a Study, with parameter values suggested by Vertex AI Vizier. Returns a long-running operation associated with the generation of Trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.</td>
+</tr>
+<tr>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
+    <td></td>
+    <td>Stops a Trial.</td>
+</tr>
+<tr>
+    <td><a href="#add_trial_measurement"><CopyableCode code="add_trial_measurement" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
+    <td></td>
+    <td>Adds a measurement of the objective metrics to a Trial. This measurement is assumed to have been taken before the Trial is complete.</td>
 </tr>
 </tbody>
 </table>
@@ -421,20 +422,20 @@ webAccessUris
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: trials
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the trials resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the trials resource.
     - name: studiesId
-      value: string
+      value: "{{ studiesId }}"
       description: Required parameter for the trials resource.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -466,51 +467,21 @@ AND trialsId = '{{ trialsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="add_trial_measurement"
+    defaultValue="check_trial_early_stopping_state"
     values={[
-        { label: 'add_trial_measurement', value: 'add_trial_measurement' },
         { label: 'check_trial_early_stopping_state', value: 'check_trial_early_stopping_state' },
-        { label: 'stop', value: 'stop' },
         { label: 'complete', value: 'complete' },
-        { label: 'suggest', value: 'suggest' }
+        { label: 'suggest', value: 'suggest' },
+        { label: 'stop', value: 'stop' },
+        { label: 'add_trial_measurement', value: 'add_trial_measurement' }
     ]}
 >
-<TabItem value="add_trial_measurement">
-
-Adds a measurement of the objective metrics to a Trial. This measurement is assumed to have been taken before the Trial is complete.
-
-```sql
-EXEC google.aiplatform.trials.add_trial_measurement 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@studiesId='{{ studiesId }}' --required, 
-@trialsId='{{ trialsId }}' --required 
-@@json=
-'{
-"measurement": "{{ measurement }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="check_trial_early_stopping_state">
 
 Checks whether a Trial should stop or not. Returns a long-running operation. When the operation is successful, it will contain a CheckTrialEarlyStoppingStateResponse.
 
 ```sql
 EXEC google.aiplatform.trials.check_trial_early_stopping_state 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@studiesId='{{ studiesId }}' --required, 
-@trialsId='{{ trialsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="stop">
-
-Stops a Trial.
-
-```sql
-EXEC google.aiplatform.trials.stop 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @studiesId='{{ studiesId }}' --required, 
@@ -530,8 +501,8 @@ EXEC google.aiplatform.trials.complete
 @trialsId='{{ trialsId }}' --required 
 @@json=
 '{
-"trialInfeasible": {{ trialInfeasible }}, 
 "finalMeasurement": "{{ finalMeasurement }}", 
+"trialInfeasible": {{ trialInfeasible }}, 
 "infeasibleReason": "{{ infeasibleReason }}"
 }'
 ;
@@ -551,6 +522,36 @@ EXEC google.aiplatform.trials.suggest
 "contexts": "{{ contexts }}", 
 "clientId": "{{ clientId }}", 
 "suggestionCount": {{ suggestionCount }}
+}'
+;
+```
+</TabItem>
+<TabItem value="stop">
+
+Stops a Trial.
+
+```sql
+EXEC google.aiplatform.trials.stop 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@studiesId='{{ studiesId }}' --required, 
+@trialsId='{{ trialsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="add_trial_measurement">
+
+Adds a measurement of the objective metrics to a Trial. This measurement is assumed to have been taken before the Trial is complete.
+
+```sql
+EXEC google.aiplatform.trials.add_trial_measurement 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@studiesId='{{ studiesId }}' --required, 
+@trialsId='{{ trialsId }}' --required 
+@@json=
+'{
+"measurement": "{{ measurement }}"
 }'
 ;
 ```
