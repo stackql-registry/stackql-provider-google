@@ -100,8 +100,8 @@ Lints, or validates, an IAM policy. Currently checks the google.iam.v1.Binding.c
 EXEC google.iam.iam_policies.lint_policy 
 @@json=
 '{
-"fullResourceName": "{{ fullResourceName }}", 
-"condition": "{{ condition }}"
+"condition": "{{ condition }}", 
+"fullResourceName": "{{ fullResourceName }}"
 }'
 ;
 ```

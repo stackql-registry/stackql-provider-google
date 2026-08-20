@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists the `Membership`s within a `Group`.</td>
 </tr>
 <tr>
@@ -190,27 +190,6 @@ The following methods are available for this resource:
     <td>Check a potential member for membership in a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A member has membership to a group as long as there is a single viewable transitive membership between the group and the member. The actor must have view permissions to at least one transitive membership between the member and group.</td>
 </tr>
 <tr>
-    <td><a href="#search_direct_groups"><CopyableCode code="search_direct_groups" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-query"><code>query</code></a></td>
-    <td>Searches direct groups of a member. Groups for which the actor does not have the permission to view memberships are silently filtered out.</td>
-</tr>
-<tr>
-    <td><a href="#search_transitive_memberships"><CopyableCode code="search_transitive_memberships" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Search transitive memberships of a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the group is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive membership is any direct or indirect membership of a group. Actor must have view permissions to all transitive memberships.</td>
-</tr>
-<tr>
-    <td><a href="#search_transitive_groups"><CopyableCode code="search_transitive_groups" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.</td>
-</tr>
-<tr>
     <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
@@ -223,6 +202,27 @@ The following methods are available for this resource:
     <td><a href="#parameter-groupsId"><code>groupsId</code></a>, <a href="#parameter-membershipsId"><code>membershipsId</code></a></td>
     <td></td>
     <td>Modifies the `MembershipRole`s of a `Membership`.</td>
+</tr>
+<tr>
+    <td><a href="#search_direct_groups"><CopyableCode code="search_direct_groups" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td>Searches direct groups of a member. Groups for which the actor does not have the permission to view memberships are silently filtered out.</td>
+</tr>
+<tr>
+    <td><a href="#search_transitive_groups"><CopyableCode code="search_transitive_groups" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td>Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.</td>
+</tr>
+<tr>
+    <td><a href="#search_transitive_memberships"><CopyableCode code="search_transitive_memberships" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-groupsId"><code>groupsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Search transitive memberships of a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the group is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive membership is any direct or indirect membership of a group. Actor must have view permissions to all transitive memberships.</td>
 </tr>
 </tbody>
 </table>
@@ -331,9 +331,9 @@ type,
 updateTime
 FROM google.cloudidentity.memberships
 WHERE groupsId = '{{ groupsId }}' -- required
-AND view = '{{ view }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -384,18 +384,18 @@ response
       description: |
         Required. Immutable. The \`EntityKey\` of the member.
       value:
-        namespace: "{{ namespace }}"
         id: "{{ id }}"
+        namespace: "{{ namespace }}"
     - name: roles
       description: |
         The \`MembershipRole\`s that apply to the \`Membership\`. If unspecified, defaults to a single \`MembershipRole\` with \`name\` \`MEMBER\`. Must not contain duplicate \`MembershipRole\`s with the same \`name\`.
       value:
-        - restrictionEvaluations:
+        - expiryDetail:
+            expireTime: "{{ expireTime }}"
+          name: "{{ name }}"
+          restrictionEvaluations:
             memberRestrictionEvaluation:
               state: "{{ state }}"
-          name: "{{ name }}"
-          expiryDetail:
-            expireTime: "{{ expireTime }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -430,11 +430,11 @@ AND membershipsId = '{{ membershipsId }}' --required
     defaultValue="check_transitive_membership"
     values={[
         { label: 'check_transitive_membership', value: 'check_transitive_membership' },
-        { label: 'search_direct_groups', value: 'search_direct_groups' },
-        { label: 'search_transitive_memberships', value: 'search_transitive_memberships' },
-        { label: 'search_transitive_groups', value: 'search_transitive_groups' },
         { label: 'lookup', value: 'lookup' },
-        { label: 'modify_membership_roles', value: 'modify_membership_roles' }
+        { label: 'modify_membership_roles', value: 'modify_membership_roles' },
+        { label: 'search_direct_groups', value: 'search_direct_groups' },
+        { label: 'search_transitive_groups', value: 'search_transitive_groups' },
+        { label: 'search_transitive_memberships', value: 'search_transitive_memberships' }
     ]}
 >
 <TabItem value="check_transitive_membership">
@@ -445,45 +445,6 @@ Check a potential member for membership in a group. **Note:** This feature is on
 EXEC google.cloudidentity.memberships.check_transitive_membership 
 @groupsId='{{ groupsId }}' --required, 
 @query='{{ query }}'
-;
-```
-</TabItem>
-<TabItem value="search_direct_groups">
-
-Searches direct groups of a member. Groups for which the actor does not have the permission to view memberships are silently filtered out.
-
-```sql
-EXEC google.cloudidentity.memberships.search_direct_groups 
-@groupsId='{{ groupsId }}' --required, 
-@pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}', 
-@orderBy='{{ orderBy }}', 
-@query='{{ query }}'
-;
-```
-</TabItem>
-<TabItem value="search_transitive_memberships">
-
-Search transitive memberships of a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the group is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive membership is any direct or indirect membership of a group. Actor must have view permissions to all transitive memberships.
-
-```sql
-EXEC google.cloudidentity.memberships.search_transitive_memberships 
-@groupsId='{{ groupsId }}' --required, 
-@pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="search_transitive_groups">
-
-Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.
-
-```sql
-EXEC google.cloudidentity.memberships.search_transitive_groups 
-@groupsId='{{ groupsId }}' --required, 
-@query='{{ query }}', 
-@pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -513,6 +474,45 @@ EXEC google.cloudidentity.memberships.modify_membership_roles
 "removeRoles": "{{ removeRoles }}", 
 "updateRolesParams": "{{ updateRolesParams }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="search_direct_groups">
+
+Searches direct groups of a member. Groups for which the actor does not have the permission to view memberships are silently filtered out.
+
+```sql
+EXEC google.cloudidentity.memberships.search_direct_groups 
+@groupsId='{{ groupsId }}' --required, 
+@orderBy='{{ orderBy }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@query='{{ query }}'
+;
+```
+</TabItem>
+<TabItem value="search_transitive_groups">
+
+Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the member is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.
+
+```sql
+EXEC google.cloudidentity.memberships.search_transitive_groups 
+@groupsId='{{ groupsId }}' --required, 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@query='{{ query }}'
+;
+```
+</TabItem>
+<TabItem value="search_transitive_memberships">
+
+Search transitive memberships of a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. If the account of the group is not one of these, a 403 (PERMISSION_DENIED) HTTP status code will be returned. A transitive membership is any direct or indirect membership of a group. Actor must have view permissions to all transitive memberships.
+
+```sql
+EXEC google.cloudidentity.memberships.search_transitive_memberships 
+@groupsId='{{ groupsId }}' --required, 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}'
 ;
 ```
 </TabItem>

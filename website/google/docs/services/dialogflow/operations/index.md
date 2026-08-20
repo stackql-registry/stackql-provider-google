@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_operations_get"
     values={[
         { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
-        { label: 'projects_operations_get', value: 'projects_operations_get' },
         { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
+        { label: 'projects_operations_get', value: 'projects_operations_get' },
         { label: 'projects_operations_list', value: 'projects_operations_list' }
     ]}
 >
@@ -80,7 +80,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_operations_get">
+<TabItem value="projects_locations_operations_list">
 
 <table>
 <thead>
@@ -119,7 +119,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_operations_list">
+<TabItem value="projects_operations_get">
 
 <table>
 <thead>
@@ -222,6 +222,13 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#projects_operations_get"><CopyableCode code="projects_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
@@ -229,30 +236,23 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td></td>
-</tr>
-<tr>
     <td><a href="#projects_operations_list"><CopyableCode code="projects_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#projects_operations_cancel"><CopyableCode code="projects_operations_cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_operations_cancel"><CopyableCode code="projects_locations_operations_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_operations_cancel"><CopyableCode code="projects_operations_cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -316,8 +316,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_operations_get"
     values={[
         { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
-        { label: 'projects_operations_get', value: 'projects_operations_get' },
         { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
+        { label: 'projects_operations_get', value: 'projects_operations_get' },
         { label: 'projects_operations_list', value: 'projects_operations_list' }
     ]}
 >
@@ -339,6 +339,27 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_operations_list">
+
+Successful response
+
+```sql
+SELECT
+name,
+done,
+error,
+metadata,
+response
+FROM google.dialogflow.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
 <TabItem value="projects_operations_get">
 
 Successful response
@@ -356,27 +377,6 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_operations_list">
-
-Successful response
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.dialogflow.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="projects_operations_list">
 
 Successful response
@@ -390,10 +390,10 @@ metadata,
 response
 FROM google.dialogflow.operations
 WHERE projectsId = '{{ projectsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -403,23 +403,12 @@ AND filter = '{{ filter }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_operations_cancel"
+    defaultValue="projects_locations_operations_cancel"
     values={[
-        { label: 'projects_operations_cancel', value: 'projects_operations_cancel' },
-        { label: 'projects_locations_operations_cancel', value: 'projects_locations_operations_cancel' }
+        { label: 'projects_locations_operations_cancel', value: 'projects_locations_operations_cancel' },
+        { label: 'projects_operations_cancel', value: 'projects_operations_cancel' }
     ]}
 >
-<TabItem value="projects_operations_cancel">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.operations.projects_operations_cancel 
-@projectsId='{{ projectsId }}' --required, 
-@operationsId='{{ operationsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_operations_cancel">
 
 Successful response
@@ -428,6 +417,17 @@ Successful response
 EXEC google.dialogflow.operations.projects_locations_operations_cancel 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@operationsId='{{ operationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_operations_cancel">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.operations.projects_operations_cancel 
+@projectsId='{{ projectsId }}' --required, 
 @operationsId='{{ operationsId }}' --required
 ;
 ```

@@ -673,21 +673,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_widget_configs_get"><CopyableCode code="projects_locations_collections_data_stores_widget_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-widgetConfigsId"><code>widgetConfigsId</code></a></td>
-    <td><a href="#parameter-getWidgetConfigRequestOption.turnOffCollectionComponents"><code>getWidgetConfigRequestOption.turnOffCollectionComponents</code></a>, <a href="#parameter-acceptCache"><code>acceptCache</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-modelInfoView"><code>modelInfoView</code></a></td>
+    <td><a href="#parameter-acceptCache"><code>acceptCache</code></a>, <a href="#parameter-getWidgetConfigRequestOption.turnOffCollectionComponents"><code>getWidgetConfigRequestOption.turnOffCollectionComponents</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-modelInfoView"><code>modelInfoView</code></a></td>
     <td>Gets a WidgetConfig.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_collections_engines_widget_configs_get"><CopyableCode code="projects_locations_collections_engines_widget_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-widgetConfigsId"><code>widgetConfigsId</code></a></td>
-    <td><a href="#parameter-getWidgetConfigRequestOption.turnOffCollectionComponents"><code>getWidgetConfigRequestOption.turnOffCollectionComponents</code></a>, <a href="#parameter-modelInfoView"><code>modelInfoView</code></a>, <a href="#parameter-acceptCache"><code>acceptCache</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
+    <td><a href="#parameter-acceptCache"><code>acceptCache</code></a>, <a href="#parameter-getWidgetConfigRequestOption.turnOffCollectionComponents"><code>getWidgetConfigRequestOption.turnOffCollectionComponents</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-modelInfoView"><code>modelInfoView</code></a></td>
     <td>Gets a WidgetConfig.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_stores_widget_configs_get"><CopyableCode code="projects_locations_data_stores_widget_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-widgetConfigsId"><code>widgetConfigsId</code></a></td>
-    <td><a href="#parameter-getWidgetConfigRequestOption.turnOffCollectionComponents"><code>getWidgetConfigRequestOption.turnOffCollectionComponents</code></a>, <a href="#parameter-acceptCache"><code>acceptCache</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-modelInfoView"><code>modelInfoView</code></a></td>
+    <td><a href="#parameter-acceptCache"><code>acceptCache</code></a>, <a href="#parameter-getWidgetConfigRequestOption.turnOffCollectionComponents"><code>getWidgetConfigRequestOption.turnOffCollectionComponents</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-modelInfoView"><code>modelInfoView</code></a></td>
     <td>Gets a WidgetConfig.</td>
 </tr>
 <tr>
@@ -845,8 +845,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND widgetConfigsId = '{{ widgetConfigsId }}' -- required
-AND getWidgetConfigRequestOption.turnOffCollectionComponents = '{{ getWidgetConfigRequestOption.turnOffCollectionComponents }}'
 AND acceptCache = '{{ acceptCache }}'
+AND getWidgetConfigRequestOption.turnOffCollectionComponents = '{{ getWidgetConfigRequestOption.turnOffCollectionComponents }}'
 AND languageCode = '{{ languageCode }}'
 AND modelInfoView = '{{ modelInfoView }}'
 ;
@@ -902,10 +902,10 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND enginesId = '{{ enginesId }}' -- required
 AND widgetConfigsId = '{{ widgetConfigsId }}' -- required
-AND getWidgetConfigRequestOption.turnOffCollectionComponents = '{{ getWidgetConfigRequestOption.turnOffCollectionComponents }}'
-AND modelInfoView = '{{ modelInfoView }}'
 AND acceptCache = '{{ acceptCache }}'
+AND getWidgetConfigRequestOption.turnOffCollectionComponents = '{{ getWidgetConfigRequestOption.turnOffCollectionComponents }}'
 AND languageCode = '{{ languageCode }}'
+AND modelInfoView = '{{ modelInfoView }}'
 ;
 ```
 </TabItem>
@@ -958,8 +958,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND widgetConfigsId = '{{ widgetConfigsId }}' -- required
-AND getWidgetConfigRequestOption.turnOffCollectionComponents = '{{ getWidgetConfigRequestOption.turnOffCollectionComponents }}'
 AND acceptCache = '{{ acceptCache }}'
+AND getWidgetConfigRequestOption.turnOffCollectionComponents = '{{ getWidgetConfigRequestOption.turnOffCollectionComponents }}'
 AND languageCode = '{{ languageCode }}'
 AND modelInfoView = '{{ modelInfoView }}'
 ;
@@ -985,30 +985,30 @@ Update a WidgetConfig.
 ```sql
 UPDATE google.discoveryengine.widget_configs
 SET 
-data__allowlistedDomains = '{{ allowlistedDomains }}',
-data__contentSearchSpec = '{{ contentSearchSpec }}',
-data__enableQualityFeedback = {{ enableQualityFeedback }},
-data__resultDisplayType = '{{ resultDisplayType }}',
-data__displayName = '{{ displayName }}',
-data__facetField = '{{ facetField }}',
-data__enableSafeSearch = {{ enableSafeSearch }},
-data__enableSnippetResultSummary = {{ enableSnippetResultSummary }},
 data__accessSettings = '{{ accessSettings }}',
 data__allowPublicAccess = {{ allowPublicAccess }},
-data__enableResultScore = {{ enableResultScore }},
-data__uiBranding = '{{ uiBranding }}',
-data__solutionType = '{{ solutionType }}',
-data__homepageSetting = '{{ homepageSetting }}',
-data__enableConversationalSearch = {{ enableConversationalSearch }},
-data__uiSettings = '{{ uiSettings }}',
+data__allowlistedDomains = '{{ allowlistedDomains }}',
+data__contentSearchSpec = '{{ contentSearchSpec }}',
+data__dataStoreUiConfigs = '{{ dataStoreUiConfigs }}',
 data__defaultSearchRequestOrderBy = '{{ defaultSearchRequestOrderBy }}',
-data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__enableAutocomplete = {{ enableAutocomplete }},
+data__enableConversationalSearch = {{ enableConversationalSearch }},
+data__enableQualityFeedback = {{ enableQualityFeedback }},
+data__enableResultScore = {{ enableResultScore }},
+data__enableSafeSearch = {{ enableSafeSearch }},
+data__enableSearchAsYouType = {{ enableSearchAsYouType }},
+data__enableSnippetResultSummary = {{ enableSnippetResultSummary }},
 data__enableSummarization = {{ enableSummarization }},
 data__enableWebApp = {{ enableWebApp }},
+data__facetField = '{{ facetField }}',
 data__fieldsUiComponentsMap = '{{ fieldsUiComponentsMap }}',
-data__dataStoreUiConfigs = '{{ dataStoreUiConfigs }}',
-data__enableSearchAsYouType = {{ enableSearchAsYouType }}
+data__homepageSetting = '{{ homepageSetting }}',
+data__name = '{{ name }}',
+data__resultDisplayType = '{{ resultDisplayType }}',
+data__solutionType = '{{ solutionType }}',
+data__uiBranding = '{{ uiBranding }}',
+data__uiSettings = '{{ uiSettings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1064,30 +1064,30 @@ Update a WidgetConfig.
 ```sql
 UPDATE google.discoveryengine.widget_configs
 SET 
-data__allowlistedDomains = '{{ allowlistedDomains }}',
-data__contentSearchSpec = '{{ contentSearchSpec }}',
-data__enableQualityFeedback = {{ enableQualityFeedback }},
-data__resultDisplayType = '{{ resultDisplayType }}',
-data__displayName = '{{ displayName }}',
-data__facetField = '{{ facetField }}',
-data__enableSafeSearch = {{ enableSafeSearch }},
-data__enableSnippetResultSummary = {{ enableSnippetResultSummary }},
 data__accessSettings = '{{ accessSettings }}',
 data__allowPublicAccess = {{ allowPublicAccess }},
-data__enableResultScore = {{ enableResultScore }},
-data__uiBranding = '{{ uiBranding }}',
-data__solutionType = '{{ solutionType }}',
-data__homepageSetting = '{{ homepageSetting }}',
-data__enableConversationalSearch = {{ enableConversationalSearch }},
-data__uiSettings = '{{ uiSettings }}',
+data__allowlistedDomains = '{{ allowlistedDomains }}',
+data__contentSearchSpec = '{{ contentSearchSpec }}',
+data__dataStoreUiConfigs = '{{ dataStoreUiConfigs }}',
 data__defaultSearchRequestOrderBy = '{{ defaultSearchRequestOrderBy }}',
-data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__enableAutocomplete = {{ enableAutocomplete }},
+data__enableConversationalSearch = {{ enableConversationalSearch }},
+data__enableQualityFeedback = {{ enableQualityFeedback }},
+data__enableResultScore = {{ enableResultScore }},
+data__enableSafeSearch = {{ enableSafeSearch }},
+data__enableSearchAsYouType = {{ enableSearchAsYouType }},
+data__enableSnippetResultSummary = {{ enableSnippetResultSummary }},
 data__enableSummarization = {{ enableSummarization }},
 data__enableWebApp = {{ enableWebApp }},
+data__facetField = '{{ facetField }}',
 data__fieldsUiComponentsMap = '{{ fieldsUiComponentsMap }}',
-data__dataStoreUiConfigs = '{{ dataStoreUiConfigs }}',
-data__enableSearchAsYouType = {{ enableSearchAsYouType }}
+data__homepageSetting = '{{ homepageSetting }}',
+data__name = '{{ name }}',
+data__resultDisplayType = '{{ resultDisplayType }}',
+data__solutionType = '{{ solutionType }}',
+data__uiBranding = '{{ uiBranding }}',
+data__uiSettings = '{{ uiSettings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1143,30 +1143,30 @@ Update a WidgetConfig.
 ```sql
 UPDATE google.discoveryengine.widget_configs
 SET 
-data__allowlistedDomains = '{{ allowlistedDomains }}',
-data__contentSearchSpec = '{{ contentSearchSpec }}',
-data__enableQualityFeedback = {{ enableQualityFeedback }},
-data__resultDisplayType = '{{ resultDisplayType }}',
-data__displayName = '{{ displayName }}',
-data__facetField = '{{ facetField }}',
-data__enableSafeSearch = {{ enableSafeSearch }},
-data__enableSnippetResultSummary = {{ enableSnippetResultSummary }},
 data__accessSettings = '{{ accessSettings }}',
 data__allowPublicAccess = {{ allowPublicAccess }},
-data__enableResultScore = {{ enableResultScore }},
-data__uiBranding = '{{ uiBranding }}',
-data__solutionType = '{{ solutionType }}',
-data__homepageSetting = '{{ homepageSetting }}',
-data__enableConversationalSearch = {{ enableConversationalSearch }},
-data__uiSettings = '{{ uiSettings }}',
+data__allowlistedDomains = '{{ allowlistedDomains }}',
+data__contentSearchSpec = '{{ contentSearchSpec }}',
+data__dataStoreUiConfigs = '{{ dataStoreUiConfigs }}',
 data__defaultSearchRequestOrderBy = '{{ defaultSearchRequestOrderBy }}',
-data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__enableAutocomplete = {{ enableAutocomplete }},
+data__enableConversationalSearch = {{ enableConversationalSearch }},
+data__enableQualityFeedback = {{ enableQualityFeedback }},
+data__enableResultScore = {{ enableResultScore }},
+data__enableSafeSearch = {{ enableSafeSearch }},
+data__enableSearchAsYouType = {{ enableSearchAsYouType }},
+data__enableSnippetResultSummary = {{ enableSnippetResultSummary }},
 data__enableSummarization = {{ enableSummarization }},
 data__enableWebApp = {{ enableWebApp }},
+data__facetField = '{{ facetField }}',
 data__fieldsUiComponentsMap = '{{ fieldsUiComponentsMap }}',
-data__dataStoreUiConfigs = '{{ dataStoreUiConfigs }}',
-data__enableSearchAsYouType = {{ enableSearchAsYouType }}
+data__homepageSetting = '{{ homepageSetting }}',
+data__name = '{{ name }}',
+data__resultDisplayType = '{{ resultDisplayType }}',
+data__solutionType = '{{ solutionType }}',
+data__uiBranding = '{{ uiBranding }}',
+data__uiSettings = '{{ uiSettings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

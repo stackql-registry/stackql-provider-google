@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the Exadb (Exascale) VM Clusters for the given project and location.</td>
 </tr>
 <tr>
@@ -352,8 +352,8 @@ FROM google.oracledatabase.exadb_vm_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -376,26 +376,26 @@ Creates a new Exadb (Exascale) VM Cluster resource.
 
 ```sql
 INSERT INTO google.oracledatabase.exadb_vm_clusters (
-data__name,
-data__labels,
-data__displayName,
-data__odbSubnet,
-data__odbNetwork,
-data__properties,
 data__backupOdbSubnet,
+data__displayName,
+data__labels,
+data__name,
+data__odbNetwork,
+data__odbSubnet,
+data__properties,
 projectsId,
 locationsId,
 exadbVmClusterId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ displayName }}',
-'{{ odbSubnet }}',
-'{{ odbNetwork }}',
-'{{ properties }}',
 '{{ backupOdbSubnet }}',
+'{{ displayName }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ odbNetwork }}',
+'{{ odbSubnet }}',
+'{{ properties }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ exadbVmClusterId }}',
@@ -420,60 +420,60 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the exadb_vm_clusters resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the ExadbVmCluster resource in the following format: projects/{project}/locations/{region}/exadbVmClusters/{exadb_vm_cluster}
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. The labels or tags associated with the ExadbVmCluster.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Immutable. The display name for the ExadbVmCluster. The name does not have to be unique within your project. The name must be 1-255 characters long and can only contain alphanumeric characters.
-    - name: odbSubnet
-      value: "{{ odbSubnet }}"
-      description: |
-        Required. Immutable. The name of the OdbSubnet associated with the ExadbVmCluster for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
-    - name: odbNetwork
-      value: "{{ odbNetwork }}"
-      description: |
-        Optional. Immutable. The name of the OdbNetwork associated with the ExadbVmCluster. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
-    - name: properties
-      description: |
-        Required. The properties of the ExadbVmCluster.
-      value:
-        exascaleDbStorageVault: "{{ exascaleDbStorageVault }}"
-        gridImageId: "{{ gridImageId }}"
-        lifecycleState: "{{ lifecycleState }}"
-        hostnamePrefix: "{{ hostnamePrefix }}"
-        shapeAttribute: "{{ shapeAttribute }}"
-        dataCollectionOptions:
-          isDiagnosticsEventsEnabled: {{ isDiagnosticsEventsEnabled }}
-          isHealthMonitoringEnabled: {{ isHealthMonitoringEnabled }}
-          isIncidentLogsEnabled: {{ isIncidentLogsEnabled }}
-        clusterName: "{{ clusterName }}"
-        giVersion: "{{ giVersion }}"
-        nodeCount: {{ nodeCount }}
-        scanListenerPortTcp: {{ scanListenerPortTcp }}
-        licenseModel: "{{ licenseModel }}"
-        hostname: "{{ hostname }}"
-        ociUri: "{{ ociUri }}"
-        additionalEcpuCountPerNode: {{ additionalEcpuCountPerNode }}
-        enabledEcpuCountPerNode: {{ enabledEcpuCountPerNode }}
-        sshPublicKeys:
-          - "{{ sshPublicKeys }}"
-        memorySizeGb: {{ memorySizeGb }}
-        vmFileSystemStorage:
-          sizeInGbsPerNode: {{ sizeInGbsPerNode }}
-        timeZone:
-          id: "{{ id }}"
-          version: "{{ version }}"
     - name: backupOdbSubnet
       value: "{{ backupOdbSubnet }}"
       description: |
         Required. Immutable. The name of the backup OdbSubnet associated with the ExadbVmCluster. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Immutable. The display name for the ExadbVmCluster. The name does not have to be unique within your project. The name must be 1-255 characters long and can only contain alphanumeric characters.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels or tags associated with the ExadbVmCluster.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the ExadbVmCluster resource in the following format: projects/{project}/locations/{region}/exadbVmClusters/{exadb_vm_cluster}
+    - name: odbNetwork
+      value: "{{ odbNetwork }}"
+      description: |
+        Optional. Immutable. The name of the OdbNetwork associated with the ExadbVmCluster. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
+    - name: odbSubnet
+      value: "{{ odbSubnet }}"
+      description: |
+        Required. Immutable. The name of the OdbSubnet associated with the ExadbVmCluster for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+    - name: properties
+      description: |
+        Required. The properties of the ExadbVmCluster.
+      value:
+        additionalEcpuCountPerNode: {{ additionalEcpuCountPerNode }}
+        clusterName: "{{ clusterName }}"
+        dataCollectionOptions:
+          isDiagnosticsEventsEnabled: {{ isDiagnosticsEventsEnabled }}
+          isHealthMonitoringEnabled: {{ isHealthMonitoringEnabled }}
+          isIncidentLogsEnabled: {{ isIncidentLogsEnabled }}
+        enabledEcpuCountPerNode: {{ enabledEcpuCountPerNode }}
+        exascaleDbStorageVault: "{{ exascaleDbStorageVault }}"
+        giVersion: "{{ giVersion }}"
+        gridImageId: "{{ gridImageId }}"
+        hostname: "{{ hostname }}"
+        hostnamePrefix: "{{ hostnamePrefix }}"
+        licenseModel: "{{ licenseModel }}"
+        lifecycleState: "{{ lifecycleState }}"
+        memorySizeGb: {{ memorySizeGb }}
+        nodeCount: {{ nodeCount }}
+        ociUri: "{{ ociUri }}"
+        scanListenerPortTcp: {{ scanListenerPortTcp }}
+        shapeAttribute: "{{ shapeAttribute }}"
+        sshPublicKeys:
+          - "{{ sshPublicKeys }}"
+        timeZone:
+          id: "{{ id }}"
+          version: "{{ version }}"
+        vmFileSystemStorage:
+          sizeInGbsPerNode: {{ sizeInGbsPerNode }}
     - name: exadbVmClusterId
       value: "{{ exadbVmClusterId }}"
     - name: requestId
@@ -499,13 +499,13 @@ Updates a single Exadb (Exascale) VM Cluster. To add virtual machines to existin
 ```sql
 UPDATE google.oracledatabase.exadb_vm_clusters
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
+data__backupOdbSubnet = '{{ backupOdbSubnet }}',
 data__displayName = '{{ displayName }}',
-data__odbSubnet = '{{ odbSubnet }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__odbNetwork = '{{ odbNetwork }}',
-data__properties = '{{ properties }}',
-data__backupOdbSubnet = '{{ backupOdbSubnet }}'
+data__odbSubnet = '{{ odbSubnet }}',
+data__properties = '{{ properties }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

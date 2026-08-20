@@ -98,9 +98,9 @@ EXEC google.discoveryengine.projects.projects_provision
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"saasParams": "{{ saasParams }}", 
 "acceptDataUseTerms": {{ acceptDataUseTerms }}, 
-"dataUseTermsVersion": "{{ dataUseTermsVersion }}"
+"dataUseTermsVersion": "{{ dataUseTermsVersion }}", 
+"saasParams": "{{ saasParams }}"
 }'
 ;
 ```

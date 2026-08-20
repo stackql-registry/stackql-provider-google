@@ -425,7 +425,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupPlansId"><code>backupPlansId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the Backups for a given BackupPlan.</td>
 </tr>
 <tr>
@@ -633,9 +633,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupPlansId = '{{ backupPlansId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -658,20 +658,20 @@ Creates a Backup for the given BackupPlan.
 
 ```sql
 INSERT INTO google.gkebackup.backups (
-data__description,
-data__retainDays,
 data__deleteLockDays,
+data__description,
 data__labels,
+data__retainDays,
 projectsId,
 locationsId,
 backupPlansId,
 backupId
 )
 SELECT 
-'{{ description }}',
-{{ retainDays }},
 {{ deleteLockDays }},
+'{{ description }}',
 '{{ labels }}',
+{{ retainDays }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupPlansId }}',
@@ -699,22 +699,22 @@ response
     - name: backupPlansId
       value: "{{ backupPlansId }}"
       description: Required parameter for the backups resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. User specified descriptive string for this Backup.
-    - name: retainDays
-      value: {{ retainDays }}
-      description: |
-        Optional. The age (in days) after which this Backup will be automatically deleted. Must be an integer value >= 0: - If 0, no automatic deletion will occur for this Backup. - If not 0, this must be >= delete_lock_days and <= 365. Once a Backup is created, this value may only be increased. Defaults to the parent BackupPlan's backup_retain_days value.
     - name: deleteLockDays
       value: {{ deleteLockDays }}
       description: |
         Optional. Minimum age for this Backup (in days). If this field is set to a non-zero value, the Backup will be "locked" against deletion (either manual or automatic deletion) for the number of days provided (measured from the creation time of the Backup). MUST be an integer value between 0-90 (inclusive). Defaults to parent BackupPlan's backup_delete_lock_days setting and may only be increased (either at creation time or in a subsequent update).
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User specified descriptive string for this Backup.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. A set of custom labels supplied by user.
+    - name: retainDays
+      value: {{ retainDays }}
+      description: |
+        Optional. The age (in days) after which this Backup will be automatically deleted. Must be an integer value >= 0: - If 0, no automatic deletion will occur for this Backup. - If not 0, this must be >= delete_lock_days and <= 365. Once a Backup is created, this value may only be increased. Defaults to the parent BackupPlan's backup_retain_days value.
     - name: backupId
       value: "{{ backupId }}"
 `}</CodeBlock>
@@ -738,10 +738,10 @@ Update a Backup.
 ```sql
 UPDATE google.gkebackup.backups
 SET 
-data__description = '{{ description }}',
-data__retainDays = {{ retainDays }},
 data__deleteLockDays = {{ deleteLockDays }},
-data__labels = '{{ labels }}'
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__retainDays = {{ retainDays }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

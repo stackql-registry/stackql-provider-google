@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists groups in a given hub.</td>
 </tr>
 <tr>
@@ -308,10 +308,10 @@ updateTime
 FROM google.networkconnectivity.groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND hubsId = '{{ hubsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -333,9 +333,9 @@ Updates the parameters of a Network Connectivity Center group.
 ```sql
 UPDATE google.networkconnectivity.groups
 SET 
-data__labels = '{{ labels }}',
 data__autoAccept = '{{ autoAccept }}',
 data__description = '{{ description }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

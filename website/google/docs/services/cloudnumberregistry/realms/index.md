@@ -114,6 +114,56 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Required. Identifier. The resource name of the Realm.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="aggregatedData" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Aggregated data for the Realm. Populated only when the view is AGGREGATE. (id: RealmAggregatedData)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the Realm was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="discoveryMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Discovery metadata of the Realm. (id: DiscoveryMetadata)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ipVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. IP version of the Realm. (IP_VERSION_UNSPECIFIED, IPV4, IPV6)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. User-defined labels.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="managementType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Management type of the Realm. (MANAGEMENT_TYPE_UNSPECIFIED, CNR, USER)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="registryBook" /></td>
+    <td><code>string</code></td>
+    <td>Required. Name of the RegistryBook that claims the Realm.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="trafficType" /></td>
+    <td><code>string</code></td>
+    <td>Required. Traffic type of the Realm. (TRAFFIC_TYPE_UNSPECIFIED, UNSET, INTERNET, PRIVATE, LINKLOCAL)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the Realm was last updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -145,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists Realms in a given project and location.</td>
 </tr>
 <tr>
@@ -159,14 +209,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-realmsId"><code>realmsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Realm.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-realmsId"><code>realmsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single Realm.</td>
 </tr>
 </tbody>
@@ -287,15 +337,24 @@ Lists Realms in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+aggregatedData,
+createTime,
+discoveryMetadata,
+ipVersion,
+labels,
+managementType,
+registryBook,
+trafficType,
+updateTime
 FROM google.cloudnumberregistry.realms
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND view = '{{ view }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -317,11 +376,11 @@ Creates a new Realm in a given project and location.
 
 ```sql
 INSERT INTO google.cloudnumberregistry.realms (
-data__registryBook,
-data__labels,
-data__name,
-data__managementType,
 data__ipVersion,
+data__labels,
+data__managementType,
+data__name,
+data__registryBook,
 data__trafficType,
 projectsId,
 locationsId,
@@ -329,11 +388,11 @@ realmId,
 requestId
 )
 SELECT 
-'{{ registryBook }}',
-'{{ labels }}',
-'{{ name }}',
-'{{ managementType }}',
 '{{ ipVersion }}',
+'{{ labels }}',
+'{{ managementType }}',
+'{{ name }}',
+'{{ registryBook }}',
 '{{ trafficType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -359,28 +418,28 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the realms resource.
-    - name: registryBook
-      value: "{{ registryBook }}"
-      description: |
-        Required. Name of the RegistryBook that claims the Realm.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Identifier. The resource name of the Realm.
-    - name: managementType
-      value: "{{ managementType }}"
-      description: |
-        Optional. Management type of the Realm.
-      valid_values: ['MANAGEMENT_TYPE_UNSPECIFIED', 'CNR', 'USER']
     - name: ipVersion
       value: "{{ ipVersion }}"
       description: |
         Optional. IP version of the Realm.
       valid_values: ['IP_VERSION_UNSPECIFIED', 'IPV4', 'IPV6']
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels.
+    - name: managementType
+      value: "{{ managementType }}"
+      description: |
+        Optional. Management type of the Realm.
+      valid_values: ['MANAGEMENT_TYPE_UNSPECIFIED', 'CNR', 'USER']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. The resource name of the Realm.
+    - name: registryBook
+      value: "{{ registryBook }}"
+      description: |
+        Required. Name of the RegistryBook that claims the Realm.
     - name: trafficType
       value: "{{ trafficType }}"
       description: |
@@ -411,18 +470,18 @@ Updates the parameters of a single Realm.
 ```sql
 UPDATE google.cloudnumberregistry.realms
 SET 
-data__registryBook = '{{ registryBook }}',
-data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__managementType = '{{ managementType }}',
 data__ipVersion = '{{ ipVersion }}',
+data__labels = '{{ labels }}',
+data__managementType = '{{ managementType }}',
+data__name = '{{ name }}',
+data__registryBook = '{{ registryBook }}',
 data__trafficType = '{{ trafficType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND realmsId = '{{ realmsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -451,8 +510,8 @@ DELETE FROM google.cloudnumberregistry.realms
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND realmsId = '{{ realmsId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

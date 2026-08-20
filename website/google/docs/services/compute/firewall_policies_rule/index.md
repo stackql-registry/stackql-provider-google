@@ -157,28 +157,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_rule"><CopyableCode code="get_rule" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
     <td><a href="#parameter-priority"><code>priority</code></a></td>
     <td>Gets a rule of the specified priority.</td>
 </tr>
 <tr>
     <td><a href="#add_rule"><CopyableCode code="add_rule" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-maxPriority"><code>maxPriority</code></a>, <a href="#parameter-minPriority"><code>minPriority</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Inserts a rule into a firewall policy.</td>
 </tr>
 <tr>
     <td><a href="#patch_rule"><CopyableCode code="patch_rule" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-priority"><code>priority</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-priority"><code>priority</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Patches a rule of the specified priority.</td>
 </tr>
 <tr>
     <td><a href="#remove_rule"><CopyableCode code="remove_rule" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
     <td><a href="#parameter-priority"><code>priority</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a rule of the specified priority.</td>
 </tr>
@@ -186,7 +186,7 @@ The following methods are available for this resource:
     <td><a href="#clone_rules"><CopyableCode code="clone_rules" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-firewallPolicy"><code>firewallPolicy</code></a></td>
-    <td><a href="#parameter-sourceFirewallPolicy"><code>sourceFirewallPolicy</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceFirewallPolicy"><code>sourceFirewallPolicy</code></a></td>
     <td>Copies rules to the specified firewall policy.</td>
 </tr>
 </tbody>
@@ -208,6 +208,21 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-firewallPolicy">
     <td><CopyableCode code="firewallPolicy" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-project">
+    <td><CopyableCode code="project" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-maxPriority">
+    <td><CopyableCode code="maxPriority" /></td>
+    <td><code>integer (int32)</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-minPriority">
+    <td><CopyableCode code="minPriority" /></td>
+    <td><code>integer (int32)</code></td>
     <td></td>
 </tr>
 <tr id="parameter-priority">
@@ -260,7 +275,8 @@ targetServiceAccounts,
 targetType,
 tlsInspect
 FROM google.compute.firewall_policies_rule
-WHERE firewallPolicy = '{{ firewallPolicy }}' -- required
+WHERE project = '{{ project }}' -- required
+AND firewallPolicy = '{{ firewallPolicy }}' -- required
 AND priority = '{{ priority }}'
 ;
 ```
@@ -283,41 +299,47 @@ Inserts a rule into a firewall policy.
 
 ```sql
 INSERT INTO google.compute.firewall_policies_rule (
+data__action,
 data__description,
+data__direction,
+data__disabled,
+data__enableLogging,
 data__match,
 data__priority,
-data__targetServiceAccounts,
+data__ruleName,
+data__securityProfileGroup,
 data__targetForwardingRules,
 data__targetResources,
-data__action,
-data__ruleName,
 data__targetSecureTags,
-data__enableLogging,
+data__targetServiceAccounts,
 data__targetType,
-data__direction,
-data__securityProfileGroup,
-data__disabled,
 data__tlsInspect,
+project,
 firewallPolicy,
+maxPriority,
+minPriority,
 requestId
 )
 SELECT 
+'{{ action }}',
 '{{ description }}',
+'{{ direction }}',
+{{ disabled }},
+{{ enableLogging }},
 '{{ match }}',
 {{ priority }},
-'{{ targetServiceAccounts }}',
+'{{ ruleName }}',
+'{{ securityProfileGroup }}',
 '{{ targetForwardingRules }}',
 '{{ targetResources }}',
-'{{ action }}',
-'{{ ruleName }}',
 '{{ targetSecureTags }}',
-{{ enableLogging }},
+'{{ targetServiceAccounts }}',
 '{{ targetType }}',
-'{{ direction }}',
-'{{ securityProfileGroup }}',
-{{ disabled }},
 {{ tlsInspect }},
+'{{ project }}',
 '{{ firewallPolicy }}',
+'{{ maxPriority }}',
+'{{ minPriority }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -355,50 +377,82 @@ zone
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: firewall_policies_rule
   props:
+    - name: project
+      value: "{{ project }}"
+      description: Required parameter for the firewall_policies_rule resource.
     - name: firewallPolicy
       value: "{{ firewallPolicy }}"
       description: Required parameter for the firewall_policies_rule resource.
+    - name: action
+      value: "{{ action }}"
+      description: |
+        The Action to perform when the client connection triggers the rule.
+        Valid actions for firewall rules are: "allow", "deny",
+        "apply_security_profile_group" and "goto_next" (
+        "apply_security_profile_group" can be specified only for global
+        network firewall policies or hierarchical firewall policies).
+        Valid actions for packet mirroring rules are: "mirror", "do_not_mirror"
+        and "goto_next".
     - name: description
       value: "{{ description }}"
       description: |
         An optional description for this resource.
+    - name: direction
+      value: "{{ direction }}"
+      description: |
+        The direction in which this rule applies.
+      valid_values: ['EGRESS', 'INGRESS']
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Denotes whether the firewall policy rule is disabled. When set to true,
+        the firewall policy rule is not enforced and traffic behaves as if it did
+        not exist. If this is unspecified, the firewall policy rule will be
+        enabled.
+    - name: enableLogging
+      value: {{ enableLogging }}
+      description: |
+        Denotes whether to enable logging for a particular rule. If logging is
+        enabled, logs will be exported to the configured export destination in
+        Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you
+        cannot enable logging on "goto_next" rules.
     - name: match
       description: |
         A match condition that incoming traffic is evaluated against.
         If it evaluates to true, the corresponding 'action' is enforced.
       value:
-        destIpRanges:
-          - "{{ destIpRanges }}"
-        destRegionCodes:
-          - "{{ destRegionCodes }}"
+        destAddressGroups:
+          - "{{ destAddressGroups }}"
         destFqdns:
           - "{{ destFqdns }}"
+        destIpRanges:
+          - "{{ destIpRanges }}"
         destNetworkContext: "{{ destNetworkContext }}"
+        destNetworkType: "{{ destNetworkType }}"
+        destRegionCodes:
+          - "{{ destRegionCodes }}"
+        destThreatIntelligences:
+          - "{{ destThreatIntelligences }}"
         layer4Configs:
           - ipProtocol: "{{ ipProtocol }}"
             ports: "{{ ports }}"
-        srcNetworkContext: "{{ srcNetworkContext }}"
         srcAddressGroups:
           - "{{ srcAddressGroups }}"
+        srcFqdns:
+          - "{{ srcFqdns }}"
+        srcIpRanges:
+          - "{{ srcIpRanges }}"
+        srcNetworkContext: "{{ srcNetworkContext }}"
+        srcNetworkType: "{{ srcNetworkType }}"
+        srcNetworks:
+          - "{{ srcNetworks }}"
         srcRegionCodes:
           - "{{ srcRegionCodes }}"
-        destThreatIntelligences:
-          - "{{ destThreatIntelligences }}"
         srcSecureTags:
           - name: "{{ name }}"
             state: "{{ state }}"
-        destNetworkType: "{{ destNetworkType }}"
-        srcFqdns:
-          - "{{ srcFqdns }}"
-        srcNetworkType: "{{ srcNetworkType }}"
-        srcIpRanges:
-          - "{{ srcIpRanges }}"
         srcThreatIntelligences:
           - "{{ srcThreatIntelligences }}"
-        srcNetworks:
-          - "{{ srcNetworks }}"
-        destAddressGroups:
-          - "{{ destAddressGroups }}"
     - name: priority
       value: {{ priority }}
       description: |
@@ -406,12 +460,20 @@ zone
         must be a positive value between 0 and 2147483647.
         Rules are evaluated from highest to lowest priority where 0 is the
         highest priority and 2147483647 is the lowest priority.
-    - name: targetServiceAccounts
-      value:
-        - "{{ targetServiceAccounts }}"
+    - name: ruleName
+      value: "{{ ruleName }}"
       description: |
-        A list of service accounts indicating the sets of instances that are
-        applied with this rule.
+        An optional name for the rule. This field is not a unique identifier
+        and can be updated.
+    - name: securityProfileGroup
+      value: "{{ securityProfileGroup }}"
+      description: |
+        A fully-qualified URL of a SecurityProfileGroup resource instance.
+        Example:
+        https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group
+        Must be specified if action is one of 'apply_security_profile_group' or
+        'mirror'. Cannot be specified for other actions. Can be specified only
+        for global network firewall policies or hierarchical firewall policies.
     - name: targetForwardingRules
       value:
         - "{{ targetForwardingRules }}"
@@ -432,21 +494,6 @@ zone
         A list of network resource URLs to which this rule applies.  This field
         allows you to control which network's VMs get this rule.  If this field
         is left blank, all VMs within the organization will receive the rule.
-    - name: action
-      value: "{{ action }}"
-      description: |
-        The Action to perform when the client connection triggers the rule.
-        Valid actions for firewall rules are: "allow", "deny",
-        "apply_security_profile_group" and "goto_next" (
-        "apply_security_profile_group" can be specified only for global
-        network firewall policies or hierarchical firewall policies).
-        Valid actions for packet mirroring rules are: "mirror", "do_not_mirror"
-        and "goto_next".
-    - name: ruleName
-      value: "{{ ruleName }}"
-      description: |
-        An optional name for the rule. This field is not a unique identifier
-        and can be updated.
     - name: targetSecureTags
       description: |
         A list of secure tags that controls which instances the firewall rule
@@ -460,46 +507,28 @@ zone
       value:
         - name: "{{ name }}"
           state: "{{ state }}"
-    - name: enableLogging
-      value: {{ enableLogging }}
+    - name: targetServiceAccounts
+      value:
+        - "{{ targetServiceAccounts }}"
       description: |
-        Denotes whether to enable logging for a particular rule. If logging is
-        enabled, logs will be exported to the configured export destination in
-        Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you
-        cannot enable logging on "goto_next" rules.
+        A list of service accounts indicating the sets of instances that are
+        applied with this rule.
     - name: targetType
       value: "{{ targetType }}"
       description: |
         Target types of the firewall policy rule.
         Default value is INSTANCES.
       valid_values: ['INSTANCES', 'INTERNAL_MANAGED_LB']
-    - name: direction
-      value: "{{ direction }}"
-      description: |
-        The direction in which this rule applies.
-      valid_values: ['EGRESS', 'INGRESS']
-    - name: securityProfileGroup
-      value: "{{ securityProfileGroup }}"
-      description: |
-        A fully-qualified URL of a SecurityProfileGroup resource instance.
-        Example:
-        https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group
-        Must be specified if action is one of 'apply_security_profile_group' or
-        'mirror'. Cannot be specified for other actions. Can be specified only
-        for global network firewall policies or hierarchical firewall policies.
-    - name: disabled
-      value: {{ disabled }}
-      description: |
-        Denotes whether the firewall policy rule is disabled. When set to true,
-        the firewall policy rule is not enforced and traffic behaves as if it did
-        not exist. If this is unspecified, the firewall policy rule will be
-        enabled.
     - name: tlsInspect
       value: {{ tlsInspect }}
       description: |
         Boolean flag indicating if the traffic should be TLS decrypted.
         Can be set only if action = 'apply_security_profile_group' and cannot
         be set for other actions.
+    - name: maxPriority
+      value: "{{ maxPriority }}"
+    - name: minPriority
+      value: "{{ minPriority }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -523,25 +552,26 @@ Patches a rule of the specified priority.
 ```sql
 UPDATE google.compute.firewall_policies_rule
 SET 
+data__action = '{{ action }}',
 data__description = '{{ description }}',
+data__direction = '{{ direction }}',
+data__disabled = {{ disabled }},
+data__enableLogging = {{ enableLogging }},
 data__match = '{{ match }}',
 data__priority = {{ priority }},
-data__targetServiceAccounts = '{{ targetServiceAccounts }}',
+data__ruleName = '{{ ruleName }}',
+data__securityProfileGroup = '{{ securityProfileGroup }}',
 data__targetForwardingRules = '{{ targetForwardingRules }}',
 data__targetResources = '{{ targetResources }}',
-data__action = '{{ action }}',
-data__ruleName = '{{ ruleName }}',
 data__targetSecureTags = '{{ targetSecureTags }}',
-data__enableLogging = {{ enableLogging }},
+data__targetServiceAccounts = '{{ targetServiceAccounts }}',
 data__targetType = '{{ targetType }}',
-data__direction = '{{ direction }}',
-data__securityProfileGroup = '{{ securityProfileGroup }}',
-data__disabled = {{ disabled }},
 data__tlsInspect = {{ tlsInspect }}
 WHERE 
-firewallPolicy = '{{ firewallPolicy }}' --required
-AND requestId = '{{ requestId}}'
+project = '{{ project }}' --required
+AND firewallPolicy = '{{ firewallPolicy }}' --required
 AND priority = '{{ priority}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 id,
 name,
@@ -589,7 +619,8 @@ Deletes a rule of the specified priority.
 
 ```sql
 DELETE FROM google.compute.firewall_policies_rule
-WHERE firewallPolicy = '{{ firewallPolicy }}' --required
+WHERE project = '{{ project }}' --required
+AND firewallPolicy = '{{ firewallPolicy }}' --required
 AND priority = '{{ priority }}'
 AND requestId = '{{ requestId }}'
 ;
@@ -613,8 +644,8 @@ Copies rules to the specified firewall policy.
 ```sql
 EXEC google.compute.firewall_policies_rule.clone_rules 
 @firewallPolicy='{{ firewallPolicy }}' --required, 
-@sourceFirewallPolicy='{{ sourceFirewallPolicy }}', 
-@requestId='{{ requestId }}'
+@requestId='{{ requestId }}', 
+@sourceFirewallPolicy='{{ sourceFirewallPolicy }}'
 ;
 ```
 </TabItem>

@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists all non-deleted WorkforcePoolProviderKeys in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted keys are also listed.</td>
 </tr>
 <tr>
@@ -271,9 +271,9 @@ FROM google.iam.workforce_pool_provider_keys
 WHERE locationsId = '{{ locationsId }}' -- required
 AND workforcePoolsId = '{{ workforcePoolsId }}' -- required
 AND providersId = '{{ providersId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -295,8 +295,8 @@ Creates a new WorkforcePoolProviderKey in a WorkforcePoolProvider.
 
 ```sql
 INSERT INTO google.iam.workforce_pool_provider_keys (
-data__name,
 data__keyData,
+data__name,
 data__use,
 locationsId,
 workforcePoolsId,
@@ -304,8 +304,8 @@ providersId,
 workforcePoolProviderKeyId
 )
 SELECT 
-'{{ name }}',
 '{{ keyData }}',
+'{{ name }}',
 '{{ use }}',
 '{{ locationsId }}',
 '{{ workforcePoolsId }}',
@@ -334,10 +334,6 @@ response
     - name: providersId
       value: "{{ providersId }}"
       description: Required parameter for the workforce_pool_provider_keys resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the key. Format: \`locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_id}/keys/{key_id}\`
     - name: keyData
       description: |
         Immutable. Public half of the asymmetric key.
@@ -345,8 +341,12 @@ response
         format: "{{ format }}"
         key: "{{ key }}"
         keySpec: "{{ keySpec }}"
-        notBeforeTime: "{{ notBeforeTime }}"
         notAfterTime: "{{ notAfterTime }}"
+        notBeforeTime: "{{ notBeforeTime }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the key. Format: \`locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_id}/keys/{key_id}\`
     - name: use
       value: "{{ use }}"
       description: |

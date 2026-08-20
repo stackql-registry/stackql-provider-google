@@ -128,7 +128,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all services available to the specified project, and the current state of those services with respect to the project. The list includes all public services, all services for which the calling user has the `servicemanagement.services.bind` permission, and all services that have already been enabled on the project. The list can be filtered to only include services in a specific state, for example to only include services enabled on the project. WARNING: If you need to query enabled services frequently or across an organization, you should use [Cloud Asset Inventory API](https://cloud.google.com/asset-inventory/docs/apis), which provides higher throughput and richer filtering capability.</td>
 </tr>
 <tr>
@@ -144,6 +144,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td></td>
     <td>Enable multiple services on a project. The operation is atomic: if enabling any service fails, then the entire batch fails, and no state changes occur. To enable a single service, use the `EnableService` method instead.</td>
+</tr>
+<tr>
+    <td><a href="#batch_get"><CopyableCode code="batch_get" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
+    <td><a href="#parameter-names"><code>names</code></a></td>
+    <td>Returns the service configurations and enabled states for a given list of services.</td>
+</tr>
+<tr>
+    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-name"><code>name</code></a></td>
+    <td></td>
+    <td>Disable a service so that it can no longer be used with a project. This prevents unintended usage that may cause unexpected billing charges or security leaks. It is not valid to call the disable method on a service that is not currently enabled. Callers will receive a `FAILED_PRECONDITION` status if the target service is not currently enabled.</td>
 </tr>
 <tr>
     <td><a href="#enable"><CopyableCode code="enable" /></a></td>
@@ -188,6 +202,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-names">
+    <td><CopyableCode code="names" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-pageSize">
     <td><CopyableCode code="pageSize" /></td>
     <td><code>integer (int32)</code></td>
@@ -223,8 +242,8 @@ state
 FROM google.serviceusage.services
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -253,6 +272,8 @@ WHERE name = '{{ name }}' -- required
     defaultValue="batch_enable"
     values={[
         { label: 'batch_enable', value: 'batch_enable' },
+        { label: 'batch_get', value: 'batch_get' },
+        { label: 'disable', value: 'disable' },
         { label: 'enable', value: 'enable' }
     ]}
 >
@@ -267,6 +288,33 @@ EXEC google.serviceusage.services.batch_enable
 @@json=
 '{
 "serviceIds": "{{ serviceIds }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="batch_get">
+
+Returns the service configurations and enabled states for a given list of services.
+
+```sql
+EXEC google.serviceusage.services.batch_get 
+@parentType='{{ parentType }}' --required, 
+@parent='{{ parent }}' --required, 
+@names='{{ names }}'
+;
+```
+</TabItem>
+<TabItem value="disable">
+
+Disable a service so that it can no longer be used with a project. This prevents unintended usage that may cause unexpected billing charges or security leaks. It is not valid to call the disable method on a service that is not currently enabled. Callers will receive a `FAILED_PRECONDITION` status if the target service is not currently enabled.
+
+```sql
+EXEC google.serviceusage.services.disable 
+@name='{{ name }}' --required 
+@@json=
+'{
+"checkIfServiceHasUsage": "{{ checkIfServiceHasUsage }}", 
+"disableDependentServices": {{ disableDependentServices }}
 }'
 ;
 ```

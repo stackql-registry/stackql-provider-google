@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CertificateMaps in a given project and location.</td>
 </tr>
 <tr>
@@ -299,9 +299,9 @@ FROM google.certificatemanager.certificate_maps
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -323,19 +323,19 @@ Creates a new CertificateMap in a given project and location.
 
 ```sql
 INSERT INTO google.certificatemanager.certificate_maps (
+data__description,
 data__labels,
 data__name,
 data__tags,
-data__description,
 projectsId,
 locationsId,
 certificateMapId
 )
 SELECT 
+'{{ description }}',
 '{{ labels }}',
 '{{ name }}',
 '{{ tags }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ certificateMapId }}'
@@ -359,6 +359,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the certificate_maps resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. One or more paragraphs of text description of a certificate map.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -371,10 +375,6 @@ response
       value: "{{ tags }}"
       description: |
         Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. One or more paragraphs of text description of a certificate map.
     - name: certificateMapId
       value: "{{ certificateMapId }}"
 `}</CodeBlock>
@@ -398,10 +398,10 @@ Updates a CertificateMap.
 ```sql
 UPDATE google.certificatemanager.certificate_maps
 SET 
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__tags = '{{ tags }}',
-data__description = '{{ description }}'
+data__tags = '{{ tags }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

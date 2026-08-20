@@ -275,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists BackupPlans in a given project and location.</td>
 </tr>
 <tr>
@@ -289,7 +289,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupPlansId"><code>backupPlansId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a BackupPlan.</td>
 </tr>
 <tr>
@@ -435,10 +435,10 @@ updateTime
 FROM google.backupdr.backup_plans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -460,32 +460,32 @@ Create a BackupPlan
 
 ```sql
 INSERT INTO google.backupdr.backup_plans (
-data__etag,
-data__logRetentionDays,
-data__description,
-data__backupVault,
 data__backupRules,
+data__backupVault,
+data__computeInstanceBackupPlanProperties,
+data__description,
+data__diskBackupPlanProperties,
+data__etag,
 data__labels,
+data__logRetentionDays,
 data__maxCustomOnDemandRetentionDays,
 data__resourceType,
-data__diskBackupPlanProperties,
-data__computeInstanceBackupPlanProperties,
 projectsId,
 locationsId,
 backupPlanId,
 requestId
 )
 SELECT 
-'{{ etag }}',
-'{{ logRetentionDays }}',
-'{{ description }}',
-'{{ backupVault }}',
 '{{ backupRules }}',
+'{{ backupVault }}',
+'{{ computeInstanceBackupPlanProperties }}',
+'{{ description }}',
+'{{ diskBackupPlanProperties }}',
+'{{ etag }}',
 '{{ labels }}',
+'{{ logRetentionDays }}',
 {{ maxCustomOnDemandRetentionDays }},
 '{{ resourceType }}',
-'{{ diskBackupPlanProperties }}',
-'{{ computeInstanceBackupPlanProperties }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupPlanId }}',
@@ -510,48 +510,63 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the backup_plans resource.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. \`etag\` is returned from the service in the response. As a user of the service, you may provide an etag value in this field to prevent stale resources.
-    - name: logRetentionDays
-      value: "{{ logRetentionDays }}"
-      description: |
-        Optional. Applicable only for Cloud SQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the \`BackupPlan\` resource. The description allows for additional details about \`BackupPlan\` and its use cases to be provided. An example description is the following: "This is a backup plan that performs a daily backup at 6pm and retains data for 3 months". The description must be at most 2048 characters.
-    - name: backupVault
-      value: "{{ backupVault }}"
-      description: |
-        Required. Resource name of backup vault which will be used as storage location for backups. Format: projects/{project}/locations/{location}/backupVaults/{backupvault}
     - name: backupRules
       description: |
         Optional. The backup rules for this \`BackupPlan\`.
       value:
-        - ruleId: "{{ ruleId }}"
-          backupRetentionDays: {{ backupRetentionDays }}
+        - backupRetentionDays: {{ backupRetentionDays }}
+          ruleId: "{{ ruleId }}"
           standardSchedule:
             backupWindow:
-              startHourOfDay: {{ startHourOfDay }}
               endHourOfDay: {{ endHourOfDay }}
-            timeZone: "{{ timeZone }}"
-            weekDayOfMonth:
-              weekOfMonth: "{{ weekOfMonth }}"
-              dayOfWeek: "{{ dayOfWeek }}"
-            recurrenceType: "{{ recurrenceType }}"
+              startHourOfDay: {{ startHourOfDay }}
+            daysOfMonth:
+              - {{ daysOfMonth }}
             daysOfWeek:
               - "{{ daysOfWeek }}"
             hourlyFrequency: {{ hourlyFrequency }}
             months:
               - "{{ months }}"
-            daysOfMonth:
-              - {{ daysOfMonth }}
+            recurrenceType: "{{ recurrenceType }}"
+            timeZone: "{{ timeZone }}"
+            weekDayOfMonth:
+              dayOfWeek: "{{ dayOfWeek }}"
+              weekOfMonth: "{{ weekOfMonth }}"
+    - name: backupVault
+      value: "{{ backupVault }}"
+      description: |
+        Required. Resource name of backup vault which will be used as storage location for backups. Format: projects/{project}/locations/{location}/backupVaults/{backupvault}
+    - name: computeInstanceBackupPlanProperties
+      description: |
+        Optional. Defines optional properties specific to backups of compute instance-based resources, such as Compute Engine. This includes settings like whether to perform a guest flush.
+      value:
+        bootDiskOnly: {{ bootDiskOnly }}
+        diskExclusionLabels:
+          labels:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+        guestFlush: {{ guestFlush }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the \`BackupPlan\` resource. The description allows for additional details about \`BackupPlan\` and its use cases to be provided. An example description is the following: "This is a backup plan that performs a daily backup at 6pm and retains data for 3 months". The description must be at most 2048 characters.
+    - name: diskBackupPlanProperties
+      description: |
+        Optional. Defines optional properties specific to backups of disk-based resources, such as Compute Engine Persistent Disks. This includes settings like whether to perform a guest flush.
+      value:
+        guestFlush: {{ guestFlush }}
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. \`etag\` is returned from the service in the response. As a user of the service, you may provide an etag value in this field to prevent stale resources.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. This collection of key/value pairs allows for custom labels to be supplied by the user. Example, {"tag": "Weekly"}.
+    - name: logRetentionDays
+      value: "{{ logRetentionDays }}"
+      description: |
+        Optional. Applicable only for Cloud SQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.
     - name: maxCustomOnDemandRetentionDays
       value: {{ maxCustomOnDemandRetentionDays }}
       description: |
@@ -560,16 +575,6 @@ response
       value: "{{ resourceType }}"
       description: |
         Required. The resource type to which the \`BackupPlan\` will be applied. Examples include, "compute.googleapis.com/Instance", "sqladmin.googleapis.com/Instance", "alloydb.googleapis.com/Cluster", "compute.googleapis.com/Disk".
-    - name: diskBackupPlanProperties
-      description: |
-        Optional. Defines optional properties specific to backups of disk-based resources, such as Compute Engine Persistent Disks. This includes settings like whether to perform a guest flush.
-      value:
-        guestFlush: {{ guestFlush }}
-    - name: computeInstanceBackupPlanProperties
-      description: |
-        Optional. Defines optional properties specific to backups of compute instance-based resources, such as Compute Engine. This includes settings like whether to perform a guest flush.
-      value:
-        guestFlush: {{ guestFlush }}
     - name: backupPlanId
       value: "{{ backupPlanId }}"
     - name: requestId
@@ -595,22 +600,22 @@ Update a BackupPlan.
 ```sql
 UPDATE google.backupdr.backup_plans
 SET 
-data__etag = '{{ etag }}',
-data__logRetentionDays = '{{ logRetentionDays }}',
-data__description = '{{ description }}',
-data__backupVault = '{{ backupVault }}',
 data__backupRules = '{{ backupRules }}',
-data__labels = '{{ labels }}',
-data__maxCustomOnDemandRetentionDays = {{ maxCustomOnDemandRetentionDays }},
-data__resourceType = '{{ resourceType }}',
+data__backupVault = '{{ backupVault }}',
+data__computeInstanceBackupPlanProperties = '{{ computeInstanceBackupPlanProperties }}',
+data__description = '{{ description }}',
 data__diskBackupPlanProperties = '{{ diskBackupPlanProperties }}',
-data__computeInstanceBackupPlanProperties = '{{ computeInstanceBackupPlanProperties }}'
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}',
+data__logRetentionDays = '{{ logRetentionDays }}',
+data__maxCustomOnDemandRetentionDays = {{ maxCustomOnDemandRetentionDays }},
+data__resourceType = '{{ resourceType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupPlansId = '{{ backupPlansId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

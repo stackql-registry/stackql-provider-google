@@ -173,8 +173,8 @@ Update default config for a given project and location. **Note:** *This method d
 ```sql
 UPDATE google.dataform.config
 SET 
-data__name = '{{ name }}',
-data__defaultKmsKeyName = '{{ defaultKmsKeyName }}'
+data__defaultKmsKeyName = '{{ defaultKmsKeyName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -73,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="runtimeConfig" /></td>
     <td><code>object</code></td>
-    <td>RuntimeConfig represents the runtimes where the application is deployed. (id: RuntimeConfig)</td>
+    <td>Output only. The runtime configurations where the DeploymentEvent happened. (id: RuntimeConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="runtimeDeploymentUri" /></td>
@@ -132,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="runtimeConfig" /></td>
     <td><code>object</code></td>
-    <td>RuntimeConfig represents the runtimes where the application is deployed. (id: RuntimeConfig)</td>
+    <td>Output only. The runtime configurations where the DeploymentEvent happened. (id: RuntimeConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="runtimeDeploymentUri" /></td>
@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-insightsConfigsId"><code>insightsConfigsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Deployment Events in a given insights config.</td>
 </tr>
 </tbody>
@@ -298,10 +298,10 @@ FROM google.developerconnect.deployment_events
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND insightsConfigsId = '{{ insightsConfigsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

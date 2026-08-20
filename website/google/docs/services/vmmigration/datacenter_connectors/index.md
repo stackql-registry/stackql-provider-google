@@ -235,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DatacenterConnectors in a given Source.</td>
 </tr>
 <tr>
@@ -389,10 +389,10 @@ FROM google.vmmigration.datacenter_connectors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND sourcesId = '{{ sourcesId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -414,9 +414,9 @@ Creates a new DatacenterConnector in a given Source.
 
 ```sql
 INSERT INTO google.vmmigration.datacenter_connectors (
-data__version,
 data__registrationId,
 data__serviceAccount,
+data__version,
 projectsId,
 locationsId,
 sourcesId,
@@ -424,9 +424,9 @@ datacenterConnectorId,
 requestId
 )
 SELECT 
-'{{ version }}',
 '{{ registrationId }}',
 '{{ serviceAccount }}',
+'{{ version }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourcesId }}',
@@ -455,10 +455,6 @@ response
     - name: sourcesId
       value: "{{ sourcesId }}"
       description: Required parameter for the datacenter_connectors resource.
-    - name: version
-      value: "{{ version }}"
-      description: |
-        The version running in the DatacenterConnector. This is supplied by the OVA connector during the registration process and can not be modified.
     - name: registrationId
       value: "{{ registrationId }}"
       description: |
@@ -467,6 +463,10 @@ response
       value: "{{ serviceAccount }}"
       description: |
         The service account to use in the connector when communicating with the cloud.
+    - name: version
+      value: "{{ version }}"
+      description: |
+        The version running in the DatacenterConnector. This is supplied by the OVA connector during the registration process and can not be modified.
     - name: datacenterConnectorId
       value: "{{ datacenterConnectorId }}"
     - name: requestId

@@ -109,6 +109,51 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Full resource path of the backup collection.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cluster" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The full resource path of the cluster the backup collection belongs to. Example: projects/&#123;project&#125;/locations/&#123;location&#125;/clusters/&#123;cluster&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clusterUid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The cluster uid of the backup collection.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the backup collection was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kmsKey" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The KMS key used to encrypt the backups under this backup collection.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastBackupTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last time a backup was created in the backup collection.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="totalBackupCount" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total number of backups in the backup collection.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="totalBackupSizeBytes" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total size of all backups in the backup collection.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. System assigned unique identifier of the backup collection.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -224,7 +269,15 @@ Lists all backup collections owned by a consumer project in either the specified
 
 ```sql
 SELECT
-*
+name,
+cluster,
+clusterUid,
+createTime,
+kmsKey,
+lastBackupTime,
+totalBackupCount,
+totalBackupSizeBytes,
+uid
 FROM google.redis.backup_collections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required

@@ -205,8 +205,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists agents in a location.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the agents in a location that belong to the caller. An agent belongs to the end user recorded as its owner when it was created, so the response holds that caller's agents and no others. It is empty for a caller that is not an end user, and an agent with no recorded owner is listed for nobody.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -318,7 +318,7 @@ AND agentsId = '{{ agentsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists agents in a location.
+Lists the agents in a location that belong to the caller. An agent belongs to the end user recorded as its owner when it was created, so the response holds that caller's agents and no others. It is empty for a caller that is not an end user, and an agent with no recorded owner is listed for nobody.
 
 ```sql
 SELECT
@@ -336,9 +336,9 @@ updated
 FROM google.aiplatform.agents
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -360,26 +360,26 @@ Creates an agent.
 
 ```sql
 INSERT INTO google.aiplatform.agents (
-data__description,
-data__name,
-data__metadata,
-data__id,
-data__base_environment,
-data__tools,
 data__base_agent,
+data__base_environment,
+data__description,
+data__id,
+data__metadata,
+data__name,
 data__system_instruction,
+data__tools,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ description }}',
-'{{ name }}',
-'{{ metadata }}',
-'{{ id }}',
-'{{ base_environment }}',
-'{{ tools }}',
 '{{ base_agent }}',
+'{{ base_environment }}',
+'{{ description }}',
+'{{ id }}',
+'{{ metadata }}',
+'{{ name }}',
 '{{ system_instruction }}',
+'{{ tools }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -402,42 +402,42 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the agents resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the agent.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the agent. Format: \`projects/{project}/locations/{location}/agents/{agent}\`.
-    - name: metadata
-      value: "{{ metadata }}"
-      description: |
-        Optional. The metadata for the agent.
-    - name: id
-      value: "{{ id }}"
-      description: |
-        Immutable. The user-specified ID for the agent. This ID becomes the final component of the agent resource name. If not provided, Vertex AI will generate a value for this ID. The ID can be up to 63 characters and must match the regular expression \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`.
-    - name: base_environment
-      value: "{{ base_environment }}"
-      description: |
-        Optional. The base environment configuration for the agent. Valid types: * A string value for the environment ID, or \`remote\` for the default. * A struct value for the \`environment_config\`.
-    - name: tools
-      description: |
-        Optional. The tools available to the agent.
-      value:
-        - url: "{{ url }}"
-          type: "{{ type }}"
-          headers: "{{ headers }}"
-          name: "{{ name }}"
     - name: base_agent
       value: "{{ base_agent }}"
       description: |
         Required. The base agent for the agent. Supported values: * \`antigravity-preview-05-2026\`
+    - name: base_environment
+      value: "{{ base_environment }}"
+      description: |
+        Optional. The base environment configuration for the agent. Valid types: * A string value for the environment ID, or \`remote\` for the default. * A struct value for the \`environment_config\`.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the agent.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Immutable. The user-specified ID for the agent. This ID becomes the final component of the agent resource name. If not provided, Vertex AI will generate a value for this ID. The ID can be up to 63 characters and must match the regular expression \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`.
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. The metadata for the agent.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the agent. Format: \`projects/{project}/locations/{location}/agents/{agent}\`.
     - name: system_instruction
       value: "{{ system_instruction }}"
       description: |
         Optional. The instructions for the agent to follow. These instructions are passed to the LLM as a system instruction.
+    - name: tools
+      description: |
+        Optional. The tools available to the agent.
+      value:
+        - headers: "{{ headers }}"
+          name: "{{ name }}"
+          type: "{{ type }}"
+          url: "{{ url }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -459,14 +459,14 @@ Updates an agent.
 ```sql
 UPDATE google.aiplatform.agents
 SET 
-data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__metadata = '{{ metadata }}',
-data__id = '{{ id }}',
-data__base_environment = '{{ base_environment }}',
-data__tools = '{{ tools }}',
 data__base_agent = '{{ base_agent }}',
-data__system_instruction = '{{ system_instruction }}'
+data__base_environment = '{{ base_environment }}',
+data__description = '{{ description }}',
+data__id = '{{ id }}',
+data__metadata = '{{ metadata }}',
+data__name = '{{ name }}',
+data__system_instruction = '{{ system_instruction }}',
+data__tools = '{{ tools }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

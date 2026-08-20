@@ -97,8 +97,8 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list_network_endpoints"><CopyableCode code="list_network_endpoints" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-networkEndpointGroup"><code>networkEndpointGroup</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the network endpoints in the specified network endpoint group.</td>
 </tr>
 </tbody>
@@ -124,11 +124,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-zone">
-    <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -181,11 +176,10 @@ nextPageToken,
 warning
 FROM google.compute.network_endpoints
 WHERE project = '{{ project }}' -- required
-AND zone = '{{ zone }}' -- required
 AND networkEndpointGroup = '{{ networkEndpointGroup }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;

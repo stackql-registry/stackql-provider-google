@@ -275,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-singleTenantHsmInstancesId"><code>singleTenantHsmInstancesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists SingleTenantHsmInstanceProposals.</td>
 </tr>
 <tr>
@@ -293,18 +293,18 @@ The following methods are available for this resource:
     <td>Deletes a SingleTenantHsmInstanceProposal.</td>
 </tr>
 <tr>
-    <td><a href="#execute"><CopyableCode code="execute" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-singleTenantHsmInstancesId"><code>singleTenantHsmInstancesId</code></a>, <a href="#parameter-proposalsId"><code>proposalsId</code></a></td>
-    <td></td>
-    <td>Executes a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the APPROVED state.</td>
-</tr>
-<tr>
     <td><a href="#approve"><CopyableCode code="approve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-singleTenantHsmInstancesId"><code>singleTenantHsmInstancesId</code></a>, <a href="#parameter-proposalsId"><code>proposalsId</code></a></td>
     <td></td>
     <td>Approves a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the PENDING state.</td>
+</tr>
+<tr>
+    <td><a href="#execute"><CopyableCode code="execute" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-singleTenantHsmInstancesId"><code>singleTenantHsmInstancesId</code></a>, <a href="#parameter-proposalsId"><code>proposalsId</code></a></td>
+    <td></td>
+    <td>Executes a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the APPROVED state.</td>
 </tr>
 </tbody>
 </table>
@@ -444,11 +444,11 @@ FROM google.cloudkms.proposals
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND singleTenantHsmInstancesId = '{{ singleTenantHsmInstancesId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -470,34 +470,34 @@ Creates a new SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstanc
 
 ```sql
 INSERT INTO google.cloudkms.proposals (
-data__name,
-data__deleteSingleTenantHsmInstance,
-data__upgradeKeyTrust,
 data__addQuorumMember,
-data__registerTwoFactorAuthKeys,
+data__deleteSingleTenantHsmInstance,
+data__disableSingleTenantHsmInstance,
 data__enableSingleTenantHsmInstance,
 data__expireTime,
+data__name,
 data__refreshSingleTenantHsmInstance,
-data__ttl,
-data__disableSingleTenantHsmInstance,
+data__registerTwoFactorAuthKeys,
 data__removeQuorumMember,
+data__ttl,
+data__upgradeKeyTrust,
 projectsId,
 locationsId,
 singleTenantHsmInstancesId,
 singleTenantHsmInstanceProposalId
 )
 SELECT 
-'{{ name }}',
-'{{ deleteSingleTenantHsmInstance }}',
-'{{ upgradeKeyTrust }}',
 '{{ addQuorumMember }}',
-'{{ registerTwoFactorAuthKeys }}',
+'{{ deleteSingleTenantHsmInstance }}',
+'{{ disableSingleTenantHsmInstance }}',
 '{{ enableSingleTenantHsmInstance }}',
 '{{ expireTime }}',
+'{{ name }}',
 '{{ refreshSingleTenantHsmInstance }}',
-'{{ ttl }}',
-'{{ disableSingleTenantHsmInstance }}',
+'{{ registerTwoFactorAuthKeys }}',
 '{{ removeQuorumMember }}',
+'{{ ttl }}',
+'{{ upgradeKeyTrust }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ singleTenantHsmInstancesId }}',
@@ -525,32 +525,19 @@ response
     - name: singleTenantHsmInstancesId
       value: "{{ singleTenantHsmInstancesId }}"
       description: Required parameter for the proposals resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name for this SingleTenantHsmInstance in the format \`projects/*/locations/*/singleTenantHsmInstances/*/proposals/*\`.
-    - name: deleteSingleTenantHsmInstance
-      value: "{{ deleteSingleTenantHsmInstance }}"
-      description: |
-        Delete the SingleTenantHsmInstance. Deleting a SingleTenantHsmInstance will make all CryptoKeys attached to the SingleTenantHsmInstance unusable. The SingleTenantHsmInstance must be in the DISABLED or PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation.
-    - name: upgradeKeyTrust
-      description: |
-        Promotes a key with the AES_WRAPPING purpose to a trusted wrapping key. The key must be in the ACTIVE state to perform this operation.
-      value:
-        name: "{{ name }}"
-        twoFactorPublicKeyPem: "{{ twoFactorPublicKeyPem }}"
     - name: addQuorumMember
       description: |
         Add a quorum member to the SingleTenantHsmInstance. This will increase the total_approver_count by 1. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
       value:
         twoFactorPublicKeyPem: "{{ twoFactorPublicKeyPem }}"
-    - name: registerTwoFactorAuthKeys
+    - name: deleteSingleTenantHsmInstance
+      value: "{{ deleteSingleTenantHsmInstance }}"
       description: |
-        Register 2FA keys for the SingleTenantHsmInstance. This operation requires all N Challenges to be signed by 2FA keys. The SingleTenantHsmInstance must be in the PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation.
-      value:
-        requiredApproverCount: {{ requiredApproverCount }}
-        twoFactorPublicKeyPems:
-          - "{{ twoFactorPublicKeyPems }}"
+        Delete the SingleTenantHsmInstance. Deleting a SingleTenantHsmInstance will make all CryptoKeys attached to the SingleTenantHsmInstance unusable. The SingleTenantHsmInstance must be in the DISABLED or PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation.
+    - name: disableSingleTenantHsmInstance
+      value: "{{ disableSingleTenantHsmInstance }}"
+      description: |
+        Disable the SingleTenantHsmInstance. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
     - name: enableSingleTenantHsmInstance
       value: "{{ enableSingleTenantHsmInstance }}"
       description: |
@@ -559,22 +546,35 @@ response
       value: "{{ expireTime }}"
       description: |
         The time at which the SingleTenantHsmInstanceProposal will expire if not approved and executed.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name for this SingleTenantHsmInstance in the format \`projects/*/locations/*/singleTenantHsmInstances/*/proposals/*\`.
     - name: refreshSingleTenantHsmInstance
       value: "{{ refreshSingleTenantHsmInstance }}"
       description: |
         Refreshes the SingleTenantHsmInstance. This operation must be performed periodically to keep the SingleTenantHsmInstance active. This operation must be performed before unrefreshed_duration_until_disable has passed. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
-    - name: ttl
-      value: "{{ ttl }}"
+    - name: registerTwoFactorAuthKeys
       description: |
-        Input only. The TTL for the SingleTenantHsmInstanceProposal. Proposals will expire after this duration.
-    - name: disableSingleTenantHsmInstance
-      value: "{{ disableSingleTenantHsmInstance }}"
-      description: |
-        Disable the SingleTenantHsmInstance. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
+        Register 2FA keys for the SingleTenantHsmInstance. This operation requires all N Challenges to be signed by 2FA keys. The SingleTenantHsmInstance must be in the PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation.
+      value:
+        requiredApproverCount: {{ requiredApproverCount }}
+        twoFactorPublicKeyPems:
+          - "{{ twoFactorPublicKeyPems }}"
     - name: removeQuorumMember
       description: |
         Remove a quorum member from the SingleTenantHsmInstance. This will reduce total_approver_count by 1. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
       value:
+        twoFactorPublicKeyPem: "{{ twoFactorPublicKeyPem }}"
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        Input only. The TTL for the SingleTenantHsmInstanceProposal. Proposals will expire after this duration.
+    - name: upgradeKeyTrust
+      description: |
+        Promotes a key with the AES_WRAPPING purpose to a trusted wrapping key. The key must be in the ACTIVE state to perform this operation.
+      value:
+        name: "{{ name }}"
         twoFactorPublicKeyPem: "{{ twoFactorPublicKeyPem }}"
     - name: singleTenantHsmInstanceProposalId
       value: "{{ singleTenantHsmInstanceProposalId }}"
@@ -611,25 +611,12 @@ AND proposalsId = '{{ proposalsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="execute"
+    defaultValue="approve"
     values={[
-        { label: 'execute', value: 'execute' },
-        { label: 'approve', value: 'approve' }
+        { label: 'approve', value: 'approve' },
+        { label: 'execute', value: 'execute' }
     ]}
 >
-<TabItem value="execute">
-
-Executes a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the APPROVED state.
-
-```sql
-EXEC google.cloudkms.proposals.execute 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@singleTenantHsmInstancesId='{{ singleTenantHsmInstancesId }}' --required, 
-@proposalsId='{{ proposalsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="approve">
 
 Approves a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the PENDING state.
@@ -645,6 +632,19 @@ EXEC google.cloudkms.proposals.approve
 "quorumReply": "{{ quorumReply }}", 
 "requiredActionQuorumReply": "{{ requiredActionQuorumReply }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="execute">
+
+Executes a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the APPROVED state.
+
+```sql
+EXEC google.cloudkms.proposals.execute 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@singleTenantHsmInstancesId='{{ singleTenantHsmInstancesId }}' --required, 
+@proposalsId='{{ proposalsId }}' --required
 ;
 ```
 </TabItem>

@@ -388,7 +388,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_vmware_admin_clusters_get"><CopyableCode code="projects_locations_vmware_admin_clusters_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareAdminClustersId"><code>vmwareAdminClustersId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Gets details of a single VMware admin cluster.</td>
 </tr>
 <tr>
@@ -402,14 +402,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_vmware_admin_clusters_create"><CopyableCode code="projects_locations_vmware_admin_clusters_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-vmwareAdminClusterId"><code>vmwareAdminClusterId</code></a>, <a href="#parameter-allowPreflightFailure"><code>allowPreflightFailure</code></a>, <a href="#parameter-skipValidations"><code>skipValidations</code></a></td>
+    <td><a href="#parameter-allowPreflightFailure"><code>allowPreflightFailure</code></a>, <a href="#parameter-skipValidations"><code>skipValidations</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-vmwareAdminClusterId"><code>vmwareAdminClusterId</code></a></td>
     <td>Creates a new VMware admin cluster in a given project and location. The API needs to be combined with creating a bootstrap cluster to work.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_vmware_admin_clusters_patch"><CopyableCode code="projects_locations_vmware_admin_clusters_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareAdminClustersId"><code>vmwareAdminClustersId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-skipValidations"><code>skipValidations</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-skipValidations"><code>skipValidations</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single VMware admin cluster.</td>
 </tr>
 <tr>
@@ -423,7 +423,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_vmware_admin_clusters_unenroll"><CopyableCode code="projects_locations_vmware_admin_clusters_unenroll" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareAdminClustersId"><code>vmwareAdminClustersId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Unenrolls an existing VMware admin cluster from the Anthos On-Prem API within a given project and location. Unenrollment removes the Cloud reference to the cluster without modifying the underlying OnPrem Resources. Clusters will continue to run; however, they will no longer be accessible through the Anthos On-Prem API or its clients.</td>
 </tr>
 </tbody>
@@ -564,8 +564,8 @@ FROM google.gkeonprem.vmware_admin_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND vmwareAdminClustersId = '{{ vmwareAdminClustersId }}' -- required
-AND view = '{{ view }}'
 AND allowMissing = '{{ allowMissing }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -633,58 +633,58 @@ Creates a new VMware admin cluster in a given project and location. The API need
 
 ```sql
 INSERT INTO google.gkeonprem.vmware_admin_clusters (
-data__networkConfig,
-data__loadBalancer,
-data__etag,
-data__annotations,
-data__vcenter,
-data__imageType,
-data__autoRepairConfig,
-data__description,
 data__addonNode,
-data__proxy,
-data__authorization,
-data__enableAdvancedCluster,
-data__onPremVersion,
-data__controlPlaneNode,
-data__platformConfig,
-data__bootstrapClusterMembership,
+data__annotations,
 data__antiAffinityGroups,
-data__privateRegistryConfig,
+data__authorization,
+data__autoRepairConfig,
+data__bootstrapClusterMembership,
+data__controlPlaneNode,
+data__description,
+data__enableAdvancedCluster,
+data__etag,
+data__imageType,
+data__loadBalancer,
 data__name,
+data__networkConfig,
+data__onPremVersion,
+data__platformConfig,
+data__privateRegistryConfig,
+data__proxy,
+data__vcenter,
 projectsId,
 locationsId,
-validateOnly,
-vmwareAdminClusterId,
 allowPreflightFailure,
-skipValidations
+skipValidations,
+validateOnly,
+vmwareAdminClusterId
 )
 SELECT 
-'{{ networkConfig }}',
-'{{ loadBalancer }}',
-'{{ etag }}',
-'{{ annotations }}',
-'{{ vcenter }}',
-'{{ imageType }}',
-'{{ autoRepairConfig }}',
-'{{ description }}',
 '{{ addonNode }}',
-'{{ proxy }}',
-'{{ authorization }}',
-{{ enableAdvancedCluster }},
-'{{ onPremVersion }}',
-'{{ controlPlaneNode }}',
-'{{ platformConfig }}',
-'{{ bootstrapClusterMembership }}',
+'{{ annotations }}',
 '{{ antiAffinityGroups }}',
-'{{ privateRegistryConfig }}',
+'{{ authorization }}',
+'{{ autoRepairConfig }}',
+'{{ bootstrapClusterMembership }}',
+'{{ controlPlaneNode }}',
+'{{ description }}',
+{{ enableAdvancedCluster }},
+'{{ etag }}',
+'{{ imageType }}',
+'{{ loadBalancer }}',
 '{{ name }}',
+'{{ networkConfig }}',
+'{{ onPremVersion }}',
+'{{ platformConfig }}',
+'{{ privateRegistryConfig }}',
+'{{ proxy }}',
+'{{ vcenter }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ vmwareAdminClusterId }}',
 '{{ allowPreflightFailure }}',
-'{{ skipValidations }}'
+'{{ skipValidations }}',
+'{{ validateOnly }}',
+'{{ vmwareAdminClusterId }}'
 RETURNING
 name,
 done,
@@ -705,126 +705,36 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the vmware_admin_clusters resource.
-    - name: networkConfig
-      description: |
-        The VMware admin cluster network configuration.
-      value:
-        dhcpIpConfig:
-          enabled: {{ enabled }}
-        staticIpConfig:
-          ipBlocks:
-            - gateway: "{{ gateway }}"
-              netmask: "{{ netmask }}"
-              ips: "{{ ips }}"
-        haControlPlaneConfig:
-          controlPlaneIpBlock:
-            gateway: "{{ gateway }}"
-            netmask: "{{ netmask }}"
-            ips:
-              - ip: "{{ ip }}"
-                hostname: "{{ hostname }}"
-        podAddressCidrBlocks:
-          - "{{ podAddressCidrBlocks }}"
-        vcenterNetwork: "{{ vcenterNetwork }}"
-        serviceAddressCidrBlocks:
-          - "{{ serviceAddressCidrBlocks }}"
-        hostConfig:
-          ntpServers:
-            - "{{ ntpServers }}"
-          dnsServers:
-            - "{{ dnsServers }}"
-          dnsSearchDomains:
-            - "{{ dnsSearchDomains }}"
-    - name: loadBalancer
-      description: |
-        The VMware admin cluster load balancer configuration.
-      value:
-        metalLbConfig:
-          enabled: {{ enabled }}
-        f5Config:
-          snatPool: "{{ snatPool }}"
-          partition: "{{ partition }}"
-          address: "{{ address }}"
-        manualLbConfig:
-          ingressHttpsNodePort: {{ ingressHttpsNodePort }}
-          ingressHttpNodePort: {{ ingressHttpNodePort }}
-          konnectivityServerNodePort: {{ konnectivityServerNodePort }}
-          controlPlaneNodePort: {{ controlPlaneNodePort }}
-          addonsNodePort: {{ addonsNodePort }}
-        seesawConfig:
-          masterIp: "{{ masterIp }}"
-          group: "{{ group }}"
-          stackdriverName: "{{ stackdriverName }}"
-          ipBlocks:
-            - gateway: "{{ gateway }}"
-              netmask: "{{ netmask }}"
-              ips: "{{ ips }}"
-          vms:
-            - "{{ vms }}"
-          enableHa: {{ enableHa }}
-        vipConfig:
-          controlPlaneVip: "{{ controlPlaneVip }}"
-          addonsVip: "{{ addonsVip }}"
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Annotations on the VMware admin cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
-    - name: vcenter
-      description: |
-        The VMware admin cluster VCenter configuration.
-      value:
-        resourcePool: "{{ resourcePool }}"
-        datastore: "{{ datastore }}"
-        datacenter: "{{ datacenter }}"
-        folder: "{{ folder }}"
-        address: "{{ address }}"
-        storagePolicyName: "{{ storagePolicyName }}"
-        caCertData: "{{ caCertData }}"
-        cluster: "{{ cluster }}"
-        dataDisk: "{{ dataDisk }}"
-    - name: imageType
-      value: "{{ imageType }}"
-      description: |
-        The OS image type for the VMware admin cluster.
-    - name: autoRepairConfig
-      description: |
-        The VMware admin cluster auto repair configuration.
-      value:
-        enabled: {{ enabled }}
-    - name: description
-      value: "{{ description }}"
-      description: |
-        A human readable description of this VMware admin cluster.
     - name: addonNode
       description: |
         The VMware admin cluster addon node configuration.
       value:
         autoResizeConfig:
           enabled: {{ enabled }}
-    - name: proxy
+    - name: annotations
+      value: "{{ annotations }}"
       description: |
-        Configuration for proxy.
+        Annotations on the VMware admin cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+    - name: antiAffinityGroups
+      description: |
+        The VMware admin cluster anti affinity group configuration.
       value:
-        url: "{{ url }}"
-        noProxy: "{{ noProxy }}"
+        aagConfigDisabled: {{ aagConfigDisabled }}
     - name: authorization
       description: |
         The VMware admin cluster authorization configuration.
       value:
         viewerUsers:
           - username: "{{ username }}"
-    - name: enableAdvancedCluster
-      value: {{ enableAdvancedCluster }}
+    - name: autoRepairConfig
       description: |
-        Enable advanced cluster.
-    - name: onPremVersion
-      value: "{{ onPremVersion }}"
+        The VMware admin cluster auto repair configuration.
+      value:
+        enabled: {{ enabled }}
+    - name: bootstrapClusterMembership
+      value: "{{ bootstrapClusterMembership }}"
       description: |
-        The Anthos clusters on the VMware version for the admin cluster.
+        The bootstrap cluster this VMware admin cluster belongs to.
     - name: controlPlaneNode
       description: |
         The VMware admin cluster control plane node configuration.
@@ -832,67 +742,157 @@ response
         cpus: "{{ cpus }}"
         memory: "{{ memory }}"
         replicas: "{{ replicas }}"
-    - name: platformConfig
+    - name: description
+      value: "{{ description }}"
       description: |
-        The VMware platform configuration.
+        A human readable description of this VMware admin cluster.
+    - name: enableAdvancedCluster
+      value: {{ enableAdvancedCluster }}
+      description: |
+        Enable advanced cluster.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
+    - name: imageType
+      value: "{{ imageType }}"
+      description: |
+        The OS image type for the VMware admin cluster.
+    - name: loadBalancer
+      description: |
+        The VMware admin cluster load balancer configuration.
       value:
-        platformVersion: "{{ platformVersion }}"
-        status:
-          conditions:
-            - type: "{{ type }}"
-              lastTransitionTime: "{{ lastTransitionTime }}"
-              reason: "{{ reason }}"
-              state: "{{ state }}"
-              message: "{{ message }}"
-          version: "{{ version }}"
-          errorMessage: "{{ errorMessage }}"
-          versions:
-            versions:
-              - version: "{{ version }}"
-                count: "{{ count }}"
-        requiredPlatformVersion: "{{ requiredPlatformVersion }}"
-        bundles:
-          - version: "{{ version }}"
-            status:
-              conditions:
-                - type: "{{ type }}"
-                  lastTransitionTime: "{{ lastTransitionTime }}"
-                  reason: "{{ reason }}"
-                  state: "{{ state }}"
-                  message: "{{ message }}"
-              version: "{{ version }}"
-              errorMessage: "{{ errorMessage }}"
-              versions:
-                versions:
-                  - version: "{{ version }}"
-                    count: "{{ count }}"
-    - name: bootstrapClusterMembership
-      value: "{{ bootstrapClusterMembership }}"
-      description: |
-        The bootstrap cluster this VMware admin cluster belongs to.
-    - name: antiAffinityGroups
-      description: |
-        The VMware admin cluster anti affinity group configuration.
-      value:
-        aagConfigDisabled: {{ aagConfigDisabled }}
-    - name: privateRegistryConfig
-      description: |
-        Configuration for registry.
-      value:
-        caCert: "{{ caCert }}"
-        address: "{{ address }}"
+        f5Config:
+          address: "{{ address }}"
+          partition: "{{ partition }}"
+          snatPool: "{{ snatPool }}"
+        manualLbConfig:
+          addonsNodePort: {{ addonsNodePort }}
+          controlPlaneNodePort: {{ controlPlaneNodePort }}
+          ingressHttpNodePort: {{ ingressHttpNodePort }}
+          ingressHttpsNodePort: {{ ingressHttpsNodePort }}
+          konnectivityServerNodePort: {{ konnectivityServerNodePort }}
+        metalLbConfig:
+          enabled: {{ enabled }}
+        seesawConfig:
+          enableHa: {{ enableHa }}
+          group: "{{ group }}"
+          ipBlocks:
+            - gateway: "{{ gateway }}"
+              ips: "{{ ips }}"
+              netmask: "{{ netmask }}"
+          masterIp: "{{ masterIp }}"
+          stackdriverName: "{{ stackdriverName }}"
+          vms:
+            - "{{ vms }}"
+        vipConfig:
+          addonsVip: "{{ addonsVip }}"
+          controlPlaneVip: "{{ controlPlaneVip }}"
     - name: name
       value: "{{ name }}"
       description: |
         Immutable. The VMware admin cluster resource name.
-    - name: validateOnly
-      value: {{ validateOnly }}
-    - name: vmwareAdminClusterId
-      value: "{{ vmwareAdminClusterId }}"
+    - name: networkConfig
+      description: |
+        The VMware admin cluster network configuration.
+      value:
+        dhcpIpConfig:
+          enabled: {{ enabled }}
+        haControlPlaneConfig:
+          controlPlaneIpBlock:
+            gateway: "{{ gateway }}"
+            ips:
+              - hostname: "{{ hostname }}"
+                ip: "{{ ip }}"
+            netmask: "{{ netmask }}"
+        hostConfig:
+          dnsSearchDomains:
+            - "{{ dnsSearchDomains }}"
+          dnsServers:
+            - "{{ dnsServers }}"
+          ntpServers:
+            - "{{ ntpServers }}"
+        podAddressCidrBlocks:
+          - "{{ podAddressCidrBlocks }}"
+        serviceAddressCidrBlocks:
+          - "{{ serviceAddressCidrBlocks }}"
+        staticIpConfig:
+          ipBlocks:
+            - gateway: "{{ gateway }}"
+              ips: "{{ ips }}"
+              netmask: "{{ netmask }}"
+        vcenterNetwork: "{{ vcenterNetwork }}"
+    - name: onPremVersion
+      value: "{{ onPremVersion }}"
+      description: |
+        The Anthos clusters on the VMware version for the admin cluster.
+    - name: platformConfig
+      description: |
+        The VMware platform configuration.
+      value:
+        bundles:
+          - status:
+              conditions:
+                - lastTransitionTime: "{{ lastTransitionTime }}"
+                  message: "{{ message }}"
+                  reason: "{{ reason }}"
+                  state: "{{ state }}"
+                  type: "{{ type }}"
+              errorMessage: "{{ errorMessage }}"
+              version: "{{ version }}"
+              versions:
+                versions:
+                  - count: "{{ count }}"
+                    version: "{{ version }}"
+            version: "{{ version }}"
+        platformVersion: "{{ platformVersion }}"
+        requiredPlatformVersion: "{{ requiredPlatformVersion }}"
+        status:
+          conditions:
+            - lastTransitionTime: "{{ lastTransitionTime }}"
+              message: "{{ message }}"
+              reason: "{{ reason }}"
+              state: "{{ state }}"
+              type: "{{ type }}"
+          errorMessage: "{{ errorMessage }}"
+          version: "{{ version }}"
+          versions:
+            versions:
+              - count: "{{ count }}"
+                version: "{{ version }}"
+    - name: privateRegistryConfig
+      description: |
+        Configuration for registry.
+      value:
+        address: "{{ address }}"
+        caCert: "{{ caCert }}"
+    - name: proxy
+      description: |
+        Configuration for proxy.
+      value:
+        noProxy: "{{ noProxy }}"
+        url: "{{ url }}"
+    - name: vcenter
+      description: |
+        The VMware admin cluster VCenter configuration.
+      value:
+        address: "{{ address }}"
+        caCertData: "{{ caCertData }}"
+        cluster: "{{ cluster }}"
+        dataDisk: "{{ dataDisk }}"
+        datacenter: "{{ datacenter }}"
+        datastore: "{{ datastore }}"
+        folder: "{{ folder }}"
+        resourcePool: "{{ resourcePool }}"
+        storagePolicyName: "{{ storagePolicyName }}"
     - name: allowPreflightFailure
       value: {{ allowPreflightFailure }}
     - name: skipValidations
       value: "{{ skipValidations }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+    - name: vmwareAdminClusterId
+      value: "{{ vmwareAdminClusterId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -914,32 +914,32 @@ Updates the parameters of a single VMware admin cluster.
 ```sql
 UPDATE google.gkeonprem.vmware_admin_clusters
 SET 
-data__networkConfig = '{{ networkConfig }}',
-data__loadBalancer = '{{ loadBalancer }}',
-data__etag = '{{ etag }}',
-data__annotations = '{{ annotations }}',
-data__vcenter = '{{ vcenter }}',
-data__imageType = '{{ imageType }}',
-data__autoRepairConfig = '{{ autoRepairConfig }}',
-data__description = '{{ description }}',
 data__addonNode = '{{ addonNode }}',
-data__proxy = '{{ proxy }}',
-data__authorization = '{{ authorization }}',
-data__enableAdvancedCluster = {{ enableAdvancedCluster }},
-data__onPremVersion = '{{ onPremVersion }}',
-data__controlPlaneNode = '{{ controlPlaneNode }}',
-data__platformConfig = '{{ platformConfig }}',
-data__bootstrapClusterMembership = '{{ bootstrapClusterMembership }}',
+data__annotations = '{{ annotations }}',
 data__antiAffinityGroups = '{{ antiAffinityGroups }}',
+data__authorization = '{{ authorization }}',
+data__autoRepairConfig = '{{ autoRepairConfig }}',
+data__bootstrapClusterMembership = '{{ bootstrapClusterMembership }}',
+data__controlPlaneNode = '{{ controlPlaneNode }}',
+data__description = '{{ description }}',
+data__enableAdvancedCluster = {{ enableAdvancedCluster }},
+data__etag = '{{ etag }}',
+data__imageType = '{{ imageType }}',
+data__loadBalancer = '{{ loadBalancer }}',
+data__name = '{{ name }}',
+data__networkConfig = '{{ networkConfig }}',
+data__onPremVersion = '{{ onPremVersion }}',
+data__platformConfig = '{{ platformConfig }}',
 data__privateRegistryConfig = '{{ privateRegistryConfig }}',
-data__name = '{{ name }}'
+data__proxy = '{{ proxy }}',
+data__vcenter = '{{ vcenter }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND vmwareAdminClustersId = '{{ vmwareAdminClustersId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND skipValidations = '{{ skipValidations}}'
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -970,8 +970,8 @@ EXEC google.gkeonprem.vmware_admin_clusters.projects_locations_vmware_admin_clus
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"vmwareAdminClusterId": "{{ vmwareAdminClusterId }}", 
-"membership": "{{ membership }}"
+"membership": "{{ membership }}", 
+"vmwareAdminClusterId": "{{ vmwareAdminClusterId }}"
 }'
 ;
 ```
@@ -986,8 +986,8 @@ EXEC google.gkeonprem.vmware_admin_clusters.projects_locations_vmware_admin_clus
 @locationsId='{{ locationsId }}' --required, 
 @vmwareAdminClustersId='{{ vmwareAdminClustersId }}' --required, 
 @allowMissing={{ allowMissing }}, 
-@ignoreErrors={{ ignoreErrors }}, 
 @etag='{{ etag }}', 
+@ignoreErrors={{ ignoreErrors }}, 
 @validateOnly={{ validateOnly }}
 ;
 ```

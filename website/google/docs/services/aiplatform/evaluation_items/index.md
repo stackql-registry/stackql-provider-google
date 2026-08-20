@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Evaluation Items.</td>
 </tr>
 <tr>
@@ -317,10 +317,10 @@ metadata
 FROM google.aiplatform.evaluation_items
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -343,23 +343,23 @@ Creates an Evaluation Item.
 ```sql
 INSERT INTO google.aiplatform.evaluation_items (
 data__displayName,
-data__name,
-data__labels,
 data__evaluationItemType,
 data__evaluationRequest,
 data__gcsUri,
+data__labels,
 data__metadata,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ displayName }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ evaluationItemType }}',
 '{{ evaluationRequest }}',
 '{{ gcsUri }}',
+'{{ labels }}',
 '{{ metadata }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -391,14 +391,6 @@ metadata
       value: "{{ displayName }}"
       description: |
         Required. The display name of the EvaluationItem.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the EvaluationItem. Format: \`projects/{project}/locations/{location}/evaluationItems/{evaluation_item}\`
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Labels for the EvaluationItem.
     - name: evaluationItemType
       value: "{{ evaluationItemType }}"
       description: |
@@ -408,57 +400,65 @@ metadata
       description: |
         The request to evaluate.
       value:
-        goldenResponse:
-          error:
-            message: "{{ message }}"
-            details: "{{ details }}"
-            code: {{ code }}
-          text: "{{ text }}"
-          candidate: "{{ candidate }}"
-          value: "{{ value }}"
-          agentData:
-            turns:
-              - turnIndex: {{ turnIndex }}
-                events: "{{ events }}"
-                turnId: "{{ turnId }}"
-            agents: "{{ agents }}"
         candidateResponses:
-          - error:
-              message: "{{ message }}"
-              details: "{{ details }}"
-              code: {{ code }}
-            text: "{{ text }}"
-            candidate: "{{ candidate }}"
-            value: "{{ value }}"
-            agentData:
-              turns:
-                - turnIndex: {{ turnIndex }}
-                  events: "{{ events }}"
-                  turnId: "{{ turnId }}"
+          - agentData:
               agents: "{{ agents }}"
-        rubrics: "{{ rubrics }}"
+              turns:
+                - events: "{{ events }}"
+                  turnId: "{{ turnId }}"
+                  turnIndex: {{ turnIndex }}
+            candidate: "{{ candidate }}"
+            error:
+              code: {{ code }}
+              details: "{{ details }}"
+              message: "{{ message }}"
+            text: "{{ text }}"
+            value: "{{ value }}"
+        goldenResponse:
+          agentData:
+            agents: "{{ agents }}"
+            turns:
+              - events: "{{ events }}"
+                turnId: "{{ turnId }}"
+                turnIndex: {{ turnIndex }}
+          candidate: "{{ candidate }}"
+          error:
+            code: {{ code }}
+            details: "{{ details }}"
+            message: "{{ message }}"
+          text: "{{ text }}"
+          value: "{{ value }}"
         prompt:
+          agentData:
+            agents: "{{ agents }}"
+            turns:
+              - events: "{{ events }}"
+                turnId: "{{ turnId }}"
+                turnIndex: {{ turnIndex }}
           promptTemplateData:
             values: "{{ values }}"
-          value: "{{ value }}"
-          agentData:
-            turns:
-              - turnIndex: {{ turnIndex }}
-                events: "{{ events }}"
-                turnId: "{{ turnId }}"
-            agents: "{{ agents }}"
+          text: "{{ text }}"
           userScenario:
             conversationPlan: "{{ conversationPlan }}"
             startingPrompt: "{{ startingPrompt }}"
-          text: "{{ text }}"
+          value: "{{ value }}"
+        rubrics: "{{ rubrics }}"
     - name: gcsUri
       value: "{{ gcsUri }}"
       description: |
         The Cloud Storage object where the request or response is stored.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels for the EvaluationItem.
     - name: metadata
       value: "{{ metadata }}"
       description: |
         Optional. Metadata for the EvaluationItem.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the EvaluationItem. Format: \`projects/{project}/locations/{location}/evaluationItems/{evaluation_item}\`
 `}</CodeBlock>
 
 </TabItem>

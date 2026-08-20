@@ -196,7 +196,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_products_data_assets_delete"><CopyableCode code="projects_locations_data_products_data_assets_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataProductsId"><code>dataProductsId</code></a>, <a href="#parameter-dataAssetsId"><code>dataAssetsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a data asset.</td>
 </tr>
 </tbody>
@@ -352,9 +352,9 @@ Creates a data asset.
 
 ```sql
 INSERT INTO google.dataplex.data_assets (
+data__accessGroupConfigs,
 data__etag,
 data__labels,
-data__accessGroupConfigs,
 data__name,
 data__resource,
 projectsId,
@@ -364,9 +364,9 @@ dataAssetId,
 validateOnly
 )
 SELECT 
+'{{ accessGroupConfigs }}',
 '{{ etag }}',
 '{{ labels }}',
-'{{ accessGroupConfigs }}',
 '{{ name }}',
 '{{ resource }}',
 '{{ projectsId }}',
@@ -397,6 +397,10 @@ response
     - name: dataProductsId
       value: "{{ dataProductsId }}"
       description: Required parameter for the data_assets resource.
+    - name: accessGroupConfigs
+      value: "{{ accessGroupConfigs }}"
+      description: |
+        Optional. Access groups configurations for this data asset.The key is DataProduct.AccessGroup.id and the value is AccessGroupConfig.Example: { "analyst": { "iamRoles": ["roles/bigquery.dataViewer"] } } Currently, at most one IAM role is allowed per access group. For providing multiple predefined IAM roles, wrap them in a custom IAM role as per https://cloud.google.com/iam/docs/creating-custom-roles.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -405,10 +409,6 @@ response
       value: "{{ labels }}"
       description: |
         Optional. User-defined labels for the data asset.Example: { "environment": "production", "billing": "marketing-department" }
-    - name: accessGroupConfigs
-      value: "{{ accessGroupConfigs }}"
-      description: |
-        Optional. Access groups configurations for this data asset.The key is DataProduct.AccessGroup.id and the value is AccessGroupConfig.Example: { "analyst": { "iamRoles": ["roles/bigquery.dataViewer"] } } Currently, at most one IAM role is allowed per access group. For providing multiple predefined IAM roles, wrap them in a custom IAM role as per https://cloud.google.com/iam/docs/creating-custom-roles.
     - name: name
       value: "{{ name }}"
       description: |
@@ -442,9 +442,9 @@ Updates a data asset.
 ```sql
 UPDATE google.dataplex.data_assets
 SET 
+data__accessGroupConfigs = '{{ accessGroupConfigs }}',
 data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
-data__accessGroupConfigs = '{{ accessGroupConfigs }}',
 data__name = '{{ name }}',
 data__resource = '{{ resource }}'
 WHERE 
@@ -483,8 +483,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND dataProductsId = '{{ dataProductsId }}' --required
 AND dataAssetsId = '{{ dataAssetsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

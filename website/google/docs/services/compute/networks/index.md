@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of networks available to the specified project.</td>
 </tr>
 <tr>
@@ -257,18 +257,18 @@ The following methods are available for this resource:
     <td>Cancel requests to remove a peering from the specified network. Applicable<br />only for PeeringConnection with update_strategy=CONSENSUS.  Cancels a<br />request to remove a peering from the specified network.</td>
 </tr>
 <tr>
-    <td><a href="#switch_to_custom_mode"><CopyableCode code="switch_to_custom_mode" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-network"><code>network</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Switches the network mode from auto subnet mode to custom subnet mode.</td>
-</tr>
-<tr>
     <td><a href="#request_remove_peering"><CopyableCode code="request_remove_peering" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-network"><code>network</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Requests to remove a peering from the specified network. Applicable only<br />for PeeringConnection with update_strategy=CONSENSUS.</td>
+</tr>
+<tr>
+    <td><a href="#switch_to_custom_mode"><CopyableCode code="switch_to_custom_mode" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-network"><code>network</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Switches the network mode from auto subnet mode to custom subnet mode.</td>
 </tr>
 </tbody>
 </table>
@@ -384,11 +384,11 @@ selfLink,
 warning
 FROM google.compute.networks
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -410,38 +410,38 @@ Creates a network in the specified project using the data included<br />in the r
 
 ```sql
 INSERT INTO google.compute.networks (
-data__routingConfig,
-data__networkProfile,
-data__networkFirewallPolicyEnforcementOrder,
-data__gatewayIPv4,
-data__enableUlaInternalIpv6,
 data__IPv4Range,
-data__subnetworks,
-data__name,
 data__autoCreateSubnetworks,
-data__params,
-data__internalIpv6Range,
 data__description,
+data__enableUlaInternalIpv6,
+data__gatewayIPv4,
+data__internalIpv6Range,
 data__mtu,
+data__name,
+data__networkFirewallPolicyEnforcementOrder,
+data__networkProfile,
+data__params,
+data__routingConfig,
 data__selfLink,
+data__subnetworks,
 project,
 requestId
 )
 SELECT 
-'{{ routingConfig }}',
-'{{ networkProfile }}',
-'{{ networkFirewallPolicyEnforcementOrder }}',
-'{{ gatewayIPv4 }}',
-{{ enableUlaInternalIpv6 }},
 '{{ IPv4Range }}',
-'{{ subnetworks }}',
-'{{ name }}',
 {{ autoCreateSubnetworks }},
-'{{ params }}',
-'{{ internalIpv6Range }}',
 '{{ description }}',
+{{ enableUlaInternalIpv6 }},
+'{{ gatewayIPv4 }}',
+'{{ internalIpv6Range }}',
 {{ mtu }},
+'{{ name }}',
+'{{ networkFirewallPolicyEnforcementOrder }}',
+'{{ networkProfile }}',
+'{{ params }}',
+'{{ routingConfig }}',
 '{{ selfLink }}',
+'{{ subnetworks }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -483,43 +483,6 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the networks resource.
-    - name: routingConfig
-      description: |
-        The network-level routing configuration for this network.  Used by Cloud
-        Router to determine what type of network-wide routing behavior to enforce.
-      value:
-        bgpInterRegionCost: "{{ bgpInterRegionCost }}"
-        routingMode: "{{ routingMode }}"
-        bgpAlwaysCompareMed: {{ bgpAlwaysCompareMed }}
-        effectiveBgpAlwaysCompareMed: {{ effectiveBgpAlwaysCompareMed }}
-        effectiveBgpInterRegionCost: "{{ effectiveBgpInterRegionCost }}"
-        bgpBestPathSelectionMode: "{{ bgpBestPathSelectionMode }}"
-    - name: networkProfile
-      value: "{{ networkProfile }}"
-      description: |
-        A full or partial URL of the network profile to apply to this network.
-        This field can be set only at resource creation time. For example, the
-        following are valid URLs:
-        - https://www.googleapis.com/compute/{api_version}/projects/{project_id}/global/networkProfiles/{network_profile_name}
-        - projects/{project_id}/global/networkProfiles/{network_profile_name}
-    - name: networkFirewallPolicyEnforcementOrder
-      value: "{{ networkFirewallPolicyEnforcementOrder }}"
-      description: |
-        The network firewall policy enforcement order. Can be either
-        AFTER_CLASSIC_FIREWALL or BEFORE_CLASSIC_FIREWALL. Defaults to
-        AFTER_CLASSIC_FIREWALL if the field is not specified.
-      valid_values: ['AFTER_CLASSIC_FIREWALL', 'BEFORE_CLASSIC_FIREWALL']
-    - name: gatewayIPv4
-      value: "{{ gatewayIPv4 }}"
-      description: |
-        [Output Only] The gateway address for default routing out of the network,
-        selected by Google Cloud.
-    - name: enableUlaInternalIpv6
-      value: {{ enableUlaInternalIpv6 }}
-      description: |
-        Enable ULA internal ipv6 on this network. Enabling this feature will assign
-        a /48 from google defined ULA prefix fd20::/20.
-        .
     - name: IPv4Range
       value: "{{ IPv4Range }}"
       description: |
@@ -527,22 +490,6 @@ zone
         The range of internal addresses that are legal on this network. This
         range is aCIDR specification, for example:192.168.0.0/16. Provided by the client when the network is
         created.
-    - name: subnetworks
-      value:
-        - "{{ subnetworks }}"
-      description: |
-        [Output Only] Server-defined fully-qualified URLs for all subnetworks
-        in this VPC network.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`. The first character must be a
-        lowercase letter, and all following characters (except for the last
-        character) must be a dash, lowercase letter, or digit. The last character
-        must be a lowercase letter or digit.
     - name: autoCreateSubnetworks
       value: {{ autoCreateSubnetworks }}
       description: |
@@ -554,12 +501,22 @@ zone
         has a predetermined range as described inAuto mode VPC network IP ranges.
         For custom mode VPC networks, you can add subnets using the subnetworksinsert
         method.
-    - name: params
+    - name: description
+      value: "{{ description }}"
       description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
+        An optional description of this resource. Provide this field when you
+        create the resource.
+    - name: enableUlaInternalIpv6
+      value: {{ enableUlaInternalIpv6 }}
+      description: |
+        Enable ULA internal ipv6 on this network. Enabling this feature will assign
+        a /48 from google defined ULA prefix fd20::/20.
+        .
+    - name: gatewayIPv4
+      value: "{{ gatewayIPv4 }}"
+      description: |
+        [Output Only] The gateway address for default routing out of the network,
+        selected by Google Cloud.
     - name: internalIpv6Range
       value: "{{ internalIpv6Range }}"
       description: |
@@ -570,11 +527,6 @@ zone
         resource. If the field is not speficied, then a /48 range will be randomly
         allocated from fd20::/20 and returned via this field.
         .
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this field when you
-        create the resource.
     - name: mtu
       value: {{ mtu }}
       description: |
@@ -583,10 +535,58 @@ zone
         The suggested value is 1500, which is the default MTU used on the
         Internet, or 8896 if you want to use Jumbo frames. If unspecified, the
         value defaults to 1460.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`. The first character must be a
+        lowercase letter, and all following characters (except for the last
+        character) must be a dash, lowercase letter, or digit. The last character
+        must be a lowercase letter or digit.
+    - name: networkFirewallPolicyEnforcementOrder
+      value: "{{ networkFirewallPolicyEnforcementOrder }}"
+      description: |
+        The network firewall policy enforcement order. Can be either
+        AFTER_CLASSIC_FIREWALL or BEFORE_CLASSIC_FIREWALL. Defaults to
+        AFTER_CLASSIC_FIREWALL if the field is not specified.
+      valid_values: ['AFTER_CLASSIC_FIREWALL', 'BEFORE_CLASSIC_FIREWALL']
+    - name: networkProfile
+      value: "{{ networkProfile }}"
+      description: |
+        A full or partial URL of the network profile to apply to this network.
+        This field can be set only at resource creation time. For example, the
+        following are valid URLs:
+        - https://www.googleapis.com/compute/{api_version}/projects/{project_id}/global/networkProfiles/{network_profile_name}
+        - projects/{project_id}/global/networkProfiles/{network_profile_name}
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: routingConfig
+      description: |
+        The network-level routing configuration for this network.  Used by Cloud
+        Router to determine what type of network-wide routing behavior to enforce.
+      value:
+        bgpAlwaysCompareMed: {{ bgpAlwaysCompareMed }}
+        bgpBestPathSelectionMode: "{{ bgpBestPathSelectionMode }}"
+        bgpInterRegionCost: "{{ bgpInterRegionCost }}"
+        effectiveBgpAlwaysCompareMed: {{ effectiveBgpAlwaysCompareMed }}
+        effectiveBgpInterRegionCost: "{{ effectiveBgpInterRegionCost }}"
+        routingMode: "{{ routingMode }}"
     - name: selfLink
       value: "{{ selfLink }}"
       description: |
         [Output Only] Server-defined URL for the resource.
+    - name: subnetworks
+      value:
+        - "{{ subnetworks }}"
+      description: |
+        [Output Only] Server-defined fully-qualified URLs for all subnetworks
+        in this VPC network.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -610,20 +610,20 @@ Patches the specified network with the data included in the request.<br />Only r
 ```sql
 UPDATE google.compute.networks
 SET 
-data__routingConfig = '{{ routingConfig }}',
-data__networkProfile = '{{ networkProfile }}',
-data__networkFirewallPolicyEnforcementOrder = '{{ networkFirewallPolicyEnforcementOrder }}',
-data__gatewayIPv4 = '{{ gatewayIPv4 }}',
-data__enableUlaInternalIpv6 = {{ enableUlaInternalIpv6 }},
 data__IPv4Range = '{{ IPv4Range }}',
-data__subnetworks = '{{ subnetworks }}',
-data__name = '{{ name }}',
 data__autoCreateSubnetworks = {{ autoCreateSubnetworks }},
-data__params = '{{ params }}',
-data__internalIpv6Range = '{{ internalIpv6Range }}',
 data__description = '{{ description }}',
+data__enableUlaInternalIpv6 = {{ enableUlaInternalIpv6 }},
+data__gatewayIPv4 = '{{ gatewayIPv4 }}',
+data__internalIpv6Range = '{{ internalIpv6Range }}',
 data__mtu = {{ mtu }},
-data__selfLink = '{{ selfLink }}'
+data__name = '{{ name }}',
+data__networkFirewallPolicyEnforcementOrder = '{{ networkFirewallPolicyEnforcementOrder }}',
+data__networkProfile = '{{ networkProfile }}',
+data__params = '{{ params }}',
+data__routingConfig = '{{ routingConfig }}',
+data__selfLink = '{{ selfLink }}',
+data__subnetworks = '{{ subnetworks }}'
 WHERE 
 project = '{{ project }}' --required
 AND network = '{{ network }}' --required
@@ -690,8 +690,8 @@ AND requestId = '{{ requestId }}'
     defaultValue="cancel_request_remove_peering"
     values={[
         { label: 'cancel_request_remove_peering', value: 'cancel_request_remove_peering' },
-        { label: 'switch_to_custom_mode', value: 'switch_to_custom_mode' },
-        { label: 'request_remove_peering', value: 'request_remove_peering' }
+        { label: 'request_remove_peering', value: 'request_remove_peering' },
+        { label: 'switch_to_custom_mode', value: 'switch_to_custom_mode' }
     ]}
 >
 <TabItem value="cancel_request_remove_peering">
@@ -700,6 +700,22 @@ Cancel requests to remove a peering from the specified network. Applicable<br />
 
 ```sql
 EXEC google.compute.networks.cancel_request_remove_peering 
+@project='{{ project }}' --required, 
+@network='{{ network }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"name": "{{ name }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="request_remove_peering">
+
+Requests to remove a peering from the specified network. Applicable only<br />for PeeringConnection with update_strategy=CONSENSUS.
+
+```sql
+EXEC google.compute.networks.request_remove_peering 
 @project='{{ project }}' --required, 
 @network='{{ network }}' --required, 
 @requestId='{{ requestId }}' 
@@ -719,22 +735,6 @@ EXEC google.compute.networks.switch_to_custom_mode
 @project='{{ project }}' --required, 
 @network='{{ network }}' --required, 
 @requestId='{{ requestId }}'
-;
-```
-</TabItem>
-<TabItem value="request_remove_peering">
-
-Requests to remove a peering from the specified network. Applicable only<br />for PeeringConnection with update_strategy=CONSENSUS.
-
-```sql
-EXEC google.compute.networks.request_remove_peering 
-@project='{{ project }}' --required, 
-@network='{{ network }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"name": "{{ name }}"
-}'
 ;
 ```
 </TabItem>

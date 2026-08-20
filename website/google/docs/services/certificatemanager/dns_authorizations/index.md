@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DnsAuthorizations in a given project and location.</td>
 </tr>
 <tr>
@@ -323,9 +323,9 @@ FROM google.certificatemanager.dns_authorizations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -347,22 +347,22 @@ Creates a new DnsAuthorization in a given project and location.
 
 ```sql
 INSERT INTO google.certificatemanager.dns_authorizations (
-data__name,
-data__tags,
+data__description,
 data__domain,
 data__labels,
-data__description,
+data__name,
+data__tags,
 data__type,
 projectsId,
 locationsId,
 dnsAuthorizationId
 )
 SELECT 
-'{{ name }}',
-'{{ tags }}',
+'{{ description }}',
 '{{ domain }}',
 '{{ labels }}',
-'{{ description }}',
+'{{ name }}',
+'{{ tags }}',
 '{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -387,14 +387,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the dns_authorizations resource.
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Identifier. A user-defined name of the dns authorization. DnsAuthorization names must be unique globally and match pattern \`projects/*/locations/*/dnsAuthorizations/*\`.
-    - name: tags
-      value: "{{ tags }}"
-      description: |
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
+        Optional. One or more paragraphs of text description of a DnsAuthorization.
     - name: domain
       value: "{{ domain }}"
       description: |
@@ -403,10 +399,14 @@ response
       value: "{{ labels }}"
       description: |
         Optional. Set of labels associated with a DnsAuthorization.
-    - name: description
-      value: "{{ description }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. One or more paragraphs of text description of a DnsAuthorization.
+        Identifier. A user-defined name of the dns authorization. DnsAuthorization names must be unique globally and match pattern \`projects/*/locations/*/dnsAuthorizations/*\`.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
     - name: type
       value: "{{ type }}"
       description: |
@@ -435,11 +435,11 @@ Updates a DnsAuthorization.
 ```sql
 UPDATE google.certificatemanager.dns_authorizations
 SET 
-data__name = '{{ name }}',
-data__tags = '{{ tags }}',
+data__description = '{{ description }}',
 data__domain = '{{ domain }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__tags = '{{ tags }}',
 data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

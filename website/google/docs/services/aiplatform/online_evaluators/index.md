@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the OnlineEvaluators for the given project and location.</td>
 </tr>
 <tr>
@@ -220,18 +220,18 @@ The following methods are available for this resource:
     <td>Deletes an OnlineEvaluator.</td>
 </tr>
 <tr>
-    <td><a href="#suspend"><CopyableCode code="suspend" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-onlineEvaluatorsId"><code>onlineEvaluatorsId</code></a></td>
-    <td></td>
-    <td>Suspends an OnlineEvaluator. When an OnlineEvaluator is suspended, it won't run any evaluations until it is activated again.</td>
-</tr>
-<tr>
     <td><a href="#activate"><CopyableCode code="activate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-onlineEvaluatorsId"><code>onlineEvaluatorsId</code></a></td>
     <td></td>
     <td>Activates an OnlineEvaluator.</td>
+</tr>
+<tr>
+    <td><a href="#suspend"><CopyableCode code="suspend" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-onlineEvaluatorsId"><code>onlineEvaluatorsId</code></a></td>
+    <td></td>
+    <td>Suspends an OnlineEvaluator. When an OnlineEvaluator is suspended, it won't run any evaluations until it is activated again.</td>
 </tr>
 </tbody>
 </table>
@@ -343,10 +343,10 @@ updateTime
 FROM google.aiplatform.online_evaluators
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -368,22 +368,22 @@ Creates an OnlineEvaluator in the given project and location.
 
 ```sql
 INSERT INTO google.aiplatform.online_evaluators (
+data__agentResource,
+data__cloudObservability,
+data__config,
+data__displayName,
 data__metricSources,
 data__name,
-data__config,
-data__cloudObservability,
-data__displayName,
-data__agentResource,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ agentResource }}',
+'{{ cloudObservability }}',
+'{{ config }}',
+'{{ displayName }}',
 '{{ metricSources }}',
 '{{ name }}',
-'{{ config }}',
-'{{ cloudObservability }}',
-'{{ displayName }}',
-'{{ agentResource }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -406,114 +406,17 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the online_evaluators resource.
-    - name: metricSources
+    - name: agentResource
+      value: "{{ agentResource }}"
       description: |
-        Required. A list of metric sources to be used for evaluating samples. At least one MetricSource must be provided. Right now, only predefined metrics and registered metrics are supported. Every registered metric must have \`display_name\` (or \`title\`) and \`score_range\` defined. Otherwise, the evaluations will fail. The maximum number of \`metric_sources\` is 25.
-      value:
-        - metricResourceName: "{{ metricResourceName }}"
-          metric:
-            pointwiseMetricSpec:
-              metricPromptTemplate: "{{ metricPromptTemplate }}"
-              systemInstruction: "{{ systemInstruction }}"
-              customOutputFormatConfig:
-                returnRawOutput: {{ returnRawOutput }}
-            bleuSpec:
-              useEffectiveOrder: {{ useEffectiveOrder }}
-            rougeSpec:
-              useStemmer: {{ useStemmer }}
-              rougeType: "{{ rougeType }}"
-              splitSummaries: {{ splitSummaries }}
-            exactMatchSpec: "{{ exactMatchSpec }}"
-            computationBasedMetricSpec:
-              type: "{{ type }}"
-              parameters: "{{ parameters }}"
-            predefinedMetricSpec:
-              metricSpecName: "{{ metricSpecName }}"
-              metricSpecParameters: "{{ metricSpecParameters }}"
-            metadata:
-              otherMetadata: "{{ otherMetadata }}"
-              title: "{{ title }}"
-              scoreRange:
-                min: {{ min }}
-                step: {{ step }}
-                description: "{{ description }}"
-                max: {{ max }}
-            customCodeExecutionSpec:
-              evaluationFunction: "{{ evaluationFunction }}"
-            pairwiseMetricSpec:
-              systemInstruction: "{{ systemInstruction }}"
-              baselineResponseFieldName: "{{ baselineResponseFieldName }}"
-              candidateResponseFieldName: "{{ candidateResponseFieldName }}"
-              metricPromptTemplate: "{{ metricPromptTemplate }}"
-              customOutputFormatConfig:
-                returnRawOutput: {{ returnRawOutput }}
-            aggregationMetrics:
-              - "{{ aggregationMetrics }}"
-            llmBasedMetricSpec:
-              systemInstruction: "{{ systemInstruction }}"
-              judgeAutoraterConfig:
-                samplingCount: {{ samplingCount }}
-                flipEnabled: {{ flipEnabled }}
-                autoraterModel: "{{ autoraterModel }}"
-                generationConfig:
-                  speechConfig: "{{ speechConfig }}"
-                  seed: {{ seed }}
-                  imageConfig: "{{ imageConfig }}"
-                  audioTranscriptionConfig: "{{ audioTranscriptionConfig }}"
-                  maxOutputTokens: {{ maxOutputTokens }}
-                  responseModalities: "{{ responseModalities }}"
-                  topP: {{ topP }}
-                  responseJsonSchema: "{{ responseJsonSchema }}"
-                  responseFormat: "{{ responseFormat }}"
-                  thinkingConfig: "{{ thinkingConfig }}"
-                  enableAffectiveDialog: {{ enableAffectiveDialog }}
-                  topK: {{ topK }}
-                  logprobs: {{ logprobs }}
-                  presencePenalty: {{ presencePenalty }}
-                  candidateCount: {{ candidateCount }}
-                  responseSchema: "{{ responseSchema }}"
-                  routingConfig: "{{ routingConfig }}"
-                  audioTimestamp: {{ audioTimestamp }}
-                  temperature: {{ temperature }}
-                  stopSequences: "{{ stopSequences }}"
-                  responseLogprobs: {{ responseLogprobs }}
-                  responseMimeType: "{{ responseMimeType }}"
-                  mediaResolution: "{{ mediaResolution }}"
-                  frequencyPenalty: {{ frequencyPenalty }}
-              rubricGroupKey: "{{ rubricGroupKey }}"
-              resultParserConfig:
-                customCodeParserConfig:
-                  parsingFunction: "{{ parsingFunction }}"
-              predefinedRubricGenerationSpec:
-                metricSpecName: "{{ metricSpecName }}"
-                metricSpecParameters: "{{ metricSpecParameters }}"
-              metricPromptTemplate: "{{ metricPromptTemplate }}"
-              rubricGenerationSpec:
-                promptTemplate: "{{ promptTemplate }}"
-                modelConfig:
-                  samplingCount: {{ samplingCount }}
-                  flipEnabled: {{ flipEnabled }}
-                  autoraterModel: "{{ autoraterModel }}"
-                  generationConfig: "{{ generationConfig }}"
-                rubricTypeOntology:
-                  - "{{ rubricTypeOntology }}"
-                rubricContentType: "{{ rubricContentType }}"
-              additionalConfig: "{{ additionalConfig }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the OnlineEvaluator. Format: projects/{project}/locations/{location}/onlineEvaluators/{id}.
-    - name: config
-      description: |
-        Required. Configuration for the OnlineEvaluator.
-      value:
-        randomSampling:
-          percentage: {{ percentage }}
-        maxEvaluatedSamplesPerRun: "{{ maxEvaluatedSamplesPerRun }}"
+        Required. Immutable. The name of the agent that the OnlineEvaluator evaluates periodically. This value is used to filter the traces with a matching cloud.resource_id and link the evaluation results with relevant dashboards/UIs. This field is immutable. Once set, it cannot be changed.
     - name: cloudObservability
       description: |
         Data source for the OnlineEvaluator, based on Google Cloud Observability stack (Cloud Trace & Cloud Logging).
       value:
+        logView: "{{ logView }}"
+        openTelemetry:
+          semconvVersion: "{{ semconvVersion }}"
         traceScope:
           filter:
             - duration:
@@ -522,18 +425,115 @@ response
               totalTokenUsage:
                 comparisonOperator: "{{ comparisonOperator }}"
                 value: {{ value }}
-        logView: "{{ logView }}"
-        openTelemetry:
-          semconvVersion: "{{ semconvVersion }}"
         traceView: "{{ traceView }}"
+    - name: config
+      description: |
+        Required. Configuration for the OnlineEvaluator.
+      value:
+        maxEvaluatedSamplesPerRun: "{{ maxEvaluatedSamplesPerRun }}"
+        randomSampling:
+          percentage: {{ percentage }}
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. Human-readable name for the OnlineEvaluator. The name doesn't have to be unique. The name can consist of any UTF-8 characters. The maximum length is \`63\` characters. If the display name exceeds max characters, an \`INVALID_ARGUMENT\` error is returned.
-    - name: agentResource
-      value: "{{ agentResource }}"
+    - name: metricSources
       description: |
-        Required. Immutable. The name of the agent that the OnlineEvaluator evaluates periodically. This value is used to filter the traces with a matching cloud.resource_id and link the evaluation results with relevant dashboards/UIs. This field is immutable. Once set, it cannot be changed.
+        Required. A list of metric sources to be used for evaluating samples. At least one MetricSource must be provided. Right now, only predefined metrics and registered metrics are supported. Every registered metric must have \`display_name\` (or \`title\`) and \`score_range\` defined. Otherwise, the evaluations will fail. The maximum number of \`metric_sources\` is 25.
+      value:
+        - metric:
+            aggregationMetrics:
+              - "{{ aggregationMetrics }}"
+            bleuSpec:
+              useEffectiveOrder: {{ useEffectiveOrder }}
+            computationBasedMetricSpec:
+              parameters: "{{ parameters }}"
+              type: "{{ type }}"
+            customCodeExecutionSpec:
+              evaluationFunction: "{{ evaluationFunction }}"
+            exactMatchSpec: "{{ exactMatchSpec }}"
+            llmBasedMetricSpec:
+              additionalConfig: "{{ additionalConfig }}"
+              judgeAutoraterConfig:
+                autoraterModel: "{{ autoraterModel }}"
+                flipEnabled: {{ flipEnabled }}
+                generationConfig:
+                  audioTimestamp: {{ audioTimestamp }}
+                  audioTranscriptionConfig: "{{ audioTranscriptionConfig }}"
+                  candidateCount: {{ candidateCount }}
+                  enableAffectiveDialog: {{ enableAffectiveDialog }}
+                  frequencyPenalty: {{ frequencyPenalty }}
+                  imageConfig: "{{ imageConfig }}"
+                  logprobs: {{ logprobs }}
+                  maxOutputTokens: {{ maxOutputTokens }}
+                  mediaResolution: "{{ mediaResolution }}"
+                  presencePenalty: {{ presencePenalty }}
+                  responseFormat: "{{ responseFormat }}"
+                  responseJsonSchema: "{{ responseJsonSchema }}"
+                  responseLogprobs: {{ responseLogprobs }}
+                  responseMimeType: "{{ responseMimeType }}"
+                  responseModalities: "{{ responseModalities }}"
+                  responseSchema: "{{ responseSchema }}"
+                  routingConfig: "{{ routingConfig }}"
+                  seed: {{ seed }}
+                  speechConfig: "{{ speechConfig }}"
+                  stopSequences: "{{ stopSequences }}"
+                  temperature: {{ temperature }}
+                  thinkingConfig: "{{ thinkingConfig }}"
+                  topK: {{ topK }}
+                  topP: {{ topP }}
+                samplingCount: {{ samplingCount }}
+              metricPromptTemplate: "{{ metricPromptTemplate }}"
+              predefinedRubricGenerationSpec:
+                metricSpecName: "{{ metricSpecName }}"
+                metricSpecParameters: "{{ metricSpecParameters }}"
+              resultParserConfig:
+                customCodeParserConfig:
+                  parsingFunction: "{{ parsingFunction }}"
+              rubricGenerationSpec:
+                modelConfig:
+                  autoraterModel: "{{ autoraterModel }}"
+                  flipEnabled: {{ flipEnabled }}
+                  generationConfig: "{{ generationConfig }}"
+                  samplingCount: {{ samplingCount }}
+                promptTemplate: "{{ promptTemplate }}"
+                rubricContentType: "{{ rubricContentType }}"
+                rubricTypeOntology:
+                  - "{{ rubricTypeOntology }}"
+              rubricGroupKey: "{{ rubricGroupKey }}"
+              systemInstruction: "{{ systemInstruction }}"
+            metadata:
+              otherMetadata: "{{ otherMetadata }}"
+              scoreRange:
+                description: "{{ description }}"
+                max: {{ max }}
+                min: {{ min }}
+                step: {{ step }}
+              title: "{{ title }}"
+            pairwiseMetricSpec:
+              baselineResponseFieldName: "{{ baselineResponseFieldName }}"
+              candidateResponseFieldName: "{{ candidateResponseFieldName }}"
+              customOutputFormatConfig:
+                returnRawOutput: {{ returnRawOutput }}
+              metricPromptTemplate: "{{ metricPromptTemplate }}"
+              systemInstruction: "{{ systemInstruction }}"
+            pointwiseMetricSpec:
+              customOutputFormatConfig:
+                returnRawOutput: {{ returnRawOutput }}
+              metricPromptTemplate: "{{ metricPromptTemplate }}"
+              systemInstruction: "{{ systemInstruction }}"
+            predefinedMetricSpec:
+              metricSpecName: "{{ metricSpecName }}"
+              metricSpecParameters: "{{ metricSpecParameters }}"
+            rougeSpec:
+              rougeType: "{{ rougeType }}"
+              splitSummaries: {{ splitSummaries }}
+              useStemmer: {{ useStemmer }}
+          metricResourceName: "{{ metricResourceName }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the OnlineEvaluator. Format: projects/{project}/locations/{location}/onlineEvaluators/{id}.
 `}</CodeBlock>
 
 </TabItem>
@@ -555,12 +555,12 @@ Updates the fields of an OnlineEvaluator.
 ```sql
 UPDATE google.aiplatform.online_evaluators
 SET 
-data__metricSources = '{{ metricSources }}',
-data__name = '{{ name }}',
-data__config = '{{ config }}',
+data__agentResource = '{{ agentResource }}',
 data__cloudObservability = '{{ cloudObservability }}',
+data__config = '{{ config }}',
 data__displayName = '{{ displayName }}',
-data__agentResource = '{{ agentResource }}'
+data__metricSources = '{{ metricSources }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -603,30 +603,30 @@ AND onlineEvaluatorsId = '{{ onlineEvaluatorsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="suspend"
+    defaultValue="activate"
     values={[
-        { label: 'suspend', value: 'suspend' },
-        { label: 'activate', value: 'activate' }
+        { label: 'activate', value: 'activate' },
+        { label: 'suspend', value: 'suspend' }
     ]}
 >
-<TabItem value="suspend">
-
-Suspends an OnlineEvaluator. When an OnlineEvaluator is suspended, it won't run any evaluations until it is activated again.
-
-```sql
-EXEC google.aiplatform.online_evaluators.suspend 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@onlineEvaluatorsId='{{ onlineEvaluatorsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="activate">
 
 Activates an OnlineEvaluator.
 
 ```sql
 EXEC google.aiplatform.online_evaluators.activate 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@onlineEvaluatorsId='{{ onlineEvaluatorsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="suspend">
+
+Suspends an OnlineEvaluator. When an OnlineEvaluator is suspended, it won't run any evaluations until it is activated again.
+
+```sql
+EXEC google.aiplatform.online_evaluators.suspend 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @onlineEvaluatorsId='{{ onlineEvaluatorsId }}' --required

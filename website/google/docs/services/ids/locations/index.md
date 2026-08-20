@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 </tbody>
@@ -236,10 +236,10 @@ locationId,
 metadata
 FROM google.ids.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

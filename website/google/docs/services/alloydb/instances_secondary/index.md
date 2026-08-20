@@ -121,24 +121,24 @@ Creates a new SECONDARY Instance in a given project and location.
 
 ```sql
 INSERT INTO google.alloydb.instances_secondary (
-data__observabilityConfig,
-data__labels,
-data__dataApiAccess,
-data__gceZone,
-data__etag,
-data__availabilityType,
-data__databaseFlags,
-data__annotations,
-data__pscInstanceConfig,
 data__activationPolicy,
-data__instanceType,
+data__annotations,
+data__availabilityType,
+data__clientConnectionConfig,
+data__connectionPoolConfig,
+data__dataApiAccess,
+data__databaseFlags,
 data__displayName,
+data__etag,
+data__gceZone,
+data__instanceType,
+data__labels,
 data__machineConfig,
+data__networkConfig,
+data__observabilityConfig,
+data__pscInstanceConfig,
 data__queryInsightsConfig,
 data__readPoolConfig,
-data__connectionPoolConfig,
-data__clientConnectionConfig,
-data__networkConfig,
 projectsId,
 locationsId,
 clustersId,
@@ -147,24 +147,24 @@ requestId,
 validateOnly
 )
 SELECT 
-'{{ observabilityConfig }}',
-'{{ labels }}',
-'{{ dataApiAccess }}',
-'{{ gceZone }}',
-'{{ etag }}',
-'{{ availabilityType }}',
-'{{ databaseFlags }}',
-'{{ annotations }}',
-'{{ pscInstanceConfig }}',
 '{{ activationPolicy }}',
-'{{ instanceType }}',
+'{{ annotations }}',
+'{{ availabilityType }}',
+'{{ clientConnectionConfig }}',
+'{{ connectionPoolConfig }}',
+'{{ dataApiAccess }}',
+'{{ databaseFlags }}',
 '{{ displayName }}',
+'{{ etag }}',
+'{{ gceZone }}',
+'{{ instanceType }}',
+'{{ labels }}',
 '{{ machineConfig }}',
+'{{ networkConfig }}',
+'{{ observabilityConfig }}',
+'{{ pscInstanceConfig }}',
 '{{ queryInsightsConfig }}',
 '{{ readPoolConfig }}',
-'{{ connectionPoolConfig }}',
-'{{ clientConnectionConfig }}',
-'{{ networkConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}',
@@ -194,125 +194,125 @@ response
     - name: clustersId
       value: "{{ clustersId }}"
       description: Required parameter for the instances_secondary resource.
-    - name: observabilityConfig
-      description: |
-        Configuration for observability.
-      value:
-        enabled: {{ enabled }}
-        trackActiveQueries: {{ trackActiveQueries }}
-        recordApplicationTags: {{ recordApplicationTags }}
-        trackWaitEvents: {{ trackWaitEvents }}
-        maxQueryStringLength: {{ maxQueryStringLength }}
-        preserveComments: {{ preserveComments }}
-        queryPlansPerMinute: {{ queryPlansPerMinute }}
-        trackWaitEventTypes: {{ trackWaitEventTypes }}
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels as key value pairs
-    - name: dataApiAccess
-      value: "{{ dataApiAccess }}"
-      description: |
-        Optional. Controls whether the Data API is enabled for this instance. When enabled, this allows authorized users to connect to the instance from the public internet using the \`executeSql\` API, even for private IP instances. If this is not specified, the data API is enabled by default for Google internal services like AlloyDB Studio. Disable it explicitly to disallow Google internal services as well.
-      valid_values: ['DEFAULT_DATA_API_ENABLED_FOR_GOOGLE_CLOUD_SERVICES', 'DISABLED', 'ENABLED']
-    - name: gceZone
-      value: "{{ gceZone }}"
-      description: |
-        The Compute Engine zone that the instance should serve from, per https://cloud.google.com/compute/docs/regions-zones This can ONLY be specified for ZONAL instances. If present for a REGIONAL instance, an error will be thrown. If this is absent for a ZONAL instance, instance is created in a random zone with available capacity.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        For Resource freshness validation (https://google.aip.dev/154)
-    - name: availabilityType
-      value: "{{ availabilityType }}"
-      description: |
-        Availability type of an Instance. If empty, defaults to REGIONAL for primary instances. For read pools, availability_type is always UNSPECIFIED. Instances in the read pools are evenly distributed across available zones within the region (i.e. read pools with more than one node will have a node in at least two zones).
-      valid_values: ['AVAILABILITY_TYPE_UNSPECIFIED', 'ZONAL', 'REGIONAL']
-    - name: databaseFlags
-      value: "{{ databaseFlags }}"
-      description: |
-        Database flags. Set at the instance level. They are copied from the primary instance on secondary instance creation. Flags that have restrictions default to the value at primary instance on read instances during creation. Read instances can set new flags or override existing flags that are relevant for reads, for example, for enabling columnar cache on a read instance. Flags set on read instance might or might not be present on the primary instance. This is a list of "key": "value" pairs. "key": The name of the flag. These flags are passed at instance setup time, so include both server options and system variables for Postgres. Flags are specified with underscores, not hyphens. "value": The value of the flag. Booleans are set to **on** for true and **off** for false. This field must be omitted if the flag doesn't take a value.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
-    - name: pscInstanceConfig
-      description: |
-        Optional. The configuration for Private Service Connect (PSC) for the instance.
-      value:
-        pscDnsName: "{{ pscDnsName }}"
-        pscInterfaceConfigs:
-          - networkAttachmentResource: "{{ networkAttachmentResource }}"
-        serviceAttachmentLink: "{{ serviceAttachmentLink }}"
-        pscAutoConnections:
-          - status: "{{ status }}"
-            ipAddress: "{{ ipAddress }}"
-            consumerProject: "{{ consumerProject }}"
-            consumerNetwork: "{{ consumerNetwork }}"
-            consumerNetworkStatus: "{{ consumerNetworkStatus }}"
-        allowedConsumerProjects:
-          - "{{ allowedConsumerProjects }}"
     - name: activationPolicy
       value: "{{ activationPolicy }}"
       description: |
         Optional. Specifies whether an instance needs to spin up. Once the instance is active, the activation policy can be updated to the \`NEVER\` to stop the instance. Likewise, the activation policy can be updated to \`ALWAYS\` to start the instance. There are restrictions around when an instance can/cannot be activated (for example, a read pool instance should be stopped before stopping primary etc.). Please refer to the API documentation for more details.
       valid_values: ['ACTIVATION_POLICY_UNSPECIFIED', 'ALWAYS', 'NEVER']
-    - name: instanceType
-      value: "{{ instanceType }}"
+    - name: annotations
+      value: "{{ annotations }}"
       description: |
-        Required. The type of the instance. Specified at creation time.
-      valid_values: ['INSTANCE_TYPE_UNSPECIFIED', 'PRIMARY', 'READ_POOL', 'SECONDARY']
-    - name: displayName
-      value: "{{ displayName }}"
+        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
+    - name: availabilityType
+      value: "{{ availabilityType }}"
       description: |
-        User-settable and human-readable display name for the Instance.
-    - name: machineConfig
-      description: |
-        Configurations for the machines that host the underlying database engine.
-      value:
-        machineType: "{{ machineType }}"
-        cpuCount: {{ cpuCount }}
-    - name: queryInsightsConfig
-      description: |
-        Configuration for query insights.
-      value:
-        recordApplicationTags: {{ recordApplicationTags }}
-        queryStringLength: {{ queryStringLength }}
-        recordClientAddress: {{ recordClientAddress }}
-        queryPlansPerMinute: {{ queryPlansPerMinute }}
-    - name: readPoolConfig
-      description: |
-        Read pool instance configuration. This is required if the value of instanceType is READ_POOL.
-      value:
-        nodeCount: {{ nodeCount }}
-    - name: connectionPoolConfig
-      description: |
-        Optional. The configuration for Managed Connection Pool (MCP).
-      value:
-        flags: "{{ flags }}"
-        enabled: {{ enabled }}
-        authproxyPoolerCount: {{ authproxyPoolerCount }}
-        authproxyPoolerScalingType: "{{ authproxyPoolerScalingType }}"
-        poolerCount: {{ poolerCount }}
-        poolerScalingType: "{{ poolerScalingType }}"
+        Availability type of an Instance. If empty, defaults to REGIONAL for primary instances. For read pools, availability_type is always UNSPECIFIED. Instances in the read pools are evenly distributed across available zones within the region (i.e. read pools with more than one node will have a node in at least two zones).
+      valid_values: ['AVAILABILITY_TYPE_UNSPECIFIED', 'ZONAL', 'REGIONAL']
     - name: clientConnectionConfig
       description: |
         Optional. Client connection specific configurations
       value:
         requireConnectors: {{ requireConnectors }}
         sslConfig:
-          sslMode: "{{ sslMode }}"
           caSource: "{{ caSource }}"
+          sslMode: "{{ sslMode }}"
+    - name: connectionPoolConfig
+      description: |
+        Optional. The configuration for Managed Connection Pool (MCP).
+      value:
+        authproxyPoolerCount: {{ authproxyPoolerCount }}
+        authproxyPoolerScalingType: "{{ authproxyPoolerScalingType }}"
+        enabled: {{ enabled }}
+        flags: "{{ flags }}"
+        poolerCount: {{ poolerCount }}
+        poolerScalingType: "{{ poolerScalingType }}"
+    - name: dataApiAccess
+      value: "{{ dataApiAccess }}"
+      description: |
+        Optional. Controls whether the Data API is enabled for this instance. When enabled, this allows authorized users to connect to the instance from the public internet using the \`executeSql\` API, even for private IP instances. If this is not specified, the data API is enabled by default for Google internal services like AlloyDB Studio. Disable it explicitly to disallow Google internal services as well.
+      valid_values: ['DEFAULT_DATA_API_ENABLED_FOR_GOOGLE_CLOUD_SERVICES', 'DISABLED', 'ENABLED']
+    - name: databaseFlags
+      value: "{{ databaseFlags }}"
+      description: |
+        Database flags. Set at the instance level. They are copied from the primary instance on secondary instance creation. Flags that have restrictions default to the value at primary instance on read instances during creation. Read instances can set new flags or override existing flags that are relevant for reads, for example, for enabling columnar cache on a read instance. Flags set on read instance might or might not be present on the primary instance. This is a list of "key": "value" pairs. "key": The name of the flag. These flags are passed at instance setup time, so include both server options and system variables for Postgres. Flags are specified with underscores, not hyphens. "value": The value of the flag. Booleans are set to **on** for true and **off** for false. This field must be omitted if the flag doesn't take a value.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-settable and human-readable display name for the Instance.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        For Resource freshness validation (https://google.aip.dev/154)
+    - name: gceZone
+      value: "{{ gceZone }}"
+      description: |
+        The Compute Engine zone that the instance should serve from, per https://cloud.google.com/compute/docs/regions-zones This can ONLY be specified for ZONAL instances. If present for a REGIONAL instance, an error will be thrown. If this is absent for a ZONAL instance, instance is created in a random zone with available capacity.
+    - name: instanceType
+      value: "{{ instanceType }}"
+      description: |
+        Required. The type of the instance. Specified at creation time.
+      valid_values: ['INSTANCE_TYPE_UNSPECIFIED', 'PRIMARY', 'READ_POOL', 'SECONDARY']
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs
+    - name: machineConfig
+      description: |
+        Configurations for the machines that host the underlying database engine.
+      value:
+        cpuCount: {{ cpuCount }}
+        machineType: "{{ machineType }}"
     - name: networkConfig
       description: |
         Optional. Instance-level network configuration.
       value:
+        allocatedIpRangeOverride: "{{ allocatedIpRangeOverride }}"
         authorizedExternalNetworks:
           - cidrRange: "{{ cidrRange }}"
+        enableOutboundPublicIp: {{ enableOutboundPublicIp }}
         enablePublicIp: {{ enablePublicIp }}
         network: "{{ network }}"
-        allocatedIpRangeOverride: "{{ allocatedIpRangeOverride }}"
-        enableOutboundPublicIp: {{ enableOutboundPublicIp }}
+    - name: observabilityConfig
+      description: |
+        Configuration for observability.
+      value:
+        enabled: {{ enabled }}
+        maxQueryStringLength: {{ maxQueryStringLength }}
+        preserveComments: {{ preserveComments }}
+        queryPlansPerMinute: {{ queryPlansPerMinute }}
+        recordApplicationTags: {{ recordApplicationTags }}
+        trackActiveQueries: {{ trackActiveQueries }}
+        trackWaitEventTypes: {{ trackWaitEventTypes }}
+        trackWaitEvents: {{ trackWaitEvents }}
+    - name: pscInstanceConfig
+      description: |
+        Optional. The configuration for Private Service Connect (PSC) for the instance.
+      value:
+        allowedConsumerProjects:
+          - "{{ allowedConsumerProjects }}"
+        pscAutoConnections:
+          - consumerNetwork: "{{ consumerNetwork }}"
+            consumerNetworkStatus: "{{ consumerNetworkStatus }}"
+            consumerProject: "{{ consumerProject }}"
+            ipAddress: "{{ ipAddress }}"
+            status: "{{ status }}"
+        pscDnsName: "{{ pscDnsName }}"
+        pscInterfaceConfigs:
+          - networkAttachmentResource: "{{ networkAttachmentResource }}"
+        serviceAttachmentLink: "{{ serviceAttachmentLink }}"
+    - name: queryInsightsConfig
+      description: |
+        Configuration for query insights.
+      value:
+        queryPlansPerMinute: {{ queryPlansPerMinute }}
+        queryStringLength: {{ queryStringLength }}
+        recordApplicationTags: {{ recordApplicationTags }}
+        recordClientAddress: {{ recordClientAddress }}
+    - name: readPoolConfig
+      description: |
+        Read pool instance configuration. This is required if the value of instanceType is READ_POOL.
+      value:
+        nodeCount: {{ nodeCount }}
     - name: instanceId
       value: "{{ instanceId }}"
     - name: requestId

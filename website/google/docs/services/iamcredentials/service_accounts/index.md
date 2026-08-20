@@ -58,11 +58,11 @@ The following methods are available for this resource:
     <td>Generates an OAuth 2.0 access token for a service account.</td>
 </tr>
 <tr>
-    <td><a href="#sign_jwt"><CopyableCode code="sign_jwt" /></a></td>
+    <td><a href="#generate_id_token"><CopyableCode code="generate_id_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
     <td></td>
-    <td>Signs a JWT using a service account's system-managed private key.</td>
+    <td>Generates an OpenID Connect ID token for a service account.</td>
 </tr>
 <tr>
     <td><a href="#sign_blob"><CopyableCode code="sign_blob" /></a></td>
@@ -72,11 +72,11 @@ The following methods are available for this resource:
     <td>Signs a blob using a service account's system-managed private key.</td>
 </tr>
 <tr>
-    <td><a href="#generate_id_token"><CopyableCode code="generate_id_token" /></a></td>
+    <td><a href="#sign_jwt"><CopyableCode code="sign_jwt" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
     <td></td>
-    <td>Generates an OpenID Connect ID token for a service account.</td>
+    <td>Signs a JWT using a service account's system-managed private key.</td>
 </tr>
 </tbody>
 </table>
@@ -113,9 +113,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="generate_access_token"
     values={[
         { label: 'generate_access_token', value: 'generate_access_token' },
-        { label: 'sign_jwt', value: 'sign_jwt' },
+        { label: 'generate_id_token', value: 'generate_id_token' },
         { label: 'sign_blob', value: 'sign_blob' },
-        { label: 'generate_id_token', value: 'generate_id_token' }
+        { label: 'sign_jwt', value: 'sign_jwt' }
     ]}
 >
 <TabItem value="generate_access_token">
@@ -128,25 +128,27 @@ EXEC google.iamcredentials.service_accounts.generate_access_token
 @serviceAccountsId='{{ serviceAccountsId }}' --required 
 @@json=
 '{
-"lifetime": "{{ lifetime }}", 
 "delegates": "{{ delegates }}", 
+"lifetime": "{{ lifetime }}", 
 "scope": "{{ scope }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="sign_jwt">
+<TabItem value="generate_id_token">
 
-Signs a JWT using a service account's system-managed private key.
+Generates an OpenID Connect ID token for a service account.
 
 ```sql
-EXEC google.iamcredentials.service_accounts.sign_jwt 
+EXEC google.iamcredentials.service_accounts.generate_id_token 
 @projectsId='{{ projectsId }}' --required, 
 @serviceAccountsId='{{ serviceAccountsId }}' --required 
 @@json=
 '{
+"audience": "{{ audience }}", 
 "delegates": "{{ delegates }}", 
-"payload": "{{ payload }}"
+"includeEmail": {{ includeEmail }}, 
+"organizationNumberIncluded": {{ organizationNumberIncluded }}
 }'
 ;
 ```
@@ -167,20 +169,18 @@ EXEC google.iamcredentials.service_accounts.sign_blob
 ;
 ```
 </TabItem>
-<TabItem value="generate_id_token">
+<TabItem value="sign_jwt">
 
-Generates an OpenID Connect ID token for a service account.
+Signs a JWT using a service account's system-managed private key.
 
 ```sql
-EXEC google.iamcredentials.service_accounts.generate_id_token 
+EXEC google.iamcredentials.service_accounts.sign_jwt 
 @projectsId='{{ projectsId }}' --required, 
 @serviceAccountsId='{{ serviceAccountsId }}' --required 
 @@json=
 '{
-"audience": "{{ audience }}", 
-"includeEmail": {{ includeEmail }}, 
 "delegates": "{{ delegates }}", 
-"organizationNumberIncluded": {{ organizationNumberIncluded }}
+"payload": "{{ payload }}"
 }'
 ;
 ```

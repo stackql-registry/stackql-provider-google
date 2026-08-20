@@ -185,14 +185,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_entry_groups_list"><CopyableCode code="projects_locations_entry_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists EntryGroup resources in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_entry_groups_create"><CopyableCode code="projects_locations_entry_groups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-entryGroupId"><code>entryGroupId</code></a></td>
+    <td><a href="#parameter-entryGroupId"><code>entryGroupId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates an EntryGroup.</td>
 </tr>
 <tr>
@@ -332,9 +332,9 @@ updateTime
 FROM google.dataplex.entry_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -357,24 +357,24 @@ Creates an EntryGroup.
 
 ```sql
 INSERT INTO google.dataplex.entry_groups (
-data__etag,
 data__description,
-data__labels,
 data__displayName,
+data__etag,
+data__labels,
 projectsId,
 locationsId,
-validateOnly,
-entryGroupId
+entryGroupId,
+validateOnly
 )
 SELECT 
-'{{ etag }}',
 '{{ description }}',
-'{{ labels }}',
 '{{ displayName }}',
+'{{ etag }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ entryGroupId }}'
+'{{ entryGroupId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -395,26 +395,26 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the entry_groups resource.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This checksum is computed by the service, and might be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Description of the EntryGroup.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the EntryGroup.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. User friendly display name.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the service, and might be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the EntryGroup.
     - name: entryGroupId
       value: "{{ entryGroupId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -436,10 +436,10 @@ Updates an EntryGroup.
 ```sql
 UPDATE google.dataplex.entry_groups
 SET 
-data__etag = '{{ etag }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

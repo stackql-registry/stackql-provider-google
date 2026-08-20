@@ -295,8 +295,8 @@ Create a metadata partition.
 
 ```sql
 INSERT INTO google.dataplex.partitions (
-data__location,
 data__etag,
+data__location,
 data__values,
 projectsId,
 locationsId,
@@ -306,8 +306,8 @@ entitiesId,
 validateOnly
 )
 SELECT 
-'{{ location }}',
 '{{ etag }}',
+'{{ location }}',
 '{{ values }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -343,14 +343,14 @@ values
     - name: entitiesId
       value: "{{ entitiesId }}"
       description: Required parameter for the partitions resource.
-    - name: location
-      value: "{{ location }}"
-      description: |
-        Required. Immutable. The location of the entity data within the partition, for example, gs://bucket/path/to/entity/key1=value1/key2=value2. Or projects//datasets//tables/
     - name: etag
       value: "{{ etag }}"
       description: |
         Optional. The etag for this partition.
+    - name: location
+      value: "{{ location }}"
+      description: |
+        Required. Immutable. The location of the entity data within the partition, for example, gs://bucket/path/to/entity/key1=value1/key2=value2. Or projects//datasets//tables/
     - name: values
       value:
         - "{{ values }}"

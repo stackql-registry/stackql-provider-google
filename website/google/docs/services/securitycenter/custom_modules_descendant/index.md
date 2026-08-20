@@ -33,16 +33,134 @@ Creates, updates, deletes, gets or lists a <code>custom_modules_descendant</code
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_list_descendant"
+    defaultValue="folders_event_threat_detection_settings_custom_modules_list_descendant"
     values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_list_descendant', value: 'folders_event_threat_detection_settings_custom_modules_list_descendant' },
+        { label: 'folders_security_health_analytics_settings_custom_modules_list_descendant', value: 'folders_security_health_analytics_settings_custom_modules_list_descendant' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_list_descendant', value: 'organizations_event_threat_detection_settings_custom_modules_list_descendant' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_list_descendant', value: 'organizations_security_health_analytics_settings_custom_modules_list_descendant' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_list_descendant', value: 'projects_security_health_analytics_settings_custom_modules_list_descendant' },
         { label: 'projects_event_threat_detection_settings_custom_modules_list_descendant', value: 'projects_event_threat_detection_settings_custom_modules_list_descendant' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_list_descendant', value: 'folders_security_health_analytics_settings_custom_modules_list_descendant' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_list_descendant', value: 'folders_event_threat_detection_settings_custom_modules_list_descendant' }
+        { label: 'projects_security_health_analytics_settings_custom_modules_list_descendant', value: 'projects_security_health_analytics_settings_custom_modules_list_descendant' }
     ]}
 >
+<TabItem value="folders_event_threat_detection_settings_custom_modules_list_descendant">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="ancestorModule" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudProvider" /></td>
+    <td><code>string</code></td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="config" /></td>
+    <td><code>object</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="enablementState" /></td>
+    <td><code>string</code></td>
+    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastEditor" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_security_health_analytics_settings_custom_modules_list_descendant">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="ancestorModule" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudProvider" /></td>
+    <td><code>string</code></td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customConfig" /></td>
+    <td><code>object</code></td>
+    <td> (id: GoogleCloudSecuritycenterV1CustomConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="enablementState" /></td>
+    <td><code>string</code></td>
+    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastEditor" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_list_descendant">
 
 <table>
@@ -161,60 +279,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_list_descendant">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="ancestorModule" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="cloudProvider" /></td>
-    <td><code>string</code></td>
-    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="customConfig" /></td>
-    <td><code>object</code></td>
-    <td> (id: GoogleCloudSecuritycenterV1CustomConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="enablementState" /></td>
-    <td><code>string</code></td>
-    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastEditor" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="projects_event_threat_detection_settings_custom_modules_list_descendant">
 
 <table>
@@ -279,7 +343,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_list_descendant">
+<TabItem value="projects_security_health_analytics_settings_custom_modules_list_descendant">
 
 <table>
 <thead>
@@ -333,70 +397,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_list_descendant">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="ancestorModule" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="cloudProvider" /></td>
-    <td><code>string</code></td>
-    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="config" /></td>
-    <td><code>object</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="enablementState" /></td>
-    <td><code>string</code></td>
-    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastEditor" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 </Tabs>
 
 ## Methods
@@ -415,6 +415,20 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_list_descendant"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_list_descendant" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_security_health_analytics_settings_custom_modules_list_descendant"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_list_descendant" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_event_threat_detection_settings_custom_modules_list_descendant"><CopyableCode code="organizations_event_threat_detection_settings_custom_modules_list_descendant" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
@@ -429,31 +443,17 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_security_health_analytics_settings_custom_modules_list_descendant"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_list_descendant" /></a></td>
+    <td><a href="#projects_event_threat_detection_settings_custom_modules_list_descendant"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_list_descendant" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_event_threat_detection_settings_custom_modules_list_descendant"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_list_descendant" /></a></td>
+    <td><a href="#projects_security_health_analytics_settings_custom_modules_list_descendant"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_list_descendant" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_security_health_analytics_settings_custom_modules_list_descendant"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_list_descendant" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_list_descendant"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_list_descendant" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 </tbody>
@@ -503,16 +503,60 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_list_descendant"
+    defaultValue="folders_event_threat_detection_settings_custom_modules_list_descendant"
     values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_list_descendant', value: 'folders_event_threat_detection_settings_custom_modules_list_descendant' },
+        { label: 'folders_security_health_analytics_settings_custom_modules_list_descendant', value: 'folders_security_health_analytics_settings_custom_modules_list_descendant' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_list_descendant', value: 'organizations_event_threat_detection_settings_custom_modules_list_descendant' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_list_descendant', value: 'organizations_security_health_analytics_settings_custom_modules_list_descendant' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_list_descendant', value: 'projects_security_health_analytics_settings_custom_modules_list_descendant' },
         { label: 'projects_event_threat_detection_settings_custom_modules_list_descendant', value: 'projects_event_threat_detection_settings_custom_modules_list_descendant' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_list_descendant', value: 'folders_security_health_analytics_settings_custom_modules_list_descendant' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_list_descendant', value: 'folders_event_threat_detection_settings_custom_modules_list_descendant' }
+        { label: 'projects_security_health_analytics_settings_custom_modules_list_descendant', value: 'projects_security_health_analytics_settings_custom_modules_list_descendant' }
     ]}
 >
+<TabItem value="folders_event_threat_detection_settings_custom_modules_list_descendant">
+
+Successful response
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+config,
+description,
+displayName,
+enablementState,
+lastEditor,
+type,
+updateTime
+FROM google.securitycenter.custom_modules_descendant
+WHERE foldersId = '{{ foldersId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="folders_security_health_analytics_settings_custom_modules_list_descendant">
+
+Successful response
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+customConfig,
+displayName,
+enablementState,
+lastEditor,
+updateTime
+FROM google.securitycenter.custom_modules_descendant
+WHERE foldersId = '{{ foldersId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_list_descendant">
 
 Successful response
@@ -557,27 +601,6 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_list_descendant">
-
-Successful response
-
-```sql
-SELECT
-name,
-ancestorModule,
-cloudProvider,
-customConfig,
-displayName,
-enablementState,
-lastEditor,
-updateTime
-FROM google.securitycenter.custom_modules_descendant
-WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="projects_event_threat_detection_settings_custom_modules_list_descendant">
 
 Successful response
@@ -596,12 +619,12 @@ type,
 updateTime
 FROM google.securitycenter.custom_modules_descendant
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_list_descendant">
+<TabItem value="projects_security_health_analytics_settings_custom_modules_list_descendant">
 
 Successful response
 
@@ -616,32 +639,9 @@ enablementState,
 lastEditor,
 updateTime
 FROM google.securitycenter.custom_modules_descendant
-WHERE foldersId = '{{ foldersId }}' -- required
-AND pageToken = '{{ pageToken }}'
+WHERE projectsId = '{{ projectsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_list_descendant">
-
-Successful response
-
-```sql
-SELECT
-name,
-ancestorModule,
-cloudProvider,
-config,
-description,
-displayName,
-enablementState,
-lastEditor,
-type,
-updateTime
-FROM google.securitycenter.custom_modules_descendant
-WHERE foldersId = '{{ foldersId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

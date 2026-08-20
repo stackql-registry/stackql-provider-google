@@ -58,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="defaultVersion" /></td>
     <td><code>object</code></td>
-    <td>Represents a version of the model. Each version is a trained model deployed in the cloud, ready to handle prediction requests. A model can have multiple versions. You can get information about all of the versions of a given model by calling projects.models.versions.list. (id: GoogleCloudMlV1__Version)</td>
+    <td>Output only. The default version of the model. This version will be used to handle prediction requests that do not specify a version. You can change the default version by calling projects.models.versions.setDefault. (id: GoogleCloudMlV1__Version)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -112,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="defaultVersion" /></td>
     <td><code>object</code></td>
-    <td>Represents a version of the model. Each version is a trained model deployed in the cloud, ready to handle prediction requests. A model can have multiple versions. You can get information about all of the versions of a given model by calling projects.models.versions.list. (id: GoogleCloudMlV1__Version)</td>
+    <td>Output only. The default version of the model. This version will be used to handle prediction requests that do not specify a version. You can change the default version by calling projects.models.versions.setDefault. (id: GoogleCloudMlV1__Version)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#projects_models_list"><CopyableCode code="projects_models_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the models in a project. Each project can contain multiple models, and each model can have multiple versions. If there are no models that match the request parameters, the list request returns an empty response body: &#123;&#125;.</td>
 </tr>
 <tr>
@@ -293,9 +293,9 @@ onlinePredictionLogging,
 regions
 FROM google.ml.models
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -317,25 +317,25 @@ Creates a model which will later contain one or more versions. You must add at l
 
 ```sql
 INSERT INTO google.ml.models (
-data__description,
-data__name,
-data__onlinePredictionConsoleLogging,
-data__regions,
 data__defaultVersion,
+data__description,
 data__etag,
 data__labels,
+data__name,
+data__onlinePredictionConsoleLogging,
 data__onlinePredictionLogging,
+data__regions,
 projectsId
 )
 SELECT 
-'{{ description }}',
-'{{ name }}',
-{{ onlinePredictionConsoleLogging }},
-'{{ regions }}',
 '{{ defaultVersion }}',
+'{{ description }}',
 '{{ etag }}',
 '{{ labels }}',
+'{{ name }}',
+{{ onlinePredictionConsoleLogging }},
 {{ onlinePredictionLogging }},
+'{{ regions }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -357,82 +357,69 @@ regions
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the models resource.
+    - name: defaultVersion
+      description: |
+        Output only. The default version of the model. This version will be used to handle prediction requests that do not specify a version. You can change the default version by calling projects.models.versions.setDefault.
+      value:
+        acceleratorConfig:
+          count: "{{ count }}"
+          type: "{{ type }}"
+        autoScaling:
+          maxNodes: {{ maxNodes }}
+          metrics:
+            - name: "{{ name }}"
+              target: {{ target }}
+          minNodes: {{ minNodes }}
+        container:
+          args:
+            - "{{ args }}"
+          command:
+            - "{{ command }}"
+          env:
+            - name: "{{ name }}"
+              value: "{{ value }}"
+          image: "{{ image }}"
+          ports:
+            - containerPort: {{ containerPort }}
+        createTime: "{{ createTime }}"
+        deploymentUri: "{{ deploymentUri }}"
+        description: "{{ description }}"
+        errorMessage: "{{ errorMessage }}"
+        etag: "{{ etag }}"
+        explanationConfig:
+          integratedGradientsAttribution:
+            numIntegralSteps: {{ numIntegralSteps }}
+          sampledShapleyAttribution:
+            numPaths: {{ numPaths }}
+          xraiAttribution:
+            numIntegralSteps: {{ numIntegralSteps }}
+        framework: "{{ framework }}"
+        isDefault: {{ isDefault }}
+        labels: "{{ labels }}"
+        lastMigrationModelId: "{{ lastMigrationModelId }}"
+        lastMigrationTime: "{{ lastMigrationTime }}"
+        lastUseTime: "{{ lastUseTime }}"
+        machineType: "{{ machineType }}"
+        manualScaling:
+          nodes: {{ nodes }}
+        name: "{{ name }}"
+        packageUris:
+          - "{{ packageUris }}"
+        predictionClass: "{{ predictionClass }}"
+        pythonVersion: "{{ pythonVersion }}"
+        requestLoggingConfig:
+          bigqueryTableName: "{{ bigqueryTableName }}"
+          samplingPercentage: {{ samplingPercentage }}
+        routes:
+          health: "{{ health }}"
+          predict: "{{ predict }}"
+        runtimeVersion: "{{ runtimeVersion }}"
+        serviceAccount: "{{ serviceAccount }}"
+        state: "{{ state }}"
     - name: description
       value: "{{ description }}"
       description: |
         Optional. The description specified for the model when it was created.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. The name specified for the model when it was created. The model name must be unique within the project it is created in.
-    - name: onlinePredictionConsoleLogging
-      value: {{ onlinePredictionConsoleLogging }}
-      description: |
-        Optional. If true, online prediction nodes send \`stderr\` and \`stdout\` streams to Cloud Logging. These can be more verbose than the standard access logs (see \`onlinePredictionLogging\`) and can incur higher cost. However, they are helpful for debugging. Note that [logs may incur a cost](https://cloud.google.com/stackdriver/pricing), especially if your project receives prediction requests at a high QPS. Estimate your costs before enabling this option. Default is false.
-    - name: regions
-      value:
-        - "{{ regions }}"
-      description: |
-        Optional. The list of regions where the model is going to be deployed. Only one region per model is supported. Defaults to 'us-central1' if nothing is set. See the available regions for AI Platform services. Note: * No matter where a model is deployed, it can always be accessed by users from anywhere, both for online and batch prediction. * The region for a batch prediction job is set by the region field when submitting the batch prediction job and does not take its value from this field.
-    - name: defaultVersion
-      description: |
-        Represents a version of the model. Each version is a trained model deployed in the cloud, ready to handle prediction requests. A model can have multiple versions. You can get information about all of the versions of a given model by calling projects.models.versions.list.
-      value:
-        explanationConfig:
-          xraiAttribution:
-            numIntegralSteps: {{ numIntegralSteps }}
-          sampledShapleyAttribution:
-            numPaths: {{ numPaths }}
-          integratedGradientsAttribution:
-            numIntegralSteps: {{ numIntegralSteps }}
-        manualScaling:
-          nodes: {{ nodes }}
-        deploymentUri: "{{ deploymentUri }}"
-        lastUseTime: "{{ lastUseTime }}"
-        routes:
-          predict: "{{ predict }}"
-          health: "{{ health }}"
-        etag: "{{ etag }}"
-        predictionClass: "{{ predictionClass }}"
-        autoScaling:
-          metrics:
-            - target: {{ target }}
-              name: "{{ name }}"
-          minNodes: {{ minNodes }}
-          maxNodes: {{ maxNodes }}
-        description: "{{ description }}"
-        machineType: "{{ machineType }}"
-        pythonVersion: "{{ pythonVersion }}"
-        lastMigrationTime: "{{ lastMigrationTime }}"
-        labels: "{{ labels }}"
-        acceleratorConfig:
-          count: "{{ count }}"
-          type: "{{ type }}"
-        isDefault: {{ isDefault }}
-        framework: "{{ framework }}"
-        serviceAccount: "{{ serviceAccount }}"
-        errorMessage: "{{ errorMessage }}"
-        name: "{{ name }}"
-        runtimeVersion: "{{ runtimeVersion }}"
-        lastMigrationModelId: "{{ lastMigrationModelId }}"
-        container:
-          ports:
-            - containerPort: {{ containerPort }}
-          args:
-            - "{{ args }}"
-          image: "{{ image }}"
-          env:
-            - name: "{{ name }}"
-              value: "{{ value }}"
-          command:
-            - "{{ command }}"
-        requestLoggingConfig:
-          bigqueryTableName: "{{ bigqueryTableName }}"
-          samplingPercentage: {{ samplingPercentage }}
-        state: "{{ state }}"
-        packageUris:
-          - "{{ packageUris }}"
-        createTime: "{{ createTime }}"
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -441,10 +428,23 @@ regions
       value: "{{ labels }}"
       description: |
         Optional. One or more labels that you can add, to organize your models. Each label is a key-value pair, where both the key and the value are arbitrary strings that you supply. For more information, see the documentation on using labels. Note that this field is not updatable for mls1* models.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The name specified for the model when it was created. The model name must be unique within the project it is created in.
+    - name: onlinePredictionConsoleLogging
+      value: {{ onlinePredictionConsoleLogging }}
+      description: |
+        Optional. If true, online prediction nodes send \`stderr\` and \`stdout\` streams to Cloud Logging. These can be more verbose than the standard access logs (see \`onlinePredictionLogging\`) and can incur higher cost. However, they are helpful for debugging. Note that [logs may incur a cost](https://cloud.google.com/stackdriver/pricing), especially if your project receives prediction requests at a high QPS. Estimate your costs before enabling this option. Default is false.
     - name: onlinePredictionLogging
       value: {{ onlinePredictionLogging }}
       description: |
         Optional. If true, online prediction access logs are sent to Cloud Logging. These logs are like standard server access logs, containing information like timestamp and latency for each request. Note that [logs may incur a cost](https://cloud.google.com/stackdriver/pricing), especially if your project receives prediction requests at a high queries per second rate (QPS). Estimate your costs before enabling this option. Default is false.
+    - name: regions
+      value:
+        - "{{ regions }}"
+      description: |
+        Optional. The list of regions where the model is going to be deployed. Only one region per model is supported. Defaults to 'us-central1' if nothing is set. See the available regions for AI Platform services. Note: * No matter where a model is deployed, it can always be accessed by users from anywhere, both for online and batch prediction. * The region for a batch prediction job is set by the region field when submitting the batch prediction job and does not take its value from this field.
 `}</CodeBlock>
 
 </TabItem>
@@ -466,14 +466,14 @@ Updates a specific model resource. Currently the only supported fields to update
 ```sql
 UPDATE google.ml.models
 SET 
-data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__onlinePredictionConsoleLogging = {{ onlinePredictionConsoleLogging }},
-data__regions = '{{ regions }}',
 data__defaultVersion = '{{ defaultVersion }}',
+data__description = '{{ description }}',
 data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
-data__onlinePredictionLogging = {{ onlinePredictionLogging }}
+data__name = '{{ name }}',
+data__onlinePredictionConsoleLogging = {{ onlinePredictionConsoleLogging }},
+data__onlinePredictionLogging = {{ onlinePredictionLogging }},
+data__regions = '{{ regions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND modelsId = '{{ modelsId }}' --required

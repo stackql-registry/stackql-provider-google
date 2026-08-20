@@ -98,10 +98,10 @@ EXEC google.databasecenter.organizations.aggregate_query_stats
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"orderBy": "{{ orderBy }}", 
-"pageToken": "{{ pageToken }}", 
 "filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}
+"orderBy": "{{ orderBy }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```

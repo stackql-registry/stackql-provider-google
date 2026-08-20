@@ -225,21 +225,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_app_gateways_list"><CopyableCode code="projects_locations_app_gateways_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists AppGateways in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_gateways_create"><CopyableCode code="projects_locations_app_gateways_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-appGatewayId"><code>appGatewayId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-appGatewayId"><code>appGatewayId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new AppGateway in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_gateways_delete"><CopyableCode code="projects_locations_app_gateways_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appGatewaysId"><code>appGatewaysId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single AppGateway.</td>
 </tr>
 </tbody>
@@ -368,9 +368,9 @@ uri
 FROM google.beyondcorp.app_gateways
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -395,26 +395,26 @@ Creates a new AppGateway in a given project and location.
 INSERT INTO google.beyondcorp.app_gateways (
 data__displayName,
 data__hostType,
-data__type,
 data__labels,
 data__name,
+data__type,
 projectsId,
 locationsId,
-validateOnly,
 appGatewayId,
-requestId
+requestId,
+validateOnly
 )
 SELECT 
 '{{ displayName }}',
 '{{ hostType }}',
-'{{ type }}',
 '{{ labels }}',
 '{{ name }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
 '{{ appGatewayId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -444,11 +444,6 @@ response
       description: |
         Required. The type of hosting used by the AppGateway.
       valid_values: ['HOST_TYPE_UNSPECIFIED', 'GCP_REGIONAL_MIG']
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Required. The type of network connectivity used by the AppGateway.
-      valid_values: ['TYPE_UNSPECIFIED', 'TCP_PROXY']
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -457,12 +452,17 @@ response
       value: "{{ name }}"
       description: |
         Required. Unique resource name of the AppGateway. The name is ignored when creating an AppGateway.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The type of network connectivity used by the AppGateway.
+      valid_values: ['TYPE_UNSPECIFIED', 'TCP_PROXY']
     - name: appGatewayId
       value: "{{ appGatewayId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -486,8 +486,8 @@ DELETE FROM google.beyondcorp.app_gateways
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND appGatewaysId = '{{ appGatewaysId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

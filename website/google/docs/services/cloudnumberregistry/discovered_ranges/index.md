@@ -225,14 +225,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DiscoveredRanges in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#find_free_ip_ranges"><CopyableCode code="find_free_ip_ranges" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveredRangesId"><code>discoveredRangesId</code></a></td>
-    <td><a href="#parameter-rangeCount"><code>rangeCount</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-cidrPrefixLength"><code>cidrPrefixLength</code></a></td>
+    <td><a href="#parameter-cidrPrefixLength"><code>cidrPrefixLength</code></a>, <a href="#parameter-rangeCount"><code>rangeCount</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Finds free IP ranges in a single DiscoveredRange.</td>
 </tr>
 <tr>
@@ -369,8 +369,8 @@ FROM google.cloudnumberregistry.discovered_ranges
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -396,9 +396,9 @@ EXEC google.cloudnumberregistry.discovered_ranges.find_free_ip_ranges
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @discoveredRangesId='{{ discoveredRangesId }}' --required, 
+@cidrPrefixLength='{{ cidrPrefixLength }}', 
 @rangeCount='{{ rangeCount }}', 
-@requestId='{{ requestId }}', 
-@cidrPrefixLength='{{ cidrPrefixLength }}'
+@requestId='{{ requestId }}'
 ;
 ```
 </TabItem>

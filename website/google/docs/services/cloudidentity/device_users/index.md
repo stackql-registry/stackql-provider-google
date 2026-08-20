@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists/Searches DeviceUsers.</td>
 </tr>
 <tr>
@@ -206,11 +206,11 @@ The following methods are available for this resource:
     <td>Deletes the specified DeviceUser. This also revokes the user's access to device data.</td>
 </tr>
 <tr>
-    <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
+    <td><a href="#approve"><CopyableCode code="approve" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
-    <td><a href="#parameter-rawResourceId"><code>rawResourceId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-userId"><code>userId</code></a>, <a href="#parameter-iosDeviceId"><code>iosDeviceId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-androidId"><code>androidId</code></a>, <a href="#parameter-partner"><code>partner</code></a></td>
-    <td>Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: If either the `partner` or `ios_device_id` field is provided, then both fields are required. - Android: Specifying the `android_id` field is required. - Desktop: Specifying the `raw_resource_id` field is required.</td>
+    <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
+    <td></td>
+    <td>Approves device to access user data.</td>
 </tr>
 <tr>
     <td><a href="#block"><CopyableCode code="block" /></a></td>
@@ -220,13 +220,6 @@ The following methods are available for this resource:
     <td>Blocks device from accessing user data</td>
 </tr>
 <tr>
-    <td><a href="#wipe"><CopyableCode code="wipe" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
-    <td></td>
-    <td>Wipes the user's account on a device. Other data on the device that is not associated with the user's work account is not affected. For example, if a Gmail app is installed on a device that is used for personal and work purposes, and the user is logged in to the Gmail app with their personal account as well as their work account, wiping the "deviceUser" by their work administrator will not affect their personal account within Gmail or other apps such as Photos.</td>
-</tr>
-<tr>
     <td><a href="#cancel_wipe"><CopyableCode code="cancel_wipe" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
@@ -234,11 +227,18 @@ The following methods are available for this resource:
     <td>Cancels an unfinished user account wipe. This operation can be used to cancel device wipe in the gap between the wipe operation returning success and the device being wiped.</td>
 </tr>
 <tr>
-    <td><a href="#approve"><CopyableCode code="approve" /></a></td>
+    <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td><a href="#parameter-androidId"><code>androidId</code></a>, <a href="#parameter-iosDeviceId"><code>iosDeviceId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-partner"><code>partner</code></a>, <a href="#parameter-rawResourceId"><code>rawResourceId</code></a>, <a href="#parameter-userId"><code>userId</code></a></td>
+    <td>Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: If either the `partner` or `ios_device_id` field is provided, then both fields are required. - Android: Specifying the `android_id` field is required. - Desktop: Specifying the `raw_resource_id` field is required.</td>
+</tr>
+<tr>
+    <td><a href="#wipe"><CopyableCode code="wipe" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
     <td></td>
-    <td>Approves device to access user data.</td>
+    <td>Wipes the user's account on a device. Other data on the device that is not associated with the user's work account is not affected. For example, if a Gmail app is installed on a device that is used for personal and work purposes, and the user is logged in to the Gmail app with their personal account as well as their work account, wiping the "deviceUser" by their work administrator will not affect their personal account within Gmail or other apps such as Photos.</td>
 </tr>
 </tbody>
 </table>
@@ -369,10 +369,10 @@ userAgent,
 userEmail
 FROM google.cloudidentity.device_users
 WHERE devicesId = '{{ devicesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND customer = '{{ customer }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -406,38 +406,21 @@ AND customer = '{{ customer }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="lookup"
+    defaultValue="approve"
     values={[
-        { label: 'lookup', value: 'lookup' },
+        { label: 'approve', value: 'approve' },
         { label: 'block', value: 'block' },
-        { label: 'wipe', value: 'wipe' },
         { label: 'cancel_wipe', value: 'cancel_wipe' },
-        { label: 'approve', value: 'approve' }
+        { label: 'lookup', value: 'lookup' },
+        { label: 'wipe', value: 'wipe' }
     ]}
 >
-<TabItem value="lookup">
+<TabItem value="approve">
 
-Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: If either the `partner` or `ios_device_id` field is provided, then both fields are required. - Android: Specifying the `android_id` field is required. - Desktop: Specifying the `raw_resource_id` field is required.
-
-```sql
-EXEC google.cloudidentity.device_users.lookup 
-@devicesId='{{ devicesId }}' --required, 
-@rawResourceId='{{ rawResourceId }}', 
-@pageToken='{{ pageToken }}', 
-@userId='{{ userId }}', 
-@iosDeviceId='{{ iosDeviceId }}', 
-@pageSize='{{ pageSize }}', 
-@androidId='{{ androidId }}', 
-@partner='{{ partner }}'
-;
-```
-</TabItem>
-<TabItem value="block">
-
-Blocks device from accessing user data
+Approves device to access user data.
 
 ```sql
-EXEC google.cloudidentity.device_users.block 
+EXEC google.cloudidentity.device_users.approve 
 @devicesId='{{ devicesId }}' --required, 
 @deviceUsersId='{{ deviceUsersId }}' --required 
 @@json=
@@ -447,12 +430,12 @@ EXEC google.cloudidentity.device_users.block
 ;
 ```
 </TabItem>
-<TabItem value="wipe">
+<TabItem value="block">
 
-Wipes the user's account on a device. Other data on the device that is not associated with the user's work account is not affected. For example, if a Gmail app is installed on a device that is used for personal and work purposes, and the user is logged in to the Gmail app with their personal account as well as their work account, wiping the "deviceUser" by their work administrator will not affect their personal account within Gmail or other apps such as Photos.
+Blocks device from accessing user data
 
 ```sql
-EXEC google.cloudidentity.device_users.wipe 
+EXEC google.cloudidentity.device_users.block 
 @devicesId='{{ devicesId }}' --required, 
 @deviceUsersId='{{ deviceUsersId }}' --required 
 @@json=
@@ -477,12 +460,29 @@ EXEC google.cloudidentity.device_users.cancel_wipe
 ;
 ```
 </TabItem>
-<TabItem value="approve">
+<TabItem value="lookup">
 
-Approves device to access user data.
+Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: If either the `partner` or `ios_device_id` field is provided, then both fields are required. - Android: Specifying the `android_id` field is required. - Desktop: Specifying the `raw_resource_id` field is required.
 
 ```sql
-EXEC google.cloudidentity.device_users.approve 
+EXEC google.cloudidentity.device_users.lookup 
+@devicesId='{{ devicesId }}' --required, 
+@androidId='{{ androidId }}', 
+@iosDeviceId='{{ iosDeviceId }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@partner='{{ partner }}', 
+@rawResourceId='{{ rawResourceId }}', 
+@userId='{{ userId }}'
+;
+```
+</TabItem>
+<TabItem value="wipe">
+
+Wipes the user's account on a device. Other data on the device that is not associated with the user's work account is not affected. For example, if a Gmail app is installed on a device that is used for personal and work purposes, and the user is logged in to the Gmail app with their personal account as well as their work account, wiping the "deviceUser" by their work administrator will not affect their personal account within Gmail or other apps such as Photos.
+
+```sql
+EXEC google.cloudidentity.device_users.wipe 
 @devicesId='{{ devicesId }}' --required, 
 @deviceUsersId='{{ deviceUsersId }}' --required 
 @@json=

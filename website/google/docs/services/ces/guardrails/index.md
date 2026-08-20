@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists guardrails in the given app.</td>
 </tr>
 <tr>
@@ -246,7 +246,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-guardrailsId"><code>guardrailsId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes the specified guardrail.</td>
 </tr>
 </tbody>
@@ -387,10 +387,10 @@ FROM google.ces.guardrails
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND appsId = '{{ appsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -412,34 +412,34 @@ Creates a new guardrail in the given app.
 
 ```sql
 INSERT INTO google.ces.guardrails (
-data__description,
+data__action,
 data__codeCallback,
+data__contentFilter,
+data__description,
+data__displayName,
+data__enabled,
 data__etag,
 data__llmPolicy,
-data__enabled,
 data__llmPromptSecurity,
-data__name,
-data__displayName,
-data__contentFilter,
 data__modelSafety,
-data__action,
+data__name,
 projectsId,
 locationsId,
 appsId,
 guardrailId
 )
 SELECT 
-'{{ description }}',
+'{{ action }}',
 '{{ codeCallback }}',
+'{{ contentFilter }}',
+'{{ description }}',
+'{{ displayName }}',
+{{ enabled }},
 '{{ etag }}',
 '{{ llmPolicy }}',
-{{ enabled }},
 '{{ llmPromptSecurity }}',
-'{{ name }}',
-'{{ displayName }}',
-'{{ contentFilter }}',
 '{{ modelSafety }}',
-'{{ action }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ appsId }}',
@@ -475,97 +475,6 @@ updateTime
     - name: appsId
       value: "{{ appsId }}"
       description: Required parameter for the guardrails resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the guardrail.
-    - name: codeCallback
-      description: |
-        Optional. Guardrail that potentially blocks the conversation based on the result of the callback execution.
-      value:
-        beforeAgentCallback:
-          pythonCode: "{{ pythonCode }}"
-          disabled: {{ disabled }}
-          description: "{{ description }}"
-          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-        afterModelCallback:
-          pythonCode: "{{ pythonCode }}"
-          disabled: {{ disabled }}
-          description: "{{ description }}"
-          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-        beforeModelCallback:
-          pythonCode: "{{ pythonCode }}"
-          disabled: {{ disabled }}
-          description: "{{ description }}"
-          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-        afterAgentCallback:
-          pythonCode: "{{ pythonCode }}"
-          disabled: {{ disabled }}
-          description: "{{ description }}"
-          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Etag used to ensure the object hasn't changed during a read-modify-write operation. If the etag is empty, the update will overwrite any concurrent changes.
-    - name: llmPolicy
-      description: |
-        Optional. Guardrail that blocks the conversation if the LLM response is considered violating the policy based on the LLM classification.
-      value:
-        policyScope: "{{ policyScope }}"
-        maxConversationMessages: {{ maxConversationMessages }}
-        modelSettings:
-          model: "{{ model }}"
-          temperature: {{ temperature }}
-        failOpen: {{ failOpen }}
-        allowShortUtterance: {{ allowShortUtterance }}
-        prompt: "{{ prompt }}"
-    - name: enabled
-      value: {{ enabled }}
-      description: |
-        Optional. Whether the guardrail is enabled.
-    - name: llmPromptSecurity
-      description: |
-        Optional. Guardrail that blocks the conversation if the prompt is considered unsafe based on the LLM classification.
-      value:
-        defaultSettings:
-          defaultPromptTemplate: "{{ defaultPromptTemplate }}"
-        failOpen: {{ failOpen }}
-        customPolicy:
-          policyScope: "{{ policyScope }}"
-          maxConversationMessages: {{ maxConversationMessages }}
-          modelSettings:
-            model: "{{ model }}"
-            temperature: {{ temperature }}
-          failOpen: {{ failOpen }}
-          allowShortUtterance: {{ allowShortUtterance }}
-          prompt: "{{ prompt }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The unique identifier of the guardrail. Format: \`projects/{project}/locations/{location}/apps/{app}/guardrails/{guardrail}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Display name of the guardrail.
-    - name: contentFilter
-      description: |
-        Optional. Guardrail that bans certain content from being used in the conversation.
-      value:
-        matchType: "{{ matchType }}"
-        disregardDiacritics: {{ disregardDiacritics }}
-        bannedContentsInAgentResponse:
-          - "{{ bannedContentsInAgentResponse }}"
-        bannedContentsInUserInput:
-          - "{{ bannedContentsInUserInput }}"
-        bannedContents:
-          - "{{ bannedContents }}"
-    - name: modelSafety
-      description: |
-        Optional. Guardrail that blocks the conversation if the LLM response is considered unsafe based on the model safety settings.
-      value:
-        safetySettings:
-          - category: "{{ category }}"
-            threshold: "{{ threshold }}"
     - name: action
       description: |
         Optional. Action to take when the guardrail is triggered.
@@ -578,6 +487,97 @@ updateTime
               text: "{{ text }}"
         transferAgent:
           agent: "{{ agent }}"
+    - name: codeCallback
+      description: |
+        Optional. Guardrail that potentially blocks the conversation based on the result of the callback execution.
+      value:
+        afterAgentCallback:
+          description: "{{ description }}"
+          disabled: {{ disabled }}
+          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
+          pythonCode: "{{ pythonCode }}"
+        afterModelCallback:
+          description: "{{ description }}"
+          disabled: {{ disabled }}
+          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
+          pythonCode: "{{ pythonCode }}"
+        beforeAgentCallback:
+          description: "{{ description }}"
+          disabled: {{ disabled }}
+          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
+          pythonCode: "{{ pythonCode }}"
+        beforeModelCallback:
+          description: "{{ description }}"
+          disabled: {{ disabled }}
+          proactiveExecutionEnabled: {{ proactiveExecutionEnabled }}
+          pythonCode: "{{ pythonCode }}"
+    - name: contentFilter
+      description: |
+        Optional. Guardrail that bans certain content from being used in the conversation.
+      value:
+        bannedContents:
+          - "{{ bannedContents }}"
+        bannedContentsInAgentResponse:
+          - "{{ bannedContentsInAgentResponse }}"
+        bannedContentsInUserInput:
+          - "{{ bannedContentsInUserInput }}"
+        disregardDiacritics: {{ disregardDiacritics }}
+        matchType: "{{ matchType }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the guardrail.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name of the guardrail.
+    - name: enabled
+      value: {{ enabled }}
+      description: |
+        Optional. Whether the guardrail is enabled.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Etag used to ensure the object hasn't changed during a read-modify-write operation. If the etag is empty, the update will overwrite any concurrent changes.
+    - name: llmPolicy
+      description: |
+        Optional. Guardrail that blocks the conversation if the LLM response is considered violating the policy based on the LLM classification.
+      value:
+        allowShortUtterance: {{ allowShortUtterance }}
+        failOpen: {{ failOpen }}
+        maxConversationMessages: {{ maxConversationMessages }}
+        modelSettings:
+          model: "{{ model }}"
+          temperature: {{ temperature }}
+        policyScope: "{{ policyScope }}"
+        prompt: "{{ prompt }}"
+    - name: llmPromptSecurity
+      description: |
+        Optional. Guardrail that blocks the conversation if the prompt is considered unsafe based on the LLM classification.
+      value:
+        customPolicy:
+          allowShortUtterance: {{ allowShortUtterance }}
+          failOpen: {{ failOpen }}
+          maxConversationMessages: {{ maxConversationMessages }}
+          modelSettings:
+            model: "{{ model }}"
+            temperature: {{ temperature }}
+          policyScope: "{{ policyScope }}"
+          prompt: "{{ prompt }}"
+        defaultSettings:
+          defaultPromptTemplate: "{{ defaultPromptTemplate }}"
+        failOpen: {{ failOpen }}
+    - name: modelSafety
+      description: |
+        Optional. Guardrail that blocks the conversation if the LLM response is considered unsafe based on the model safety settings.
+      value:
+        safetySettings:
+          - category: "{{ category }}"
+            threshold: "{{ threshold }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The unique identifier of the guardrail. Format: \`projects/{project}/locations/{location}/apps/{app}/guardrails/{guardrail}\`
     - name: guardrailId
       value: "{{ guardrailId }}"
 `}</CodeBlock>
@@ -601,17 +601,17 @@ Updates the specified guardrail.
 ```sql
 UPDATE google.ces.guardrails
 SET 
-data__description = '{{ description }}',
+data__action = '{{ action }}',
 data__codeCallback = '{{ codeCallback }}',
+data__contentFilter = '{{ contentFilter }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__enabled = {{ enabled }},
 data__etag = '{{ etag }}',
 data__llmPolicy = '{{ llmPolicy }}',
-data__enabled = {{ enabled }},
 data__llmPromptSecurity = '{{ llmPromptSecurity }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__contentFilter = '{{ contentFilter }}',
 data__modelSafety = '{{ modelSafety }}',
-data__action = '{{ action }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -655,8 +655,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND appsId = '{{ appsId }}' --required
 AND guardrailsId = '{{ guardrailsId }}' --required
-AND force = '{{ force }}'
 AND etag = '{{ etag }}'
+AND force = '{{ force }}'
 ;
 ```
 </TabItem>

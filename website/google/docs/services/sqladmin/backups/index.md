@@ -58,13 +58,6 @@ The following methods are available for this resource:
     <td>Creates a backup for a Cloud SQL instance. This API can be used only to create on-demand backups.</td>
 </tr>
 <tr>
-    <td><a href="#list_backups"><CopyableCode code="list_backups" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists all backups associated with the project.</td>
-</tr>
-<tr>
     <td><a href="#delete_backup"><CopyableCode code="delete_backup" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
@@ -77,6 +70,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
     <td></td>
     <td>Retrieves a resource containing information about a backup.</td>
+</tr>
+<tr>
+    <td><a href="#list_backups"><CopyableCode code="list_backups" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all backups associated with the project.</td>
 </tr>
 <tr>
     <td><a href="#update_backup"><CopyableCode code="update_backup" /></a></td>
@@ -140,9 +140,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="create_backup"
     values={[
         { label: 'create_backup', value: 'create_backup' },
-        { label: 'list_backups', value: 'list_backups' },
         { label: 'delete_backup', value: 'delete_backup' },
         { label: 'get_backup', value: 'get_backup' },
+        { label: 'list_backups', value: 'list_backups' },
         { label: 'update_backup', value: 'update_backup' }
     ]}
 >
@@ -155,25 +155,12 @@ EXEC google.sqladmin.backups.create_backup
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"expiryTime": "{{ expiryTime }}", 
 "description": "{{ description }}", 
+"expiryTime": "{{ expiryTime }}", 
+"instance": "{{ instance }}", 
 "location": "{{ location }}", 
-"ttlDays": "{{ ttlDays }}", 
-"instance": "{{ instance }}"
+"ttlDays": "{{ ttlDays }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="list_backups">
-
-Lists all backups associated with the project.
-
-```sql
-EXEC google.sqladmin.backups.list_backups 
-@projectsId='{{ projectsId }}' --required, 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@filter='{{ filter }}'
 ;
 ```
 </TabItem>
@@ -199,6 +186,19 @@ EXEC google.sqladmin.backups.get_backup
 ;
 ```
 </TabItem>
+<TabItem value="list_backups">
+
+Lists all backups associated with the project.
+
+```sql
+EXEC google.sqladmin.backups.list_backups 
+@projectsId='{{ projectsId }}' --required, 
+@filter='{{ filter }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="update_backup">
 
 Updates the retention period and description of the backup. You can use this API to update final backups only.
@@ -210,11 +210,11 @@ EXEC google.sqladmin.backups.update_backup
 @updateMask='{{ updateMask }}' 
 @@json=
 '{
-"expiryTime": "{{ expiryTime }}", 
 "description": "{{ description }}", 
+"expiryTime": "{{ expiryTime }}", 
+"instance": "{{ instance }}", 
 "location": "{{ location }}", 
-"ttlDays": "{{ ttlDays }}", 
-"instance": "{{ instance }}"
+"ttlDays": "{{ ttlDays }}"
 }'
 ;
 ```

@@ -328,28 +328,28 @@ Creates an app profile within an instance.
 
 ```sql
 INSERT INTO google.bigtableadmin.app_profiles (
-data__etag,
-data__multiClusterRoutingUseAny,
-data__priority,
 data__dataBoostIsolationReadOnly,
 data__description,
+data__etag,
+data__multiClusterRoutingUseAny,
+data__name,
+data__priority,
 data__singleClusterRouting,
 data__standardIsolation,
-data__name,
 projectsId,
 instancesId,
 appProfileId,
 ignoreWarnings
 )
 SELECT 
-'{{ etag }}',
-'{{ multiClusterRoutingUseAny }}',
-'{{ priority }}',
 '{{ dataBoostIsolationReadOnly }}',
 '{{ description }}',
+'{{ etag }}',
+'{{ multiClusterRoutingUseAny }}',
+'{{ name }}',
+'{{ priority }}',
 '{{ singleClusterRouting }}',
 '{{ standardIsolation }}',
-'{{ name }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ appProfileId }}',
@@ -377,6 +377,15 @@ standardIsolation
     - name: instancesId
       value: "{{ instancesId }}"
       description: Required parameter for the app_profiles resource.
+    - name: dataBoostIsolationReadOnly
+      description: |
+        Specifies that this app profile is intended for read-only usage via the Data Boost feature.
+      value:
+        computeBillingOwner: "{{ computeBillingOwner }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Long form description of the use case for this AppProfile.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -388,20 +397,15 @@ standardIsolation
         clusterIds:
           - "{{ clusterIds }}"
         rowAffinity: "{{ rowAffinity }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The unique name of the app profile, up to 50 characters long. Values are of the form \`projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*\`.
     - name: priority
       value: "{{ priority }}"
       description: |
         This field has been deprecated in favor of \`standard_isolation.priority\`. If you set this field, \`standard_isolation.priority\` will be set instead. The priority of requests sent using this app profile.
       valid_values: ['PRIORITY_UNSPECIFIED', 'PRIORITY_LOW', 'PRIORITY_MEDIUM', 'PRIORITY_HIGH']
-    - name: dataBoostIsolationReadOnly
-      description: |
-        Specifies that this app profile is intended for read-only usage via the Data Boost feature.
-      value:
-        computeBillingOwner: "{{ computeBillingOwner }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Long form description of the use case for this AppProfile.
     - name: singleClusterRouting
       description: |
         Use a single-cluster routing policy.
@@ -412,12 +416,8 @@ standardIsolation
       description: |
         The standard options used for isolating this app profile's traffic from other use cases.
       value:
-        priority: "{{ priority }}"
         memoryConfig: "{{ memoryConfig }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The unique name of the app profile, up to 50 characters long. Values are of the form \`projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*\`.
+        priority: "{{ priority }}"
     - name: appProfileId
       value: "{{ appProfileId }}"
     - name: ignoreWarnings
@@ -443,14 +443,14 @@ Updates an app profile within an instance.
 ```sql
 UPDATE google.bigtableadmin.app_profiles
 SET 
-data__etag = '{{ etag }}',
-data__multiClusterRoutingUseAny = '{{ multiClusterRoutingUseAny }}',
-data__priority = '{{ priority }}',
 data__dataBoostIsolationReadOnly = '{{ dataBoostIsolationReadOnly }}',
 data__description = '{{ description }}',
+data__etag = '{{ etag }}',
+data__multiClusterRoutingUseAny = '{{ multiClusterRoutingUseAny }}',
+data__name = '{{ name }}',
+data__priority = '{{ priority }}',
 data__singleClusterRouting = '{{ singleClusterRouting }}',
-data__standardIsolation = '{{ standardIsolation }}',
-data__name = '{{ name }}'
+data__standardIsolation = '{{ standardIsolation }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

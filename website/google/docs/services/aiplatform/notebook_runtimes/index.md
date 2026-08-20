@@ -375,7 +375,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists NotebookRuntimes in a Location.</td>
 </tr>
 <tr>
@@ -393,11 +393,11 @@ The following methods are available for this resource:
     <td>Assigns a NotebookRuntime to a user for a particular Notebook file. This method will either returns an existing assignment or generates a new one.</td>
 </tr>
 <tr>
-    <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
+    <td><a href="#start"><CopyableCode code="start" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notebookRuntimesId"><code>notebookRuntimesId</code></a></td>
     <td></td>
-    <td>Upgrades a NotebookRuntime.</td>
+    <td>Starts a NotebookRuntime.</td>
 </tr>
 <tr>
     <td><a href="#stop"><CopyableCode code="stop" /></a></td>
@@ -407,11 +407,11 @@ The following methods are available for this resource:
     <td>Stops a NotebookRuntime.</td>
 </tr>
 <tr>
-    <td><a href="#start"><CopyableCode code="start" /></a></td>
+    <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notebookRuntimesId"><code>notebookRuntimesId</code></a></td>
     <td></td>
-    <td>Starts a NotebookRuntime.</td>
+    <td>Upgrades a NotebookRuntime.</td>
 </tr>
 </tbody>
 </table>
@@ -560,9 +560,9 @@ FROM google.aiplatform.notebook_runtimes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -599,9 +599,9 @@ AND notebookRuntimesId = '{{ notebookRuntimesId }}' --required
     defaultValue="assign"
     values={[
         { label: 'assign', value: 'assign' },
-        { label: 'upgrade', value: 'upgrade' },
+        { label: 'start', value: 'start' },
         { label: 'stop', value: 'stop' },
-        { label: 'start', value: 'start' }
+        { label: 'upgrade', value: 'upgrade' }
     ]}
 >
 <TabItem value="assign">
@@ -621,12 +621,12 @@ EXEC google.aiplatform.notebook_runtimes.assign
 ;
 ```
 </TabItem>
-<TabItem value="upgrade">
+<TabItem value="start">
 
-Upgrades a NotebookRuntime.
+Starts a NotebookRuntime.
 
 ```sql
-EXEC google.aiplatform.notebook_runtimes.upgrade 
+EXEC google.aiplatform.notebook_runtimes.start 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @notebookRuntimesId='{{ notebookRuntimesId }}' --required
@@ -645,12 +645,12 @@ EXEC google.aiplatform.notebook_runtimes.stop
 ;
 ```
 </TabItem>
-<TabItem value="start">
+<TabItem value="upgrade">
 
-Starts a NotebookRuntime.
+Upgrades a NotebookRuntime.
 
 ```sql
-EXEC google.aiplatform.notebook_runtimes.start 
+EXEC google.aiplatform.notebook_runtimes.upgrade 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @notebookRuntimesId='{{ notebookRuntimesId }}' --required

@@ -73,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>Holds the contents of a Gemini Cloud Assist Troubleshooting investigation. (id: Investigation)</td>
+    <td>Optional. Snapshot of the investigation contents at this revision. (id: Investigation)</td>
 </tr>
 </tbody>
 </table>
@@ -112,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>Holds the contents of a Gemini Cloud Assist Troubleshooting investigation. (id: Investigation)</td>
+    <td>Optional. Snapshot of the investigation contents at this revision. (id: Investigation)</td>
 </tr>
 </tbody>
 </table>
@@ -153,7 +153,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-investigationsId"><code>investigationsId</code></a></td>
     <td><a href="#parameter-investigationRevisionId"><code>investigationRevisionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a new revision of a given Investigation.</td>
+    <td>Deprecated: Investigations should only be modified by the agent. Creates a new revision of a given Investigation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -167,14 +167,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-investigationsId"><code>investigationsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
-    <td>Modifies an existing investigation revision in place. This is intended for use by callers that are modifying as part of an investigation session, and do not want to create a new revision. Other callers should use UpdateInvestigation, which will create a new revision if the investigation is RUNNING.</td>
+    <td>Deprecated: Investigations should only be modified by the agent. Modifies an existing investigation revision in place. This is intended for use by callers that are modifying as part of an investigation session, and do not want to create a new revision. Other callers should use UpdateInvestigation, which will create a new revision if the investigation is RUNNING.</td>
 </tr>
 <tr>
     <td><a href="#run"><CopyableCode code="run" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-investigationsId"><code>investigationsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
-    <td>Run an existing revision of an investigation.</td>
+    <td>Deprecated: Investigations should only be run by the agent. Run an existing revision of an investigation.</td>
 </tr>
 </tbody>
 </table>
@@ -297,13 +297,13 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="create">
 
-Creates a new revision of a given Investigation.
+Deprecated: Investigations should only be modified by the agent. Creates a new revision of a given Investigation.
 
 ```sql
 INSERT INTO google.geminicloudassist.revisions (
+data__labels,
 data__name,
 data__snapshot,
-data__labels,
 projectsId,
 locationsId,
 investigationsId,
@@ -311,9 +311,9 @@ investigationRevisionId,
 requestId
 )
 SELECT 
+'{{ labels }}',
 '{{ name }}',
 '{{ snapshot }}',
-'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ investigationsId }}',
@@ -342,41 +342,41 @@ snapshot
     - name: investigationsId
       value: "{{ investigationsId }}"
       description: Required parameter for the revisions resource.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the revision.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. The name of the revision resource, of the form: projects/{project_number}/locations/{location_id}/investigations/{investigation_id}/revisions/{revision_id}
     - name: snapshot
       description: |
-        Holds the contents of a Gemini Cloud Assist Troubleshooting investigation.
+        Optional. Snapshot of the investigation contents at this revision.
       value:
-        name: "{{ name }}"
-        labels: "{{ labels }}"
-        title: "{{ title }}"
-        observations: "{{ observations }}"
-        observerStatuses: "{{ observerStatuses }}"
-        executionState: "{{ executionState }}"
-        revisionIndex: {{ revisionIndex }}
-        createTime: "{{ createTime }}"
-        revisionPredecessor: "{{ revisionPredecessor }}"
-        operation: "{{ operation }}"
-        revision: "{{ revision }}"
-        error:
-          code: {{ code }}
-          message: "{{ message }}"
-          details: "{{ details }}"
-        updateTime: "{{ updateTime }}"
         annotations:
-          supportCase: "{{ supportCase }}"
+          extrasMap: "{{ extrasMap }}"
+          pagePath: "{{ pagePath }}"
           revisionLastRunInterval:
             endTime: "{{ endTime }}"
             startTime: "{{ startTime }}"
-          pagePath: "{{ pagePath }}"
-          extrasMap: "{{ extrasMap }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the revision.
+          supportCase: "{{ supportCase }}"
+        createTime: "{{ createTime }}"
+        error:
+          code: {{ code }}
+          details: "{{ details }}"
+          message: "{{ message }}"
+        executionState: "{{ executionState }}"
+        labels: "{{ labels }}"
+        name: "{{ name }}"
+        observations: "{{ observations }}"
+        observerStatuses: "{{ observerStatuses }}"
+        operation: "{{ operation }}"
+        revision: "{{ revision }}"
+        revisionIndex: {{ revisionIndex }}
+        revisionPredecessor: "{{ revisionPredecessor }}"
+        title: "{{ title }}"
+        updateTime: "{{ updateTime }}"
     - name: investigationRevisionId
       value: "{{ investigationRevisionId }}"
     - name: requestId
@@ -423,7 +423,7 @@ AND requestId = '{{ requestId }}'
 >
 <TabItem value="modify">
 
-Modifies an existing investigation revision in place. This is intended for use by callers that are modifying as part of an investigation session, and do not want to create a new revision. Other callers should use UpdateInvestigation, which will create a new revision if the investigation is RUNNING.
+Deprecated: Investigations should only be modified by the agent. Modifies an existing investigation revision in place. This is intended for use by callers that are modifying as part of an investigation session, and do not want to create a new revision. Other callers should use UpdateInvestigation, which will create a new revision if the investigation is RUNNING.
 
 ```sql
 EXEC google.geminicloudassist.revisions.modify 
@@ -441,7 +441,7 @@ EXEC google.geminicloudassist.revisions.modify
 </TabItem>
 <TabItem value="run">
 
-Run an existing revision of an investigation.
+Deprecated: Investigations should only be run by the agent. Run an existing revision of an investigation.
 
 ```sql
 EXEC google.geminicloudassist.revisions.run 

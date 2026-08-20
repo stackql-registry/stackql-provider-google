@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists RestorePlans in a given location.</td>
 </tr>
 <tr>
@@ -246,7 +246,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-restorePlansId"><code>restorePlansId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes an existing RestorePlan.</td>
 </tr>
 <tr>
@@ -387,10 +387,10 @@ updateTime
 FROM google.gkebackup.restore_plans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -412,21 +412,21 @@ Creates a new RestorePlan in a given location.
 
 ```sql
 INSERT INTO google.gkebackup.restore_plans (
-data__restoreConfig,
-data__labels,
 data__backupPlan,
 data__cluster,
 data__description,
+data__labels,
+data__restoreConfig,
 projectsId,
 locationsId,
 restorePlanId
 )
 SELECT 
-'{{ restoreConfig }}',
-'{{ labels }}',
 '{{ backupPlan }}',
 '{{ cluster }}',
 '{{ description }}',
+'{{ labels }}',
+'{{ restoreConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ restorePlanId }}'
@@ -450,65 +450,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the restore_plans resource.
-    - name: restoreConfig
-      description: |
-        Required. Configuration of Restores created via this RestorePlan.
-      value:
-        excludedNamespaces:
-          namespaces:
-            - "{{ namespaces }}"
-        substitutionRules:
-          - targetJsonPath: "{{ targetJsonPath }}"
-            targetGroupKinds: "{{ targetGroupKinds }}"
-            newValue: "{{ newValue }}"
-            originalValuePattern: "{{ originalValuePattern }}"
-            targetNamespaces: "{{ targetNamespaces }}"
-        allNamespaces: {{ allNamespaces }}
-        volumeDataRestorePolicyBindings:
-          - policy: "{{ policy }}"
-            volumeType: "{{ volumeType }}"
-        noNamespaces: {{ noNamespaces }}
-        clusterResourceRestoreScope:
-          selectedGroupKinds:
-            - resourceGroup: "{{ resourceGroup }}"
-              resourceKind: "{{ resourceKind }}"
-          excludedGroupKinds:
-            - resourceGroup: "{{ resourceGroup }}"
-              resourceKind: "{{ resourceKind }}"
-          allGroupKinds: {{ allGroupKinds }}
-          noGroupKinds: {{ noGroupKinds }}
-        selectedNamespaces:
-          namespaces:
-            - "{{ namespaces }}"
-        restoreOrder:
-          groupKindDependencies:
-            - satisfying:
-                resourceGroup: "{{ resourceGroup }}"
-                resourceKind: "{{ resourceKind }}"
-              requiring:
-                resourceGroup: "{{ resourceGroup }}"
-                resourceKind: "{{ resourceKind }}"
-        clusterResourceConflictPolicy: "{{ clusterResourceConflictPolicy }}"
-        selectedApplications:
-          namespacedNames:
-            - name: "{{ name }}"
-              namespace: "{{ namespace }}"
-        transformationRules:
-          - resourceFilter:
-              namespaces:
-                - "{{ namespaces }}"
-              groupKinds:
-                - resourceGroup: "{{ resourceGroup }}"
-                  resourceKind: "{{ resourceKind }}"
-              jsonPath: "{{ jsonPath }}"
-            description: "{{ description }}"
-            fieldActions: "{{ fieldActions }}"
-        volumeDataRestorePolicy: "{{ volumeDataRestorePolicy }}"
-        namespacedResourceRestoreMode: "{{ namespacedResourceRestoreMode }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. A set of custom labels supplied by user.
     - name: backupPlan
       value: "{{ backupPlan }}"
       description: |
@@ -521,6 +462,65 @@ response
       value: "{{ description }}"
       description: |
         Optional. User specified descriptive string for this RestorePlan.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. A set of custom labels supplied by user.
+    - name: restoreConfig
+      description: |
+        Required. Configuration of Restores created via this RestorePlan.
+      value:
+        allNamespaces: {{ allNamespaces }}
+        clusterResourceConflictPolicy: "{{ clusterResourceConflictPolicy }}"
+        clusterResourceRestoreScope:
+          allGroupKinds: {{ allGroupKinds }}
+          excludedGroupKinds:
+            - resourceGroup: "{{ resourceGroup }}"
+              resourceKind: "{{ resourceKind }}"
+          noGroupKinds: {{ noGroupKinds }}
+          selectedGroupKinds:
+            - resourceGroup: "{{ resourceGroup }}"
+              resourceKind: "{{ resourceKind }}"
+        excludedNamespaces:
+          namespaces:
+            - "{{ namespaces }}"
+        namespacedResourceRestoreMode: "{{ namespacedResourceRestoreMode }}"
+        noNamespaces: {{ noNamespaces }}
+        restoreOrder:
+          groupKindDependencies:
+            - requiring:
+                resourceGroup: "{{ resourceGroup }}"
+                resourceKind: "{{ resourceKind }}"
+              satisfying:
+                resourceGroup: "{{ resourceGroup }}"
+                resourceKind: "{{ resourceKind }}"
+        selectedApplications:
+          namespacedNames:
+            - name: "{{ name }}"
+              namespace: "{{ namespace }}"
+        selectedNamespaces:
+          namespaces:
+            - "{{ namespaces }}"
+        substitutionRules:
+          - newValue: "{{ newValue }}"
+            originalValuePattern: "{{ originalValuePattern }}"
+            targetGroupKinds: "{{ targetGroupKinds }}"
+            targetJsonPath: "{{ targetJsonPath }}"
+            targetNamespaces: "{{ targetNamespaces }}"
+        transformationRules:
+          - description: "{{ description }}"
+            fieldActions: "{{ fieldActions }}"
+            resourceFilter:
+              groupKinds:
+                - resourceGroup: "{{ resourceGroup }}"
+                  resourceKind: "{{ resourceKind }}"
+              jsonPath: "{{ jsonPath }}"
+              namespaces:
+                - "{{ namespaces }}"
+        volumeDataRestorePolicy: "{{ volumeDataRestorePolicy }}"
+        volumeDataRestorePolicyBindings:
+          - policy: "{{ policy }}"
+            volumeType: "{{ volumeType }}"
     - name: restorePlanId
       value: "{{ restorePlanId }}"
 `}</CodeBlock>
@@ -544,11 +544,11 @@ Update a RestorePlan.
 ```sql
 UPDATE google.gkebackup.restore_plans
 SET 
-data__restoreConfig = '{{ restoreConfig }}',
-data__labels = '{{ labels }}',
 data__backupPlan = '{{ backupPlan }}',
 data__cluster = '{{ cluster }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__restoreConfig = '{{ restoreConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -582,8 +582,8 @@ DELETE FROM google.gkebackup.restore_plans
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND restorePlansId = '{{ restorePlansId }}' --required
-AND force = '{{ force }}'
 AND etag = '{{ etag }}'
+AND force = '{{ force }}'
 ;
 ```
 </TabItem>
@@ -609,10 +609,10 @@ EXEC google.gkebackup.restore_plans.set_tags
 @restorePlansId='{{ restorePlansId }}' --required 
 @@json=
 '{
-"tags": "{{ tags }}", 
 "etag": "{{ etag }}", 
 "name": "{{ name }}", 
-"requestId": "{{ requestId }}"
+"requestId": "{{ requestId }}", 
+"tags": "{{ tags }}"
 }'
 ;
 ```

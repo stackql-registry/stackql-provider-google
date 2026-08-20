@@ -145,14 +145,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists service projects attached to the host project.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-serviceProjectAttachmentId"><code>serviceProjectAttachmentId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-serviceProjectAttachmentId"><code>serviceProjectAttachmentId</code></a></td>
     <td>Attaches a service project to the host project.</td>
 </tr>
 <tr>
@@ -268,9 +268,9 @@ FROM google.apphub.service_project_attachments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -296,16 +296,16 @@ data__name,
 data__serviceProject,
 projectsId,
 locationsId,
-serviceProjectAttachmentId,
-requestId
+requestId,
+serviceProjectAttachmentId
 )
 SELECT 
 '{{ name }}',
 '{{ serviceProject }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ serviceProjectAttachmentId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ serviceProjectAttachmentId }}'
 RETURNING
 name,
 done,
@@ -334,10 +334,10 @@ response
       value: "{{ serviceProject }}"
       description: |
         Required. Immutable. Service project name in the format: \`"projects/abc"\` or \`"projects/123"\`. As input, project name with either project id or number are accepted. As output, this field will contain project number.
-    - name: serviceProjectAttachmentId
-      value: "{{ serviceProjectAttachmentId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: serviceProjectAttachmentId
+      value: "{{ serviceProjectAttachmentId }}"
 `}</CodeBlock>
 
 </TabItem>

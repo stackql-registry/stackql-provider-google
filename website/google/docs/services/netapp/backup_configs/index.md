@@ -49,6 +49,16 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="backupConfig" /></td>
+    <td><code>object</code></td>
+    <td>Backup configuration for the volume. (id: BackupConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="volumeUuid" /></td>
+    <td><code>string</code></td>
+    <td>Provides the Ontap UUID of the volume within the pool.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -73,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storagePoolsId"><code>storagePoolsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists backup configurations for all volumes in an ONTAP-mode Storage Pool.</td>
 </tr>
 </tbody>
@@ -144,15 +154,16 @@ Lists backup configurations for all volumes in an ONTAP-mode Storage Pool.
 
 ```sql
 SELECT
-*
+backupConfig,
+volumeUuid
 FROM google.netapp.backup_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND storagePoolsId = '{{ storagePoolsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

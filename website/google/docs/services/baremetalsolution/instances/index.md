@@ -316,6 +316,48 @@ The following methods are available for this resource:
     <td>Update details of a single server.</td>
 </tr>
 <tr>
+    <td><a href="#detach_lun"><CopyableCode code="detach_lun" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Detach LUN from Instance.</td>
+</tr>
+<tr>
+    <td><a href="#disable_hyperthreading"><CopyableCode code="disable_hyperthreading" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Perform disable hyperthreading operation on a single server.</td>
+</tr>
+<tr>
+    <td><a href="#disable_interactive_serial_console"><CopyableCode code="disable_interactive_serial_console" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Disable the interactive serial console feature on an instance.</td>
+</tr>
+<tr>
+    <td><a href="#enable_hyperthreading"><CopyableCode code="enable_hyperthreading" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Perform enable hyperthreading operation on a single server.</td>
+</tr>
+<tr>
+    <td><a href="#enable_interactive_serial_console"><CopyableCode code="enable_interactive_serial_console" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Enable the interactive serial console feature on an instance.</td>
+</tr>
+<tr>
+    <td><a href="#load_auth_info"><CopyableCode code="load_auth_info" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Load auth info for a server.</td>
+</tr>
+<tr>
     <td><a href="#reimage"><CopyableCode code="reimage" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
@@ -330,34 +372,6 @@ The following methods are available for this resource:
     <td>RenameInstance sets a new name for an instance. Use with caution, previous names become immediately invalidated.</td>
 </tr>
 <tr>
-    <td><a href="#start"><CopyableCode code="start" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Starts a server that was shutdown.</td>
-</tr>
-<tr>
-    <td><a href="#enable_hyperthreading"><CopyableCode code="enable_hyperthreading" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Perform enable hyperthreading operation on a single server.</td>
-</tr>
-<tr>
-    <td><a href="#detach_lun"><CopyableCode code="detach_lun" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Detach LUN from Instance.</td>
-</tr>
-<tr>
-    <td><a href="#disable_interactive_serial_console"><CopyableCode code="disable_interactive_serial_console" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Disable the interactive serial console feature on an instance.</td>
-</tr>
-<tr>
     <td><a href="#reset"><CopyableCode code="reset" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
@@ -365,32 +379,18 @@ The following methods are available for this resource:
     <td>Perform an ungraceful, hard reset on a server. Equivalent to shutting the power off and then turning it back on.</td>
 </tr>
 <tr>
+    <td><a href="#start"><CopyableCode code="start" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Starts a server that was shutdown.</td>
+</tr>
+<tr>
     <td><a href="#stop"><CopyableCode code="stop" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Stop a running server.</td>
-</tr>
-<tr>
-    <td><a href="#load_auth_info"><CopyableCode code="load_auth_info" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Load auth info for a server.</td>
-</tr>
-<tr>
-    <td><a href="#disable_hyperthreading"><CopyableCode code="disable_hyperthreading" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Perform disable hyperthreading operation on a single server.</td>
-</tr>
-<tr>
-    <td><a href="#enable_interactive_serial_console"><CopyableCode code="enable_interactive_serial_console" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Enable the interactive serial console feature on an instance.</td>
 </tr>
 </tbody>
 </table>
@@ -543,19 +543,19 @@ Update details of a single server.
 ```sql
 UPDATE google.baremetalsolution.instances
 SET 
-data__osImage = '{{ osImage }}',
-data__labels = '{{ labels }}',
-data__networkTemplate = '{{ networkTemplate }}',
-data__name = '{{ name }}',
-data__luns = '{{ luns }}',
-data__logicalInterfaces = '{{ logicalInterfaces }}',
-data__pod = '{{ pod }}',
-data__workloadProfile = '{{ workloadProfile }}',
 data__hyperthreadingEnabled = {{ hyperthreadingEnabled }},
-data__volumes = '{{ volumes }}',
-data__sshKeys = '{{ sshKeys }}',
 data__kmsKeyVersion = '{{ kmsKeyVersion }}',
-data__machineType = '{{ machineType }}'
+data__labels = '{{ labels }}',
+data__logicalInterfaces = '{{ logicalInterfaces }}',
+data__luns = '{{ luns }}',
+data__machineType = '{{ machineType }}',
+data__name = '{{ name }}',
+data__networkTemplate = '{{ networkTemplate }}',
+data__osImage = '{{ osImage }}',
+data__pod = '{{ pod }}',
+data__sshKeys = '{{ sshKeys }}',
+data__volumes = '{{ volumes }}',
+data__workloadProfile = '{{ workloadProfile }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -575,21 +575,98 @@ response;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reimage"
+    defaultValue="detach_lun"
     values={[
+        { label: 'detach_lun', value: 'detach_lun' },
+        { label: 'disable_hyperthreading', value: 'disable_hyperthreading' },
+        { label: 'disable_interactive_serial_console', value: 'disable_interactive_serial_console' },
+        { label: 'enable_hyperthreading', value: 'enable_hyperthreading' },
+        { label: 'enable_interactive_serial_console', value: 'enable_interactive_serial_console' },
+        { label: 'load_auth_info', value: 'load_auth_info' },
         { label: 'reimage', value: 'reimage' },
         { label: 'rename', value: 'rename' },
-        { label: 'start', value: 'start' },
-        { label: 'enable_hyperthreading', value: 'enable_hyperthreading' },
-        { label: 'detach_lun', value: 'detach_lun' },
-        { label: 'disable_interactive_serial_console', value: 'disable_interactive_serial_console' },
         { label: 'reset', value: 'reset' },
-        { label: 'stop', value: 'stop' },
-        { label: 'load_auth_info', value: 'load_auth_info' },
-        { label: 'disable_hyperthreading', value: 'disable_hyperthreading' },
-        { label: 'enable_interactive_serial_console', value: 'enable_interactive_serial_console' }
+        { label: 'start', value: 'start' },
+        { label: 'stop', value: 'stop' }
     ]}
 >
+<TabItem value="detach_lun">
+
+Detach LUN from Instance.
+
+```sql
+EXEC google.baremetalsolution.instances.detach_lun 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"lun": "{{ lun }}", 
+"skipReboot": {{ skipReboot }}
+}'
+;
+```
+</TabItem>
+<TabItem value="disable_hyperthreading">
+
+Perform disable hyperthreading operation on a single server.
+
+```sql
+EXEC google.baremetalsolution.instances.disable_hyperthreading 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="disable_interactive_serial_console">
+
+Disable the interactive serial console feature on an instance.
+
+```sql
+EXEC google.baremetalsolution.instances.disable_interactive_serial_console 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="enable_hyperthreading">
+
+Perform enable hyperthreading operation on a single server.
+
+```sql
+EXEC google.baremetalsolution.instances.enable_hyperthreading 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="enable_interactive_serial_console">
+
+Enable the interactive serial console feature on an instance.
+
+```sql
+EXEC google.baremetalsolution.instances.enable_interactive_serial_console 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="load_auth_info">
+
+Load auth info for a server.
+
+```sql
+EXEC google.baremetalsolution.instances.load_auth_info 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="reimage">
 
 Perform reimage operation on a single server.
@@ -624,59 +701,6 @@ EXEC google.baremetalsolution.instances.rename
 ;
 ```
 </TabItem>
-<TabItem value="start">
-
-Starts a server that was shutdown.
-
-```sql
-EXEC google.baremetalsolution.instances.start 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="enable_hyperthreading">
-
-Perform enable hyperthreading operation on a single server.
-
-```sql
-EXEC google.baremetalsolution.instances.enable_hyperthreading 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="detach_lun">
-
-Detach LUN from Instance.
-
-```sql
-EXEC google.baremetalsolution.instances.detach_lun 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"lun": "{{ lun }}", 
-"skipReboot": {{ skipReboot }}
-}'
-;
-```
-</TabItem>
-<TabItem value="disable_interactive_serial_console">
-
-Disable the interactive serial console feature on an instance.
-
-```sql
-EXEC google.baremetalsolution.instances.disable_interactive_serial_console 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="reset">
 
 Perform an ungraceful, hard reset on a server. Equivalent to shutting the power off and then turning it back on.
@@ -689,48 +713,24 @@ EXEC google.baremetalsolution.instances.reset
 ;
 ```
 </TabItem>
+<TabItem value="start">
+
+Starts a server that was shutdown.
+
+```sql
+EXEC google.baremetalsolution.instances.start 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="stop">
 
 Stop a running server.
 
 ```sql
 EXEC google.baremetalsolution.instances.stop 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="load_auth_info">
-
-Load auth info for a server.
-
-```sql
-EXEC google.baremetalsolution.instances.load_auth_info 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="disable_hyperthreading">
-
-Perform disable hyperthreading operation on a single server.
-
-```sql
-EXEC google.baremetalsolution.instances.disable_hyperthreading 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="enable_interactive_serial_console">
-
-Enable the interactive serial console feature on an instance.
-
-```sql
-EXEC google.baremetalsolution.instances.enable_interactive_serial_console 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required

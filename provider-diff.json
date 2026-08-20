@@ -1,0 +1,284 @@
+{
+ "new_services": {},
+ "removed_services": [
+  "apigeeregistry"
+ ],
+ "svc_diffs": [
+  {
+   "svc": "aiplatform",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 1,
+   "added_methods": {
+    "sessions": [
+     "compact"
+    ]
+   }
+  },
+  {
+   "svc": "assuredworkloads",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 0,
+   "removed_methods": {
+    "violations": [
+     "batch_acknowledge_violations"
+    ]
+   }
+  },
+  {
+   "svc": "bigquery",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 3,
+   "added_methods": {
+    "routines_iam_policies": [
+     "get_iam_policy",
+     "test_iam_permissions"
+    ],
+    "row_access_policies": [
+     "batch_delete"
+    ]
+   }
+  },
+  {
+   "svc": "bigtableadmin",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 1,
+   "added_methods": {
+    "clusters_memory_layer": [
+     "update_memory_layer"
+    ]
+   }
+  },
+  {
+   "svc": "cloudasset",
+   "added_res": [
+    "cloudasset"
+   ],
+   "removed_res": [
+    "operations"
+   ],
+   "added_methods_on_existing": 5,
+   "added_methods": {
+    "cloudasset_iam_policies": [
+     "analyze_iam_policy",
+     "search_all_iam_policies"
+    ],
+    "feeds": [
+     "delete",
+     "get",
+     "patch"
+    ]
+   },
+   "removed_methods": {
+    "saved_queries": [
+     "delete",
+     "patch"
+    ]
+   },
+   "added_res_methods": {
+    "cloudasset": [
+     "analyze_org_policies",
+     "analyze_org_policy_governed_containers",
+     "export_assets",
+     "search_all_resources"
+    ]
+   }
+  },
+  {
+   "svc": "cloudidentity",
+   "added_res": [
+    "allowlisted_domains"
+   ],
+   "removed_res": [],
+   "added_methods_on_existing": 0,
+   "added_res_methods": {
+    "allowlisted_domains": [
+     "create",
+     "delete",
+     "get",
+     "list"
+    ]
+   }
+  },
+  {
+   "svc": "cloudsupport",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 3,
+   "added_methods": {
+    "cases": [
+     "escalate",
+     "list"
+    ],
+    "media": [
+     "download"
+    ]
+   }
+  },
+  {
+   "svc": "discoveryengine",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 1,
+   "added_methods": {
+    "locations": [
+     "projects_locations_provision"
+    ]
+   }
+  },
+  {
+   "svc": "firestore",
+   "added_res": [
+    "change_streams"
+   ],
+   "removed_res": [],
+   "added_methods_on_existing": 0,
+   "added_res_methods": {
+    "change_streams": [
+     "create",
+     "delete",
+     "get",
+     "list"
+    ]
+   }
+  },
+  {
+   "svc": "logging",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 8,
+   "added_methods": {
+    "buckets_async": [
+     "locations_buckets_create_async",
+     "locations_buckets_update_async"
+    ],
+    "exclusions": [
+     "exclusions_delete",
+     "exclusions_get",
+     "exclusions_patch"
+    ],
+    "operations": [
+     "locations_operations_cancel"
+    ],
+    "views_iam_policies": [
+     "locations_buckets_views_get_iam_policy",
+     "locations_buckets_views_test_iam_permissions"
+    ]
+   },
+   "removed_methods": {
+    "views": [
+     "locations_buckets_views_delete",
+     "locations_buckets_views_get",
+     "locations_buckets_views_patch"
+    ]
+   }
+  },
+  {
+   "svc": "monitoring",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 3,
+   "added_methods": {
+    "services": [
+     "services_delete",
+     "services_get",
+     "services_patch"
+    ]
+   },
+   "removed_methods": {
+    "service_level_objectives": [
+     "services_service_level_objectives_delete",
+     "services_service_level_objectives_get",
+     "services_service_level_objectives_patch"
+    ]
+   }
+  },
+  {
+   "svc": "networkservices",
+   "added_res": [
+    "agent_connectivity_templates",
+    "extension_bindings",
+    "producer_extensions"
+   ],
+   "removed_res": [],
+   "added_methods_on_existing": 0,
+   "added_res_methods": {
+    "agent_connectivity_templates": [
+     "create",
+     "delete",
+     "get",
+     "list",
+     "patch"
+    ],
+    "extension_bindings": [
+     "create",
+     "delete",
+     "get",
+     "list",
+     "patch"
+    ],
+    "producer_extensions": [
+     "create",
+     "delete",
+     "get",
+     "list"
+    ]
+   }
+  },
+  {
+   "svc": "run",
+   "added_res": [
+    "source_uploads"
+   ],
+   "removed_res": [],
+   "added_methods_on_existing": 0,
+   "added_res_methods": {
+    "source_uploads": [
+     "upload"
+    ]
+   }
+  },
+  {
+   "svc": "serviceusage",
+   "added_res": [],
+   "removed_res": [],
+   "added_methods_on_existing": 2,
+   "added_methods": {
+    "services": [
+     "batch_get",
+     "disable"
+    ]
+   }
+  },
+  {
+   "svc": "storage",
+   "added_res": [
+    "objects_content",
+    "rapid_caches"
+   ],
+   "removed_res": [],
+   "added_methods_on_existing": 1,
+   "added_methods": {
+    "managed_folders": [
+     "update"
+    ]
+   },
+   "added_res_methods": {
+    "objects_content": [
+     "download",
+     "upload"
+    ],
+    "rapid_caches": [
+     "disable",
+     "get",
+     "insert",
+     "list",
+     "update"
+    ]
+   }
+  }
+ ]
+}

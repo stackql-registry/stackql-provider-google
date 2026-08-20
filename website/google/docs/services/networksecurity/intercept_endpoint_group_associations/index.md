@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_intercept_endpoint_group_associations_list"><CopyableCode code="projects_locations_intercept_endpoint_group_associations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists associations in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
@@ -351,10 +351,10 @@ updateTime
 FROM google.networksecurity.intercept_endpoint_group_associations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -377,9 +377,9 @@ Creates an association in a given project and location. See https://google.aip.d
 ```sql
 INSERT INTO google.networksecurity.intercept_endpoint_group_associations (
 data__interceptEndpointGroup,
-data__network,
-data__name,
 data__labels,
+data__name,
+data__network,
 projectsId,
 locationsId,
 interceptEndpointGroupAssociationId,
@@ -387,9 +387,9 @@ requestId
 )
 SELECT 
 '{{ interceptEndpointGroup }}',
-'{{ network }}',
-'{{ name }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ network }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ interceptEndpointGroupAssociationId }}',
@@ -418,18 +418,18 @@ response
       value: "{{ interceptEndpointGroup }}"
       description: |
         Required. Immutable. The endpoint group that this association is connected to, for example: \`projects/123456789/locations/global/interceptEndpointGroups/my-eg\`. See https://google.aip.dev/124.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Required. Immutable. The VPC network that is associated. for example: \`projects/123456789/global/networks/my-network\`. See https://google.aip.dev/124.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. The resource name of this endpoint group association, for example: \`projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg-association\`. See https://google.aip.dev/122 for more details.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels are key/value pairs that help to organize and filter resources.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of this endpoint group association, for example: \`projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg-association\`. See https://google.aip.dev/122 for more details.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Required. Immutable. The VPC network that is associated. for example: \`projects/123456789/global/networks/my-network\`. See https://google.aip.dev/124.
     - name: interceptEndpointGroupAssociationId
       value: "{{ interceptEndpointGroupAssociationId }}"
     - name: requestId
@@ -456,9 +456,9 @@ Updates an association. See https://google.aip.dev/134.
 UPDATE google.networksecurity.intercept_endpoint_group_associations
 SET 
 data__interceptEndpointGroup = '{{ interceptEndpointGroup }}',
-data__network = '{{ network }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__labels = '{{ labels }}'
+data__network = '{{ network }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

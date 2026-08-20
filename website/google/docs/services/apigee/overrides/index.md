@@ -125,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_trace_config_overrides_list"><CopyableCode code="organizations_environments_trace_config_overrides_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all of the distributed trace configuration overrides in an environment.</td>
 </tr>
 <tr>
@@ -235,8 +235,8 @@ samplingConfig
 FROM google.apigee.overrides
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -258,15 +258,15 @@ Creates a trace configuration override. The response contains a system-generated
 
 ```sql
 INSERT INTO google.apigee.overrides (
-data__name,
 data__apiProxy,
+data__name,
 data__samplingConfig,
 organizationsId,
 environmentsId
 )
 SELECT 
-'{{ name }}',
 '{{ apiProxy }}',
+'{{ name }}',
 '{{ samplingConfig }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
@@ -288,20 +288,20 @@ samplingConfig
     - name: environmentsId
       value: "{{ environmentsId }}"
       description: Required parameter for the overrides resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        ID of the trace configuration override specified as a system-generated UUID.
     - name: apiProxy
       value: "{{ apiProxy }}"
       description: |
         ID of the API proxy that will have its trace configuration overridden.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        ID of the trace configuration override specified as a system-generated UUID.
     - name: samplingConfig
       description: |
         Trace configuration to override.
       value:
-        samplingRate: {{ samplingRate }}
         sampler: "{{ sampler }}"
+        samplingRate: {{ samplingRate }}
 `}</CodeBlock>
 
 </TabItem>
@@ -323,8 +323,8 @@ Updates a distributed trace configuration override. Note that the repeated field
 ```sql
 UPDATE google.apigee.overrides
 SET 
-data__name = '{{ name }}',
 data__apiProxy = '{{ apiProxy }}',
+data__name = '{{ name }}',
 data__samplingConfig = '{{ samplingConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

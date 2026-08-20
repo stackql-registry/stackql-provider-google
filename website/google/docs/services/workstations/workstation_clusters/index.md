@@ -305,28 +305,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns all workstation clusters in the specified location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-workstationClusterId"><code>workstationClusterId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-workstationClusterId"><code>workstationClusterId</code></a></td>
     <td>Creates a new workstation cluster.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates an existing workstation cluster.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes the specified workstation cluster.</td>
 </tr>
 </tbody>
@@ -481,9 +481,9 @@ workstationLaunchUrl
 FROM google.workstations.workstation_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -505,42 +505,42 @@ Creates a new workstation cluster.
 
 ```sql
 INSERT INTO google.workstations.workstation_clusters (
-data__name,
-data__tags,
-data__workstationAuthorizationUrl,
-data__etag,
-data__privateClusterConfig,
-data__workstationLaunchUrl,
-data__labels,
-data__subnetwork,
+data__annotations,
 data__displayName,
 data__domainConfig,
+data__etag,
 data__gatewayConfig,
+data__labels,
+data__name,
 data__network,
-data__annotations,
+data__privateClusterConfig,
+data__subnetwork,
+data__tags,
+data__workstationAuthorizationUrl,
+data__workstationLaunchUrl,
 projectsId,
 locationsId,
-workstationClusterId,
-validateOnly
+validateOnly,
+workstationClusterId
 )
 SELECT 
-'{{ name }}',
-'{{ tags }}',
-'{{ workstationAuthorizationUrl }}',
-'{{ etag }}',
-'{{ privateClusterConfig }}',
-'{{ workstationLaunchUrl }}',
-'{{ labels }}',
-'{{ subnetwork }}',
+'{{ annotations }}',
 '{{ displayName }}',
 '{{ domainConfig }}',
+'{{ etag }}',
 '{{ gatewayConfig }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ network }}',
-'{{ annotations }}',
+'{{ privateClusterConfig }}',
+'{{ subnetwork }}',
+'{{ tags }}',
+'{{ workstationAuthorizationUrl }}',
+'{{ workstationLaunchUrl }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ workstationClusterId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ workstationClusterId }}'
 RETURNING
 name,
 done,
@@ -561,43 +561,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the workstation_clusters resource.
-    - name: name
-      value: "{{ name }}"
+    - name: annotations
+      value: "{{ annotations }}"
       description: |
-        Identifier. Full name of this workstation cluster.
-    - name: tags
-      value: "{{ tags }}"
-      description: |
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-    - name: workstationAuthorizationUrl
-      value: "{{ workstationAuthorizationUrl }}"
-      description: |
-        Optional. Specifies the redirect URL for unauthorized requests received by workstation VMs in this cluster. Redirects to this endpoint will send a base64 encoded \`state\` query param containing the target workstation name and original request hostname. The endpoint is responsible for retrieving a token using \`GenerateAccessToken\` and redirecting back to the original hostname with the token.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Checksum computed by the server. May be sent on update and delete requests to make sure that the client has an up-to-date value before proceeding.
-    - name: privateClusterConfig
-      description: |
-        Optional. Configuration for private workstation cluster.
-      value:
-        enablePrivateEndpoint: {{ enablePrivateEndpoint }}
-        serviceAttachmentUri: "{{ serviceAttachmentUri }}"
-        clusterHostname: "{{ clusterHostname }}"
-        allowedProjects:
-          - "{{ allowedProjects }}"
-    - name: workstationLaunchUrl
-      value: "{{ workstationLaunchUrl }}"
-      description: |
-        Optional. Specifies the launch URL for workstations in this cluster. Requests sent to unstarted workstations will be redirected to this URL. Requests redirected to the launch endpoint will be sent with a \`workstation\` and \`project\` query parameter containing the full workstation resource name and project ID, respectively. The launch endpoint is responsible for starting the workstation, polling it until it reaches \`STATE_RUNNING\`, and then issuing a redirect to the workstation's host URL.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation cluster and that are also propagated to the underlying Compute Engine resources.
-    - name: subnetwork
-      value: "{{ subnetwork }}"
-      description: |
-        Immutable. Name of the Compute Engine subnetwork in which instances associated with this workstation cluster will be created. Must be part of the subnetwork specified for this workstation cluster.
+        Optional. Client-specified annotations.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -607,23 +574,56 @@ response
         Optional. Configuration options for a custom domain.
       value:
         domain: "{{ domain }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Checksum computed by the server. May be sent on update and delete requests to make sure that the client has an up-to-date value before proceeding.
     - name: gatewayConfig
       description: |
         Optional. Configuration options for Cluster HTTP Gateway.
       value:
         http2Enabled: {{ http2Enabled }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation cluster and that are also propagated to the underlying Compute Engine resources.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Full name of this workstation cluster.
     - name: network
       value: "{{ network }}"
       description: |
         Immutable. Name of the Compute Engine network in which instances associated with this workstation cluster will be created.
-    - name: annotations
-      value: "{{ annotations }}"
+    - name: privateClusterConfig
       description: |
-        Optional. Client-specified annotations.
-    - name: workstationClusterId
-      value: "{{ workstationClusterId }}"
+        Optional. Configuration for private workstation cluster.
+      value:
+        allowedProjects:
+          - "{{ allowedProjects }}"
+        clusterHostname: "{{ clusterHostname }}"
+        enablePrivateEndpoint: {{ enablePrivateEndpoint }}
+        serviceAttachmentUri: "{{ serviceAttachmentUri }}"
+    - name: subnetwork
+      value: "{{ subnetwork }}"
+      description: |
+        Immutable. Name of the Compute Engine subnetwork in which instances associated with this workstation cluster will be created. Must be part of the subnetwork specified for this workstation cluster.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
+    - name: workstationAuthorizationUrl
+      value: "{{ workstationAuthorizationUrl }}"
+      description: |
+        Optional. Specifies the redirect URL for unauthorized requests received by workstation VMs in this cluster. Redirects to this endpoint will send a base64 encoded \`state\` query param containing the target workstation name and original request hostname. The endpoint is responsible for retrieving a token using \`GenerateAccessToken\` and redirecting back to the original hostname with the token.
+    - name: workstationLaunchUrl
+      value: "{{ workstationLaunchUrl }}"
+      description: |
+        Optional. Specifies the launch URL for workstations in this cluster. Requests sent to unstarted workstations will be redirected to this URL. Requests redirected to the launch endpoint will be sent with a \`workstation\` and \`project\` query parameter containing the full workstation resource name and project ID, respectively. The launch endpoint is responsible for starting the workstation, polling it until it reaches \`STATE_RUNNING\`, and then issuing a redirect to the workstation's host URL.
     - name: validateOnly
       value: {{ validateOnly }}
+    - name: workstationClusterId
+      value: "{{ workstationClusterId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -645,25 +645,25 @@ Updates an existing workstation cluster.
 ```sql
 UPDATE google.workstations.workstation_clusters
 SET 
-data__name = '{{ name }}',
-data__tags = '{{ tags }}',
-data__workstationAuthorizationUrl = '{{ workstationAuthorizationUrl }}',
-data__etag = '{{ etag }}',
-data__privateClusterConfig = '{{ privateClusterConfig }}',
-data__workstationLaunchUrl = '{{ workstationLaunchUrl }}',
-data__labels = '{{ labels }}',
-data__subnetwork = '{{ subnetwork }}',
+data__annotations = '{{ annotations }}',
 data__displayName = '{{ displayName }}',
 data__domainConfig = '{{ domainConfig }}',
+data__etag = '{{ etag }}',
 data__gatewayConfig = '{{ gatewayConfig }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__network = '{{ network }}',
-data__annotations = '{{ annotations }}'
+data__privateClusterConfig = '{{ privateClusterConfig }}',
+data__subnetwork = '{{ subnetwork }}',
+data__tags = '{{ tags }}',
+data__workstationAuthorizationUrl = '{{ workstationAuthorizationUrl }}',
+data__workstationLaunchUrl = '{{ workstationLaunchUrl }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND workstationClustersId = '{{ workstationClustersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
@@ -693,9 +693,9 @@ DELETE FROM google.workstations.workstation_clusters
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND workstationClustersId = '{{ workstationClustersId }}' --required
+AND etag = '{{ etag }}'
 AND force = '{{ force }}'
 AND validateOnly = '{{ validateOnly }}'
-AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

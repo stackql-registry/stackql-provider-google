@@ -275,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-scanConfigsId"><code>scanConfigsId</code></a>, <a href="#parameter-scanRunsId"><code>scanRunsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List Findings under a given ScanRun.</td>
 </tr>
 </tbody>
@@ -401,9 +401,9 @@ FROM google.websecurityscanner.findings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND scanConfigsId = '{{ scanConfigsId }}' -- required
 AND scanRunsId = '{{ scanRunsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

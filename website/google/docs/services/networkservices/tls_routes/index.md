@@ -353,25 +353,25 @@ Creates a new TlsRoute in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.tls_routes (
-data__name,
 data__description,
-data__rules,
-data__meshes,
 data__gateways,
-data__targetProxies,
 data__labels,
+data__meshes,
+data__name,
+data__rules,
+data__targetProxies,
 projectsId,
 locationsId,
 tlsRouteId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
-'{{ rules }}',
-'{{ meshes }}',
 '{{ gateways }}',
-'{{ targetProxies }}',
 '{{ labels }}',
+'{{ meshes }}',
+'{{ name }}',
+'{{ rules }}',
+'{{ targetProxies }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tlsRouteId }}'
@@ -395,43 +395,43 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the tls_routes resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the TlsRoute resource. It matches pattern \`projects/*/locations/*/tlsRoutes/tls_route_name>\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A free-text description of the resource. Max length 1024 characters.
-    - name: rules
-      description: |
-        Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.
-      value:
-        - matches: "{{ matches }}"
-          action:
-            destinations:
-              - serviceName: "{{ serviceName }}"
-                weight: {{ weight }}
-            idleTimeout: "{{ idleTimeout }}"
-    - name: meshes
-      value:
-        - "{{ meshes }}"
-      description: |
-        Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\` The attached Mesh should be of a type SIDECAR
     - name: gateways
       value:
         - "{{ gateways }}"
       description: |
         Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: \`projects/*/locations/*/gateways/\`
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the TlsRoute resource.
+    - name: meshes
+      value:
+        - "{{ meshes }}"
+      description: |
+        Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\` The attached Mesh should be of a type SIDECAR
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the TlsRoute resource. It matches pattern \`projects/*/locations/*/tlsRoutes/tls_route_name>\`.
+    - name: rules
+      description: |
+        Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.
+      value:
+        - action:
+            destinations:
+              - serviceName: "{{ serviceName }}"
+                weight: {{ weight }}
+            idleTimeout: "{{ idleTimeout }}"
+          matches: "{{ matches }}"
     - name: targetProxies
       value:
         - "{{ targetProxies }}"
       description: |
         Optional. TargetProxies defines a list of TargetTcpProxies this TlsRoute is attached to, as one of the routing rules to route the requests served by the TargetTcpProxy. Each TargetTcpProxy reference should match the pattern: \`projects/*/locations/*/targetTcpProxies/\`
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of label tags associated with the TlsRoute resource.
     - name: tlsRouteId
       value: "{{ tlsRouteId }}"
 `}</CodeBlock>
@@ -455,13 +455,13 @@ Updates the parameters of a single TlsRoute.
 ```sql
 UPDATE google.networkservices.tls_routes
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__rules = '{{ rules }}',
-data__meshes = '{{ meshes }}',
 data__gateways = '{{ gateways }}',
-data__targetProxies = '{{ targetProxies }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__meshes = '{{ meshes }}',
+data__name = '{{ name }}',
+data__rules = '{{ rules }}',
+data__targetProxies = '{{ targetProxies }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

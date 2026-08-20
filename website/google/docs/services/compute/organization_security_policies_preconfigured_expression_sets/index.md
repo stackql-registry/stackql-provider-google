@@ -78,7 +78,7 @@ The following methods are available for this resource:
     <td><a href="#list_preconfigured_expression_sets"><CopyableCode code="list_preconfigured_expression_sets" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-parentId"><code>parentId</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parentId"><code>parentId</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Gets the current list of preconfigured Web Application Firewall (WAF)<br />expressions.</td>
 </tr>
 </tbody>
@@ -146,11 +146,11 @@ Gets the current list of preconfigured Web Application Firewall (WAF)<br />expre
 SELECT
 preconfiguredExpressionSets
 FROM google.compute.organization_security_policies_preconfigured_expression_sets
-WHERE orderBy = '{{ orderBy }}'
-AND parentId = '{{ parentId }}'
+WHERE filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND parentId = '{{ parentId }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```

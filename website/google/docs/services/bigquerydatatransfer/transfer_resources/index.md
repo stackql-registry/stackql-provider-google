@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_transfer_configs_transfer_resources_get"
     values={[
         { label: 'projects_locations_transfer_configs_transfer_resources_get', value: 'projects_locations_transfer_configs_transfer_resources_get' },
-        { label: 'projects_transfer_configs_transfer_resources_get', value: 'projects_transfer_configs_transfer_resources_get' },
         { label: 'projects_locations_transfer_configs_transfer_resources_list', value: 'projects_locations_transfer_configs_transfer_resources_list' },
+        { label: 'projects_transfer_configs_transfer_resources_get', value: 'projects_transfer_configs_transfer_resources_get' },
         { label: 'projects_transfer_configs_transfer_resources_list', value: 'projects_transfer_configs_transfer_resources_list' }
     ]}
 >
@@ -95,7 +95,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_transfer_configs_transfer_resources_get">
+<TabItem value="projects_locations_transfer_configs_transfer_resources_list">
 
 <table>
 <thead>
@@ -149,7 +149,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_transfer_configs_transfer_resources_list">
+<TabItem value="projects_transfer_configs_transfer_resources_get">
 
 <table>
 <thead>
@@ -282,6 +282,13 @@ The following methods are available for this resource:
     <td>Returns a transfer resource.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_transfer_configs_transfer_resources_list"><CopyableCode code="projects_locations_transfer_configs_transfer_resources_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Returns information about transfer resources.</td>
+</tr>
+<tr>
     <td><a href="#projects_transfer_configs_transfer_resources_get"><CopyableCode code="projects_transfer_configs_transfer_resources_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a>, <a href="#parameter-transferResourcesId"><code>transferResourcesId</code></a></td>
@@ -289,17 +296,10 @@ The following methods are available for this resource:
     <td>Returns a transfer resource.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_transfer_configs_transfer_resources_list"><CopyableCode code="projects_locations_transfer_configs_transfer_resources_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Returns information about transfer resources.</td>
-</tr>
-<tr>
     <td><a href="#projects_transfer_configs_transfer_resources_list"><CopyableCode code="projects_transfer_configs_transfer_resources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns information about transfer resources.</td>
 </tr>
 </tbody>
@@ -362,8 +362,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_transfer_configs_transfer_resources_get"
     values={[
         { label: 'projects_locations_transfer_configs_transfer_resources_get', value: 'projects_locations_transfer_configs_transfer_resources_get' },
-        { label: 'projects_transfer_configs_transfer_resources_get', value: 'projects_transfer_configs_transfer_resources_get' },
         { label: 'projects_locations_transfer_configs_transfer_resources_list', value: 'projects_locations_transfer_configs_transfer_resources_list' },
+        { label: 'projects_transfer_configs_transfer_resources_get', value: 'projects_transfer_configs_transfer_resources_get' },
         { label: 'projects_transfer_configs_transfer_resources_list', value: 'projects_transfer_configs_transfer_resources_list' }
     ]}
 >
@@ -389,6 +389,30 @@ AND transferResourcesId = '{{ transferResourcesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_transfer_configs_transfer_resources_list">
+
+Returns information about transfer resources.
+
+```sql
+SELECT
+name,
+destination,
+hierarchyDetail,
+lastSuccessfulRun,
+latestRun,
+latestStatusDetail,
+type,
+updateTime
+FROM google.bigquerydatatransfer.transfer_resources
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND transferConfigsId = '{{ transferConfigsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_transfer_configs_transfer_resources_get">
 
 Returns a transfer resource.
@@ -410,30 +434,6 @@ AND transferResourcesId = '{{ transferResourcesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_transfer_configs_transfer_resources_list">
-
-Returns information about transfer resources.
-
-```sql
-SELECT
-name,
-destination,
-hierarchyDetail,
-lastSuccessfulRun,
-latestRun,
-latestStatusDetail,
-type,
-updateTime
-FROM google.bigquerydatatransfer.transfer_resources
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND transferConfigsId = '{{ transferConfigsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-;
-```
-</TabItem>
 <TabItem value="projects_transfer_configs_transfer_resources_list">
 
 Returns information about transfer resources.
@@ -451,9 +451,9 @@ updateTime
 FROM google.bigquerydatatransfer.transfer_resources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND transferConfigsId = '{{ transferConfigsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

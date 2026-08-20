@@ -92,9 +92,9 @@ Successful response
 EXEC google.trafficdirector.discovery.client_status 
 @@json=
 '{
-"nodeMatchers": "{{ nodeMatchers }}", 
+"excludeResourceContents": {{ excludeResourceContents }}, 
 "node": "{{ node }}", 
-"excludeResourceContents": {{ excludeResourceContents }}
+"nodeMatchers": "{{ nodeMatchers }}"
 }'
 ;
 ```

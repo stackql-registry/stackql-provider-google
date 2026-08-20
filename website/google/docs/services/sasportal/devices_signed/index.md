@@ -51,20 +51,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#nodes_nodes_devices_create_signed"><CopyableCode code="nodes_nodes_devices_create_signed" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
-    <td></td>
-    <td>Creates a signed device under a node or customer.</td>
-</tr>
-<tr>
-    <td><a href="#nodes_deployments_devices_create_signed"><CopyableCode code="nodes_deployments_devices_create_signed" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td></td>
-    <td>Creates a signed device under a node or customer.</td>
-</tr>
-<tr>
     <td><a href="#customers_deployments_devices_create_signed"><CopyableCode code="customers_deployments_devices_create_signed" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
@@ -79,9 +65,16 @@ The following methods are available for this resource:
     <td>Creates a signed device under a node or customer.</td>
 </tr>
 <tr>
-    <td><a href="#nodes_devices_create_signed"><CopyableCode code="nodes_devices_create_signed" /></a></td>
+    <td><a href="#nodes_deployments_devices_create_signed"><CopyableCode code="nodes_deployments_devices_create_signed" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-nodesId"><code>nodesId</code></a></td>
+    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
+    <td></td>
+    <td>Creates a signed device under a node or customer.</td>
+</tr>
+<tr>
+    <td><a href="#nodes_nodes_devices_create_signed"><CopyableCode code="nodes_nodes_devices_create_signed" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
     <td></td>
     <td>Creates a signed device under a node or customer.</td>
 </tr>
@@ -91,6 +84,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-customersId"><code>customersId</code></a></td>
     <td></td>
     <td>Creates a signed device under a node or customer.</td>
+</tr>
+<tr>
+    <td><a href="#nodes_devices_create_signed"><CopyableCode code="nodes_devices_create_signed" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-nodesId"><code>nodesId</code></a></td>
+    <td></td>
+    <td>Creates a signed device under a node or customer.</td>
+</tr>
+<tr>
+    <td><a href="#customers_devices_update_signed"><CopyableCode code="customers_devices_update_signed" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td></td>
+    <td>Updates a signed device.</td>
 </tr>
 <tr>
     <td><a href="#deployments_devices_update_signed"><CopyableCode code="deployments_devices_update_signed" /></a></td>
@@ -103,13 +110,6 @@ The following methods are available for this resource:
     <td><a href="#nodes_devices_update_signed"><CopyableCode code="nodes_devices_update_signed" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
-    <td></td>
-    <td>Updates a signed device.</td>
-</tr>
-<tr>
-    <td><a href="#customers_devices_update_signed"><CopyableCode code="customers_devices_update_signed" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
     <td></td>
     <td>Updates a signed device.</td>
 </tr>
@@ -160,79 +160,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="nodes_nodes_devices_create_signed"
+    defaultValue="customers_deployments_devices_create_signed"
     values={[
-        { label: 'nodes_nodes_devices_create_signed', value: 'nodes_nodes_devices_create_signed' },
-        { label: 'nodes_deployments_devices_create_signed', value: 'nodes_deployments_devices_create_signed' },
         { label: 'customers_deployments_devices_create_signed', value: 'customers_deployments_devices_create_signed' },
         { label: 'customers_nodes_devices_create_signed', value: 'customers_nodes_devices_create_signed' },
-        { label: 'nodes_devices_create_signed', value: 'nodes_devices_create_signed' },
+        { label: 'nodes_deployments_devices_create_signed', value: 'nodes_deployments_devices_create_signed' },
+        { label: 'nodes_nodes_devices_create_signed', value: 'nodes_nodes_devices_create_signed' },
         { label: 'customers_devices_create_signed', value: 'customers_devices_create_signed' },
+        { label: 'nodes_devices_create_signed', value: 'nodes_devices_create_signed' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="nodes_nodes_devices_create_signed">
-
-Creates a signed device under a node or customer.
-
-```sql
-INSERT INTO google.sasportal.devices_signed (
-data__encodedDevice,
-data__installerId,
-nodesId,
-nodesId1
-)
-SELECT 
-'{{ encodedDevice }}',
-'{{ installerId }}',
-'{{ nodesId }}',
-'{{ nodesId1 }}'
-RETURNING
-name,
-activeConfig,
-currentChannels,
-deviceMetadata,
-displayName,
-fccId,
-grantRangeAllowlists,
-grants,
-preloadedConfig,
-serialNumber,
-state
-;
-```
-</TabItem>
-<TabItem value="nodes_deployments_devices_create_signed">
-
-Creates a signed device under a node or customer.
-
-```sql
-INSERT INTO google.sasportal.devices_signed (
-data__encodedDevice,
-data__installerId,
-nodesId,
-deploymentsId
-)
-SELECT 
-'{{ encodedDevice }}',
-'{{ installerId }}',
-'{{ nodesId }}',
-'{{ deploymentsId }}'
-RETURNING
-name,
-activeConfig,
-currentChannels,
-deviceMetadata,
-displayName,
-fccId,
-grantRangeAllowlists,
-grants,
-preloadedConfig,
-serialNumber,
-state
-;
-```
-</TabItem>
 <TabItem value="customers_deployments_devices_create_signed">
 
 Creates a signed device under a node or customer.
@@ -295,7 +233,7 @@ state
 ;
 ```
 </TabItem>
-<TabItem value="nodes_devices_create_signed">
+<TabItem value="nodes_deployments_devices_create_signed">
 
 Creates a signed device under a node or customer.
 
@@ -303,12 +241,45 @@ Creates a signed device under a node or customer.
 INSERT INTO google.sasportal.devices_signed (
 data__encodedDevice,
 data__installerId,
-nodesId
+nodesId,
+deploymentsId
 )
 SELECT 
 '{{ encodedDevice }}',
 '{{ installerId }}',
-'{{ nodesId }}'
+'{{ nodesId }}',
+'{{ deploymentsId }}'
+RETURNING
+name,
+activeConfig,
+currentChannels,
+deviceMetadata,
+displayName,
+fccId,
+grantRangeAllowlists,
+grants,
+preloadedConfig,
+serialNumber,
+state
+;
+```
+</TabItem>
+<TabItem value="nodes_nodes_devices_create_signed">
+
+Creates a signed device under a node or customer.
+
+```sql
+INSERT INTO google.sasportal.devices_signed (
+data__encodedDevice,
+data__installerId,
+nodesId,
+nodesId1
+)
+SELECT 
+'{{ encodedDevice }}',
+'{{ installerId }}',
+'{{ nodesId }}',
+'{{ nodesId1 }}'
 RETURNING
 name,
 activeConfig,
@@ -353,22 +324,51 @@ state
 ;
 ```
 </TabItem>
+<TabItem value="nodes_devices_create_signed">
+
+Creates a signed device under a node or customer.
+
+```sql
+INSERT INTO google.sasportal.devices_signed (
+data__encodedDevice,
+data__installerId,
+nodesId
+)
+SELECT 
+'{{ encodedDevice }}',
+'{{ installerId }}',
+'{{ nodesId }}'
+RETURNING
+name,
+activeConfig,
+currentChannels,
+deviceMetadata,
+displayName,
+fccId,
+grantRangeAllowlists,
+grants,
+preloadedConfig,
+serialNumber,
+state
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: devices_signed
   props:
+    - name: customersId
+      value: "{{ customersId }}"
+      description: Required parameter for the devices_signed resource.
+    - name: deploymentsId
+      value: "{{ deploymentsId }}"
+      description: Required parameter for the devices_signed resource.
     - name: nodesId
       value: "{{ nodesId }}"
       description: Required parameter for the devices_signed resource.
     - name: nodesId1
       value: "{{ nodesId1 }}"
-      description: Required parameter for the devices_signed resource.
-    - name: deploymentsId
-      value: "{{ deploymentsId }}"
-      description: Required parameter for the devices_signed resource.
-    - name: customersId
-      value: "{{ customersId }}"
       description: Required parameter for the devices_signed resource.
     - name: encodedDevice
       value: "{{ encodedDevice }}"
@@ -387,13 +387,39 @@ state
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="deployments_devices_update_signed"
+    defaultValue="customers_devices_update_signed"
     values={[
+        { label: 'customers_devices_update_signed', value: 'customers_devices_update_signed' },
         { label: 'deployments_devices_update_signed', value: 'deployments_devices_update_signed' },
-        { label: 'nodes_devices_update_signed', value: 'nodes_devices_update_signed' },
-        { label: 'customers_devices_update_signed', value: 'customers_devices_update_signed' }
+        { label: 'nodes_devices_update_signed', value: 'nodes_devices_update_signed' }
     ]}
 >
+<TabItem value="customers_devices_update_signed">
+
+Updates a signed device.
+
+```sql
+UPDATE google.sasportal.devices_signed
+SET 
+data__encodedDevice = '{{ encodedDevice }}',
+data__installerId = '{{ installerId }}'
+WHERE 
+customersId = '{{ customersId }}' --required
+AND devicesId = '{{ devicesId }}' --required
+RETURNING
+name,
+activeConfig,
+currentChannels,
+deviceMetadata,
+displayName,
+fccId,
+grantRangeAllowlists,
+grants,
+preloadedConfig,
+serialNumber,
+state;
+```
+</TabItem>
 <TabItem value="deployments_devices_update_signed">
 
 Updates a signed device.
@@ -431,32 +457,6 @@ data__encodedDevice = '{{ encodedDevice }}',
 data__installerId = '{{ installerId }}'
 WHERE 
 nodesId = '{{ nodesId }}' --required
-AND devicesId = '{{ devicesId }}' --required
-RETURNING
-name,
-activeConfig,
-currentChannels,
-deviceMetadata,
-displayName,
-fccId,
-grantRangeAllowlists,
-grants,
-preloadedConfig,
-serialNumber,
-state;
-```
-</TabItem>
-<TabItem value="customers_devices_update_signed">
-
-Updates a signed device.
-
-```sql
-UPDATE google.sasportal.devices_signed
-SET 
-data__encodedDevice = '{{ encodedDevice }}',
-data__installerId = '{{ installerId }}'
-WHERE 
-customersId = '{{ customersId }}' --required
 AND devicesId = '{{ devicesId }}' --required
 RETURNING
 name,

@@ -99,16 +99,16 @@ The following methods are available for this resource:
     <td>Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_address_groups_test_iam_permissions"><CopyableCode code="projects_locations_address_groups_test_iam_permissions" /></a></td>
+    <td><a href="#organizations_locations_address_groups_test_iam_permissions"><CopyableCode code="organizations_locations_address_groups_test_iam_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
     <td></td>
     <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_address_groups_test_iam_permissions"><CopyableCode code="organizations_locations_address_groups_test_iam_permissions" /></a></td>
+    <td><a href="#projects_locations_address_groups_test_iam_permissions"><CopyableCode code="projects_locations_address_groups_test_iam_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
     <td></td>
     <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
 </tr>
@@ -218,19 +218,19 @@ version;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_address_groups_test_iam_permissions"
+    defaultValue="organizations_locations_address_groups_test_iam_permissions"
     values={[
-        { label: 'projects_locations_address_groups_test_iam_permissions', value: 'projects_locations_address_groups_test_iam_permissions' },
-        { label: 'organizations_locations_address_groups_test_iam_permissions', value: 'organizations_locations_address_groups_test_iam_permissions' }
+        { label: 'organizations_locations_address_groups_test_iam_permissions', value: 'organizations_locations_address_groups_test_iam_permissions' },
+        { label: 'projects_locations_address_groups_test_iam_permissions', value: 'projects_locations_address_groups_test_iam_permissions' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_test_iam_permissions">
+<TabItem value="organizations_locations_address_groups_test_iam_permissions">
 
 Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
 
 ```sql
-EXEC google.networksecurity.address_groups_iam_policies.projects_locations_address_groups_test_iam_permissions 
-@projectsId='{{ projectsId }}' --required, 
+EXEC google.networksecurity.address_groups_iam_policies.organizations_locations_address_groups_test_iam_permissions 
+@organizationsId='{{ organizationsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @addressGroupsId='{{ addressGroupsId }}' --required 
 @@json=
@@ -240,13 +240,13 @@ EXEC google.networksecurity.address_groups_iam_policies.projects_locations_addre
 ;
 ```
 </TabItem>
-<TabItem value="organizations_locations_address_groups_test_iam_permissions">
+<TabItem value="projects_locations_address_groups_test_iam_permissions">
 
 Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
 
 ```sql
-EXEC google.networksecurity.address_groups_iam_policies.organizations_locations_address_groups_test_iam_permissions 
-@organizationsId='{{ organizationsId }}' --required, 
+EXEC google.networksecurity.address_groups_iam_policies.projects_locations_address_groups_test_iam_permissions 
+@projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @addressGroupsId='{{ addressGroupsId }}' --required 
 @@json=

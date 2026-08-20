@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the TargetGrpcProxies for a project in the given scope.</td>
 </tr>
 <tr>
@@ -305,8 +305,8 @@ FROM google.compute.target_grpc_proxies
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -329,19 +329,19 @@ Creates a TargetGrpcProxy in the specified project in the given scope<br />using
 
 ```sql
 INSERT INTO google.compute.target_grpc_proxies (
-data__name,
-data__fingerprint,
-data__urlMap,
 data__description,
+data__fingerprint,
+data__name,
+data__urlMap,
 data__validateForProxyless,
 project,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ fingerprint }}',
-'{{ urlMap }}',
 '{{ description }}',
+'{{ fingerprint }}',
+'{{ name }}',
+'{{ urlMap }}',
 {{ validateForProxyless }},
 '{{ project }}',
 '{{ requestId }}'
@@ -384,16 +384,11 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the target_grpc_proxies resource.
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -404,17 +399,22 @@ zone
         request will fail with error 412 conditionNotMet. To see the
         latest fingerprint, make a get() request to retrieve the
         TargetGrpcProxy.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: urlMap
       value: "{{ urlMap }}"
       description: |
         URL to the UrlMap resource that defines the mapping from URL to the
         BackendService. The protocol field in the BackendService must be set to
         GRPC.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: validateForProxyless
       value: {{ validateForProxyless }}
       description: |
@@ -451,10 +451,10 @@ Patches the specified TargetGrpcProxy resource with the data included in<br />th
 ```sql
 UPDATE google.compute.target_grpc_proxies
 SET 
-data__name = '{{ name }}',
-data__fingerprint = '{{ fingerprint }}',
-data__urlMap = '{{ urlMap }}',
 data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__name = '{{ name }}',
+data__urlMap = '{{ urlMap }}',
 data__validateForProxyless = {{ validateForProxyless }}
 WHERE 
 project = '{{ project }}' --required

@@ -87,14 +87,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_kaj_policy_config"><CopyableCode code="get_kaj_policy_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td>Gets the KeyAccessJustificationsPolicyConfig for a given organization, folder, or project.</td>
 </tr>
 <tr>
     <td><a href="#update_kaj_policy_config"><CopyableCode code="update_kaj_policy_config" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the KeyAccessJustificationsPolicyConfig for a given organization, folder, or project.</td>
 </tr>
@@ -114,8 +114,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-organizationsId">
-    <td><CopyableCode code="organizationsId" /></td>
+<tr id="parameter-foldersId">
+    <td><CopyableCode code="foldersId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -145,7 +145,7 @@ name,
 defaultKeyAccessJustificationPolicy,
 defaultPolicyAvailable
 FROM google.cloudkms.kaj_policy_config
-WHERE organizationsId = '{{ organizationsId }}' -- required
+WHERE foldersId = '{{ foldersId }}' -- required
 ;
 ```
 </TabItem>
@@ -167,10 +167,10 @@ Updates the KeyAccessJustificationsPolicyConfig for a given organization, folder
 ```sql
 UPDATE google.cloudkms.kaj_policy_config
 SET 
-data__name = '{{ name }}',
-data__defaultKeyAccessJustificationPolicy = '{{ defaultKeyAccessJustificationPolicy }}'
+data__defaultKeyAccessJustificationPolicy = '{{ defaultKeyAccessJustificationPolicy }}',
+data__name = '{{ name }}'
 WHERE 
-organizationsId = '{{ organizationsId }}' --required
+foldersId = '{{ foldersId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,

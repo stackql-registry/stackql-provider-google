@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about the supported locations for this service.This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: Global locations: If name is empty, the method lists the public locations available to all projects. Project-specific locations: If name follows the format projects/&#123;project&#125;, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project.For gRPC and client library implementations, the resource name is passed as the name field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 <tr>
@@ -156,6 +156,20 @@ The following methods are available for this resource:
     <td>Looks up LLM Context for the specified resources.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_lookup_entry"><CopyableCode code="projects_locations_lookup_entry" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-entry"><code>entry</code></a>, <a href="#parameter-paths"><code>paths</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td>Looks up an entry by name using the permission on the source system.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_lookup_entry_links"><CopyableCode code="projects_locations_lookup_entry_links" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-entry"><code>entry</code></a>, <a href="#parameter-entryLinkTypes"><code>entryLinkTypes</code></a>, <a href="#parameter-entryMode"><code>entryMode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Looks up Entry Links referencing the specified Entry.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_modify_entry"><CopyableCode code="projects_locations_modify_entry" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -163,25 +177,11 @@ The following methods are available for this resource:
     <td>Modifies an entry using the permission on the source system.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_lookup_entry"><CopyableCode code="projects_locations_lookup_entry" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-entry"><code>entry</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-paths"><code>paths</code></a></td>
-    <td>Looks up an entry by name using the permission on the source system.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_search_entries"><CopyableCode code="projects_locations_search_entries" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-semanticSearch"><code>semanticSearch</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-scope"><code>scope</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-scope"><code>scope</code></a>, <a href="#parameter-semanticSearch"><code>semanticSearch</code></a></td>
     <td>Searches for Entries matching the given query and scope.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_lookup_entry_links"><CopyableCode code="projects_locations_lookup_entry_links" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-entryMode"><code>entryMode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-entry"><code>entry</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-entryLinkTypes"><code>entryLinkTypes</code></a></td>
-    <td>Looks up Entry Links referencing the specified Entry.</td>
 </tr>
 </tbody>
 </table>
@@ -322,9 +322,9 @@ metadata
 FROM google.dataplex.locations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND extraLocationTypes = '{{ extraLocationTypes }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -337,10 +337,10 @@ AND filter = '{{ filter }}'
     defaultValue="projects_locations_lookup_context"
     values={[
         { label: 'projects_locations_lookup_context', value: 'projects_locations_lookup_context' },
-        { label: 'projects_locations_modify_entry', value: 'projects_locations_modify_entry' },
         { label: 'projects_locations_lookup_entry', value: 'projects_locations_lookup_entry' },
-        { label: 'projects_locations_search_entries', value: 'projects_locations_search_entries' },
-        { label: 'projects_locations_lookup_entry_links', value: 'projects_locations_lookup_entry_links' }
+        { label: 'projects_locations_lookup_entry_links', value: 'projects_locations_lookup_entry_links' },
+        { label: 'projects_locations_modify_entry', value: 'projects_locations_modify_entry' },
+        { label: 'projects_locations_search_entries', value: 'projects_locations_search_entries' }
     ]}
 >
 <TabItem value="projects_locations_lookup_context">
@@ -353,26 +353,8 @@ EXEC google.dataplex.locations.projects_locations_lookup_context
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"resources": "{{ resources }}", 
-"options": "{{ options }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_modify_entry">
-
-Modifies an entry using the permission on the source system.
-
-```sql
-EXEC google.dataplex.locations.projects_locations_modify_entry 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"updateMask": "{{ updateMask }}", 
-"deleteMissingAspects": {{ deleteMissingAspects }}, 
-"entry": "{{ entry }}", 
-"aspectKeys": "{{ aspectKeys }}"
+"options": "{{ options }}", 
+"resources": "{{ resources }}"
 }'
 ;
 ```
@@ -387,25 +369,8 @@ EXEC google.dataplex.locations.projects_locations_lookup_entry
 @locationsId='{{ locationsId }}' --required, 
 @aspectTypes='{{ aspectTypes }}', 
 @entry='{{ entry }}', 
-@view='{{ view }}', 
-@paths='{{ paths }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_search_entries">
-
-Searches for Entries matching the given query and scope.
-
-```sql
-EXEC google.dataplex.locations.projects_locations_search_entries 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@query='{{ query }}', 
-@semanticSearch={{ semanticSearch }}, 
-@pageSize='{{ pageSize }}', 
-@orderBy='{{ orderBy }}', 
-@scope='{{ scope }}', 
-@pageToken='{{ pageToken }}'
+@paths='{{ paths }}', 
+@view='{{ view }}'
 ;
 ```
 </TabItem>
@@ -417,11 +382,46 @@ Looks up Entry Links referencing the specified Entry.
 EXEC google.dataplex.locations.projects_locations_lookup_entry_links 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@entry='{{ entry }}', 
+@entryLinkTypes='{{ entryLinkTypes }}', 
 @entryMode='{{ entryMode }}', 
 @pageSize='{{ pageSize }}', 
-@entry='{{ entry }}', 
+@pageToken='{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_modify_entry">
+
+Modifies an entry using the permission on the source system.
+
+```sql
+EXEC google.dataplex.locations.projects_locations_modify_entry 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"aspectKeys": "{{ aspectKeys }}", 
+"deleteMissingAspects": {{ deleteMissingAspects }}, 
+"entry": "{{ entry }}", 
+"updateMask": "{{ updateMask }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_search_entries">
+
+Searches for Entries matching the given query and scope.
+
+```sql
+EXEC google.dataplex.locations.projects_locations_search_entries 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@orderBy='{{ orderBy }}', 
+@pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@entryLinkTypes='{{ entryLinkTypes }}'
+@query='{{ query }}', 
+@scope='{{ scope }}', 
+@semanticSearch={{ semanticSearch }}
 ;
 ```
 </TabItem>

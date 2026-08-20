@@ -33,15 +33,15 @@ Creates, updates, deletes, gets or lists a <code>valued_resources</code> resourc
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_simulations_valued_resources_get"
+    defaultValue="organizations_simulations_attack_exposure_results_valued_resources_list"
     values={[
-        { label: 'organizations_simulations_valued_resources_get', value: 'organizations_simulations_valued_resources_get' },
         { label: 'organizations_simulations_attack_exposure_results_valued_resources_list', value: 'organizations_simulations_attack_exposure_results_valued_resources_list' },
+        { label: 'organizations_simulations_valued_resources_get', value: 'organizations_simulations_valued_resources_get' },
         { label: 'organizations_simulations_valued_resources_list', value: 'organizations_simulations_valued_resources_list' },
         { label: 'organizations_valued_resources_list', value: 'organizations_valued_resources_list' }
     ]}
 >
-<TabItem value="organizations_simulations_valued_resources_get">
+<TabItem value="organizations_simulations_attack_exposure_results_valued_resources_list">
 
 <table>
 <thead>
@@ -90,7 +90,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_simulations_attack_exposure_results_valued_resources_list">
+<TabItem value="organizations_simulations_valued_resources_get">
 
 <table>
 <thead>
@@ -255,6 +255,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#organizations_simulations_attack_exposure_results_valued_resources_list"><CopyableCode code="organizations_simulations_attack_exposure_results_valued_resources_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-attackExposureResultsId"><code>attackExposureResultsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_simulations_valued_resources_get"><CopyableCode code="organizations_simulations_valued_resources_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-valuedResourcesId"><code>valuedResourcesId</code></a></td>
@@ -262,24 +269,17 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#organizations_simulations_attack_exposure_results_valued_resources_list"><CopyableCode code="organizations_simulations_attack_exposure_results_valued_resources_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-attackExposureResultsId"><code>attackExposureResultsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td></td>
-</tr>
-<tr>
     <td><a href="#organizations_simulations_valued_resources_list"><CopyableCode code="organizations_simulations_valued_resources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_valued_resources_list"><CopyableCode code="organizations_valued_resources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 </tbody>
@@ -344,14 +344,38 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_simulations_valued_resources_get"
+    defaultValue="organizations_simulations_attack_exposure_results_valued_resources_list"
     values={[
-        { label: 'organizations_simulations_valued_resources_get', value: 'organizations_simulations_valued_resources_get' },
         { label: 'organizations_simulations_attack_exposure_results_valued_resources_list', value: 'organizations_simulations_attack_exposure_results_valued_resources_list' },
+        { label: 'organizations_simulations_valued_resources_get', value: 'organizations_simulations_valued_resources_get' },
         { label: 'organizations_simulations_valued_resources_list', value: 'organizations_simulations_valued_resources_list' },
         { label: 'organizations_valued_resources_list', value: 'organizations_valued_resources_list' }
     ]}
 >
+<TabItem value="organizations_simulations_attack_exposure_results_valued_resources_list">
+
+Successful response
+
+```sql
+SELECT
+name,
+displayName,
+exposedScore,
+resource,
+resourceType,
+resourceValue,
+resourceValueConfigsUsed
+FROM google.securitycenter.valued_resources
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND simulationsId = '{{ simulationsId }}' -- required
+AND attackExposureResultsId = '{{ attackExposureResultsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_simulations_valued_resources_get">
 
 Successful response
@@ -372,30 +396,6 @@ AND valuedResourcesId = '{{ valuedResourcesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_simulations_attack_exposure_results_valued_resources_list">
-
-Successful response
-
-```sql
-SELECT
-name,
-displayName,
-exposedScore,
-resource,
-resourceType,
-resourceValue,
-resourceValueConfigsUsed
-FROM google.securitycenter.valued_resources
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND simulationsId = '{{ simulationsId }}' -- required
-AND attackExposureResultsId = '{{ attackExposureResultsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_simulations_valued_resources_list">
 
 Successful response
@@ -413,8 +413,8 @@ FROM google.securitycenter.valued_resources
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -435,8 +435,8 @@ resourceValueConfigsUsed
 FROM google.securitycenter.valued_resources
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```

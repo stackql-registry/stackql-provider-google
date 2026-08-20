@@ -194,17 +194,17 @@ Creates a Reference in the specified environment.
 
 ```sql
 INSERT INTO google.apigee.references (
+data__description,
 data__name,
 data__refers,
-data__description,
 data__resourceType,
 organizationsId,
 environmentsId
 )
 SELECT 
+'{{ description }}',
 '{{ name }}',
 '{{ refers }}',
-'{{ description }}',
 '{{ resourceType }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
@@ -227,6 +227,10 @@ resourceType
     - name: environmentsId
       value: "{{ environmentsId }}"
       description: Required parameter for the references resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A human-readable description of this reference.
     - name: name
       value: "{{ name }}"
       description: |
@@ -235,10 +239,6 @@ resourceType
       value: "{{ refers }}"
       description: |
         Required. The id of the resource to which this reference refers. Must be the id of a resource that exists in the parent environment and is of the given resource_type.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. A human-readable description of this reference.
     - name: resourceType
       value: "{{ resourceType }}"
       description: |
@@ -264,9 +264,9 @@ Updates an existing Reference. Note that this operation has PUT semantics; it wi
 ```sql
 REPLACE google.apigee.references
 SET 
+data__description = '{{ description }}',
 data__name = '{{ name }}',
 data__refers = '{{ refers }}',
-data__description = '{{ description }}',
 data__resourceType = '{{ resourceType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

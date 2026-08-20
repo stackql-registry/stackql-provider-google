@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_agents_generators_list"><CopyableCode code="projects_locations_agents_generators_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -169,7 +169,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_agents_generators_patch"><CopyableCode code="projects_locations_agents_generators_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-generatorsId"><code>generatorsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -289,9 +289,9 @@ FROM google.dialogflow.generators
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND languageCode = '{{ languageCode }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -313,24 +313,24 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.generators (
+data__displayName,
+data__llmModelSettings,
 data__modelParameter,
 data__name,
-data__promptText,
-data__displayName,
 data__placeholders,
-data__llmModelSettings,
+data__promptText,
 projectsId,
 locationsId,
 agentsId,
 languageCode
 )
 SELECT 
+'{{ displayName }}',
+'{{ llmModelSettings }}',
 '{{ modelParameter }}',
 '{{ name }}',
-'{{ promptText }}',
-'{{ displayName }}',
 '{{ placeholders }}',
-'{{ llmModelSettings }}',
+'{{ promptText }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -359,27 +359,27 @@ promptText
     - name: agentsId
       value: "{{ agentsId }}"
       description: Required parameter for the generators resource.
-    - name: modelParameter
-      value:
-        maxDecodeSteps: {{ maxDecodeSteps }}
-        temperature: {{ temperature }}
-        topP: {{ topP }}
-        topK: {{ topK }}
-    - name: name
-      value: "{{ name }}"
-    - name: promptText
-      value:
-        text: "{{ text }}"
     - name: displayName
       value: "{{ displayName }}"
-    - name: placeholders
-      value:
-        - id: "{{ id }}"
-          name: "{{ name }}"
     - name: llmModelSettings
       value:
         model: "{{ model }}"
         promptText: "{{ promptText }}"
+    - name: modelParameter
+      value:
+        maxDecodeSteps: {{ maxDecodeSteps }}
+        temperature: {{ temperature }}
+        topK: {{ topK }}
+        topP: {{ topP }}
+    - name: name
+      value: "{{ name }}"
+    - name: placeholders
+      value:
+        - id: "{{ id }}"
+          name: "{{ name }}"
+    - name: promptText
+      value:
+        text: "{{ text }}"
     - name: languageCode
       value: "{{ languageCode }}"
 `}</CodeBlock>
@@ -403,19 +403,19 @@ No description available.
 ```sql
 UPDATE google.dialogflow.generators
 SET 
+data__displayName = '{{ displayName }}',
+data__llmModelSettings = '{{ llmModelSettings }}',
 data__modelParameter = '{{ modelParameter }}',
 data__name = '{{ name }}',
-data__promptText = '{{ promptText }}',
-data__displayName = '{{ displayName }}',
 data__placeholders = '{{ placeholders }}',
-data__llmModelSettings = '{{ llmModelSettings }}'
+data__promptText = '{{ promptText }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND agentsId = '{{ agentsId }}' --required
 AND generatorsId = '{{ generatorsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND languageCode = '{{ languageCode}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 displayName,

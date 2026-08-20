@@ -67,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceContext" /></td>
     <td><code>object</code></td>
-    <td>Describes a running service that sends errors. Its version changes over time and multiple versions can run in parallel. (id: ServiceContext)</td>
+    <td>The `ServiceContext` for which this error was reported. (id: ServiceContext)</td>
 </tr>
 </tbody>
 </table>
@@ -93,7 +93,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-timeRange.period"><code>timeRange.period</code></a>, <a href="#parameter-serviceFilter.version"><code>serviceFilter.version</code></a>, <a href="#parameter-serviceFilter.service"><code>serviceFilter.service</code></a>, <a href="#parameter-serviceFilter.resourceType"><code>serviceFilter.resourceType</code></a>, <a href="#parameter-groupId"><code>groupId</code></a></td>
+    <td><a href="#parameter-groupId"><code>groupId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-serviceFilter.resourceType"><code>serviceFilter.resourceType</code></a>, <a href="#parameter-serviceFilter.service"><code>serviceFilter.service</code></a>, <a href="#parameter-serviceFilter.version"><code>serviceFilter.version</code></a>, <a href="#parameter-timeRange.period"><code>timeRange.period</code></a></td>
     <td>Lists the specified events.</td>
 </tr>
 <tr>
@@ -195,13 +195,13 @@ serviceContext
 FROM google.clouderrorreporting.events
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND groupId = '{{ groupId }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND timeRange.period = '{{ timeRange.period }}'
-AND serviceFilter.version = '{{ serviceFilter.version }}'
-AND serviceFilter.service = '{{ serviceFilter.service }}'
 AND serviceFilter.resourceType = '{{ serviceFilter.resourceType }}'
-AND groupId = '{{ groupId }}'
+AND serviceFilter.service = '{{ serviceFilter.service }}'
+AND serviceFilter.version = '{{ serviceFilter.version }}'
+AND timeRange.period = '{{ timeRange.period }}'
 ;
 ```
 </TabItem>
@@ -247,9 +247,9 @@ EXEC google.clouderrorreporting.events.report
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
+"context": "{{ context }}", 
 "eventTime": "{{ eventTime }}", 
 "message": "{{ message }}", 
-"context": "{{ context }}", 
 "serviceContext": "{{ serviceContext }}"
 }'
 ;

@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#retrieve"><CopyableCode code="retrieve" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authProvidersId"><code>authProvidersId</code></a></td>
-    <td></td>
-    <td>Retrieves authorization credentials for an authprovider, or indicates what action needs to be taken to obtain credentials. If the `token` field in the response is populated, credential retrieval was successful. If one of the fields in the `status` oneof is populated, further action is required to obtain credentials, such as redirecting the user for consent. View comments on `RetrieveCredentialsResponse` for more information.</td>
-</tr>
-<tr>
     <td><a href="#finalize"><CopyableCode code="finalize" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authProvidersId"><code>authProvidersId</code></a></td>
     <td></td>
     <td>Finalizes the credentials after a successful consent flow.</td>
+</tr>
+<tr>
+    <td><a href="#retrieve"><CopyableCode code="retrieve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authProvidersId"><code>authProvidersId</code></a></td>
+    <td></td>
+    <td>Retrieves authorization credentials for an auth provider, or indicates what action needs to be taken to obtain credentials. If the `token` field in the response is populated, credential retrieval was successful. If one of the fields in the `result` oneof is populated, further action is required to obtain credentials, such as redirecting the user for consent. View comments on `RetrieveCredentialsResponse` for more information.</td>
 </tr>
 </tbody>
 </table>
@@ -101,31 +101,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="retrieve"
+    defaultValue="finalize"
     values={[
-        { label: 'retrieve', value: 'retrieve' },
-        { label: 'finalize', value: 'finalize' }
+        { label: 'finalize', value: 'finalize' },
+        { label: 'retrieve', value: 'retrieve' }
     ]}
 >
-<TabItem value="retrieve">
-
-Retrieves authorization credentials for an authprovider, or indicates what action needs to be taken to obtain credentials. If the `token` field in the response is populated, credential retrieval was successful. If one of the fields in the `status` oneof is populated, further action is required to obtain credentials, such as redirecting the user for consent. View comments on `RetrieveCredentialsResponse` for more information.
-
-```sql
-EXEC google.agentidentitycredentials.credentials.retrieve 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@authProvidersId='{{ authProvidersId }}' --required 
-@@json=
-'{
-"scopes": "{{ scopes }}", 
-"userId": "{{ userId }}", 
-"continueUri": "{{ continueUri }}", 
-"forceRefreshToken": "{{ forceRefreshToken }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="finalize">
 
 Finalizes the credentials after a successful consent flow.
@@ -137,8 +118,27 @@ EXEC google.agentidentitycredentials.credentials.finalize
 @authProvidersId='{{ authProvidersId }}' --required 
 @@json=
 '{
-"userIdValidationState": "{{ userIdValidationState }}", 
 "consentNonce": "{{ consentNonce }}", 
+"userId": "{{ userId }}", 
+"userIdValidationState": "{{ userIdValidationState }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="retrieve">
+
+Retrieves authorization credentials for an auth provider, or indicates what action needs to be taken to obtain credentials. If the `token` field in the response is populated, credential retrieval was successful. If one of the fields in the `result` oneof is populated, further action is required to obtain credentials, such as redirecting the user for consent. View comments on `RetrieveCredentialsResponse` for more information.
+
+```sql
+EXEC google.agentidentitycredentials.credentials.retrieve 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@authProvidersId='{{ authProvidersId }}' --required 
+@@json=
+'{
+"continueUri": "{{ continueUri }}", 
+"forceRefreshToken": "{{ forceRefreshToken }}", 
+"scopes": "{{ scopes }}", 
 "userId": "{{ userId }}"
 }'
 ;

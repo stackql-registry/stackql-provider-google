@@ -7,10 +7,11 @@ import {
 } from '../util/filesystem.js';
 import { 
     getCurrentDate,
-    populateSecuritySchemes, 
-    replaceSchemaRefs, 
-    processParameters, 
+    populateSecuritySchemes,
+    replaceSchemaRefs,
+    processParameters,
     populatePaths,
+    addMediaMethods,
     generateStackQLResources,
 } from '../helper/functions.js';
 import {
@@ -96,7 +97,7 @@ async function generateProviderIndex(provider, servicesDir, providerDir, configO
     // Write the provider YAML to the provider.yaml file
     const outputFilePath = path.join(providerDir, 'provider.yaml');
     debug ? logger.debug(`writing file to: ${outputFilePath}...`) : null;
-    await writeFile(outputFilePath, yaml.dump(providerYaml), debug);
+    await writeFile(outputFilePath, yaml.dump(providerYaml, { sortKeys: true }), debug);
     debug ? logger.debug(`provider index generated at: ${outputFilePath}`) : null;
 }
 
@@ -155,6 +156,11 @@ async function processService(provider, serviceName, serviceData, serviceDir, de
         debug ? logger.debug('populating paths..') : null;
         openApiDoc['paths'] = populatePaths({}, serviceData.resources, paramRefList, debug);
 
+        // synthesise media (object content) download/upload methods where
+        // allowlisted (see config/media.js - storage only)
+        debug ? logger.debug('adding media methods..') : null;
+        openApiDoc = addMediaMethods(openApiDoc, serviceData, serviceName, debug);
+
         // add stackql resources
         debug ? logger.debug('adding stackQL resources...') : null;
         openApiDoc = generateStackQLResources(provider, openApiDoc, serviceName, debug);
@@ -169,8 +175,13 @@ async function processService(provider, serviceName, serviceData, serviceDir, de
             delete openApiDoc['paths'][path];
         });
 
-        // write out openapi doc as yaml
-        const openApiDocYaml = yaml.dump(openApiDoc);
+        // write out openapi doc as yaml - sortKeys makes output reproducible:
+        // discovery docs are served with nondeterministic JSON key order, so
+        // without sorting every regeneration reorders schemas/paths and
+        // registry publish diffs are unreviewable. Order-significant data
+        // (sqlVerbs routing precedence, parameter lists) lives in arrays,
+        // which sortKeys does not touch
+        const openApiDocYaml = yaml.dump(openApiDoc, { sortKeys: true });
         await writeFile(path.join(serviceDir, `${serviceName}.yaml`), openApiDocYaml, debug);
 
         return

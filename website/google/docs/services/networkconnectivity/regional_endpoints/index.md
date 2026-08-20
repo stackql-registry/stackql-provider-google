@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists RegionalEndpoints in a given project and location.</td>
 </tr>
 <tr>
@@ -351,10 +351,10 @@ updateTime
 FROM google.networkconnectivity.regional_endpoints
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -376,26 +376,26 @@ Creates a new RegionalEndpoint in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.regional_endpoints (
-data__targetGoogleApi,
-data__subnetwork,
-data__description,
-data__network,
-data__labels,
 data__accessType,
 data__address,
+data__description,
+data__labels,
+data__network,
+data__subnetwork,
+data__targetGoogleApi,
 projectsId,
 locationsId,
 regionalEndpointId,
 requestId
 )
 SELECT 
-'{{ targetGoogleApi }}',
-'{{ subnetwork }}',
-'{{ description }}',
-'{{ network }}',
-'{{ labels }}',
 '{{ accessType }}',
 '{{ address }}',
+'{{ description }}',
+'{{ labels }}',
+'{{ network }}',
+'{{ subnetwork }}',
+'{{ targetGoogleApi }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ regionalEndpointId }}',
@@ -420,26 +420,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the regional_endpoints resource.
-    - name: targetGoogleApi
-      value: "{{ targetGoogleApi }}"
-      description: |
-        Required. The service endpoint this private regional endpoint connects to. Format: \`{apiname}.{region}.p.rep.googleapis.com\` Example: "cloudkms.us-central1.p.rep.googleapis.com".
-    - name: subnetwork
-      value: "{{ subnetwork }}"
-      description: |
-        Optional. The name of the subnetwork from which the IP address will be allocated. Format: \`projects/{project}/regions/{region}/subnetworks/{subnetwork}\`
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. A description of this resource.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Optional. The name of the VPC network for this private regional endpoint. Format: \`projects/{project}/global/networks/{network}\`
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        User-defined labels.
     - name: accessType
       value: "{{ accessType }}"
       description: |
@@ -449,6 +429,26 @@ response
       value: "{{ address }}"
       description: |
         Optional. The IP Address of the Regional Endpoint. When no address is provided, an IP from the subnetwork is allocated. Use one of the following formats: * IPv4 address as in \`10.0.0.1\` * Address resource URI as in \`projects/{project}/regions/{region}/addresses/{address_name}\` for an IPv4 or IPv6 address.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of this resource.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Optional. The name of the VPC network for this private regional endpoint. Format: \`projects/{project}/global/networks/{network}\`
+    - name: subnetwork
+      value: "{{ subnetwork }}"
+      description: |
+        Optional. The name of the subnetwork from which the IP address will be allocated. Format: \`projects/{project}/regions/{region}/subnetworks/{subnetwork}\`
+    - name: targetGoogleApi
+      value: "{{ targetGoogleApi }}"
+      description: |
+        Required. The service endpoint this private regional endpoint connects to. Format: \`{apiname}.{region}.p.rep.googleapis.com\` Example: "cloudkms.us-central1.p.rep.googleapis.com".
     - name: regionalEndpointId
       value: "{{ regionalEndpointId }}"
     - name: requestId

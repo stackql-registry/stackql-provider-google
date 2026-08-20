@@ -124,6 +124,66 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Identifier. In the following format: * `organizations/&#123;organization_id&#125;/locations/global/policyOrchestrators/&#123;orchestrator_id&#125;` * `folders/&#123;folder_id&#125;/locations/global/policyOrchestrators/&#123;orchestrator_id&#125;` * `projects/&#123;project_id_or_number&#125;/locations/global/policyOrchestrators/&#123;orchestrator_id&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="action" /></td>
+    <td><code>string</code></td>
+    <td>Required. Action to be done by the orchestrator in `projects/&#123;project_id&#125;/zones/&#123;zone_id&#125;` locations defined by the `orchestration_scope`. Allowed values: - `UPSERT` - Orchestrator will create or update target resources. - `DELETE` - Orchestrator will delete target resources, if they exist</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp when the policy orchestrator resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Freeform text describing the purpose of the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Output only. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs</td>
+</tr>
+<tr>
+    <td><CopyableCode code="orchestratedResource" /></td>
+    <td><code>object</code></td>
+    <td>Required. Resource to be orchestrated by the policy orchestrator. (id: GoogleCloudOsconfigV2__OrchestratedResource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="orchestrationScope" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Defines scope for the orchestration, in context of the enclosing PolicyOrchestrator resource. Scope is expanded into a list of pairs, in which the rollout action will take place. Expansion starts with a Folder resource parenting the PolicyOrchestrator resource: - All the descendant projects are listed. - List of project is cross joined with a list of all available zones. - Resulting list of pairs is filtered according to the selectors. (id: GoogleCloudOsconfigV2__OrchestrationScope)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="orchestrationState" /></td>
+    <td><code>object</code></td>
+    <td>Output only. State of the orchestration. (id: GoogleCloudOsconfigV2_PolicyOrchestrator_OrchestrationState)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="reconciling" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Set to true, if there are ongoing changes being applied by the orchestrator.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Optional. State of the orchestrator. Can be updated to change orchestrator behaviour. Allowed values: - `ACTIVE` - orchestrator is actively looking for actions to be taken. - `STOPPED` - orchestrator won't make any changes. Note: There might be more states added in the future. We use string here instead of an enum, to avoid the need of propagating new states to all the client code.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp when the policy orchestrator resource was last modified.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -162,7 +222,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-policyOrchestratorId"><code>policyOrchestratorId</code></a></td>
+    <td><a href="#parameter-policyOrchestratorId"><code>policyOrchestratorId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new policy orchestrator under the given organizations resource. `name` field of the given orchestrator are ignored and instead replaced by a product of `parent` and `policy_orchestrator_id`. Orchestrator state field might be only set to `ACTIVE`, `STOPPED` or omitted (in which case, the created resource will be in `ACTIVE` state anyway).</td>
 </tr>
 <tr>
@@ -176,7 +236,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-policyOrchestratorsId"><code>policyOrchestratorsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes an existing policy orchestrator resource, parented by an organization.</td>
 </tr>
 </tbody>
@@ -287,7 +347,18 @@ Lists the policy orchestrators under the given parent organization resource.
 
 ```sql
 SELECT
-*
+name,
+action,
+createTime,
+description,
+etag,
+labels,
+orchestratedResource,
+orchestrationScope,
+orchestrationState,
+reconciling,
+state,
+updateTime
 FROM google.osconfig.policy_orchestrators
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND filter = '{{ filter }}'
@@ -317,26 +388,26 @@ Creates a new policy orchestrator under the given organizations resource. `name`
 INSERT INTO google.osconfig.policy_orchestrators (
 data__action,
 data__description,
-data__orchestratedResource,
 data__labels,
 data__name,
-data__state,
+data__orchestratedResource,
 data__orchestrationScope,
+data__state,
 organizationsId,
-requestId,
-policyOrchestratorId
+policyOrchestratorId,
+requestId
 )
 SELECT 
 '{{ action }}',
 '{{ description }}',
-'{{ orchestratedResource }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ state }}',
+'{{ orchestratedResource }}',
 '{{ orchestrationScope }}',
+'{{ state }}',
 '{{ organizationsId }}',
-'{{ requestId }}',
-'{{ policyOrchestratorId }}'
+'{{ policyOrchestratorId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -362,42 +433,6 @@ response
       value: "{{ description }}"
       description: |
         Optional. Freeform text describing the purpose of the resource.
-    - name: orchestratedResource
-      description: |
-        Required. Resource to be orchestrated by the policy orchestrator.
-      value:
-        osPolicyAssignmentV1Payload:
-          osPolicies:
-            - description: "{{ description }}"
-              allowNoResourceGroupMatch: {{ allowNoResourceGroupMatch }}
-              id: "{{ id }}"
-              mode: "{{ mode }}"
-              resourceGroups: "{{ resourceGroups }}"
-          deleted: {{ deleted }}
-          uid: "{{ uid }}"
-          instanceFilter:
-            inclusionLabels:
-              - labels: "{{ labels }}"
-            all: {{ all }}
-            exclusionLabels:
-              - labels: "{{ labels }}"
-            inventories:
-              - osShortName: "{{ osShortName }}"
-                osVersion: "{{ osVersion }}"
-          revisionId: "{{ revisionId }}"
-          name: "{{ name }}"
-          rolloutState: "{{ rolloutState }}"
-          rollout:
-            disruptionBudget:
-              percent: {{ percent }}
-              fixed: {{ fixed }}
-            minWaitDuration: "{{ minWaitDuration }}"
-          revisionCreateTime: "{{ revisionCreateTime }}"
-          etag: "{{ etag }}"
-          reconciling: {{ reconciling }}
-          baseline: {{ baseline }}
-          description: "{{ description }}"
-        id: "{{ id }}"
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -406,27 +441,63 @@ response
       value: "{{ name }}"
       description: |
         Immutable. Identifier. In the following format: * \`organizations/{organization_id}/locations/global/policyOrchestrators/{orchestrator_id}\` * \`folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}\` * \`projects/{project_id_or_number}/locations/global/policyOrchestrators/{orchestrator_id}\`
-    - name: state
-      value: "{{ state }}"
+    - name: orchestratedResource
       description: |
-        Optional. State of the orchestrator. Can be updated to change orchestrator behaviour. Allowed values: - \`ACTIVE\` - orchestrator is actively looking for actions to be taken. - \`STOPPED\` - orchestrator won't make any changes. Note: There might be more states added in the future. We use string here instead of an enum, to avoid the need of propagating new states to all the client code.
+        Required. Resource to be orchestrated by the policy orchestrator.
+      value:
+        id: "{{ id }}"
+        osPolicyAssignmentV1Payload:
+          baseline: {{ baseline }}
+          deleted: {{ deleted }}
+          description: "{{ description }}"
+          etag: "{{ etag }}"
+          instanceFilter:
+            all: {{ all }}
+            exclusionLabels:
+              - labels: "{{ labels }}"
+            inclusionLabels:
+              - labels: "{{ labels }}"
+            inventories:
+              - osShortName: "{{ osShortName }}"
+                osVersion: "{{ osVersion }}"
+          name: "{{ name }}"
+          osPolicies:
+            - allowNoResourceGroupMatch: {{ allowNoResourceGroupMatch }}
+              description: "{{ description }}"
+              id: "{{ id }}"
+              mode: "{{ mode }}"
+              resourceGroups: "{{ resourceGroups }}"
+          reconciling: {{ reconciling }}
+          revisionCreateTime: "{{ revisionCreateTime }}"
+          revisionId: "{{ revisionId }}"
+          rollout:
+            disruptionBudget:
+              fixed: {{ fixed }}
+              percent: {{ percent }}
+            minWaitDuration: "{{ minWaitDuration }}"
+          rolloutState: "{{ rolloutState }}"
+          uid: "{{ uid }}"
     - name: orchestrationScope
       description: |
         Optional. Defines scope for the orchestration, in context of the enclosing PolicyOrchestrator resource. Scope is expanded into a list of pairs, in which the rollout action will take place. Expansion starts with a Folder resource parenting the PolicyOrchestrator resource: - All the descendant projects are listed. - List of project is cross joined with a list of all available zones. - Resulting list of pairs is filtered according to the selectors.
       value:
         selectors:
-          - resourceHierarchySelector:
-              includedProjects:
-                - "{{ includedProjects }}"
-              includedFolders:
-                - "{{ includedFolders }}"
-            locationSelector:
+          - locationSelector:
               includedLocations:
                 - "{{ includedLocations }}"
-    - name: requestId
-      value: "{{ requestId }}"
+            resourceHierarchySelector:
+              includedFolders:
+                - "{{ includedFolders }}"
+              includedProjects:
+                - "{{ includedProjects }}"
+    - name: state
+      value: "{{ state }}"
+      description: |
+        Optional. State of the orchestrator. Can be updated to change orchestrator behaviour. Allowed values: - \`ACTIVE\` - orchestrator is actively looking for actions to be taken. - \`STOPPED\` - orchestrator won't make any changes. Note: There might be more states added in the future. We use string here instead of an enum, to avoid the need of propagating new states to all the client code.
     - name: policyOrchestratorId
       value: "{{ policyOrchestratorId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -450,11 +521,11 @@ UPDATE google.osconfig.policy_orchestrators
 SET 
 data__action = '{{ action }}',
 data__description = '{{ description }}',
-data__orchestratedResource = '{{ orchestratedResource }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__state = '{{ state }}',
-data__orchestrationScope = '{{ orchestrationScope }}'
+data__orchestratedResource = '{{ orchestratedResource }}',
+data__orchestrationScope = '{{ orchestrationScope }}',
+data__state = '{{ state }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND policyOrchestratorsId = '{{ policyOrchestratorsId }}' --required
@@ -486,8 +557,8 @@ Deletes an existing policy orchestrator resource, parented by an organization.
 DELETE FROM google.osconfig.policy_orchestrators
 WHERE organizationsId = '{{ organizationsId }}' --required
 AND policyOrchestratorsId = '{{ policyOrchestratorsId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

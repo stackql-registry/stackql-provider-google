@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_user_repositories"><CopyableCode code="fetch_user_repositories" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-accountConnectorsId"><code>accountConnectorsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-repository"><code>repository</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-repository"><code>repository</code></a></td>
     <td>FetchUserRepositories returns a list of UserRepos that are available for an account connector resource.</td>
 </tr>
 </tbody>
@@ -156,8 +156,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND accountConnectorsId = '{{ accountConnectorsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND repository = '{{ repository }}'
 AND pageToken = '{{ pageToken }}'
+AND repository = '{{ repository }}'
 ;
 ```
 </TabItem>

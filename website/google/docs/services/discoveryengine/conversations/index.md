@@ -37,9 +37,9 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_collections_data_stores_conversations_get', value: 'projects_locations_collections_data_stores_conversations_get' },
         { label: 'projects_locations_collections_engines_conversations_get', value: 'projects_locations_collections_engines_conversations_get' },
-        { label: 'projects_locations_data_stores_conversations_get', value: 'projects_locations_data_stores_conversations_get' },
         { label: 'projects_locations_collections_data_stores_conversations_list', value: 'projects_locations_collections_data_stores_conversations_list' },
         { label: 'projects_locations_collections_engines_conversations_list', value: 'projects_locations_collections_engines_conversations_list' },
+        { label: 'projects_locations_data_stores_conversations_get', value: 'projects_locations_data_stores_conversations_get' },
         { label: 'projects_locations_data_stores_conversations_list', value: 'projects_locations_data_stores_conversations_list' }
     ]}
 >
@@ -131,50 +131,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_data_stores_conversations_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Fully qualified name `projects/&#123;project&#125;/locations/global/collections/&#123;collection&#125;/dataStore/*/conversations/*` or `projects/&#123;project&#125;/locations/global/collections/&#123;collection&#125;/engines/*/conversations/*`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="endTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time the conversation finished.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="messages" /></td>
-    <td><code>array</code></td>
-    <td>Conversation messages.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="startTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time the conversation started.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>The state of the Conversation. (STATE_UNSPECIFIED, IN_PROGRESS, COMPLETED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="userPseudoId" /></td>
-    <td><code>string</code></td>
-    <td>A unique identifier for tracking users.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_conversations_list">
 
 <table>
@@ -220,6 +176,50 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_locations_collections_engines_conversations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Fully qualified name `projects/&#123;project&#125;/locations/global/collections/&#123;collection&#125;/dataStore/*/conversations/*` or `projects/&#123;project&#125;/locations/global/collections/&#123;collection&#125;/engines/*/conversations/*`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time the conversation finished.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="messages" /></td>
+    <td><code>array</code></td>
+    <td>Conversation messages.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="startTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time the conversation started.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>The state of the Conversation. (STATE_UNSPECIFIED, IN_PROGRESS, COMPLETED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="userPseudoId" /></td>
+    <td><code>string</code></td>
+    <td>A unique identifier for tracking users.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_data_stores_conversations_get">
 
 <table>
 <thead>
@@ -339,6 +339,20 @@ The following methods are available for this resource:
     <td>Gets a Conversation.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_collections_data_stores_conversations_list"><CopyableCode code="projects_locations_collections_data_stores_conversations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all Conversations by their parent DataStore.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_engines_conversations_list"><CopyableCode code="projects_locations_collections_engines_conversations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all Conversations by their parent DataStore.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_data_stores_conversations_get"><CopyableCode code="projects_locations_data_stores_conversations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
@@ -346,24 +360,10 @@ The following methods are available for this resource:
     <td>Gets a Conversation.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_conversations_list"><CopyableCode code="projects_locations_collections_data_stores_conversations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists all Conversations by their parent DataStore.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_engines_conversations_list"><CopyableCode code="projects_locations_collections_engines_conversations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists all Conversations by their parent DataStore.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_stores_conversations_list"><CopyableCode code="projects_locations_data_stores_conversations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all Conversations by their parent DataStore.</td>
 </tr>
 <tr>
@@ -430,13 +430,6 @@ The following methods are available for this resource:
     <td>Deletes a Conversation. If the Conversation to delete does not exist, a NOT_FOUND error is returned.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_conversations_converse"><CopyableCode code="projects_locations_data_stores_conversations_converse" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
-    <td></td>
-    <td>Converses a conversation.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_collections_data_stores_conversations_converse"><CopyableCode code="projects_locations_collections_data_stores_conversations_converse" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
@@ -447,6 +440,13 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_engines_conversations_converse"><CopyableCode code="projects_locations_collections_engines_conversations_converse" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td></td>
+    <td>Converses a conversation.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_conversations_converse"><CopyableCode code="projects_locations_data_stores_conversations_converse" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
     <td></td>
     <td>Converses a conversation.</td>
 </tr>
@@ -531,9 +531,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_collections_data_stores_conversations_get', value: 'projects_locations_collections_data_stores_conversations_get' },
         { label: 'projects_locations_collections_engines_conversations_get', value: 'projects_locations_collections_engines_conversations_get' },
-        { label: 'projects_locations_data_stores_conversations_get', value: 'projects_locations_data_stores_conversations_get' },
         { label: 'projects_locations_collections_data_stores_conversations_list', value: 'projects_locations_collections_data_stores_conversations_list' },
         { label: 'projects_locations_collections_engines_conversations_list', value: 'projects_locations_collections_engines_conversations_list' },
+        { label: 'projects_locations_data_stores_conversations_get', value: 'projects_locations_data_stores_conversations_get' },
         { label: 'projects_locations_data_stores_conversations_list', value: 'projects_locations_data_stores_conversations_list' }
     ]}
 >
@@ -579,26 +579,6 @@ AND conversationsId = '{{ conversationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_stores_conversations_get">
-
-Gets a Conversation.
-
-```sql
-SELECT
-name,
-endTime,
-messages,
-startTime,
-state,
-userPseudoId
-FROM google.discoveryengine.conversations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND conversationsId = '{{ conversationsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_conversations_list">
 
 Lists all Conversations by their parent DataStore.
@@ -617,9 +597,9 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -641,9 +621,29 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND enginesId = '{{ enginesId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_conversations_get">
+
+Gets a Conversation.
+
+```sql
+SELECT
+name,
+endTime,
+messages,
+startTime,
+state,
+userPseudoId
+FROM google.discoveryengine.conversations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND conversationsId = '{{ conversationsId }}' -- required
 ;
 ```
 </TabItem>
@@ -663,9 +663,9 @@ FROM google.discoveryengine.conversations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -690,9 +690,9 @@ Creates a Conversation. If the Conversation to create already exists, an ALREADY
 
 ```sql
 INSERT INTO google.discoveryengine.conversations (
+data__messages,
 data__name,
 data__state,
-data__messages,
 data__userPseudoId,
 projectsId,
 locationsId,
@@ -700,9 +700,9 @@ collectionsId,
 dataStoresId
 )
 SELECT 
+'{{ messages }}',
 '{{ name }}',
 '{{ state }}',
-'{{ messages }}',
 '{{ userPseudoId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -724,9 +724,9 @@ Creates a Conversation. If the Conversation to create already exists, an ALREADY
 
 ```sql
 INSERT INTO google.discoveryengine.conversations (
+data__messages,
 data__name,
 data__state,
-data__messages,
 data__userPseudoId,
 projectsId,
 locationsId,
@@ -734,9 +734,9 @@ collectionsId,
 enginesId
 )
 SELECT 
+'{{ messages }}',
 '{{ name }}',
 '{{ state }}',
-'{{ messages }}',
 '{{ userPseudoId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -758,18 +758,18 @@ Creates a Conversation. If the Conversation to create already exists, an ALREADY
 
 ```sql
 INSERT INTO google.discoveryengine.conversations (
+data__messages,
 data__name,
 data__state,
-data__messages,
 data__userPseudoId,
 projectsId,
 locationsId,
 dataStoresId
 )
 SELECT 
+'{{ messages }}',
 '{{ name }}',
 '{{ state }}',
-'{{ messages }}',
 '{{ userPseudoId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -804,6 +804,36 @@ userPseudoId
     - name: enginesId
       value: "{{ enginesId }}"
       description: Required parameter for the conversations resource.
+    - name: messages
+      description: |
+        Conversation messages.
+      value:
+        - createTime: "{{ createTime }}"
+          reply:
+            summary:
+              safetyAttributes:
+                categories:
+                  - "{{ categories }}"
+                scores:
+                  - {{ scores }}
+              summarySkippedReasons:
+                - "{{ summarySkippedReasons }}"
+              summaryText: "{{ summaryText }}"
+              summaryWithMetadata:
+                citationMetadata:
+                  citations: "{{ citations }}"
+                references:
+                  - chunkContents: "{{ chunkContents }}"
+                    document: "{{ document }}"
+                    title: "{{ title }}"
+                    uri: "{{ uri }}"
+                summary: "{{ summary }}"
+          userInput:
+            context:
+              activeDocument: "{{ activeDocument }}"
+              contextDocuments:
+                - "{{ contextDocuments }}"
+            input: "{{ input }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -813,36 +843,6 @@ userPseudoId
       description: |
         The state of the Conversation.
       valid_values: ['STATE_UNSPECIFIED', 'IN_PROGRESS', 'COMPLETED']
-    - name: messages
-      description: |
-        Conversation messages.
-      value:
-        - reply:
-            summary:
-              summaryText: "{{ summaryText }}"
-              summarySkippedReasons:
-                - "{{ summarySkippedReasons }}"
-              safetyAttributes:
-                scores:
-                  - {{ scores }}
-                categories:
-                  - "{{ categories }}"
-              summaryWithMetadata:
-                summary: "{{ summary }}"
-                citationMetadata:
-                  citations: "{{ citations }}"
-                references:
-                  - title: "{{ title }}"
-                    document: "{{ document }}"
-                    uri: "{{ uri }}"
-                    chunkContents: "{{ chunkContents }}"
-          createTime: "{{ createTime }}"
-          userInput:
-            input: "{{ input }}"
-            context:
-              contextDocuments:
-                - "{{ contextDocuments }}"
-              activeDocument: "{{ activeDocument }}"
     - name: userPseudoId
       value: "{{ userPseudoId }}"
       description: |
@@ -870,9 +870,9 @@ Updates a Conversation. Conversation action type cannot be changed. If the Conve
 ```sql
 UPDATE google.discoveryengine.conversations
 SET 
+data__messages = '{{ messages }}',
 data__name = '{{ name }}',
 data__state = '{{ state }}',
-data__messages = '{{ messages }}',
 data__userPseudoId = '{{ userPseudoId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -897,9 +897,9 @@ Updates a Conversation. Conversation action type cannot be changed. If the Conve
 ```sql
 UPDATE google.discoveryengine.conversations
 SET 
+data__messages = '{{ messages }}',
 data__name = '{{ name }}',
 data__state = '{{ state }}',
-data__messages = '{{ messages }}',
 data__userPseudoId = '{{ userPseudoId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -924,9 +924,9 @@ Updates a Conversation. Conversation action type cannot be changed. If the Conve
 ```sql
 UPDATE google.discoveryengine.conversations
 SET 
+data__messages = '{{ messages }}',
 data__name = '{{ name }}',
 data__state = '{{ state }}',
-data__messages = '{{ messages }}',
 data__userPseudoId = '{{ userPseudoId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -1003,37 +1003,13 @@ AND conversationsId = '{{ conversationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_data_stores_conversations_converse"
+    defaultValue="projects_locations_collections_data_stores_conversations_converse"
     values={[
-        { label: 'projects_locations_data_stores_conversations_converse', value: 'projects_locations_data_stores_conversations_converse' },
         { label: 'projects_locations_collections_data_stores_conversations_converse', value: 'projects_locations_collections_data_stores_conversations_converse' },
-        { label: 'projects_locations_collections_engines_conversations_converse', value: 'projects_locations_collections_engines_conversations_converse' }
+        { label: 'projects_locations_collections_engines_conversations_converse', value: 'projects_locations_collections_engines_conversations_converse' },
+        { label: 'projects_locations_data_stores_conversations_converse', value: 'projects_locations_data_stores_conversations_converse' }
     ]}
 >
-<TabItem value="projects_locations_data_stores_conversations_converse">
-
-Converses a conversation.
-
-```sql
-EXEC google.discoveryengine.conversations.projects_locations_data_stores_conversations_converse 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@conversationsId='{{ conversationsId }}' --required 
-@@json=
-'{
-"conversation": "{{ conversation }}", 
-"boostSpec": "{{ boostSpec }}", 
-"summarySpec": "{{ summarySpec }}", 
-"filter": "{{ filter }}", 
-"servingConfig": "{{ servingConfig }}", 
-"query": "{{ query }}", 
-"safeSearch": {{ safeSearch }}, 
-"userLabels": "{{ userLabels }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_conversations_converse">
 
 Converses a conversation.
@@ -1047,13 +1023,13 @@ EXEC google.discoveryengine.conversations.projects_locations_collections_data_st
 @conversationsId='{{ conversationsId }}' --required 
 @@json=
 '{
-"conversation": "{{ conversation }}", 
 "boostSpec": "{{ boostSpec }}", 
-"summarySpec": "{{ summarySpec }}", 
+"conversation": "{{ conversation }}", 
 "filter": "{{ filter }}", 
-"servingConfig": "{{ servingConfig }}", 
 "query": "{{ query }}", 
 "safeSearch": {{ safeSearch }}, 
+"servingConfig": "{{ servingConfig }}", 
+"summarySpec": "{{ summarySpec }}", 
 "userLabels": "{{ userLabels }}"
 }'
 ;
@@ -1072,13 +1048,37 @@ EXEC google.discoveryengine.conversations.projects_locations_collections_engines
 @conversationsId='{{ conversationsId }}' --required 
 @@json=
 '{
-"conversation": "{{ conversation }}", 
 "boostSpec": "{{ boostSpec }}", 
-"summarySpec": "{{ summarySpec }}", 
+"conversation": "{{ conversation }}", 
 "filter": "{{ filter }}", 
-"servingConfig": "{{ servingConfig }}", 
 "query": "{{ query }}", 
 "safeSearch": {{ safeSearch }}, 
+"servingConfig": "{{ servingConfig }}", 
+"summarySpec": "{{ summarySpec }}", 
+"userLabels": "{{ userLabels }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_conversations_converse">
+
+Converses a conversation.
+
+```sql
+EXEC google.discoveryengine.conversations.projects_locations_data_stores_conversations_converse 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@conversationsId='{{ conversationsId }}' --required 
+@@json=
+'{
+"boostSpec": "{{ boostSpec }}", 
+"conversation": "{{ conversation }}", 
+"filter": "{{ filter }}", 
+"query": "{{ query }}", 
+"safeSearch": {{ safeSearch }}, 
+"servingConfig": "{{ servingConfig }}", 
+"summarySpec": "{{ summarySpec }}", 
 "userLabels": "{{ userLabels }}"
 }'
 ;

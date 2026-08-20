@@ -116,25 +116,25 @@ Creates a cluster of type SECONDARY in the given location using the primary clus
 
 ```sql
 INSERT INTO google.alloydb.clusters_secondary (
+data__annotations,
+data__automatedBackupPolicy,
 data__continuousBackupConfig,
 data__databaseVersion,
-data__annotations,
-data__displayName,
-data__maintenanceUpdatePolicy,
-data__encryptionConfig,
-data__network,
 data__dataplexConfig,
-data__sslConfig,
-data__networkConfig,
-data__tags,
-data__labels,
-data__secondaryConfig,
-data__initialUser,
-data__maintenanceVersionSelectionPolicy,
+data__displayName,
+data__encryptionConfig,
 data__etag,
-data__subscriptionType,
+data__initialUser,
+data__labels,
+data__maintenanceUpdatePolicy,
+data__maintenanceVersionSelectionPolicy,
+data__network,
+data__networkConfig,
 data__pscConfig,
-data__automatedBackupPolicy,
+data__secondaryConfig,
+data__sslConfig,
+data__subscriptionType,
+data__tags,
 projectsId,
 locationsId,
 clusterId,
@@ -142,25 +142,25 @@ requestId,
 validateOnly
 )
 SELECT 
+'{{ annotations }}',
+'{{ automatedBackupPolicy }}',
 '{{ continuousBackupConfig }}',
 '{{ databaseVersion }}',
-'{{ annotations }}',
-'{{ displayName }}',
-'{{ maintenanceUpdatePolicy }}',
-'{{ encryptionConfig }}',
-'{{ network }}',
 '{{ dataplexConfig }}',
-'{{ sslConfig }}',
-'{{ networkConfig }}',
-'{{ tags }}',
-'{{ labels }}',
-'{{ secondaryConfig }}',
-'{{ initialUser }}',
-'{{ maintenanceVersionSelectionPolicy }}',
+'{{ displayName }}',
+'{{ encryptionConfig }}',
 '{{ etag }}',
-'{{ subscriptionType }}',
+'{{ initialUser }}',
+'{{ labels }}',
+'{{ maintenanceUpdatePolicy }}',
+'{{ maintenanceVersionSelectionPolicy }}',
+'{{ network }}',
+'{{ networkConfig }}',
 '{{ pscConfig }}',
-'{{ automatedBackupPolicy }}',
+'{{ secondaryConfig }}',
+'{{ sslConfig }}',
+'{{ subscriptionType }}',
+'{{ tags }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clusterId }}',
@@ -186,6 +186,32 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the clusters_secondary resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
+    - name: automatedBackupPolicy
+      description: |
+        The automated backup policy for this cluster. If no policy is provided then the default policy will be used. If backups are supported for the cluster, the default policy takes one backup a day, has a backup window of 1 hour, and retains backups for 14 days. For more information on the defaults, consult the documentation for the message type.
+      value:
+        backupWindow: "{{ backupWindow }}"
+        enabled: {{ enabled }}
+        encryptionConfig:
+          kmsKeyName: "{{ kmsKeyName }}"
+        labels: "{{ labels }}"
+        location: "{{ location }}"
+        quantityBasedRetention:
+          count: {{ count }}
+        timeBasedRetention:
+          retentionPeriod: "{{ retentionPeriod }}"
+        weeklySchedule:
+          daysOfWeek:
+            - "{{ daysOfWeek }}"
+          startTimes:
+            - hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
     - name: continuousBackupConfig
       description: |
         Optional. Continuous backup configuration for this cluster.
@@ -199,126 +225,100 @@ response
       description: |
         Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.
       valid_values: ['DATABASE_VERSION_UNSPECIFIED', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16', 'POSTGRES_17', 'POSTGRES_18']
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        User-settable and human-readable display name for the Cluster.
-    - name: maintenanceUpdatePolicy
-      description: |
-        Optional. The maintenance update policy determines when to allow or deny updates.
-      value:
-        maintenanceWindows:
-          - day: "{{ day }}"
-            startTime:
-              minutes: {{ minutes }}
-              seconds: {{ seconds }}
-              hours: {{ hours }}
-              nanos: {{ nanos }}
-        denyMaintenancePeriods:
-          - time:
-              minutes: {{ minutes }}
-              seconds: {{ seconds }}
-              hours: {{ hours }}
-              nanos: {{ nanos }}
-            startDate:
-              day: {{ day }}
-              month: {{ month }}
-              year: {{ year }}
-            endDate:
-              day: {{ day }}
-              month: {{ month }}
-              year: {{ year }}
-    - name: encryptionConfig
-      description: |
-        Optional. The encryption config can be specified to encrypt the data disks and other persistent data resources of a cluster with a customer-managed encryption key (CMEK). When this field is not specified, the cluster will then use default encryption scheme to protect the user data.
-      value:
-        kmsKeyName: "{{ kmsKeyName }}"
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Required. The resource link for the VPC network in which cluster resources are created and from which they are accessible via Private IP. The network must belong to the same project as the cluster. It is specified in the form: \`projects/{project}/global/networks/{network_id}\`. This is required to create a cluster. Deprecated, use network_config.network instead.
     - name: dataplexConfig
       description: |
         Optional. Configuration for Dataplex integration.
       value:
         enabled: {{ enabled }}
-    - name: sslConfig
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        SSL configuration for this AlloyDB cluster.
+        User-settable and human-readable display name for the Cluster.
+    - name: encryptionConfig
+      description: |
+        Optional. The encryption config can be specified to encrypt the data disks and other persistent data resources of a cluster with a customer-managed encryption key (CMEK). When this field is not specified, the cluster will then use default encryption scheme to protect the user data.
       value:
-        sslMode: "{{ sslMode }}"
-        caSource: "{{ caSource }}"
-    - name: networkConfig
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: etag
+      value: "{{ etag }}"
       description: |
-        Metadata related to network configuration.
-      value:
-        allocatedIpRange: "{{ allocatedIpRange }}"
-        network: "{{ network }}"
-    - name: tags
-      value: "{{ tags }}"
-      description: |
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \`\`\` "123/environment": "production", "123/costCenter": "marketing" \`\`\`
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels as key value pairs
-    - name: secondaryConfig
-      description: |
-        Cross Region replication config specific to SECONDARY cluster.
-      value:
-        primaryClusterName: "{{ primaryClusterName }}"
+        For Resource freshness validation (https://google.aip.dev/154)
     - name: initialUser
       description: |
         Input only. Initial user to setup during cluster creation. Required. If used in \`RestoreCluster\` this is ignored.
       value:
-        user: "{{ user }}"
         password: "{{ password }}"
+        user: "{{ user }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs
+    - name: maintenanceUpdatePolicy
+      description: |
+        Optional. The maintenance update policy determines when to allow or deny updates.
+      value:
+        denyMaintenancePeriods:
+          - endDate:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            startDate:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+        maintenanceWindows:
+          - day: "{{ day }}"
+            startTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
     - name: maintenanceVersionSelectionPolicy
       value: "{{ maintenanceVersionSelectionPolicy }}"
       description: |
         Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.
       valid_values: ['MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED', 'MAINTENANCE_VERSION_SELECTION_POLICY_LATEST', 'MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT']
-    - name: etag
-      value: "{{ etag }}"
+    - name: network
+      value: "{{ network }}"
       description: |
-        For Resource freshness validation (https://google.aip.dev/154)
-    - name: subscriptionType
-      value: "{{ subscriptionType }}"
+        Required. The resource link for the VPC network in which cluster resources are created and from which they are accessible via Private IP. The network must belong to the same project as the cluster. It is specified in the form: \`projects/{project}/global/networks/{network_id}\`. This is required to create a cluster. Deprecated, use network_config.network instead.
+    - name: networkConfig
       description: |
-        Optional. Subscription type of the cluster.
-      valid_values: ['SUBSCRIPTION_TYPE_UNSPECIFIED', 'STANDARD', 'TRIAL']
+        Optional.
+      value:
+        allocatedIpRange: "{{ allocatedIpRange }}"
+        network: "{{ network }}"
     - name: pscConfig
       description: |
         Optional. The configuration for Private Service Connect (PSC) for the cluster.
       value:
         pscEnabled: {{ pscEnabled }}
         serviceOwnedProjectNumber: "{{ serviceOwnedProjectNumber }}"
-    - name: automatedBackupPolicy
+    - name: secondaryConfig
       description: |
-        The automated backup policy for this cluster. If no policy is provided then the default policy will be used. If backups are supported for the cluster, the default policy takes one backup a day, has a backup window of 1 hour, and retains backups for 14 days. For more information on the defaults, consult the documentation for the message type.
+        Cross Region replication config specific to SECONDARY cluster.
       value:
-        labels: "{{ labels }}"
-        encryptionConfig:
-          kmsKeyName: "{{ kmsKeyName }}"
-        timeBasedRetention:
-          retentionPeriod: "{{ retentionPeriod }}"
-        backupWindow: "{{ backupWindow }}"
-        weeklySchedule:
-          startTimes:
-            - minutes: {{ minutes }}
-              seconds: {{ seconds }}
-              hours: {{ hours }}
-              nanos: {{ nanos }}
-          daysOfWeek:
-            - "{{ daysOfWeek }}"
-        enabled: {{ enabled }}
-        quantityBasedRetention:
-          count: {{ count }}
-        location: "{{ location }}"
+        primaryClusterName: "{{ primaryClusterName }}"
+    - name: sslConfig
+      description: |
+        SSL configuration for this AlloyDB cluster.
+      value:
+        caSource: "{{ caSource }}"
+        sslMode: "{{ sslMode }}"
+    - name: subscriptionType
+      value: "{{ subscriptionType }}"
+      description: |
+        Optional. Subscription type of the cluster.
+      valid_values: ['SUBSCRIPTION_TYPE_UNSPECIFIED', 'STANDARD', 'TRIAL']
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \`\`\` "123/environment": "production", "123/costCenter": "marketing" \`\`\`
     - name: clusterId
       value: "{{ clusterId }}"
     - name: requestId

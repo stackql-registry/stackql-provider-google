@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_content_policies_list"><CopyableCode code="projects_locations_content_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ContentPolicies in a parent.</td>
 </tr>
 <tr>
@@ -350,8 +350,8 @@ updateTime
 FROM google.dlp.content_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -415,160 +415,160 @@ updateTime
       description: |
         Required. The content_policy resource.
       value:
-        updateTime: "{{ updateTime }}"
-        unsupportedFileType:
-          returnVerdict: "{{ returnVerdict }}"
-        failedToScanSupportedFileType:
-          returnVerdict: "{{ returnVerdict }}"
-        inspectTemplate:
-          updateTime: "{{ updateTime }}"
-          inspectConfig:
-            minLikelihoodPerInfoType:
-              - infoType:
-                  name: "{{ name }}"
-                  version: "{{ version }}"
-                  sensitivityScore: "{{ sensitivityScore }}"
-                minLikelihood: "{{ minLikelihood }}"
-            infoTypes:
-              - name: "{{ name }}"
-                version: "{{ version }}"
-                sensitivityScore:
-                  score: "{{ score }}"
-            contentOptions:
-              - "{{ contentOptions }}"
-            minLikelihood: "{{ minLikelihood }}"
-            excludeInfoTypes: {{ excludeInfoTypes }}
-            customInfoTypes:
-              - likelihood: "{{ likelihood }}"
-                exclusionType: "{{ exclusionType }}"
-                surrogateType: "{{ surrogateType }}"
-                sensitivityScore:
-                  score: "{{ score }}"
-                storedType:
-                  name: "{{ name }}"
-                  createTime: "{{ createTime }}"
-                metadataKeyValueExpression:
-                  valueRegex: "{{ valueRegex }}"
-                  keyRegex: "{{ keyRegex }}"
-                fileLabelInfoType:
-                  sensitivityLabel: "{{ sensitivityLabel }}"
-                  googleDriveLabel: "{{ googleDriveLabel }}"
-                detectionRules: "{{ detectionRules }}"
-                infoType:
-                  name: "{{ name }}"
-                  version: "{{ version }}"
-                  sensitivityScore: "{{ sensitivityScore }}"
-                regex:
-                  pattern: "{{ pattern }}"
-                  groupIndexes: "{{ groupIndexes }}"
-                dictionary:
-                  wordList: "{{ wordList }}"
-                  cloudStoragePath: "{{ cloudStoragePath }}"
-            limits:
-              maxFindingsPerInfoType:
-                - maxFindings: {{ maxFindings }}
-                  infoType:
-                    name: "{{ name }}"
-                    version: "{{ version }}"
-                    sensitivityScore: "{{ sensitivityScore }}"
-              maxFindingsPerRequest: {{ maxFindingsPerRequest }}
-              maxFindingsPerItem: {{ maxFindingsPerItem }}
-            ruleSet:
-              - rules: "{{ rules }}"
-                infoTypes: "{{ infoTypes }}"
-            includeQuote: {{ includeQuote }}
-          description: "{{ description }}"
-          createTime: "{{ createTime }}"
-          displayName: "{{ displayName }}"
-          allowLimitedAvailabilityInfoTypes: {{ allowLimitedAvailabilityInfoTypes }}
-          name: "{{ name }}"
+        createTime: "{{ createTime }}"
         defaultAction:
           returnVerdict: "{{ returnVerdict }}"
+        displayName: "{{ displayName }}"
+        errors:
+          - details:
+              code: {{ code }}
+              details: "{{ details }}"
+              message: "{{ message }}"
+            extraInfo: "{{ extraInfo }}"
+            timestamps: "{{ timestamps }}"
+        failedToScanSupportedFileType:
+          returnVerdict: "{{ returnVerdict }}"
+        inputTooLarge:
+          returnVerdict: "{{ returnVerdict }}"
         inspectConfig:
-          minLikelihoodPerInfoType:
-            - infoType:
-                name: "{{ name }}"
-                version: "{{ version }}"
-                sensitivityScore:
-                  score: "{{ score }}"
-              minLikelihood: "{{ minLikelihood }}"
-          infoTypes:
-            - name: "{{ name }}"
-              version: "{{ version }}"
-              sensitivityScore:
-                score: "{{ score }}"
           contentOptions:
             - "{{ contentOptions }}"
-          minLikelihood: "{{ minLikelihood }}"
-          excludeInfoTypes: {{ excludeInfoTypes }}
           customInfoTypes:
-            - likelihood: "{{ likelihood }}"
+            - detectionRules: "{{ detectionRules }}"
+              dictionary:
+                cloudStoragePath:
+                  path: "{{ path }}"
+                wordList:
+                  words: "{{ words }}"
               exclusionType: "{{ exclusionType }}"
-              surrogateType: "{{ surrogateType }}"
-              sensitivityScore:
-                score: "{{ score }}"
-              storedType:
-                name: "{{ name }}"
-                createTime: "{{ createTime }}"
-              metadataKeyValueExpression:
-                valueRegex: "{{ valueRegex }}"
-                keyRegex: "{{ keyRegex }}"
               fileLabelInfoType:
-                sensitivityLabel:
-                  guid: "{{ guid }}"
                 googleDriveLabel:
                   labelFieldsToMatch: "{{ labelFieldsToMatch }}"
                   labelId: "{{ labelId }}"
-              detectionRules: "{{ detectionRules }}"
+                sensitivityLabel:
+                  guid: "{{ guid }}"
               infoType:
                 name: "{{ name }}"
-                version: "{{ version }}"
                 sensitivityScore:
                   score: "{{ score }}"
+                version: "{{ version }}"
+              likelihood: "{{ likelihood }}"
+              metadataKeyValueExpression:
+                keyRegex: "{{ keyRegex }}"
+                valueRegex: "{{ valueRegex }}"
               regex:
-                pattern: "{{ pattern }}"
                 groupIndexes:
                   - {{ groupIndexes }}
-              dictionary:
-                wordList:
-                  words: "{{ words }}"
-                cloudStoragePath:
-                  path: "{{ path }}"
+                pattern: "{{ pattern }}"
+              sensitivityScore:
+                score: "{{ score }}"
+              storedType:
+                createTime: "{{ createTime }}"
+                name: "{{ name }}"
+              surrogateType: "{{ surrogateType }}"
+          excludeInfoTypes: {{ excludeInfoTypes }}
+          includeQuote: {{ includeQuote }}
+          infoTypes:
+            - name: "{{ name }}"
+              sensitivityScore:
+                score: "{{ score }}"
+              version: "{{ version }}"
           limits:
             maxFindingsPerInfoType:
-              - maxFindings: {{ maxFindings }}
+              - infoType:
+                  name: "{{ name }}"
+                  sensitivityScore: "{{ sensitivityScore }}"
+                  version: "{{ version }}"
+                maxFindings: {{ maxFindings }}
+            maxFindingsPerItem: {{ maxFindingsPerItem }}
+            maxFindingsPerRequest: {{ maxFindingsPerRequest }}
+          minLikelihood: "{{ minLikelihood }}"
+          minLikelihoodPerInfoType:
+            - infoType:
+                name: "{{ name }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+                version: "{{ version }}"
+              minLikelihood: "{{ minLikelihood }}"
+          ruleSet:
+            - infoTypes: "{{ infoTypes }}"
+              rules: "{{ rules }}"
+        inspectTemplate:
+          allowLimitedAvailabilityInfoTypes: {{ allowLimitedAvailabilityInfoTypes }}
+          createTime: "{{ createTime }}"
+          description: "{{ description }}"
+          displayName: "{{ displayName }}"
+          inspectConfig:
+            contentOptions:
+              - "{{ contentOptions }}"
+            customInfoTypes:
+              - detectionRules: "{{ detectionRules }}"
+                dictionary:
+                  cloudStoragePath: "{{ cloudStoragePath }}"
+                  wordList: "{{ wordList }}"
+                exclusionType: "{{ exclusionType }}"
+                fileLabelInfoType:
+                  googleDriveLabel: "{{ googleDriveLabel }}"
+                  sensitivityLabel: "{{ sensitivityLabel }}"
                 infoType:
                   name: "{{ name }}"
-                  version: "{{ version }}"
                   sensitivityScore: "{{ sensitivityScore }}"
-            maxFindingsPerRequest: {{ maxFindingsPerRequest }}
-            maxFindingsPerItem: {{ maxFindingsPerItem }}
-          ruleSet:
-            - rules: "{{ rules }}"
-              infoTypes: "{{ infoTypes }}"
-          includeQuote: {{ includeQuote }}
-        createTime: "{{ createTime }}"
-        rules:
-          - returnVerdict: "{{ returnVerdict }}"
-            action:
-              returnVerdict: "{{ returnVerdict }}"
-            conditions: "{{ conditions }}"
-        errors:
-          - timestamps: "{{ timestamps }}"
-            extraInfo: "{{ extraInfo }}"
-            details:
-              message: "{{ message }}"
-              details: "{{ details }}"
-              code: {{ code }}
+                  version: "{{ version }}"
+                likelihood: "{{ likelihood }}"
+                metadataKeyValueExpression:
+                  keyRegex: "{{ keyRegex }}"
+                  valueRegex: "{{ valueRegex }}"
+                regex:
+                  groupIndexes: "{{ groupIndexes }}"
+                  pattern: "{{ pattern }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+                storedType:
+                  createTime: "{{ createTime }}"
+                  name: "{{ name }}"
+                surrogateType: "{{ surrogateType }}"
+            excludeInfoTypes: {{ excludeInfoTypes }}
+            includeQuote: {{ includeQuote }}
+            infoTypes:
+              - name: "{{ name }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+                version: "{{ version }}"
+            limits:
+              maxFindingsPerInfoType:
+                - infoType:
+                    name: "{{ name }}"
+                    sensitivityScore: "{{ sensitivityScore }}"
+                    version: "{{ version }}"
+                  maxFindings: {{ maxFindings }}
+              maxFindingsPerItem: {{ maxFindingsPerItem }}
+              maxFindingsPerRequest: {{ maxFindingsPerRequest }}
+            minLikelihood: "{{ minLikelihood }}"
+            minLikelihoodPerInfoType:
+              - infoType:
+                  name: "{{ name }}"
+                  sensitivityScore: "{{ sensitivityScore }}"
+                  version: "{{ version }}"
+                minLikelihood: "{{ minLikelihood }}"
+            ruleSet:
+              - infoTypes: "{{ infoTypes }}"
+                rules: "{{ rules }}"
+          name: "{{ name }}"
+          updateTime: "{{ updateTime }}"
         loggingConfigs:
           - logToBigQuery:
-              tableId: "{{ tableId }}"
-              projectId: "{{ projectId }}"
               datasetId: "{{ datasetId }}"
+              projectId: "{{ projectId }}"
+              tableId: "{{ tableId }}"
         name: "{{ name }}"
-        inputTooLarge:
+        rules:
+          - action:
+              returnVerdict: "{{ returnVerdict }}"
+            conditions: "{{ conditions }}"
+            returnVerdict: "{{ returnVerdict }}"
+        unsupportedFileType:
           returnVerdict: "{{ returnVerdict }}"
-        displayName: "{{ displayName }}"
+        updateTime: "{{ updateTime }}"
     - name: contentPolicyId
       value: "{{ contentPolicyId }}"
       description: |

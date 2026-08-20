@@ -296,19 +296,19 @@ Creates a schema version.
 
 ```sql
 INSERT INTO google.documentai.schema_versions (
-data__schema,
-data__name,
 data__displayName,
 data__labels,
+data__name,
+data__schema,
 projectsId,
 locationsId,
 schemasId
 )
 SELECT 
-'{{ schema }}',
-'{{ name }}',
 '{{ displayName }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ schema }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ schemasId }}'
@@ -335,30 +335,6 @@ schema
     - name: schemasId
       value: "{{ schemasId }}"
       description: Required parameter for the schema_versions resource.
-    - name: schema
-      description: |
-        Required. The schema of the SchemaVersion.
-      value:
-        documentPrompt: "{{ documentPrompt }}"
-        displayName: "{{ displayName }}"
-        description: "{{ description }}"
-        entityTypes:
-          - enumValues:
-              values:
-                - "{{ values }}"
-            baseTypes: "{{ baseTypes }}"
-            properties: "{{ properties }}"
-            displayName: "{{ displayName }}"
-            name: "{{ name }}"
-        metadata:
-          prefixedNamingOnProperties: {{ prefixedNamingOnProperties }}
-          documentSplitter: {{ documentSplitter }}
-          documentAllowMultipleLabels: {{ documentAllowMultipleLabels }}
-          skipNamingValidation: {{ skipNamingValidation }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the SchemaVersion. Format: \`projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}\`
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -367,6 +343,30 @@ schema
       value: "{{ labels }}"
       description: |
         Optional. The {{gcp_name_short}} labels for the SchemaVersion.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the SchemaVersion. Format: \`projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}\`
+    - name: schema
+      description: |
+        Required. The schema of the SchemaVersion.
+      value:
+        description: "{{ description }}"
+        displayName: "{{ displayName }}"
+        documentPrompt: "{{ documentPrompt }}"
+        entityTypes:
+          - baseTypes: "{{ baseTypes }}"
+            displayName: "{{ displayName }}"
+            enumValues:
+              values:
+                - "{{ values }}"
+            name: "{{ name }}"
+            properties: "{{ properties }}"
+        metadata:
+          documentAllowMultipleLabels: {{ documentAllowMultipleLabels }}
+          documentSplitter: {{ documentSplitter }}
+          prefixedNamingOnProperties: {{ prefixedNamingOnProperties }}
+          skipNamingValidation: {{ skipNamingValidation }}
 `}</CodeBlock>
 
 </TabItem>
@@ -388,10 +388,10 @@ Updates a schema version. Editable fields are: - `display_name` - `labels`
 ```sql
 UPDATE google.documentai.schema_versions
 SET 
-data__schema = '{{ schema }}',
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__schema = '{{ schema }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -452,12 +452,12 @@ EXEC google.documentai.schema_versions.projects_locations_schemas_schema_version
 @schemasId='{{ schemasId }}' --required 
 @@json=
 '{
-"rawDocuments": "{{ rawDocuments }}", 
+"baseSchemaVersion": "{{ baseSchemaVersion }}", 
+"gcsDocuments": "{{ gcsDocuments }}", 
 "gcsPrefix": "{{ gcsPrefix }}", 
 "generateSchemaVersionParams": "{{ generateSchemaVersionParams }}", 
-"gcsDocuments": "{{ gcsDocuments }}", 
 "inlineDocuments": "{{ inlineDocuments }}", 
-"baseSchemaVersion": "{{ baseSchemaVersion }}"
+"rawDocuments": "{{ rawDocuments }}"
 }'
 ;
 ```

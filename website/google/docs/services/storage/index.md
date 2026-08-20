@@ -18,7 +18,7 @@ storage service documentation.
 
 :::info[Service Summary]
 
-total resources: __18__  
+total resources: __20__  
 
 :::
 
@@ -33,16 +33,18 @@ total resources: __18__
 <a href="/services/storage/channels/">channels</a><br />
 <a href="/services/storage/default_object_access_controls/">default_object_access_controls</a><br />
 <a href="/services/storage/folders/">folders</a><br />
-<a href="/services/storage/hmac_keys/">hmac_keys</a>
+<a href="/services/storage/hmac_keys/">hmac_keys</a><br />
+<a href="/services/storage/managed_folders/">managed_folders</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/storage/managed_folders/">managed_folders</a><br />
 <a href="/services/storage/managed_folders_iam_policies/">managed_folders_iam_policies</a><br />
 <a href="/services/storage/notifications/">notifications</a><br />
 <a href="/services/storage/object_access_controls/">object_access_controls</a><br />
 <a href="/services/storage/objects/">objects</a><br />
+<a href="/services/storage/objects_content/">objects_content</a><br />
 <a href="/services/storage/objects_iam_policies/">objects_iam_policies</a><br />
 <a href="/services/storage/operations/">operations</a><br />
+<a href="/services/storage/rapid_caches/">rapid_caches</a><br />
 <a href="/services/storage/recursive/">recursive</a><br />
 <a href="/services/storage/service_account/">service_account</a>
 </div>

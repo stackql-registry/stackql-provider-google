@@ -54,7 +54,7 @@ The following methods are available for this resource:
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-uri"><code>uri</code></a>, <a href="#parameter-threatTypes"><code>threatTypes</code></a></td>
+    <td><a href="#parameter-threatTypes"><code>threatTypes</code></a>, <a href="#parameter-uri"><code>uri</code></a></td>
     <td>This method is used to check whether a URI is on a given threatList. Multiple threatLists may be searched in a single query. The response will list all requested threatLists the URI was found to match. If the URI is not found on any of the requested ThreatList an empty response will be returned.</td>
 </tr>
 </tbody>
@@ -100,8 +100,8 @@ This method is used to check whether a URI is on a given threatList. Multiple th
 
 ```sql
 EXEC google.webrisk.uris.search 
-@uri='{{ uri }}', 
-@threatTypes='{{ threatTypes }}'
+@threatTypes='{{ threatTypes }}', 
+@uri='{{ uri }}'
 ;
 ```
 </TabItem>

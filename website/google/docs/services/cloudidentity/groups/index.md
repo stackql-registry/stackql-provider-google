@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists the `Group` resources under a customer or namespace.</td>
 </tr>
 <tr>
@@ -230,7 +230,7 @@ The following methods are available for this resource:
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Searches for `Group` resources matching a specified query.</td>
 </tr>
 </tbody>
@@ -349,10 +349,10 @@ labels,
 parent,
 updateTime
 FROM google.cloudidentity.groups
-WHERE parent = '{{ parent }}'
-AND view = '{{ view }}'
+WHERE pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
+AND parent = '{{ parent }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -374,21 +374,21 @@ Creates a Group.
 
 ```sql
 INSERT INTO google.cloudidentity.groups (
-data__parent,
 data__description,
-data__groupKey,
 data__displayName,
-data__labels,
 data__dynamicGroupMetadata,
+data__groupKey,
+data__labels,
+data__parent,
 initialGroupConfig
 )
 SELECT 
-'{{ parent }}',
 '{{ description }}',
-'{{ groupKey }}',
 '{{ displayName }}',
-'{{ labels }}',
 '{{ dynamicGroupMetadata }}',
+'{{ groupKey }}',
+'{{ labels }}',
+'{{ parent }}',
 '{{ initialGroupConfig }}'
 RETURNING
 name,
@@ -404,28 +404,14 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups
   props:
-    - name: parent
-      value: "{{ parent }}"
-      description: |
-        Required. Immutable. The resource name of the entity under which this \`Group\` resides in the Cloud Identity resource hierarchy. Must be of the form \`identitysources/{identity_source}\` for external [identity-mapped groups](https://support.google.com/a/answer/9039510) or \`customers/{customer_id}\` for Google Groups. The \`customer_id\` must begin with "C" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793)
     - name: description
       value: "{{ description }}"
       description: |
         An extended description to help users determine the purpose of a \`Group\`. Must not be longer than 4,096 characters.
-    - name: groupKey
-      description: |
-        A unique identifier for an entity in the Cloud Identity Groups API. An entity can represent either a group with an optional \`namespace\` or a user without a \`namespace\`. The combination of \`id\` and \`namespace\` must be unique; however, the same \`id\` can be used with different \`namespace\`s.
-      value:
-        namespace: "{{ namespace }}"
-        id: "{{ id }}"
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The display name of the \`Group\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Required. One or more label entries that apply to the Group. Labels contain a key with an empty value. Google Groups are the default type of group and have a label with a key of \`cloudidentity.googleapis.com/groups.discussion_forum\` and an empty value. Existing Google Groups can have an additional label with a key of \`cloudidentity.googleapis.com/groups.security\` and an empty value added to them. **This is an immutable change and the security label cannot be removed once added.** Dynamic groups have a label with a key of \`cloudidentity.googleapis.com/groups.dynamic\`. Identity-mapped groups for Cloud Search have a label with a key of \`system/groups/external\` and an empty value. Google Groups can be [locked](https://support.google.com/a?p=locked-groups). To lock a group, add a label with a key of \`cloudidentity.googleapis.com/groups.locked\` and an empty value. Doing so locks the group. To unlock the group, remove this label.
     - name: dynamicGroupMetadata
       description: |
         Optional. Dynamic group metadata like queries and status.
@@ -436,6 +422,20 @@ response
         status:
           status: "{{ status }}"
           statusTime: "{{ statusTime }}"
+    - name: groupKey
+      description: |
+        A unique identifier for an entity in the Cloud Identity Groups API. An entity can represent either a group with an optional \`namespace\` or a user without a \`namespace\`. The combination of \`id\` and \`namespace\` must be unique; however, the same \`id\` can be used with different \`namespace\`s.
+      value:
+        id: "{{ id }}"
+        namespace: "{{ namespace }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Required. One or more label entries that apply to the Group. Labels contain a key with an empty value. Google Groups are the default type of group and have a label with a key of \`cloudidentity.googleapis.com/groups.discussion_forum\` and an empty value. Existing Google Groups can have an additional label with a key of \`cloudidentity.googleapis.com/groups.security\` and an empty value added to them. **This is an immutable change and the security label cannot be removed once added.** Dynamic groups have a label with a key of \`cloudidentity.googleapis.com/groups.dynamic\`. Identity-mapped groups for Cloud Search have a label with a key of \`system/groups/external\` and an empty value. Google Groups can be [locked](https://support.google.com/a?p=locked-groups). To lock a group, add a label with a key of \`cloudidentity.googleapis.com/groups.locked\` and an empty value. Doing so locks the group. To unlock the group, remove this label.
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Required. Immutable. The resource name of the entity under which this \`Group\` resides in the Cloud Identity resource hierarchy. Must be of the form \`identitysources/{identity_source}\` for external [identity-mapped groups](https://support.google.com/a/answer/9039510) or \`customers/{customer_id}\` for Google Groups. The \`customer_id\` must begin with "C" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793)
     - name: initialGroupConfig
       value: "{{ initialGroupConfig }}"
 `}</CodeBlock>
@@ -459,12 +459,12 @@ Updates a `Group`.
 ```sql
 UPDATE google.cloudidentity.groups
 SET 
-data__parent = '{{ parent }}',
 data__description = '{{ description }}',
-data__groupKey = '{{ groupKey }}',
 data__displayName = '{{ displayName }}',
+data__dynamicGroupMetadata = '{{ dynamicGroupMetadata }}',
+data__groupKey = '{{ groupKey }}',
 data__labels = '{{ labels }}',
-data__dynamicGroupMetadata = '{{ dynamicGroupMetadata }}'
+data__parent = '{{ parent }}'
 WHERE 
 groupsId = '{{ groupsId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -526,10 +526,10 @@ Searches for `Group` resources matching a specified query.
 
 ```sql
 EXEC google.cloudidentity.groups.search 
-@query='{{ query }}', 
-@view='{{ view }}', 
+@pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}'
+@query='{{ query }}', 
+@view='{{ view }}'
 ;
 ```
 </TabItem>

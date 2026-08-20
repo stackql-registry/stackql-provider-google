@@ -51,16 +51,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_jobs_debug_send_capture"><CopyableCode code="projects_locations_jobs_debug_send_capture" /></a></td>
+    <td><a href="#projects_jobs_debug_send_capture"><CopyableCode code="projects_jobs_debug_send_capture" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td></td>
     <td>Send encoded debug capture data for component.</td>
 </tr>
 <tr>
-    <td><a href="#projects_jobs_debug_send_capture"><CopyableCode code="projects_jobs_debug_send_capture" /></a></td>
+    <td><a href="#projects_locations_jobs_debug_send_capture"><CopyableCode code="projects_locations_jobs_debug_send_capture" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td></td>
     <td>Send encoded debug capture data for component.</td>
 </tr>
@@ -101,12 +101,31 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_jobs_debug_send_capture"
+    defaultValue="projects_jobs_debug_send_capture"
     values={[
-        { label: 'projects_locations_jobs_debug_send_capture', value: 'projects_locations_jobs_debug_send_capture' },
-        { label: 'projects_jobs_debug_send_capture', value: 'projects_jobs_debug_send_capture' }
+        { label: 'projects_jobs_debug_send_capture', value: 'projects_jobs_debug_send_capture' },
+        { label: 'projects_locations_jobs_debug_send_capture', value: 'projects_locations_jobs_debug_send_capture' }
     ]}
 >
+<TabItem value="projects_jobs_debug_send_capture">
+
+Send encoded debug capture data for component.
+
+```sql
+EXEC google.dataflow.debug.projects_jobs_debug_send_capture 
+@projectId='{{ projectId }}' --required, 
+@jobId='{{ jobId }}' --required 
+@@json=
+'{
+"componentId": "{{ componentId }}", 
+"data": "{{ data }}", 
+"dataFormat": "{{ dataFormat }}", 
+"location": "{{ location }}", 
+"workerId": "{{ workerId }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_jobs_debug_send_capture">
 
 Send encoded debug capture data for component.
@@ -119,29 +138,10 @@ EXEC google.dataflow.debug.projects_locations_jobs_debug_send_capture
 @@json=
 '{
 "componentId": "{{ componentId }}", 
-"dataFormat": "{{ dataFormat }}", 
-"workerId": "{{ workerId }}", 
 "data": "{{ data }}", 
-"location": "{{ location }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_jobs_debug_send_capture">
-
-Send encoded debug capture data for component.
-
-```sql
-EXEC google.dataflow.debug.projects_jobs_debug_send_capture 
-@projectId='{{ projectId }}' --required, 
-@jobId='{{ jobId }}' --required 
-@@json=
-'{
-"componentId": "{{ componentId }}", 
 "dataFormat": "{{ dataFormat }}", 
-"workerId": "{{ workerId }}", 
-"data": "{{ data }}", 
-"location": "{{ location }}"
+"location": "{{ location }}", 
+"workerId": "{{ workerId }}"
 }'
 ;
 ```

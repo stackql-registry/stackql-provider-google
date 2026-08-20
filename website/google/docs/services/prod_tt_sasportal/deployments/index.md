@@ -33,51 +33,17 @@ Creates, updates, deletes, gets or lists a <code>deployments</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="customers_nodes_deployments_list"
+    defaultValue="customers_deployments_get"
     values={[
-        { label: 'customers_nodes_deployments_list', value: 'customers_nodes_deployments_list' },
         { label: 'customers_deployments_get', value: 'customers_deployments_get' },
-        { label: 'nodes_nodes_deployments_list', value: 'nodes_nodes_deployments_list' },
+        { label: 'customers_nodes_deployments_list', value: 'customers_nodes_deployments_list' },
         { label: 'nodes_deployments_get', value: 'nodes_deployments_get' },
-        { label: 'deployments_get', value: 'deployments_get' },
+        { label: 'nodes_nodes_deployments_list', value: 'nodes_nodes_deployments_list' },
         { label: 'customers_deployments_list', value: 'customers_deployments_list' },
+        { label: 'deployments_get', value: 'deployments_get' },
         { label: 'nodes_deployments_list', value: 'nodes_deployments_list' }
     ]}
 >
-<TabItem value="customers_nodes_deployments_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Resource name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The deployment's display name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="frns" /></td>
-    <td><code>array</code></td>
-    <td>Output only. The FCC Registration Numbers (FRNs) copied from its direct parent.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sasUserIds" /></td>
-    <td><code>array</code></td>
-    <td>User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="customers_deployments_get">
 
 <table>
@@ -112,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="nodes_nodes_deployments_list">
+<TabItem value="customers_nodes_deployments_list">
 
 <table>
 <thead>
@@ -180,7 +146,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="deployments_get">
+<TabItem value="nodes_nodes_deployments_list">
 
 <table>
 <thead>
@@ -215,6 +181,40 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="customers_deployments_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Resource name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The deployment's display name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="frns" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The FCC Registration Numbers (FRNs) copied from its direct parent.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sasUserIds" /></td>
+    <td><code>array</code></td>
+    <td>User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="deployments_get">
 
 <table>
 <thead>
@@ -300,13 +300,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#customers_nodes_deployments_list"><CopyableCode code="customers_nodes_deployments_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists deployments.</td>
-</tr>
-<tr>
     <td><a href="#customers_deployments_get"><CopyableCode code="customers_deployments_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
@@ -314,10 +307,10 @@ The following methods are available for this resource:
     <td>Returns a requested deployment.</td>
 </tr>
 <tr>
-    <td><a href="#nodes_nodes_deployments_list"><CopyableCode code="nodes_nodes_deployments_list" /></a></td>
+    <td><a href="#customers_nodes_deployments_list"><CopyableCode code="customers_nodes_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployments.</td>
 </tr>
 <tr>
@@ -328,6 +321,20 @@ The following methods are available for this resource:
     <td>Returns a requested deployment.</td>
 </tr>
 <tr>
+    <td><a href="#nodes_nodes_deployments_list"><CopyableCode code="nodes_nodes_deployments_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists deployments.</td>
+</tr>
+<tr>
+    <td><a href="#customers_deployments_list"><CopyableCode code="customers_deployments_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-customersId"><code>customersId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists deployments.</td>
+</tr>
+<tr>
     <td><a href="#deployments_get"><CopyableCode code="deployments_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
@@ -335,17 +342,10 @@ The following methods are available for this resource:
     <td>Returns a requested deployment.</td>
 </tr>
 <tr>
-    <td><a href="#customers_deployments_list"><CopyableCode code="customers_deployments_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-customersId"><code>customersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists deployments.</td>
-</tr>
-<tr>
     <td><a href="#nodes_deployments_list"><CopyableCode code="nodes_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployments.</td>
 </tr>
 <tr>
@@ -473,36 +473,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="customers_nodes_deployments_list"
+    defaultValue="customers_deployments_get"
     values={[
-        { label: 'customers_nodes_deployments_list', value: 'customers_nodes_deployments_list' },
         { label: 'customers_deployments_get', value: 'customers_deployments_get' },
-        { label: 'nodes_nodes_deployments_list', value: 'nodes_nodes_deployments_list' },
+        { label: 'customers_nodes_deployments_list', value: 'customers_nodes_deployments_list' },
         { label: 'nodes_deployments_get', value: 'nodes_deployments_get' },
-        { label: 'deployments_get', value: 'deployments_get' },
+        { label: 'nodes_nodes_deployments_list', value: 'nodes_nodes_deployments_list' },
         { label: 'customers_deployments_list', value: 'customers_deployments_list' },
+        { label: 'deployments_get', value: 'deployments_get' },
         { label: 'nodes_deployments_list', value: 'nodes_deployments_list' }
     ]}
 >
-<TabItem value="customers_nodes_deployments_list">
-
-Lists deployments.
-
-```sql
-SELECT
-name,
-displayName,
-frns,
-sasUserIds
-FROM google.prod_tt_sasportal.deployments
-WHERE customersId = '{{ customersId }}' -- required
-AND nodesId = '{{ nodesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-;
-```
-</TabItem>
 <TabItem value="customers_deployments_get">
 
 Returns a requested deployment.
@@ -519,7 +500,7 @@ AND deploymentsId = '{{ deploymentsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="nodes_nodes_deployments_list">
+<TabItem value="customers_nodes_deployments_list">
 
 Lists deployments.
 
@@ -530,11 +511,11 @@ displayName,
 frns,
 sasUserIds
 FROM google.prod_tt_sasportal.deployments
-WHERE nodesId = '{{ nodesId }}' -- required
-AND nodesId1 = '{{ nodesId1 }}' -- required
-AND pageToken = '{{ pageToken }}'
+WHERE customersId = '{{ customersId }}' -- required
+AND nodesId = '{{ nodesId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -554,9 +535,9 @@ AND deploymentsId = '{{ deploymentsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="deployments_get">
+<TabItem value="nodes_nodes_deployments_list">
 
-Returns a requested deployment.
+Lists deployments.
 
 ```sql
 SELECT
@@ -565,7 +546,11 @@ displayName,
 frns,
 sasUserIds
 FROM google.prod_tt_sasportal.deployments
-WHERE deploymentsId = '{{ deploymentsId }}' -- required
+WHERE nodesId = '{{ nodesId }}' -- required
+AND nodesId1 = '{{ nodesId1 }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -581,9 +566,24 @@ frns,
 sasUserIds
 FROM google.prod_tt_sasportal.deployments
 WHERE customersId = '{{ customersId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="deployments_get">
+
+Returns a requested deployment.
+
+```sql
+SELECT
+name,
+displayName,
+frns,
+sasUserIds
+FROM google.prod_tt_sasportal.deployments
+WHERE deploymentsId = '{{ deploymentsId }}' -- required
 ;
 ```
 </TabItem>
@@ -599,9 +599,9 @@ frns,
 sasUserIds
 FROM google.prod_tt_sasportal.deployments
 WHERE nodesId = '{{ nodesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

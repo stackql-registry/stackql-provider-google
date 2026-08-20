@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List DeploymentGroups for a given project and location.</td>
 </tr>
 <tr>
@@ -219,22 +219,15 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentGroupsId"><code>deploymentGroupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a DeploymentGroup</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentGroupsId"><code>deploymentGroupsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-deploymentReferencePolicy"><code>deploymentReferencePolicy</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-deploymentReferencePolicy"><code>deploymentReferencePolicy</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a DeploymentGroup</td>
-</tr>
-<tr>
-    <td><a href="#provision"><CopyableCode code="provision" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentGroupsId"><code>deploymentGroupsId</code></a></td>
-    <td></td>
-    <td>Provisions a deployment group. NOTE: As a first step of this operation, Infra Manager will automatically delete any Deployments that were part of the *last successful* DeploymentGroupRevision but are *no longer* included in the *current* DeploymentGroup definition (e.g., following an `UpdateDeploymentGroup` call), along with their actuated resources.</td>
 </tr>
 <tr>
     <td><a href="#deprovision"><CopyableCode code="deprovision" /></a></td>
@@ -242,6 +235,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentGroupsId"><code>deploymentGroupsId</code></a></td>
     <td></td>
     <td>Deprovisions a deployment group. NOTE: As a first step of this operation, Infra Manager will automatically delete any Deployments that were part of the *last successful* DeploymentGroupRevision but are *no longer* included in the *current* DeploymentGroup definition (e.g., following an `UpdateDeploymentGroup` call), along with their actuated resources.</td>
+</tr>
+<tr>
+    <td><a href="#provision"><CopyableCode code="provision" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentGroupsId"><code>deploymentGroupsId</code></a></td>
+    <td></td>
+    <td>Provisions a deployment group. NOTE: As a first step of this operation, Infra Manager will automatically delete any Deployments that were part of the *last successful* DeploymentGroupRevision but are *no longer* included in the *current* DeploymentGroup definition (e.g., following an `UpdateDeploymentGroup` call), along with their actuated resources.</td>
 </tr>
 </tbody>
 </table>
@@ -375,10 +375,10 @@ updateTime
 FROM google.config.deployment_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -400,20 +400,20 @@ Creates a DeploymentGroup The newly created DeploymentGroup will be in the `CREA
 
 ```sql
 INSERT INTO google.config.deployment_groups (
-data__deploymentUnits,
-data__name,
-data__labels,
 data__annotations,
+data__deploymentUnits,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 deploymentGroupId,
 requestId
 )
 SELECT 
-'{{ deploymentUnits }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ annotations }}',
+'{{ deploymentUnits }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deploymentGroupId }}',
@@ -438,25 +438,25 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the deployment_groups resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Arbitrary key-value metadata storage e.g. to help client tools identify deployment group during automation. See https://google.aip.dev/148#annotations for details on format and size limitations.
     - name: deploymentUnits
       description: |
         The deployment units of the deployment group in a DAG like structure. When a deployment group is being provisioned, the deployment units are deployed in a DAG order. The provided units must be in a DAG order, otherwise an error will be returned.
       value:
         - dependencies: "{{ dependencies }}"
-          id: "{{ id }}"
           deployment: "{{ deployment }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the deployment group. Format: 'projects/{project_id}/locations/{location}/deploymentGroups/{deployment_group}'.
+          id: "{{ id }}"
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. User-defined metadata for the deployment group.
-    - name: annotations
-      value: "{{ annotations }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. Arbitrary key-value metadata storage e.g. to help client tools identify deployment group during automation. See https://google.aip.dev/148#annotations for details on format and size limitations.
+        Identifier. The name of the deployment group. Format: 'projects/{project_id}/locations/{location}/deploymentGroups/{deployment_group}'.
     - name: deploymentGroupId
       value: "{{ deploymentGroupId }}"
     - name: requestId
@@ -482,16 +482,16 @@ Updates a DeploymentGroup
 ```sql
 UPDATE google.config.deployment_groups
 SET 
+data__annotations = '{{ annotations }}',
 data__deploymentUnits = '{{ deploymentUnits }}',
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deploymentGroupsId = '{{ deploymentGroupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -520,9 +520,9 @@ DELETE FROM google.config.deployment_groups
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deploymentGroupsId = '{{ deploymentGroupsId }}' --required
-AND requestId = '{{ requestId }}'
 AND deploymentReferencePolicy = '{{ deploymentReferencePolicy }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -532,12 +532,29 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="provision"
+    defaultValue="deprovision"
     values={[
-        { label: 'provision', value: 'provision' },
-        { label: 'deprovision', value: 'deprovision' }
+        { label: 'deprovision', value: 'deprovision' },
+        { label: 'provision', value: 'provision' }
     ]}
 >
+<TabItem value="deprovision">
+
+Deprovisions a deployment group. NOTE: As a first step of this operation, Infra Manager will automatically delete any Deployments that were part of the *last successful* DeploymentGroupRevision but are *no longer* included in the *current* DeploymentGroup definition (e.g., following an `UpdateDeploymentGroup` call), along with their actuated resources.
+
+```sql
+EXEC google.config.deployment_groups.deprovision 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@deploymentGroupsId='{{ deploymentGroupsId }}' --required 
+@@json=
+'{
+"deletePolicy": "{{ deletePolicy }}", 
+"force": {{ force }}
+}'
+;
+```
+</TabItem>
 <TabItem value="provision">
 
 Provisions a deployment group. NOTE: As a first step of this operation, Infra Manager will automatically delete any Deployments that were part of the *last successful* DeploymentGroupRevision but are *no longer* included in the *current* DeploymentGroup definition (e.g., following an `UpdateDeploymentGroup` call), along with their actuated resources.
@@ -550,23 +567,6 @@ EXEC google.config.deployment_groups.provision
 @@json=
 '{
 "deploymentSpecs": "{{ deploymentSpecs }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="deprovision">
-
-Deprovisions a deployment group. NOTE: As a first step of this operation, Infra Manager will automatically delete any Deployments that were part of the *last successful* DeploymentGroupRevision but are *no longer* included in the *current* DeploymentGroup definition (e.g., following an `UpdateDeploymentGroup` call), along with their actuated resources.
-
-```sql
-EXEC google.config.deployment_groups.deprovision 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@deploymentGroupsId='{{ deploymentGroupsId }}' --required 
-@@json=
-'{
-"force": {{ force }}, 
-"deletePolicy": "{{ deletePolicy }}"
 }'
 ;
 ```

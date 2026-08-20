@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#get_media"><CopyableCode code="get_media" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-placesId"><code>placesId</code></a>, <a href="#parameter-photosId"><code>photosId</code></a></td>
-    <td><a href="#parameter-skipHttpRedirect"><code>skipHttpRedirect</code></a>, <a href="#parameter-maxWidthPx"><code>maxWidthPx</code></a>, <a href="#parameter-maxHeightPx"><code>maxHeightPx</code></a></td>
+    <td><a href="#parameter-maxHeightPx"><code>maxHeightPx</code></a>, <a href="#parameter-maxWidthPx"><code>maxWidthPx</code></a>, <a href="#parameter-skipHttpRedirect"><code>skipHttpRedirect</code></a></td>
     <td>Get a photo media with a photo reference string.</td>
 </tr>
 </tbody>
@@ -149,9 +149,9 @@ photoUri
 FROM google.places.photos_media
 WHERE placesId = '{{ placesId }}' -- required
 AND photosId = '{{ photosId }}' -- required
-AND skipHttpRedirect = '{{ skipHttpRedirect }}'
-AND maxWidthPx = '{{ maxWidthPx }}'
 AND maxHeightPx = '{{ maxHeightPx }}'
+AND maxWidthPx = '{{ maxWidthPx }}'
+AND skipHttpRedirect = '{{ skipHttpRedirect }}'
 ;
 ```
 </TabItem>

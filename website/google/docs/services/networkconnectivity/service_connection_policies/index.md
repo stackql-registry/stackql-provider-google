@@ -215,14 +215,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ServiceConnectionPolicies in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-autoSubnetworkConfig.allocRangeSpace"><code>autoSubnetworkConfig.allocRangeSpace</code></a>, <a href="#parameter-subnetworkMode"><code>subnetworkMode</code></a>, <a href="#parameter-autoSubnetworkConfig.ipStack"><code>autoSubnetworkConfig.ipStack</code></a>, <a href="#parameter-autoSubnetworkConfig.prefixLength"><code>autoSubnetworkConfig.prefixLength</code></a>, <a href="#parameter-serviceConnectionPolicyId"><code>serviceConnectionPolicyId</code></a></td>
+    <td><a href="#parameter-autoSubnetworkConfig.allocRangeSpace"><code>autoSubnetworkConfig.allocRangeSpace</code></a>, <a href="#parameter-autoSubnetworkConfig.ipStack"><code>autoSubnetworkConfig.ipStack</code></a>, <a href="#parameter-autoSubnetworkConfig.prefixLength"><code>autoSubnetworkConfig.prefixLength</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-serviceConnectionPolicyId"><code>serviceConnectionPolicyId</code></a>, <a href="#parameter-subnetworkMode"><code>subnetworkMode</code></a></td>
     <td>Creates a new ServiceConnectionPolicy in a given project and location.</td>
 </tr>
 <tr>
@@ -388,10 +388,10 @@ updateTime
 FROM google.networkconnectivity.service_connection_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -413,38 +413,38 @@ Creates a new ServiceConnectionPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.service_connection_policies (
+data__description,
+data__etag,
+data__labels,
 data__name,
 data__network,
 data__pscConfig,
-data__description,
-data__labels,
 data__serviceClass,
-data__etag,
 projectsId,
 locationsId,
-requestId,
 autoSubnetworkConfig.allocRangeSpace,
-subnetworkMode,
 autoSubnetworkConfig.ipStack,
 autoSubnetworkConfig.prefixLength,
-serviceConnectionPolicyId
+requestId,
+serviceConnectionPolicyId,
+subnetworkMode
 )
 SELECT 
+'{{ description }}',
+'{{ etag }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ network }}',
 '{{ pscConfig }}',
-'{{ description }}',
-'{{ labels }}',
 '{{ serviceClass }}',
-'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
 '{{ autoSubnetworkConfig.allocRangeSpace }}',
-'{{ subnetworkMode }}',
 '{{ autoSubnetworkConfig.ipStack }}',
 '{{ autoSubnetworkConfig.prefixLength }}',
-'{{ serviceConnectionPolicyId }}'
+'{{ requestId }}',
+'{{ serviceConnectionPolicyId }}',
+'{{ subnetworkMode }}'
 RETURNING
 name,
 done,
@@ -465,6 +465,18 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the service_connection_policies resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of this resource.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels.
     - name: name
       value: "{{ name }}"
       description: |
@@ -477,40 +489,28 @@ response
       description: |
         Configuration used for Private Service Connect connections. Used when Infrastructure is PSC.
       value:
-        limit: "{{ limit }}"
-        producerInstanceLocation: "{{ producerInstanceLocation }}"
         allowedGoogleProducersResourceHierarchyLevel:
           - "{{ allowedGoogleProducersResourceHierarchyLevel }}"
+        limit: "{{ limit }}"
+        producerInstanceLocation: "{{ producerInstanceLocation }}"
         subnetworks:
           - "{{ subnetworks }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        A description of this resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        User-defined labels.
     - name: serviceClass
       value: "{{ serviceClass }}"
       description: |
         The service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass. It is provided by the Service Producer. Google services have a prefix of gcp or google-cloud. For example, gcp-memorystore-redis or google-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: autoSubnetworkConfig.allocRangeSpace
       value: "{{ autoSubnetworkConfig.allocRangeSpace }}"
-    - name: subnetworkMode
-      value: "{{ subnetworkMode }}"
     - name: autoSubnetworkConfig.ipStack
       value: "{{ autoSubnetworkConfig.ipStack }}"
     - name: autoSubnetworkConfig.prefixLength
       value: "{{ autoSubnetworkConfig.prefixLength }}"
+    - name: requestId
+      value: "{{ requestId }}"
     - name: serviceConnectionPolicyId
       value: "{{ serviceConnectionPolicyId }}"
+    - name: subnetworkMode
+      value: "{{ subnetworkMode }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -532,13 +532,13 @@ Updates the parameters of a single ServiceConnectionPolicy.
 ```sql
 UPDATE google.networkconnectivity.service_connection_policies
 SET 
+data__description = '{{ description }}',
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
 data__network = '{{ network }}',
 data__pscConfig = '{{ pscConfig }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__serviceClass = '{{ serviceClass }}',
-data__etag = '{{ etag }}'
+data__serviceClass = '{{ serviceClass }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -185,28 +185,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists `VmwareEngineNetwork` resources in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-vmwareEngineNetworkId"><code>vmwareEngineNetworkId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-vmwareEngineNetworkId"><code>vmwareEngineNetworkId</code></a></td>
     <td>Creates a new VMware Engine network that can be used by a private cloud.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareEngineNetworksId"><code>vmwareEngineNetworksId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Modifies a VMware Engine network resource. Only the following fields can be updated: `description`. Only fields specified in `updateMask` are applied.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareEngineNetworksId"><code>vmwareEngineNetworksId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a `VmwareEngineNetwork` resource. You can only delete a VMware Engine network after all resources that refer to it are deleted. For example, a private cloud, a network peering, and a network policy can all refer to the same VMware Engine network.</td>
 </tr>
 </tbody>
@@ -337,9 +337,9 @@ vpcNetworks
 FROM google.vmwareengine.vmware_engine_networks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -368,8 +368,8 @@ data__type,
 projectsId,
 locationsId,
 requestId,
-vmwareEngineNetworkId,
-validateOnly
+validateOnly,
+vmwareEngineNetworkId
 )
 SELECT 
 '{{ description }}',
@@ -378,8 +378,8 @@ SELECT
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
-'{{ vmwareEngineNetworkId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ vmwareEngineNetworkId }}'
 RETURNING
 name,
 done,
@@ -415,10 +415,10 @@ response
       valid_values: ['TYPE_UNSPECIFIED', 'LEGACY', 'STANDARD']
     - name: requestId
       value: "{{ requestId }}"
-    - name: vmwareEngineNetworkId
-      value: "{{ vmwareEngineNetworkId }}"
     - name: validateOnly
       value: {{ validateOnly }}
+    - name: vmwareEngineNetworkId
+      value: "{{ vmwareEngineNetworkId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -447,8 +447,8 @@ WHERE
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND vmwareEngineNetworksId = '{{ vmwareEngineNetworksId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
@@ -478,8 +478,8 @@ DELETE FROM google.vmwareengine.vmware_engine_networks
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND vmwareEngineNetworksId = '{{ vmwareEngineNetworksId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

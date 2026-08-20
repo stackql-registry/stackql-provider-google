@@ -51,34 +51,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#export"><CopyableCode code="export" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td></td>
-    <td>Exports a copy of all or a subset of entities from Google Cloud Datastore to another storage system, such as Google Cloud Storage. Recent updates to entities may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.</td>
-</tr>
-<tr>
-    <td><a href="#import"><CopyableCode code="import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td></td>
-    <td>Imports entities into Google Cloud Datastore. Existing entities with the same key are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportEntities operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Datastore.</td>
-</tr>
-<tr>
-    <td><a href="#run_aggregation_query"><CopyableCode code="run_aggregation_query" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td></td>
-    <td>Runs an aggregation query.</td>
-</tr>
-<tr>
-    <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td></td>
-    <td>Looks up entities by key.</td>
-</tr>
-<tr>
     <td><a href="#allocate_ids"><CopyableCode code="allocate_ids" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
@@ -93,18 +65,32 @@ The following methods are available for this resource:
     <td>Begins a new transaction.</td>
 </tr>
 <tr>
-    <td><a href="#rollback"><CopyableCode code="rollback" /></a></td>
+    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
-    <td>Rolls back a transaction.</td>
+    <td>Commits a transaction, optionally creating, deleting or modifying some entities.</td>
 </tr>
 <tr>
-    <td><a href="#run_query"><CopyableCode code="run_query" /></a></td>
+    <td><a href="#export"><CopyableCode code="export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
-    <td>Queries for entities.</td>
+    <td>Exports a copy of all or a subset of entities from Google Cloud Datastore to another storage system, such as Google Cloud Storage. Recent updates to entities may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.</td>
+</tr>
+<tr>
+    <td><a href="#import"><CopyableCode code="import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
+    <td></td>
+    <td>Imports entities into Google Cloud Datastore. Existing entities with the same key are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportEntities operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Datastore.</td>
+</tr>
+<tr>
+    <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
+    <td></td>
+    <td>Looks up entities by key.</td>
 </tr>
 <tr>
     <td><a href="#reserve_ids"><CopyableCode code="reserve_ids" /></a></td>
@@ -114,11 +100,25 @@ The following methods are available for this resource:
     <td>Prevents the supplied keys' IDs from being auto-allocated by Cloud Datastore.</td>
 </tr>
 <tr>
-    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
+    <td><a href="#rollback"><CopyableCode code="rollback" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
-    <td>Commits a transaction, optionally creating, deleting or modifying some entities.</td>
+    <td>Rolls back a transaction.</td>
+</tr>
+<tr>
+    <td><a href="#run_aggregation_query"><CopyableCode code="run_aggregation_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
+    <td></td>
+    <td>Runs an aggregation query.</td>
+</tr>
+<tr>
+    <td><a href="#run_query"><CopyableCode code="run_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
+    <td></td>
+    <td>Queries for entities.</td>
 </tr>
 </tbody>
 </table>
@@ -147,90 +147,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="export"
+    defaultValue="allocate_ids"
     values={[
-        { label: 'export', value: 'export' },
-        { label: 'import', value: 'import' },
-        { label: 'run_aggregation_query', value: 'run_aggregation_query' },
-        { label: 'lookup', value: 'lookup' },
         { label: 'allocate_ids', value: 'allocate_ids' },
         { label: 'begin_transaction', value: 'begin_transaction' },
-        { label: 'rollback', value: 'rollback' },
-        { label: 'run_query', value: 'run_query' },
+        { label: 'commit', value: 'commit' },
+        { label: 'export', value: 'export' },
+        { label: 'import', value: 'import' },
+        { label: 'lookup', value: 'lookup' },
         { label: 'reserve_ids', value: 'reserve_ids' },
-        { label: 'commit', value: 'commit' }
+        { label: 'rollback', value: 'rollback' },
+        { label: 'run_aggregation_query', value: 'run_aggregation_query' },
+        { label: 'run_query', value: 'run_query' }
     ]}
 >
-<TabItem value="export">
-
-Exports a copy of all or a subset of entities from Google Cloud Datastore to another storage system, such as Google Cloud Storage. Recent updates to entities may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.
-
-```sql
-EXEC google.datastore.projects.export 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
-"labels": "{{ labels }}", 
-"outputUrlPrefix": "{{ outputUrlPrefix }}", 
-"entityFilter": "{{ entityFilter }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="import">
-
-Imports entities into Google Cloud Datastore. Existing entities with the same key are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportEntities operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Datastore.
-
-```sql
-EXEC google.datastore.projects.import 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
-"labels": "{{ labels }}", 
-"inputUrl": "{{ inputUrl }}", 
-"entityFilter": "{{ entityFilter }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="run_aggregation_query">
-
-Runs an aggregation query.
-
-```sql
-EXEC google.datastore.projects.run_aggregation_query 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
-"gqlQuery": "{{ gqlQuery }}", 
-"requestOptions": "{{ requestOptions }}", 
-"readOptions": "{{ readOptions }}", 
-"databaseId": "{{ databaseId }}", 
-"partitionId": "{{ partitionId }}", 
-"aggregationQuery": "{{ aggregationQuery }}", 
-"explainOptions": "{{ explainOptions }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="lookup">
-
-Looks up entities by key.
-
-```sql
-EXEC google.datastore.projects.lookup 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
-"readOptions": "{{ readOptions }}", 
-"propertyMask": "{{ propertyMask }}", 
-"keys": "{{ keys }}", 
-"databaseId": "{{ databaseId }}", 
-"requestOptions": "{{ requestOptions }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="allocate_ids">
 
 Allocates IDs for the given keys, which is useful for referencing an entity before it is inserted.
@@ -240,9 +170,9 @@ EXEC google.datastore.projects.allocate_ids
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"requestOptions": "{{ requestOptions }}", 
 "databaseId": "{{ databaseId }}", 
-"keys": "{{ keys }}"
+"keys": "{{ keys }}", 
+"requestOptions": "{{ requestOptions }}"
 }'
 ;
 ```
@@ -256,62 +186,9 @@ EXEC google.datastore.projects.begin_transaction
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"transactionOptions": "{{ transactionOptions }}", 
-"requestOptions": "{{ requestOptions }}", 
-"databaseId": "{{ databaseId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="rollback">
-
-Rolls back a transaction.
-
-```sql
-EXEC google.datastore.projects.rollback 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
-"requestOptions": "{{ requestOptions }}", 
-"transaction": "{{ transaction }}", 
-"databaseId": "{{ databaseId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="run_query">
-
-Queries for entities.
-
-```sql
-EXEC google.datastore.projects.run_query 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
-"gqlQuery": "{{ gqlQuery }}", 
-"requestOptions": "{{ requestOptions }}", 
-"query": "{{ query }}", 
 "databaseId": "{{ databaseId }}", 
-"partitionId": "{{ partitionId }}", 
-"explainOptions": "{{ explainOptions }}", 
-"readOptions": "{{ readOptions }}", 
-"propertyMask": "{{ propertyMask }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="reserve_ids">
-
-Prevents the supplied keys' IDs from being auto-allocated by Cloud Datastore.
-
-```sql
-EXEC google.datastore.projects.reserve_ids 
-@projectId='{{ projectId }}' --required 
-@@json=
-'{
 "requestOptions": "{{ requestOptions }}", 
-"databaseId": "{{ databaseId }}", 
-"keys": "{{ keys }}"
+"transactionOptions": "{{ transactionOptions }}"
 }'
 ;
 ```
@@ -325,12 +202,135 @@ EXEC google.datastore.projects.commit
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
+"databaseId": "{{ databaseId }}", 
+"mode": "{{ mode }}", 
 "mutations": "{{ mutations }}", 
 "requestOptions": "{{ requestOptions }}", 
-"transaction": "{{ transaction }}", 
 "singleUseTransaction": "{{ singleUseTransaction }}", 
-"mode": "{{ mode }}", 
-"databaseId": "{{ databaseId }}"
+"transaction": "{{ transaction }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="export">
+
+Exports a copy of all or a subset of entities from Google Cloud Datastore to another storage system, such as Google Cloud Storage. Recent updates to entities may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.
+
+```sql
+EXEC google.datastore.projects.export 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"entityFilter": "{{ entityFilter }}", 
+"labels": "{{ labels }}", 
+"outputUrlPrefix": "{{ outputUrlPrefix }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="import">
+
+Imports entities into Google Cloud Datastore. Existing entities with the same key are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportEntities operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Datastore.
+
+```sql
+EXEC google.datastore.projects.import 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"entityFilter": "{{ entityFilter }}", 
+"inputUrl": "{{ inputUrl }}", 
+"labels": "{{ labels }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="lookup">
+
+Looks up entities by key.
+
+```sql
+EXEC google.datastore.projects.lookup 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"databaseId": "{{ databaseId }}", 
+"keys": "{{ keys }}", 
+"propertyMask": "{{ propertyMask }}", 
+"readOptions": "{{ readOptions }}", 
+"requestOptions": "{{ requestOptions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reserve_ids">
+
+Prevents the supplied keys' IDs from being auto-allocated by Cloud Datastore.
+
+```sql
+EXEC google.datastore.projects.reserve_ids 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"databaseId": "{{ databaseId }}", 
+"keys": "{{ keys }}", 
+"requestOptions": "{{ requestOptions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="rollback">
+
+Rolls back a transaction.
+
+```sql
+EXEC google.datastore.projects.rollback 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"databaseId": "{{ databaseId }}", 
+"requestOptions": "{{ requestOptions }}", 
+"transaction": "{{ transaction }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="run_aggregation_query">
+
+Runs an aggregation query.
+
+```sql
+EXEC google.datastore.projects.run_aggregation_query 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"aggregationQuery": "{{ aggregationQuery }}", 
+"databaseId": "{{ databaseId }}", 
+"explainOptions": "{{ explainOptions }}", 
+"gqlQuery": "{{ gqlQuery }}", 
+"partitionId": "{{ partitionId }}", 
+"readOptions": "{{ readOptions }}", 
+"requestOptions": "{{ requestOptions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="run_query">
+
+Queries for entities.
+
+```sql
+EXEC google.datastore.projects.run_query 
+@projectId='{{ projectId }}' --required 
+@@json=
+'{
+"databaseId": "{{ databaseId }}", 
+"explainOptions": "{{ explainOptions }}", 
+"gqlQuery": "{{ gqlQuery }}", 
+"partitionId": "{{ partitionId }}", 
+"propertyMask": "{{ propertyMask }}", 
+"query": "{{ query }}", 
+"readOptions": "{{ readOptions }}", 
+"requestOptions": "{{ requestOptions }}"
 }'
 ;
 ```

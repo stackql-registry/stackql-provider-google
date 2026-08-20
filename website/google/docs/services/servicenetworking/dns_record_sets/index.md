@@ -78,7 +78,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-consumerNetwork"><code>consumerNetwork</code></a></td>
+    <td><a href="#parameter-consumerNetwork"><code>consumerNetwork</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td>Producers can use this method to retrieve a list of available DNS RecordSets available inside the private zone on the tenant host project accessible from their network.</td>
 </tr>
 <tr>
@@ -153,8 +153,8 @@ SELECT
 dnsRecordSets
 FROM google.servicenetworking.dns_record_sets
 WHERE servicesId = '{{ servicesId }}' -- required
-AND zone = '{{ zone }}'
 AND consumerNetwork = '{{ consumerNetwork }}'
+AND zone = '{{ zone }}'
 ;
 ```
 </TabItem>
@@ -176,14 +176,14 @@ Service producers can use this method to add DNS record sets to private DNS zone
 
 ```sql
 INSERT INTO google.servicenetworking.dns_record_sets (
-data__dnsRecordSet,
 data__consumerNetwork,
+data__dnsRecordSet,
 data__zone,
 servicesId
 )
 SELECT 
-'{{ dnsRecordSet }}',
 '{{ consumerNetwork }}',
+'{{ dnsRecordSet }}',
 '{{ zone }}',
 '{{ servicesId }}'
 RETURNING
@@ -203,19 +203,19 @@ response
     - name: servicesId
       value: "{{ servicesId }}"
       description: Required parameter for the dns_record_sets resource.
-    - name: dnsRecordSet
-      description: |
-        Represents a DNS record set resource.
-      value:
-        type: "{{ type }}"
-        ttl: "{{ ttl }}"
-        domain: "{{ domain }}"
-        data:
-          - "{{ data }}"
     - name: consumerNetwork
       value: "{{ consumerNetwork }}"
       description: |
         Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is the project number, as in '12345' {network} is the network name.
+    - name: dnsRecordSet
+      description: |
+        Required. The DNS record set to add.
+      value:
+        data:
+          - "{{ data }}"
+        domain: "{{ domain }}"
+        ttl: "{{ ttl }}"
+        type: "{{ type }}"
     - name: zone
       value: "{{ zone }}"
       description: |
@@ -243,8 +243,8 @@ UPDATE google.servicenetworking.dns_record_sets
 SET 
 data__consumerNetwork = '{{ consumerNetwork }}',
 data__existingDnsRecordSet = '{{ existingDnsRecordSet }}',
-data__zone = '{{ zone }}',
-data__newDnsRecordSet = '{{ newDnsRecordSet }}'
+data__newDnsRecordSet = '{{ newDnsRecordSet }}',
+data__zone = '{{ zone }}'
 WHERE 
 servicesId = '{{ servicesId }}' --required
 RETURNING

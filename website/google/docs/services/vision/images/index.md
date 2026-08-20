@@ -51,16 +51,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_images_annotate"><CopyableCode code="projects_locations_images_annotate" /></a></td>
+    <td><a href="#images_annotate"><CopyableCode code="images_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
     <td></td>
     <td>Run image detection and annotation for a batch of images.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_images_async_batch_annotate"><CopyableCode code="projects_locations_images_async_batch_annotate" /></a></td>
+    <td><a href="#images_async_batch_annotate"><CopyableCode code="images_async_batch_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
     <td></td>
     <td>Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.</td>
 </tr>
@@ -79,16 +79,16 @@ The following methods are available for this resource:
     <td>Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.</td>
 </tr>
 <tr>
-    <td><a href="#images_annotate"><CopyableCode code="images_annotate" /></a></td>
+    <td><a href="#projects_locations_images_annotate"><CopyableCode code="projects_locations_images_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Run image detection and annotation for a batch of images.</td>
 </tr>
 <tr>
-    <td><a href="#images_async_batch_annotate"><CopyableCode code="images_async_batch_annotate" /></a></td>
+    <td><a href="#projects_locations_images_async_batch_annotate"><CopyableCode code="projects_locations_images_async_batch_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.</td>
 </tr>
@@ -124,16 +124,80 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_images_annotate"
+    defaultValue="images_annotate"
     values={[
-        { label: 'projects_locations_images_annotate', value: 'projects_locations_images_annotate' },
-        { label: 'projects_locations_images_async_batch_annotate', value: 'projects_locations_images_async_batch_annotate' },
+        { label: 'images_annotate', value: 'images_annotate' },
+        { label: 'images_async_batch_annotate', value: 'images_async_batch_annotate' },
         { label: 'projects_images_annotate', value: 'projects_images_annotate' },
         { label: 'projects_images_async_batch_annotate', value: 'projects_images_async_batch_annotate' },
-        { label: 'images_annotate', value: 'images_annotate' },
-        { label: 'images_async_batch_annotate', value: 'images_async_batch_annotate' }
+        { label: 'projects_locations_images_annotate', value: 'projects_locations_images_annotate' },
+        { label: 'projects_locations_images_async_batch_annotate', value: 'projects_locations_images_async_batch_annotate' }
     ]}
 >
+<TabItem value="images_annotate">
+
+Run image detection and annotation for a batch of images.
+
+```sql
+EXEC google.vision.images.images_annotate 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="images_async_batch_annotate">
+
+Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.
+
+```sql
+EXEC google.vision.images.images_async_batch_annotate 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"outputConfig": "{{ outputConfig }}", 
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_images_annotate">
+
+Run image detection and annotation for a batch of images.
+
+```sql
+EXEC google.vision.images.projects_images_annotate 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_images_async_batch_annotate">
+
+Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.
+
+```sql
+EXEC google.vision.images.projects_images_async_batch_annotate 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"labels": "{{ labels }}", 
+"outputConfig": "{{ outputConfig }}", 
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_images_annotate">
 
 Run image detection and annotation for a batch of images.
@@ -144,9 +208,9 @@ EXEC google.vision.images.projects_locations_images_annotate
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"requests": "{{ requests }}", 
 "labels": "{{ labels }}", 
-"parent": "{{ parent }}"
+"parent": "{{ parent }}", 
+"requests": "{{ requests }}"
 }'
 ;
 ```
@@ -161,74 +225,10 @@ EXEC google.vision.images.projects_locations_images_async_batch_annotate
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"parent": "{{ parent }}", 
-"outputConfig": "{{ outputConfig }}", 
-"requests": "{{ requests }}", 
-"labels": "{{ labels }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_images_annotate">
-
-Run image detection and annotation for a batch of images.
-
-```sql
-EXEC google.vision.images.projects_images_annotate 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"requests": "{{ requests }}", 
 "labels": "{{ labels }}", 
-"parent": "{{ parent }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_images_async_batch_annotate">
-
-Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.
-
-```sql
-EXEC google.vision.images.projects_images_async_batch_annotate 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"parent": "{{ parent }}", 
 "outputConfig": "{{ outputConfig }}", 
-"requests": "{{ requests }}", 
-"labels": "{{ labels }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="images_annotate">
-
-Run image detection and annotation for a batch of images.
-
-```sql
-EXEC google.vision.images.images_annotate 
-@@json=
-'{
-"requests": "{{ requests }}", 
-"labels": "{{ labels }}", 
-"parent": "{{ parent }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="images_async_batch_annotate">
-
-Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.
-
-```sql
-EXEC google.vision.images.images_async_batch_annotate 
-@@json=
-'{
 "parent": "{{ parent }}", 
-"outputConfig": "{{ outputConfig }}", 
-"requests": "{{ requests }}", 
-"labels": "{{ labels }}"
+"requests": "{{ requests }}"
 }'
 ;
 ```

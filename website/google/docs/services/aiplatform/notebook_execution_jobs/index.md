@@ -295,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists NotebookExecutionJobs in a Location.</td>
 </tr>
 <tr>
@@ -448,10 +448,10 @@ workbenchRuntime
 FROM google.aiplatform.notebook_execution_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
 ;
 ```
@@ -474,41 +474,41 @@ Creates a NotebookExecutionJob.
 
 ```sql
 INSERT INTO google.aiplatform.notebook_execution_jobs (
-data__notebookRuntimeTemplateResourceName,
-data__directNotebookSource,
 data__customEnvironmentSpec,
-data__workbenchRuntime,
-data__executionUser,
+data__dataformRepositorySource,
+data__directNotebookSource,
 data__displayName,
 data__encryptionSpec,
-data__gcsOutputUri,
 data__executionTimeout,
-data__labels,
-data__dataformRepositorySource,
-data__kernelName,
-data__scheduleResourceName,
+data__executionUser,
 data__gcsNotebookSource,
+data__gcsOutputUri,
+data__kernelName,
+data__labels,
+data__notebookRuntimeTemplateResourceName,
+data__scheduleResourceName,
 data__serviceAccount,
+data__workbenchRuntime,
 projectsId,
 locationsId,
 notebookExecutionJobId
 )
 SELECT 
-'{{ notebookRuntimeTemplateResourceName }}',
-'{{ directNotebookSource }}',
 '{{ customEnvironmentSpec }}',
-'{{ workbenchRuntime }}',
-'{{ executionUser }}',
+'{{ dataformRepositorySource }}',
+'{{ directNotebookSource }}',
 '{{ displayName }}',
 '{{ encryptionSpec }}',
-'{{ gcsOutputUri }}',
 '{{ executionTimeout }}',
-'{{ labels }}',
-'{{ dataformRepositorySource }}',
-'{{ kernelName }}',
-'{{ scheduleResourceName }}',
+'{{ executionUser }}',
 '{{ gcsNotebookSource }}',
+'{{ gcsOutputUri }}',
+'{{ kernelName }}',
+'{{ labels }}',
+'{{ notebookRuntimeTemplateResourceName }}',
+'{{ scheduleResourceName }}',
 '{{ serviceAccount }}',
+'{{ workbenchRuntime }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ notebookExecutionJobId }}'
@@ -532,56 +532,43 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the notebook_execution_jobs resource.
-    - name: notebookRuntimeTemplateResourceName
-      value: "{{ notebookRuntimeTemplateResourceName }}"
+    - name: customEnvironmentSpec
       description: |
-        The NotebookRuntimeTemplate to source compute configuration from.
+        The custom compute configuration for an execution job.
+      value:
+        machineSpec:
+          acceleratorCount: {{ acceleratorCount }}
+          acceleratorType: "{{ acceleratorType }}"
+          gpuPartitionSize: "{{ gpuPartitionSize }}"
+          machineType: "{{ machineType }}"
+          reservationAffinity:
+            key: "{{ key }}"
+            reservationAffinityType: "{{ reservationAffinityType }}"
+            values:
+              - "{{ values }}"
+          tpuTopology: "{{ tpuTopology }}"
+        networkSpec:
+          enableInternetAccess: {{ enableInternetAccess }}
+          network: "{{ network }}"
+          subnetwork: "{{ subnetwork }}"
+        persistentDiskSpec:
+          diskSizeGb: "{{ diskSizeGb }}"
+          diskType: "{{ diskType }}"
+        shieldedInstanceConfig:
+          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+          enableSecureBoot: {{ enableSecureBoot }}
+          enableVtpm: {{ enableVtpm }}
+    - name: dataformRepositorySource
+      description: |
+        The Dataform Repository pointing to a single file notebook repository.
+      value:
+        commitSha: "{{ commitSha }}"
+        dataformRepositoryResourceName: "{{ dataformRepositoryResourceName }}"
     - name: directNotebookSource
       description: |
         The contents of an input notebook file.
       value:
         content: "{{ content }}"
-    - name: customEnvironmentSpec
-      description: |
-        The custom compute configuration for an execution job.
-      value:
-        networkSpec:
-          network: "{{ network }}"
-          enableInternetAccess: {{ enableInternetAccess }}
-          subnetwork: "{{ subnetwork }}"
-        machineSpec:
-          machineType: "{{ machineType }}"
-          tpuTopology: "{{ tpuTopology }}"
-          reservationAffinity:
-            reservationAffinityType: "{{ reservationAffinityType }}"
-            key: "{{ key }}"
-            values:
-              - "{{ values }}"
-          acceleratorCount: {{ acceleratorCount }}
-          acceleratorType: "{{ acceleratorType }}"
-          gpuPartitionSize: "{{ gpuPartitionSize }}"
-        persistentDiskSpec:
-          diskType: "{{ diskType }}"
-          diskSizeGb: "{{ diskSizeGb }}"
-        shieldedInstanceConfig:
-          enableVtpm: {{ enableVtpm }}
-          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-          enableSecureBoot: {{ enableSecureBoot }}
-    - name: workbenchRuntime
-      description: |
-        The Workbench runtime configuration to use for the notebook execution.
-      value:
-        vmImage:
-          family: "{{ family }}"
-          project: "{{ project }}"
-          name: "{{ name }}"
-        customContainerImage:
-          repository: "{{ repository }}"
-          tag: "{{ tag }}"
-    - name: executionUser
-      value: "{{ executionUser }}"
-      description: |
-        The user email to run the execution as. Only supported by Colab runtimes.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -591,42 +578,55 @@ response
         Customer-managed encryption key spec for the notebook execution job. This field is auto-populated if the NotebookRuntimeTemplate has an encryption spec.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
-    - name: gcsOutputUri
-      value: "{{ gcsOutputUri }}"
-      description: |
-        The Cloud Storage location to upload the result to. Format: \`gs://bucket-name\`
     - name: executionTimeout
       value: "{{ executionTimeout }}"
       description: |
         Max running time of the execution job in seconds (default 86400s / 24 hrs).
-    - name: labels
-      value: "{{ labels }}"
+    - name: executionUser
+      value: "{{ executionUser }}"
       description: |
-        The labels with user-defined metadata to organize NotebookExecutionJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-    - name: dataformRepositorySource
-      description: |
-        The Dataform Repository pointing to a single file notebook repository.
-      value:
-        dataformRepositoryResourceName: "{{ dataformRepositoryResourceName }}"
-        commitSha: "{{ commitSha }}"
-    - name: kernelName
-      value: "{{ kernelName }}"
-      description: |
-        The name of the kernel to use during notebook execution. If unset, the default kernel is used.
-    - name: scheduleResourceName
-      value: "{{ scheduleResourceName }}"
-      description: |
-        The Schedule resource name if this job is triggered by one. Format: \`projects/{project_id}/locations/{location}/schedules/{schedule_id}\`
+        The user email to run the execution as. Only supported by Colab runtimes.
     - name: gcsNotebookSource
       description: |
         The Cloud Storage url pointing to the ipynb file. Format: \`gs://bucket/notebook_file.ipynb\`
       value:
-        uri: "{{ uri }}"
         generation: "{{ generation }}"
+        uri: "{{ uri }}"
+    - name: gcsOutputUri
+      value: "{{ gcsOutputUri }}"
+      description: |
+        The Cloud Storage location to upload the result to. Format: \`gs://bucket-name\`
+    - name: kernelName
+      value: "{{ kernelName }}"
+      description: |
+        The name of the kernel to use during notebook execution. If unset, the default kernel is used.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize NotebookExecutionJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+    - name: notebookRuntimeTemplateResourceName
+      value: "{{ notebookRuntimeTemplateResourceName }}"
+      description: |
+        The NotebookRuntimeTemplate to source compute configuration from.
+    - name: scheduleResourceName
+      value: "{{ scheduleResourceName }}"
+      description: |
+        The Schedule resource name if this job is triggered by one. Format: \`projects/{project_id}/locations/{location}/schedules/{schedule_id}\`
     - name: serviceAccount
       value: "{{ serviceAccount }}"
       description: |
         The service account to run the execution as.
+    - name: workbenchRuntime
+      description: |
+        The Workbench runtime configuration to use for the notebook execution.
+      value:
+        customContainerImage:
+          repository: "{{ repository }}"
+          tag: "{{ tag }}"
+        vmImage:
+          family: "{{ family }}"
+          name: "{{ name }}"
+          project: "{{ project }}"
     - name: notebookExecutionJobId
       value: "{{ notebookExecutionJobId }}"
 `}</CodeBlock>

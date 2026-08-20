@@ -189,7 +189,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-tagValuesId"><code>tagValuesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the attributes of the TagValue resource.</td>
 </tr>
 <tr>
@@ -321,18 +321,18 @@ Creates a TagValue as a child of the specified TagKey. If a another request with
 ```sql
 INSERT INTO google.cloudresourcemanager.tag_values (
 data__description,
-data__shortName,
-data__parent,
 data__etag,
 data__name,
+data__parent,
+data__shortName,
 validateOnly
 )
 SELECT 
 '{{ description }}',
-'{{ shortName }}',
-'{{ parent }}',
 '{{ etag }}',
 '{{ name }}',
+'{{ parent }}',
+'{{ shortName }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -352,14 +352,6 @@ response
       value: "{{ description }}"
       description: |
         Optional. User-assigned description of the TagValue. Must not exceed 256 characters. Read-write.
-    - name: shortName
-      value: "{{ shortName }}"
-      description: |
-        Required. Immutable. User-assigned short name for TagValue. The short name should be unique for TagValues within the same parent TagKey. The short name must be 256 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
-    - name: parent
-      value: "{{ parent }}"
-      description: |
-        Immutable. The resource name of the new TagValue's parent TagKey. Must be of the form \`tagKeys/{tag_key_id}\`.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -368,6 +360,14 @@ response
       value: "{{ name }}"
       description: |
         Immutable. Resource name for TagValue in the format \`tagValues/456\`.
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Immutable. The resource name of the new TagValue's parent TagKey. Must be of the form \`tagKeys/{tag_key_id}\`.
+    - name: shortName
+      value: "{{ shortName }}"
+      description: |
+        Required. Immutable. User-assigned short name for TagValue. The short name should be unique for TagValues within the same parent TagKey. The short name must be 256 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
     - name: validateOnly
       value: {{ validateOnly }}
 `}</CodeBlock>
@@ -392,14 +392,14 @@ Updates the attributes of the TagValue resource.
 UPDATE google.cloudresourcemanager.tag_values
 SET 
 data__description = '{{ description }}',
-data__shortName = '{{ shortName }}',
-data__parent = '{{ parent }}',
 data__etag = '{{ etag }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__parent = '{{ parent }}',
+data__shortName = '{{ shortName }}'
 WHERE 
 tagValuesId = '{{ tagValuesId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,

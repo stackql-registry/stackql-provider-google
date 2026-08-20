@@ -360,24 +360,24 @@ Creates a phrase matcher.
 
 ```sql
 INSERT INTO google.contactcenterinsights.phrase_matchers (
-data__name,
-data__type,
-data__displayName,
-data__roleMatch,
-data__phraseMatchRuleGroups,
-data__versionTag,
 data__active,
+data__displayName,
+data__name,
+data__phraseMatchRuleGroups,
+data__roleMatch,
+data__type,
+data__versionTag,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ type }}',
-'{{ displayName }}',
-'{{ roleMatch }}',
-'{{ phraseMatchRuleGroups }}',
-'{{ versionTag }}',
 {{ active }},
+'{{ displayName }}',
+'{{ name }}',
+'{{ phraseMatchRuleGroups }}',
+'{{ roleMatch }}',
+'{{ type }}',
+'{{ versionTag }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -406,38 +406,38 @@ versionTag
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the phrase_matchers resource.
-    - name: name
-      value: "{{ name }}"
+    - name: active
+      value: {{ active }}
       description: |
-        The resource name of the phrase matcher. Format: projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher}
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Required. The type of this phrase matcher.
-      valid_values: ['PHRASE_MATCHER_TYPE_UNSPECIFIED', 'ALL_OF', 'ANY_OF']
+        Applies the phrase matcher only when it is active.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The human-readable name of the phrase matcher.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the phrase matcher. Format: projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher}
+    - name: phraseMatchRuleGroups
+      description: |
+        A list of phase match rule groups that are included in this matcher.
+      value:
+        - phraseMatchRules: "{{ phraseMatchRules }}"
+          type: "{{ type }}"
     - name: roleMatch
       value: "{{ roleMatch }}"
       description: |
         The role whose utterances the phrase matcher should be matched against. If the role is ROLE_UNSPECIFIED it will be matched against any utterances in the transcript.
       valid_values: ['ROLE_UNSPECIFIED', 'HUMAN_AGENT', 'AUTOMATED_AGENT', 'END_USER', 'ANY_AGENT']
-    - name: phraseMatchRuleGroups
+    - name: type
+      value: "{{ type }}"
       description: |
-        A list of phase match rule groups that are included in this matcher.
-      value:
-        - type: "{{ type }}"
-          phraseMatchRules: "{{ phraseMatchRules }}"
+        Required. The type of this phrase matcher.
+      valid_values: ['PHRASE_MATCHER_TYPE_UNSPECIFIED', 'ALL_OF', 'ANY_OF']
     - name: versionTag
       value: "{{ versionTag }}"
       description: |
         The customized version tag to use for the phrase matcher. If not specified, it will default to \`revision_id\`.
-    - name: active
-      value: {{ active }}
-      description: |
-        Applies the phrase matcher only when it is active.
 `}</CodeBlock>
 
 </TabItem>
@@ -459,13 +459,13 @@ Updates a phrase matcher.
 ```sql
 UPDATE google.contactcenterinsights.phrase_matchers
 SET 
-data__name = '{{ name }}',
-data__type = '{{ type }}',
+data__active = {{ active }},
 data__displayName = '{{ displayName }}',
-data__roleMatch = '{{ roleMatch }}',
+data__name = '{{ name }}',
 data__phraseMatchRuleGroups = '{{ phraseMatchRuleGroups }}',
-data__versionTag = '{{ versionTag }}',
-data__active = {{ active }}
+data__roleMatch = '{{ roleMatch }}',
+data__type = '{{ type }}',
+data__versionTag = '{{ versionTag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -33,19 +33,78 @@ Creates, updates, deletes, gets or lists a <code>mute_configs</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_locations_mute_configs_get"
+    defaultValue="folders_locations_mute_configs_get"
     values={[
+        { label: 'folders_locations_mute_configs_get', value: 'folders_locations_mute_configs_get' },
         { label: 'organizations_locations_mute_configs_get', value: 'organizations_locations_mute_configs_get' },
         { label: 'projects_locations_mute_configs_get', value: 'projects_locations_mute_configs_get' },
-        { label: 'folders_locations_mute_configs_get', value: 'folders_locations_mute_configs_get' },
+        { label: 'folders_mute_configs_get', value: 'folders_mute_configs_get' },
         { label: 'organizations_mute_configs_get', value: 'organizations_mute_configs_get' },
         { label: 'projects_mute_configs_get', value: 'projects_mute_configs_get' },
-        { label: 'folders_mute_configs_get', value: 'folders_mute_configs_get' },
+        { label: 'folders_mute_configs_list', value: 'folders_mute_configs_list' },
         { label: 'organizations_mute_configs_list', value: 'organizations_mute_configs_list' },
-        { label: 'projects_mute_configs_list', value: 'projects_mute_configs_list' },
-        { label: 'folders_mute_configs_list', value: 'folders_mute_configs_list' }
+        { label: 'projects_mute_configs_list', value: 'projects_mute_configs_list' }
     ]}
 >
+<TabItem value="folders_locations_mute_configs_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="expiryTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="mostRecentEditor" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td> (MUTE_CONFIG_TYPE_UNSPECIFIED, STATIC, DYNAMIC)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_locations_mute_configs_get">
 
 <table>
@@ -164,7 +223,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_locations_mute_configs_get">
+<TabItem value="folders_mute_configs_get">
 
 <table>
 <thead>
@@ -341,7 +400,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_mute_configs_get">
+<TabItem value="folders_mute_configs_list">
 
 <table>
 <thead>
@@ -460,65 +519,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_mute_configs_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="expiryTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="mostRecentEditor" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td> (MUTE_CONFIG_TYPE_UNSPECIFIED, STATIC, DYNAMIC)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="folders_mute_configs_list">
 
 <table>
 <thead>
@@ -595,6 +595,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_locations_mute_configs_get"><CopyableCode code="folders_locations_mute_configs_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_locations_mute_configs_get"><CopyableCode code="organizations_locations_mute_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
@@ -609,9 +616,9 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_locations_mute_configs_get"><CopyableCode code="folders_locations_mute_configs_get" /></a></td>
+    <td><a href="#folders_mute_configs_get"><CopyableCode code="folders_mute_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -630,17 +637,17 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_mute_configs_get"><CopyableCode code="folders_mute_configs_get" /></a></td>
+    <td><a href="#folders_mute_configs_list"><CopyableCode code="folders_mute_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_mute_configs_list"><CopyableCode code="organizations_mute_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -651,10 +658,10 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_mute_configs_list"><CopyableCode code="folders_mute_configs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
+    <td><a href="#folders_mute_configs_create"><CopyableCode code="folders_mute_configs_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-muteConfigId"><code>muteConfigId</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -672,10 +679,10 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_mute_configs_create"><CopyableCode code="folders_mute_configs_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-muteConfigId"><code>muteConfigId</code></a></td>
+    <td><a href="#folders_locations_mute_configs_patch"><CopyableCode code="folders_locations_mute_configs_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -693,9 +700,9 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_locations_mute_configs_patch"><CopyableCode code="folders_locations_mute_configs_patch" /></a></td>
+    <td><a href="#folders_mute_configs_patch"><CopyableCode code="folders_mute_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
 </tr>
@@ -714,10 +721,10 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_mute_configs_patch"><CopyableCode code="folders_mute_configs_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#folders_locations_mute_configs_delete"><CopyableCode code="folders_locations_mute_configs_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
+    <td></td>
     <td></td>
 </tr>
 <tr>
@@ -735,9 +742,9 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_locations_mute_configs_delete"><CopyableCode code="folders_locations_mute_configs_delete" /></a></td>
+    <td><a href="#folders_mute_configs_delete"><CopyableCode code="folders_mute_configs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -752,13 +759,6 @@ The following methods are available for this resource:
     <td><a href="#projects_mute_configs_delete"><CopyableCode code="projects_mute_configs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_mute_configs_delete"><CopyableCode code="folders_mute_configs_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-muteConfigsId"><code>muteConfigsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -829,19 +829,41 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_locations_mute_configs_get"
+    defaultValue="folders_locations_mute_configs_get"
     values={[
+        { label: 'folders_locations_mute_configs_get', value: 'folders_locations_mute_configs_get' },
         { label: 'organizations_locations_mute_configs_get', value: 'organizations_locations_mute_configs_get' },
         { label: 'projects_locations_mute_configs_get', value: 'projects_locations_mute_configs_get' },
-        { label: 'folders_locations_mute_configs_get', value: 'folders_locations_mute_configs_get' },
+        { label: 'folders_mute_configs_get', value: 'folders_mute_configs_get' },
         { label: 'organizations_mute_configs_get', value: 'organizations_mute_configs_get' },
         { label: 'projects_mute_configs_get', value: 'projects_mute_configs_get' },
-        { label: 'folders_mute_configs_get', value: 'folders_mute_configs_get' },
+        { label: 'folders_mute_configs_list', value: 'folders_mute_configs_list' },
         { label: 'organizations_mute_configs_list', value: 'organizations_mute_configs_list' },
-        { label: 'projects_mute_configs_list', value: 'projects_mute_configs_list' },
-        { label: 'folders_mute_configs_list', value: 'folders_mute_configs_list' }
+        { label: 'projects_mute_configs_list', value: 'projects_mute_configs_list' }
     ]}
 >
+<TabItem value="folders_locations_mute_configs_get">
+
+Successful response
+
+```sql
+SELECT
+name,
+createTime,
+description,
+displayName,
+expiryTime,
+filter,
+mostRecentEditor,
+type,
+updateTime
+FROM google.securitycenter.mute_configs
+WHERE foldersId = '{{ foldersId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND muteConfigsId = '{{ muteConfigsId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="organizations_locations_mute_configs_get">
 
 Successful response
@@ -886,7 +908,7 @@ AND muteConfigsId = '{{ muteConfigsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="folders_locations_mute_configs_get">
+<TabItem value="folders_mute_configs_get">
 
 Successful response
 
@@ -903,7 +925,6 @@ type,
 updateTime
 FROM google.securitycenter.mute_configs
 WHERE foldersId = '{{ foldersId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
 AND muteConfigsId = '{{ muteConfigsId }}' -- required
 ;
 ```
@@ -950,7 +971,7 @@ AND muteConfigsId = '{{ muteConfigsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="folders_mute_configs_get">
+<TabItem value="folders_mute_configs_list">
 
 Successful response
 
@@ -967,7 +988,8 @@ type,
 updateTime
 FROM google.securitycenter.mute_configs
 WHERE foldersId = '{{ foldersId }}' -- required
-AND muteConfigsId = '{{ muteConfigsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -988,8 +1010,8 @@ type,
 updateTime
 FROM google.securitycenter.mute_configs
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -1015,12 +1037,45 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="folders_mute_configs_list">
+</Tabs>
 
-Successful response
+
+## `INSERT` examples
+
+<Tabs
+    defaultValue="folders_mute_configs_create"
+    values={[
+        { label: 'folders_mute_configs_create', value: 'folders_mute_configs_create' },
+        { label: 'organizations_mute_configs_create', value: 'organizations_mute_configs_create' },
+        { label: 'projects_mute_configs_create', value: 'projects_mute_configs_create' },
+        { label: 'Manifest', value: 'manifest' }
+    ]}
+>
+<TabItem value="folders_mute_configs_create">
+
+No description available.
 
 ```sql
-SELECT
+INSERT INTO google.securitycenter.mute_configs (
+data__description,
+data__displayName,
+data__expiryTime,
+data__filter,
+data__name,
+data__type,
+foldersId,
+muteConfigId
+)
+SELECT 
+'{{ description }}',
+'{{ displayName }}',
+'{{ expiryTime }}',
+'{{ filter }}',
+'{{ name }}',
+'{{ type }}',
+'{{ foldersId }}',
+'{{ muteConfigId }}'
+RETURNING
 name,
 createTime,
 description,
@@ -1030,49 +1085,31 @@ filter,
 mostRecentEditor,
 type,
 updateTime
-FROM google.securitycenter.mute_configs
-WHERE foldersId = '{{ foldersId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
-</Tabs>
-
-
-## `INSERT` examples
-
-<Tabs
-    defaultValue="organizations_mute_configs_create"
-    values={[
-        { label: 'organizations_mute_configs_create', value: 'organizations_mute_configs_create' },
-        { label: 'projects_mute_configs_create', value: 'projects_mute_configs_create' },
-        { label: 'folders_mute_configs_create', value: 'folders_mute_configs_create' },
-        { label: 'Manifest', value: 'manifest' }
-    ]}
->
 <TabItem value="organizations_mute_configs_create">
 
 No description available.
 
 ```sql
 INSERT INTO google.securitycenter.mute_configs (
-data__type,
-data__filter,
-data__displayName,
 data__description,
+data__displayName,
 data__expiryTime,
+data__filter,
 data__name,
+data__type,
 organizationsId,
 muteConfigId
 )
 SELECT 
-'{{ type }}',
-'{{ filter }}',
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ expiryTime }}',
+'{{ filter }}',
 '{{ name }}',
+'{{ type }}',
 '{{ organizationsId }}',
 '{{ muteConfigId }}'
 RETURNING
@@ -1094,60 +1131,23 @@ No description available.
 
 ```sql
 INSERT INTO google.securitycenter.mute_configs (
-data__type,
-data__filter,
-data__displayName,
 data__description,
+data__displayName,
 data__expiryTime,
+data__filter,
 data__name,
+data__type,
 projectsId,
 muteConfigId
 )
 SELECT 
-'{{ type }}',
-'{{ filter }}',
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ expiryTime }}',
+'{{ filter }}',
 '{{ name }}',
+'{{ type }}',
 '{{ projectsId }}',
-'{{ muteConfigId }}'
-RETURNING
-name,
-createTime,
-description,
-displayName,
-expiryTime,
-filter,
-mostRecentEditor,
-type,
-updateTime
-;
-```
-</TabItem>
-<TabItem value="folders_mute_configs_create">
-
-No description available.
-
-```sql
-INSERT INTO google.securitycenter.mute_configs (
-data__type,
-data__filter,
-data__displayName,
-data__description,
-data__expiryTime,
-data__name,
-foldersId,
-muteConfigId
-)
-SELECT 
-'{{ type }}',
-'{{ filter }}',
-'{{ displayName }}',
-'{{ description }}',
-'{{ expiryTime }}',
-'{{ name }}',
-'{{ foldersId }}',
 '{{ muteConfigId }}'
 RETURNING
 name,
@@ -1167,28 +1167,28 @@ updateTime
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: mute_configs
   props:
+    - name: foldersId
+      value: "{{ foldersId }}"
+      description: Required parameter for the mute_configs resource.
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the mute_configs resource.
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the mute_configs resource.
-    - name: foldersId
-      value: "{{ foldersId }}"
-      description: Required parameter for the mute_configs resource.
+    - name: description
+      value: "{{ description }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: expiryTime
+      value: "{{ expiryTime }}"
+    - name: filter
+      value: "{{ filter }}"
+    - name: name
+      value: "{{ name }}"
     - name: type
       value: "{{ type }}"
       valid_values: ['MUTE_CONFIG_TYPE_UNSPECIFIED', 'STATIC', 'DYNAMIC']
-    - name: filter
-      value: "{{ filter }}"
-    - name: displayName
-      value: "{{ displayName }}"
-    - name: description
-      value: "{{ description }}"
-    - name: expiryTime
-      value: "{{ expiryTime }}"
-    - name: name
-      value: "{{ name }}"
     - name: muteConfigId
       value: "{{ muteConfigId }}"
 `}</CodeBlock>
@@ -1200,16 +1200,46 @@ updateTime
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="organizations_locations_mute_configs_patch"
+    defaultValue="folders_locations_mute_configs_patch"
     values={[
+        { label: 'folders_locations_mute_configs_patch', value: 'folders_locations_mute_configs_patch' },
         { label: 'organizations_locations_mute_configs_patch', value: 'organizations_locations_mute_configs_patch' },
         { label: 'projects_locations_mute_configs_patch', value: 'projects_locations_mute_configs_patch' },
-        { label: 'folders_locations_mute_configs_patch', value: 'folders_locations_mute_configs_patch' },
+        { label: 'folders_mute_configs_patch', value: 'folders_mute_configs_patch' },
         { label: 'organizations_mute_configs_patch', value: 'organizations_mute_configs_patch' },
-        { label: 'projects_mute_configs_patch', value: 'projects_mute_configs_patch' },
-        { label: 'folders_mute_configs_patch', value: 'folders_mute_configs_patch' }
+        { label: 'projects_mute_configs_patch', value: 'projects_mute_configs_patch' }
     ]}
 >
+<TabItem value="folders_locations_mute_configs_patch">
+
+No description available.
+
+```sql
+UPDATE google.securitycenter.mute_configs
+SET 
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__expiryTime = '{{ expiryTime }}',
+data__filter = '{{ filter }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND muteConfigsId = '{{ muteConfigsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+createTime,
+description,
+displayName,
+expiryTime,
+filter,
+mostRecentEditor,
+type,
+updateTime;
+```
+</TabItem>
 <TabItem value="organizations_locations_mute_configs_patch">
 
 No description available.
@@ -1217,12 +1247,12 @@ No description available.
 ```sql
 UPDATE google.securitycenter.mute_configs
 SET 
-data__type = '{{ type }}',
-data__filter = '{{ filter }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__expiryTime = '{{ expiryTime }}',
-data__name = '{{ name }}'
+data__filter = '{{ filter }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1247,12 +1277,12 @@ No description available.
 ```sql
 UPDATE google.securitycenter.mute_configs
 SET 
-data__type = '{{ type }}',
-data__filter = '{{ filter }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__expiryTime = '{{ expiryTime }}',
-data__name = '{{ name }}'
+data__filter = '{{ filter }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1270,22 +1300,21 @@ type,
 updateTime;
 ```
 </TabItem>
-<TabItem value="folders_locations_mute_configs_patch">
+<TabItem value="folders_mute_configs_patch">
 
 No description available.
 
 ```sql
 UPDATE google.securitycenter.mute_configs
 SET 
-data__type = '{{ type }}',
-data__filter = '{{ filter }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__expiryTime = '{{ expiryTime }}',
-data__name = '{{ name }}'
+data__filter = '{{ filter }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
-AND locationsId = '{{ locationsId }}' --required
 AND muteConfigsId = '{{ muteConfigsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -1307,12 +1336,12 @@ No description available.
 ```sql
 UPDATE google.securitycenter.mute_configs
 SET 
-data__type = '{{ type }}',
-data__filter = '{{ filter }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__expiryTime = '{{ expiryTime }}',
-data__name = '{{ name }}'
+data__filter = '{{ filter }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND muteConfigsId = '{{ muteConfigsId }}' --required
@@ -1336,43 +1365,14 @@ No description available.
 ```sql
 UPDATE google.securitycenter.mute_configs
 SET 
-data__type = '{{ type }}',
-data__filter = '{{ filter }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__expiryTime = '{{ expiryTime }}',
-data__name = '{{ name }}'
+data__filter = '{{ filter }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
-AND muteConfigsId = '{{ muteConfigsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-createTime,
-description,
-displayName,
-expiryTime,
-filter,
-mostRecentEditor,
-type,
-updateTime;
-```
-</TabItem>
-<TabItem value="folders_mute_configs_patch">
-
-No description available.
-
-```sql
-UPDATE google.securitycenter.mute_configs
-SET 
-data__type = '{{ type }}',
-data__filter = '{{ filter }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__expiryTime = '{{ expiryTime }}',
-data__name = '{{ name }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
 AND muteConfigsId = '{{ muteConfigsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -1393,16 +1393,28 @@ updateTime;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="organizations_locations_mute_configs_delete"
+    defaultValue="folders_locations_mute_configs_delete"
     values={[
+        { label: 'folders_locations_mute_configs_delete', value: 'folders_locations_mute_configs_delete' },
         { label: 'organizations_locations_mute_configs_delete', value: 'organizations_locations_mute_configs_delete' },
         { label: 'projects_locations_mute_configs_delete', value: 'projects_locations_mute_configs_delete' },
-        { label: 'folders_locations_mute_configs_delete', value: 'folders_locations_mute_configs_delete' },
+        { label: 'folders_mute_configs_delete', value: 'folders_mute_configs_delete' },
         { label: 'organizations_mute_configs_delete', value: 'organizations_mute_configs_delete' },
-        { label: 'projects_mute_configs_delete', value: 'projects_mute_configs_delete' },
-        { label: 'folders_mute_configs_delete', value: 'folders_mute_configs_delete' }
+        { label: 'projects_mute_configs_delete', value: 'projects_mute_configs_delete' }
     ]}
 >
+<TabItem value="folders_locations_mute_configs_delete">
+
+No description available.
+
+```sql
+DELETE FROM google.securitycenter.mute_configs
+WHERE foldersId = '{{ foldersId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND muteConfigsId = '{{ muteConfigsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="organizations_locations_mute_configs_delete">
 
 No description available.
@@ -1427,14 +1439,13 @@ AND muteConfigsId = '{{ muteConfigsId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="folders_locations_mute_configs_delete">
+<TabItem value="folders_mute_configs_delete">
 
 No description available.
 
 ```sql
 DELETE FROM google.securitycenter.mute_configs
 WHERE foldersId = '{{ foldersId }}' --required
-AND locationsId = '{{ locationsId }}' --required
 AND muteConfigsId = '{{ muteConfigsId }}' --required
 ;
 ```
@@ -1457,17 +1468,6 @@ No description available.
 ```sql
 DELETE FROM google.securitycenter.mute_configs
 WHERE projectsId = '{{ projectsId }}' --required
-AND muteConfigsId = '{{ muteConfigsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="folders_mute_configs_delete">
-
-No description available.
-
-```sql
-DELETE FROM google.securitycenter.mute_configs
-WHERE foldersId = '{{ foldersId }}' --required
 AND muteConfigsId = '{{ muteConfigsId }}' --required
 ;
 ```

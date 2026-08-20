@@ -33,37 +33,13 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="query_user_root_contents"
+    defaultValue="get"
     values={[
-        { label: 'query_user_root_contents', value: 'query_user_root_contents' },
         { label: 'get', value: 'get' },
+        { label: 'query_user_root_contents', value: 'query_user_root_contents' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_user_root_contents">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="entries" /></td>
-    <td><code>array</code></td>
-    <td>List of entries in the folder.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="get">
 
 <table>
@@ -99,6 +75,30 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="metadata" /></td>
     <td><code>object</code></td>
     <td>Service-specific metadata. For example the available capacity at the given location.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="query_user_root_contents">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="entries" /></td>
+    <td><code>array</code></td>
+    <td>List of entries in the folder.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
 </tr>
 </tbody>
 </table>
@@ -160,13 +160,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#query_user_root_contents"><CopyableCode code="query_user_root_contents" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Returns the contents of a caller's root folder in a given location. The root folder contains all resources that are created by the user and not contained in any other folder.</td>
-</tr>
-<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -174,10 +167,17 @@ The following methods are available for this resource:
     <td>Gets information about a location.</td>
 </tr>
 <tr>
+    <td><a href="#query_user_root_contents"><CopyableCode code="query_user_root_contents" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Returns the contents of a caller's root folder in a given location. The root folder contains all resources that are created by the user and not contained in any other folder.</td>
+</tr>
+<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 </tbody>
@@ -237,31 +237,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="query_user_root_contents"
+    defaultValue="get"
     values={[
-        { label: 'query_user_root_contents', value: 'query_user_root_contents' },
         { label: 'get', value: 'get' },
+        { label: 'query_user_root_contents', value: 'query_user_root_contents' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_user_root_contents">
-
-Returns the contents of a caller's root folder in a given location. The root folder contains all resources that are created by the user and not contained in any other folder.
-
-```sql
-SELECT
-entries,
-nextPageToken
-FROM google.dataform.locations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="get">
 
 Gets information about a location.
@@ -279,6 +261,24 @@ AND locationsId = '{{ locationsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="query_user_root_contents">
+
+Returns the contents of a caller's root folder in a given location. The root folder contains all resources that are created by the user and not contained in any other folder.
+
+```sql
+SELECT
+entries,
+nextPageToken
+FROM google.dataform.locations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="list">
 
 Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
@@ -292,10 +292,10 @@ locationId,
 metadata
 FROM google.dataform.locations
 WHERE projectsId = '{{ projectsId }}' -- required
+AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
 ;
 ```
 </TabItem>

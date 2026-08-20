@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ReportConfigs in a given project and location.</td>
 </tr>
 <tr>
@@ -169,7 +169,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reportConfigsId"><code>reportConfigsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a ReportConfig.</td>
 </tr>
 </tbody>
@@ -284,10 +284,10 @@ updateTime
 FROM google.migrationcenter.report_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -309,8 +309,8 @@ Creates a report configuration.
 
 ```sql
 INSERT INTO google.migrationcenter.report_configs (
-data__displayName,
 data__description,
+data__displayName,
 data__groupPreferencesetAssignments,
 projectsId,
 locationsId,
@@ -318,8 +318,8 @@ reportConfigId,
 requestId
 )
 SELECT 
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ groupPreferencesetAssignments }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -345,14 +345,14 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the report_configs resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        User-friendly display name. Maximum length is 63 characters.
     - name: description
       value: "{{ description }}"
       description: |
         Free-text description.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-friendly display name. Maximum length is 63 characters.
     - name: groupPreferencesetAssignments
       description: |
         Required. Collection of combinations of groups and preference sets.
@@ -386,8 +386,8 @@ DELETE FROM google.migrationcenter.report_configs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND reportConfigsId = '{{ reportConfigsId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

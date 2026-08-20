@@ -235,21 +235,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Endpoints in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-endpointId"><code>endpointId</code></a></td>
+    <td><a href="#parameter-endpointId"><code>endpointId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Endpoint in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Endpoint.</td>
 </tr>
 <tr>
@@ -387,9 +387,9 @@ updateTime
 FROM google.ids.endpoints
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -412,28 +412,28 @@ Creates a new Endpoint in a given project and location.
 
 ```sql
 INSERT INTO google.ids.endpoints (
-data__network,
-data__threatExceptions,
-data__severity,
-data__trafficLogs,
-data__labels,
 data__description,
+data__labels,
+data__network,
+data__severity,
+data__threatExceptions,
+data__trafficLogs,
 projectsId,
 locationsId,
-requestId,
-endpointId
+endpointId,
+requestId
 )
 SELECT 
-'{{ network }}',
-'{{ threatExceptions }}',
-'{{ severity }}',
-{{ trafficLogs }},
-'{{ labels }}',
 '{{ description }}',
+'{{ labels }}',
+'{{ network }}',
+'{{ severity }}',
+'{{ threatExceptions }}',
+{{ trafficLogs }},
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ endpointId }}'
+'{{ endpointId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -454,36 +454,36 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the endpoints resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided description of the endpoint
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels of the endpoint.
     - name: network
       value: "{{ network }}"
       description: |
         Required. The fully qualified URL of the network to which the IDS Endpoint is attached.
-    - name: threatExceptions
-      value:
-        - "{{ threatExceptions }}"
-      description: |
-        List of threat IDs to be excepted from generating alerts.
     - name: severity
       value: "{{ severity }}"
       description: |
         Required. Lowest threat severity that this endpoint will alert on.
       valid_values: ['SEVERITY_UNSPECIFIED', 'INFORMATIONAL', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
+    - name: threatExceptions
+      value:
+        - "{{ threatExceptions }}"
+      description: |
+        List of threat IDs to be excepted from generating alerts.
     - name: trafficLogs
       value: {{ trafficLogs }}
       description: |
         Whether the endpoint should report traffic logs in addition to threat logs.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The labels of the endpoint.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        User-provided description of the endpoint
-    - name: requestId
-      value: "{{ requestId }}"
     - name: endpointId
       value: "{{ endpointId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -505,18 +505,18 @@ Updates the parameters of a single Endpoint.
 ```sql
 UPDATE google.ids.endpoints
 SET 
-data__network = '{{ network }}',
-data__threatExceptions = '{{ threatExceptions }}',
-data__severity = '{{ severity }}',
-data__trafficLogs = {{ trafficLogs }},
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}'
+data__network = '{{ network }}',
+data__severity = '{{ severity }}',
+data__threatExceptions = '{{ threatExceptions }}',
+data__trafficLogs = {{ trafficLogs }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND endpointsId = '{{ endpointsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

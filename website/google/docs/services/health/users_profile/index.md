@@ -191,10 +191,10 @@ Updates the user's profile details.
 ```sql
 UPDATE google.health.users_profile
 SET 
-data__userConfiguredWalkingStrideLengthMm = {{ userConfiguredWalkingStrideLengthMm }},
 data__age = {{ age }},
 data__name = '{{ name }}',
-data__userConfiguredRunningStrideLengthMm = {{ userConfiguredRunningStrideLengthMm }}
+data__userConfiguredRunningStrideLengthMm = {{ userConfiguredRunningStrideLengthMm }},
+data__userConfiguredWalkingStrideLengthMm = {{ userConfiguredWalkingStrideLengthMm }}
 WHERE 
 usersId = '{{ usersId }}' --required
 AND updateMask = '{{ updateMask}}'

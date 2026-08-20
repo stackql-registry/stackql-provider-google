@@ -270,14 +270,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of PacketMirroring resources available to the specified<br />project and region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of packetMirrorings.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -426,10 +426,10 @@ warning
 FROM google.compute.packet_mirrorings
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -456,12 +456,12 @@ selfLink
 FROM google.compute.packet_mirrorings
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -483,28 +483,28 @@ Creates a PacketMirroring resource in the specified project and region<br />usin
 
 ```sql
 INSERT INTO google.compute.packet_mirrorings (
+data__collectorIlb,
 data__description,
+data__enable,
+data__filter,
 data__mirroredResources,
 data__name,
-data__priority,
 data__network,
-data__enable,
-data__collectorIlb,
-data__filter,
+data__priority,
 data__region,
 project,
 region,
 requestId
 )
 SELECT 
+'{{ collectorIlb }}',
 '{{ description }}',
+'{{ enable }}',
+'{{ filter }}',
 '{{ mirroredResources }}',
 '{{ name }}',
-{{ priority }},
 '{{ network }}',
-'{{ enable }}',
-'{{ collectorIlb }}',
-'{{ filter }}',
+{{ priority }},
 '{{ region }}',
 '{{ project }}',
 '{{ region }}',
@@ -551,11 +551,37 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the packet_mirrorings resource.
+    - name: collectorIlb
+      description: |
+        The Forwarding Rule resource of typeloadBalancingScheme=INTERNAL that will be used as collector
+        for mirrored traffic.
+        The specified forwarding rule must have isMirroringCollector
+        set to true.
+      value:
+        canonicalUrl: "{{ canonicalUrl }}"
+        url: "{{ url }}"
     - name: description
       value: "{{ description }}"
       description: |
         An optional description of this resource. Provide this property when you
         create the resource.
+    - name: enable
+      value: "{{ enable }}"
+      description: |
+        Indicates whether or not this packet mirroring takes effect.
+        If set to FALSE, this packet mirroring policy will not be enforced on the
+        network.
+        The default is TRUE.
+      valid_values: ['FALSE', 'TRUE']
+    - name: filter
+      description: |
+        Filter for mirrored traffic. If unspecified, all IPv4 traffic is mirrored.
+      value:
+        IPProtocols:
+          - "{{ IPProtocols }}"
+        cidrRanges:
+          - "{{ cidrRanges }}"
+        direction: "{{ direction }}"
     - name: mirroredResources
       description: |
         PacketMirroring mirroredResourceInfos.
@@ -563,11 +589,11 @@ zone
         and/or tags for which traffic from/to all VM instances will be mirrored.
       value:
         instances:
-          - url: "{{ url }}"
-            canonicalUrl: "{{ canonicalUrl }}"
+          - canonicalUrl: "{{ canonicalUrl }}"
+            url: "{{ url }}"
         subnetworks:
-          - url: "{{ url }}"
-            canonicalUrl: "{{ canonicalUrl }}"
+          - canonicalUrl: "{{ canonicalUrl }}"
+            url: "{{ url }}"
         tags:
           - "{{ tags }}"
     - name: name
@@ -580,6 +606,14 @@ zone
         character must be a lowercase letter, and all following characters must be
         a dash, lowercase letter, or digit, except the last character, which cannot
         be a dash.
+    - name: network
+      description: |
+        Specifies the mirrored VPC network. Only packets in this network will be
+        mirrored. All mirrored VMs should have a NIC in the given network.
+        All mirrored subnetworks should belong to the given network.
+      value:
+        canonicalUrl: "{{ canonicalUrl }}"
+        url: "{{ url }}"
     - name: priority
       value: {{ priority }}
       description: |
@@ -588,40 +622,6 @@ zone
         rules that apply for a given Instance, the one with the lowest-numbered
         priority value wins.
         Default value is 1000. Valid range is 0 through 65535.
-    - name: network
-      description: |
-        Specifies the mirrored VPC network. Only packets in this network will be
-        mirrored. All mirrored VMs should have a NIC in the given network.
-        All mirrored subnetworks should belong to the given network.
-      value:
-        url: "{{ url }}"
-        canonicalUrl: "{{ canonicalUrl }}"
-    - name: enable
-      value: "{{ enable }}"
-      description: |
-        Indicates whether or not this packet mirroring takes effect.
-        If set to FALSE, this packet mirroring policy will not be enforced on the
-        network.
-        The default is TRUE.
-      valid_values: ['FALSE', 'TRUE']
-    - name: collectorIlb
-      description: |
-        The Forwarding Rule resource of typeloadBalancingScheme=INTERNAL that will be used as collector
-        for mirrored traffic.
-        The specified forwarding rule must have isMirroringCollector
-        set to true.
-      value:
-        url: "{{ url }}"
-        canonicalUrl: "{{ canonicalUrl }}"
-    - name: filter
-      description: |
-        Filter for mirrored traffic. If unspecified, all IPv4 traffic is mirrored.
-      value:
-        cidrRanges:
-          - "{{ cidrRanges }}"
-        direction: "{{ direction }}"
-        IPProtocols:
-          - "{{ IPProtocols }}"
     - name: region
       value: "{{ region }}"
       description: |
@@ -649,14 +649,14 @@ Patches the specified PacketMirroring resource with the data included in<br />th
 ```sql
 UPDATE google.compute.packet_mirrorings
 SET 
+data__collectorIlb = '{{ collectorIlb }}',
 data__description = '{{ description }}',
+data__enable = '{{ enable }}',
+data__filter = '{{ filter }}',
 data__mirroredResources = '{{ mirroredResources }}',
 data__name = '{{ name }}',
-data__priority = {{ priority }},
 data__network = '{{ network }}',
-data__enable = '{{ enable }}',
-data__collectorIlb = '{{ collectorIlb }}',
-data__filter = '{{ filter }}',
+data__priority = {{ priority }},
 data__region = '{{ region }}'
 WHERE 
 project = '{{ project }}' --required

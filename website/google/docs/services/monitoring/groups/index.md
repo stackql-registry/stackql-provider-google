@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#projects_groups_list"><CopyableCode code="projects_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-childrenOfGroup"><code>childrenOfGroup</code></a>, <a href="#parameter-descendantsOfGroup"><code>descendantsOfGroup</code></a>, <a href="#parameter-ancestorsOfGroup"><code>ancestorsOfGroup</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-ancestorsOfGroup"><code>ancestorsOfGroup</code></a>, <a href="#parameter-childrenOfGroup"><code>childrenOfGroup</code></a>, <a href="#parameter-descendantsOfGroup"><code>descendantsOfGroup</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the existing groups.</td>
 </tr>
 <tr>
@@ -272,10 +272,10 @@ isCluster,
 parentName
 FROM google.monitoring.groups
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND ancestorsOfGroup = '{{ ancestorsOfGroup }}'
 AND childrenOfGroup = '{{ childrenOfGroup }}'
 AND descendantsOfGroup = '{{ descendantsOfGroup }}'
-AND ancestorsOfGroup = '{{ ancestorsOfGroup }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -298,20 +298,20 @@ Creates a new group.
 
 ```sql
 INSERT INTO google.monitoring.groups (
-data__parentName,
 data__displayName,
-data__isCluster,
 data__filter,
+data__isCluster,
 data__name,
+data__parentName,
 projectsId,
 validateOnly
 )
 SELECT 
-'{{ parentName }}',
 '{{ displayName }}',
-{{ isCluster }},
 '{{ filter }}',
+{{ isCluster }},
 '{{ name }}',
+'{{ parentName }}',
 '{{ projectsId }}',
 '{{ validateOnly }}'
 RETURNING
@@ -331,26 +331,26 @@ parentName
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the groups resource.
-    - name: parentName
-      value: "{{ parentName }}"
-      description: |
-        The name of the group's parent, if it has one. The format is: projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] For groups with no parent, parent_name is the empty string, "".
     - name: displayName
       value: "{{ displayName }}"
       description: |
         A user-assigned name for this group, used only for display purposes.
-    - name: isCluster
-      value: {{ isCluster }}
-      description: |
-        If true, the members of this group are considered to be a cluster. The system can perform additional analysis on groups that are clusters.
     - name: filter
       value: "{{ filter }}"
       description: |
         The filter used to determine which monitored resources belong to this group.
+    - name: isCluster
+      value: {{ isCluster }}
+      description: |
+        If true, the members of this group are considered to be a cluster. The system can perform additional analysis on groups that are clusters.
     - name: name
       value: "{{ name }}"
       description: |
         Output only. The name of this group. The format is: projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique [GROUP_ID] that is generated automatically.
+    - name: parentName
+      value: "{{ parentName }}"
+      description: |
+        The name of the group's parent, if it has one. The format is: projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] For groups with no parent, parent_name is the empty string, "".
     - name: validateOnly
       value: {{ validateOnly }}
 `}</CodeBlock>
@@ -374,11 +374,11 @@ Updates an existing group. You can change any group attributes except name.
 ```sql
 REPLACE google.monitoring.groups
 SET 
-data__parentName = '{{ parentName }}',
 data__displayName = '{{ displayName }}',
-data__isCluster = {{ isCluster }},
 data__filter = '{{ filter }}',
-data__name = '{{ name }}'
+data__isCluster = {{ isCluster }},
+data__name = '{{ name }}',
+data__parentName = '{{ parentName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND groupsId = '{{ groupsId }}' --required

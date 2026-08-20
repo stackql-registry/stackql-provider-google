@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_topics_list"><CopyableCode code="projects_topics_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists matching topics.</td>
 </tr>
 <tr>
@@ -223,18 +223,18 @@ The following methods are available for this resource:
     <td>Deletes the topic with the given name. Returns `NOT_FOUND` if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions. Existing subscriptions to this topic are not deleted, but their `topic` field is set to `_deleted-topic_`.</td>
 </tr>
 <tr>
-    <td><a href="#projects_topics_publish"><CopyableCode code="projects_topics_publish" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
-    <td></td>
-    <td>Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does not exist.</td>
-</tr>
-<tr>
     <td><a href="#projects_topics_create"><CopyableCode code="projects_topics_create" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
     <td></td>
     <td>Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).</td>
+</tr>
+<tr>
+    <td><a href="#projects_topics_publish"><CopyableCode code="projects_topics_publish" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
+    <td></td>
+    <td>Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does not exist.</td>
 </tr>
 </tbody>
 </table>
@@ -326,8 +326,8 @@ state,
 tags
 FROM google.pubsub.topics
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -396,12 +396,36 @@ AND topicsId = '{{ topicsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_topics_publish"
+    defaultValue="projects_topics_create"
     values={[
-        { label: 'projects_topics_publish', value: 'projects_topics_publish' },
-        { label: 'projects_topics_create', value: 'projects_topics_create' }
+        { label: 'projects_topics_create', value: 'projects_topics_create' },
+        { label: 'projects_topics_publish', value: 'projects_topics_publish' }
     ]}
 >
+<TabItem value="projects_topics_create">
+
+Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+
+```sql
+EXEC google.pubsub.topics.projects_topics_create 
+@projectsId='{{ projectsId }}' --required, 
+@topicsId='{{ topicsId }}' --required 
+@@json=
+'{
+"ingestionDataSourceSettings": "{{ ingestionDataSourceSettings }}", 
+"kmsKeyName": "{{ kmsKeyName }}", 
+"labels": "{{ labels }}", 
+"messageRetentionDuration": "{{ messageRetentionDuration }}", 
+"messageStoragePolicy": "{{ messageStoragePolicy }}", 
+"messageTransforms": "{{ messageTransforms }}", 
+"name": "{{ name }}", 
+"satisfiesPzs": {{ satisfiesPzs }}, 
+"schemaSettings": "{{ schemaSettings }}", 
+"tags": "{{ tags }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_topics_publish">
 
 Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does not exist.
@@ -413,30 +437,6 @@ EXEC google.pubsub.topics.projects_topics_publish
 @@json=
 '{
 "messages": "{{ messages }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_topics_create">
-
-Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
-
-```sql
-EXEC google.pubsub.topics.projects_topics_create 
-@projectsId='{{ projectsId }}' --required, 
-@topicsId='{{ topicsId }}' --required 
-@@json=
-'{
-"kmsKeyName": "{{ kmsKeyName }}", 
-"ingestionDataSourceSettings": "{{ ingestionDataSourceSettings }}", 
-"name": "{{ name }}", 
-"satisfiesPzs": {{ satisfiesPzs }}, 
-"tags": "{{ tags }}", 
-"messageTransforms": "{{ messageTransforms }}", 
-"messageStoragePolicy": "{{ messageStoragePolicy }}", 
-"labels": "{{ labels }}", 
-"schemaSettings": "{{ schemaSettings }}", 
-"messageRetentionDuration": "{{ messageRetentionDuration }}"
 }'
 ;
 ```

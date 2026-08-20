@@ -33,56 +33,12 @@ Creates, updates, deletes, gets or lists a <code>xpn_hosts</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="list_xpn_hosts"
+    defaultValue="get_xpn_host"
     values={[
-        { label: 'list_xpn_hosts', value: 'list_xpn_hosts' },
-        { label: 'get_xpn_host', value: 'get_xpn_host' }
+        { label: 'get_xpn_host', value: 'get_xpn_host' },
+        { label: 'list_xpn_hosts', value: 'list_xpn_hosts' }
     ]}
 >
-<TabItem value="list_xpn_hosts">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="id" /></td>
-    <td><code>string</code></td>
-    <td>[Output Only] Unique identifier for the resource; defined by the server.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="items" /></td>
-    <td><code>array</code></td>
-    <td>[Output Only] A list of shared VPC host project URLs.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kind" /></td>
-    <td><code>string</code></td>
-    <td>Output only. [Output Only] Type of resource. Always compute#xpnHostList for lists of shared VPC hosts. (default: compute#xpnHostList)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="warning" /></td>
-    <td><code>object</code></td>
-    <td>[Output Only] Informational warning message.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="get_xpn_host">
 
 <table>
@@ -172,6 +128,50 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="list_xpn_hosts">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] Unique identifier for the resource; defined by the server.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="items" /></td>
+    <td><code>array</code></td>
+    <td>[Output Only] A list of shared VPC host project URLs.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Type of resource. Always compute#xpnHostList for lists of shared VPC hosts. (default: compute#xpnHostList)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="warning" /></td>
+    <td><code>object</code></td>
+    <td>[Output Only] Informational warning message.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 </Tabs>
 
 ## Methods
@@ -190,18 +190,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#list_xpn_hosts"><CopyableCode code="list_xpn_hosts" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists all shared VPC host projects visible to the user in an organization.</td>
-</tr>
-<tr>
     <td><a href="#get_xpn_host"><CopyableCode code="get_xpn_host" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td></td>
     <td>Gets the shared VPC host project that this project links to. May be empty<br />if no link exists.</td>
+</tr>
+<tr>
+    <td><a href="#list_xpn_hosts"><CopyableCode code="list_xpn_hosts" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists all shared VPC host projects visible to the user in an organization.</td>
 </tr>
 </tbody>
 </table>
@@ -255,34 +255,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="list_xpn_hosts"
+    defaultValue="get_xpn_host"
     values={[
-        { label: 'list_xpn_hosts', value: 'list_xpn_hosts' },
-        { label: 'get_xpn_host', value: 'get_xpn_host' }
+        { label: 'get_xpn_host', value: 'get_xpn_host' },
+        { label: 'list_xpn_hosts', value: 'list_xpn_hosts' }
     ]}
 >
-<TabItem value="list_xpn_hosts">
-
-Lists all shared VPC host projects visible to the user in an organization.
-
-```sql
-SELECT
-id,
-items,
-kind,
-nextPageToken,
-selfLink,
-warning
-FROM google.compute.xpn_hosts
-WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="get_xpn_host">
 
 Gets the shared VPC host project that this project links to. May be empty<br />if no link exists.
@@ -306,6 +284,28 @@ vmDnsSetting,
 xpnProjectStatus
 FROM google.compute.xpn_hosts
 WHERE project = '{{ project }}' -- required
+;
+```
+</TabItem>
+<TabItem value="list_xpn_hosts">
+
+Lists all shared VPC host projects visible to the user in an organization.
+
+```sql
+SELECT
+id,
+items,
+kind,
+nextPageToken,
+selfLink,
+warning
+FROM google.compute.xpn_hosts
+WHERE project = '{{ project }}' -- required
+AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

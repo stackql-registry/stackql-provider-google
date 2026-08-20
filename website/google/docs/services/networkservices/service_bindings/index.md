@@ -311,19 +311,19 @@ Creates a new ServiceBinding in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.service_bindings (
-data__name,
 data__description,
-data__service,
 data__labels,
+data__name,
+data__service,
 projectsId,
 locationsId,
 serviceBindingId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
-'{{ service }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ service }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceBindingId }}'
@@ -347,22 +347,22 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the service_bindings resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the ServiceBinding resource. It matches pattern \`projects/*/locations/*/serviceBindings/\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A free-text description of the resource. Max length 1024 characters.
-    - name: service
-      value: "{{ service }}"
-      description: |
-        Optional. The full Service Directory Service name of the format \`projects/*/locations/*/namespaces/*/services/*\`. This field is for Service Directory integration which will be deprecated soon.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Set of label tags associated with the ServiceBinding resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the ServiceBinding resource. It matches pattern \`projects/*/locations/*/serviceBindings/\`.
+    - name: service
+      value: "{{ service }}"
+      description: |
+        Optional. The full Service Directory Service name of the format \`projects/*/locations/*/namespaces/*/services/*\`. This field is for Service Directory integration which will be deprecated soon.
     - name: serviceBindingId
       value: "{{ serviceBindingId }}"
 `}</CodeBlock>
@@ -386,10 +386,10 @@ Updates the parameters of a single ServiceBinding.
 ```sql
 UPDATE google.networkservices.service_bindings
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__service = '{{ service }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__service = '{{ service }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

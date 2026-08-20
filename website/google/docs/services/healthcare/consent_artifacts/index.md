@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Consent artifacts in the specified consent store.</td>
 </tr>
 <tr>
@@ -302,9 +302,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND consentStoresId = '{{ consentStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -326,28 +326,28 @@ Creates a new Consent artifact in the parent consent store.
 
 ```sql
 INSERT INTO google.healthcare.consent_artifacts (
-data__userId,
-data__userSignature,
-data__witnessSignature,
-data__metadata,
 data__consentContentScreenshots,
 data__consentContentVersion,
 data__guardianSignature,
+data__metadata,
 data__name,
+data__userId,
+data__userSignature,
+data__witnessSignature,
 projectsId,
 locationsId,
 datasetsId,
 consentStoresId
 )
 SELECT 
-'{{ userId }}',
-'{{ userSignature }}',
-'{{ witnessSignature }}',
-'{{ metadata }}',
 '{{ consentContentScreenshots }}',
 '{{ consentContentVersion }}',
 '{{ guardianSignature }}',
+'{{ metadata }}',
 '{{ name }}',
+'{{ userId }}',
+'{{ userSignature }}',
+'{{ witnessSignature }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -381,40 +381,12 @@ witnessSignature
     - name: consentStoresId
       value: "{{ consentStoresId }}"
       description: Required parameter for the consent_artifacts resource.
-    - name: userId
-      value: "{{ userId }}"
-      description: |
-        Required. User's UUID provided by the client.
-    - name: userSignature
-      description: |
-        Optional. User's signature.
-      value:
-        signatureTime: "{{ signatureTime }}"
-        metadata: "{{ metadata }}"
-        userId: "{{ userId }}"
-        image:
-          rawBytes: "{{ rawBytes }}"
-          gcsUri: "{{ gcsUri }}"
-    - name: witnessSignature
-      description: |
-        Optional. A signature from a witness.
-      value:
-        signatureTime: "{{ signatureTime }}"
-        metadata: "{{ metadata }}"
-        userId: "{{ userId }}"
-        image:
-          rawBytes: "{{ rawBytes }}"
-          gcsUri: "{{ gcsUri }}"
-    - name: metadata
-      value: "{{ metadata }}"
-      description: |
-        Optional. Metadata associated with the Consent artifact. For example, the consent locale or user agent version.
     - name: consentContentScreenshots
       description: |
         Optional. Screenshots, PDFs, or other binary information documenting the user's consent.
       value:
-        - rawBytes: "{{ rawBytes }}"
-          gcsUri: "{{ gcsUri }}"
+        - gcsUri: "{{ gcsUri }}"
+          rawBytes: "{{ rawBytes }}"
     - name: consentContentVersion
       value: "{{ consentContentVersion }}"
       description: |
@@ -423,16 +395,44 @@ witnessSignature
       description: |
         Optional. A signature from a guardian.
       value:
-        signatureTime: "{{ signatureTime }}"
-        metadata: "{{ metadata }}"
-        userId: "{{ userId }}"
         image:
-          rawBytes: "{{ rawBytes }}"
           gcsUri: "{{ gcsUri }}"
+          rawBytes: "{{ rawBytes }}"
+        metadata: "{{ metadata }}"
+        signatureTime: "{{ signatureTime }}"
+        userId: "{{ userId }}"
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. Metadata associated with the Consent artifact. For example, the consent locale or user agent version.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Resource name of the Consent artifact, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}\`. Cannot be changed after creation.
+    - name: userId
+      value: "{{ userId }}"
+      description: |
+        Required. User's UUID provided by the client.
+    - name: userSignature
+      description: |
+        Optional. User's signature.
+      value:
+        image:
+          gcsUri: "{{ gcsUri }}"
+          rawBytes: "{{ rawBytes }}"
+        metadata: "{{ metadata }}"
+        signatureTime: "{{ signatureTime }}"
+        userId: "{{ userId }}"
+    - name: witnessSignature
+      description: |
+        Optional. A signature from a witness.
+      value:
+        image:
+          gcsUri: "{{ gcsUri }}"
+          rawBytes: "{{ rawBytes }}"
+        metadata: "{{ metadata }}"
+        signatureTime: "{{ signatureTime }}"
+        userId: "{{ userId }}"
 `}</CodeBlock>
 
 </TabItem>

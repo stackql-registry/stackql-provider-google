@@ -255,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all backups in a project for either a specified location or for all locations.</td>
 </tr>
 <tr>
@@ -406,8 +406,8 @@ tags
 FROM google.file.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -431,23 +431,23 @@ Creates a backup.
 
 ```sql
 INSERT INTO google.file.backups (
+data__description,
 data__kmsKey,
-data__tags,
 data__labels,
 data__sourceFileShare,
 data__sourceInstance,
-data__description,
+data__tags,
 projectsId,
 locationsId,
 backupId
 )
 SELECT 
+'{{ description }}',
 '{{ kmsKey }}',
-'{{ tags }}',
 '{{ labels }}',
 '{{ sourceFileShare }}',
 '{{ sourceInstance }}',
-'{{ description }}',
+'{{ tags }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupId }}'
@@ -471,14 +471,14 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the backups resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.
     - name: kmsKey
       value: "{{ kmsKey }}"
       description: |
         Immutable. KMS key name used for data encryption.
-    - name: tags
-      value: "{{ tags }}"
-      description: |
-        Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: "123456789012/environment" : "production", "123456789013/costCenter" : "marketing" See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -491,10 +491,10 @@ response
       value: "{{ sourceInstance }}"
       description: |
         The resource name of the source Filestore instance, in the format \`projects/{project_number}/locations/{location_id}/instances/{instance_id}\`, used to create this backup.
-    - name: description
-      value: "{{ description }}"
+    - name: tags
+      value: "{{ tags }}"
       description: |
-        A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.
+        Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: "123456789012/environment" : "production", "123456789013/costCenter" : "marketing" See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
     - name: backupId
       value: "{{ backupId }}"
 `}</CodeBlock>
@@ -518,12 +518,12 @@ Updates the settings of a specific backup.
 ```sql
 UPDATE google.file.backups
 SET 
+data__description = '{{ description }}',
 data__kmsKey = '{{ kmsKey }}',
-data__tags = '{{ tags }}',
 data__labels = '{{ labels }}',
 data__sourceFileShare = '{{ sourceFileShare }}',
 data__sourceInstance = '{{ sourceInstance }}',
-data__description = '{{ description }}'
+data__tags = '{{ tags }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

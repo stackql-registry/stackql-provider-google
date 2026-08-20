@@ -275,29 +275,36 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns all Workstations using the specified workstation configuration.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a></td>
-    <td><a href="#parameter-workstationId"><code>workstationId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-workstationId"><code>workstationId</code></a></td>
     <td>Creates a new workstation.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a>, <a href="#parameter-workstationsId"><code>workstationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates an existing workstation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a>, <a href="#parameter-workstationsId"><code>workstationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes the specified workstation.</td>
+</tr>
+<tr>
+    <td><a href="#generate_access_token"><CopyableCode code="generate_access_token" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a>, <a href="#parameter-workstationsId"><code>workstationsId</code></a></td>
+    <td></td>
+    <td>Returns a short-lived credential that can be used to send authenticated and authorized traffic to a workstation. Once generated this token cannot be revoked and is good for the lifetime of the token.</td>
 </tr>
 <tr>
     <td><a href="#start"><CopyableCode code="start" /></a></td>
@@ -312,13 +319,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a>, <a href="#parameter-workstationsId"><code>workstationsId</code></a></td>
     <td></td>
     <td>Stops running a workstation, reducing costs.</td>
-</tr>
-<tr>
-    <td><a href="#generate_access_token"><CopyableCode code="generate_access_token" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a>, <a href="#parameter-workstationsId"><code>workstationsId</code></a></td>
-    <td></td>
-    <td>Returns a short-lived credential that can be used to send authenticated and authorized traffic to a workstation. Once generated this token cannot be revoked and is good for the lifetime of the token.</td>
 </tr>
 </tbody>
 </table>
@@ -475,9 +475,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workstationClustersId = '{{ workstationClustersId }}' -- required
 AND workstationConfigsId = '{{ workstationConfigsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -499,36 +499,36 @@ Creates a new workstation.
 
 ```sql
 INSERT INTO google.workstations.workstations (
-data__persistentDirectories,
 data__annotations,
-data__sourceWorkstation,
 data__displayName,
 data__env,
-data__labels,
 data__etag,
+data__labels,
 data__name,
+data__persistentDirectories,
+data__sourceWorkstation,
 projectsId,
 locationsId,
 workstationClustersId,
 workstationConfigsId,
-workstationId,
-validateOnly
+validateOnly,
+workstationId
 )
 SELECT 
-'{{ persistentDirectories }}',
 '{{ annotations }}',
-'{{ sourceWorkstation }}',
 '{{ displayName }}',
 '{{ env }}',
-'{{ labels }}',
 '{{ etag }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ persistentDirectories }}',
+'{{ sourceWorkstation }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workstationClustersId }}',
 '{{ workstationConfigsId }}',
-'{{ workstationId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ workstationId }}'
 RETURNING
 name,
 done,
@@ -555,20 +555,10 @@ response
     - name: workstationConfigsId
       value: "{{ workstationConfigsId }}"
       description: Required parameter for the workstations resource.
-    - name: persistentDirectories
-      description: |
-        Optional. Directories to persist across workstation sessions.
-      value:
-        - mountPath: "{{ mountPath }}"
-          sizeGb: {{ sizeGb }}
     - name: annotations
       value: "{{ annotations }}"
       description: |
         Optional. Client-specified annotations.
-    - name: sourceWorkstation
-      value: "{{ sourceWorkstation }}"
-      description: |
-        Optional. The source workstation from which this workstation's persistent directories were cloned on creation.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -577,22 +567,32 @@ response
       value: "{{ env }}"
       description: |
         Optional. Environment variables passed to the workstation container's entrypoint.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation and that are also propagated to the underlying Compute Engine resources.
     - name: etag
       value: "{{ etag }}"
       description: |
         Optional. Checksum computed by the server. May be sent on update and delete requests to make sure that the client has an up-to-date value before proceeding.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation and that are also propagated to the underlying Compute Engine resources.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Full name of this workstation.
-    - name: workstationId
-      value: "{{ workstationId }}"
+    - name: persistentDirectories
+      description: |
+        Optional. Directories to persist across workstation sessions.
+      value:
+        - mountPath: "{{ mountPath }}"
+          sizeGb: {{ sizeGb }}
+    - name: sourceWorkstation
+      value: "{{ sourceWorkstation }}"
+      description: |
+        Optional. The source workstation from which this workstation's persistent directories were cloned on creation.
     - name: validateOnly
       value: {{ validateOnly }}
+    - name: workstationId
+      value: "{{ workstationId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -614,23 +614,23 @@ Updates an existing workstation.
 ```sql
 UPDATE google.workstations.workstations
 SET 
-data__persistentDirectories = '{{ persistentDirectories }}',
 data__annotations = '{{ annotations }}',
-data__sourceWorkstation = '{{ sourceWorkstation }}',
 data__displayName = '{{ displayName }}',
 data__env = '{{ env }}',
-data__labels = '{{ labels }}',
 data__etag = '{{ etag }}',
-data__name = '{{ name }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__persistentDirectories = '{{ persistentDirectories }}',
+data__sourceWorkstation = '{{ sourceWorkstation }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND workstationClustersId = '{{ workstationClustersId }}' --required
 AND workstationConfigsId = '{{ workstationConfigsId }}' --required
 AND workstationsId = '{{ workstationsId }}' --required
-AND validateOnly = {{ validateOnly}}
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -661,8 +661,8 @@ AND locationsId = '{{ locationsId }}' --required
 AND workstationClustersId = '{{ workstationClustersId }}' --required
 AND workstationConfigsId = '{{ workstationConfigsId }}' --required
 AND workstationsId = '{{ workstationsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -672,13 +672,33 @@ AND etag = '{{ etag }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="start"
+    defaultValue="generate_access_token"
     values={[
+        { label: 'generate_access_token', value: 'generate_access_token' },
         { label: 'start', value: 'start' },
-        { label: 'stop', value: 'stop' },
-        { label: 'generate_access_token', value: 'generate_access_token' }
+        { label: 'stop', value: 'stop' }
     ]}
 >
+<TabItem value="generate_access_token">
+
+Returns a short-lived credential that can be used to send authenticated and authorized traffic to a workstation. Once generated this token cannot be revoked and is good for the lifetime of the token.
+
+```sql
+EXEC google.workstations.workstations.generate_access_token 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@workstationClustersId='{{ workstationClustersId }}' --required, 
+@workstationConfigsId='{{ workstationConfigsId }}' --required, 
+@workstationsId='{{ workstationsId }}' --required 
+@@json=
+'{
+"expireTime": "{{ expireTime }}", 
+"port": {{ port }}, 
+"ttl": "{{ ttl }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="start">
 
 Starts running a workstation so that users can connect to it.
@@ -692,9 +712,9 @@ EXEC google.workstations.workstations.start
 @workstationsId='{{ workstationsId }}' --required 
 @@json=
 '{
-"validateOnly": {{ validateOnly }}, 
+"boostConfig": "{{ boostConfig }}", 
 "etag": "{{ etag }}", 
-"boostConfig": "{{ boostConfig }}"
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```
@@ -712,28 +732,8 @@ EXEC google.workstations.workstations.stop
 @workstationsId='{{ workstationsId }}' --required 
 @@json=
 '{
-"validateOnly": {{ validateOnly }}, 
-"etag": "{{ etag }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="generate_access_token">
-
-Returns a short-lived credential that can be used to send authenticated and authorized traffic to a workstation. Once generated this token cannot be revoked and is good for the lifetime of the token.
-
-```sql
-EXEC google.workstations.workstations.generate_access_token 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@workstationClustersId='{{ workstationClustersId }}' --required, 
-@workstationConfigsId='{{ workstationConfigsId }}' --required, 
-@workstationsId='{{ workstationsId }}' --required 
-@@json=
-'{
-"expireTime": "{{ expireTime }}", 
-"port": {{ port }}, 
-"ttl": "{{ ttl }}"
+"etag": "{{ etag }}", 
+"validateOnly": {{ validateOnly }}
 }'
 ;
 ```

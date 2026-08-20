@@ -175,11 +175,18 @@ The following methods are available for this resource:
     <td>Deletes an issue model.</td>
 </tr>
 <tr>
-    <td><a href="#undeploy"><CopyableCode code="undeploy" /></a></td>
+    <td><a href="#calculate_issue_model_stats"><CopyableCode code="calculate_issue_model_stats" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-issueModelsId"><code>issueModelsId</code></a></td>
     <td></td>
-    <td>Undeploys an issue model. An issue model can not be used in analysis after it has been undeployed.</td>
+    <td>Gets an issue model's statistics.</td>
+</tr>
+<tr>
+    <td><a href="#deploy"><CopyableCode code="deploy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-issueModelsId"><code>issueModelsId</code></a></td>
+    <td></td>
+    <td>Deploys an issue model. Returns an error if a model is already deployed. An issue model can only be used in analysis after it has been deployed.</td>
 </tr>
 <tr>
     <td><a href="#export"><CopyableCode code="export" /></a></td>
@@ -196,18 +203,11 @@ The following methods are available for this resource:
     <td>Imports an issue model from a Cloud Storage bucket.</td>
 </tr>
 <tr>
-    <td><a href="#calculate_issue_model_stats"><CopyableCode code="calculate_issue_model_stats" /></a></td>
+    <td><a href="#undeploy"><CopyableCode code="undeploy" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-issueModelsId"><code>issueModelsId</code></a></td>
     <td></td>
-    <td>Gets an issue model's statistics.</td>
-</tr>
-<tr>
-    <td><a href="#deploy"><CopyableCode code="deploy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-issueModelsId"><code>issueModelsId</code></a></td>
-    <td></td>
-    <td>Deploys an issue model. Returns an error if a model is already deployed. An issue model can only be used in analysis after it has been deployed.</td>
+    <td>Undeploys an issue model. An issue model can not be used in analysis after it has been undeployed.</td>
 </tr>
 </tbody>
 </table>
@@ -311,20 +311,20 @@ Creates an issue model.
 
 ```sql
 INSERT INTO google.contactcenterinsights.issue_models (
-data__name,
 data__displayName,
-data__modelType,
-data__languageCode,
 data__inputDataConfig,
+data__languageCode,
+data__modelType,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
-'{{ modelType }}',
-'{{ languageCode }}',
 '{{ inputDataConfig }}',
+'{{ languageCode }}',
+'{{ modelType }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -347,30 +347,30 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the issue_models resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The resource name of the issue model. Format: projects/{project}/locations/{location}/issueModels/{issue_model}
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The representative name for the issue model.
+    - name: inputDataConfig
+      description: |
+        Configs for the input data that used to create the issue model.
+      value:
+        filter: "{{ filter }}"
+        medium: "{{ medium }}"
+        trainingConversationsCount: "{{ trainingConversationsCount }}"
+    - name: languageCode
+      value: "{{ languageCode }}"
+      description: |
+        Language of the model.
     - name: modelType
       value: "{{ modelType }}"
       description: |
         Type of the model.
       valid_values: ['MODEL_TYPE_UNSPECIFIED', 'TYPE_V1', 'TYPE_V2']
-    - name: languageCode
-      value: "{{ languageCode }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Language of the model.
-    - name: inputDataConfig
-      description: |
-        Configs for the input data that used to create the issue model.
-      value:
-        trainingConversationsCount: "{{ trainingConversationsCount }}"
-        filter: "{{ filter }}"
-        medium: "{{ medium }}"
+        Immutable. The resource name of the issue model. Format: projects/{project}/locations/{location}/issueModels/{issue_model}
 `}</CodeBlock>
 
 </TabItem>
@@ -392,11 +392,11 @@ Updates an issue model.
 ```sql
 UPDATE google.contactcenterinsights.issue_models
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__modelType = '{{ modelType }}',
+data__inputDataConfig = '{{ inputDataConfig }}',
 data__languageCode = '{{ languageCode }}',
-data__inputDataConfig = '{{ inputDataConfig }}'
+data__modelType = '{{ modelType }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -444,21 +444,33 @@ AND issueModelsId = '{{ issueModelsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undeploy"
+    defaultValue="calculate_issue_model_stats"
     values={[
-        { label: 'undeploy', value: 'undeploy' },
+        { label: 'calculate_issue_model_stats', value: 'calculate_issue_model_stats' },
+        { label: 'deploy', value: 'deploy' },
         { label: 'export', value: 'export' },
         { label: 'import', value: 'import' },
-        { label: 'calculate_issue_model_stats', value: 'calculate_issue_model_stats' },
-        { label: 'deploy', value: 'deploy' }
+        { label: 'undeploy', value: 'undeploy' }
     ]}
 >
-<TabItem value="undeploy">
+<TabItem value="calculate_issue_model_stats">
 
-Undeploys an issue model. An issue model can not be used in analysis after it has been undeployed.
+Gets an issue model's statistics.
 
 ```sql
-EXEC google.contactcenterinsights.issue_models.undeploy 
+EXEC google.contactcenterinsights.issue_models.calculate_issue_model_stats 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@issueModelsId='{{ issueModelsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="deploy">
+
+Deploys an issue model. Returns an error if a model is already deployed. An issue model can only be used in analysis after it has been deployed.
+
+```sql
+EXEC google.contactcenterinsights.issue_models.deploy 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @issueModelsId='{{ issueModelsId }}' --required 
@@ -496,31 +508,19 @@ EXEC google.contactcenterinsights.issue_models.import
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"gcsSource": "{{ gcsSource }}", 
 "createNewModel": {{ createNewModel }}, 
+"gcsSource": "{{ gcsSource }}", 
 "parent": "{{ parent }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="calculate_issue_model_stats">
+<TabItem value="undeploy">
 
-Gets an issue model's statistics.
-
-```sql
-EXEC google.contactcenterinsights.issue_models.calculate_issue_model_stats 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@issueModelsId='{{ issueModelsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="deploy">
-
-Deploys an issue model. Returns an error if a model is already deployed. An issue model can only be used in analysis after it has been deployed.
+Undeploys an issue model. An issue model can not be used in analysis after it has been undeployed.
 
 ```sql
-EXEC google.contactcenterinsights.issue_models.deploy 
+EXEC google.contactcenterinsights.issue_models.undeploy 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @issueModelsId='{{ issueModelsId }}' --required 

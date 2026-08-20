@@ -287,17 +287,17 @@ Creates a new UrlList in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.url_lists (
-data__values,
-data__name,
 data__description,
+data__name,
+data__values,
 projectsId,
 locationsId,
 urlListId
 )
 SELECT 
-'{{ values }}',
-'{{ name }}',
 '{{ description }}',
+'{{ name }}',
+'{{ values }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ urlListId }}'
@@ -321,19 +321,19 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the url_lists resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Free-text description of the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Name of the resource provided by the user. Name is of the form projects/{project}/locations/{location}/urlLists/{url_list} url_list should match the pattern:(^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
     - name: values
       value:
         - "{{ values }}"
       description: |
         Required. FQDNs and URLs.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Name of the resource provided by the user. Name is of the form projects/{project}/locations/{location}/urlLists/{url_list} url_list should match the pattern:(^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Free-text description of the resource.
     - name: urlListId
       value: "{{ urlListId }}"
 `}</CodeBlock>
@@ -357,9 +357,9 @@ Updates the parameters of a single UrlList.
 ```sql
 UPDATE google.networksecurity.url_lists
 SET 
-data__values = '{{ values }}',
+data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__values = '{{ values }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

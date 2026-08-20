@@ -73,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationRecord" /></td>
     <td><code>object</code></td>
-    <td>Describes a change made to a configuration. (id: MutationRecord)</td>
+    <td>A read-only record of the creation of the alerting policy. If provided in a call to create or update, this field will be ignored. (id: MutationRecord)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -93,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mutationRecord" /></td>
     <td><code>object</code></td>
-    <td>Describes a change made to a configuration. (id: MutationRecord)</td>
+    <td>A read-only record of the most recent change to the alerting policy. If provided in a call to create or update, this field will be ignored. (id: MutationRecord)</td>
 </tr>
 <tr>
     <td><CopyableCode code="notificationChannels" /></td>
@@ -113,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="validity" /></td>
     <td><code>object</code></td>
-    <td>The Status type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each Status message contains three pieces of data: error code, error message, and error details.You can find out more about this error model and how to work with it in the API Design Guide (https://cloud.google.com/apis/design/errors). (id: Status)</td>
+    <td>Read-only description of how the alerting policy is invalid. This field is only set when the alerting policy is invalid. An invalid alerting policy will not generate incidents. (id: Status)</td>
 </tr>
 </tbody>
 </table>
@@ -152,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationRecord" /></td>
     <td><code>object</code></td>
-    <td>Describes a change made to a configuration. (id: MutationRecord)</td>
+    <td>A read-only record of the creation of the alerting policy. If provided in a call to create or update, this field will be ignored. (id: MutationRecord)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -172,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mutationRecord" /></td>
     <td><code>object</code></td>
-    <td>Describes a change made to a configuration. (id: MutationRecord)</td>
+    <td>A read-only record of the most recent change to the alerting policy. If provided in a call to create or update, this field will be ignored. (id: MutationRecord)</td>
 </tr>
 <tr>
     <td><CopyableCode code="notificationChannels" /></td>
@@ -192,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="validity" /></td>
     <td><code>object</code></td>
-    <td>The Status type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each Status message contains three pieces of data: error code, error message, and error details.You can find out more about this error model and how to work with it in the API Design Guide (https://cloud.google.com/apis/design/errors). (id: Status)</td>
+    <td>Read-only description of how the alerting policy is invalid. This field is only set when the alerting policy is invalid. An invalid alerting policy will not generate incidents. (id: Status)</td>
 </tr>
 </tbody>
 </table>
@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_alert_policies_list"><CopyableCode code="projects_alert_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the existing alerting policies for the workspace.</td>
 </tr>
 <tr>
@@ -358,9 +358,9 @@ userLabels,
 validity
 FROM google.monitoring.alert_policies
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -383,35 +383,35 @@ Creates a new alerting policy.Design your application to single-thread API calls
 
 ```sql
 INSERT INTO google.monitoring.alert_policies (
+data__alertStrategy,
+data__combiner,
+data__conditions,
 data__creationRecord,
+data__displayName,
+data__documentation,
+data__enabled,
+data__mutationRecord,
 data__name,
 data__notificationChannels,
-data__enabled,
-data__documentation,
-data__displayName,
-data__validity,
-data__mutationRecord,
-data__alertStrategy,
 data__severity,
-data__combiner,
 data__userLabels,
-data__conditions,
+data__validity,
 projectsId
 )
 SELECT 
+'{{ alertStrategy }}',
+'{{ combiner }}',
+'{{ conditions }}',
 '{{ creationRecord }}',
+'{{ displayName }}',
+'{{ documentation }}',
+{{ enabled }},
+'{{ mutationRecord }}',
 '{{ name }}',
 '{{ notificationChannels }}',
-{{ enabled }},
-'{{ documentation }}',
-'{{ displayName }}',
-'{{ validity }}',
-'{{ mutationRecord }}',
-'{{ alertStrategy }}',
 '{{ severity }}',
-'{{ combiner }}',
 '{{ userLabels }}',
-'{{ conditions }}',
+'{{ validity }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -438,9 +438,126 @@ validity
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the alert_policies resource.
+    - name: alertStrategy
+      description: |
+        Control over how this alerting policy's notification channels are notified.
+      value:
+        autoClose: "{{ autoClose }}"
+        notificationChannelStrategy:
+          - notificationChannelNames: "{{ notificationChannelNames }}"
+            renotifyInterval: "{{ renotifyInterval }}"
+        notificationPrompts:
+          - "{{ notificationPrompts }}"
+        notificationRateLimit:
+          period: "{{ period }}"
+    - name: combiner
+      value: "{{ combiner }}"
+      description: |
+        How to combine the results of multiple conditions to determine if an incident should be opened. If condition_time_series_query_language is present, this must be COMBINE_UNSPECIFIED.
+      valid_values: ['COMBINE_UNSPECIFIED', 'AND', 'OR', 'AND_WITH_MATCHING_RESOURCE']
+    - name: conditions
+      description: |
+        A list of conditions for the policy. The conditions are combined by AND or OR according to the combiner field. If the combined conditions evaluate to true, then an incident is created. A policy can have from one to six conditions. If condition_time_series_query_language is present, it must be the only condition. If condition_monitoring_query_language is present, it must be the only condition.
+      value:
+        - conditionAbsent:
+            aggregations:
+              - alignmentPeriod: "{{ alignmentPeriod }}"
+                crossSeriesReducer: "{{ crossSeriesReducer }}"
+                groupByFields: "{{ groupByFields }}"
+                perSeriesAligner: "{{ perSeriesAligner }}"
+            duration: "{{ duration }}"
+            filter: "{{ filter }}"
+            trigger:
+              count: {{ count }}
+              percent: {{ percent }}
+          conditionMatchedLog:
+            filter: "{{ filter }}"
+            labelExtractors: "{{ labelExtractors }}"
+          conditionMonitoringQueryLanguage:
+            duration: "{{ duration }}"
+            evaluationMissingData: "{{ evaluationMissingData }}"
+            query: "{{ query }}"
+            trigger:
+              count: {{ count }}
+              percent: {{ percent }}
+          conditionPrometheusQueryLanguage:
+            alertRule: "{{ alertRule }}"
+            disableMetricValidation: {{ disableMetricValidation }}
+            duration: "{{ duration }}"
+            evaluationInterval: "{{ evaluationInterval }}"
+            labels: "{{ labels }}"
+            query: "{{ query }}"
+            ruleGroup: "{{ ruleGroup }}"
+          conditionSql:
+            booleanTest:
+              column: "{{ column }}"
+            daily:
+              executionTime:
+                hours: {{ hours }}
+                minutes: {{ minutes }}
+                nanos: {{ nanos }}
+                seconds: {{ seconds }}
+              periodicity: {{ periodicity }}
+            hourly:
+              minuteOffset: {{ minuteOffset }}
+              periodicity: {{ periodicity }}
+            minutes:
+              periodicity: {{ periodicity }}
+            query: "{{ query }}"
+            rowCountTest:
+              comparison: "{{ comparison }}"
+              threshold: "{{ threshold }}"
+          conditionThreshold:
+            aggregations:
+              - alignmentPeriod: "{{ alignmentPeriod }}"
+                crossSeriesReducer: "{{ crossSeriesReducer }}"
+                groupByFields: "{{ groupByFields }}"
+                perSeriesAligner: "{{ perSeriesAligner }}"
+            comparison: "{{ comparison }}"
+            denominatorAggregations:
+              - alignmentPeriod: "{{ alignmentPeriod }}"
+                crossSeriesReducer: "{{ crossSeriesReducer }}"
+                groupByFields: "{{ groupByFields }}"
+                perSeriesAligner: "{{ perSeriesAligner }}"
+            denominatorFilter: "{{ denominatorFilter }}"
+            duration: "{{ duration }}"
+            evaluationMissingData: "{{ evaluationMissingData }}"
+            filter: "{{ filter }}"
+            forecastOptions:
+              forecastHorizon: "{{ forecastHorizon }}"
+            thresholdValue: {{ thresholdValue }}
+            trigger:
+              count: {{ count }}
+              percent: {{ percent }}
+          displayName: "{{ displayName }}"
+          name: "{{ name }}"
     - name: creationRecord
       description: |
-        Describes a change made to a configuration.
+        A read-only record of the creation of the alerting policy. If provided in a call to create or update, this field will be ignored.
+      value:
+        mutateTime: "{{ mutateTime }}"
+        mutatedBy: "{{ mutatedBy }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        A short name or phrase used to identify the policy in dashboards, notifications, and incidents. To avoid confusion, don't use the same display name for multiple policies in the same project. The name is limited to 512 Unicode characters.The convention for the display_name of a PrometheusQueryLanguageCondition is "{rule group name}/{alert name}", where the {rule group name} and {alert name} should be taken from the corresponding Prometheus configuration file. This convention is not enforced. In any case the display_name is not a unique key of the AlertPolicy.
+    - name: documentation
+      description: |
+        Documentation that is included with notifications and incidents related to this policy. Best practice is for the documentation to include information to help responders understand, mitigate, escalate, and correct the underlying problems detected by the alerting policy. Notification channels that have limited capacity might not show this documentation.
+      value:
+        content: "{{ content }}"
+        links:
+          - displayName: "{{ displayName }}"
+            url: "{{ url }}"
+        mimeType: "{{ mimeType }}"
+        subject: "{{ subject }}"
+    - name: enabled
+      value: {{ enabled }}
+      description: |
+        Whether or not the policy is enabled. On write, the default interpretation if unset is that the policy is enabled. On read, clients should not make any assumption about the state if it has not been populated. The field should always be populated on List and Get operations, unless a field projection has been specified that strips it out.
+    - name: mutationRecord
+      description: |
+        A read-only record of the most recent change to the alerting policy. If provided in a call to create or update, this field will be ignored.
       value:
         mutateTime: "{{ mutateTime }}"
         mutatedBy: "{{ mutatedBy }}"
@@ -453,139 +570,22 @@ validity
         - "{{ notificationChannels }}"
       description: |
         Identifies the notification channels to which notifications should be sent when incidents are opened or closed or when new violations occur on an already opened incident. Each element of this array corresponds to the name field in each of the NotificationChannel objects that are returned from the ListNotificationChannels method. The format of the entries in this field is: projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
-    - name: enabled
-      value: {{ enabled }}
-      description: |
-        Whether or not the policy is enabled. On write, the default interpretation if unset is that the policy is enabled. On read, clients should not make any assumption about the state if it has not been populated. The field should always be populated on List and Get operations, unless a field projection has been specified that strips it out.
-    - name: documentation
-      description: |
-        Documentation that is included with notifications and incidents related to this policy. Best practice is for the documentation to include information to help responders understand, mitigate, escalate, and correct the underlying problems detected by the alerting policy. Notification channels that have limited capacity might not show this documentation.
-      value:
-        links:
-          - displayName: "{{ displayName }}"
-            url: "{{ url }}"
-        content: "{{ content }}"
-        mimeType: "{{ mimeType }}"
-        subject: "{{ subject }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        A short name or phrase used to identify the policy in dashboards, notifications, and incidents. To avoid confusion, don't use the same display name for multiple policies in the same project. The name is limited to 512 Unicode characters.The convention for the display_name of a PrometheusQueryLanguageCondition is "{rule group name}/{alert name}", where the {rule group name} and {alert name} should be taken from the corresponding Prometheus configuration file. This convention is not enforced. In any case the display_name is not a unique key of the AlertPolicy.
-    - name: validity
-      description: |
-        The Status type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each Status message contains three pieces of data: error code, error message, and error details.You can find out more about this error model and how to work with it in the API Design Guide (https://cloud.google.com/apis/design/errors).
-      value:
-        code: {{ code }}
-        message: "{{ message }}"
-        details: "{{ details }}"
-    - name: mutationRecord
-      description: |
-        Describes a change made to a configuration.
-      value:
-        mutateTime: "{{ mutateTime }}"
-        mutatedBy: "{{ mutatedBy }}"
-    - name: alertStrategy
-      description: |
-        Control over how this alerting policy's notification channels are notified.
-      value:
-        autoClose: "{{ autoClose }}"
-        notificationRateLimit:
-          period: "{{ period }}"
-        notificationPrompts:
-          - "{{ notificationPrompts }}"
-        notificationChannelStrategy:
-          - renotifyInterval: "{{ renotifyInterval }}"
-            notificationChannelNames: "{{ notificationChannelNames }}"
     - name: severity
       value: "{{ severity }}"
       description: |
         Optional. The severity of an alerting policy indicates how important incidents generated by that policy are. The severity level will be displayed on the Incident detail page and in notifications.
       valid_values: ['SEVERITY_UNSPECIFIED', 'CRITICAL', 'ERROR', 'WARNING']
-    - name: combiner
-      value: "{{ combiner }}"
-      description: |
-        How to combine the results of multiple conditions to determine if an incident should be opened. If condition_time_series_query_language is present, this must be COMBINE_UNSPECIFIED.
-      valid_values: ['COMBINE_UNSPECIFIED', 'AND', 'OR', 'AND_WITH_MATCHING_RESOURCE']
     - name: userLabels
       value: "{{ userLabels }}"
       description: |
         User-supplied key/value data to be used for organizing and identifying the AlertPolicy objects.The field can contain up to 64 entries. Each key and value is limited to 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values can contain only lowercase letters, numerals, underscores, and dashes. Keys must begin with a letter.Note that Prometheus {alert name} is a valid Prometheus label names (https://prometheus.io/docs/concepts/data_model/#metric-names-and-labels), whereas Prometheus {rule group} is an unrestricted UTF-8 string. This means that they cannot be stored as-is in user labels, because they may contain characters that are not allowed in user-label values.
-    - name: conditions
+    - name: validity
       description: |
-        A list of conditions for the policy. The conditions are combined by AND or OR according to the combiner field. If the combined conditions evaluate to true, then an incident is created. A policy can have from one to six conditions. If condition_time_series_query_language is present, it must be the only condition. If condition_monitoring_query_language is present, it must be the only condition.
+        Read-only description of how the alerting policy is invalid. This field is only set when the alerting policy is invalid. An invalid alerting policy will not generate incidents.
       value:
-        - conditionMonitoringQueryLanguage:
-            evaluationMissingData: "{{ evaluationMissingData }}"
-            trigger:
-              count: {{ count }}
-              percent: {{ percent }}
-            query: "{{ query }}"
-            duration: "{{ duration }}"
-          conditionPrometheusQueryLanguage:
-            duration: "{{ duration }}"
-            query: "{{ query }}"
-            evaluationInterval: "{{ evaluationInterval }}"
-            labels: "{{ labels }}"
-            ruleGroup: "{{ ruleGroup }}"
-            alertRule: "{{ alertRule }}"
-            disableMetricValidation: {{ disableMetricValidation }}
-          displayName: "{{ displayName }}"
-          conditionSql:
-            query: "{{ query }}"
-            booleanTest:
-              column: "{{ column }}"
-            rowCountTest:
-              comparison: "{{ comparison }}"
-              threshold: "{{ threshold }}"
-            minutes:
-              periodicity: {{ periodicity }}
-            hourly:
-              minuteOffset: {{ minuteOffset }}
-              periodicity: {{ periodicity }}
-            daily:
-              periodicity: {{ periodicity }}
-              executionTime:
-                hours: {{ hours }}
-                seconds: {{ seconds }}
-                nanos: {{ nanos }}
-                minutes: {{ minutes }}
-          conditionAbsent:
-            filter: "{{ filter }}"
-            aggregations:
-              - alignmentPeriod: "{{ alignmentPeriod }}"
-                perSeriesAligner: "{{ perSeriesAligner }}"
-                crossSeriesReducer: "{{ crossSeriesReducer }}"
-                groupByFields: "{{ groupByFields }}"
-            trigger:
-              count: {{ count }}
-              percent: {{ percent }}
-            duration: "{{ duration }}"
-          conditionMatchedLog:
-            filter: "{{ filter }}"
-            labelExtractors: "{{ labelExtractors }}"
-          conditionThreshold:
-            denominatorAggregations:
-              - alignmentPeriod: "{{ alignmentPeriod }}"
-                perSeriesAligner: "{{ perSeriesAligner }}"
-                crossSeriesReducer: "{{ crossSeriesReducer }}"
-                groupByFields: "{{ groupByFields }}"
-            thresholdValue: {{ thresholdValue }}
-            filter: "{{ filter }}"
-            aggregations:
-              - alignmentPeriod: "{{ alignmentPeriod }}"
-                perSeriesAligner: "{{ perSeriesAligner }}"
-                crossSeriesReducer: "{{ crossSeriesReducer }}"
-                groupByFields: "{{ groupByFields }}"
-            comparison: "{{ comparison }}"
-            duration: "{{ duration }}"
-            trigger:
-              count: {{ count }}
-              percent: {{ percent }}
-            forecastOptions:
-              forecastHorizon: "{{ forecastHorizon }}"
-            denominatorFilter: "{{ denominatorFilter }}"
-            evaluationMissingData: "{{ evaluationMissingData }}"
-          name: "{{ name }}"
+        code: {{ code }}
+        details: "{{ details }}"
+        message: "{{ message }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -607,19 +607,19 @@ Updates an alerting policy. You can either replace the entire policy with a new 
 ```sql
 UPDATE google.monitoring.alert_policies
 SET 
+data__alertStrategy = '{{ alertStrategy }}',
+data__combiner = '{{ combiner }}',
+data__conditions = '{{ conditions }}',
 data__creationRecord = '{{ creationRecord }}',
+data__displayName = '{{ displayName }}',
+data__documentation = '{{ documentation }}',
+data__enabled = {{ enabled }},
+data__mutationRecord = '{{ mutationRecord }}',
 data__name = '{{ name }}',
 data__notificationChannels = '{{ notificationChannels }}',
-data__enabled = {{ enabled }},
-data__documentation = '{{ documentation }}',
-data__displayName = '{{ displayName }}',
-data__validity = '{{ validity }}',
-data__mutationRecord = '{{ mutationRecord }}',
-data__alertStrategy = '{{ alertStrategy }}',
 data__severity = '{{ severity }}',
-data__combiner = '{{ combiner }}',
 data__userLabels = '{{ userLabels }}',
-data__conditions = '{{ conditions }}'
+data__validity = '{{ validity }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND alertPoliciesId = '{{ alertPoliciesId }}' --required

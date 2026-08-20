@@ -347,7 +347,7 @@ export function getObjectKey(openapiDoc, service, operationId, debug) {
     }
 
     // Find array properties sibling to "nextPageToken".
-    const arrayProperties = [];
+    let arrayProperties = [];
     for (const propName of Object.keys(schemaObj.properties)) {
         if (schemaObj.properties[propName].type === 'array' && propName !== 'nextPageToken') {
             arrayProperties.push(propName);
@@ -357,8 +357,19 @@ export function getObjectKey(openapiDoc, service, operationId, debug) {
     if (arrayProperties.length === 0) {
         return false;
     } else if (arrayProperties.length > 1) {
-        // Log a warning if multiple array types are found.
-        logger.warn(`multiple array types found for operationId : ${operationId}, arrayProperties : ${JSON.stringify(arrayProperties)}`);
+        // 'unreachable' is Google's partial-result reporting field, never the
+        // object list itself - drop it when another candidate exists, and sort
+        // so the pick is deterministic (schema property order follows the
+        // discovery doc's nondeterministic JSON key order)
+        const filtered = arrayProperties.filter(p => p !== 'unreachable');
+        if (filtered.length > 0) {
+            arrayProperties = filtered;
+        }
+        arrayProperties.sort();
+        if (arrayProperties.length > 1) {
+            // Log a warning if multiple array types are found.
+            logger.warn(`multiple array types found for operationId : ${operationId}, arrayProperties : ${JSON.stringify(arrayProperties)}`);
+        }
     }
 
     // Return the name of the array, prefixed with "$.".

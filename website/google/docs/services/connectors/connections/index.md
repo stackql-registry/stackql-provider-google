@@ -51,39 +51,11 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#tools"><CopyableCode code="tools" /></a></td>
+    <td><a href="#check_readiness"><CopyableCode code="check_readiness" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
     <td></td>
-    <td>Lists all available tools with POST.</td>
-</tr>
-<tr>
-    <td><a href="#generate_connection_toolspec_override"><CopyableCode code="generate_connection_toolspec_override" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td></td>
-    <td>Generate toolspec override for the given list of toolNames.</td>
-</tr>
-<tr>
-    <td><a href="#execute_sql_query"><CopyableCode code="execute_sql_query" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td></td>
-    <td>Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be 'select * from Account a, Order o where a.Id = o.AccountId'.</td>
-</tr>
-<tr>
-    <td><a href="#execute_http_request"><CopyableCode code="execute_http_request" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td></td>
-    <td>Executes a generic HTTP request. This supports all payload formats including REST/JSON, GraphQL, XML, SOAP, and Multipart by passing the rendered payload as raw bytes.</td>
-</tr>
-<tr>
-    <td><a href="#refresh_access_token"><CopyableCode code="refresh_access_token" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td></td>
-    <td>RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).</td>
+    <td>Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.</td>
 </tr>
 <tr>
     <td><a href="#check_status"><CopyableCode code="check_status" /></a></td>
@@ -93,18 +65,46 @@ The following methods are available for this resource:
     <td>Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not "OK", which indicates that ConnectionStatus itself, not the connection, failed.</td>
 </tr>
 <tr>
-    <td><a href="#check_readiness"><CopyableCode code="check_readiness" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td></td>
-    <td>Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.</td>
-</tr>
-<tr>
     <td><a href="#exchange_auth_code"><CopyableCode code="exchange_auth_code" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
     <td></td>
     <td>ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).</td>
+</tr>
+<tr>
+    <td><a href="#execute_http_request"><CopyableCode code="execute_http_request" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>Executes a generic HTTP request. This supports all payload formats including REST/JSON, GraphQL, XML, SOAP, and Multipart by passing the rendered payload as raw bytes.</td>
+</tr>
+<tr>
+    <td><a href="#execute_sql_query"><CopyableCode code="execute_sql_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be 'select * from Account a, Order o where a.Id = o.AccountId'.</td>
+</tr>
+<tr>
+    <td><a href="#generate_connection_toolspec_override"><CopyableCode code="generate_connection_toolspec_override" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>Generate toolspec override for the given list of toolNames.</td>
+</tr>
+<tr>
+    <td><a href="#refresh_access_token"><CopyableCode code="refresh_access_token" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).</td>
+</tr>
+<tr>
+    <td><a href="#tools"><CopyableCode code="tools" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>Lists all available tools with POST.</td>
 </tr>
 </tbody>
 </table>
@@ -148,50 +148,76 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="tools"
+    defaultValue="check_readiness"
     values={[
-        { label: 'tools', value: 'tools' },
-        { label: 'generate_connection_toolspec_override', value: 'generate_connection_toolspec_override' },
-        { label: 'execute_sql_query', value: 'execute_sql_query' },
-        { label: 'execute_http_request', value: 'execute_http_request' },
-        { label: 'refresh_access_token', value: 'refresh_access_token' },
-        { label: 'check_status', value: 'check_status' },
         { label: 'check_readiness', value: 'check_readiness' },
-        { label: 'exchange_auth_code', value: 'exchange_auth_code' }
+        { label: 'check_status', value: 'check_status' },
+        { label: 'exchange_auth_code', value: 'exchange_auth_code' },
+        { label: 'execute_http_request', value: 'execute_http_request' },
+        { label: 'execute_sql_query', value: 'execute_sql_query' },
+        { label: 'generate_connection_toolspec_override', value: 'generate_connection_toolspec_override' },
+        { label: 'refresh_access_token', value: 'refresh_access_token' },
+        { label: 'tools', value: 'tools' }
     ]}
 >
-<TabItem value="tools">
+<TabItem value="check_readiness">
 
-Lists all available tools with POST.
+Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.
 
 ```sql
-EXEC google.connectors.connections.tools 
+EXEC google.connectors.connections.check_readiness 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectionsId='{{ connectionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="check_status">
+
+Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not "OK", which indicates that ConnectionStatus itself, not the connection, failed.
+
+```sql
+EXEC google.connectors.connections.check_status 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectionsId='{{ connectionsId }}' --required, 
+@executionConfig.headers='{{ executionConfig.headers }}'
+;
+```
+</TabItem>
+<TabItem value="exchange_auth_code">
+
+ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).
+
+```sql
+EXEC google.connectors.connections.exchange_auth_code 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required 
 @@json=
 '{
-"toolNames": "{{ toolNames }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
+"authCodeData": "{{ authCodeData }}", 
 "executionConfig": "{{ executionConfig }}", 
-"toolSpec": "{{ toolSpec }}"
+"oauth2Config": "{{ oauth2Config }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="generate_connection_toolspec_override">
+<TabItem value="execute_http_request">
 
-Generate toolspec override for the given list of toolNames.
+Executes a generic HTTP request. This supports all payload formats including REST/JSON, GraphQL, XML, SOAP, and Multipart by passing the rendered payload as raw bytes.
 
 ```sql
-EXEC google.connectors.connections.generate_connection_toolspec_override 
+EXEC google.connectors.connections.execute_http_request 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required 
 @@json=
 '{
-"toolNames": "{{ toolNames }}"
+"headers": "{{ headers }}", 
+"httpMethod": "{{ httpMethod }}", 
+"rawBody": "{{ rawBody }}", 
+"url": "{{ url }}"
 }'
 ;
 ```
@@ -212,21 +238,18 @@ EXEC google.connectors.connections.execute_sql_query
 ;
 ```
 </TabItem>
-<TabItem value="execute_http_request">
+<TabItem value="generate_connection_toolspec_override">
 
-Executes a generic HTTP request. This supports all payload formats including REST/JSON, GraphQL, XML, SOAP, and Multipart by passing the rendered payload as raw bytes.
+Generate toolspec override for the given list of toolNames.
 
 ```sql
-EXEC google.connectors.connections.execute_http_request 
+EXEC google.connectors.connections.generate_connection_toolspec_override 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required 
 @@json=
 '{
-"httpMethod": "{{ httpMethod }}", 
-"url": "{{ url }}", 
-"headers": "{{ headers }}", 
-"rawBody": "{{ rawBody }}"
+"toolNames": "{{ toolNames }}"
 }'
 ;
 ```
@@ -249,45 +272,22 @@ EXEC google.connectors.connections.refresh_access_token
 ;
 ```
 </TabItem>
-<TabItem value="check_status">
+<TabItem value="tools">
 
-Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not "OK", which indicates that ConnectionStatus itself, not the connection, failed.
-
-```sql
-EXEC google.connectors.connections.check_status 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@connectionsId='{{ connectionsId }}' --required, 
-@executionConfig.headers='{{ executionConfig.headers }}'
-;
-```
-</TabItem>
-<TabItem value="check_readiness">
-
-Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.
+Lists all available tools with POST.
 
 ```sql
-EXEC google.connectors.connections.check_readiness 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@connectionsId='{{ connectionsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="exchange_auth_code">
-
-ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).
-
-```sql
-EXEC google.connectors.connections.exchange_auth_code 
+EXEC google.connectors.connections.tools 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required 
 @@json=
 '{
 "executionConfig": "{{ executionConfig }}", 
-"oauth2Config": "{{ oauth2Config }}", 
-"authCodeData": "{{ authCodeData }}"
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"toolNames": "{{ toolNames }}", 
+"toolSpec": "{{ toolSpec }}"
 }'
 ;
 ```

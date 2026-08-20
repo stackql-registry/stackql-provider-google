@@ -93,9 +93,9 @@ EXEC google.texttospeech.text.synthesize
 @@json=
 '{
 "advancedVoiceOptions": "{{ advancedVoiceOptions }}", 
-"voice": "{{ voice }}", 
+"audioConfig": "{{ audioConfig }}", 
 "input": "{{ input }}", 
-"audioConfig": "{{ audioConfig }}"
+"voice": "{{ voice }}"
 }'
 ;
 ```

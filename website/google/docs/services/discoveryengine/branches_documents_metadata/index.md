@@ -98,14 +98,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_branches_batch_get_documents_metadata"><CopyableCode code="projects_locations_collections_data_stores_branches_batch_get_documents_metadata" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td><a href="#parameter-matcher.urisMatcher.uris"><code>matcher.urisMatcher.uris</code></a>, <a href="#parameter-matcher.fhirMatcher.fhirResources"><code>matcher.fhirMatcher.fhirResources</code></a></td>
+    <td><a href="#parameter-matcher.fhirMatcher.fhirResources"><code>matcher.fhirMatcher.fhirResources</code></a>, <a href="#parameter-matcher.urisMatcher.uris"><code>matcher.urisMatcher.uris</code></a></td>
     <td>Gets index freshness metadata for Documents. Supported for website search only.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_stores_branches_batch_get_documents_metadata"><CopyableCode code="projects_locations_data_stores_branches_batch_get_documents_metadata" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td><a href="#parameter-matcher.urisMatcher.uris"><code>matcher.urisMatcher.uris</code></a>, <a href="#parameter-matcher.fhirMatcher.fhirResources"><code>matcher.fhirMatcher.fhirResources</code></a></td>
+    <td><a href="#parameter-matcher.fhirMatcher.fhirResources"><code>matcher.fhirMatcher.fhirResources</code></a>, <a href="#parameter-matcher.urisMatcher.uris"><code>matcher.urisMatcher.uris</code></a></td>
     <td>Gets index freshness metadata for Documents. Supported for website search only.</td>
 </tr>
 </tbody>
@@ -184,8 +184,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND branchesId = '{{ branchesId }}' -- required
-AND matcher.urisMatcher.uris = '{{ matcher.urisMatcher.uris }}'
 AND matcher.fhirMatcher.fhirResources = '{{ matcher.fhirMatcher.fhirResources }}'
+AND matcher.urisMatcher.uris = '{{ matcher.urisMatcher.uris }}'
 ;
 ```
 </TabItem>
@@ -201,8 +201,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND branchesId = '{{ branchesId }}' -- required
-AND matcher.urisMatcher.uris = '{{ matcher.urisMatcher.uris }}'
 AND matcher.fhirMatcher.fhirResources = '{{ matcher.fhirMatcher.fhirResources }}'
+AND matcher.urisMatcher.uris = '{{ matcher.urisMatcher.uris }}'
 ;
 ```
 </TabItem>

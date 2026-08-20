@@ -18,22 +18,23 @@ cloudidentity service documentation.
 
 :::info[Service Summary]
 
-total resources: __13__  
+total resources: __14__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/cloudidentity/allowlisted_domains/">allowlisted_domains</a><br />
 <a href="/services/cloudidentity/client_states/">client_states</a><br />
 <a href="/services/cloudidentity/device_users/">device_users</a><br />
 <a href="/services/cloudidentity/devices/">devices</a><br />
 <a href="/services/cloudidentity/groups/">groups</a><br />
 <a href="/services/cloudidentity/groups_security_settings/">groups_security_settings</a><br />
-<a href="/services/cloudidentity/idp_credentials/">idp_credentials</a><br />
-<a href="/services/cloudidentity/inbound_oidc_sso_profiles/">inbound_oidc_sso_profiles</a>
+<a href="/services/cloudidentity/idp_credentials/">idp_credentials</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/cloudidentity/inbound_oidc_sso_profiles/">inbound_oidc_sso_profiles</a><br />
 <a href="/services/cloudidentity/inbound_saml_sso_profiles/">inbound_saml_sso_profiles</a><br />
 <a href="/services/cloudidentity/inbound_sso_assignments/">inbound_sso_assignments</a><br />
 <a href="/services/cloudidentity/memberships/">memberships</a><br />

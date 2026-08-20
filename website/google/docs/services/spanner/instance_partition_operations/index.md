@@ -98,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_instance_partition_operations_list"><CopyableCode code="projects_instances_instance_partition_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-instancePartitionDeadline"><code>instancePartitionDeadline</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-instancePartitionDeadline"><code>instancePartitionDeadline</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists instance partition long-running operations in the given instance. An instance partition operation has a name of the form `projects//instances//instancePartitions//operations/`. The long-running operation metadata field type `metadata.type_url` describes the type of the metadata. Operations returned include those that have completed/failed/canceled within the last 7 days, and pending operations. Operations returned are ordered by `operation.metadata.value.start_time` in descending order starting from the most recently started operation. Authorization requires `spanner.instancePartitionOperations.list` permission on the resource parent.</td>
 </tr>
 </tbody>
@@ -173,9 +173,9 @@ FROM google.spanner.instance_partition_operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND filter = '{{ filter }}'
+AND instancePartitionDeadline = '{{ instancePartitionDeadline }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND instancePartitionDeadline = '{{ instancePartitionDeadline }}'
 ;
 ```
 </TabItem>

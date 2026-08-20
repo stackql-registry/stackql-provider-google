@@ -235,14 +235,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists CustomClasses.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-customClassId"><code>customClassId</code></a></td>
+    <td><a href="#parameter-customClassId"><code>customClassId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a CustomClass.</td>
 </tr>
 <tr>
@@ -256,7 +256,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-customClassesId"><code>customClassesId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes the CustomClass.</td>
 </tr>
 <tr>
@@ -400,8 +400,8 @@ FROM google.speechv2.custom_classes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND showDeleted = '{{ showDeleted }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -423,22 +423,22 @@ Creates a CustomClass.
 
 ```sql
 INSERT INTO google.speechv2.custom_classes (
+data__annotations,
 data__displayName,
 data__items,
-data__annotations,
 projectsId,
 locationsId,
-validateOnly,
-customClassId
+customClassId,
+validateOnly
 )
 SELECT 
+'{{ annotations }}',
 '{{ displayName }}',
 '{{ items }}',
-'{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ customClassId }}'
+'{{ customClassId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -459,6 +459,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the custom_classes resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Allows users to store small amounts of arbitrary data. Both the key and the value must be 63 characters or less each. At most 100 annotations.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -468,14 +472,10 @@ response
         A collection of class items.
       value:
         - value: "{{ value }}"
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. Allows users to store small amounts of arbitrary data. Both the key and the value must be 63 characters or less each. At most 100 annotations.
-    - name: validateOnly
-      value: {{ validateOnly }}
     - name: customClassId
       value: "{{ customClassId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -497,9 +497,9 @@ Updates the CustomClass.
 ```sql
 UPDATE google.speechv2.custom_classes
 SET 
+data__annotations = '{{ annotations }}',
 data__displayName = '{{ displayName }}',
-data__items = '{{ items }}',
-data__annotations = '{{ annotations }}'
+data__items = '{{ items }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -534,9 +534,9 @@ DELETE FROM google.speechv2.custom_classes
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND customClassesId = '{{ customClassesId }}' --required
+AND allowMissing = '{{ allowMissing }}'
 AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'
-AND allowMissing = '{{ allowMissing }}'
 ;
 ```
 </TabItem>

@@ -116,8 +116,8 @@ EXEC google.aiplatform.responses.compact
 @deployedModelId='{{ deployedModelId }}' 
 @@json=
 '{
-"data": "{{ data }}", 
 "contentType": "{{ contentType }}", 
+"data": "{{ data }}", 
 "extensions": "{{ extensions }}"
 }'
 ;

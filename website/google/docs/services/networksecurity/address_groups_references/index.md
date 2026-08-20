@@ -33,13 +33,13 @@ Creates, updates, deletes, gets or lists an <code>address_groups_references</cod
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_address_groups_list_references"
+    defaultValue="organizations_locations_address_groups_list_references"
     values={[
-        { label: 'projects_locations_address_groups_list_references', value: 'projects_locations_address_groups_list_references' },
-        { label: 'organizations_locations_address_groups_list_references', value: 'organizations_locations_address_groups_list_references' }
+        { label: 'organizations_locations_address_groups_list_references', value: 'organizations_locations_address_groups_list_references' },
+        { label: 'projects_locations_address_groups_list_references', value: 'projects_locations_address_groups_list_references' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_list_references">
+<TabItem value="organizations_locations_address_groups_list_references">
 
 <table>
 <thead>
@@ -68,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_locations_address_groups_list_references">
+<TabItem value="projects_locations_address_groups_list_references">
 
 <table>
 <thead>
@@ -115,16 +115,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_address_groups_list_references"><CopyableCode code="projects_locations_address_groups_list_references" /></a></td>
+    <td><a href="#organizations_locations_address_groups_list_references"><CopyableCode code="organizations_locations_address_groups_list_references" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists references of an address group.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_address_groups_list_references"><CopyableCode code="organizations_locations_address_groups_list_references" /></a></td>
+    <td><a href="#projects_locations_address_groups_list_references"><CopyableCode code="projects_locations_address_groups_list_references" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists references of an address group.</td>
 </tr>
@@ -180,30 +180,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_address_groups_list_references"
+    defaultValue="organizations_locations_address_groups_list_references"
     values={[
-        { label: 'projects_locations_address_groups_list_references', value: 'projects_locations_address_groups_list_references' },
-        { label: 'organizations_locations_address_groups_list_references', value: 'organizations_locations_address_groups_list_references' }
+        { label: 'organizations_locations_address_groups_list_references', value: 'organizations_locations_address_groups_list_references' },
+        { label: 'projects_locations_address_groups_list_references', value: 'projects_locations_address_groups_list_references' }
     ]}
 >
-<TabItem value="projects_locations_address_groups_list_references">
-
-Lists references of an address group.
-
-```sql
-SELECT
-firewallPolicy,
-rulePriority,
-securityPolicy
-FROM google.networksecurity.address_groups_references
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND addressGroupsId = '{{ addressGroupsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_address_groups_list_references">
 
 Lists references of an address group.
@@ -215,6 +197,24 @@ rulePriority,
 securityPolicy
 FROM google.networksecurity.address_groups_references
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND addressGroupsId = '{{ addressGroupsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_address_groups_list_references">
+
+Lists references of an address group.
+
+```sql
+SELECT
+firewallPolicy,
+rulePriority,
+securityPolicy
+FROM google.networksecurity.address_groups_references
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND addressGroupsId = '{{ addressGroupsId }}' -- required
 AND pageSize = '{{ pageSize }}'

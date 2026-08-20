@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_predict"><CopyableCode code="projects_predict" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Performs online prediction on the data in the request. &#123;% dynamic include "/ai-platform/includes/___predict-request" %&#125; </td>
-</tr>
-<tr>
     <td><a href="#projects_explain"><CopyableCode code="projects_explain" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Performs explanation on the data in the request. &#123;% dynamic include "/ai-platform/includes/___explain-request" %&#125; </td>
+</tr>
+<tr>
+    <td><a href="#projects_predict"><CopyableCode code="projects_predict" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Performs online prediction on the data in the request. &#123;% dynamic include "/ai-platform/includes/___predict-request" %&#125; </td>
 </tr>
 </tbody>
 </table>
@@ -91,18 +91,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_predict"
+    defaultValue="projects_explain"
     values={[
-        { label: 'projects_predict', value: 'projects_predict' },
-        { label: 'projects_explain', value: 'projects_explain' }
+        { label: 'projects_explain', value: 'projects_explain' },
+        { label: 'projects_predict', value: 'projects_predict' }
     ]}
 >
-<TabItem value="projects_predict">
+<TabItem value="projects_explain">
 
-Performs online prediction on the data in the request. &#123;% dynamic include "/ai-platform/includes/___predict-request" %&#125; 
+Performs explanation on the data in the request. &#123;% dynamic include "/ai-platform/includes/___explain-request" %&#125; 
 
 ```sql
-EXEC google.ml.projects.projects_predict 
+EXEC google.ml.projects.projects_explain 
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
@@ -111,12 +111,12 @@ EXEC google.ml.projects.projects_predict
 ;
 ```
 </TabItem>
-<TabItem value="projects_explain">
+<TabItem value="projects_predict">
 
-Performs explanation on the data in the request. &#123;% dynamic include "/ai-platform/includes/___explain-request" %&#125; 
+Performs online prediction on the data in the request. &#123;% dynamic include "/ai-platform/includes/___predict-request" %&#125; 
 
 ```sql
-EXEC google.ml.projects.projects_explain 
+EXEC google.ml.projects.projects_predict 
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{

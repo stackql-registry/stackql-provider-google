@@ -125,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_update_debugmask"><CopyableCode code="organizations_environments_update_debugmask" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-replaceRepeatedFields"><code>replaceRepeatedFields</code></a></td>
+    <td><a href="#parameter-replaceRepeatedFields"><code>replaceRepeatedFields</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the debug mask singleton resource for an environment.</td>
 </tr>
 </tbody>
@@ -214,20 +214,20 @@ Updates the debug mask singleton resource for an environment.
 ```sql
 UPDATE google.apigee.environments_debugmask
 SET 
-data__faultXPaths = '{{ faultXPaths }}',
-data__requestJSONPaths = '{{ requestJSONPaths }}',
 data__faultJSONPaths = '{{ faultJSONPaths }}',
+data__faultXPaths = '{{ faultXPaths }}',
 data__name = '{{ name }}',
 data__namespaces = '{{ namespaces }}',
-data__responseJSONPaths = '{{ responseJSONPaths }}',
+data__requestJSONPaths = '{{ requestJSONPaths }}',
 data__requestXPaths = '{{ requestXPaths }}',
-data__variables = '{{ variables }}',
-data__responseXPaths = '{{ responseXPaths }}'
+data__responseJSONPaths = '{{ responseJSONPaths }}',
+data__responseXPaths = '{{ responseXPaths }}',
+data__variables = '{{ variables }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND replaceRepeatedFields = {{ replaceRepeatedFields}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 faultJSONPaths,

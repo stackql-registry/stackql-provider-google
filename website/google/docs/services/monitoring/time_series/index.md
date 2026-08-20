@@ -33,67 +33,13 @@ Creates, updates, deletes, gets or lists a <code>time_series</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_time_series_list"
+    defaultValue="folders_time_series_list"
     values={[
-        { label: 'projects_time_series_list', value: 'projects_time_series_list' },
         { label: 'folders_time_series_list', value: 'folders_time_series_list' },
-        { label: 'organizations_time_series_list', value: 'organizations_time_series_list' }
+        { label: 'organizations_time_series_list', value: 'organizations_time_series_list' },
+        { label: 'projects_time_series_list', value: 'projects_time_series_list' }
     ]}
 >
-<TabItem value="projects_time_series_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Input only. A detailed description of the time series that will be associated with the google.api.MetricDescriptor for the metric. Once set, this field cannot be changed through CreateTimeSeries.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Output only. The associated monitored resource metadata. When reading a time series, this field will include metadata labels that are explicitly named in the reduction. When creating a time series, this field is ignored. (id: MonitoredResourceMetadata)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metric" /></td>
-    <td><code>object</code></td>
-    <td>The associated metric. A fully-specified metric used to identify the time series. (id: Metric)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metricKind" /></td>
-    <td><code>string</code></td>
-    <td>The metric kind of the time series. When listing time series, this metric kind might be different from the metric kind of the associated metric if this time series is an alignment or reduction of other time series.When creating a time series, this field is optional. If present, it must be the same as the metric kind of the associated metric. If the associated metric's descriptor must be auto-created, then this field specifies the metric kind of the new descriptor and must be either GAUGE (the default) or CUMULATIVE. (METRIC_KIND_UNSPECIFIED, GAUGE, DELTA, CUMULATIVE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="points" /></td>
-    <td><code>array</code></td>
-    <td>The data points of this time series. When listing time series, points are returned in reverse time order.When creating a time series, this field must contain exactly one point and the point's type must be the same as the value type of the associated metric. If the associated metric's descriptor must be auto-created, then the value type of the descriptor is determined by the point's type, which must be BOOL, INT64, DOUBLE, or DISTRIBUTION.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resource" /></td>
-    <td><code>object</code></td>
-    <td>An object representing a resource that can be used for monitoring, logging, billing, or other purposes. Examples include virtual machine instances, databases, and storage devices such as disks. The type field identifies a MonitoredResourceDescriptor object that describes the resource's schema. Information in the labels field identifies the actual resource and its attributes according to the schema. For example, a particular Compute Engine VM instance could be represented by the following object, because the MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "instance_id" and "zone": &#123; "type": "gce_instance", "labels": &#123; "project_id": "my-project", "instance_id": "12345678901234", "zone": "us-central1-a" &#125;&#125;  (id: MonitoredResource)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="unit" /></td>
-    <td><code>string</code></td>
-    <td>The units in which the metric value is reported. It is only applicable if the value_type is INT64, DOUBLE, or DISTRIBUTION. The unit defines the representation of the stored metric values. This field can only be changed through CreateTimeSeries when it is empty.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="valueType" /></td>
-    <td><code>string</code></td>
-    <td>The value type of the time series. When listing time series, this value type might be different from the value type of the associated metric if this time series is an alignment or reduction of other time series.When creating a time series, this field is optional. If present, it must be the same as the type of the data in the points field. (VALUE_TYPE_UNSPECIFIED, BOOL, INT64, DOUBLE, STRING, DISTRIBUTION, MONEY)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="folders_time_series_list">
 
 <table>
@@ -133,7 +79,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>object</code></td>
-    <td>An object representing a resource that can be used for monitoring, logging, billing, or other purposes. Examples include virtual machine instances, databases, and storage devices such as disks. The type field identifies a MonitoredResourceDescriptor object that describes the resource's schema. Information in the labels field identifies the actual resource and its attributes according to the schema. For example, a particular Compute Engine VM instance could be represented by the following object, because the MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "instance_id" and "zone": &#123; "type": "gce_instance", "labels": &#123; "project_id": "my-project", "instance_id": "12345678901234", "zone": "us-central1-a" &#125;&#125;  (id: MonitoredResource)</td>
+    <td>The associated monitored resource. Custom metrics can use only certain monitored resource types in their time series data. For more information, see Monitored resources for custom metrics (https://cloud.google.com/monitoring/custom-metrics/creating-metrics#custom-metric-resources). (id: MonitoredResource)</td>
 </tr>
 <tr>
     <td><CopyableCode code="unit" /></td>
@@ -187,7 +133,61 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="resource" /></td>
     <td><code>object</code></td>
-    <td>An object representing a resource that can be used for monitoring, logging, billing, or other purposes. Examples include virtual machine instances, databases, and storage devices such as disks. The type field identifies a MonitoredResourceDescriptor object that describes the resource's schema. Information in the labels field identifies the actual resource and its attributes according to the schema. For example, a particular Compute Engine VM instance could be represented by the following object, because the MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "instance_id" and "zone": &#123; "type": "gce_instance", "labels": &#123; "project_id": "my-project", "instance_id": "12345678901234", "zone": "us-central1-a" &#125;&#125;  (id: MonitoredResource)</td>
+    <td>The associated monitored resource. Custom metrics can use only certain monitored resource types in their time series data. For more information, see Monitored resources for custom metrics (https://cloud.google.com/monitoring/custom-metrics/creating-metrics#custom-metric-resources). (id: MonitoredResource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unit" /></td>
+    <td><code>string</code></td>
+    <td>The units in which the metric value is reported. It is only applicable if the value_type is INT64, DOUBLE, or DISTRIBUTION. The unit defines the representation of the stored metric values. This field can only be changed through CreateTimeSeries when it is empty.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="valueType" /></td>
+    <td><code>string</code></td>
+    <td>The value type of the time series. When listing time series, this value type might be different from the value type of the associated metric if this time series is an alignment or reduction of other time series.When creating a time series, this field is optional. If present, it must be the same as the type of the data in the points field. (VALUE_TYPE_UNSPECIFIED, BOOL, INT64, DOUBLE, STRING, DISTRIBUTION, MONEY)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_time_series_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Input only. A detailed description of the time series that will be associated with the google.api.MetricDescriptor for the metric. Once set, this field cannot be changed through CreateTimeSeries.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The associated monitored resource metadata. When reading a time series, this field will include metadata labels that are explicitly named in the reduction. When creating a time series, this field is ignored. (id: MonitoredResourceMetadata)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metric" /></td>
+    <td><code>object</code></td>
+    <td>The associated metric. A fully-specified metric used to identify the time series. (id: Metric)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metricKind" /></td>
+    <td><code>string</code></td>
+    <td>The metric kind of the time series. When listing time series, this metric kind might be different from the metric kind of the associated metric if this time series is an alignment or reduction of other time series.When creating a time series, this field is optional. If present, it must be the same as the metric kind of the associated metric. If the associated metric's descriptor must be auto-created, then this field specifies the metric kind of the new descriptor and must be either GAUGE (the default) or CUMULATIVE. (METRIC_KIND_UNSPECIFIED, GAUGE, DELTA, CUMULATIVE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="points" /></td>
+    <td><code>array</code></td>
+    <td>The data points of this time series. When listing time series, points are returned in reverse time order.When creating a time series, this field must contain exactly one point and the point's type must be the same as the value type of the associated metric. If the associated metric's descriptor must be auto-created, then the value type of the descriptor is determined by the point's type, which must be BOOL, INT64, DOUBLE, or DISTRIBUTION.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resource" /></td>
+    <td><code>object</code></td>
+    <td>The associated monitored resource. Custom metrics can use only certain monitored resource types in their time series data. For more information, see Monitored resources for custom metrics (https://cloud.google.com/monitoring/custom-metrics/creating-metrics#custom-metric-resources). (id: MonitoredResource)</td>
 </tr>
 <tr>
     <td><CopyableCode code="unit" /></td>
@@ -220,24 +220,24 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_time_series_list"><CopyableCode code="projects_time_series_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-secondaryAggregation.perSeriesAligner"><code>secondaryAggregation.perSeriesAligner</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-secondaryAggregation.groupByFields"><code>secondaryAggregation.groupByFields</code></a>, <a href="#parameter-aggregation.alignmentPeriod"><code>aggregation.alignmentPeriod</code></a>, <a href="#parameter-secondaryAggregation.crossSeriesReducer"><code>secondaryAggregation.crossSeriesReducer</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a>, <a href="#parameter-aggregation.perSeriesAligner"><code>aggregation.perSeriesAligner</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-aggregation.groupByFields"><code>aggregation.groupByFields</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-secondaryAggregation.alignmentPeriod"><code>secondaryAggregation.alignmentPeriod</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-aggregation.crossSeriesReducer"><code>aggregation.crossSeriesReducer</code></a></td>
-    <td>Lists time series that match a filter.</td>
-</tr>
-<tr>
     <td><a href="#folders_time_series_list"><CopyableCode code="folders_time_series_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-aggregation.crossSeriesReducer"><code>aggregation.crossSeriesReducer</code></a>, <a href="#parameter-aggregation.groupByFields"><code>aggregation.groupByFields</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-secondaryAggregation.alignmentPeriod"><code>secondaryAggregation.alignmentPeriod</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-aggregation.alignmentPeriod"><code>aggregation.alignmentPeriod</code></a>, <a href="#parameter-secondaryAggregation.crossSeriesReducer"><code>secondaryAggregation.crossSeriesReducer</code></a>, <a href="#parameter-secondaryAggregation.groupByFields"><code>secondaryAggregation.groupByFields</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a>, <a href="#parameter-aggregation.perSeriesAligner"><code>aggregation.perSeriesAligner</code></a>, <a href="#parameter-secondaryAggregation.perSeriesAligner"><code>secondaryAggregation.perSeriesAligner</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-aggregation.alignmentPeriod"><code>aggregation.alignmentPeriod</code></a>, <a href="#parameter-aggregation.crossSeriesReducer"><code>aggregation.crossSeriesReducer</code></a>, <a href="#parameter-aggregation.groupByFields"><code>aggregation.groupByFields</code></a>, <a href="#parameter-aggregation.perSeriesAligner"><code>aggregation.perSeriesAligner</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-secondaryAggregation.alignmentPeriod"><code>secondaryAggregation.alignmentPeriod</code></a>, <a href="#parameter-secondaryAggregation.crossSeriesReducer"><code>secondaryAggregation.crossSeriesReducer</code></a>, <a href="#parameter-secondaryAggregation.groupByFields"><code>secondaryAggregation.groupByFields</code></a>, <a href="#parameter-secondaryAggregation.perSeriesAligner"><code>secondaryAggregation.perSeriesAligner</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists time series that match a filter.</td>
 </tr>
 <tr>
     <td><a href="#organizations_time_series_list"><CopyableCode code="organizations_time_series_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-aggregation.crossSeriesReducer"><code>aggregation.crossSeriesReducer</code></a>, <a href="#parameter-aggregation.groupByFields"><code>aggregation.groupByFields</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-secondaryAggregation.alignmentPeriod"><code>secondaryAggregation.alignmentPeriod</code></a>, <a href="#parameter-aggregation.alignmentPeriod"><code>aggregation.alignmentPeriod</code></a>, <a href="#parameter-secondaryAggregation.crossSeriesReducer"><code>secondaryAggregation.crossSeriesReducer</code></a>, <a href="#parameter-secondaryAggregation.groupByFields"><code>secondaryAggregation.groupByFields</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a>, <a href="#parameter-aggregation.perSeriesAligner"><code>aggregation.perSeriesAligner</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-secondaryAggregation.perSeriesAligner"><code>secondaryAggregation.perSeriesAligner</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-aggregation.alignmentPeriod"><code>aggregation.alignmentPeriod</code></a>, <a href="#parameter-aggregation.crossSeriesReducer"><code>aggregation.crossSeriesReducer</code></a>, <a href="#parameter-aggregation.groupByFields"><code>aggregation.groupByFields</code></a>, <a href="#parameter-aggregation.perSeriesAligner"><code>aggregation.perSeriesAligner</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-secondaryAggregation.alignmentPeriod"><code>secondaryAggregation.alignmentPeriod</code></a>, <a href="#parameter-secondaryAggregation.crossSeriesReducer"><code>secondaryAggregation.crossSeriesReducer</code></a>, <a href="#parameter-secondaryAggregation.groupByFields"><code>secondaryAggregation.groupByFields</code></a>, <a href="#parameter-secondaryAggregation.perSeriesAligner"><code>secondaryAggregation.perSeriesAligner</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td>Lists time series that match a filter.</td>
+</tr>
+<tr>
+    <td><a href="#projects_time_series_list"><CopyableCode code="projects_time_series_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-aggregation.alignmentPeriod"><code>aggregation.alignmentPeriod</code></a>, <a href="#parameter-aggregation.crossSeriesReducer"><code>aggregation.crossSeriesReducer</code></a>, <a href="#parameter-aggregation.groupByFields"><code>aggregation.groupByFields</code></a>, <a href="#parameter-aggregation.perSeriesAligner"><code>aggregation.perSeriesAligner</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-secondaryAggregation.alignmentPeriod"><code>secondaryAggregation.alignmentPeriod</code></a>, <a href="#parameter-secondaryAggregation.crossSeriesReducer"><code>secondaryAggregation.crossSeriesReducer</code></a>, <a href="#parameter-secondaryAggregation.groupByFields"><code>secondaryAggregation.groupByFields</code></a>, <a href="#parameter-secondaryAggregation.perSeriesAligner"><code>secondaryAggregation.perSeriesAligner</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists time series that match a filter.</td>
 </tr>
 <tr>
@@ -366,47 +366,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_time_series_list"
+    defaultValue="folders_time_series_list"
     values={[
-        { label: 'projects_time_series_list', value: 'projects_time_series_list' },
         { label: 'folders_time_series_list', value: 'folders_time_series_list' },
-        { label: 'organizations_time_series_list', value: 'organizations_time_series_list' }
+        { label: 'organizations_time_series_list', value: 'organizations_time_series_list' },
+        { label: 'projects_time_series_list', value: 'projects_time_series_list' }
     ]}
 >
-<TabItem value="projects_time_series_list">
-
-Lists time series that match a filter.
-
-```sql
-SELECT
-description,
-metadata,
-metric,
-metricKind,
-points,
-resource,
-unit,
-valueType
-FROM google.monitoring.time_series
-WHERE projectsId = '{{ projectsId }}' -- required
-AND secondaryAggregation.perSeriesAligner = '{{ secondaryAggregation.perSeriesAligner }}'
-AND view = '{{ view }}'
-AND orderBy = '{{ orderBy }}'
-AND secondaryAggregation.groupByFields = '{{ secondaryAggregation.groupByFields }}'
-AND aggregation.alignmentPeriod = '{{ aggregation.alignmentPeriod }}'
-AND secondaryAggregation.crossSeriesReducer = '{{ secondaryAggregation.crossSeriesReducer }}'
-AND interval.startTime = '{{ interval.startTime }}'
-AND aggregation.perSeriesAligner = '{{ aggregation.perSeriesAligner }}'
-AND interval.endTime = '{{ interval.endTime }}'
-AND aggregation.groupByFields = '{{ aggregation.groupByFields }}'
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND secondaryAggregation.alignmentPeriod = '{{ secondaryAggregation.alignmentPeriod }}'
-AND pageToken = '{{ pageToken }}'
-AND aggregation.crossSeriesReducer = '{{ aggregation.crossSeriesReducer }}'
-;
-```
-</TabItem>
 <TabItem value="folders_time_series_list">
 
 Lists time series that match a filter.
@@ -423,20 +389,20 @@ unit,
 valueType
 FROM google.monitoring.time_series
 WHERE foldersId = '{{ foldersId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND aggregation.alignmentPeriod = '{{ aggregation.alignmentPeriod }}'
 AND aggregation.crossSeriesReducer = '{{ aggregation.crossSeriesReducer }}'
 AND aggregation.groupByFields = '{{ aggregation.groupByFields }}'
+AND aggregation.perSeriesAligner = '{{ aggregation.perSeriesAligner }}'
 AND filter = '{{ filter }}'
-AND secondaryAggregation.alignmentPeriod = '{{ secondaryAggregation.alignmentPeriod }}'
-AND pageSize = '{{ pageSize }}'
-AND aggregation.alignmentPeriod = '{{ aggregation.alignmentPeriod }}'
-AND secondaryAggregation.crossSeriesReducer = '{{ secondaryAggregation.crossSeriesReducer }}'
-AND secondaryAggregation.groupByFields = '{{ secondaryAggregation.groupByFields }}'
 AND interval.endTime = '{{ interval.endTime }}'
 AND interval.startTime = '{{ interval.startTime }}'
-AND aggregation.perSeriesAligner = '{{ aggregation.perSeriesAligner }}'
-AND secondaryAggregation.perSeriesAligner = '{{ secondaryAggregation.perSeriesAligner }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND secondaryAggregation.alignmentPeriod = '{{ secondaryAggregation.alignmentPeriod }}'
+AND secondaryAggregation.crossSeriesReducer = '{{ secondaryAggregation.crossSeriesReducer }}'
+AND secondaryAggregation.groupByFields = '{{ secondaryAggregation.groupByFields }}'
+AND secondaryAggregation.perSeriesAligner = '{{ secondaryAggregation.perSeriesAligner }}'
 AND view = '{{ view }}'
 ;
 ```
@@ -457,21 +423,55 @@ unit,
 valueType
 FROM google.monitoring.time_series
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND aggregation.alignmentPeriod = '{{ aggregation.alignmentPeriod }}'
 AND aggregation.crossSeriesReducer = '{{ aggregation.crossSeriesReducer }}'
 AND aggregation.groupByFields = '{{ aggregation.groupByFields }}'
-AND pageSize = '{{ pageSize }}'
+AND aggregation.perSeriesAligner = '{{ aggregation.perSeriesAligner }}'
 AND filter = '{{ filter }}'
+AND interval.endTime = '{{ interval.endTime }}'
+AND interval.startTime = '{{ interval.startTime }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND secondaryAggregation.alignmentPeriod = '{{ secondaryAggregation.alignmentPeriod }}'
-AND aggregation.alignmentPeriod = '{{ aggregation.alignmentPeriod }}'
 AND secondaryAggregation.crossSeriesReducer = '{{ secondaryAggregation.crossSeriesReducer }}'
 AND secondaryAggregation.groupByFields = '{{ secondaryAggregation.groupByFields }}'
-AND interval.startTime = '{{ interval.startTime }}'
-AND aggregation.perSeriesAligner = '{{ aggregation.perSeriesAligner }}'
-AND interval.endTime = '{{ interval.endTime }}'
 AND secondaryAggregation.perSeriesAligner = '{{ secondaryAggregation.perSeriesAligner }}'
 AND view = '{{ view }}'
+;
+```
+</TabItem>
+<TabItem value="projects_time_series_list">
+
+Lists time series that match a filter.
+
+```sql
+SELECT
+description,
+metadata,
+metric,
+metricKind,
+points,
+resource,
+unit,
+valueType
+FROM google.monitoring.time_series
+WHERE projectsId = '{{ projectsId }}' -- required
+AND aggregation.alignmentPeriod = '{{ aggregation.alignmentPeriod }}'
+AND aggregation.crossSeriesReducer = '{{ aggregation.crossSeriesReducer }}'
+AND aggregation.groupByFields = '{{ aggregation.groupByFields }}'
+AND aggregation.perSeriesAligner = '{{ aggregation.perSeriesAligner }}'
+AND filter = '{{ filter }}'
+AND interval.endTime = '{{ interval.endTime }}'
+AND interval.startTime = '{{ interval.startTime }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND secondaryAggregation.alignmentPeriod = '{{ secondaryAggregation.alignmentPeriod }}'
+AND secondaryAggregation.crossSeriesReducer = '{{ secondaryAggregation.crossSeriesReducer }}'
+AND secondaryAggregation.groupByFields = '{{ secondaryAggregation.groupByFields }}'
+AND secondaryAggregation.perSeriesAligner = '{{ secondaryAggregation.perSeriesAligner }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -514,20 +514,20 @@ SELECT
       description: |
         Required. The new data to be added to a list of time series. Adds at most one data point to each of several time series. The new data point must be more recent than any other point in its time series. Each TimeSeries value must fully specify a unique time series by supplying all label values for the metric and the monitored resource.The maximum number of TimeSeries objects per Create request is 200.
       value:
-        - metadata:
+        - description: "{{ description }}"
+          metadata:
             systemLabels: "{{ systemLabels }}"
             userLabels: "{{ userLabels }}"
-          description: "{{ description }}"
           metric:
-            type: "{{ type }}"
             labels: "{{ labels }}"
+            type: "{{ type }}"
           metricKind: "{{ metricKind }}"
-          unit: "{{ unit }}"
-          valueType: "{{ valueType }}"
+          points: "{{ points }}"
           resource:
             labels: "{{ labels }}"
             type: "{{ type }}"
-          points: "{{ points }}"
+          unit: "{{ unit }}"
+          valueType: "{{ valueType }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -551,9 +551,9 @@ EXEC google.monitoring.time_series.projects_time_series_query
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"query": "{{ query }}", 
 "pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
+"pageToken": "{{ pageToken }}", 
+"query": "{{ query }}"
 }'
 ;
 ```

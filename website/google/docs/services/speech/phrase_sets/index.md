@@ -378,14 +378,14 @@ Create a set of phrase hints. Each item in the set can be a single word or a mul
 
 ```sql
 INSERT INTO google.speech.phrase_sets (
-data__phraseSetId,
 data__phraseSet,
+data__phraseSetId,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ phraseSetId }}',
 '{{ phraseSet }}',
+'{{ phraseSetId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -416,29 +416,29 @@ uid
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the phrase_sets resource.
+    - name: phraseSet
+      description: |
+        Required. The phrase set to create.
+      value:
+        annotations: "{{ annotations }}"
+        boost: {{ boost }}
+        deleteTime: "{{ deleteTime }}"
+        displayName: "{{ displayName }}"
+        etag: "{{ etag }}"
+        expireTime: "{{ expireTime }}"
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyVersionName: "{{ kmsKeyVersionName }}"
+        name: "{{ name }}"
+        phrases:
+          - boost: {{ boost }}
+            value: "{{ value }}"
+        reconciling: {{ reconciling }}
+        state: "{{ state }}"
+        uid: "{{ uid }}"
     - name: phraseSetId
       value: "{{ phraseSetId }}"
       description: |
         Required. The ID to use for the phrase set, which will become the final component of the phrase set's resource name. This value should restrict to letters, numbers, and hyphens, with the first character a letter, the last a letter or a number, and be 4-63 characters.
-    - name: phraseSet
-      description: |
-        Provides "hints" to the speech recognizer to favor specific words and phrases in the results.
-      value:
-        reconciling: {{ reconciling }}
-        displayName: "{{ displayName }}"
-        uid: "{{ uid }}"
-        expireTime: "{{ expireTime }}"
-        boost: {{ boost }}
-        kmsKeyName: "{{ kmsKeyName }}"
-        state: "{{ state }}"
-        etag: "{{ etag }}"
-        kmsKeyVersionName: "{{ kmsKeyVersionName }}"
-        deleteTime: "{{ deleteTime }}"
-        phrases:
-          - value: "{{ value }}"
-            boost: {{ boost }}
-        name: "{{ name }}"
-        annotations: "{{ annotations }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -461,8 +461,8 @@ Update a phrase set.
 UPDATE google.speech.phrase_sets
 SET 
 data__boost = {{ boost }},
-data__phrases = '{{ phrases }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__phrases = '{{ phrases }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

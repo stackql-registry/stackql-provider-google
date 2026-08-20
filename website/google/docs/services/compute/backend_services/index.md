@@ -149,7 +149,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="failoverPolicy" /></td>
     <td><code>object</code></td>
-    <td>Requires at least one backend instance group to be defined as a backup (failover) backend. For load balancers that have configurable failover: [Internal passthrough Network Load Balancers](https://cloud.google.com/load-balancing/docs/internal/failover-overview) and [external passthrough Network Load Balancers](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview).  failoverPolicy cannot be specified with haPolicy. (id: BackendServiceFailoverPolicy)</td>
+    <td>Requires at least one backend instance group to be defined as a backup (failover) backend. For load balancers that have configurable failover: [Internal passthrough Network Load Balancers](https://cloud.google.com/load-balancing/docs/internal/failover-overview) and [external passthrough Network Load Balancers](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview). failoverPolicy cannot be specified with haPolicy.failoverPolicy cannot be used by global external Passthrough Network Load Balancers. (id: BackendServiceFailoverPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="fingerprint" /></td>
@@ -159,7 +159,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="haPolicy" /></td>
     <td><code>object</code></td>
-    <td>Configures self-managed High Availability (HA) for External and Internal Protocol Forwarding.  The backends of this regional backend service must only specify zonal network endpoint groups (NEGs) of type GCE_VM_IP.  When haPolicy is set for an Internal Passthrough Network Load Balancer, the regional backend service must set the network field. All zonal NEGs must belong to the same network. However, individual NEGs can belong to different subnetworks of that network.  When haPolicy is specified, the set of attached network endpoints across all backends comprise an High Availability domain from which one endpoint is selected as the active endpoint (the leader) that receives all traffic.  haPolicy can be added only at backend service creation time. Once set up, it cannot be deleted.  Note that haPolicy is not for load balancing, and therefore cannot be specified with sessionAffinity, connectionTrackingPolicy, and failoverPolicy.  haPolicy requires customers to be responsible for tracking backend endpoint health and electing a leader among the healthy endpoints. Therefore, haPolicy cannot be specified with healthChecks.  haPolicy can only be specified for External Passthrough Network Load Balancers and Internal Passthrough Network Load Balancers. (id: BackendServiceHAPolicy)</td>
+    <td>Configures self-managed High Availability (HA) for External and Internal Protocol Forwarding.  The backends of this regional backend service must only specify zonal network endpoint groups (NEGs) of type GCE_VM_IP.  When haPolicy is set for an Internal Passthrough Network Load Balancer, the regional backend service must set the network field. All zonal NEGs must belong to the same network. However, individual NEGs can belong to different subnetworks of that network.  When haPolicy is specified, the set of attached network endpoints across all backends comprise an High Availability domain from which one endpoint is selected as the active endpoint (the leader) that receives all traffic.  haPolicy can be added only at backend service creation time. Once set up, it cannot be deleted.  Note that haPolicy is not for load balancing, and therefore cannot be specified with sessionAffinity, connectionTrackingPolicy, and failoverPolicy.  haPolicy requires customers to be responsible for tracking backend endpoint health and electing a leader among the healthy endpoints. Therefore, haPolicy cannot be specified with healthChecks. haPolicy can only be specified for External Passthrough Network Load Balancers and Internal Passthrough Network Load Balancers.haPolicy cannot be used by global external Passthrough Network Load Balancers. (id: BackendServiceHAPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="healthChecks" /></td>
@@ -184,7 +184,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="loadBalancingScheme" /></td>
     <td><code>string</code></td>
-    <td>Specifies the load balancer type. A backend service created for one type of load balancer cannot be used with another. For more information, refer toChoosing a load balancer. (EXTERNAL, EXTERNAL_MANAGED, INTERNAL, INTERNAL_MANAGED, INTERNAL_SELF_MANAGED, INVALID_LOAD_BALANCING_SCHEME)</td>
+    <td>Specifies the load balancer type. A backend service created for one type of load balancer cannot be used with another. For more information, refer to Backend services product and scheme table. (EXTERNAL, EXTERNAL_MANAGED, INTERNAL, INTERNAL_MANAGED, INTERNAL_SELF_MANAGED, INVALID_LOAD_BALANCING_SCHEME)</td>
 </tr>
 <tr>
     <td><CopyableCode code="localityLbPolicies" /></td>
@@ -194,7 +194,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="localityLbPolicy" /></td>
     <td><code>string</code></td>
-    <td>The load balancing algorithm used within the scope of the locality. The possible values are:        - ROUND_ROBIN: This is a simple policy in which each healthy    backend is selected in round robin order. This is the default.    - LEAST_REQUEST: An O(1) algorithm which    selects two random healthy hosts and picks the host which has fewer active    requests.    - RING_HASH: The ring/modulo hash load balancer implements    consistent hashing to backends. The algorithm has the property that the    addition/removal of a host from a set of N hosts only affects 1/N of the    requests.    - RANDOM: The load balancer selects a random healthy    host.    - ORIGINAL_DESTINATION: Backend host is selected    based on the client connection metadata, i.e., connections are opened to    the same address as the destination address of the incoming connection    before the connection was redirected to the load balancer.    - MAGLEV: used as a drop in replacement for the ring hash    load balancer. Maglev is not as stable as ring hash but has faster table    lookup build times and host selection times. For more information about    Maglev, see Maglev:    A Fast and Reliable Software Network Load Balancer.    - WEIGHTED_ROUND_ROBIN: Per-endpoint Weighted Round Robin    Load Balancing using weights computed from Backend reported Custom Metrics.    If set, the Backend Service responses are expected to contain non-standard    HTTP response header field Endpoint-Load-Metrics. The reported    metrics to use for computing the weights are specified via thecustomMetrics field.        This field is applicable to either:       - A regional backend service with the service protocol set to HTTP,       HTTPS, HTTP2 or H2C, and load_balancing_scheme set to       INTERNAL_MANAGED.        - A global backend service with the       load_balancing_scheme set to INTERNAL_SELF_MANAGED, INTERNAL_MANAGED, or       EXTERNAL_MANAGED.            If sessionAffinity is not configured—that is, if session    affinity remains at the default value of NONE—then the    default value for localityLbPolicy    is ROUND_ROBIN. If session affinity is set to a value other    than NONE,    then the default value for localityLbPolicy isMAGLEV.        Only ROUND_ROBIN and RING_HASH are supported    when the backend service is referenced by a URL map that is bound to    target gRPC proxy that has validateForProxyless field set to true.        localityLbPolicy cannot be specified with haPolicy. (INVALID_LB_POLICY, LEAST_REQUEST, MAGLEV, ORIGINAL_DESTINATION, RANDOM, RING_HASH, ROUND_ROBIN, WEIGHTED_GCP_RENDEZVOUS, WEIGHTED_MAGLEV, WEIGHTED_ROUND_ROBIN)</td>
+    <td>The load balancing algorithm used within the scope of the locality. The possible values are:        - ROUND_ROBIN: This is a simple policy in which each healthy    backend is selected in round robin order. This is the default.    - LEAST_REQUEST: An O(1) algorithm which    selects two random healthy hosts and picks the host which has fewer active    requests.    - RING_HASH: The ring/modulo hash load balancer implements    consistent hashing to backends. The algorithm has the property that the    addition/removal of a host from a set of N hosts only affects 1/N of the    requests.    - RANDOM: The load balancer selects a random healthy    host.    - ORIGINAL_DESTINATION: Backend host is selected    based on the client connection metadata, i.e., connections are opened to    the same address as the destination address of the incoming connection    before the connection was redirected to the load balancer.    - MAGLEV: used as a drop in replacement for the ring hash    load balancer. Maglev is not as stable as ring hash but has faster table    lookup build times and host selection times. For more information about    Maglev, see Maglev:    A Fast and Reliable Software Network Load Balancer.    - WEIGHTED_ROUND_ROBIN: Per-endpoint Weighted Round Robin    Load Balancing using weights computed from Backend reported Custom Metrics.    If set, the Backend Service responses are expected to contain non-standard    HTTP response header field Endpoint-Load-Metrics. The reported    metrics to use for computing the weights are specified via thecustomMetrics field.    - WEIGHTED_MAGLEV: Per-endpoint weighted load balancing via    health check reported weights. If set, the backend service must configure    an HTTP-based Health Check, and health check replies are expected to    contain the non-standard HTTP response header fieldX-Load-Balancing-Endpoint-Weight to specify the per-endpoint    weights. If set, load balancing is weighted based on the per-endpoint    weights reported in the last processed health check replies, as long as    every instance either reported a valid weight or had UNAVAILABLE_WEIGHT.    Otherwise, load balancing remains equal-weight.    This field is applicable to either:        - A regional backend service with the service protocol set to HTTP,    HTTPS, HTTP2 or H2C, and load_balancing_scheme set to    INTERNAL_MANAGED.     - A global backend service with the    load_balancing_scheme set to INTERNAL_SELF_MANAGED, INTERNAL_MANAGED, or    EXTERNAL_MANAGED.    If sessionAffinity is not configured—that is, if session affinity remains at the default value of NONE—then the default value for localityLbPolicy is ROUND_ROBIN. If session affinity is set to a value other than NONE, then the default value for localityLbPolicy isMAGLEV.  Only ROUND_ROBIN and RING_HASH are supported when the backend service is referenced by a URL map that is bound to target gRPC proxy that has validateForProxyless field set to true.  localityLbPolicy cannot be specified with haPolicy. (INVALID_LB_POLICY, LEAST_REQUEST, MAGLEV, ORIGINAL_DESTINATION, RANDOM, RING_HASH, ROUND_ROBIN, WEIGHTED_GCP_RENDEZVOUS, WEIGHTED_MAGLEV, WEIGHTED_ROUND_ROBIN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="logConfig" /></td>
@@ -249,7 +249,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protocol" /></td>
     <td><code>string</code></td>
-    <td>The protocol this BackendService uses to communicate with backends.  Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP or GRPC. depending on the chosen load balancer or Traffic Director configuration. Refer to the documentation for the load balancers or for Traffic Director for more information.  Must be set to GRPC when the backend service is referenced by a URL map that is bound to target gRPC proxy. (GRPC, H2C, HTTP, HTTP2, HTTPS, SSL, TCP, UDP, UNSPECIFIED)</td>
+    <td>The protocol this BackendService uses to communicate with backends.  Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP, GRPC, or UNSPECIFIED, depending on the chosen load balancer or Traffic Director configuration. Refer to  Load balancing features for more information.  Must be set to GRPC when the backend service is referenced by a URL map that is bound to target gRPC proxy. (GRPC, H2C, HTTP, HTTP2, HTTPS, SSL, TCP, UDP, UNSPECIFIED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
@@ -467,7 +467,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="failoverPolicy" /></td>
     <td><code>object</code></td>
-    <td>Requires at least one backend instance group to be defined as a backup (failover) backend. For load balancers that have configurable failover: [Internal passthrough Network Load Balancers](https://cloud.google.com/load-balancing/docs/internal/failover-overview) and [external passthrough Network Load Balancers](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview).  failoverPolicy cannot be specified with haPolicy. (id: BackendServiceFailoverPolicy)</td>
+    <td>Requires at least one backend instance group to be defined as a backup (failover) backend. For load balancers that have configurable failover: [Internal passthrough Network Load Balancers](https://cloud.google.com/load-balancing/docs/internal/failover-overview) and [external passthrough Network Load Balancers](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview). failoverPolicy cannot be specified with haPolicy.failoverPolicy cannot be used by global external Passthrough Network Load Balancers. (id: BackendServiceFailoverPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="fingerprint" /></td>
@@ -477,7 +477,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="haPolicy" /></td>
     <td><code>object</code></td>
-    <td>Configures self-managed High Availability (HA) for External and Internal Protocol Forwarding.  The backends of this regional backend service must only specify zonal network endpoint groups (NEGs) of type GCE_VM_IP.  When haPolicy is set for an Internal Passthrough Network Load Balancer, the regional backend service must set the network field. All zonal NEGs must belong to the same network. However, individual NEGs can belong to different subnetworks of that network.  When haPolicy is specified, the set of attached network endpoints across all backends comprise an High Availability domain from which one endpoint is selected as the active endpoint (the leader) that receives all traffic.  haPolicy can be added only at backend service creation time. Once set up, it cannot be deleted.  Note that haPolicy is not for load balancing, and therefore cannot be specified with sessionAffinity, connectionTrackingPolicy, and failoverPolicy.  haPolicy requires customers to be responsible for tracking backend endpoint health and electing a leader among the healthy endpoints. Therefore, haPolicy cannot be specified with healthChecks.  haPolicy can only be specified for External Passthrough Network Load Balancers and Internal Passthrough Network Load Balancers. (id: BackendServiceHAPolicy)</td>
+    <td>Configures self-managed High Availability (HA) for External and Internal Protocol Forwarding.  The backends of this regional backend service must only specify zonal network endpoint groups (NEGs) of type GCE_VM_IP.  When haPolicy is set for an Internal Passthrough Network Load Balancer, the regional backend service must set the network field. All zonal NEGs must belong to the same network. However, individual NEGs can belong to different subnetworks of that network.  When haPolicy is specified, the set of attached network endpoints across all backends comprise an High Availability domain from which one endpoint is selected as the active endpoint (the leader) that receives all traffic.  haPolicy can be added only at backend service creation time. Once set up, it cannot be deleted.  Note that haPolicy is not for load balancing, and therefore cannot be specified with sessionAffinity, connectionTrackingPolicy, and failoverPolicy.  haPolicy requires customers to be responsible for tracking backend endpoint health and electing a leader among the healthy endpoints. Therefore, haPolicy cannot be specified with healthChecks. haPolicy can only be specified for External Passthrough Network Load Balancers and Internal Passthrough Network Load Balancers.haPolicy cannot be used by global external Passthrough Network Load Balancers. (id: BackendServiceHAPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="healthChecks" /></td>
@@ -502,7 +502,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="loadBalancingScheme" /></td>
     <td><code>string</code></td>
-    <td>Specifies the load balancer type. A backend service created for one type of load balancer cannot be used with another. For more information, refer toChoosing a load balancer. (EXTERNAL, EXTERNAL_MANAGED, INTERNAL, INTERNAL_MANAGED, INTERNAL_SELF_MANAGED, INVALID_LOAD_BALANCING_SCHEME)</td>
+    <td>Specifies the load balancer type. A backend service created for one type of load balancer cannot be used with another. For more information, refer to Backend services product and scheme table. (EXTERNAL, EXTERNAL_MANAGED, INTERNAL, INTERNAL_MANAGED, INTERNAL_SELF_MANAGED, INVALID_LOAD_BALANCING_SCHEME)</td>
 </tr>
 <tr>
     <td><CopyableCode code="localityLbPolicies" /></td>
@@ -512,7 +512,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="localityLbPolicy" /></td>
     <td><code>string</code></td>
-    <td>The load balancing algorithm used within the scope of the locality. The possible values are:        - ROUND_ROBIN: This is a simple policy in which each healthy    backend is selected in round robin order. This is the default.    - LEAST_REQUEST: An O(1) algorithm which    selects two random healthy hosts and picks the host which has fewer active    requests.    - RING_HASH: The ring/modulo hash load balancer implements    consistent hashing to backends. The algorithm has the property that the    addition/removal of a host from a set of N hosts only affects 1/N of the    requests.    - RANDOM: The load balancer selects a random healthy    host.    - ORIGINAL_DESTINATION: Backend host is selected    based on the client connection metadata, i.e., connections are opened to    the same address as the destination address of the incoming connection    before the connection was redirected to the load balancer.    - MAGLEV: used as a drop in replacement for the ring hash    load balancer. Maglev is not as stable as ring hash but has faster table    lookup build times and host selection times. For more information about    Maglev, see Maglev:    A Fast and Reliable Software Network Load Balancer.    - WEIGHTED_ROUND_ROBIN: Per-endpoint Weighted Round Robin    Load Balancing using weights computed from Backend reported Custom Metrics.    If set, the Backend Service responses are expected to contain non-standard    HTTP response header field Endpoint-Load-Metrics. The reported    metrics to use for computing the weights are specified via thecustomMetrics field.        This field is applicable to either:       - A regional backend service with the service protocol set to HTTP,       HTTPS, HTTP2 or H2C, and load_balancing_scheme set to       INTERNAL_MANAGED.        - A global backend service with the       load_balancing_scheme set to INTERNAL_SELF_MANAGED, INTERNAL_MANAGED, or       EXTERNAL_MANAGED.            If sessionAffinity is not configured—that is, if session    affinity remains at the default value of NONE—then the    default value for localityLbPolicy    is ROUND_ROBIN. If session affinity is set to a value other    than NONE,    then the default value for localityLbPolicy isMAGLEV.        Only ROUND_ROBIN and RING_HASH are supported    when the backend service is referenced by a URL map that is bound to    target gRPC proxy that has validateForProxyless field set to true.        localityLbPolicy cannot be specified with haPolicy. (INVALID_LB_POLICY, LEAST_REQUEST, MAGLEV, ORIGINAL_DESTINATION, RANDOM, RING_HASH, ROUND_ROBIN, WEIGHTED_GCP_RENDEZVOUS, WEIGHTED_MAGLEV, WEIGHTED_ROUND_ROBIN)</td>
+    <td>The load balancing algorithm used within the scope of the locality. The possible values are:        - ROUND_ROBIN: This is a simple policy in which each healthy    backend is selected in round robin order. This is the default.    - LEAST_REQUEST: An O(1) algorithm which    selects two random healthy hosts and picks the host which has fewer active    requests.    - RING_HASH: The ring/modulo hash load balancer implements    consistent hashing to backends. The algorithm has the property that the    addition/removal of a host from a set of N hosts only affects 1/N of the    requests.    - RANDOM: The load balancer selects a random healthy    host.    - ORIGINAL_DESTINATION: Backend host is selected    based on the client connection metadata, i.e., connections are opened to    the same address as the destination address of the incoming connection    before the connection was redirected to the load balancer.    - MAGLEV: used as a drop in replacement for the ring hash    load balancer. Maglev is not as stable as ring hash but has faster table    lookup build times and host selection times. For more information about    Maglev, see Maglev:    A Fast and Reliable Software Network Load Balancer.    - WEIGHTED_ROUND_ROBIN: Per-endpoint Weighted Round Robin    Load Balancing using weights computed from Backend reported Custom Metrics.    If set, the Backend Service responses are expected to contain non-standard    HTTP response header field Endpoint-Load-Metrics. The reported    metrics to use for computing the weights are specified via thecustomMetrics field.    - WEIGHTED_MAGLEV: Per-endpoint weighted load balancing via    health check reported weights. If set, the backend service must configure    an HTTP-based Health Check, and health check replies are expected to    contain the non-standard HTTP response header fieldX-Load-Balancing-Endpoint-Weight to specify the per-endpoint    weights. If set, load balancing is weighted based on the per-endpoint    weights reported in the last processed health check replies, as long as    every instance either reported a valid weight or had UNAVAILABLE_WEIGHT.    Otherwise, load balancing remains equal-weight.    This field is applicable to either:        - A regional backend service with the service protocol set to HTTP,    HTTPS, HTTP2 or H2C, and load_balancing_scheme set to    INTERNAL_MANAGED.     - A global backend service with the    load_balancing_scheme set to INTERNAL_SELF_MANAGED, INTERNAL_MANAGED, or    EXTERNAL_MANAGED.    If sessionAffinity is not configured—that is, if session affinity remains at the default value of NONE—then the default value for localityLbPolicy is ROUND_ROBIN. If session affinity is set to a value other than NONE, then the default value for localityLbPolicy isMAGLEV.  Only ROUND_ROBIN and RING_HASH are supported when the backend service is referenced by a URL map that is bound to target gRPC proxy that has validateForProxyless field set to true.  localityLbPolicy cannot be specified with haPolicy. (INVALID_LB_POLICY, LEAST_REQUEST, MAGLEV, ORIGINAL_DESTINATION, RANDOM, RING_HASH, ROUND_ROBIN, WEIGHTED_GCP_RENDEZVOUS, WEIGHTED_MAGLEV, WEIGHTED_ROUND_ROBIN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="logConfig" /></td>
@@ -567,7 +567,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protocol" /></td>
     <td><code>string</code></td>
-    <td>The protocol this BackendService uses to communicate with backends.  Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP or GRPC. depending on the chosen load balancer or Traffic Director configuration. Refer to the documentation for the load balancers or for Traffic Director for more information.  Must be set to GRPC when the backend service is referenced by a URL map that is bound to target gRPC proxy. (GRPC, H2C, HTTP, HTTP2, HTTPS, SSL, TCP, UDP, UNSPECIFIED)</td>
+    <td>The protocol this BackendService uses to communicate with backends.  Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP, GRPC, or UNSPECIFIED, depending on the chosen load balancer or Traffic Director configuration. Refer to  Load balancing features for more information.  Must be set to GRPC when the backend service is referenced by a URL map that is bound to target gRPC proxy. (GRPC, H2C, HTTP, HTTP2, HTTPS, SSL, TCP, UDP, UNSPECIFIED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
@@ -660,14 +660,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of regional BackendService resources available to the<br />specified project in the given region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all BackendService resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -699,25 +699,18 @@ The following methods are available for this resource:
     <td>Deletes the specified regional BackendService resource.</td>
 </tr>
 <tr>
-    <td><a href="#delete_signed_url_key"><CopyableCode code="delete_signed_url_key" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-backendService"><code>backendService</code></a>, <a href="#parameter-keyName"><code>keyName</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Deletes a key for validating requests with signed URLs for this backend<br />service.</td>
-</tr>
-<tr>
-    <td><a href="#set_security_policy"><CopyableCode code="set_security_policy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-backendService"><code>backendService</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the Google Cloud Armor security policy for the specified backend<br />service. For more information, seeGoogle<br />Cloud Armor Overview</td>
-</tr>
-<tr>
     <td><a href="#add_signed_url_key"><CopyableCode code="add_signed_url_key" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-backendService"><code>backendService</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Adds a key for validating requests with signed URLs for this backend<br />service.</td>
+</tr>
+<tr>
+    <td><a href="#delete_signed_url_key"><CopyableCode code="delete_signed_url_key" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-backendService"><code>backendService</code></a>, <a href="#parameter-keyName"><code>keyName</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Deletes a key for validating requests with signed URLs for this backend<br />service.</td>
 </tr>
 <tr>
     <td><a href="#get_effective_security_policies"><CopyableCode code="get_effective_security_policies" /></a></td>
@@ -732,6 +725,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-backendService"><code>backendService</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Sets the edge security policy for the specified backend service.</td>
+</tr>
+<tr>
+    <td><a href="#set_security_policy"><CopyableCode code="set_security_policy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-backendService"><code>backendService</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the Google Cloud Armor security policy for the specified backend<br />service. For more information, seeGoogle<br />Cloud Armor Overview</td>
 </tr>
 </tbody>
 </table>
@@ -902,11 +902,11 @@ warning
 FROM google.compute.backend_services
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -970,13 +970,13 @@ tlsSettings,
 usedBy
 FROM google.compute.backend_services
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -999,106 +999,106 @@ Creates a regional BackendService resource in the specified project using<br />t
 ```sql
 INSERT INTO google.compute.backend_services (
 data__affinityCookieTtlSec,
-data__port,
-data__network,
-data__tlsSettings,
-data__ipAddressSelectionPolicy,
+data__backends,
 data__cdnPolicy,
-data__securityPolicy,
-data__enableCDN,
-data__customMetrics,
-data__iap,
-data__failoverPolicy,
-data__externalManagedMigrationState,
-data__networkPassThroughLbTrafficPolicy,
-data__consistentHash,
-data__logConfig,
-data__strongSessionAffinityCookie,
-data__sessionAffinity,
-data__outlierDetection,
-data__customRequestHeaders,
+data__circuitBreakers,
 data__compressionMode,
-data__metadatas,
 data__connectionDraining,
-data__serviceBindings,
-data__localityLbPolicies,
+data__connectionTrackingPolicy,
+data__consistentHash,
+data__customMetrics,
+data__customRequestHeaders,
+data__customResponseHeaders,
 data__description,
-data__subsetting,
-data__portName,
-data__fingerprint,
-data__orchestrationInfo,
-data__protocol,
-data__haPolicy,
 data__edgeSecurityPolicy,
+data__enableCDN,
+data__externalManagedMigrationState,
+data__externalManagedMigrationTestingPercentage,
+data__failoverPolicy,
+data__fingerprint,
+data__haPolicy,
+data__healthChecks,
+data__iap,
+data__id,
+data__ipAddressSelectionPolicy,
+data__loadBalancingScheme,
+data__localityLbPolicies,
+data__localityLbPolicy,
+data__logConfig,
+data__maxStreamDuration,
+data__metadatas,
+data__name,
+data__network,
+data__networkPassThroughLbTrafficPolicy,
+data__orchestrationInfo,
+data__outlierDetection,
 data__params,
+data__port,
+data__portName,
+data__protocol,
+data__securityPolicy,
 data__securitySettings,
 data__selfLink,
-data__healthChecks,
-data__loadBalancingScheme,
-data__timeoutSec,
-data__backends,
+data__serviceBindings,
 data__serviceLbPolicy,
-data__localityLbPolicy,
-data__circuitBreakers,
-data__externalManagedMigrationTestingPercentage,
-data__name,
-data__connectionTrackingPolicy,
-data__id,
-data__maxStreamDuration,
-data__customResponseHeaders,
+data__sessionAffinity,
+data__strongSessionAffinityCookie,
+data__subsetting,
+data__timeoutSec,
+data__tlsSettings,
 project,
 region,
 requestId
 )
 SELECT 
 {{ affinityCookieTtlSec }},
-{{ port }},
-'{{ network }}',
-'{{ tlsSettings }}',
-'{{ ipAddressSelectionPolicy }}',
+'{{ backends }}',
 '{{ cdnPolicy }}',
-'{{ securityPolicy }}',
-{{ enableCDN }},
-'{{ customMetrics }}',
-'{{ iap }}',
-'{{ failoverPolicy }}',
-'{{ externalManagedMigrationState }}',
-'{{ networkPassThroughLbTrafficPolicy }}',
-'{{ consistentHash }}',
-'{{ logConfig }}',
-'{{ strongSessionAffinityCookie }}',
-'{{ sessionAffinity }}',
-'{{ outlierDetection }}',
-'{{ customRequestHeaders }}',
+'{{ circuitBreakers }}',
 '{{ compressionMode }}',
-'{{ metadatas }}',
 '{{ connectionDraining }}',
-'{{ serviceBindings }}',
-'{{ localityLbPolicies }}',
+'{{ connectionTrackingPolicy }}',
+'{{ consistentHash }}',
+'{{ customMetrics }}',
+'{{ customRequestHeaders }}',
+'{{ customResponseHeaders }}',
 '{{ description }}',
-'{{ subsetting }}',
-'{{ portName }}',
-'{{ fingerprint }}',
-'{{ orchestrationInfo }}',
-'{{ protocol }}',
-'{{ haPolicy }}',
 '{{ edgeSecurityPolicy }}',
+{{ enableCDN }},
+'{{ externalManagedMigrationState }}',
+{{ externalManagedMigrationTestingPercentage }},
+'{{ failoverPolicy }}',
+'{{ fingerprint }}',
+'{{ haPolicy }}',
+'{{ healthChecks }}',
+'{{ iap }}',
+'{{ id }}',
+'{{ ipAddressSelectionPolicy }}',
+'{{ loadBalancingScheme }}',
+'{{ localityLbPolicies }}',
+'{{ localityLbPolicy }}',
+'{{ logConfig }}',
+'{{ maxStreamDuration }}',
+'{{ metadatas }}',
+'{{ name }}',
+'{{ network }}',
+'{{ networkPassThroughLbTrafficPolicy }}',
+'{{ orchestrationInfo }}',
+'{{ outlierDetection }}',
 '{{ params }}',
+{{ port }},
+'{{ portName }}',
+'{{ protocol }}',
+'{{ securityPolicy }}',
 '{{ securitySettings }}',
 '{{ selfLink }}',
-'{{ healthChecks }}',
-'{{ loadBalancingScheme }}',
-{{ timeoutSec }},
-'{{ backends }}',
+'{{ serviceBindings }}',
 '{{ serviceLbPolicy }}',
-'{{ localityLbPolicy }}',
-'{{ circuitBreakers }}',
-{{ externalManagedMigrationTestingPercentage }},
-'{{ name }}',
-'{{ connectionTrackingPolicy }}',
-'{{ id }}',
-'{{ maxStreamDuration }}',
-'{{ customResponseHeaders }}',
+'{{ sessionAffinity }}',
+'{{ strongSessionAffinityCookie }}',
+'{{ subsetting }}',
+{{ timeoutSec }},
+'{{ tlsSettings }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -1155,31 +1155,264 @@ zone
         is two weeks (1,209,600).
         Not supported when the backend service is referenced by a URL map that is
         bound to target gRPC proxy that has validateForProxyless field set to true.
-    - name: port
-      value: {{ port }}
+    - name: backends
       description: |
-        Deprecated in favor of portName. The TCP port to connect on
-        the backend. The default value is 80.
-        For internal passthrough Network Load Balancers and external passthrough
-        Network Load Balancers, omit port.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        The URL of the network to which this backend service belongs.
-        This field must be set for Internal Passthrough Network Load Balancers when
-        the haPolicy is enabled, and for External Passthrough Network Load
-        Balancers when the haPolicy fastIpMove is enabled.
-        This field can only be specified when the load balancing scheme is set toINTERNAL, or when the load balancing scheme is set toEXTERNAL and haPolicy fastIpMove is enabled.
-    - name: tlsSettings
-      description: |
-        Configuration for Backend Authenticated TLS and mTLS. May only be specified
-        when the backend protocol is SSL, HTTPS or HTTP2.
+        The list of backends that serve this BackendService.
       value:
-        sni: "{{ sni }}"
-        subjectAltNames:
-          - dnsName: "{{ dnsName }}"
-            uniformResourceIdentifier: "{{ uniformResourceIdentifier }}"
-        authenticationConfig: "{{ authenticationConfig }}"
+        - balancingMode: "{{ balancingMode }}"
+          capacityScaler: {{ capacityScaler }}
+          customMetrics: "{{ customMetrics }}"
+          description: "{{ description }}"
+          failover: {{ failover }}
+          group: "{{ group }}"
+          maxConnections: {{ maxConnections }}
+          maxConnectionsPerEndpoint: {{ maxConnectionsPerEndpoint }}
+          maxConnectionsPerInstance: {{ maxConnectionsPerInstance }}
+          maxInFlightRequests: {{ maxInFlightRequests }}
+          maxInFlightRequestsPerEndpoint: {{ maxInFlightRequestsPerEndpoint }}
+          maxInFlightRequestsPerInstance: {{ maxInFlightRequestsPerInstance }}
+          maxRate: {{ maxRate }}
+          maxRatePerEndpoint: {{ maxRatePerEndpoint }}
+          maxRatePerInstance: {{ maxRatePerInstance }}
+          maxUtilization: {{ maxUtilization }}
+          orchestrationInfo:
+            resourceUri: "{{ resourceUri }}"
+          preference: "{{ preference }}"
+          trafficDuration: "{{ trafficDuration }}"
+    - name: cdnPolicy
+      description: |
+        Cloud CDN configuration for this BackendService. Only available for
+        specified load balancer types.
+      value:
+        bypassCacheOnRequestHeaders:
+          - headerName: "{{ headerName }}"
+        cacheKeyPolicy:
+          includeHost: {{ includeHost }}
+          includeHttpHeaders:
+            - "{{ includeHttpHeaders }}"
+          includeNamedCookies:
+            - "{{ includeNamedCookies }}"
+          includeProtocol: {{ includeProtocol }}
+          includeQueryString: {{ includeQueryString }}
+          queryStringBlacklist:
+            - "{{ queryStringBlacklist }}"
+          queryStringWhitelist:
+            - "{{ queryStringWhitelist }}"
+        cacheMode: "{{ cacheMode }}"
+        clientTtl: {{ clientTtl }}
+        defaultTtl: {{ defaultTtl }}
+        maxTtl: {{ maxTtl }}
+        negativeCaching: {{ negativeCaching }}
+        negativeCachingPolicy:
+          - code: {{ code }}
+            ttl: {{ ttl }}
+        requestCoalescing: {{ requestCoalescing }}
+        serveWhileStale: {{ serveWhileStale }}
+        signedUrlCacheMaxAgeSec: "{{ signedUrlCacheMaxAgeSec }}"
+        signedUrlKeyNames:
+          - "{{ signedUrlKeyNames }}"
+    - name: circuitBreakers
+      description: |
+        Settings controlling the volume of requests, connections and retries to this
+        backend service.
+      value:
+        maxConnections: {{ maxConnections }}
+        maxPendingRequests: {{ maxPendingRequests }}
+        maxRequests: {{ maxRequests }}
+        maxRequestsPerConnection: {{ maxRequestsPerConnection }}
+        maxRetries: {{ maxRetries }}
+    - name: compressionMode
+      value: "{{ compressionMode }}"
+      description: |
+        Compress text responses using Brotli or gzip compression, based on
+        the client's Accept-Encoding header.
+      valid_values: ['AUTOMATIC', 'DISABLED']
+    - name: connectionDraining
+      description: |
+        connectionDraining cannot be specified with haPolicy.
+      value:
+        drainingTimeoutSec: {{ drainingTimeoutSec }}
+    - name: connectionTrackingPolicy
+      description: |
+        Connection Tracking configuration for this BackendService. Connection
+        tracking policy settings are only available for external passthrough
+        Network Load Balancers and internal passthrough Network Load Balancers.
+        connectionTrackingPolicy cannot be specified with haPolicy.
+      value:
+        connectionPersistenceOnUnhealthyBackends: "{{ connectionPersistenceOnUnhealthyBackends }}"
+        enableStrongAffinity: {{ enableStrongAffinity }}
+        idleTimeoutSec: {{ idleTimeoutSec }}
+        trackingMode: "{{ trackingMode }}"
+    - name: consistentHash
+      description: |
+        Consistent Hash-based load balancing can be used to provide soft session
+        affinity based on HTTP headers, cookies or other properties. This load
+        balancing policy is applicable only for HTTP connections. The affinity to a
+        particular destination host will be lost when one or more hosts are
+        added/removed from the destination service. This field specifies parameters
+        that control consistent hashing. This field is only applicable whenlocalityLbPolicy is set to MAGLEV orRING_HASH.
+        This field is applicable to either:
+        - A regional backend service with the service protocol set to HTTP,
+        HTTPS, HTTP2 or H2C, and load_balancing_scheme set to
+        INTERNAL_MANAGED.
+        - A global backend service with the
+        load_balancing_scheme set to INTERNAL_SELF_MANAGED.
+      value:
+        httpCookie:
+          name: "{{ name }}"
+          path: "{{ path }}"
+          ttl:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+        httpHeaderName: "{{ httpHeaderName }}"
+        minimumRingSize: "{{ minimumRingSize }}"
+    - name: customMetrics
+      description: |
+        List of custom metrics that are used for theWEIGHTED_ROUND_ROBIN locality_lb_policy.
+      value:
+        - dryRun: {{ dryRun }}
+          name: "{{ name }}"
+    - name: customRequestHeaders
+      value:
+        - "{{ customRequestHeaders }}"
+      description: |
+        Headers that the load balancer adds to proxied requests. See [Creating
+        custom
+        headers](https://cloud.google.com/load-balancing/docs/custom-headers).
+    - name: customResponseHeaders
+      value:
+        - "{{ customResponseHeaders }}"
+      description: |
+        Headers that the load balancer adds to proxied responses. See [Creating
+        custom
+        headers](https://cloud.google.com/load-balancing/docs/custom-headers).
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: edgeSecurityPolicy
+      value: "{{ edgeSecurityPolicy }}"
+      description: |
+        [Output Only] The resource URL for the edge security policy associated with
+        this backend service.
+    - name: enableCDN
+      value: {{ enableCDN }}
+      description: |
+        If true, enables Cloud CDN for the backend service of a
+        global external Application Load Balancer.
+    - name: externalManagedMigrationState
+      value: "{{ externalManagedMigrationState }}"
+      description: |
+        Specifies the canary migration state. Possible values are PREPARE,
+        TEST_BY_PERCENTAGE, and TEST_ALL_TRAFFIC.
+        To begin the migration from EXTERNAL to EXTERNAL_MANAGED, the state must be
+        changed to PREPARE. The state must be changed to TEST_ALL_TRAFFIC before
+        the loadBalancingScheme can be changed to EXTERNAL_MANAGED. Optionally, the
+        TEST_BY_PERCENTAGE state can be used to migrate traffic by percentage using
+        externalManagedMigrationTestingPercentage.
+        Rolling back a migration requires the states to be set in reverse order. So
+        changing the scheme from EXTERNAL_MANAGED to EXTERNAL requires the state to
+        be set to TEST_ALL_TRAFFIC at the same time. Optionally, the
+        TEST_BY_PERCENTAGE state can be used to migrate some traffic back to
+        EXTERNAL or PREPARE can be used to migrate all traffic back to EXTERNAL.
+      valid_values: ['PREPARE', 'TEST_ALL_TRAFFIC', 'TEST_BY_PERCENTAGE']
+    - name: externalManagedMigrationTestingPercentage
+      value: {{ externalManagedMigrationTestingPercentage }}
+      description: |
+        Determines the fraction of requests that should be processed by the Global
+        external Application Load Balancer.
+        The value of this field must be in the range [0, 100].
+        Session affinity options will slightly affect this routing behavior, for
+        more details, see:Session
+        Affinity.
+        This value can only be set if the loadBalancingScheme in the BackendService
+        is set to EXTERNAL (when using the classic Application Load Balancer) and
+        the migration state is TEST_BY_PERCENTAGE.
+    - name: failoverPolicy
+      description: |
+        Requires at least one backend instance group to be defined
+        as a backup (failover) backend.
+        For load balancers that have configurable failover:
+        [Internal passthrough Network Load
+        Balancers](https://cloud.google.com/load-balancing/docs/internal/failover-overview)
+        and [external passthrough Network Load
+        Balancers](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview).
+        failoverPolicy cannot be specified with haPolicy.failoverPolicy cannot be used by global external Passthrough
+        Network Load Balancers.
+      value:
+        disableConnectionDrainOnFailover: {{ disableConnectionDrainOnFailover }}
+        dropTrafficIfUnhealthy: {{ dropTrafficIfUnhealthy }}
+        failoverRatio: {{ failoverRatio }}
+    - name: fingerprint
+      value: "{{ fingerprint }}"
+      description: |
+        Fingerprint of this resource. A hash of the contents stored in this object.
+        This field is used in optimistic locking. This field will be ignored when
+        inserting a BackendService. An up-to-date fingerprint must be provided in
+        order to update the BackendService, otherwise the request will
+        fail with error 412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve a BackendService.
+    - name: haPolicy
+      description: |
+        Configures self-managed High Availability (HA) for External and Internal
+        Protocol Forwarding.
+        The backends of this regional backend service must only specify zonal
+        network endpoint groups (NEGs) of type GCE_VM_IP.
+        When haPolicy is set for an Internal Passthrough Network Load Balancer, the
+        regional backend service must set the network field. All zonal NEGs must
+        belong to the same network. However, individual NEGs can
+        belong to different subnetworks of that network.
+        When haPolicy is specified, the set of attached network endpoints across
+        all backends comprise an High Availability domain from which one endpoint
+        is selected as the active endpoint (the leader) that receives all
+        traffic.
+        haPolicy can be added only at backend service creation time. Once set up,
+        it cannot be deleted.
+        Note that haPolicy is not for load balancing, and therefore cannot be
+        specified with sessionAffinity, connectionTrackingPolicy, and
+        failoverPolicy.
+        haPolicy requires customers to be responsible for tracking backend
+        endpoint health and electing a leader among the healthy endpoints.
+        Therefore, haPolicy cannot be specified with healthChecks.
+        haPolicy can only be specified for External Passthrough
+        Network Load Balancers and Internal Passthrough Network Load Balancers.haPolicy cannot be used by global external Passthrough Network
+        Load Balancers.
+      value:
+        fastIPMove: "{{ fastIPMove }}"
+        leader:
+          backendGroup: "{{ backendGroup }}"
+          networkEndpoint:
+            instance: "{{ instance }}"
+    - name: healthChecks
+      value:
+        - "{{ healthChecks }}"
+      description: |
+        The list of URLs to the healthChecks, httpHealthChecks (legacy), or
+        httpsHealthChecks (legacy) resource for health checking this backend
+        service. Not all backend services support legacy health checks. See
+        Load balancer guide. Currently, at most one health check can be
+        specified for each backend service. Backend services with
+        instance group or zonal NEG backends must have a health check unless
+        haPolicy is specified. Backend services with internet or serverless NEG
+        backends must not have a health check.
+        healthChecks[] cannot be specified with haPolicy.
+    - name: iap
+      description: |
+        The configurations for Identity-Aware Proxy on this resource.
+        Not available for internal passthrough Network Load Balancers and external
+        passthrough Network Load Balancers.
+      value:
+        enabled: {{ enabled }}
+        oauth2ClientId: "{{ oauth2ClientId }}"
+        oauth2ClientSecret: "{{ oauth2ClientSecret }}"
+        oauth2ClientSecretSha256: "{{ oauth2ClientSecretSha256 }}"
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
     - name: ipAddressSelectionPolicy
       value: "{{ ipAddressSelectionPolicy }}"
       description: |
@@ -1211,94 +1444,141 @@ zone
         Director with Envoy proxies and proxyless gRPC (load balancing scheme
         INTERNAL_SELF_MANAGED).
       valid_values: ['IPV4_ONLY', 'IPV6_ONLY', 'IP_ADDRESS_SELECTION_POLICY_UNSPECIFIED', 'PREFER_IPV6']
-    - name: cdnPolicy
+    - name: loadBalancingScheme
+      value: "{{ loadBalancingScheme }}"
       description: |
-        Cloud CDN configuration for this BackendService. Only available for
-        specified load balancer types.
+        Specifies the load balancer type. A backend service
+        created for one type of load balancer cannot be used with another.
+        For more information, refer to
+        Backend services product and scheme table.
+      valid_values: ['EXTERNAL', 'EXTERNAL_MANAGED', 'INTERNAL', 'INTERNAL_MANAGED', 'INTERNAL_SELF_MANAGED', 'INVALID_LOAD_BALANCING_SCHEME']
+    - name: localityLbPolicies
+      description: |
+        A list of locality load-balancing policies to be used in order of
+        preference. When you use localityLbPolicies, you must set at least one
+        value for either the localityLbPolicies[].policy or the
+        localityLbPolicies[].customPolicy field. localityLbPolicies overrides any
+        value set in the localityLbPolicy field.
+        For an example of how to use this field, seeDefine
+        a list of preferred policies.
+        Caution: This field and its children are intended for use in a service mesh
+        that includes gRPC clients only. Envoy proxies can't use backend services
+        that have this configuration.
       value:
-        cacheMode: "{{ cacheMode }}"
-        negativeCaching: {{ negativeCaching }}
-        bypassCacheOnRequestHeaders:
+        - customPolicy:
+            data: "{{ data }}"
+            name: "{{ name }}"
+          policy:
+            name: "{{ name }}"
+    - name: localityLbPolicy
+      value: "{{ localityLbPolicy }}"
+      description: |
+        The load balancing algorithm used within the scope of the locality. The
+        possible values are:
+        - ROUND_ROBIN: This is a simple policy in which each healthy
+        backend is selected in round robin order. This is the default.
+        - LEAST_REQUEST: An O(1) algorithm which
+        selects two random healthy hosts and picks the host which has fewer active
+        requests.
+        - RING_HASH: The ring/modulo hash load balancer implements
+        consistent hashing to backends. The algorithm has the property that the
+        addition/removal of a host from a set of N hosts only affects 1/N of the
+        requests.
+        - RANDOM: The load balancer selects a random healthy
+        host.
+        - ORIGINAL_DESTINATION: Backend host is selected
+        based on the client connection metadata, i.e., connections are opened to
+        the same address as the destination address of the incoming connection
+        before the connection was redirected to the load balancer.
+        - MAGLEV: used as a drop in replacement for the ring hash
+        load balancer. Maglev is not as stable as ring hash but has faster table
+        lookup build times and host selection times. For more information about
+        Maglev, see Maglev:
+        A Fast and Reliable Software Network Load Balancer.
+        - WEIGHTED_ROUND_ROBIN: Per-endpoint Weighted Round Robin
+        Load Balancing using weights computed from Backend reported Custom Metrics.
+        If set, the Backend Service responses are expected to contain non-standard
+        HTTP response header field Endpoint-Load-Metrics. The reported
+        metrics to use for computing the weights are specified via thecustomMetrics field.
+        - WEIGHTED_MAGLEV: Per-endpoint weighted load balancing via
+        health check reported weights. If set, the backend service must configure
+        an HTTP-based Health Check, and health check replies are expected to
+        contain the non-standard HTTP response header fieldX-Load-Balancing-Endpoint-Weight to specify the per-endpoint
+        weights. If set, load balancing is weighted based on the per-endpoint
+        weights reported in the last processed health check replies, as long as
+        every instance either reported a valid weight or had UNAVAILABLE_WEIGHT.
+        Otherwise, load balancing remains equal-weight.
+        This field is applicable to either:
+        - A regional backend service with the service protocol set to HTTP,
+        HTTPS, HTTP2 or H2C, and load_balancing_scheme set to
+        INTERNAL_MANAGED.
+        - A global backend service with the
+        load_balancing_scheme set to INTERNAL_SELF_MANAGED, INTERNAL_MANAGED, or
+        EXTERNAL_MANAGED.
+        If sessionAffinity is not configured—that is, if session
+        affinity remains at the default value of NONE—then the
+        default value for localityLbPolicy
+        is ROUND_ROBIN. If session affinity is set to a value other
+        than NONE,
+        then the default value for localityLbPolicy isMAGLEV.
+        Only ROUND_ROBIN and RING_HASH are supported
+        when the backend service is referenced by a URL map that is bound to
+        target gRPC proxy that has validateForProxyless field set to true.
+        localityLbPolicy cannot be specified with haPolicy.
+      valid_values: ['INVALID_LB_POLICY', 'LEAST_REQUEST', 'MAGLEV', 'ORIGINAL_DESTINATION', 'RANDOM', 'RING_HASH', 'ROUND_ROBIN', 'WEIGHTED_GCP_RENDEZVOUS', 'WEIGHTED_MAGLEV', 'WEIGHTED_ROUND_ROBIN']
+    - name: logConfig
+      description: |
+        This field denotes the logging options for the load balancer traffic served
+        by this backend service. If logging is enabled, logs will be exported to
+        Stackdriver.
+      value:
+        enable: {{ enable }}
+        loggingHttpRequestHeaders:
           - headerName: "{{ headerName }}"
-        cacheKeyPolicy:
-          includeQueryString: {{ includeQueryString }}
-          includeNamedCookies:
-            - "{{ includeNamedCookies }}"
-          includeProtocol: {{ includeProtocol }}
-          includeHost: {{ includeHost }}
-          includeHttpHeaders:
-            - "{{ includeHttpHeaders }}"
-          queryStringBlacklist:
-            - "{{ queryStringBlacklist }}"
-          queryStringWhitelist:
-            - "{{ queryStringWhitelist }}"
-        negativeCachingPolicy:
-          - ttl: {{ ttl }}
-            code: {{ code }}
-        requestCoalescing: {{ requestCoalescing }}
-        defaultTtl: {{ defaultTtl }}
-        clientTtl: {{ clientTtl }}
-        maxTtl: {{ maxTtl }}
-        signedUrlCacheMaxAgeSec: "{{ signedUrlCacheMaxAgeSec }}"
-        serveWhileStale: {{ serveWhileStale }}
-        signedUrlKeyNames:
-          - "{{ signedUrlKeyNames }}"
-    - name: securityPolicy
-      value: "{{ securityPolicy }}"
+        loggingHttpResponseHeaders:
+          - headerName: "{{ headerName }}"
+        optionalFields:
+          - "{{ optionalFields }}"
+        optionalMode: "{{ optionalMode }}"
+        sampleRate: {{ sampleRate }}
+    - name: maxStreamDuration
       description: |
-        [Output Only] The resource URL for the security policy associated with this
-        backend service.
-    - name: enableCDN
-      value: {{ enableCDN }}
-      description: |
-        If true, enables Cloud CDN for the backend service of a
-        global external Application Load Balancer.
-    - name: customMetrics
-      description: |
-        List of custom metrics that are used for theWEIGHTED_ROUND_ROBIN locality_lb_policy.
+        Specifies the default maximum duration (timeout) for streams to this
+        service. Duration is computed from the beginning of the stream until the
+        response has been completely processed, including all retries. A stream
+        that does not complete in this duration is closed.
+        If not specified, there will be no timeout limit, i.e. the maximum
+        duration is infinite.
+        This value can be overridden in the PathMatcher configuration of the
+        UrlMap that references this backend service.
+        This field is only allowed when the loadBalancingScheme of
+        the backend service is INTERNAL_SELF_MANAGED.
       value:
-        - name: "{{ name }}"
-          dryRun: {{ dryRun }}
-    - name: iap
+        nanos: {{ nanos }}
+        seconds: "{{ seconds }}"
+    - name: metadatas
+      value: "{{ metadatas }}"
       description: |
-        The configurations for Identity-Aware Proxy on this resource.
-        Not available for internal passthrough Network Load Balancers and external
-        passthrough Network Load Balancers.
-      value:
-        oauth2ClientId: "{{ oauth2ClientId }}"
-        enabled: {{ enabled }}
-        oauth2ClientSecretSha256: "{{ oauth2ClientSecretSha256 }}"
-        oauth2ClientSecret: "{{ oauth2ClientSecret }}"
-    - name: failoverPolicy
+        Deployment metadata associated with the resource to be set by a GKE hub
+        controller and read by the backend RCTH
+    - name: name
+      value: "{{ name }}"
       description: |
-        Requires at least one backend instance group to be defined
-        as a backup (failover) backend.
-        For load balancers that have configurable failover:
-        [Internal passthrough Network Load
-        Balancers](https://cloud.google.com/load-balancing/docs/internal/failover-overview)
-        and [external passthrough Network Load
-        Balancers](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview).
-        failoverPolicy cannot be specified with haPolicy.
-      value:
-        dropTrafficIfUnhealthy: {{ dropTrafficIfUnhealthy }}
-        disableConnectionDrainOnFailover: {{ disableConnectionDrainOnFailover }}
-        failoverRatio: {{ failoverRatio }}
-    - name: externalManagedMigrationState
-      value: "{{ externalManagedMigrationState }}"
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: network
+      value: "{{ network }}"
       description: |
-        Specifies the canary migration state. Possible values are PREPARE,
-        TEST_BY_PERCENTAGE, and TEST_ALL_TRAFFIC.
-        To begin the migration from EXTERNAL to EXTERNAL_MANAGED, the state must be
-        changed to PREPARE. The state must be changed to TEST_ALL_TRAFFIC before
-        the loadBalancingScheme can be changed to EXTERNAL_MANAGED. Optionally, the
-        TEST_BY_PERCENTAGE state can be used to migrate traffic by percentage using
-        externalManagedMigrationTestingPercentage.
-        Rolling back a migration requires the states to be set in reverse order. So
-        changing the scheme from EXTERNAL_MANAGED to EXTERNAL requires the state to
-        be set to TEST_ALL_TRAFFIC at the same time. Optionally, the
-        TEST_BY_PERCENTAGE state can be used to migrate some traffic back to
-        EXTERNAL or PREPARE can be used to migrate all traffic back to EXTERNAL.
-      valid_values: ['PREPARE', 'TEST_ALL_TRAFFIC', 'TEST_BY_PERCENTAGE']
+        The URL of the network to which this backend service belongs.
+        This field must be set for Internal Passthrough Network Load Balancers when
+        the haPolicy is enabled, and for External Passthrough Network Load
+        Balancers when the haPolicy fastIpMove is enabled.
+        This field can only be specified when the load balancing scheme is set toINTERNAL, or when the load balancing scheme is set toEXTERNAL and haPolicy fastIpMove is enabled.
     - name: networkPassThroughLbTrafficPolicy
       description: |
         Configures traffic steering properties of internal passthrough Network
@@ -1308,66 +1588,11 @@ zone
         zonalAffinity:
           spillover: "{{ spillover }}"
           spilloverRatio: {{ spilloverRatio }}
-    - name: consistentHash
+    - name: orchestrationInfo
       description: |
-        Consistent Hash-based load balancing can be used to provide soft session
-        affinity based on HTTP headers, cookies or other properties. This load
-        balancing policy is applicable only for HTTP connections. The affinity to a
-        particular destination host will be lost when one or more hosts are
-        added/removed from the destination service. This field specifies parameters
-        that control consistent hashing. This field is only applicable whenlocalityLbPolicy is set to MAGLEV orRING_HASH.
-        This field is applicable to either:
-        - A regional backend service with the service protocol set to HTTP,
-        HTTPS, HTTP2 or H2C, and load_balancing_scheme set to
-        INTERNAL_MANAGED.
-        - A global backend service with the
-        load_balancing_scheme set to INTERNAL_SELF_MANAGED.
+        Information about the resource or system that manages the backend service.
       value:
-        httpCookie:
-          name: "{{ name }}"
-          path: "{{ path }}"
-          ttl:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-        httpHeaderName: "{{ httpHeaderName }}"
-        minimumRingSize: "{{ minimumRingSize }}"
-    - name: logConfig
-      description: |
-        This field denotes the logging options for the load balancer traffic served
-        by this backend service. If logging is enabled, logs will be exported to
-        Stackdriver.
-      value:
-        loggingHttpRequestHeaders:
-          - headerName: "{{ headerName }}"
-        optionalMode: "{{ optionalMode }}"
-        optionalFields:
-          - "{{ optionalFields }}"
-        sampleRate: {{ sampleRate }}
-        loggingHttpResponseHeaders:
-          - headerName: "{{ headerName }}"
-        enable: {{ enable }}
-    - name: strongSessionAffinityCookie
-      description: |
-        Describes the HTTP cookie used for stateful session affinity. This field is
-        applicable and required if the sessionAffinity is set toSTRONG_COOKIE_AFFINITY.
-      value:
-        ttl:
-          nanos: {{ nanos }}
-          seconds: "{{ seconds }}"
-        path: "{{ path }}"
-        name: "{{ name }}"
-    - name: sessionAffinity
-      value: "{{ sessionAffinity }}"
-      description: |
-        Type of session affinity to use. The default is NONE.
-        Only NONE and HEADER_FIELD are supported
-        when the backend service is referenced by a URL map that is bound to
-        target gRPC proxy that has validateForProxyless field set to true.
-        For more details, see:
-        [Session
-        Affinity](https://cloud.google.com/load-balancing/docs/backend-service#session_affinity).
-        sessionAffinity cannot be specified with haPolicy.
-      valid_values: ['CLIENT_IP', 'CLIENT_IP_NO_DESTINATION', 'CLIENT_IP_PORT_PROTO', 'CLIENT_IP_PROTO', 'GENERATED_COOKIE', 'HEADER_FIELD', 'HTTP_COOKIE', 'NONE', 'STRONG_COOKIE_AFFINITY']
+        resourceUri: "{{ resourceUri }}"
     - name: outlierDetection
       description: |
         Settings controlling the ejection of unhealthy backend endpoints from the
@@ -1401,79 +1626,34 @@ zone
         Not supported when the backend service is referenced by a URL map that is
         bound to target gRPC proxy that has validateForProxyless field set to true.
       value:
-        interval:
-          nanos: {{ nanos }}
-          seconds: "{{ seconds }}"
         baseEjectionTime:
           nanos: {{ nanos }}
           seconds: "{{ seconds }}"
-        consecutiveGatewayFailure: {{ consecutiveGatewayFailure }}
         consecutiveErrors: {{ consecutiveErrors }}
+        consecutiveGatewayFailure: {{ consecutiveGatewayFailure }}
         enforcingConsecutiveErrors: {{ enforcingConsecutiveErrors }}
-        successRateRequestVolume: {{ successRateRequestVolume }}
-        successRateStdevFactor: {{ successRateStdevFactor }}
-        maxEjectionPercent: {{ maxEjectionPercent }}
         enforcingConsecutiveGatewayFailure: {{ enforcingConsecutiveGatewayFailure }}
         enforcingSuccessRate: {{ enforcingSuccessRate }}
+        interval:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+        maxEjectionPercent: {{ maxEjectionPercent }}
         successRateMinimumHosts: {{ successRateMinimumHosts }}
-    - name: customRequestHeaders
+        successRateRequestVolume: {{ successRateRequestVolume }}
+        successRateStdevFactor: {{ successRateStdevFactor }}
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
       value:
-        - "{{ customRequestHeaders }}"
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: port
+      value: {{ port }}
       description: |
-        Headers that the load balancer adds to proxied requests. See [Creating
-        custom
-        headers](https://cloud.google.com/load-balancing/docs/custom-headers).
-    - name: compressionMode
-      value: "{{ compressionMode }}"
-      description: |
-        Compress text responses using Brotli or gzip compression, based on
-        the client's Accept-Encoding header.
-      valid_values: ['AUTOMATIC', 'DISABLED']
-    - name: metadatas
-      value: "{{ metadatas }}"
-      description: |
-        Deployment metadata associated with the resource to be set by a GKE hub
-        controller and read by the backend RCTH
-    - name: connectionDraining
-      description: |
-        connectionDraining cannot be specified with haPolicy.
-      value:
-        drainingTimeoutSec: {{ drainingTimeoutSec }}
-    - name: serviceBindings
-      value:
-        - "{{ serviceBindings }}"
-      description: |
-        URLs of networkservices.ServiceBinding resources.
-        Can only be set if load balancing scheme is INTERNAL_SELF_MANAGED.
-        If set, lists of backends and health checks must be both empty.
-    - name: localityLbPolicies
-      description: |
-        A list of locality load-balancing policies to be used in order of
-        preference. When you use localityLbPolicies, you must set at least one
-        value for either the localityLbPolicies[].policy or the
-        localityLbPolicies[].customPolicy field. localityLbPolicies overrides any
-        value set in the localityLbPolicy field.
-        For an example of how to use this field, seeDefine
-        a list of preferred policies.
-        Caution: This field and its children are intended for use in a service mesh
-        that includes gRPC clients only. Envoy proxies can't use backend services
-        that have this configuration.
-      value:
-        - customPolicy:
-            name: "{{ name }}"
-            data: "{{ data }}"
-          policy:
-            name: "{{ name }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: subsetting
-      description: |
-        subsetting cannot be specified with haPolicy.
-      value:
-        policy: "{{ policy }}"
+        Deprecated in favor of portName. The TCP port to connect on
+        the backend. The default value is 80.
+        For internal passthrough Network Load Balancers and external passthrough
+        Network Load Balancers, omit port.
     - name: portName
       value: "{{ portName }}"
       description: |
@@ -1484,113 +1664,85 @@ zone
         This parameter has no meaning if the backends are NEGs. For internal
         passthrough Network Load Balancers and external passthrough Network Load
         Balancers, omit port_name.
-    - name: fingerprint
-      value: "{{ fingerprint }}"
-      description: |
-        Fingerprint of this resource. A hash of the contents stored in this object.
-        This field is used in optimistic locking. This field will be ignored when
-        inserting a BackendService. An up-to-date fingerprint must be provided in
-        order to update the BackendService, otherwise the request will
-        fail with error 412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve a BackendService.
-    - name: orchestrationInfo
-      description: |
-        Information about the resource or system that manages the backend service.
-      value:
-        resourceUri: "{{ resourceUri }}"
     - name: protocol
       value: "{{ protocol }}"
       description: |
-        The protocol this BackendService uses to communicate
-        with backends.
-        Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP or GRPC.
-        depending on the chosen load balancer or Traffic Director configuration.
-        Refer to the documentation for the load balancers or for Traffic Director
-        for more information.
+        The protocol this BackendService uses to communicate with backends.
+        Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP, GRPC, or
+        UNSPECIFIED, depending on the chosen load balancer or Traffic Director
+        configuration.
+        Refer to
+        Load balancing features for more information.
         Must be set to GRPC when the backend service is referenced by a URL map
         that is bound to target gRPC proxy.
       valid_values: ['GRPC', 'H2C', 'HTTP', 'HTTP2', 'HTTPS', 'SSL', 'TCP', 'UDP', 'UNSPECIFIED']
-    - name: haPolicy
+    - name: securityPolicy
+      value: "{{ securityPolicy }}"
       description: |
-        Configures self-managed High Availability (HA) for External and Internal
-        Protocol Forwarding.
-        The backends of this regional backend service must only specify zonal
-        network endpoint groups (NEGs) of type GCE_VM_IP.
-        When haPolicy is set for an Internal Passthrough Network Load Balancer, the
-        regional backend service must set the network field. All zonal NEGs must
-        belong to the same network. However, individual NEGs can
-        belong to different subnetworks of that network.
-        When haPolicy is specified, the set of attached network endpoints across
-        all backends comprise an High Availability domain from which one endpoint
-        is selected as the active endpoint (the leader) that receives all
-        traffic.
-        haPolicy can be added only at backend service creation time. Once set up,
-        it cannot be deleted.
-        Note that haPolicy is not for load balancing, and therefore cannot be
-        specified with sessionAffinity, connectionTrackingPolicy, and
-        failoverPolicy.
-        haPolicy requires customers to be responsible for tracking backend
-        endpoint health and electing a leader among the healthy endpoints.
-        Therefore, haPolicy cannot be specified with healthChecks.
-        haPolicy can only be specified for External Passthrough Network Load
-        Balancers and Internal Passthrough Network Load Balancers.
-      value:
-        fastIPMove: "{{ fastIPMove }}"
-        leader:
-          backendGroup: "{{ backendGroup }}"
-          networkEndpoint:
-            instance: "{{ instance }}"
-    - name: edgeSecurityPolicy
-      value: "{{ edgeSecurityPolicy }}"
-      description: |
-        [Output Only] The resource URL for the edge security policy associated with
-        this backend service.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
+        [Output Only] The resource URL for the security policy associated with this
+        backend service.
     - name: securitySettings
       description: |
         This field specifies the security settings that apply to this backend
         service. This field is applicable to a global backend service with the
         load_balancing_scheme set to INTERNAL_SELF_MANAGED.
       value:
-        subjectAltNames:
-          - "{{ subjectAltNames }}"
         awsV4Authentication:
-          accessKeyId: "{{ accessKeyId }}"
           accessKey: "{{ accessKey }}"
+          accessKeyId: "{{ accessKeyId }}"
           accessKeyVersion: "{{ accessKeyVersion }}"
           originRegion: "{{ originRegion }}"
         clientTlsPolicy: "{{ clientTlsPolicy }}"
+        subjectAltNames:
+          - "{{ subjectAltNames }}"
     - name: selfLink
       value: "{{ selfLink }}"
       description: |
         [Output Only] Server-defined URL for the resource.
-    - name: healthChecks
+    - name: serviceBindings
       value:
-        - "{{ healthChecks }}"
+        - "{{ serviceBindings }}"
       description: |
-        The list of URLs to the healthChecks, httpHealthChecks (legacy), or
-        httpsHealthChecks (legacy) resource for health checking this backend
-        service. Not all backend services support legacy health checks. See
-        Load balancer guide. Currently, at most one health check can be
-        specified for each backend service. Backend services with
-        instance group or zonal NEG backends must have a health check unless
-        haPolicy is specified. Backend services with internet or serverless NEG
-        backends must not have a health check.
-        healthChecks[] cannot be specified with haPolicy.
-    - name: loadBalancingScheme
-      value: "{{ loadBalancingScheme }}"
+        URLs of networkservices.ServiceBinding resources.
+        Can only be set if load balancing scheme is INTERNAL_SELF_MANAGED.
+        If set, lists of backends and health checks must be both empty.
+    - name: serviceLbPolicy
+      value: "{{ serviceLbPolicy }}"
       description: |
-        Specifies the load balancer type. A backend service
-        created for one type of load balancer cannot be used with another.
-        For more information, refer toChoosing
-        a load balancer.
-      valid_values: ['EXTERNAL', 'EXTERNAL_MANAGED', 'INTERNAL', 'INTERNAL_MANAGED', 'INTERNAL_SELF_MANAGED', 'INVALID_LOAD_BALANCING_SCHEME']
+        URL to networkservices.ServiceLbPolicy resource.
+        Can only be set if load balancing scheme is EXTERNAL_MANAGED,
+        INTERNAL_MANAGED or INTERNAL_SELF_MANAGED for a global backend service, and
+        EXTERNAL_MANAGED or INTERNAL_MANAGED for a regional backend service. For a
+        global backend service, the service lb policy must be global. For a
+        regional backend service, the service lb policy must be regional and in the
+        same region.
+    - name: sessionAffinity
+      value: "{{ sessionAffinity }}"
+      description: |
+        Type of session affinity to use. The default is NONE.
+        Only NONE and HEADER_FIELD are supported
+        when the backend service is referenced by a URL map that is bound to
+        target gRPC proxy that has validateForProxyless field set to true.
+        For more details, see:
+        [Session
+        Affinity](https://cloud.google.com/load-balancing/docs/backend-service#session_affinity).
+        sessionAffinity cannot be specified with haPolicy.
+      valid_values: ['CLIENT_IP', 'CLIENT_IP_NO_DESTINATION', 'CLIENT_IP_PORT_PROTO', 'CLIENT_IP_PROTO', 'GENERATED_COOKIE', 'HEADER_FIELD', 'HTTP_COOKIE', 'NONE', 'STRONG_COOKIE_AFFINITY']
+    - name: strongSessionAffinityCookie
+      description: |
+        Describes the HTTP cookie used for stateful session affinity. This field is
+        applicable and required if the sessionAffinity is set toSTRONG_COOKIE_AFFINITY.
+      value:
+        name: "{{ name }}"
+        path: "{{ path }}"
+        ttl:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+    - name: subsetting
+      description: |
+        subsetting cannot be specified with haPolicy.
+      value:
+        policy: "{{ policy }}"
     - name: timeoutSec
       value: {{ timeoutSec }}
       description: |
@@ -1605,158 +1757,17 @@ zone
         Not supported when the backend service is referenced by a URL map that is
         bound to target gRPC proxy that has validateForProxyless field set to true.
         Instead, use maxStreamDuration.
-    - name: backends
+    - name: tlsSettings
       description: |
-        The list of backends that serve this BackendService.
+        Configuration for Backend Authenticated TLS and mTLS. May only be specified
+        when the backend protocol is SSL, HTTPS or HTTP2.
       value:
-        - maxRate: {{ maxRate }}
-          group: "{{ group }}"
-          maxConnectionsPerEndpoint: {{ maxConnectionsPerEndpoint }}
-          maxInFlightRequests: {{ maxInFlightRequests }}
-          trafficDuration: "{{ trafficDuration }}"
-          preference: "{{ preference }}"
-          description: "{{ description }}"
-          customMetrics: "{{ customMetrics }}"
-          maxRatePerEndpoint: {{ maxRatePerEndpoint }}
-          capacityScaler: {{ capacityScaler }}
-          maxConnections: {{ maxConnections }}
-          failover: {{ failover }}
-          maxInFlightRequestsPerEndpoint: {{ maxInFlightRequestsPerEndpoint }}
-          maxRatePerInstance: {{ maxRatePerInstance }}
-          balancingMode: "{{ balancingMode }}"
-          orchestrationInfo:
-            resourceUri: "{{ resourceUri }}"
-          maxInFlightRequestsPerInstance: {{ maxInFlightRequestsPerInstance }}
-          maxConnectionsPerInstance: {{ maxConnectionsPerInstance }}
-          maxUtilization: {{ maxUtilization }}
-    - name: serviceLbPolicy
-      value: "{{ serviceLbPolicy }}"
-      description: |
-        URL to networkservices.ServiceLbPolicy resource.
-        Can only be set if load balancing scheme is EXTERNAL_MANAGED,
-        INTERNAL_MANAGED or INTERNAL_SELF_MANAGED for a global backend service, and
-        EXTERNAL_MANAGED or INTERNAL_MANAGED for a regional backend service. For a
-        global backend service, the service lb policy must be global. For a
-        regional backend service, the service lb policy must be regional and in the
-        same region.
-    - name: localityLbPolicy
-      value: "{{ localityLbPolicy }}"
-      description: |
-        The load balancing algorithm used within the scope of the locality. The
-        possible values are:
-        - ROUND_ROBIN: This is a simple policy in which each healthy
-        backend is selected in round robin order. This is the default.
-        - LEAST_REQUEST: An O(1) algorithm which
-        selects two random healthy hosts and picks the host which has fewer active
-        requests.
-        - RING_HASH: The ring/modulo hash load balancer implements
-        consistent hashing to backends. The algorithm has the property that the
-        addition/removal of a host from a set of N hosts only affects 1/N of the
-        requests.
-        - RANDOM: The load balancer selects a random healthy
-        host.
-        - ORIGINAL_DESTINATION: Backend host is selected
-        based on the client connection metadata, i.e., connections are opened to
-        the same address as the destination address of the incoming connection
-        before the connection was redirected to the load balancer.
-        - MAGLEV: used as a drop in replacement for the ring hash
-        load balancer. Maglev is not as stable as ring hash but has faster table
-        lookup build times and host selection times. For more information about
-        Maglev, see Maglev:
-        A Fast and Reliable Software Network Load Balancer.
-        - WEIGHTED_ROUND_ROBIN: Per-endpoint Weighted Round Robin
-        Load Balancing using weights computed from Backend reported Custom Metrics.
-        If set, the Backend Service responses are expected to contain non-standard
-        HTTP response header field Endpoint-Load-Metrics. The reported
-        metrics to use for computing the weights are specified via thecustomMetrics field.
-        This field is applicable to either:
-        - A regional backend service with the service protocol set to HTTP,
-        HTTPS, HTTP2 or H2C, and load_balancing_scheme set to
-        INTERNAL_MANAGED.
-        - A global backend service with the
-        load_balancing_scheme set to INTERNAL_SELF_MANAGED, INTERNAL_MANAGED, or
-        EXTERNAL_MANAGED.
-        If sessionAffinity is not configured—that is, if session
-        affinity remains at the default value of NONE—then the
-        default value for localityLbPolicy
-        is ROUND_ROBIN. If session affinity is set to a value other
-        than NONE,
-        then the default value for localityLbPolicy isMAGLEV.
-        Only ROUND_ROBIN and RING_HASH are supported
-        when the backend service is referenced by a URL map that is bound to
-        target gRPC proxy that has validateForProxyless field set to true.
-        localityLbPolicy cannot be specified with haPolicy.
-      valid_values: ['INVALID_LB_POLICY', 'LEAST_REQUEST', 'MAGLEV', 'ORIGINAL_DESTINATION', 'RANDOM', 'RING_HASH', 'ROUND_ROBIN', 'WEIGHTED_GCP_RENDEZVOUS', 'WEIGHTED_MAGLEV', 'WEIGHTED_ROUND_ROBIN']
-    - name: circuitBreakers
-      description: |
-        Settings controlling the volume of requests, connections and retries to this
-        backend service.
-      value:
-        maxPendingRequests: {{ maxPendingRequests }}
-        maxRetries: {{ maxRetries }}
-        maxRequests: {{ maxRequests }}
-        maxRequestsPerConnection: {{ maxRequestsPerConnection }}
-        maxConnections: {{ maxConnections }}
-    - name: externalManagedMigrationTestingPercentage
-      value: {{ externalManagedMigrationTestingPercentage }}
-      description: |
-        Determines the fraction of requests that should be processed by the Global
-        external Application Load Balancer.
-        The value of this field must be in the range [0, 100].
-        Session affinity options will slightly affect this routing behavior, for
-        more details, see:Session
-        Affinity.
-        This value can only be set if the loadBalancingScheme in the BackendService
-        is set to EXTERNAL (when using the classic Application Load Balancer) and
-        the migration state is TEST_BY_PERCENTAGE.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
-    - name: connectionTrackingPolicy
-      description: |
-        Connection Tracking configuration for this BackendService. Connection
-        tracking policy settings are only available for external passthrough
-        Network Load Balancers and internal passthrough Network Load Balancers.
-        connectionTrackingPolicy cannot be specified with haPolicy.
-      value:
-        trackingMode: "{{ trackingMode }}"
-        connectionPersistenceOnUnhealthyBackends: "{{ connectionPersistenceOnUnhealthyBackends }}"
-        enableStrongAffinity: {{ enableStrongAffinity }}
-        idleTimeoutSec: {{ idleTimeoutSec }}
-    - name: id
-      value: "{{ id }}"
-      description: |
-        [Output Only] The unique identifier for the resource. This identifier is
-        defined by the server.
-    - name: maxStreamDuration
-      description: |
-        Specifies the default maximum duration (timeout) for streams to this
-        service. Duration is computed from the beginning of the stream until the
-        response has been completely processed, including all retries. A stream
-        that does not complete in this duration is closed.
-        If not specified, there will be no timeout limit, i.e. the maximum
-        duration is infinite.
-        This value can be overridden in the PathMatcher configuration of the
-        UrlMap that references this backend service.
-        This field is only allowed when the loadBalancingScheme of
-        the backend service is INTERNAL_SELF_MANAGED.
-      value:
-        nanos: {{ nanos }}
-        seconds: "{{ seconds }}"
-    - name: customResponseHeaders
-      value:
-        - "{{ customResponseHeaders }}"
-      description: |
-        Headers that the load balancer adds to proxied responses. See [Creating
-        custom
-        headers](https://cloud.google.com/load-balancing/docs/custom-headers).
+        authenticationConfig: "{{ authenticationConfig }}"
+        identity: "{{ identity }}"
+        sni: "{{ sni }}"
+        subjectAltNames:
+          - dnsName: "{{ dnsName }}"
+            uniformResourceIdentifier: "{{ uniformResourceIdentifier }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -1781,53 +1792,53 @@ Updates the specified regional BackendService resource with the data<br />includ
 UPDATE google.compute.backend_services
 SET 
 data__affinityCookieTtlSec = {{ affinityCookieTtlSec }},
-data__port = {{ port }},
-data__network = '{{ network }}',
-data__tlsSettings = '{{ tlsSettings }}',
-data__ipAddressSelectionPolicy = '{{ ipAddressSelectionPolicy }}',
+data__backends = '{{ backends }}',
 data__cdnPolicy = '{{ cdnPolicy }}',
-data__securityPolicy = '{{ securityPolicy }}',
-data__enableCDN = {{ enableCDN }},
-data__customMetrics = '{{ customMetrics }}',
-data__iap = '{{ iap }}',
-data__failoverPolicy = '{{ failoverPolicy }}',
-data__externalManagedMigrationState = '{{ externalManagedMigrationState }}',
-data__networkPassThroughLbTrafficPolicy = '{{ networkPassThroughLbTrafficPolicy }}',
-data__consistentHash = '{{ consistentHash }}',
-data__logConfig = '{{ logConfig }}',
-data__strongSessionAffinityCookie = '{{ strongSessionAffinityCookie }}',
-data__sessionAffinity = '{{ sessionAffinity }}',
-data__outlierDetection = '{{ outlierDetection }}',
-data__customRequestHeaders = '{{ customRequestHeaders }}',
+data__circuitBreakers = '{{ circuitBreakers }}',
 data__compressionMode = '{{ compressionMode }}',
-data__metadatas = '{{ metadatas }}',
 data__connectionDraining = '{{ connectionDraining }}',
-data__serviceBindings = '{{ serviceBindings }}',
-data__localityLbPolicies = '{{ localityLbPolicies }}',
+data__connectionTrackingPolicy = '{{ connectionTrackingPolicy }}',
+data__consistentHash = '{{ consistentHash }}',
+data__customMetrics = '{{ customMetrics }}',
+data__customRequestHeaders = '{{ customRequestHeaders }}',
+data__customResponseHeaders = '{{ customResponseHeaders }}',
 data__description = '{{ description }}',
-data__subsetting = '{{ subsetting }}',
-data__portName = '{{ portName }}',
-data__fingerprint = '{{ fingerprint }}',
-data__orchestrationInfo = '{{ orchestrationInfo }}',
-data__protocol = '{{ protocol }}',
-data__haPolicy = '{{ haPolicy }}',
 data__edgeSecurityPolicy = '{{ edgeSecurityPolicy }}',
+data__enableCDN = {{ enableCDN }},
+data__externalManagedMigrationState = '{{ externalManagedMigrationState }}',
+data__externalManagedMigrationTestingPercentage = {{ externalManagedMigrationTestingPercentage }},
+data__failoverPolicy = '{{ failoverPolicy }}',
+data__fingerprint = '{{ fingerprint }}',
+data__haPolicy = '{{ haPolicy }}',
+data__healthChecks = '{{ healthChecks }}',
+data__iap = '{{ iap }}',
+data__id = '{{ id }}',
+data__ipAddressSelectionPolicy = '{{ ipAddressSelectionPolicy }}',
+data__loadBalancingScheme = '{{ loadBalancingScheme }}',
+data__localityLbPolicies = '{{ localityLbPolicies }}',
+data__localityLbPolicy = '{{ localityLbPolicy }}',
+data__logConfig = '{{ logConfig }}',
+data__maxStreamDuration = '{{ maxStreamDuration }}',
+data__metadatas = '{{ metadatas }}',
+data__name = '{{ name }}',
+data__network = '{{ network }}',
+data__networkPassThroughLbTrafficPolicy = '{{ networkPassThroughLbTrafficPolicy }}',
+data__orchestrationInfo = '{{ orchestrationInfo }}',
+data__outlierDetection = '{{ outlierDetection }}',
 data__params = '{{ params }}',
+data__port = {{ port }},
+data__portName = '{{ portName }}',
+data__protocol = '{{ protocol }}',
+data__securityPolicy = '{{ securityPolicy }}',
 data__securitySettings = '{{ securitySettings }}',
 data__selfLink = '{{ selfLink }}',
-data__healthChecks = '{{ healthChecks }}',
-data__loadBalancingScheme = '{{ loadBalancingScheme }}',
-data__timeoutSec = {{ timeoutSec }},
-data__backends = '{{ backends }}',
+data__serviceBindings = '{{ serviceBindings }}',
 data__serviceLbPolicy = '{{ serviceLbPolicy }}',
-data__localityLbPolicy = '{{ localityLbPolicy }}',
-data__circuitBreakers = '{{ circuitBreakers }}',
-data__externalManagedMigrationTestingPercentage = {{ externalManagedMigrationTestingPercentage }},
-data__name = '{{ name }}',
-data__connectionTrackingPolicy = '{{ connectionTrackingPolicy }}',
-data__id = '{{ id }}',
-data__maxStreamDuration = '{{ maxStreamDuration }}',
-data__customResponseHeaders = '{{ customResponseHeaders }}'
+data__sessionAffinity = '{{ sessionAffinity }}',
+data__strongSessionAffinityCookie = '{{ strongSessionAffinityCookie }}',
+data__subsetting = '{{ subsetting }}',
+data__timeoutSec = {{ timeoutSec }},
+data__tlsSettings = '{{ tlsSettings }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -1882,53 +1893,53 @@ Updates the specified regional BackendService resource with the data<br />includ
 REPLACE google.compute.backend_services
 SET 
 data__affinityCookieTtlSec = {{ affinityCookieTtlSec }},
-data__port = {{ port }},
-data__network = '{{ network }}',
-data__tlsSettings = '{{ tlsSettings }}',
-data__ipAddressSelectionPolicy = '{{ ipAddressSelectionPolicy }}',
+data__backends = '{{ backends }}',
 data__cdnPolicy = '{{ cdnPolicy }}',
-data__securityPolicy = '{{ securityPolicy }}',
-data__enableCDN = {{ enableCDN }},
-data__customMetrics = '{{ customMetrics }}',
-data__iap = '{{ iap }}',
-data__failoverPolicy = '{{ failoverPolicy }}',
-data__externalManagedMigrationState = '{{ externalManagedMigrationState }}',
-data__networkPassThroughLbTrafficPolicy = '{{ networkPassThroughLbTrafficPolicy }}',
-data__consistentHash = '{{ consistentHash }}',
-data__logConfig = '{{ logConfig }}',
-data__strongSessionAffinityCookie = '{{ strongSessionAffinityCookie }}',
-data__sessionAffinity = '{{ sessionAffinity }}',
-data__outlierDetection = '{{ outlierDetection }}',
-data__customRequestHeaders = '{{ customRequestHeaders }}',
+data__circuitBreakers = '{{ circuitBreakers }}',
 data__compressionMode = '{{ compressionMode }}',
-data__metadatas = '{{ metadatas }}',
 data__connectionDraining = '{{ connectionDraining }}',
-data__serviceBindings = '{{ serviceBindings }}',
-data__localityLbPolicies = '{{ localityLbPolicies }}',
+data__connectionTrackingPolicy = '{{ connectionTrackingPolicy }}',
+data__consistentHash = '{{ consistentHash }}',
+data__customMetrics = '{{ customMetrics }}',
+data__customRequestHeaders = '{{ customRequestHeaders }}',
+data__customResponseHeaders = '{{ customResponseHeaders }}',
 data__description = '{{ description }}',
-data__subsetting = '{{ subsetting }}',
-data__portName = '{{ portName }}',
-data__fingerprint = '{{ fingerprint }}',
-data__orchestrationInfo = '{{ orchestrationInfo }}',
-data__protocol = '{{ protocol }}',
-data__haPolicy = '{{ haPolicy }}',
 data__edgeSecurityPolicy = '{{ edgeSecurityPolicy }}',
+data__enableCDN = {{ enableCDN }},
+data__externalManagedMigrationState = '{{ externalManagedMigrationState }}',
+data__externalManagedMigrationTestingPercentage = {{ externalManagedMigrationTestingPercentage }},
+data__failoverPolicy = '{{ failoverPolicy }}',
+data__fingerprint = '{{ fingerprint }}',
+data__haPolicy = '{{ haPolicy }}',
+data__healthChecks = '{{ healthChecks }}',
+data__iap = '{{ iap }}',
+data__id = '{{ id }}',
+data__ipAddressSelectionPolicy = '{{ ipAddressSelectionPolicy }}',
+data__loadBalancingScheme = '{{ loadBalancingScheme }}',
+data__localityLbPolicies = '{{ localityLbPolicies }}',
+data__localityLbPolicy = '{{ localityLbPolicy }}',
+data__logConfig = '{{ logConfig }}',
+data__maxStreamDuration = '{{ maxStreamDuration }}',
+data__metadatas = '{{ metadatas }}',
+data__name = '{{ name }}',
+data__network = '{{ network }}',
+data__networkPassThroughLbTrafficPolicy = '{{ networkPassThroughLbTrafficPolicy }}',
+data__orchestrationInfo = '{{ orchestrationInfo }}',
+data__outlierDetection = '{{ outlierDetection }}',
 data__params = '{{ params }}',
+data__port = {{ port }},
+data__portName = '{{ portName }}',
+data__protocol = '{{ protocol }}',
+data__securityPolicy = '{{ securityPolicy }}',
 data__securitySettings = '{{ securitySettings }}',
 data__selfLink = '{{ selfLink }}',
-data__healthChecks = '{{ healthChecks }}',
-data__loadBalancingScheme = '{{ loadBalancingScheme }}',
-data__timeoutSec = {{ timeoutSec }},
-data__backends = '{{ backends }}',
+data__serviceBindings = '{{ serviceBindings }}',
 data__serviceLbPolicy = '{{ serviceLbPolicy }}',
-data__localityLbPolicy = '{{ localityLbPolicy }}',
-data__circuitBreakers = '{{ circuitBreakers }}',
-data__externalManagedMigrationTestingPercentage = {{ externalManagedMigrationTestingPercentage }},
-data__name = '{{ name }}',
-data__connectionTrackingPolicy = '{{ connectionTrackingPolicy }}',
-data__id = '{{ id }}',
-data__maxStreamDuration = '{{ maxStreamDuration }}',
-data__customResponseHeaders = '{{ customResponseHeaders }}'
+data__sessionAffinity = '{{ sessionAffinity }}',
+data__strongSessionAffinityCookie = '{{ strongSessionAffinityCookie }}',
+data__subsetting = '{{ subsetting }}',
+data__timeoutSec = {{ timeoutSec }},
+data__tlsSettings = '{{ tlsSettings }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -1994,45 +2005,15 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="delete_signed_url_key"
+    defaultValue="add_signed_url_key"
     values={[
-        { label: 'delete_signed_url_key', value: 'delete_signed_url_key' },
-        { label: 'set_security_policy', value: 'set_security_policy' },
         { label: 'add_signed_url_key', value: 'add_signed_url_key' },
+        { label: 'delete_signed_url_key', value: 'delete_signed_url_key' },
         { label: 'get_effective_security_policies', value: 'get_effective_security_policies' },
-        { label: 'set_edge_security_policy', value: 'set_edge_security_policy' }
+        { label: 'set_edge_security_policy', value: 'set_edge_security_policy' },
+        { label: 'set_security_policy', value: 'set_security_policy' }
     ]}
 >
-<TabItem value="delete_signed_url_key">
-
-Deletes a key for validating requests with signed URLs for this backend<br />service.
-
-```sql
-EXEC google.compute.backend_services.delete_signed_url_key 
-@project='{{ project }}' --required, 
-@backendService='{{ backendService }}' --required, 
-@keyName='{{ keyName }}' --required, 
-@requestId='{{ requestId }}'
-;
-```
-</TabItem>
-<TabItem value="set_security_policy">
-
-Sets the Google Cloud Armor security policy for the specified backend<br />service. For more information, seeGoogle<br />Cloud Armor Overview
-
-```sql
-EXEC google.compute.backend_services.set_security_policy 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@backendService='{{ backendService }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"securityPolicy": "{{ securityPolicy }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="add_signed_url_key">
 
 Adds a key for validating requests with signed URLs for this backend<br />service.
@@ -2044,9 +2025,22 @@ EXEC google.compute.backend_services.add_signed_url_key
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"keyValue": "{{ keyValue }}", 
-"keyName": "{{ keyName }}"
+"keyName": "{{ keyName }}", 
+"keyValue": "{{ keyValue }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="delete_signed_url_key">
+
+Deletes a key for validating requests with signed URLs for this backend<br />service.
+
+```sql
+EXEC google.compute.backend_services.delete_signed_url_key 
+@project='{{ project }}' --required, 
+@backendService='{{ backendService }}' --required, 
+@keyName='{{ keyName }}' --required, 
+@requestId='{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -2068,6 +2062,23 @@ Sets the edge security policy for the specified backend service.
 ```sql
 EXEC google.compute.backend_services.set_edge_security_policy 
 @project='{{ project }}' --required, 
+@backendService='{{ backendService }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"securityPolicy": "{{ securityPolicy }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_security_policy">
+
+Sets the Google Cloud Armor security policy for the specified backend<br />service. For more information, seeGoogle<br />Cloud Armor Overview
+
+```sql
+EXEC google.compute.backend_services.set_security_policy 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
 @backendService='{{ backendService }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=

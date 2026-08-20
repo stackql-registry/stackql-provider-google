@@ -169,18 +169,18 @@ The following methods are available for this resource:
     <td>Lists operations that match the specified filter in the request.</td>
 </tr>
 <tr>
-    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-operationId"><code>operationId</code></a></td>
-    <td></td>
-    <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed.</td>
-</tr>
-<tr>
     <td><a href="#advance_relocate_bucket"><CopyableCode code="advance_relocate_bucket" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-operationId"><code>operationId</code></a></td>
     <td></td>
     <td>Starts asynchronous advancement of the relocate bucket operation in the case of required write downtime, to allow it to lock the bucket at the source location, and proceed with the bucket location swap. The server makes a best effort to advance the relocate bucket operation, but success is not guaranteed.</td>
+</tr>
+<tr>
+    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-operationId"><code>operationId</code></a></td>
+    <td></td>
+    <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed.</td>
 </tr>
 </tbody>
 </table>
@@ -281,23 +281,12 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="cancel"
+    defaultValue="advance_relocate_bucket"
     values={[
-        { label: 'cancel', value: 'cancel' },
-        { label: 'advance_relocate_bucket', value: 'advance_relocate_bucket' }
+        { label: 'advance_relocate_bucket', value: 'advance_relocate_bucket' },
+        { label: 'cancel', value: 'cancel' }
     ]}
 >
-<TabItem value="cancel">
-
-Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed.
-
-```sql
-EXEC google.storage.operations.cancel 
-@bucket='{{ bucket }}' --required, 
-@operationId='{{ operationId }}' --required
-;
-```
-</TabItem>
 <TabItem value="advance_relocate_bucket">
 
 Starts asynchronous advancement of the relocate bucket operation in the case of required write downtime, to allow it to lock the bucket at the source location, and proceed with the bucket location swap. The server makes a best effort to advance the relocate bucket operation, but success is not guaranteed.
@@ -308,9 +297,20 @@ EXEC google.storage.operations.advance_relocate_bucket
 @operationId='{{ operationId }}' --required 
 @@json=
 '{
-"ttl": "{{ ttl }}", 
-"expireTime": "{{ expireTime }}"
+"expireTime": "{{ expireTime }}", 
+"ttl": "{{ ttl }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="cancel">
+
+Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed.
+
+```sql
+EXEC google.storage.operations.cancel 
+@bucket='{{ bucket }}' --required, 
+@operationId='{{ operationId }}' --required
 ;
 ```
 </TabItem>

@@ -110,8 +110,8 @@ EXEC google.artifactregistry.kfp_artifacts.upload
 @repositoriesId='{{ repositoriesId }}' --required 
 @@json=
 '{
-"tags": "{{ tags }}", 
-"description": "{{ description }}"
+"description": "{{ description }}", 
+"tags": "{{ tags }}"
 }'
 ;
 ```

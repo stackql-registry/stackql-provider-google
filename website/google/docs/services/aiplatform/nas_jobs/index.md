@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists NasJobs in a Location.</td>
 </tr>
 <tr>
@@ -384,9 +384,9 @@ updateTime
 FROM google.aiplatform.nas_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -409,20 +409,20 @@ Creates a NasJob
 
 ```sql
 INSERT INTO google.aiplatform.nas_jobs (
-data__labels,
-data__encryptionSpec,
-data__enableRestrictedImageTraining,
-data__nasJobSpec,
 data__displayName,
+data__enableRestrictedImageTraining,
+data__encryptionSpec,
+data__labels,
+data__nasJobSpec,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ labels }}',
-'{{ encryptionSpec }}',
-{{ enableRestrictedImageTraining }},
-'{{ nasJobSpec }}',
 '{{ displayName }}',
+{{ enableRestrictedImageTraining }},
+'{{ encryptionSpec }}',
+'{{ labels }}',
+'{{ nasJobSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -455,141 +455,141 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the nas_jobs resource.
-    - name: labels
-      value: "{{ labels }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        The labels with user-defined metadata to organize NasJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        Required. The display name of the NasJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: enableRestrictedImageTraining
+      value: {{ enableRestrictedImageTraining }}
+      description: |
+        Optional. Enable a separation of Custom model training and restricted image training for tenant project.
     - name: encryptionSpec
       description: |
         Customer-managed encryption key options for a NasJob. If this is set, then all resources created by the NasJob will be encrypted with the provided encryption key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
-    - name: enableRestrictedImageTraining
-      value: {{ enableRestrictedImageTraining }}
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Optional. Enable a separation of Custom model training and restricted image training for tenant project.
+        The labels with user-defined metadata to organize NasJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
     - name: nasJobSpec
       description: |
         Required. The specification of a NasJob.
       value:
-        searchSpaceSpec: "{{ searchSpaceSpec }}"
         multiTrialAlgorithmSpec:
-          trainTrialSpec:
-            maxParallelTrialCount: {{ maxParallelTrialCount }}
-            frequency: {{ frequency }}
-            trainTrialJobSpec:
-              pscInterfaceConfig:
-                networkAttachment: "{{ networkAttachment }}"
-                dnsPeeringConfigs: "{{ dnsPeeringConfigs }}"
-              persistentResourceId: "{{ persistentResourceId }}"
-              enableWebAccess: {{ enableWebAccess }}
-              tensorboard: "{{ tensorboard }}"
-              enableDashboardAccess: {{ enableDashboardAccess }}
-              reservedIpRanges:
-                - "{{ reservedIpRanges }}"
-              models:
-                - "{{ models }}"
-              protectedArtifactLocationId: "{{ protectedArtifactLocationId }}"
-              experiment: "{{ experiment }}"
-              baseOutputDirectory:
-                outputUriPrefix: "{{ outputUriPrefix }}"
-              scheduling:
-                timeout: "{{ timeout }}"
-                restartJobOnWorkerRestart: {{ restartJobOnWorkerRestart }}
-                disableRetries: {{ disableRetries }}
-                maxWaitDuration: "{{ maxWaitDuration }}"
-                strategy: "{{ strategy }}"
-              network: "{{ network }}"
-              workerPoolSpecs:
-                - containerSpec:
-                    imageUri: "{{ imageUri }}"
-                    command: "{{ command }}"
-                    args: "{{ args }}"
-                    env: "{{ env }}"
-                  lustreMounts: "{{ lustreMounts }}"
-                  machineSpec:
-                    machineType: "{{ machineType }}"
-                    tpuTopology: "{{ tpuTopology }}"
-                    reservationAffinity: "{{ reservationAffinity }}"
-                    acceleratorCount: {{ acceleratorCount }}
-                    acceleratorType: "{{ acceleratorType }}"
-                    gpuPartitionSize: "{{ gpuPartitionSize }}"
-                  nfsMounts: "{{ nfsMounts }}"
-                  pythonPackageSpec:
-                    executorImageUri: "{{ executorImageUri }}"
-                    args: "{{ args }}"
-                    env: "{{ env }}"
-                    pythonModule: "{{ pythonModule }}"
-                    packageUris: "{{ packageUris }}"
-                  diskSpec:
-                    bootDiskType: "{{ bootDiskType }}"
-                    bootDiskSizeGb: {{ bootDiskSizeGb }}
-                  replicaCount: "{{ replicaCount }}"
-              experimentRun: "{{ experimentRun }}"
-              serviceAccount: "{{ serviceAccount }}"
           metric:
-            metricId: "{{ metricId }}"
             goal: "{{ goal }}"
+            metricId: "{{ metricId }}"
           multiTrialAlgorithm: "{{ multiTrialAlgorithm }}"
           searchTrialSpec:
             maxFailedTrialCount: {{ maxFailedTrialCount }}
+            maxParallelTrialCount: {{ maxParallelTrialCount }}
+            maxTrialCount: {{ maxTrialCount }}
             searchTrialJobSpec:
-              pscInterfaceConfig:
-                networkAttachment: "{{ networkAttachment }}"
-                dnsPeeringConfigs: "{{ dnsPeeringConfigs }}"
-              persistentResourceId: "{{ persistentResourceId }}"
-              enableWebAccess: {{ enableWebAccess }}
-              tensorboard: "{{ tensorboard }}"
-              enableDashboardAccess: {{ enableDashboardAccess }}
-              reservedIpRanges:
-                - "{{ reservedIpRanges }}"
-              models:
-                - "{{ models }}"
-              protectedArtifactLocationId: "{{ protectedArtifactLocationId }}"
-              experiment: "{{ experiment }}"
               baseOutputDirectory:
                 outputUriPrefix: "{{ outputUriPrefix }}"
+              enableDashboardAccess: {{ enableDashboardAccess }}
+              enableWebAccess: {{ enableWebAccess }}
+              experiment: "{{ experiment }}"
+              experimentRun: "{{ experimentRun }}"
+              models:
+                - "{{ models }}"
+              network: "{{ network }}"
+              persistentResourceId: "{{ persistentResourceId }}"
+              protectedArtifactLocationId: "{{ protectedArtifactLocationId }}"
+              pscInterfaceConfig:
+                dnsPeeringConfigs: "{{ dnsPeeringConfigs }}"
+                networkAttachment: "{{ networkAttachment }}"
+              reservedIpRanges:
+                - "{{ reservedIpRanges }}"
               scheduling:
-                timeout: "{{ timeout }}"
-                restartJobOnWorkerRestart: {{ restartJobOnWorkerRestart }}
                 disableRetries: {{ disableRetries }}
                 maxWaitDuration: "{{ maxWaitDuration }}"
+                restartJobOnWorkerRestart: {{ restartJobOnWorkerRestart }}
                 strategy: "{{ strategy }}"
-              network: "{{ network }}"
+                timeout: "{{ timeout }}"
+              serviceAccount: "{{ serviceAccount }}"
+              tensorboard: "{{ tensorboard }}"
               workerPoolSpecs:
                 - containerSpec:
-                    imageUri: "{{ imageUri }}"
-                    command: "{{ command }}"
                     args: "{{ args }}"
+                    command: "{{ command }}"
                     env: "{{ env }}"
+                    imageUri: "{{ imageUri }}"
+                  diskSpec:
+                    bootDiskSizeGb: {{ bootDiskSizeGb }}
+                    bootDiskType: "{{ bootDiskType }}"
                   lustreMounts: "{{ lustreMounts }}"
                   machineSpec:
-                    machineType: "{{ machineType }}"
-                    tpuTopology: "{{ tpuTopology }}"
-                    reservationAffinity: "{{ reservationAffinity }}"
                     acceleratorCount: {{ acceleratorCount }}
                     acceleratorType: "{{ acceleratorType }}"
                     gpuPartitionSize: "{{ gpuPartitionSize }}"
+                    machineType: "{{ machineType }}"
+                    reservationAffinity: "{{ reservationAffinity }}"
+                    tpuTopology: "{{ tpuTopology }}"
                   nfsMounts: "{{ nfsMounts }}"
                   pythonPackageSpec:
-                    executorImageUri: "{{ executorImageUri }}"
                     args: "{{ args }}"
                     env: "{{ env }}"
-                    pythonModule: "{{ pythonModule }}"
+                    executorImageUri: "{{ executorImageUri }}"
                     packageUris: "{{ packageUris }}"
-                  diskSpec:
-                    bootDiskType: "{{ bootDiskType }}"
-                    bootDiskSizeGb: {{ bootDiskSizeGb }}
+                    pythonModule: "{{ pythonModule }}"
                   replicaCount: "{{ replicaCount }}"
-              experimentRun: "{{ experimentRun }}"
-              serviceAccount: "{{ serviceAccount }}"
-            maxTrialCount: {{ maxTrialCount }}
+          trainTrialSpec:
+            frequency: {{ frequency }}
             maxParallelTrialCount: {{ maxParallelTrialCount }}
+            trainTrialJobSpec:
+              baseOutputDirectory:
+                outputUriPrefix: "{{ outputUriPrefix }}"
+              enableDashboardAccess: {{ enableDashboardAccess }}
+              enableWebAccess: {{ enableWebAccess }}
+              experiment: "{{ experiment }}"
+              experimentRun: "{{ experimentRun }}"
+              models:
+                - "{{ models }}"
+              network: "{{ network }}"
+              persistentResourceId: "{{ persistentResourceId }}"
+              protectedArtifactLocationId: "{{ protectedArtifactLocationId }}"
+              pscInterfaceConfig:
+                dnsPeeringConfigs: "{{ dnsPeeringConfigs }}"
+                networkAttachment: "{{ networkAttachment }}"
+              reservedIpRanges:
+                - "{{ reservedIpRanges }}"
+              scheduling:
+                disableRetries: {{ disableRetries }}
+                maxWaitDuration: "{{ maxWaitDuration }}"
+                restartJobOnWorkerRestart: {{ restartJobOnWorkerRestart }}
+                strategy: "{{ strategy }}"
+                timeout: "{{ timeout }}"
+              serviceAccount: "{{ serviceAccount }}"
+              tensorboard: "{{ tensorboard }}"
+              workerPoolSpecs:
+                - containerSpec:
+                    args: "{{ args }}"
+                    command: "{{ command }}"
+                    env: "{{ env }}"
+                    imageUri: "{{ imageUri }}"
+                  diskSpec:
+                    bootDiskSizeGb: {{ bootDiskSizeGb }}
+                    bootDiskType: "{{ bootDiskType }}"
+                  lustreMounts: "{{ lustreMounts }}"
+                  machineSpec:
+                    acceleratorCount: {{ acceleratorCount }}
+                    acceleratorType: "{{ acceleratorType }}"
+                    gpuPartitionSize: "{{ gpuPartitionSize }}"
+                    machineType: "{{ machineType }}"
+                    reservationAffinity: "{{ reservationAffinity }}"
+                    tpuTopology: "{{ tpuTopology }}"
+                  nfsMounts: "{{ nfsMounts }}"
+                  pythonPackageSpec:
+                    args: "{{ args }}"
+                    env: "{{ env }}"
+                    executorImageUri: "{{ executorImageUri }}"
+                    packageUris: "{{ packageUris }}"
+                    pythonModule: "{{ pythonModule }}"
+                  replicaCount: "{{ replicaCount }}"
         resumeNasJobId: "{{ resumeNasJobId }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the NasJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+        searchSpaceSpec: "{{ searchSpaceSpec }}"
 `}</CodeBlock>
 
 </TabItem>

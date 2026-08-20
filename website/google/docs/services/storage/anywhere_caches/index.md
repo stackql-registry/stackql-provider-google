@@ -243,6 +243,13 @@ The following methods are available for this resource:
     <td>Updates the config of an Anywhere Cache instance.</td>
 </tr>
 <tr>
+    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-anywhereCacheId"><code>anywhereCacheId</code></a></td>
+    <td></td>
+    <td>Disables an Anywhere Cache instance.</td>
+</tr>
+<tr>
     <td><a href="#pause"><CopyableCode code="pause" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-anywhereCacheId"><code>anywhereCacheId</code></a></td>
@@ -255,13 +262,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-anywhereCacheId"><code>anywhereCacheId</code></a></td>
     <td></td>
     <td>Resumes a paused or disabled Anywhere Cache instance.</td>
-</tr>
-<tr>
-    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-anywhereCacheId"><code>anywhereCacheId</code></a></td>
-    <td></td>
-    <td>Disables an Anywhere Cache instance.</td>
 </tr>
 </tbody>
 </table>
@@ -380,35 +380,35 @@ Creates an Anywhere Cache instance.
 
 ```sql
 INSERT INTO google.storage.anywhere_caches (
-data__kind,
-data__id,
-data__selfLink,
-data__bucket,
-data__anywhereCacheId,
-data__zone,
-data__state,
-data__createTime,
-data__updateTime,
-data__ttl,
 data__admissionPolicy,
-data__pendingUpdate,
+data__anywhereCacheId,
+data__bucket,
+data__createTime,
+data__id,
 data__ingestOnWrite,
+data__kind,
+data__pendingUpdate,
+data__selfLink,
+data__state,
+data__ttl,
+data__updateTime,
+data__zone,
 bucket
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ selfLink }}',
-'{{ bucket }}',
-'{{ anywhereCacheId }}',
-'{{ zone }}',
-'{{ state }}',
-'{{ createTime }}',
-'{{ updateTime }}',
-'{{ ttl }}',
 '{{ admissionPolicy }}',
-{{ pendingUpdate }},
+'{{ anywhereCacheId }}',
+'{{ bucket }}',
+'{{ createTime }}',
+'{{ id }}',
 {{ ingestOnWrite }},
+'{{ kind }}',
+{{ pendingUpdate }},
+'{{ selfLink }}',
+'{{ state }}',
+'{{ ttl }}',
+'{{ updateTime }}',
+'{{ zone }}',
 '{{ bucket }}'
 RETURNING
 name,
@@ -429,59 +429,59 @@ selfLink
     - name: bucket
       value: "{{ bucket }}"
       description: Required parameter for the anywhere_caches resource.
+    - name: admissionPolicy
+      value: "{{ admissionPolicy }}"
+      description: |
+        The cache-level entry admission policy.
+    - name: anywhereCacheId
+      value: "{{ anywhereCacheId }}"
+      description: |
+        The ID of the Anywhere cache instance.
+    - name: bucket
+      value: "{{ bucket }}"
+      description: |
+        The name of the bucket containing this cache instance.
+    - name: createTime
+      value: "{{ createTime }}"
+      description: |
+        The creation time of the cache instance in RFC 3339 format.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        The ID of the resource, including the project number, bucket name and anywhere cache ID.
+    - name: ingestOnWrite
+      value: {{ ingestOnWrite }}
+      description: |
+        Specifies whether objects are ingested into the cache upon write.
     - name: kind
       value: "{{ kind }}"
       description: |
         The kind of item this is. For Anywhere Cache, this is always storage#anywhereCache.
       default: storage#anywhereCache
-    - name: id
-      value: "{{ id }}"
-      description: |
-        The ID of the resource, including the project number, bucket name and anywhere cache ID.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        The link to this cache instance.
-    - name: bucket
-      value: "{{ bucket }}"
-      description: |
-        The name of the bucket containing this cache instance.
-    - name: anywhereCacheId
-      value: "{{ anywhereCacheId }}"
-      description: |
-        The ID of the Anywhere cache instance.
-    - name: zone
-      value: "{{ zone }}"
-      description: |
-        The zone in which the cache instance is running. For example, us-central1-a.
-    - name: state
-      value: "{{ state }}"
-      description: |
-        The current state of the cache instance.
-    - name: createTime
-      value: "{{ createTime }}"
-      description: |
-        The creation time of the cache instance in RFC 3339 format.
-    - name: updateTime
-      value: "{{ updateTime }}"
-      description: |
-        The modification time of the cache instance metadata in RFC 3339 format.
-    - name: ttl
-      value: "{{ ttl }}"
-      description: |
-        The TTL of all cache entries in whole seconds. e.g., "7200s".
-    - name: admissionPolicy
-      value: "{{ admissionPolicy }}"
-      description: |
-        The cache-level entry admission policy.
     - name: pendingUpdate
       value: {{ pendingUpdate }}
       description: |
         True if the cache instance has an active Update long-running operation.
-    - name: ingestOnWrite
-      value: {{ ingestOnWrite }}
+    - name: selfLink
+      value: "{{ selfLink }}"
       description: |
-        Specifies whether objects are ingested into the cache upon write.
+        The link to this cache instance.
+    - name: state
+      value: "{{ state }}"
+      description: |
+        The current state of the cache instance.
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        The TTL of all cache entries in whole seconds. e.g., "7200s".
+    - name: updateTime
+      value: "{{ updateTime }}"
+      description: |
+        The modification time of the cache instance metadata in RFC 3339 format.
+    - name: zone
+      value: "{{ zone }}"
+      description: |
+        The zone in which the cache instance is running. For example, us-central1-a.
 `}</CodeBlock>
 
 </TabItem>
@@ -503,19 +503,19 @@ Updates the config of an Anywhere Cache instance.
 ```sql
 UPDATE google.storage.anywhere_caches
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__selfLink = '{{ selfLink }}',
-data__bucket = '{{ bucket }}',
-data__anywhereCacheId = '{{ anywhereCacheId }}',
-data__zone = '{{ zone }}',
-data__state = '{{ state }}',
-data__createTime = '{{ createTime }}',
-data__updateTime = '{{ updateTime }}',
-data__ttl = '{{ ttl }}',
 data__admissionPolicy = '{{ admissionPolicy }}',
+data__anywhereCacheId = '{{ anywhereCacheId }}',
+data__bucket = '{{ bucket }}',
+data__createTime = '{{ createTime }}',
+data__id = '{{ id }}',
+data__ingestOnWrite = {{ ingestOnWrite }},
+data__kind = '{{ kind }}',
 data__pendingUpdate = {{ pendingUpdate }},
-data__ingestOnWrite = {{ ingestOnWrite }}
+data__selfLink = '{{ selfLink }}',
+data__state = '{{ state }}',
+data__ttl = '{{ ttl }}',
+data__updateTime = '{{ updateTime }}',
+data__zone = '{{ zone }}'
 WHERE 
 bucket = '{{ bucket }}' --required
 AND anywhereCacheId = '{{ anywhereCacheId }}' --required
@@ -535,13 +535,24 @@ selfLink;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="pause"
+    defaultValue="disable"
     values={[
+        { label: 'disable', value: 'disable' },
         { label: 'pause', value: 'pause' },
-        { label: 'resume', value: 'resume' },
-        { label: 'disable', value: 'disable' }
+        { label: 'resume', value: 'resume' }
     ]}
 >
+<TabItem value="disable">
+
+Disables an Anywhere Cache instance.
+
+```sql
+EXEC google.storage.anywhere_caches.disable 
+@bucket='{{ bucket }}' --required, 
+@anywhereCacheId='{{ anywhereCacheId }}' --required
+;
+```
+</TabItem>
 <TabItem value="pause">
 
 Pauses an Anywhere Cache instance.
@@ -559,17 +570,6 @@ Resumes a paused or disabled Anywhere Cache instance.
 
 ```sql
 EXEC google.storage.anywhere_caches.resume 
-@bucket='{{ bucket }}' --required, 
-@anywhereCacheId='{{ anywhereCacheId }}' --required
-;
-```
-</TabItem>
-<TabItem value="disable">
-
-Disables an Anywhere Cache instance.
-
-```sql
-EXEC google.storage.anywhere_caches.disable 
 @bucket='{{ bucket }}' --required, 
 @anywhereCacheId='{{ anywhereCacheId }}' --required
 ;

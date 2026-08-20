@@ -320,14 +320,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the global PublicDelegatedPrefixes for a project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Lists all PublicDelegatedPrefix resources owned by the specific project<br />across all scopes.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -352,18 +352,18 @@ The following methods are available for this resource:
     <td>Deletes the specified global PublicDelegatedPrefix.</td>
 </tr>
 <tr>
-    <td><a href="#withdraw"><CopyableCode code="withdraw" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-publicDelegatedPrefix"><code>publicDelegatedPrefix</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Withdraws the specified PublicDelegatedPrefix in the given region.</td>
-</tr>
-<tr>
     <td><a href="#announce"><CopyableCode code="announce" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-publicDelegatedPrefix"><code>publicDelegatedPrefix</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Announces the specified PublicDelegatedPrefix in the given region.</td>
+</tr>
+<tr>
+    <td><a href="#withdraw"><CopyableCode code="withdraw" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-publicDelegatedPrefix"><code>publicDelegatedPrefix</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Withdraws the specified PublicDelegatedPrefix in the given region.</td>
 </tr>
 </tbody>
 </table>
@@ -493,11 +493,11 @@ selfLink,
 warning
 FROM google.compute.public_delegated_prefixes
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -527,13 +527,13 @@ selfLink,
 status
 FROM google.compute.public_delegated_prefixes
 WHERE project = '{{ project }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -555,30 +555,30 @@ Creates a global PublicDelegatedPrefix in the specified project using the<br />p
 
 ```sql
 INSERT INTO google.compute.public_delegated_prefixes (
-data__isLiveMigration,
-data__fingerprint,
-data__ipCidrRange,
-data__name,
-data__parentPrefix,
-data__status,
 data__allocatablePrefixLength,
 data__description,
-data__publicDelegatedSubPrefixs,
+data__fingerprint,
+data__ipCidrRange,
+data__isLiveMigration,
 data__mode,
+data__name,
+data__parentPrefix,
+data__publicDelegatedSubPrefixs,
+data__status,
 project,
 requestId
 )
 SELECT 
-{{ isLiveMigration }},
-'{{ fingerprint }}',
-'{{ ipCidrRange }}',
-'{{ name }}',
-'{{ parentPrefix }}',
-'{{ status }}',
 {{ allocatablePrefixLength }},
 '{{ description }}',
-'{{ publicDelegatedSubPrefixs }}',
+'{{ fingerprint }}',
+'{{ ipCidrRange }}',
+{{ isLiveMigration }},
 '{{ mode }}',
+'{{ name }}',
+'{{ parentPrefix }}',
+'{{ publicDelegatedSubPrefixs }}',
+'{{ status }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -620,10 +620,17 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the public_delegated_prefixes resource.
-    - name: isLiveMigration
-      value: {{ isLiveMigration }}
+    - name: allocatablePrefixLength
+      value: {{ allocatablePrefixLength }}
       description: |
-        If true, the prefix will be live migrated.
+        The allocatable prefix length supported by this public delegated prefix.
+        This field is optional and cannot be set for prefixes in DELEGATION mode.
+        It cannot be set for IPv4 prefixes either, and it always defaults to 32.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -639,6 +646,15 @@ zone
       description: |
         The IP address range, in CIDR format, represented by this public
         delegated prefix.
+    - name: isLiveMigration
+      value: {{ isLiveMigration }}
+      description: |
+        If true, the prefix will be live migrated.
+    - name: mode
+      value: "{{ mode }}"
+      description: |
+        The public delegated prefix mode for IPv6 only.
+      valid_values: ['DELEGATION', 'EXTERNAL_IPV6_FORWARDING_RULE_CREATION', 'EXTERNAL_IPV6_SUBNETWORK_CREATION', 'INTERNAL_IPV6_SUBNETWORK_CREATION']
     - name: name
       value: "{{ name }}"
       description: |
@@ -654,6 +670,22 @@ zone
       description: |
         The URL of parent prefix. Either PublicAdvertisedPrefix or
         PublicDelegatedPrefix.
+    - name: publicDelegatedSubPrefixs
+      description: |
+        The list of sub public delegated prefixes that exist for this public
+        delegated prefix.
+      value:
+        - allocatablePrefixLength: {{ allocatablePrefixLength }}
+          delegateeProject: "{{ delegateeProject }}"
+          description: "{{ description }}"
+          enableEnhancedIpv4Allocation: {{ enableEnhancedIpv4Allocation }}
+          ipCidrRange: "{{ ipCidrRange }}"
+          ipv6AccessType: "{{ ipv6AccessType }}"
+          isAddress: {{ isAddress }}
+          mode: "{{ mode }}"
+          name: "{{ name }}"
+          region: "{{ region }}"
+          status: "{{ status }}"
     - name: status
       value: "{{ status }}"
       description: |
@@ -668,38 +700,6 @@ zone
         - \`DELETING\` The public delegated prefix is being deprovsioned.
         - \`ACTIVE\` The public delegated prefix is ready to use.
       valid_values: ['ACTIVE', 'ANNOUNCED', 'ANNOUNCED_TO_GOOGLE', 'ANNOUNCED_TO_INTERNET', 'DELETING', 'INITIALIZING', 'READY_TO_ANNOUNCE']
-    - name: allocatablePrefixLength
-      value: {{ allocatablePrefixLength }}
-      description: |
-        The allocatable prefix length supported by this public delegated prefix.
-        This field is optional and cannot be set for prefixes in DELEGATION mode.
-        It cannot be set for IPv4 prefixes either, and it always defaults to 32.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: publicDelegatedSubPrefixs
-      description: |
-        The list of sub public delegated prefixes that exist for this public
-        delegated prefix.
-      value:
-        - region: "{{ region }}"
-          enableEnhancedIpv4Allocation: {{ enableEnhancedIpv4Allocation }}
-          name: "{{ name }}"
-          isAddress: {{ isAddress }}
-          status: "{{ status }}"
-          allocatablePrefixLength: {{ allocatablePrefixLength }}
-          ipv6AccessType: "{{ ipv6AccessType }}"
-          ipCidrRange: "{{ ipCidrRange }}"
-          mode: "{{ mode }}"
-          delegateeProject: "{{ delegateeProject }}"
-          description: "{{ description }}"
-    - name: mode
-      value: "{{ mode }}"
-      description: |
-        The public delegated prefix mode for IPv6 only.
-      valid_values: ['DELEGATION', 'EXTERNAL_IPV6_FORWARDING_RULE_CREATION', 'EXTERNAL_IPV6_SUBNETWORK_CREATION', 'INTERNAL_IPV6_SUBNETWORK_CREATION']
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -723,16 +723,16 @@ Patches the specified global PublicDelegatedPrefix resource with the data<br />i
 ```sql
 UPDATE google.compute.public_delegated_prefixes
 SET 
-data__isLiveMigration = {{ isLiveMigration }},
-data__fingerprint = '{{ fingerprint }}',
-data__ipCidrRange = '{{ ipCidrRange }}',
-data__name = '{{ name }}',
-data__parentPrefix = '{{ parentPrefix }}',
-data__status = '{{ status }}',
 data__allocatablePrefixLength = {{ allocatablePrefixLength }},
 data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__ipCidrRange = '{{ ipCidrRange }}',
+data__isLiveMigration = {{ isLiveMigration }},
+data__mode = '{{ mode }}',
+data__name = '{{ name }}',
+data__parentPrefix = '{{ parentPrefix }}',
 data__publicDelegatedSubPrefixs = '{{ publicDelegatedSubPrefixs }}',
-data__mode = '{{ mode }}'
+data__status = '{{ status }}'
 WHERE 
 project = '{{ project }}' --required
 AND publicDelegatedPrefix = '{{ publicDelegatedPrefix }}' --required
@@ -796,18 +796,18 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="withdraw"
+    defaultValue="announce"
     values={[
-        { label: 'withdraw', value: 'withdraw' },
-        { label: 'announce', value: 'announce' }
+        { label: 'announce', value: 'announce' },
+        { label: 'withdraw', value: 'withdraw' }
     ]}
 >
-<TabItem value="withdraw">
+<TabItem value="announce">
 
-Withdraws the specified PublicDelegatedPrefix in the given region.
+Announces the specified PublicDelegatedPrefix in the given region.
 
 ```sql
-EXEC google.compute.public_delegated_prefixes.withdraw 
+EXEC google.compute.public_delegated_prefixes.announce 
 @project='{{ project }}' --required, 
 @region='{{ region }}' --required, 
 @publicDelegatedPrefix='{{ publicDelegatedPrefix }}' --required, 
@@ -815,12 +815,12 @@ EXEC google.compute.public_delegated_prefixes.withdraw
 ;
 ```
 </TabItem>
-<TabItem value="announce">
+<TabItem value="withdraw">
 
-Announces the specified PublicDelegatedPrefix in the given region.
+Withdraws the specified PublicDelegatedPrefix in the given region.
 
 ```sql
-EXEC google.compute.public_delegated_prefixes.announce 
+EXEC google.compute.public_delegated_prefixes.withdraw 
 @project='{{ project }}' --required, 
 @region='{{ region }}' --required, 
 @publicDelegatedPrefix='{{ publicDelegatedPrefix }}' --required, 

@@ -63,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Encryption information for a given resource. If this resource is protected with customer managed encryption, the in-use Cloud Key Management Service (Cloud KMS) key version is specified along with its status. (id: EncryptionInfo)</td>
+    <td>Output only. The encryption information for the backup. (id: EncryptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
@@ -132,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Encryption information for a given resource. If this resource is protected with customer managed encryption, the in-use Cloud Key Management Service (Cloud KMS) key version is specified along with its status. (id: EncryptionInfo)</td>
+    <td>Output only. The encryption information for the backup. (id: EncryptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Cloud Bigtable backups. Returns both completed and pending backups.</td>
 </tr>
 <tr>
@@ -361,9 +361,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -385,22 +385,22 @@ Starts creating a new Cloud Bigtable Backup. The returned backup long-running op
 
 ```sql
 INSERT INTO google.bigtableadmin.backups (
-data__sourceTable,
-data__hotToStandardTime,
 data__backupType,
-data__name,
 data__expireTime,
+data__hotToStandardTime,
+data__name,
+data__sourceTable,
 projectsId,
 instancesId,
 clustersId,
 backupId
 )
 SELECT 
-'{{ sourceTable }}',
-'{{ hotToStandardTime }}',
 '{{ backupType }}',
-'{{ name }}',
 '{{ expireTime }}',
+'{{ hotToStandardTime }}',
+'{{ name }}',
+'{{ sourceTable }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ clustersId }}',
@@ -428,27 +428,27 @@ response
     - name: clustersId
       value: "{{ clustersId }}"
       description: Required parameter for the backups resource.
-    - name: sourceTable
-      value: "{{ sourceTable }}"
-      description: |
-        Required. Immutable. Name of the table from which this backup was created. This needs to be in the same instance as the backup. Values are of the form \`projects/{project}/instances/{instance}/tables/{source_table}\`.
-    - name: hotToStandardTime
-      value: "{{ hotToStandardTime }}"
-      description: |
-        The time at which the hot backup will be converted to a standard backup. Once the \`hot_to_standard_time\` has passed, Cloud Bigtable will convert the hot backup to a standard backup. This value must be greater than the backup creation time by: - At least 24 hours This field only applies for hot backups. When creating or updating a standard backup, attempting to set this field will fail the request.
     - name: backupType
       value: "{{ backupType }}"
       description: |
         Indicates the backup type of the backup.
       valid_values: ['BACKUP_TYPE_UNSPECIFIED', 'STANDARD', 'HOT']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        A globally unique identifier for the backup which cannot be changed. Values are of the form \`projects/{project}/instances/{instance}/clusters/{cluster}/ backups/_a-zA-Z0-9*\` The final segment of the name must be between 1 and 50 characters in length. The backup is stored in the cluster identified by the prefix of the backup name of the form \`projects/{project}/instances/{instance}/clusters/{cluster}\`.
     - name: expireTime
       value: "{{ expireTime }}"
       description: |
         Required. The expiration time of the backup. When creating a backup or updating its \`expire_time\`, the value must be greater than the backup creation time by: - At least 6 hours - At most 90 days Once the \`expire_time\` has passed, Cloud Bigtable will delete the backup.
+    - name: hotToStandardTime
+      value: "{{ hotToStandardTime }}"
+      description: |
+        The time at which the hot backup will be converted to a standard backup. Once the \`hot_to_standard_time\` has passed, Cloud Bigtable will convert the hot backup to a standard backup. This value must be greater than the backup creation time by: - At least 24 hours This field only applies for hot backups. When creating or updating a standard backup, attempting to set this field will fail the request.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        A globally unique identifier for the backup which cannot be changed. Values are of the form \`projects/{project}/instances/{instance}/clusters/{cluster}/ backups/_a-zA-Z0-9*\` The final segment of the name must be between 1 and 50 characters in length. The backup is stored in the cluster identified by the prefix of the backup name of the form \`projects/{project}/instances/{instance}/clusters/{cluster}\`.
+    - name: sourceTable
+      value: "{{ sourceTable }}"
+      description: |
+        Required. Immutable. Name of the table from which this backup was created. This needs to be in the same instance as the backup. Values are of the form \`projects/{project}/instances/{instance}/tables/{source_table}\`.
     - name: backupId
       value: "{{ backupId }}"
 `}</CodeBlock>
@@ -472,11 +472,11 @@ Updates a pending or completed Cloud Bigtable Backup.
 ```sql
 UPDATE google.bigtableadmin.backups
 SET 
-data__sourceTable = '{{ sourceTable }}',
-data__hotToStandardTime = '{{ hotToStandardTime }}',
 data__backupType = '{{ backupType }}',
+data__expireTime = '{{ expireTime }}',
+data__hotToStandardTime = '{{ hotToStandardTime }}',
 data__name = '{{ name }}',
-data__expireTime = '{{ expireTime }}'
+data__sourceTable = '{{ sourceTable }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -543,9 +543,9 @@ EXEC google.bigtableadmin.backups.copy
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"sourceBackup": "{{ sourceBackup }}", 
+"backupId": "{{ backupId }}", 
 "expireTime": "{{ expireTime }}", 
-"backupId": "{{ backupId }}"
+"sourceBackup": "{{ sourceBackup }}"
 }'
 ;
 ```

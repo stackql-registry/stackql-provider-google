@@ -200,14 +200,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the HealthSources for a project in the given region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all HealthSource resources (all<br />regional) available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -357,8 +357,8 @@ WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -372,13 +372,13 @@ SELECT
 *
 FROM google.compute.region_health_sources
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -400,10 +400,10 @@ Create a HealthSource in the specified project in the given region<br />using th
 
 ```sql
 INSERT INTO google.compute.region_health_sources (
-data__fingerprint,
-data__name,
-data__healthAggregationPolicy,
 data__description,
+data__fingerprint,
+data__healthAggregationPolicy,
+data__name,
 data__sourceType,
 data__sources,
 project,
@@ -411,10 +411,10 @@ region,
 requestId
 )
 SELECT 
-'{{ fingerprint }}',
-'{{ name }}',
-'{{ healthAggregationPolicy }}',
 '{{ description }}',
+'{{ fingerprint }}',
+'{{ healthAggregationPolicy }}',
+'{{ name }}',
 '{{ sourceType }}',
 '{{ sources }}',
 '{{ project }}',
@@ -462,6 +462,11 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the region_health_sources resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -472,6 +477,12 @@ zone
         will fail with error 412 conditionNotMet. To see the latest
         fingerprint, make a get() request to retrieve the
         HealthSource.
+    - name: healthAggregationPolicy
+      value: "{{ healthAggregationPolicy }}"
+      description: |
+        URL to the HealthAggregationPolicy resource. Must be set. Must
+        be regional and in the same region as the HealthSource. Can be
+        mutated.
     - name: name
       value: "{{ name }}"
       description: |
@@ -482,17 +493,6 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
-    - name: healthAggregationPolicy
-      value: "{{ healthAggregationPolicy }}"
-      description: |
-        URL to the HealthAggregationPolicy resource. Must be set. Must
-        be regional and in the same region as the HealthSource. Can be
-        mutated.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: sourceType
       value: "{{ sourceType }}"
       description: |
@@ -531,10 +531,10 @@ Updates the specified regional HealthSource resource<br />with the data included
 ```sql
 UPDATE google.compute.region_health_sources
 SET 
-data__fingerprint = '{{ fingerprint }}',
-data__name = '{{ name }}',
-data__healthAggregationPolicy = '{{ healthAggregationPolicy }}',
 data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__healthAggregationPolicy = '{{ healthAggregationPolicy }}',
+data__name = '{{ name }}',
 data__sourceType = '{{ sourceType }}',
 data__sources = '{{ sources }}'
 WHERE 

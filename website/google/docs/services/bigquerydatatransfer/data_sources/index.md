@@ -492,14 +492,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_sources_list"><CopyableCode code="projects_locations_data_sources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists supported data sources and returns their settings.</td>
 </tr>
 <tr>
     <td><a href="#projects_data_sources_list"><CopyableCode code="projects_data_sources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists supported data sources and returns their settings.</td>
 </tr>
 <tr>
@@ -510,18 +510,18 @@ The following methods are available for this resource:
     <td>Returns true if valid credentials exist for the given data source and requesting user.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_sources_check_valid_creds"><CopyableCode code="projects_locations_data_sources_check_valid_creds" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
-    <td></td>
-    <td>Returns true if valid credentials exist for the given data source and requesting user.</td>
-</tr>
-<tr>
     <td><a href="#projects_enroll_data_sources"><CopyableCode code="projects_enroll_data_sources" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_sources_check_valid_creds"><CopyableCode code="projects_locations_data_sources_check_valid_creds" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
+    <td></td>
+    <td>Returns true if valid credentials exist for the given data source and requesting user.</td>
 </tr>
 </tbody>
 </table>
@@ -666,8 +666,8 @@ updateDeadlineSeconds
 FROM google.bigquerydatatransfer.data_sources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -697,8 +697,8 @@ transferType,
 updateDeadlineSeconds
 FROM google.bigquerydatatransfer.data_sources
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -711,8 +711,8 @@ AND pageSize = '{{ pageSize }}'
     defaultValue="projects_data_sources_check_valid_creds"
     values={[
         { label: 'projects_data_sources_check_valid_creds', value: 'projects_data_sources_check_valid_creds' },
-        { label: 'projects_locations_data_sources_check_valid_creds', value: 'projects_locations_data_sources_check_valid_creds' },
-        { label: 'projects_enroll_data_sources', value: 'projects_enroll_data_sources' }
+        { label: 'projects_enroll_data_sources', value: 'projects_enroll_data_sources' },
+        { label: 'projects_locations_data_sources_check_valid_creds', value: 'projects_locations_data_sources_check_valid_creds' }
     ]}
 >
 <TabItem value="projects_data_sources_check_valid_creds">
@@ -722,18 +722,6 @@ Returns true if valid credentials exist for the given data source and requesting
 ```sql
 EXEC google.bigquerydatatransfer.data_sources.projects_data_sources_check_valid_creds 
 @projectsId='{{ projectsId }}' --required, 
-@dataSourcesId='{{ dataSourcesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_sources_check_valid_creds">
-
-Returns true if valid credentials exist for the given data source and requesting user.
-
-```sql
-EXEC google.bigquerydatatransfer.data_sources.projects_locations_data_sources_check_valid_creds 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
 @dataSourcesId='{{ dataSourcesId }}' --required
 ;
 ```
@@ -749,6 +737,18 @@ EXEC google.bigquerydatatransfer.data_sources.projects_enroll_data_sources
 '{
 "dataSourceIds": "{{ dataSourceIds }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_sources_check_valid_creds">
+
+Returns true if valid credentials exist for the given data source and requesting user.
+
+```sql
+EXEC google.bigquerydatatransfer.data_sources.projects_locations_data_sources_check_valid_creds 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataSourcesId='{{ dataSourcesId }}' --required
 ;
 ```
 </TabItem>

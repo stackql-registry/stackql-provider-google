@@ -175,21 +175,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Bindings in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-bindingId"><code>bindingId</code></a></td>
+    <td><a href="#parameter-bindingId"><code>bindingId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Binding in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bindingsId"><code>bindingsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Binding.</td>
 </tr>
 <tr>
@@ -316,9 +316,9 @@ FROM google.agentregistry.bindings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -341,27 +341,27 @@ Creates a new Binding in a given project and location.
 ```sql
 INSERT INTO google.agentregistry.bindings (
 data__authProviderBinding,
-data__name,
+data__description,
 data__displayName,
+data__name,
 data__source,
 data__target,
-data__description,
 projectsId,
 locationsId,
-requestId,
-bindingId
+bindingId,
+requestId
 )
 SELECT 
 '{{ authProviderBinding }}',
-'{{ name }}',
+'{{ description }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ source }}',
 '{{ target }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ bindingId }}'
+'{{ bindingId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -386,18 +386,22 @@ response
       description: |
         The binding for AuthProvider.
       value:
+        authProvider: "{{ authProvider }}"
         continueUri: "{{ continueUri }}"
         scopes:
           - "{{ scopes }}"
-        authProvider: "{{ authProvider }}"
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Required. Identifier. The resource name of the Binding. Format: \`projects/{project}/locations/{location}/bindings/{binding}\`.
+        Optional. User-defined description of a Binding. Can have a maximum length of \`2048\` characters.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. User-defined display name for the Binding. Can have a maximum length of \`63\` characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. The resource name of the Binding. Format: \`projects/{project}/locations/{location}/bindings/{binding}\`.
     - name: source
       description: |
         Required. The target Agent of the Binding.
@@ -408,14 +412,10 @@ response
         Required. The target Agent Registry Resource of the Binding.
       value:
         identifier: "{{ identifier }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. User-defined description of a Binding. Can have a maximum length of \`2048\` characters.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: bindingId
       value: "{{ bindingId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -438,17 +438,17 @@ Updates the parameters of a single Binding.
 UPDATE google.agentregistry.bindings
 SET 
 data__authProviderBinding = '{{ authProviderBinding }}',
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__source = '{{ source }}',
-data__target = '{{ target }}',
-data__description = '{{ description }}'
+data__target = '{{ target }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bindingsId = '{{ bindingsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

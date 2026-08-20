@@ -173,9 +173,9 @@ Updates the policy for a key.
 ```sql
 UPDATE google.recaptchaenterprise.keys_policy
 SET 
+data__challengeRuleGroups = '{{ challengeRuleGroups }}',
 data__clientSettings = '{{ clientSettings }}',
-data__name = '{{ name }}',
-data__challengeRuleGroups = '{{ challengeRuleGroups }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND keysId = '{{ keysId }}' --required

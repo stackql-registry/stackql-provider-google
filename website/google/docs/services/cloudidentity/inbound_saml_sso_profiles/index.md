@@ -310,16 +310,16 @@ response
       description: |
         SAML identity provider configuration.
       value:
-        logoutRedirectUri: "{{ logoutRedirectUri }}"
-        entityId: "{{ entityId }}"
-        singleSignOnServiceUri: "{{ singleSignOnServiceUri }}"
         changePasswordUri: "{{ changePasswordUri }}"
+        entityId: "{{ entityId }}"
+        logoutRedirectUri: "{{ logoutRedirectUri }}"
+        singleSignOnServiceUri: "{{ singleSignOnServiceUri }}"
     - name: spConfig
       description: |
         SAML service provider configuration for this SAML SSO profile. These are the service provider details provided by Google that should be configured on the corresponding identity provider.
       value:
-        entityId: "{{ entityId }}"
         assertionConsumerServiceUri: "{{ assertionConsumerServiceUri }}"
+        entityId: "{{ entityId }}"
 `}</CodeBlock>
 
 </TabItem>

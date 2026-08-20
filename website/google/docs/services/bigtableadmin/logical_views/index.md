@@ -280,19 +280,19 @@ Creates a logical view within an instance.
 
 ```sql
 INSERT INTO google.bigtableadmin.logical_views (
-data__query,
-data__name,
 data__deletionProtection,
 data__etag,
+data__name,
+data__query,
 projectsId,
 instancesId,
 logicalViewId
 )
 SELECT 
-'{{ query }}',
-'{{ name }}',
 {{ deletionProtection }},
 '{{ etag }}',
+'{{ name }}',
+'{{ query }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ logicalViewId }}'
@@ -316,14 +316,6 @@ response
     - name: instancesId
       value: "{{ instancesId }}"
       description: Required parameter for the logical_views resource.
-    - name: query
-      value: "{{ query }}"
-      description: |
-        Required. The logical view's select query.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The unique name of the logical view. Format: \`projects/{project}/instances/{instance}/logicalViews/{logical_view}\`
     - name: deletionProtection
       value: {{ deletionProtection }}
       description: |
@@ -332,6 +324,14 @@ response
       value: "{{ etag }}"
       description: |
         Optional. The etag for this logical view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The unique name of the logical view. Format: \`projects/{project}/instances/{instance}/logicalViews/{logical_view}\`
+    - name: query
+      value: "{{ query }}"
+      description: |
+        Required. The logical view's select query.
     - name: logicalViewId
       value: "{{ logicalViewId }}"
 `}</CodeBlock>
@@ -355,10 +355,10 @@ Updates a logical view within an instance.
 ```sql
 UPDATE google.bigtableadmin.logical_views
 SET 
-data__query = '{{ query }}',
-data__name = '{{ name }}',
 data__deletionProtection = {{ deletionProtection }},
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
+data__query = '{{ query }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

@@ -123,10 +123,10 @@ We recommend that you use the ProductService.AddLocalInventories method instead 
 
 ```sql
 INSERT INTO google.retail.products_fulfillment_places (
-data__type,
-data__placeIds,
 data__addTime,
 data__allowMissing,
+data__placeIds,
+data__type,
 projectsId,
 locationsId,
 catalogsId,
@@ -134,10 +134,10 @@ branchesId,
 productsId
 )
 SELECT 
-'{{ type }}',
-'{{ placeIds }}',
 '{{ addTime }}',
 {{ allowMissing }},
+'{{ placeIds }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -172,15 +172,6 @@ response
     - name: productsId
       value: "{{ productsId }}"
       description: Required parameter for the products_fulfillment_places resource.
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Required. The fulfillment type, including commonly used types (such as pickup in store and same day delivery), and custom types. Supported values: * "pickup-in-store" * "ship-to-store" * "same-day-delivery" * "next-day-delivery" * "custom-type-1" * "custom-type-2" * "custom-type-3" * "custom-type-4" * "custom-type-5" If this field is set to an invalid value other than these, an INVALID_ARGUMENT error is returned. This field directly corresponds to Product.fulfillment_info.type.
-    - name: placeIds
-      value:
-        - "{{ placeIds }}"
-      description: |
-        Required. The IDs for this type, such as the store IDs for "pickup-in-store" or the region IDs for "same-day-delivery" to be added for this type. Duplicate IDs will be automatically ignored. At least 1 value is required, and a maximum of 2000 values are allowed. Each value must be a string with a length limit of 10 characters, matching the pattern \`[a-zA-Z0-9_-]+\`, such as "store1" or "REGION-2". Otherwise, an INVALID_ARGUMENT error is returned. If the total number of place IDs exceeds 2000 for this type after adding, then the update will be rejected.
     - name: addTime
       value: "{{ addTime }}"
       description: |
@@ -189,6 +180,15 @@ response
       value: {{ allowMissing }}
       description: |
         If set to true, and the Product is not found, the fulfillment information will still be processed and retained for at most 1 day and processed once the Product is created. If set to false, a NOT_FOUND error is returned if the Product is not found.
+    - name: placeIds
+      value:
+        - "{{ placeIds }}"
+      description: |
+        Required. The IDs for this type, such as the store IDs for "pickup-in-store" or the region IDs for "same-day-delivery" to be added for this type. Duplicate IDs will be automatically ignored. At least 1 value is required, and a maximum of 2000 values are allowed. Each value must be a string with a length limit of 10 characters, matching the pattern \`[a-zA-Z0-9_-]+\`, such as "store1" or "REGION-2". Otherwise, an INVALID_ARGUMENT error is returned. If the total number of place IDs exceeds 2000 for this type after adding, then the update will be rejected.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The fulfillment type, including commonly used types (such as pickup in store and same day delivery), and custom types. Supported values: * "pickup-in-store" * "ship-to-store" * "same-day-delivery" * "next-day-delivery" * "custom-type-1" * "custom-type-2" * "custom-type-3" * "custom-type-4" * "custom-type-5" If this field is set to an invalid value other than these, an INVALID_ARGUMENT error is returned. This field directly corresponds to Product.fulfillment_info.type.
 `}</CodeBlock>
 
 </TabItem>

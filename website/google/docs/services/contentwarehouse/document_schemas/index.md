@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists document schemas.</td>
 </tr>
 <tr>
@@ -278,8 +278,8 @@ updateTime
 FROM google.contentwarehouse.document_schemas
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -301,20 +301,20 @@ Creates a document schema.
 
 ```sql
 INSERT INTO google.contentwarehouse.document_schemas (
-data__name,
 data__description,
 data__displayName,
-data__propertyDefinitions,
 data__documentIsFolder,
+data__name,
+data__propertyDefinitions,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
 '{{ displayName }}',
-'{{ propertyDefinitions }}',
 {{ documentIsFolder }},
+'{{ name }}',
+'{{ propertyDefinitions }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -339,10 +339,6 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the document_schemas resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The resource name of the document schema. Format: projects/{project_number}/locations/{location}/documentSchemas/{document_schema_id}. The name is ignored when creating a document schema.
     - name: description
       value: "{{ description }}"
       description: |
@@ -351,76 +347,80 @@ updateTime
       value: "{{ displayName }}"
       description: |
         Required. Name of the schema given by the user. Must be unique per project.
-    - name: propertyDefinitions
-      description: |
-        Document details.
-      value:
-        - isMetadata: {{ isMetadata }}
-          isRepeatable: {{ isRepeatable }}
-          textTypeOptions: "{{ textTypeOptions }}"
-          schemaSources: "{{ schemaSources }}"
-          isSearchable: {{ isSearchable }}
-          displayName: "{{ displayName }}"
-          propertyTypeOptions:
-            propertyDefinitions:
-              - isMetadata: {{ isMetadata }}
-                isRepeatable: {{ isRepeatable }}
-                textTypeOptions: "{{ textTypeOptions }}"
-                schemaSources: "{{ schemaSources }}"
-                isSearchable: {{ isSearchable }}
-                displayName: "{{ displayName }}"
-                propertyTypeOptions:
-                  propertyDefinitions:
-                    - isMetadata: {{ isMetadata }}
-                      isRepeatable: {{ isRepeatable }}
-                      textTypeOptions: "{{ textTypeOptions }}"
-                      schemaSources: "{{ schemaSources }}"
-                      isSearchable: {{ isSearchable }}
-                      displayName: "{{ displayName }}"
-                      propertyTypeOptions:
-                        propertyDefinitions: "{{ propertyDefinitions }}"
-                      name: "{{ name }}"
-                      floatTypeOptions: "{{ floatTypeOptions }}"
-                      enumTypeOptions:
-                        validationCheckDisabled: {{ validationCheckDisabled }}
-                        possibleValues: "{{ possibleValues }}"
-                      isFilterable: {{ isFilterable }}
-                      mapTypeOptions: "{{ mapTypeOptions }}"
-                      integerTypeOptions: "{{ integerTypeOptions }}"
-                      timestampTypeOptions: "{{ timestampTypeOptions }}"
-                      dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
-                      isRequired: {{ isRequired }}
-                      retrievalImportance: "{{ retrievalImportance }}"
-                name: "{{ name }}"
-                floatTypeOptions: "{{ floatTypeOptions }}"
-                enumTypeOptions:
-                  validationCheckDisabled: {{ validationCheckDisabled }}
-                  possibleValues:
-                    - "{{ possibleValues }}"
-                isFilterable: {{ isFilterable }}
-                mapTypeOptions: "{{ mapTypeOptions }}"
-                integerTypeOptions: "{{ integerTypeOptions }}"
-                timestampTypeOptions: "{{ timestampTypeOptions }}"
-                dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
-                isRequired: {{ isRequired }}
-                retrievalImportance: "{{ retrievalImportance }}"
-          name: "{{ name }}"
-          floatTypeOptions: "{{ floatTypeOptions }}"
-          enumTypeOptions:
-            validationCheckDisabled: {{ validationCheckDisabled }}
-            possibleValues:
-              - "{{ possibleValues }}"
-          isFilterable: {{ isFilterable }}
-          mapTypeOptions: "{{ mapTypeOptions }}"
-          integerTypeOptions: "{{ integerTypeOptions }}"
-          timestampTypeOptions: "{{ timestampTypeOptions }}"
-          dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
-          isRequired: {{ isRequired }}
-          retrievalImportance: "{{ retrievalImportance }}"
     - name: documentIsFolder
       value: {{ documentIsFolder }}
       description: |
         Document Type, true refers the document is a folder, otherwise it is a typical document.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the document schema. Format: projects/{project_number}/locations/{location}/documentSchemas/{document_schema_id}. The name is ignored when creating a document schema.
+    - name: propertyDefinitions
+      description: |
+        Document details.
+      value:
+        - dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
+          displayName: "{{ displayName }}"
+          enumTypeOptions:
+            possibleValues:
+              - "{{ possibleValues }}"
+            validationCheckDisabled: {{ validationCheckDisabled }}
+          floatTypeOptions: "{{ floatTypeOptions }}"
+          integerTypeOptions: "{{ integerTypeOptions }}"
+          isFilterable: {{ isFilterable }}
+          isMetadata: {{ isMetadata }}
+          isRepeatable: {{ isRepeatable }}
+          isRequired: {{ isRequired }}
+          isSearchable: {{ isSearchable }}
+          mapTypeOptions: "{{ mapTypeOptions }}"
+          name: "{{ name }}"
+          propertyTypeOptions:
+            propertyDefinitions:
+              - dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
+                displayName: "{{ displayName }}"
+                enumTypeOptions:
+                  possibleValues:
+                    - "{{ possibleValues }}"
+                  validationCheckDisabled: {{ validationCheckDisabled }}
+                floatTypeOptions: "{{ floatTypeOptions }}"
+                integerTypeOptions: "{{ integerTypeOptions }}"
+                isFilterable: {{ isFilterable }}
+                isMetadata: {{ isMetadata }}
+                isRepeatable: {{ isRepeatable }}
+                isRequired: {{ isRequired }}
+                isSearchable: {{ isSearchable }}
+                mapTypeOptions: "{{ mapTypeOptions }}"
+                name: "{{ name }}"
+                propertyTypeOptions:
+                  propertyDefinitions:
+                    - dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
+                      displayName: "{{ displayName }}"
+                      enumTypeOptions:
+                        possibleValues: "{{ possibleValues }}"
+                        validationCheckDisabled: {{ validationCheckDisabled }}
+                      floatTypeOptions: "{{ floatTypeOptions }}"
+                      integerTypeOptions: "{{ integerTypeOptions }}"
+                      isFilterable: {{ isFilterable }}
+                      isMetadata: {{ isMetadata }}
+                      isRepeatable: {{ isRepeatable }}
+                      isRequired: {{ isRequired }}
+                      isSearchable: {{ isSearchable }}
+                      mapTypeOptions: "{{ mapTypeOptions }}"
+                      name: "{{ name }}"
+                      propertyTypeOptions:
+                        propertyDefinitions: "{{ propertyDefinitions }}"
+                      retrievalImportance: "{{ retrievalImportance }}"
+                      schemaSources: "{{ schemaSources }}"
+                      textTypeOptions: "{{ textTypeOptions }}"
+                      timestampTypeOptions: "{{ timestampTypeOptions }}"
+                retrievalImportance: "{{ retrievalImportance }}"
+                schemaSources: "{{ schemaSources }}"
+                textTypeOptions: "{{ textTypeOptions }}"
+                timestampTypeOptions: "{{ timestampTypeOptions }}"
+          retrievalImportance: "{{ retrievalImportance }}"
+          schemaSources: "{{ schemaSources }}"
+          textTypeOptions: "{{ textTypeOptions }}"
+          timestampTypeOptions: "{{ timestampTypeOptions }}"
 `}</CodeBlock>
 
 </TabItem>

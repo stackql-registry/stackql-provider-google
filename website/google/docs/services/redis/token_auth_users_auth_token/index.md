@@ -151,12 +151,12 @@ response
       description: Required parameter for the token_auth_users_auth_token resource.
     - name: authToken
       description: |
-        Auth token for the cluster.
+        Required. The auth token to add.
       value:
-        state: "{{ state }}"
-        name: "{{ name }}"
-        token: "{{ token }}"
         createTime: "{{ createTime }}"
+        name: "{{ name }}"
+        state: "{{ state }}"
+        token: "{{ token }}"
 `}</CodeBlock>
 
 </TabItem>

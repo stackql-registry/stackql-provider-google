@@ -118,14 +118,14 @@ The following methods are available for this resource:
     <td><a href="#nodes_nodes_nodes_list"><CopyableCode code="nodes_nodes_nodes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-nodesId1"><code>nodesId1</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
     <td><a href="#nodes_nodes_list"><CopyableCode code="nodes_nodes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
@@ -252,9 +252,9 @@ sasUserIds
 FROM google.prod_tt_sasportal.nodes
 WHERE nodesId = '{{ nodesId }}' -- required
 AND nodesId1 = '{{ nodesId1 }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -269,9 +269,9 @@ displayName,
 sasUserIds
 FROM google.prod_tt_sasportal.nodes
 WHERE nodesId = '{{ nodesId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -294,15 +294,15 @@ Creates a new node.
 
 ```sql
 INSERT INTO google.prod_tt_sasportal.nodes (
-data__name,
 data__displayName,
+data__name,
 data__sasUserIds,
 nodesId,
 nodesId1
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ sasUserIds }}',
 '{{ nodesId }}',
 '{{ nodesId1 }}'
@@ -319,14 +319,14 @@ Creates a new node.
 
 ```sql
 INSERT INTO google.prod_tt_sasportal.nodes (
-data__name,
 data__displayName,
+data__name,
 data__sasUserIds,
 nodesId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ sasUserIds }}',
 '{{ nodesId }}'
 RETURNING
@@ -347,14 +347,14 @@ sasUserIds
     - name: nodesId1
       value: "{{ nodesId1 }}"
       description: Required parameter for the nodes resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Output only. Resource name.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The node's display name.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Output only. Resource name.
     - name: sasUserIds
       value:
         - "{{ sasUserIds }}"
@@ -382,8 +382,8 @@ Updates an existing node.
 ```sql
 UPDATE google.prod_tt_sasportal.nodes
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__sasUserIds = '{{ sasUserIds }}'
 WHERE 
 customersId = '{{ customersId }}' --required
@@ -402,8 +402,8 @@ Updates an existing node.
 ```sql
 UPDATE google.prod_tt_sasportal.nodes
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__sasUserIds = '{{ sasUserIds }}'
 WHERE 
 nodesId = '{{ nodesId }}' --required

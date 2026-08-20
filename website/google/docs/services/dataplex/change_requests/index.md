@@ -156,6 +156,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The full resource name of the target resource to be modified. Example: //dataplex.googleapis.com/projects/my-project/locations/us-central1/entryGroups/my-group/entries/my-entry</td>
 </tr>
 <tr>
+    <td><CopyableCode code="reviewerComment" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The comment provided by the reviewer when approving or rejecting the ChangeRequest. Maximum length is 1024 characters.</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. The current state of the ChangeRequest. (STATE_UNSPECIFIED, NEW, APPROVED, REJECTED, EXPIRED, REVOKED)</td>
@@ -310,6 +315,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The full resource name of the target resource to be modified. Example: //dataplex.googleapis.com/projects/my-project/locations/us-central1/entryGroups/my-group/entries/my-entry</td>
 </tr>
 <tr>
+    <td><CopyableCode code="reviewerComment" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The comment provided by the reviewer when approving or rejecting the ChangeRequest. Maximum length is 1024 characters.</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. The current state of the ChangeRequest. (STATE_UNSPECIFIED, NEW, APPROVED, REJECTED, EXPIRED, REVOKED)</td>
@@ -375,7 +385,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_change_requests_list"><CopyableCode code="projects_locations_change_requests_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ChangeRequests.</td>
 </tr>
 <tr>
@@ -393,18 +403,18 @@ The following methods are available for this resource:
     <td>Deletes a ChangeRequest.Behavior depends on the caller's permissions and the resource's state: 1. Callers with dataplex.changeRequests.delete can only delete ChangeRequests in the NEW state. 2. Callers with the dataplex.changeRequests.adminDelete permission can delete ChangeRequests regardless of their state.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_change_requests_reject"><CopyableCode code="projects_locations_change_requests_reject" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-changeRequestsId"><code>changeRequestsId</code></a></td>
-    <td></td>
-    <td>Rejects a ChangeRequest.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_change_requests_approve"><CopyableCode code="projects_locations_change_requests_approve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-changeRequestsId"><code>changeRequestsId</code></a></td>
     <td></td>
     <td>Approves a ChangeRequest.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_change_requests_reject"><CopyableCode code="projects_locations_change_requests_reject" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-changeRequestsId"><code>changeRequestsId</code></a></td>
+    <td></td>
+    <td>Rejects a ChangeRequest.</td>
 </tr>
 </tbody>
 </table>
@@ -506,6 +516,7 @@ justification,
 labels,
 rejectionComment,
 resource,
+reviewerComment,
 state,
 uid,
 updateEntry,
@@ -547,6 +558,7 @@ justification,
 labels,
 rejectionComment,
 resource,
+reviewerComment,
 state,
 uid,
 updateEntry,
@@ -557,10 +569,10 @@ updateTime
 FROM google.dataplex.change_requests
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -582,25 +594,25 @@ Updates a ChangeRequest. Only allowed when the state is NEW.
 ```sql
 UPDATE google.dataplex.change_requests
 SET 
+data__createEntry = '{{ createEntry }}',
+data__createEntryLink = '{{ createEntryLink }}',
 data__createGlossary = '{{ createGlossary }}',
-data__updateEntry = '{{ updateEntry }}',
-data__updateGlossary = '{{ updateGlossary }}',
-data__deleteGlossary = '{{ deleteGlossary }}',
+data__createGlossaryCategory = '{{ createGlossaryCategory }}',
 data__createGlossaryTerm = '{{ createGlossaryTerm }}',
 data__dataProductAccessRequest = '{{ dataProductAccessRequest }}',
-data__createGlossaryCategory = '{{ createGlossaryCategory }}',
-data__justification = '{{ justification }}',
-data__createEntry = '{{ createEntry }}',
+data__deleteEntry = '{{ deleteEntry }}',
 data__deleteEntryLink = '{{ deleteEntryLink }}',
-data__etag = '{{ etag }}',
-data__createEntryLink = '{{ createEntryLink }}',
+data__deleteGlossary = '{{ deleteGlossary }}',
 data__deleteGlossaryCategory = '{{ deleteGlossaryCategory }}',
+data__deleteGlossaryTerm = '{{ deleteGlossaryTerm }}',
+data__etag = '{{ etag }}',
+data__justification = '{{ justification }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
+data__updateEntry = '{{ updateEntry }}',
+data__updateGlossary = '{{ updateGlossary }}',
 data__updateGlossaryCategory = '{{ updateGlossaryCategory }}',
-data__updateGlossaryTerm = '{{ updateGlossaryTerm }}',
-data__deleteGlossaryTerm = '{{ deleteGlossaryTerm }}',
-data__deleteEntry = '{{ deleteEntry }}'
+data__updateGlossaryTerm = '{{ updateGlossaryTerm }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -628,6 +640,7 @@ justification,
 labels,
 rejectionComment,
 resource,
+reviewerComment,
 state,
 uid,
 updateEntry,
@@ -667,12 +680,29 @@ AND etag = '{{ etag }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_change_requests_reject"
+    defaultValue="projects_locations_change_requests_approve"
     values={[
-        { label: 'projects_locations_change_requests_reject', value: 'projects_locations_change_requests_reject' },
-        { label: 'projects_locations_change_requests_approve', value: 'projects_locations_change_requests_approve' }
+        { label: 'projects_locations_change_requests_approve', value: 'projects_locations_change_requests_approve' },
+        { label: 'projects_locations_change_requests_reject', value: 'projects_locations_change_requests_reject' }
     ]}
 >
+<TabItem value="projects_locations_change_requests_approve">
+
+Approves a ChangeRequest.
+
+```sql
+EXEC google.dataplex.change_requests.projects_locations_change_requests_approve 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@changeRequestsId='{{ changeRequestsId }}' --required 
+@@json=
+'{
+"comment": "{{ comment }}", 
+"etag": "{{ etag }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_change_requests_reject">
 
 Rejects a ChangeRequest.
@@ -685,22 +715,6 @@ EXEC google.dataplex.change_requests.projects_locations_change_requests_reject
 @@json=
 '{
 "comment": "{{ comment }}", 
-"etag": "{{ etag }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_change_requests_approve">
-
-Approves a ChangeRequest.
-
-```sql
-EXEC google.dataplex.change_requests.projects_locations_change_requests_approve 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@changeRequestsId='{{ changeRequestsId }}' --required 
-@@json=
-'{
 "etag": "{{ etag }}"
 }'
 ;

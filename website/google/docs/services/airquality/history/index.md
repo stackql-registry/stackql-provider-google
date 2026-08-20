@@ -92,17 +92,17 @@ Returns air quality history for a specific location for a given time range.
 EXEC google.airquality.history.lookup 
 @@json=
 '{
+"customLocalAqis": "{{ customLocalAqis }}", 
+"dateTime": "{{ dateTime }}", 
 "extraComputations": "{{ extraComputations }}", 
 "hours": {{ hours }}, 
+"languageCode": "{{ languageCode }}", 
+"location": "{{ location }}", 
 "pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
-"location": "{{ location }}", 
-"languageCode": "{{ languageCode }}", 
-"dateTime": "{{ dateTime }}", 
+"period": "{{ period }}", 
 "uaqiColorPalette": "{{ uaqiColorPalette }}", 
-"universalAqi": {{ universalAqi }}, 
-"customLocalAqis": "{{ customLocalAqis }}", 
-"period": "{{ period }}"
+"universalAqi": {{ universalAqi }}
 }'
 ;
 ```

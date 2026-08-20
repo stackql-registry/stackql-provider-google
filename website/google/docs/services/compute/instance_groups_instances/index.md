@@ -62,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource type. (default: compute#regionInstanceGroupsListInstances)</td>
+    <td>Output only. [Output Only] The resource type, which is alwayscompute#instanceGroupsListInstances for the list of instances in the specified instance group. (default: compute#instanceGroupsListInstances)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
@@ -102,9 +102,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list_instances"><CopyableCode code="list_instances" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists the instances in the specified instance group and displays<br />information about the named ports. Depending on the specified options, this<br />method can list all instances or only the instances that are running.<br />The orderBy query parameter is not supported.</td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroup"><code>instanceGroup</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists the instances in the specified instance group.<br />The orderBy query parameter is not supported.<br />The filter query parameter is supported, but only for<br />expressions that use `eq` (equal) or `ne` (not equal) operators.</td>
 </tr>
 <tr>
     <td><a href="#add_instances"><CopyableCode code="add_instances" /></a></td>
@@ -143,11 +143,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -199,7 +194,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list_instances">
 
-Lists the instances in the specified instance group and displays<br />information about the named ports. Depending on the specified options, this<br />method can list all instances or only the instances that are running.<br />The orderBy query parameter is not supported.
+Lists the instances in the specified instance group.<br />The orderBy query parameter is not supported.<br />The filter query parameter is supported, but only for<br />expressions that use `eq` (equal) or `ne` (not equal) operators.
 
 ```sql
 SELECT
@@ -211,13 +206,13 @@ selfLink,
 warning
 FROM google.compute.instance_groups_instances
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
+AND zone = '{{ zone }}' -- required
 AND instanceGroup = '{{ instanceGroup }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

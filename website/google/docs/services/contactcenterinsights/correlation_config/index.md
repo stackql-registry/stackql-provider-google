@@ -179,8 +179,8 @@ Updates correlation config.
 ```sql
 UPDATE google.contactcenterinsights.correlation_config
 SET 
-data__name = '{{ name }}',
-data__fullConversationConfig = '{{ fullConversationConfig }}'
+data__fullConversationConfig = '{{ fullConversationConfig }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

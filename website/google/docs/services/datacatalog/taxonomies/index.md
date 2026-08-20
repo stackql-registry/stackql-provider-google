@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_taxonomies_list"><CopyableCode code="projects_locations_taxonomies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all taxonomies in a project in a particular location that you have a permission to view.</td>
 </tr>
 <tr>
@@ -197,18 +197,18 @@ The following methods are available for this resource:
     <td>Deletes a taxonomy, including all policy tags in this taxonomy, their associated policies, and the policy tags references from BigQuery columns.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_taxonomies_export"><CopyableCode code="projects_locations_taxonomies_export" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-serializedTaxonomies"><code>serializedTaxonomies</code></a>, <a href="#parameter-taxonomies"><code>taxonomies</code></a></td>
+    <td>Exports taxonomies in the requested type and returns them, including their policy tags. The requested taxonomies must belong to the same project. This method generates `SerializedTaxonomy` protocol buffers with nested policy tags that can be used as input for `ImportTaxonomies` calls.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_taxonomies_import"><CopyableCode code="projects_locations_taxonomies_import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Creates new taxonomies (including their policy tags) in a given project by importing from inlined or cross-regional sources. For a cross-regional source, new taxonomies are created by copying from a source in another region. For an inlined source, taxonomies and policy tags are created in bulk using nested protocol buffer structures.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_taxonomies_export"><CopyableCode code="projects_locations_taxonomies_export" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-taxonomies"><code>taxonomies</code></a>, <a href="#parameter-serializedTaxonomies"><code>serializedTaxonomies</code></a></td>
-    <td>Exports taxonomies in the requested type and returns them, including their policy tags. The requested taxonomies must belong to the same project. This method generates `SerializedTaxonomy` protocol buffers with nested policy tags that can be used as input for `ImportTaxonomies` calls.</td>
 </tr>
 </tbody>
 </table>
@@ -319,9 +319,9 @@ taxonomyTimestamps
 FROM google.datacatalog.taxonomies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -343,18 +343,18 @@ Creates a taxonomy in a specified project. The taxonomy is initially empty, that
 
 ```sql
 INSERT INTO google.datacatalog.taxonomies (
-data__name,
-data__displayName,
-data__description,
 data__activatedPolicyTypes,
+data__description,
+data__displayName,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ activatedPolicyTypes }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -379,23 +379,23 @@ taxonomyTimestamps
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the taxonomies resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. User-defined name of this taxonomy. The name can't start or end with spaces, must contain only Unicode letters, numbers, underscores, dashes, and spaces, and be at most 200 bytes long when encoded in UTF-8. The taxonomy display name must be unique within an organization.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of this taxonomy. If not set, defaults to empty. The description must contain only Unicode characters, tabs, newlines, carriage returns, and page breaks, and be at most 2000 bytes long when encoded in UTF-8.
     - name: activatedPolicyTypes
       value:
         - "{{ activatedPolicyTypes }}"
       description: |
         Optional. A list of policy types that are activated for this taxonomy. If not set, defaults to an empty list.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of this taxonomy. If not set, defaults to empty. The description must contain only Unicode characters, tabs, newlines, carriage returns, and page breaks, and be at most 2000 bytes long when encoded in UTF-8.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. User-defined name of this taxonomy. The name can't start or end with spaces, must contain only Unicode letters, numbers, underscores, dashes, and spaces, and be at most 200 bytes long when encoded in UTF-8. The taxonomy display name must be unique within an organization.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.
 `}</CodeBlock>
 
 </TabItem>
@@ -417,10 +417,10 @@ Updates a taxonomy, including its display name, description, and activated polic
 ```sql
 UPDATE google.datacatalog.taxonomies
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
+data__activatedPolicyTypes = '{{ activatedPolicyTypes }}',
 data__description = '{{ description }}',
-data__activatedPolicyTypes = '{{ activatedPolicyTypes }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -498,12 +498,25 @@ AND taxonomiesId = '{{ taxonomiesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_taxonomies_import"
+    defaultValue="projects_locations_taxonomies_export"
     values={[
-        { label: 'projects_locations_taxonomies_import', value: 'projects_locations_taxonomies_import' },
-        { label: 'projects_locations_taxonomies_export', value: 'projects_locations_taxonomies_export' }
+        { label: 'projects_locations_taxonomies_export', value: 'projects_locations_taxonomies_export' },
+        { label: 'projects_locations_taxonomies_import', value: 'projects_locations_taxonomies_import' }
     ]}
 >
+<TabItem value="projects_locations_taxonomies_export">
+
+Exports taxonomies in the requested type and returns them, including their policy tags. The requested taxonomies must belong to the same project. This method generates `SerializedTaxonomy` protocol buffers with nested policy tags that can be used as input for `ImportTaxonomies` calls.
+
+```sql
+EXEC google.datacatalog.taxonomies.projects_locations_taxonomies_export 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@serializedTaxonomies={{ serializedTaxonomies }}, 
+@taxonomies='{{ taxonomies }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_taxonomies_import">
 
 Creates new taxonomies (including their policy tags) in a given project by importing from inlined or cross-regional sources. For a cross-regional source, new taxonomies are created by copying from a source in another region. For an inlined source, taxonomies and policy tags are created in bulk using nested protocol buffer structures.
@@ -514,22 +527,9 @@ EXEC google.datacatalog.taxonomies.projects_locations_taxonomies_import
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"inlineSource": "{{ inlineSource }}", 
-"crossRegionalSource": "{{ crossRegionalSource }}"
+"crossRegionalSource": "{{ crossRegionalSource }}", 
+"inlineSource": "{{ inlineSource }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_taxonomies_export">
-
-Exports taxonomies in the requested type and returns them, including their policy tags. The requested taxonomies must belong to the same project. This method generates `SerializedTaxonomy` protocol buffers with nested policy tags that can be used as input for `ImportTaxonomies` calls.
-
-```sql
-EXEC google.datacatalog.taxonomies.projects_locations_taxonomies_export 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@taxonomies='{{ taxonomies }}', 
-@serializedTaxonomies={{ serializedTaxonomies }}
 ;
 ```
 </TabItem>

@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' },
-        { label: 'aggregated_list', value: 'aggregated_list' }
+        { label: 'aggregated_list', value: 'aggregated_list' },
+        { label: 'list', value: 'list' }
     ]}
 >
 <TabItem value="get">
@@ -119,6 +119,20 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="aggregated_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="list">
 
 <table>
@@ -173,20 +187,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="aggregated_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</TabItem>
 </Tabs>
 
 ## Methods
@@ -212,18 +212,18 @@ The following methods are available for this resource:
     <td>Gets details of a global VM extension policy.</td>
 </tr>
 <tr>
-    <td><a href="#list"><CopyableCode code="list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists global VM extension policies.</td>
-</tr>
-<tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all VM Extension Policy resources<br />available to the specified project.<br /><br />To prevent failure, it's recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
+</tr>
+<tr>
+    <td><a href="#list"><CopyableCode code="list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists global VM extension policies.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
@@ -321,8 +321,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' },
-        { label: 'aggregated_list', value: 'aggregated_list' }
+        { label: 'aggregated_list', value: 'aggregated_list' },
+        { label: 'list', value: 'list' }
     ]}
 >
 <TabItem value="get">
@@ -350,6 +350,25 @@ AND globalVmExtensionPolicy = '{{ globalVmExtensionPolicy }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="aggregated_list">
+
+Retrieves the list of all VM Extension Policy resources<br />available to the specified project.<br /><br />To prevent failure, it's recommended that you set the<br />`returnPartialSuccess` parameter to `true`.
+
+```sql
+SELECT
+*
+FROM google.compute.global_vm_extension_policies
+WHERE project = '{{ project }}' -- required
+AND filter = '{{ filter }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+;
+```
+</TabItem>
 <TabItem value="list">
 
 Lists global VM extension policies.
@@ -366,30 +385,11 @@ unreachables,
 warning
 FROM google.compute.global_vm_extension_policies
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="aggregated_list">
-
-Retrieves the list of all VM Extension Policy resources<br />available to the specified project.<br /><br />To prevent failure, it's recommended that you set the<br />`returnPartialSuccess` parameter to `true`.
-
-```sql
-SELECT
-*
-FROM google.compute.global_vm_extension_policies
-WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -411,22 +411,22 @@ Creates a new project level GlobalVmExtensionPolicy.
 
 ```sql
 INSERT INTO google.compute.global_vm_extension_policies (
-data__rolloutOperation,
-data__name,
-data__priority,
 data__description,
 data__extensionPolicies,
 data__instanceSelectors,
+data__name,
+data__priority,
+data__rolloutOperation,
 project,
 requestId
 )
 SELECT 
-'{{ rolloutOperation }}',
-'{{ name }}',
-{{ priority }},
 '{{ description }}',
 '{{ extensionPolicies }}',
 '{{ instanceSelectors }}',
+'{{ name }}',
+{{ priority }},
+'{{ rolloutOperation }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -468,43 +468,6 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the global_vm_extension_policies resource.
-    - name: rolloutOperation
-      description: |
-        Required. The rollout strategy and status.
-      value:
-        rolloutInput:
-          name: "{{ name }}"
-          predefinedRolloutPlan: "{{ predefinedRolloutPlan }}"
-          conflictBehavior: "{{ conflictBehavior }}"
-          retryUuid: "{{ retryUuid }}"
-        rolloutStatus:
-          currentRollouts:
-            - rollout: "{{ rollout }}"
-              rolloutPlan: "{{ rolloutPlan }}"
-              state: "{{ state }}"
-              locationRolloutStatus: "{{ locationRolloutStatus }}"
-          previousRollout:
-            rollout: "{{ rollout }}"
-            rolloutPlan: "{{ rolloutPlan }}"
-            state: "{{ state }}"
-            locationRolloutStatus: "{{ locationRolloutStatus }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`
-        which means the first character must be a lowercase letter, and all
-        following characters must be a dash, lowercase letter, or digit, except
-        the last character, which cannot be a dash.
-    - name: priority
-      value: {{ priority }}
-      description: |
-        Optional. Used to resolve conflicts when multiple policies are active for the same
-        extension. Defaults to 0.
-        Larger the number, higher the priority. When the priority is the same,
-        the policy with the newer create time has higher priority.
     - name: description
       value: "{{ description }}"
       description: |
@@ -522,6 +485,43 @@ zone
       value:
         - labelSelector:
             inclusionLabels: "{{ inclusionLabels }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`
+        which means the first character must be a lowercase letter, and all
+        following characters must be a dash, lowercase letter, or digit, except
+        the last character, which cannot be a dash.
+    - name: priority
+      value: {{ priority }}
+      description: |
+        Optional. Used to resolve conflicts when multiple policies are active for the same
+        extension. Defaults to 0.
+        Larger the number, higher the priority. When the priority is the same,
+        the policy with the newer create time has higher priority.
+    - name: rolloutOperation
+      description: |
+        Required. The rollout strategy and status.
+      value:
+        rolloutInput:
+          conflictBehavior: "{{ conflictBehavior }}"
+          name: "{{ name }}"
+          predefinedRolloutPlan: "{{ predefinedRolloutPlan }}"
+          retryUuid: "{{ retryUuid }}"
+        rolloutStatus:
+          currentRollouts:
+            - locationRolloutStatus: "{{ locationRolloutStatus }}"
+              rollout: "{{ rollout }}"
+              rolloutPlan: "{{ rolloutPlan }}"
+              state: "{{ state }}"
+          previousRollout:
+            locationRolloutStatus: "{{ locationRolloutStatus }}"
+            rollout: "{{ rollout }}"
+            rolloutPlan: "{{ rolloutPlan }}"
+            state: "{{ state }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -545,12 +545,12 @@ Updates a global VM extension policy.
 ```sql
 UPDATE google.compute.global_vm_extension_policies
 SET 
-data__rolloutOperation = '{{ rolloutOperation }}',
-data__name = '{{ name }}',
-data__priority = {{ priority }},
 data__description = '{{ description }}',
 data__extensionPolicies = '{{ extensionPolicies }}',
-data__instanceSelectors = '{{ instanceSelectors }}'
+data__instanceSelectors = '{{ instanceSelectors }}',
+data__name = '{{ name }}',
+data__priority = {{ priority }},
+data__rolloutOperation = '{{ rolloutOperation }}'
 WHERE 
 project = '{{ project }}' --required
 AND globalVmExtensionPolicy = '{{ globalVmExtensionPolicy }}' --required

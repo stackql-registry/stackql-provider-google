@@ -51,13 +51,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_translate_text"><CopyableCode code="projects_translate_text" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Translates input text and returns translated text.</td>
-</tr>
-<tr>
     <td><a href="#projects_detect_language"><CopyableCode code="projects_detect_language" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
@@ -70,6 +63,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Romanize input text written in non-Latin scripts to Latin text.</td>
+</tr>
+<tr>
+    <td><a href="#projects_translate_text"><CopyableCode code="projects_translate_text" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Translates input text and returns translated text.</td>
 </tr>
 </tbody>
 </table>
@@ -98,34 +98,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_translate_text"
+    defaultValue="projects_detect_language"
     values={[
-        { label: 'projects_translate_text', value: 'projects_translate_text' },
         { label: 'projects_detect_language', value: 'projects_detect_language' },
-        { label: 'projects_romanize_text', value: 'projects_romanize_text' }
+        { label: 'projects_romanize_text', value: 'projects_romanize_text' },
+        { label: 'projects_translate_text', value: 'projects_translate_text' }
     ]}
 >
-<TabItem value="projects_translate_text">
-
-Translates input text and returns translated text.
-
-```sql
-EXEC google.translate.projects.projects_translate_text 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"model": "{{ model }}", 
-"transliterationConfig": "{{ transliterationConfig }}", 
-"glossaryConfig": "{{ glossaryConfig }}", 
-"mimeType": "{{ mimeType }}", 
-"labels": "{{ labels }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"contents": "{{ contents }}", 
-"targetLanguageCode": "{{ targetLanguageCode }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_detect_language">
 
 Detects the language of text within a request.
@@ -135,11 +114,11 @@ EXEC google.translate.projects.projects_detect_language
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"mimeType": "{{ mimeType }}", 
-"labels": "{{ labels }}", 
-"model": "{{ model }}", 
 "content": "{{ content }}", 
-"documentInputConfig": "{{ documentInputConfig }}"
+"documentInputConfig": "{{ documentInputConfig }}", 
+"labels": "{{ labels }}", 
+"mimeType": "{{ mimeType }}", 
+"model": "{{ model }}"
 }'
 ;
 ```
@@ -153,8 +132,29 @@ EXEC google.translate.projects.projects_romanize_text
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
+"contents": "{{ contents }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_translate_text">
+
+Translates input text and returns translated text.
+
+```sql
+EXEC google.translate.projects.projects_translate_text 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"contents": "{{ contents }}", 
+"glossaryConfig": "{{ glossaryConfig }}", 
+"labels": "{{ labels }}", 
+"mimeType": "{{ mimeType }}", 
+"model": "{{ model }}", 
 "sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"contents": "{{ contents }}"
+"targetLanguageCode": "{{ targetLanguageCode }}", 
+"transliterationConfig": "{{ transliterationConfig }}"
 }'
 ;
 ```

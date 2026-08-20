@@ -165,14 +165,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateConnectionsId"><code>privateConnectionsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Use this method to list routes created for a private connectivity configuration in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateConnectionsId"><code>privateConnectionsId</code></a></td>
-    <td><a href="#parameter-routeId"><code>routeId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-routeId"><code>routeId</code></a></td>
     <td>Use this method to create a route for a private connectivity configuration in a project and location.</td>
 </tr>
 <tr>
@@ -298,10 +298,10 @@ FROM google.datastream.routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateConnectionsId = '{{ privateConnectionsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -323,26 +323,26 @@ Use this method to create a route for a private connectivity configuration in a 
 
 ```sql
 INSERT INTO google.datastream.routes (
-data__labels,
+data__destinationAddress,
 data__destinationPort,
 data__displayName,
-data__destinationAddress,
+data__labels,
 projectsId,
 locationsId,
 privateConnectionsId,
-routeId,
-requestId
+requestId,
+routeId
 )
 SELECT 
-'{{ labels }}',
+'{{ destinationAddress }}',
 {{ destinationPort }},
 '{{ displayName }}',
-'{{ destinationAddress }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateConnectionsId }}',
-'{{ routeId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ routeId }}'
 RETURNING
 name,
 done,
@@ -366,10 +366,10 @@ response
     - name: privateConnectionsId
       value: "{{ privateConnectionsId }}"
       description: Required parameter for the routes resource.
-    - name: labels
-      value: "{{ labels }}"
+    - name: destinationAddress
+      value: "{{ destinationAddress }}"
       description: |
-        Labels.
+        Required. Destination address for connection
     - name: destinationPort
       value: {{ destinationPort }}
       description: |
@@ -378,14 +378,14 @@ response
       value: "{{ displayName }}"
       description: |
         Required. Display name.
-    - name: destinationAddress
-      value: "{{ destinationAddress }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Required. Destination address for connection
-    - name: routeId
-      value: "{{ routeId }}"
+        Labels.
     - name: requestId
       value: "{{ requestId }}"
+    - name: routeId
+      value: "{{ routeId }}"
 `}</CodeBlock>
 
 </TabItem>

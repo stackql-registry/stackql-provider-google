@@ -329,23 +329,23 @@ Creates a new ServerTlsPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.server_tls_policies (
-data__labels,
-data__serverCertificate,
-data__mtlsPolicy,
-data__description,
-data__name,
 data__allowOpen,
+data__description,
+data__labels,
+data__mtlsPolicy,
+data__name,
+data__serverCertificate,
 projectsId,
 locationsId,
 serverTlsPolicyId
 )
 SELECT 
-'{{ labels }}',
-'{{ serverCertificate }}',
-'{{ mtlsPolicy }}',
-'{{ description }}',
-'{{ name }}',
 {{ allowOpen }},
+'{{ description }}',
+'{{ labels }}',
+'{{ mtlsPolicy }}',
+'{{ name }}',
+'{{ serverCertificate }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serverTlsPolicyId }}'
@@ -369,10 +369,33 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the server_tls_policies resource.
+    - name: allowOpen
+      value: {{ allowOpen }}
+      description: |
+        This field applies only for Traffic Director policies. It is must be set to false for Application Load Balancer policies. Determines if server allows plaintext connections. If set to true, server allows plain text connections. By default, it is set to false. This setting is not exclusive of other encryption modes. For example, if \`allow_open\` and \`mtls_policy\` are set, server allows both plain text and mTLS connections. See documentation of other encryption modes to confirm compatibility. Consider using it if you wish to upgrade in place your deployment to TLS while having mixed TLS and non-TLS traffic reaching port :80.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Free-text description of the resource.
     - name: labels
       value: "{{ labels }}"
       description: |
         Set of label tags associated with the resource.
+    - name: mtlsPolicy
+      description: |
+        This field is required if the policy is used with Application Load Balancers. This field can be empty for Traffic Director. Defines a mechanism to provision peer validation certificates for peer to peer authentication (Mutual TLS - mTLS). If not specified, client certificate will not be requested. The connection is treated as TLS and not mTLS. If \`allow_open\` and \`mtls_policy\` are set, server allows both plain text and mTLS connections.
+      value:
+        clientValidationCa:
+          - certificateProviderInstance:
+              pluginInstance: "{{ pluginInstance }}"
+            grpcEndpoint:
+              targetUri: "{{ targetUri }}"
+        clientValidationMode: "{{ clientValidationMode }}"
+        clientValidationTrustConfig: "{{ clientValidationTrustConfig }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Name of the ServerTlsPolicy resource. It matches the pattern \`projects/*/locations/{location}/serverTlsPolicies/{server_tls_policy}\`
     - name: serverCertificate
       description: |
         Optional if policy is to be used with Traffic Director. For Application Load Balancers must be empty. Defines a mechanism to provision server identity (public and private keys). Cannot be combined with \`allow_open\` as a permissive mode that allows both plain text and TLS is not supported.
@@ -381,29 +404,6 @@ response
           pluginInstance: "{{ pluginInstance }}"
         grpcEndpoint:
           targetUri: "{{ targetUri }}"
-    - name: mtlsPolicy
-      description: |
-        This field is required if the policy is used with Application Load Balancers. This field can be empty for Traffic Director. Defines a mechanism to provision peer validation certificates for peer to peer authentication (Mutual TLS - mTLS). If not specified, client certificate will not be requested. The connection is treated as TLS and not mTLS. If \`allow_open\` and \`mtls_policy\` are set, server allows both plain text and mTLS connections.
-      value:
-        clientValidationCa:
-          - grpcEndpoint:
-              targetUri: "{{ targetUri }}"
-            certificateProviderInstance:
-              pluginInstance: "{{ pluginInstance }}"
-        clientValidationTrustConfig: "{{ clientValidationTrustConfig }}"
-        clientValidationMode: "{{ clientValidationMode }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Free-text description of the resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Name of the ServerTlsPolicy resource. It matches the pattern \`projects/*/locations/{location}/serverTlsPolicies/{server_tls_policy}\`
-    - name: allowOpen
-      value: {{ allowOpen }}
-      description: |
-        This field applies only for Traffic Director policies. It is must be set to false for Application Load Balancer policies. Determines if server allows plaintext connections. If set to true, server allows plain text connections. By default, it is set to false. This setting is not exclusive of other encryption modes. For example, if \`allow_open\` and \`mtls_policy\` are set, server allows both plain text and mTLS connections. See documentation of other encryption modes to confirm compatibility. Consider using it if you wish to upgrade in place your deployment to TLS while having mixed TLS and non-TLS traffic reaching port :80.
     - name: serverTlsPolicyId
       value: "{{ serverTlsPolicyId }}"
 `}</CodeBlock>
@@ -427,12 +427,12 @@ Updates the parameters of a single ServerTlsPolicy.
 ```sql
 UPDATE google.networksecurity.server_tls_policies
 SET 
-data__labels = '{{ labels }}',
-data__serverCertificate = '{{ serverCertificate }}',
-data__mtlsPolicy = '{{ mtlsPolicy }}',
+data__allowOpen = {{ allowOpen }},
 data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__mtlsPolicy = '{{ mtlsPolicy }}',
 data__name = '{{ name }}',
-data__allowOpen = {{ allowOpen }}
+data__serverCertificate = '{{ serverCertificate }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

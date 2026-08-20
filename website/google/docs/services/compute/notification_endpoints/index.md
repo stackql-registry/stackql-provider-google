@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the NotificationEndpoints for a project in the given region.</td>
 </tr>
 <tr>
@@ -291,9 +291,9 @@ warning
 FROM google.compute.notification_endpoints
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -317,17 +317,17 @@ Create a NotificationEndpoint in the specified project in the given region<br />
 
 ```sql
 INSERT INTO google.compute.notification_endpoints (
-data__name,
-data__grpcSettings,
 data__description,
+data__grpcSettings,
+data__name,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ grpcSettings }}',
 '{{ description }}',
+'{{ grpcSettings }}',
+'{{ name }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -373,6 +373,23 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the notification_endpoints resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: grpcSettings
+      description: |
+        Settings of the gRPC notification endpoint including the endpoint URL and
+        the retry duration.
+      value:
+        authority: "{{ authority }}"
+        endpoint: "{{ endpoint }}"
+        payloadName: "{{ payloadName }}"
+        resendInterval:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+        retryDurationSec: {{ retryDurationSec }}
     - name: name
       value: "{{ name }}"
       description: |
@@ -383,23 +400,6 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
-    - name: grpcSettings
-      description: |
-        Settings of the gRPC notification endpoint including the endpoint URL and
-        the retry duration.
-      value:
-        authority: "{{ authority }}"
-        endpoint: "{{ endpoint }}"
-        retryDurationSec: {{ retryDurationSec }}
-        payloadName: "{{ payloadName }}"
-        resendInterval:
-          nanos: {{ nanos }}
-          seconds: "{{ seconds }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

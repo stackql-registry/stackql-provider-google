@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workflowsId"><code>workflowsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-skip"><code>skip</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-skip"><code>skip</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists step entries for the corresponding workflow execution. Returned entries are ordered by their create_time.</td>
 </tr>
 </tbody>
@@ -352,12 +352,12 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workflowsId = '{{ workflowsId }}' -- required
 AND executionsId = '{{ executionsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND skip = '{{ skip }}'
-AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

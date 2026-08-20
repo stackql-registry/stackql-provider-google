@@ -187,9 +187,9 @@ Sets the access control policy on the specified resource.<br />Replaces any exis
 ```sql
 REPLACE google.compute.region_instant_snapshot_groups_iam_policies
 SET 
-data__policy = '{{ policy }}',
 data__bindings = '{{ bindings }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__policy = '{{ policy }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required

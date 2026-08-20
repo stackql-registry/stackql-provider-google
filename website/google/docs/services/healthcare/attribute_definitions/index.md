@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Attribute definitions in the specified consent store.</td>
 </tr>
 <tr>
@@ -295,8 +295,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND consentStoresId = '{{ consentStoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -319,12 +319,12 @@ Creates a new Attribute definition in the parent consent store.
 
 ```sql
 INSERT INTO google.healthcare.attribute_definitions (
-data__name,
-data__dataMappingDefaultValue,
 data__allowedValues,
 data__category,
 data__consentDefaultValues,
+data__dataMappingDefaultValue,
 data__description,
+data__name,
 projectsId,
 locationsId,
 datasetsId,
@@ -332,12 +332,12 @@ consentStoresId,
 attributeDefinitionId
 )
 SELECT 
-'{{ name }}',
-'{{ dataMappingDefaultValue }}',
 '{{ allowedValues }}',
 '{{ category }}',
 '{{ consentDefaultValues }}',
+'{{ dataMappingDefaultValue }}',
 '{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -370,14 +370,6 @@ description
     - name: consentStoresId
       value: "{{ consentStoresId }}"
       description: Required parameter for the attribute_definitions resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name of the Attribute definition, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}\`. Cannot be changed after creation.
-    - name: dataMappingDefaultValue
-      value: "{{ dataMappingDefaultValue }}"
-      description: |
-        Optional. Default value of the attribute in User data mappings. If no default value is specified, it defaults to an empty value. This field is only applicable to attributes of the category \`RESOURCE\`.
     - name: allowedValues
       value:
         - "{{ allowedValues }}"
@@ -393,10 +385,18 @@ description
         - "{{ consentDefaultValues }}"
       description: |
         Optional. Default values of the attribute in Consents. If no default values are specified, it defaults to an empty value.
+    - name: dataMappingDefaultValue
+      value: "{{ dataMappingDefaultValue }}"
+      description: |
+        Optional. Default value of the attribute in User data mappings. If no default value is specified, it defaults to an empty value. This field is only applicable to attributes of the category \`RESOURCE\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A description of the attribute.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the Attribute definition, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}\`. Cannot be changed after creation.
     - name: attributeDefinitionId
       value: "{{ attributeDefinitionId }}"
 `}</CodeBlock>
@@ -420,12 +420,12 @@ Updates the specified Attribute definition.
 ```sql
 UPDATE google.healthcare.attribute_definitions
 SET 
-data__name = '{{ name }}',
-data__dataMappingDefaultValue = '{{ dataMappingDefaultValue }}',
 data__allowedValues = '{{ allowedValues }}',
 data__category = '{{ category }}',
 data__consentDefaultValues = '{{ consentDefaultValues }}',
-data__description = '{{ description }}'
+data__dataMappingDefaultValue = '{{ dataMappingDefaultValue }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

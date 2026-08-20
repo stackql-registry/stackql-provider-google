@@ -253,16 +253,16 @@ Creates a SynonymSet for a single context. Throws an ALREADY_EXISTS exception if
 
 ```sql
 INSERT INTO google.contentwarehouse.synonym_sets (
-data__synonyms,
 data__context,
 data__name,
+data__synonyms,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ synonyms }}',
 '{{ context }}',
 '{{ name }}',
+'{{ synonyms }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -283,11 +283,6 @@ synonyms
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the synonym_sets resource.
-    - name: synonyms
-      description: |
-        List of Synonyms for the context.
-      value:
-        - words: "{{ words }}"
     - name: context
       value: "{{ context }}"
       description: |
@@ -296,6 +291,11 @@ synonyms
       value: "{{ name }}"
       description: |
         The resource name of the SynonymSet This is mandatory for google.api.resource. Format: projects/{project_number}/locations/{location}/synonymSets/{context}.
+    - name: synonyms
+      description: |
+        List of Synonyms for the context.
+      value:
+        - words: "{{ words }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -317,9 +317,9 @@ Remove the existing SynonymSet for the context and replaces it with a new one. T
 ```sql
 UPDATE google.contentwarehouse.synonym_sets
 SET 
-data__synonyms = '{{ synonyms }}',
 data__context = '{{ context }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__synonyms = '{{ synonyms }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

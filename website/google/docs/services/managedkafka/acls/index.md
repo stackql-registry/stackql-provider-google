@@ -306,18 +306,18 @@ Creates a new acl in the given project, location, and cluster.
 
 ```sql
 INSERT INTO google.managedkafka.acls (
-data__name,
-data__etag,
 data__aclEntries,
+data__etag,
+data__name,
 projectsId,
 locationsId,
 clustersId,
 aclId
 )
 SELECT 
-'{{ name }}',
-'{{ etag }}',
 '{{ aclEntries }}',
+'{{ etag }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}',
@@ -346,22 +346,22 @@ resourceType
     - name: clustersId
       value: "{{ clustersId }}"
       description: Required parameter for the acls resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name for the acl. Represents a single Resource Pattern. Structured like: projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id} The structure of \`acl_id\` defines the Resource Pattern (resource_type, resource_name, pattern_type) of the acl. \`acl_id\` is structured like one of the following: For acls on the cluster: \`cluster\` For acls on a single resource within the cluster: \`topic/{resource_name}\` \`consumerGroup/{resource_name}\` \`transactionalId/{resource_name}\` For acls on all resources that match a prefix: \`topicPrefixed/{resource_name}\` \`consumerGroupPrefixed/{resource_name}\` \`transactionalIdPrefixed/{resource_name}\` For acls on all resources of a given type (i.e. the wildcard literal "*"): \`allTopics\` (represents \`topic/*\`) \`allConsumerGroups\` (represents \`consumerGroup/*\`) \`allTransactionalIds\` (represents \`transactionalId/*\`)
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. \`etag\` is used for concurrency control. An \`etag\` is returned in the response to \`GetAcl\` and \`CreateAcl\`. Callers are required to put that etag in the request to \`UpdateAcl\` to ensure that their change will be applied to the same version of the acl that exists in the Kafka Cluster. A terminal 'T' character in the etag indicates that the AclEntries were truncated; more entries for the Acl exist on the Kafka Cluster, but can't be returned in the Acl due to repeated field limits.
     - name: aclEntries
       description: |
         Required. The ACL entries that apply to the resource pattern. The maximum number of allowed entries 100.
       value:
-        - principal: "{{ principal }}"
-          permissionType: "{{ permissionType }}"
+        - host: "{{ host }}"
           operation: "{{ operation }}"
-          host: "{{ host }}"
+          permissionType: "{{ permissionType }}"
+          principal: "{{ principal }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. \`etag\` is used for concurrency control. An \`etag\` is returned in the response to \`GetAcl\` and \`CreateAcl\`. Callers are required to put that etag in the request to \`UpdateAcl\` to ensure that their change will be applied to the same version of the acl that exists in the Kafka Cluster. A terminal 'T' character in the etag indicates that the AclEntries were truncated; more entries for the Acl exist on the Kafka Cluster, but can't be returned in the Acl due to repeated field limits.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name for the acl. Represents a single Resource Pattern. Structured like: projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id} The structure of \`acl_id\` defines the Resource Pattern (resource_type, resource_name, pattern_type) of the acl. \`acl_id\` is structured like one of the following: For acls on the cluster: \`cluster\` For acls on a single resource within the cluster: \`topic/{resource_name}\` \`consumerGroup/{resource_name}\` \`transactionalId/{resource_name}\` For acls on all resources that match a prefix: \`topicPrefixed/{resource_name}\` \`consumerGroupPrefixed/{resource_name}\` \`transactionalIdPrefixed/{resource_name}\` For acls on all resources of a given type (i.e. the wildcard literal "*"): \`allTopics\` (represents \`topic/*\`) \`allConsumerGroups\` (represents \`consumerGroup/*\`) \`allTransactionalIds\` (represents \`transactionalId/*\`)
     - name: aclId
       value: "{{ aclId }}"
 `}</CodeBlock>
@@ -385,9 +385,9 @@ Updates the properties of a single acl.
 ```sql
 UPDATE google.managedkafka.acls
 SET 
-data__name = '{{ name }}',
+data__aclEntries = '{{ aclEntries }}',
 data__etag = '{{ etag }}',
-data__aclEntries = '{{ aclEntries }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

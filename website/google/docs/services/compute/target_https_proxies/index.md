@@ -320,14 +320,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of TargetHttpsProxy resources available<br />to the specified project in the specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all TargetHttpsProxy resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -352,6 +352,20 @@ The following methods are available for this resource:
     <td>Deletes the specified TargetHttpsProxy resource.</td>
 </tr>
 <tr>
+    <td><a href="#set_certificate_map"><CopyableCode code="set_certificate_map" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Changes the Certificate Map for TargetHttpsProxy.</td>
+</tr>
+<tr>
+    <td><a href="#set_quic_override"><CopyableCode code="set_quic_override" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the QUIC override policy for TargetHttpsProxy.</td>
+</tr>
+<tr>
     <td><a href="#set_ssl_certificates"><CopyableCode code="set_ssl_certificates" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
@@ -364,20 +378,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Sets the SSL policy for TargetHttpsProxy. The SSL policy specifies the<br />server-side support for SSL features. This affects connections between<br />clients and the HTTPS proxy load balancer. They do not affect the<br />connection between the load balancer and the backends.</td>
-</tr>
-<tr>
-    <td><a href="#set_quic_override"><CopyableCode code="set_quic_override" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the QUIC override policy for TargetHttpsProxy.</td>
-</tr>
-<tr>
-    <td><a href="#set_certificate_map"><CopyableCode code="set_certificate_map" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetHttpsProxy"><code>targetHttpsProxy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Changes the Certificate Map for TargetHttpsProxy.</td>
 </tr>
 <tr>
     <td><a href="#set_url_map"><CopyableCode code="set_url_map" /></a></td>
@@ -516,11 +516,11 @@ warning
 FROM google.compute.target_https_proxies
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -550,12 +550,12 @@ tlsEarlyData,
 urlMap
 FROM google.compute.target_https_proxies
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
@@ -578,41 +578,41 @@ Creates a TargetHttpsProxy resource in the specified project and region<br />usi
 
 ```sql
 INSERT INTO google.compute.target_https_proxies (
-data__urlMap,
-data__fingerprint,
-data__tlsEarlyData,
-data__sslCertificates,
-data__id,
-data__selfLink,
-data__description,
-data__quicOverride,
 data__authorizationPolicy,
 data__certificateMap,
+data__description,
+data__fingerprint,
 data__httpKeepAliveTimeoutSec,
-data__serverTlsPolicy,
+data__id,
 data__name,
-data__sslPolicy,
 data__proxyBind,
+data__quicOverride,
+data__selfLink,
+data__serverTlsPolicy,
+data__sslCertificates,
+data__sslPolicy,
+data__tlsEarlyData,
+data__urlMap,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ urlMap }}',
-'{{ fingerprint }}',
-'{{ tlsEarlyData }}',
-'{{ sslCertificates }}',
-'{{ id }}',
-'{{ selfLink }}',
-'{{ description }}',
-'{{ quicOverride }}',
 '{{ authorizationPolicy }}',
 '{{ certificateMap }}',
+'{{ description }}',
+'{{ fingerprint }}',
 {{ httpKeepAliveTimeoutSec }},
-'{{ serverTlsPolicy }}',
+'{{ id }}',
 '{{ name }}',
-'{{ sslPolicy }}',
 {{ proxyBind }},
+'{{ quicOverride }}',
+'{{ selfLink }}',
+'{{ serverTlsPolicy }}',
+'{{ sslCertificates }}',
+'{{ sslPolicy }}',
+'{{ tlsEarlyData }}',
+'{{ urlMap }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -658,15 +658,31 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the target_https_proxies resource.
-    - name: urlMap
-      value: "{{ urlMap }}"
+    - name: authorizationPolicy
+      value: "{{ authorizationPolicy }}"
       description: |
-        A fully-qualified or valid partial URL to the UrlMap resource that defines
-        the mapping from URL to the BackendService. For example, the following are
-        all valid URLs for specifying a URL map:
-        - https://www.googleapis.compute/v1/projects/project/global/urlMaps/url-map
-        - projects/project/global/urlMaps/url-map
-        - global/urlMaps/url-map
+        Optional. A URL referring to a networksecurity.AuthorizationPolicy resource
+        that describes how the proxy should authorize inbound traffic. If left
+        blank, access will not be restricted by an authorization policy.
+        Refer to the AuthorizationPolicy resource for additional
+        details.
+        authorizationPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED.
+        Note: This field currently has no impact.
+    - name: certificateMap
+      value: "{{ certificateMap }}"
+      description: |
+        URL of a certificate map that identifies a certificate map associated with
+        the given target proxy.
+        This field can only be set for Global external Application Load Balancer or
+        Classic Application Load Balancer. For other products use Certificate
+        Manager Certificates instead.
+        If set, sslCertificates will be ignored.
+        Accepted format is//certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificateMaps/{resourceName}.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -677,6 +693,98 @@ zone
         will fail with error 412 conditionNotMet. To see the latest
         fingerprint, make a get() request to retrieve the
         TargetHttpsProxy.
+    - name: httpKeepAliveTimeoutSec
+      value: {{ httpKeepAliveTimeoutSec }}
+      description: |
+        Specifies how long to keep a connection open, after completing a response,
+        while there is no matching traffic (in seconds). If an HTTP keep-alive is
+        not specified, a default value (610 seconds) will be used.
+        For global external Application Load Balancers, the minimum allowed value
+        is 5 seconds and the maximum allowed value is 1200 seconds.
+        For classic Application Load Balancers, this option is not supported.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: proxyBind
+      value: {{ proxyBind }}
+      description: |
+        This field only applies when the forwarding rule that references this
+        target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.
+        When this field is set to true, Envoy proxies set up inbound
+        traffic interception and bind to the IP address and port specified in the
+        forwarding rule. This is generally useful when using Traffic Director to
+        configure Envoy as a gateway or middle proxy (in other words, not a
+        sidecar proxy). The Envoy proxy listens for inbound requests and handles
+        requests when it receives them.
+        The default is false.
+    - name: quicOverride
+      value: "{{ quicOverride }}"
+      description: |
+        Specifies the QUIC override policy for this TargetHttpsProxy resource. This
+        setting determines whether the load balancer attempts to negotiate QUIC
+        with clients.
+        You can specify NONE, ENABLE, orDISABLE.
+        - When quic-override is set to NONE,
+        Google manages whether QUIC is used.
+        - When quic-override is set to ENABLE, the
+        load balancer uses QUIC when possible.
+        - When quic-override is set to DISABLE, the
+        load balancer doesn't use QUIC.
+        - If the quic-override flag is not specified,NONE is implied.
+      valid_values: ['DISABLE', 'ENABLE', 'NONE']
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: serverTlsPolicy
+      value: "{{ serverTlsPolicy }}"
+      description: |
+        Optional. A URL referring to a networksecurity.ServerTlsPolicy resource
+        that describes how the proxy should authenticate inbound traffic.
+        serverTlsPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED
+        or EXTERNAL orEXTERNAL_MANAGED or INTERNAL_MANAGED.
+        It also applies to a regional TargetHttpsProxy attached to
+        regional forwardingRules with theloadBalancingScheme set to EXTERNAL_MANAGED orINTERNAL_MANAGED. For details whichServerTlsPolicy resources are accepted withINTERNAL_SELF_MANAGED and which with EXTERNAL,INTERNAL_MANAGED, EXTERNAL_MANAGEDloadBalancingScheme consult ServerTlsPolicy
+        documentation.
+        If left blank, communications are not encrypted.
+    - name: sslCertificates
+      value:
+        - "{{ sslCertificates }}"
+      description: |
+        URLs to SslCertificate resources that are used to authenticate
+        connections between users and the load balancer. At least one SSL
+        certificate must be specified. SslCertificates do not apply when the load
+        balancing scheme is set to INTERNAL_SELF_MANAGED.
+        The URLs should refer to a SSL Certificate resource or Certificate Manager
+        Certificate resource. Mixing Classic Certificates and Certificate Manager
+        Certificates is not allowed. Certificate Manager Certificates must include
+        the certificatemanager API namespace. Using Certificate Manager
+        Certificates in this field is not supported by Global external Application
+        Load Balancer or Classic Application Load Balancer, use certificate_map
+        instead.
+        Currently, you may specify up to 15 Classic SSL Certificates or up to 100
+        Certificate Manager Certificates.
+        Certificate Manager Certificates accepted formats are:
+        - //certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificates/{resourceName}.
+        - https://certificatemanager.googleapis.com/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
+    - name: sslPolicy
+      value: "{{ sslPolicy }}"
+      description: |
+        URL of SslPolicy resource that will be associated with the TargetHttpsProxy
+        resource. If not set, the TargetHttpsProxy resource has no
+        SSL policy configured.
     - name: tlsEarlyData
       value: "{{ tlsEarlyData }}"
       description: |
@@ -699,123 +807,15 @@ zone
         compliant.
         The default value is DISABLED.
       valid_values: ['DISABLED', 'PERMISSIVE', 'STRICT', 'UNRESTRICTED']
-    - name: sslCertificates
-      value:
-        - "{{ sslCertificates }}"
+    - name: urlMap
+      value: "{{ urlMap }}"
       description: |
-        URLs to SslCertificate resources that are used to authenticate
-        connections between users and the load balancer. At least one SSL
-        certificate must be specified. SslCertificates do not apply when the load
-        balancing scheme is set to INTERNAL_SELF_MANAGED.
-        The URLs should refer to a SSL Certificate resource or Certificate Manager
-        Certificate resource. Mixing Classic Certificates and Certificate Manager
-        Certificates is not allowed. Certificate Manager Certificates must include
-        the certificatemanager API namespace. Using Certificate Manager
-        Certificates in this field is not supported by Global external Application
-        Load Balancer or Classic Application Load Balancer, use certificate_map
-        instead.
-        Currently, you may specify up to 15 Classic SSL Certificates or up to 100
-        Certificate Manager Certificates.
-        Certificate Manager Certificates accepted formats are:
-        - //certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificates/{resourceName}.
-        - https://certificatemanager.googleapis.com/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
-    - name: id
-      value: "{{ id }}"
-      description: |
-        [Output Only] The unique identifier for the resource. This identifier is
-        defined by the server.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: quicOverride
-      value: "{{ quicOverride }}"
-      description: |
-        Specifies the QUIC override policy for this TargetHttpsProxy resource. This
-        setting determines whether the load balancer attempts to negotiate QUIC
-        with clients.
-        You can specify NONE, ENABLE, orDISABLE.
-        - When quic-override is set to NONE,
-        Google manages whether QUIC is used.
-        - When quic-override is set to ENABLE, the
-        load balancer uses QUIC when possible.
-        - When quic-override is set to DISABLE, the
-        load balancer doesn't use QUIC.
-        - If the quic-override flag is not specified,NONE is implied.
-      valid_values: ['DISABLE', 'ENABLE', 'NONE']
-    - name: authorizationPolicy
-      value: "{{ authorizationPolicy }}"
-      description: |
-        Optional. A URL referring to a networksecurity.AuthorizationPolicy resource
-        that describes how the proxy should authorize inbound traffic. If left
-        blank, access will not be restricted by an authorization policy.
-        Refer to the AuthorizationPolicy resource for additional
-        details.
-        authorizationPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED.
-        Note: This field currently has no impact.
-    - name: certificateMap
-      value: "{{ certificateMap }}"
-      description: |
-        URL of a certificate map that identifies a certificate map associated with
-        the given target proxy.
-        This field can only be set for Global external Application Load Balancer or
-        Classic Application Load Balancer. For other products use Certificate
-        Manager Certificates instead.
-        If set, sslCertificates will be ignored.
-        Accepted format is//certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificateMaps/{resourceName}.
-    - name: httpKeepAliveTimeoutSec
-      value: {{ httpKeepAliveTimeoutSec }}
-      description: |
-        Specifies how long to keep a connection open, after completing a response,
-        while there is no matching traffic (in seconds). If an HTTP keep-alive is
-        not specified, a default value (610 seconds) will be used.
-        For global external Application Load Balancers, the minimum allowed value
-        is 5 seconds and the maximum allowed value is 1200 seconds.
-        For classic Application Load Balancers, this option is not supported.
-    - name: serverTlsPolicy
-      value: "{{ serverTlsPolicy }}"
-      description: |
-        Optional. A URL referring to a networksecurity.ServerTlsPolicy resource
-        that describes how the proxy should authenticate inbound traffic.
-        serverTlsPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED
-        or EXTERNAL orEXTERNAL_MANAGED or INTERNAL_MANAGED.
-        It also applies to a regional TargetHttpsProxy attached to
-        regional forwardingRules with theloadBalancingScheme set to EXTERNAL_MANAGED orINTERNAL_MANAGED. For details whichServerTlsPolicy resources are accepted withINTERNAL_SELF_MANAGED and which with EXTERNAL,INTERNAL_MANAGED, EXTERNAL_MANAGEDloadBalancingScheme consult ServerTlsPolicy
-        documentation.
-        If left blank, communications are not encrypted.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
-    - name: sslPolicy
-      value: "{{ sslPolicy }}"
-      description: |
-        URL of SslPolicy resource that will be associated with the TargetHttpsProxy
-        resource. If not set, the TargetHttpsProxy resource has no
-        SSL policy configured.
-    - name: proxyBind
-      value: {{ proxyBind }}
-      description: |
-        This field only applies when the forwarding rule that references this
-        target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.
-        When this field is set to true, Envoy proxies set up inbound
-        traffic interception and bind to the IP address and port specified in the
-        forwarding rule. This is generally useful when using Traffic Director to
-        configure Envoy as a gateway or middle proxy (in other words, not a
-        sidecar proxy). The Envoy proxy listens for inbound requests and handles
-        requests when it receives them.
-        The default is false.
+        A fully-qualified or valid partial URL to the UrlMap resource that defines
+        the mapping from URL to the BackendService. For example, the following are
+        all valid URLs for specifying a URL map:
+        - https://www.googleapis.compute/v1/projects/project/global/urlMaps/url-map
+        - projects/project/global/urlMaps/url-map
+        - global/urlMaps/url-map
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -839,21 +839,21 @@ Patches the specified regional TargetHttpsProxy resource with the data<br />incl
 ```sql
 UPDATE google.compute.target_https_proxies
 SET 
-data__urlMap = '{{ urlMap }}',
-data__fingerprint = '{{ fingerprint }}',
-data__tlsEarlyData = '{{ tlsEarlyData }}',
-data__sslCertificates = '{{ sslCertificates }}',
-data__id = '{{ id }}',
-data__selfLink = '{{ selfLink }}',
-data__description = '{{ description }}',
-data__quicOverride = '{{ quicOverride }}',
 data__authorizationPolicy = '{{ authorizationPolicy }}',
 data__certificateMap = '{{ certificateMap }}',
+data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
 data__httpKeepAliveTimeoutSec = {{ httpKeepAliveTimeoutSec }},
-data__serverTlsPolicy = '{{ serverTlsPolicy }}',
+data__id = '{{ id }}',
 data__name = '{{ name }}',
+data__proxyBind = {{ proxyBind }},
+data__quicOverride = '{{ quicOverride }}',
+data__selfLink = '{{ selfLink }}',
+data__serverTlsPolicy = '{{ serverTlsPolicy }}',
+data__sslCertificates = '{{ sslCertificates }}',
 data__sslPolicy = '{{ sslPolicy }}',
-data__proxyBind = {{ proxyBind }}
+data__tlsEarlyData = '{{ tlsEarlyData }}',
+data__urlMap = '{{ urlMap }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -919,15 +919,47 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_ssl_certificates"
+    defaultValue="set_certificate_map"
     values={[
+        { label: 'set_certificate_map', value: 'set_certificate_map' },
+        { label: 'set_quic_override', value: 'set_quic_override' },
         { label: 'set_ssl_certificates', value: 'set_ssl_certificates' },
         { label: 'set_ssl_policy', value: 'set_ssl_policy' },
-        { label: 'set_quic_override', value: 'set_quic_override' },
-        { label: 'set_certificate_map', value: 'set_certificate_map' },
         { label: 'set_url_map', value: 'set_url_map' }
     ]}
 >
+<TabItem value="set_certificate_map">
+
+Changes the Certificate Map for TargetHttpsProxy.
+
+```sql
+EXEC google.compute.target_https_proxies.set_certificate_map 
+@project='{{ project }}' --required, 
+@targetHttpsProxy='{{ targetHttpsProxy }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"certificateMap": "{{ certificateMap }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_quic_override">
+
+Sets the QUIC override policy for TargetHttpsProxy.
+
+```sql
+EXEC google.compute.target_https_proxies.set_quic_override 
+@project='{{ project }}' --required, 
+@targetHttpsProxy='{{ targetHttpsProxy }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"quicOverride": "{{ quicOverride }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="set_ssl_certificates">
 
 Replaces SslCertificates for TargetHttpsProxy.
@@ -957,38 +989,6 @@ EXEC google.compute.target_https_proxies.set_ssl_policy
 @@json=
 '{
 "sslPolicy": "{{ sslPolicy }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_quic_override">
-
-Sets the QUIC override policy for TargetHttpsProxy.
-
-```sql
-EXEC google.compute.target_https_proxies.set_quic_override 
-@project='{{ project }}' --required, 
-@targetHttpsProxy='{{ targetHttpsProxy }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"quicOverride": "{{ quicOverride }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_certificate_map">
-
-Changes the Certificate Map for TargetHttpsProxy.
-
-```sql
-EXEC google.compute.target_https_proxies.set_certificate_map 
-@project='{{ project }}' --required, 
-@targetHttpsProxy='{{ targetHttpsProxy }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"certificateMap": "{{ certificateMap }}"
 }'
 ;
 ```

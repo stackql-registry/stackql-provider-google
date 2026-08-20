@@ -345,14 +345,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists services in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a></td>
     <td>Creates a metastore service in a project and location.</td>
 </tr>
 <tr>
@@ -377,39 +377,11 @@ The following methods are available for this resource:
     <td>Alter metadata resource location. The metadata resource can be a database, table, or partition. This functionality only updates the parent directory for the respective metadata resource and does not transfer any existing data to the new location.</td>
 </tr>
 <tr>
-    <td><a href="#move_table_to_database"><CopyableCode code="move_table_to_database" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td></td>
-    <td>Move a table to another database.</td>
-</tr>
-<tr>
-    <td><a href="#complete_migration"><CopyableCode code="complete_migration" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td></td>
-    <td>Completes the managed migration process. The Dataproc Metastore service will switch to using its own backend database after successful migration.</td>
-</tr>
-<tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td></td>
-    <td>Restores a service from a backup.</td>
-</tr>
-<tr>
     <td><a href="#alter_table_properties"><CopyableCode code="alter_table_properties" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
     <td></td>
     <td>Alter metadata table properties.</td>
-</tr>
-<tr>
-    <td><a href="#start_migration"><CopyableCode code="start_migration" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td></td>
-    <td>Starts the Managed Migration process.</td>
 </tr>
 <tr>
     <td><a href="#cancel_migration"><CopyableCode code="cancel_migration" /></a></td>
@@ -419,6 +391,13 @@ The following methods are available for this resource:
     <td>Cancels the ongoing Managed Migration process.</td>
 </tr>
 <tr>
+    <td><a href="#complete_migration"><CopyableCode code="complete_migration" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
+    <td></td>
+    <td>Completes the managed migration process. The Dataproc Metastore service will switch to using its own backend database after successful migration.</td>
+</tr>
+<tr>
     <td><a href="#export_metadata"><CopyableCode code="export_metadata" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
@@ -426,11 +405,32 @@ The following methods are available for this resource:
     <td>Exports metadata from a service.</td>
 </tr>
 <tr>
+    <td><a href="#move_table_to_database"><CopyableCode code="move_table_to_database" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
+    <td></td>
+    <td>Move a table to another database.</td>
+</tr>
+<tr>
     <td><a href="#query_metadata"><CopyableCode code="query_metadata" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
     <td></td>
     <td>Query Dataproc Metastore metadata.</td>
+</tr>
+<tr>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
+    <td></td>
+    <td>Restores a service from a backup.</td>
+</tr>
+<tr>
+    <td><a href="#start_migration"><CopyableCode code="start_migration" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
+    <td></td>
+    <td>Starts the Managed Migration process.</td>
 </tr>
 </tbody>
 </table>
@@ -582,9 +582,9 @@ updateTime
 FROM google.metastore.services
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -607,50 +607,50 @@ Creates a metastore service in a project and location.
 
 ```sql
 INSERT INTO google.metastore.services (
-data__scalingConfig,
-data__scheduledBackup,
-data__tier,
+data__databaseType,
 data__deletionProtection,
-data__port,
+data__encryptionConfig,
 data__hiveMetastoreConfig,
 data__labels,
-data__telemetryConfig,
-data__releaseChannel,
-data__databaseType,
-data__tags,
-data__name,
-data__metadataIntegration,
-data__networkConfig,
-data__network,
-data__encryptionConfig,
 data__maintenanceWindow,
+data__metadataIntegration,
+data__name,
+data__network,
+data__networkConfig,
+data__port,
+data__releaseChannel,
+data__scalingConfig,
+data__scheduledBackup,
+data__tags,
+data__telemetryConfig,
+data__tier,
 projectsId,
 locationsId,
-serviceId,
-requestId
+requestId,
+serviceId
 )
 SELECT 
-'{{ scalingConfig }}',
-'{{ scheduledBackup }}',
-'{{ tier }}',
+'{{ databaseType }}',
 {{ deletionProtection }},
-{{ port }},
+'{{ encryptionConfig }}',
 '{{ hiveMetastoreConfig }}',
 '{{ labels }}',
-'{{ telemetryConfig }}',
-'{{ releaseChannel }}',
-'{{ databaseType }}',
-'{{ tags }}',
-'{{ name }}',
-'{{ metadataIntegration }}',
-'{{ networkConfig }}',
-'{{ network }}',
-'{{ encryptionConfig }}',
 '{{ maintenanceWindow }}',
+'{{ metadataIntegration }}',
+'{{ name }}',
+'{{ network }}',
+'{{ networkConfig }}',
+{{ port }},
+'{{ releaseChannel }}',
+'{{ scalingConfig }}',
+'{{ scheduledBackup }}',
+'{{ tags }}',
+'{{ telemetryConfig }}',
+'{{ tier }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ serviceId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ serviceId }}'
 RETURNING
 name,
 done,
@@ -671,13 +671,81 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the services resource.
+    - name: databaseType
+      value: "{{ databaseType }}"
+      description: |
+        Immutable. The database type that the Metastore service stores its data.
+      valid_values: ['DATABASE_TYPE_UNSPECIFIED', 'MYSQL', 'SPANNER']
+    - name: deletionProtection
+      value: {{ deletionProtection }}
+      description: |
+        Optional. Indicates if the dataproc metastore should be protected against accidental deletions.
+    - name: encryptionConfig
+      description: |
+        Immutable. Information used to configure the Dataproc Metastore service to encrypt customer data at rest. Cannot be updated.
+      value:
+        kmsKey: "{{ kmsKey }}"
+    - name: hiveMetastoreConfig
+      description: |
+        Configuration information specific to running Hive metastore software as the metastore service.
+      value:
+        auxiliaryVersions: "{{ auxiliaryVersions }}"
+        configOverrides: "{{ configOverrides }}"
+        endpointProtocol: "{{ endpointProtocol }}"
+        kerberosConfig:
+          keytab:
+            cloudSecret: "{{ cloudSecret }}"
+          krb5ConfigGcsUri: "{{ krb5ConfigGcsUri }}"
+          principal: "{{ principal }}"
+        version: "{{ version }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels for the metastore service.
+    - name: maintenanceWindow
+      description: |
+        Optional. The one hour maintenance window of the metastore service. This specifies when the service can be restarted for maintenance purposes in UTC time. Maintenance window is not needed for services with the SPANNER database type.
+      value:
+        dayOfWeek: "{{ dayOfWeek }}"
+        hourOfDay: {{ hourOfDay }}
+    - name: metadataIntegration
+      description: |
+        Optional. The setting that defines how metastore metadata should be integrated with external services and systems.
+      value:
+        dataCatalogConfig:
+          enabled: {{ enabled }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The relative resource name of the metastore service, in the following format:projects/{project_number}/locations/{location_id}/services/{service_id}.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Immutable. The relative resource name of the VPC network on which the instance can be accessed. It is specified in the following form:projects/{project_number}/global/networks/{network_id}.
+    - name: networkConfig
+      description: |
+        Optional. The configuration specifying the network settings for the Dataproc Metastore service.
+      value:
+        consumers:
+          - endpointLocation: "{{ endpointLocation }}"
+            endpointUri: "{{ endpointUri }}"
+            subnetwork: "{{ subnetwork }}"
+    - name: port
+      value: {{ port }}
+      description: |
+        Optional. The TCP port at which the metastore service is reached. Default: 9083.
+    - name: releaseChannel
+      value: "{{ releaseChannel }}"
+      description: |
+        Immutable. The release channel of the service. If unspecified, defaults to STABLE.
+      valid_values: ['RELEASE_CHANNEL_UNSPECIFIED', 'CANARY', 'STABLE']
     - name: scalingConfig
       description: |
         Optional. Scaling configuration of the metastore service.
       value:
         autoscalingConfig:
-          autoscalingFactor: {{ autoscalingFactor }}
           autoscalingEnabled: {{ autoscalingEnabled }}
+          autoscalingFactor: {{ autoscalingFactor }}
           limitConfig:
             maxScalingFactor: {{ maxScalingFactor }}
             minScalingFactor: {{ minScalingFactor }}
@@ -687,102 +755,34 @@ response
       description: |
         Optional. The configuration of scheduled backup for the metastore service.
       value:
+        backupLocation: "{{ backupLocation }}"
+        cronSchedule: "{{ cronSchedule }}"
+        enabled: {{ enabled }}
         latestBackup:
-          duration: "{{ duration }}"
           backupId: "{{ backupId }}"
+          duration: "{{ duration }}"
           startTime: "{{ startTime }}"
           state: "{{ state }}"
-        backupLocation: "{{ backupLocation }}"
         nextScheduledTime: "{{ nextScheduledTime }}"
-        enabled: {{ enabled }}
-        cronSchedule: "{{ cronSchedule }}"
         timeZone: "{{ timeZone }}"
-    - name: tier
-      value: "{{ tier }}"
+    - name: tags
+      value: "{{ tags }}"
       description: |
-        Optional. The tier of the service.
-      valid_values: ['TIER_UNSPECIFIED', 'DEVELOPER', 'ENTERPRISE']
-    - name: deletionProtection
-      value: {{ deletionProtection }}
-      description: |
-        Optional. Indicates if the dataproc metastore should be protected against accidental deletions.
-    - name: port
-      value: {{ port }}
-      description: |
-        Optional. The TCP port at which the metastore service is reached. Default: 9083.
-    - name: hiveMetastoreConfig
-      description: |
-        Configuration information specific to running Hive metastore software as the metastore service.
-      value:
-        configOverrides: "{{ configOverrides }}"
-        kerberosConfig:
-          keytab:
-            cloudSecret: "{{ cloudSecret }}"
-          principal: "{{ principal }}"
-          krb5ConfigGcsUri: "{{ krb5ConfigGcsUri }}"
-        endpointProtocol: "{{ endpointProtocol }}"
-        version: "{{ version }}"
-        auxiliaryVersions: "{{ auxiliaryVersions }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        User-defined labels for the metastore service.
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
     - name: telemetryConfig
       description: |
         Optional. The configuration specifying telemetry settings for the Dataproc Metastore service. If unspecified defaults to JSON.
       value:
         logFormat: "{{ logFormat }}"
-    - name: releaseChannel
-      value: "{{ releaseChannel }}"
+    - name: tier
+      value: "{{ tier }}"
       description: |
-        Immutable. The release channel of the service. If unspecified, defaults to STABLE.
-      valid_values: ['RELEASE_CHANNEL_UNSPECIFIED', 'CANARY', 'STABLE']
-    - name: databaseType
-      value: "{{ databaseType }}"
-      description: |
-        Immutable. The database type that the Metastore service stores its data.
-      valid_values: ['DATABASE_TYPE_UNSPECIFIED', 'MYSQL', 'SPANNER']
-    - name: tags
-      value: "{{ tags }}"
-      description: |
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. The relative resource name of the metastore service, in the following format:projects/{project_number}/locations/{location_id}/services/{service_id}.
-    - name: metadataIntegration
-      description: |
-        Optional. The setting that defines how metastore metadata should be integrated with external services and systems.
-      value:
-        dataCatalogConfig:
-          enabled: {{ enabled }}
-    - name: networkConfig
-      description: |
-        Optional. The configuration specifying the network settings for the Dataproc Metastore service.
-      value:
-        consumers:
-          - subnetwork: "{{ subnetwork }}"
-            endpointUri: "{{ endpointUri }}"
-            endpointLocation: "{{ endpointLocation }}"
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Immutable. The relative resource name of the VPC network on which the instance can be accessed. It is specified in the following form:projects/{project_number}/global/networks/{network_id}.
-    - name: encryptionConfig
-      description: |
-        Immutable. Information used to configure the Dataproc Metastore service to encrypt customer data at rest. Cannot be updated.
-      value:
-        kmsKey: "{{ kmsKey }}"
-    - name: maintenanceWindow
-      description: |
-        Optional. The one hour maintenance window of the metastore service. This specifies when the service can be restarted for maintenance purposes in UTC time. Maintenance window is not needed for services with the SPANNER database type.
-      value:
-        hourOfDay: {{ hourOfDay }}
-        dayOfWeek: "{{ dayOfWeek }}"
-    - name: serviceId
-      value: "{{ serviceId }}"
+        Optional. The tier of the service.
+      valid_values: ['TIER_UNSPECIFIED', 'DEVELOPER', 'ENTERPRISE']
     - name: requestId
       value: "{{ requestId }}"
+    - name: serviceId
+      value: "{{ serviceId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -804,23 +804,23 @@ Updates the parameters of a single service.
 ```sql
 UPDATE google.metastore.services
 SET 
-data__scalingConfig = '{{ scalingConfig }}',
-data__scheduledBackup = '{{ scheduledBackup }}',
-data__tier = '{{ tier }}',
+data__databaseType = '{{ databaseType }}',
 data__deletionProtection = {{ deletionProtection }},
-data__port = {{ port }},
+data__encryptionConfig = '{{ encryptionConfig }}',
 data__hiveMetastoreConfig = '{{ hiveMetastoreConfig }}',
 data__labels = '{{ labels }}',
-data__telemetryConfig = '{{ telemetryConfig }}',
-data__releaseChannel = '{{ releaseChannel }}',
-data__databaseType = '{{ databaseType }}',
-data__tags = '{{ tags }}',
-data__name = '{{ name }}',
+data__maintenanceWindow = '{{ maintenanceWindow }}',
 data__metadataIntegration = '{{ metadataIntegration }}',
-data__networkConfig = '{{ networkConfig }}',
+data__name = '{{ name }}',
 data__network = '{{ network }}',
-data__encryptionConfig = '{{ encryptionConfig }}',
-data__maintenanceWindow = '{{ maintenanceWindow }}'
+data__networkConfig = '{{ networkConfig }}',
+data__port = {{ port }},
+data__releaseChannel = '{{ releaseChannel }}',
+data__scalingConfig = '{{ scalingConfig }}',
+data__scheduledBackup = '{{ scheduledBackup }}',
+data__tags = '{{ tags }}',
+data__telemetryConfig = '{{ telemetryConfig }}',
+data__tier = '{{ tier }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -868,14 +868,14 @@ AND requestId = '{{ requestId }}'
     defaultValue="alter_location"
     values={[
         { label: 'alter_location', value: 'alter_location' },
-        { label: 'move_table_to_database', value: 'move_table_to_database' },
-        { label: 'complete_migration', value: 'complete_migration' },
-        { label: 'restore', value: 'restore' },
         { label: 'alter_table_properties', value: 'alter_table_properties' },
-        { label: 'start_migration', value: 'start_migration' },
         { label: 'cancel_migration', value: 'cancel_migration' },
+        { label: 'complete_migration', value: 'complete_migration' },
         { label: 'export_metadata', value: 'export_metadata' },
-        { label: 'query_metadata', value: 'query_metadata' }
+        { label: 'move_table_to_database', value: 'move_table_to_database' },
+        { label: 'query_metadata', value: 'query_metadata' },
+        { label: 'restore', value: 'restore' },
+        { label: 'start_migration', value: 'start_migration' }
     ]}
 >
 <TabItem value="alter_location">
@@ -889,57 +889,8 @@ EXEC google.metastore.services.alter_location
 @servicesId='{{ servicesId }}' --required 
 @@json=
 '{
-"resourceName": "{{ resourceName }}", 
-"locationUri": "{{ locationUri }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="move_table_to_database">
-
-Move a table to another database.
-
-```sql
-EXEC google.metastore.services.move_table_to_database 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@servicesId='{{ servicesId }}' --required 
-@@json=
-'{
-"dbName": "{{ dbName }}", 
-"destinationDbName": "{{ destinationDbName }}", 
-"tableName": "{{ tableName }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="complete_migration">
-
-Completes the managed migration process. The Dataproc Metastore service will switch to using its own backend database after successful migration.
-
-```sql
-EXEC google.metastore.services.complete_migration 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@servicesId='{{ servicesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="restore">
-
-Restores a service from a backup.
-
-```sql
-EXEC google.metastore.services.restore 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@servicesId='{{ servicesId }}' --required 
-@@json=
-'{
-"backup": "{{ backup }}", 
-"backupLocation": "{{ backupLocation }}", 
-"restoreType": "{{ restoreType }}", 
-"requestId": "{{ requestId }}"
+"locationUri": "{{ locationUri }}", 
+"resourceName": "{{ resourceName }}"
 }'
 ;
 ```
@@ -962,29 +913,24 @@ EXEC google.metastore.services.alter_table_properties
 ;
 ```
 </TabItem>
-<TabItem value="start_migration">
-
-Starts the Managed Migration process.
-
-```sql
-EXEC google.metastore.services.start_migration 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@servicesId='{{ servicesId }}' --required 
-@@json=
-'{
-"migrationExecution": "{{ migrationExecution }}", 
-"requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="cancel_migration">
 
 Cancels the ongoing Managed Migration process.
 
 ```sql
 EXEC google.metastore.services.cancel_migration 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@servicesId='{{ servicesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="complete_migration">
+
+Completes the managed migration process. The Dataproc Metastore service will switch to using its own backend database after successful migration.
+
+```sql
+EXEC google.metastore.services.complete_migration 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @servicesId='{{ servicesId }}' --required
@@ -1009,6 +955,24 @@ EXEC google.metastore.services.export_metadata
 ;
 ```
 </TabItem>
+<TabItem value="move_table_to_database">
+
+Move a table to another database.
+
+```sql
+EXEC google.metastore.services.move_table_to_database 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@servicesId='{{ servicesId }}' --required 
+@@json=
+'{
+"dbName": "{{ dbName }}", 
+"destinationDbName": "{{ destinationDbName }}", 
+"tableName": "{{ tableName }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="query_metadata">
 
 Query Dataproc Metastore metadata.
@@ -1021,6 +985,42 @@ EXEC google.metastore.services.query_metadata
 @@json=
 '{
 "query": "{{ query }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore">
+
+Restores a service from a backup.
+
+```sql
+EXEC google.metastore.services.restore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@servicesId='{{ servicesId }}' --required 
+@@json=
+'{
+"backup": "{{ backup }}", 
+"backupLocation": "{{ backupLocation }}", 
+"requestId": "{{ requestId }}", 
+"restoreType": "{{ restoreType }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="start_migration">
+
+Starts the Managed Migration process.
+
+```sql
+EXEC google.metastore.services.start_migration 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@servicesId='{{ servicesId }}' --required 
+@@json=
+'{
+"migrationExecution": "{{ migrationExecution }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```

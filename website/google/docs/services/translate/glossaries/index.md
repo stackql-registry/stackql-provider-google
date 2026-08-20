@@ -324,20 +324,20 @@ Creates a glossary and returns the long-running operation. Returns NOT_FOUND, if
 
 ```sql
 INSERT INTO google.translate.glossaries (
-data__name,
-data__inputConfig,
-data__languagePair,
-data__languageCodesSet,
 data__displayName,
+data__inputConfig,
+data__languageCodesSet,
+data__languagePair,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ inputConfig }}',
-'{{ languagePair }}',
-'{{ languageCodesSet }}',
 '{{ displayName }}',
+'{{ inputConfig }}',
+'{{ languageCodesSet }}',
+'{{ languagePair }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -360,32 +360,32 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the glossaries resource.
-    - name: name
-      value: "{{ name }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Identifier. The resource name of the glossary. Glossary names have the form \`projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary-id}\`.
+        Optional. The display name of the glossary.
     - name: inputConfig
       description: |
         Required. Provides examples to build the glossary from. Total glossary must not exceed 10M Unicode codepoints.
       value:
         gcsSource:
           inputUri: "{{ inputUri }}"
-    - name: languagePair
-      description: |
-        Used with unidirectional glossaries.
-      value:
-        sourceLanguageCode: "{{ sourceLanguageCode }}"
-        targetLanguageCode: "{{ targetLanguageCode }}"
     - name: languageCodesSet
       description: |
         Used with equivalent term set glossaries.
       value:
         languageCodes:
           - "{{ languageCodes }}"
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: languagePair
       description: |
-        Optional. The display name of the glossary.
+        Used with unidirectional glossaries.
+      value:
+        sourceLanguageCode: "{{ sourceLanguageCode }}"
+        targetLanguageCode: "{{ targetLanguageCode }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the glossary. Glossary names have the form \`projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary-id}\`.
 `}</CodeBlock>
 
 </TabItem>
@@ -407,11 +407,11 @@ Updates a glossary. A LRO is used since the update can be async if the glossary'
 ```sql
 UPDATE google.translate.glossaries
 SET 
-data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__inputConfig = '{{ inputConfig }}',
-data__languagePair = '{{ languagePair }}',
 data__languageCodesSet = '{{ languageCodesSet }}',
-data__displayName = '{{ displayName }}'
+data__languagePair = '{{ languagePair }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

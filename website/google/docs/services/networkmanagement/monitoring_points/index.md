@@ -292,15 +292,8 @@ The following methods are available for this resource:
     <td><a href="#download_install_script"><CopyableCode code="download_install_script" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkMonitoringProvidersId"><code>networkMonitoringProvidersId</code></a></td>
-    <td><a href="#parameter-staticIpAddress.domain"><code>staticIpAddress.domain</code></a>, <a href="#parameter-privateConnectivityEnabled"><code>privateConnectivityEnabled</code></a>, <a href="#parameter-_password"><code>_password</code></a>, <a href="#parameter-timeZone.version"><code>timeZone.version</code></a>, <a href="#parameter-hostname"><code>hostname</code></a>, <a href="#parameter-staticIpAddress.ipAddress"><code>staticIpAddress.ipAddress</code></a>, <a href="#parameter-staticIpAddress.netmask"><code>staticIpAddress.netmask</code></a>, <a href="#parameter-ntpServerAddress"><code>ntpServerAddress</code></a>, <a href="#parameter-ntpServerSecondaryAddress"><code>ntpServerSecondaryAddress</code></a>, <a href="#parameter-staticIpAddress.gatewayAddress"><code>staticIpAddress.gatewayAddress</code></a>, <a href="#parameter-staticIpAddress.dnsServerAddress"><code>staticIpAddress.dnsServerAddress</code></a>, <a href="#parameter-timeZone.id"><code>timeZone.id</code></a>, <a href="#parameter-monitoringPointType"><code>monitoringPointType</code></a>, <a href="#parameter-staticIpAddress.dnsServerSecondaryAddress"><code>staticIpAddress.dnsServerSecondaryAddress</code></a>, <a href="#parameter-useDhcp"><code>useDhcp</code></a></td>
+    <td><a href="#parameter-_password"><code>_password</code></a>, <a href="#parameter-hostname"><code>hostname</code></a>, <a href="#parameter-monitoringPointType"><code>monitoringPointType</code></a>, <a href="#parameter-ntpServerAddress"><code>ntpServerAddress</code></a>, <a href="#parameter-ntpServerSecondaryAddress"><code>ntpServerSecondaryAddress</code></a>, <a href="#parameter-privateConnectivityEnabled"><code>privateConnectivityEnabled</code></a>, <a href="#parameter-staticIpAddress.dnsServerAddress"><code>staticIpAddress.dnsServerAddress</code></a>, <a href="#parameter-staticIpAddress.dnsServerSecondaryAddress"><code>staticIpAddress.dnsServerSecondaryAddress</code></a>, <a href="#parameter-staticIpAddress.domain"><code>staticIpAddress.domain</code></a>, <a href="#parameter-staticIpAddress.gatewayAddress"><code>staticIpAddress.gatewayAddress</code></a>, <a href="#parameter-staticIpAddress.ipAddress"><code>staticIpAddress.ipAddress</code></a>, <a href="#parameter-staticIpAddress.netmask"><code>staticIpAddress.netmask</code></a>, <a href="#parameter-timeZone.id"><code>timeZone.id</code></a>, <a href="#parameter-timeZone.version"><code>timeZone.version</code></a>, <a href="#parameter-useDhcp"><code>useDhcp</code></a></td>
     <td>Downloads an install script for MonitoringPoints for a given network monitoring provider.</td>
-</tr>
-<tr>
-    <td><a href="#download_server_connect_config"><CopyableCode code="download_server_connect_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkMonitoringProvidersId"><code>networkMonitoringProvidersId</code></a></td>
-    <td></td>
-    <td>Downloads the server connect configuration for a given network monitoring provider.</td>
 </tr>
 <tr>
     <td><a href="#download_recreate_install_script"><CopyableCode code="download_recreate_install_script" /></a></td>
@@ -308,6 +301,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkMonitoringProvidersId"><code>networkMonitoringProvidersId</code></a>, <a href="#parameter-monitoringPointsId"><code>monitoringPointsId</code></a></td>
     <td><a href="#parameter-hostname"><code>hostname</code></a></td>
     <td>Downloads an install script for a specific Container MonitoringPoint.</td>
+</tr>
+<tr>
+    <td><a href="#download_server_connect_config"><CopyableCode code="download_server_connect_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkMonitoringProvidersId"><code>networkMonitoringProvidersId</code></a></td>
+    <td></td>
+    <td>Downloads the server connect configuration for a given network monitoring provider.</td>
 </tr>
 </tbody>
 </table>
@@ -518,8 +518,8 @@ AND pageToken = '{{ pageToken }}'
     defaultValue="download_install_script"
     values={[
         { label: 'download_install_script', value: 'download_install_script' },
-        { label: 'download_server_connect_config', value: 'download_server_connect_config' },
-        { label: 'download_recreate_install_script', value: 'download_recreate_install_script' }
+        { label: 'download_recreate_install_script', value: 'download_recreate_install_script' },
+        { label: 'download_server_connect_config', value: 'download_server_connect_config' }
     ]}
 >
 <TabItem value="download_install_script">
@@ -531,33 +531,21 @@ EXEC google.networkmanagement.monitoring_points.download_install_script
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @networkMonitoringProvidersId='{{ networkMonitoringProvidersId }}' --required, 
-@staticIpAddress.domain='{{ staticIpAddress.domain }}', 
-@privateConnectivityEnabled={{ privateConnectivityEnabled }}, 
 @_password='{{ _password }}', 
-@timeZone.version='{{ timeZone.version }}', 
 @hostname='{{ hostname }}', 
-@staticIpAddress.ipAddress='{{ staticIpAddress.ipAddress }}', 
-@staticIpAddress.netmask='{{ staticIpAddress.netmask }}', 
+@monitoringPointType='{{ monitoringPointType }}', 
 @ntpServerAddress='{{ ntpServerAddress }}', 
 @ntpServerSecondaryAddress='{{ ntpServerSecondaryAddress }}', 
-@staticIpAddress.gatewayAddress='{{ staticIpAddress.gatewayAddress }}', 
+@privateConnectivityEnabled={{ privateConnectivityEnabled }}, 
 @staticIpAddress.dnsServerAddress='{{ staticIpAddress.dnsServerAddress }}', 
-@timeZone.id='{{ timeZone.id }}', 
-@monitoringPointType='{{ monitoringPointType }}', 
 @staticIpAddress.dnsServerSecondaryAddress='{{ staticIpAddress.dnsServerSecondaryAddress }}', 
+@staticIpAddress.domain='{{ staticIpAddress.domain }}', 
+@staticIpAddress.gatewayAddress='{{ staticIpAddress.gatewayAddress }}', 
+@staticIpAddress.ipAddress='{{ staticIpAddress.ipAddress }}', 
+@staticIpAddress.netmask='{{ staticIpAddress.netmask }}', 
+@timeZone.id='{{ timeZone.id }}', 
+@timeZone.version='{{ timeZone.version }}', 
 @useDhcp={{ useDhcp }}
-;
-```
-</TabItem>
-<TabItem value="download_server_connect_config">
-
-Downloads the server connect configuration for a given network monitoring provider.
-
-```sql
-EXEC google.networkmanagement.monitoring_points.download_server_connect_config 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@networkMonitoringProvidersId='{{ networkMonitoringProvidersId }}' --required
 ;
 ```
 </TabItem>
@@ -572,6 +560,18 @@ EXEC google.networkmanagement.monitoring_points.download_recreate_install_script
 @networkMonitoringProvidersId='{{ networkMonitoringProvidersId }}' --required, 
 @monitoringPointsId='{{ monitoringPointsId }}' --required, 
 @hostname='{{ hostname }}'
+;
+```
+</TabItem>
+<TabItem value="download_server_connect_config">
+
+Downloads the server connect configuration for a given network monitoring provider.
+
+```sql
+EXEC google.networkmanagement.monitoring_points.download_server_connect_config 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@networkMonitoringProvidersId='{{ networkMonitoringProvidersId }}' --required
 ;
 ```
 </TabItem>

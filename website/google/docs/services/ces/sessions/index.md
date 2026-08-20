@@ -51,11 +51,11 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#stream_run_session"><CopyableCode code="stream_run_session" /></a></td>
+    <td><a href="#generate_chat_token"><CopyableCode code="generate_chat_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
-    <td>Initiates a single-turn interaction with the CES agent. Uses server-side streaming to deliver incremental results and partial responses as they are generated. By default, complete responses (e.g., messages from callbacks or full LLM responses) are sent to the client as soon as they are available. To enable streaming individual text chunks directly from the model, set enable_text_streaming to true.</td>
+    <td>Generates a session scoped token for chat widget to authenticate with Session APIs.</td>
 </tr>
 <tr>
     <td><a href="#run_session"><CopyableCode code="run_session" /></a></td>
@@ -65,11 +65,11 @@ The following methods are available for this resource:
     <td>Initiates a single-turn interaction with the CES agent within a session.</td>
 </tr>
 <tr>
-    <td><a href="#generate_chat_token"><CopyableCode code="generate_chat_token" /></a></td>
+    <td><a href="#stream_run_session"><CopyableCode code="stream_run_session" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
-    <td>Generates a session scoped token for chat widget to authenticate with Session APIs.</td>
+    <td>Initiates a single-turn interaction with the CES agent. Uses server-side streaming to deliver incremental results and partial responses as they are generated. By default, complete responses (e.g., messages from callbacks or full LLM responses) are sent to the client as soon as they are available. To enable streaming individual text chunks directly from the model, set enable_text_streaming to true.</td>
 </tr>
 </tbody>
 </table>
@@ -113,27 +113,28 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="stream_run_session"
+    defaultValue="generate_chat_token"
     values={[
-        { label: 'stream_run_session', value: 'stream_run_session' },
+        { label: 'generate_chat_token', value: 'generate_chat_token' },
         { label: 'run_session', value: 'run_session' },
-        { label: 'generate_chat_token', value: 'generate_chat_token' }
+        { label: 'stream_run_session', value: 'stream_run_session' }
     ]}
 >
-<TabItem value="stream_run_session">
+<TabItem value="generate_chat_token">
 
-Initiates a single-turn interaction with the CES agent. Uses server-side streaming to deliver incremental results and partial responses as they are generated. By default, complete responses (e.g., messages from callbacks or full LLM responses) are sent to the client as soon as they are available. To enable streaming individual text chunks directly from the model, set enable_text_streaming to true.
+Generates a session scoped token for chat widget to authenticate with Session APIs.
 
 ```sql
-EXEC google.ces.sessions.stream_run_session 
+EXEC google.ces.sessions.generate_chat_token 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @appsId='{{ appsId }}' --required, 
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"config": "{{ config }}", 
-"inputs": "{{ inputs }}"
+"deployment": "{{ deployment }}", 
+"liveHandoffEnabled": {{ liveHandoffEnabled }}, 
+"recaptchaToken": "{{ recaptchaToken }}"
 }'
 ;
 ```
@@ -156,21 +157,20 @@ EXEC google.ces.sessions.run_session
 ;
 ```
 </TabItem>
-<TabItem value="generate_chat_token">
+<TabItem value="stream_run_session">
 
-Generates a session scoped token for chat widget to authenticate with Session APIs.
+Initiates a single-turn interaction with the CES agent. Uses server-side streaming to deliver incremental results and partial responses as they are generated. By default, complete responses (e.g., messages from callbacks or full LLM responses) are sent to the client as soon as they are available. To enable streaming individual text chunks directly from the model, set enable_text_streaming to true.
 
 ```sql
-EXEC google.ces.sessions.generate_chat_token 
+EXEC google.ces.sessions.stream_run_session 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @appsId='{{ appsId }}' --required, 
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"liveHandoffEnabled": {{ liveHandoffEnabled }}, 
-"deployment": "{{ deployment }}", 
-"recaptchaToken": "{{ recaptchaToken }}"
+"config": "{{ config }}", 
+"inputs": "{{ inputs }}"
 }'
 ;
 ```

@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about the supported locations for this service. This method can be called in two ways: * **List all public locations:** Use the path `GET /v1/locations`. * **List project-visible locations:** Use the path `GET /v1/projects/&#123;project_id&#125;/locations`. This may include public locations as well as private or other locations specifically visible to the project.</td>
 </tr>
 <tr>
@@ -243,9 +243,9 @@ locationId,
 metadata
 FROM google.tpu.locations
 WHERE projectsId = '{{ projectsId }}' -- required
+AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```

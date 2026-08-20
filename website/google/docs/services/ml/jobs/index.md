@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_jobs_list"><CopyableCode code="projects_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the jobs in the project. If there are no jobs that match the request parameters, the list request returns an empty response body: &#123;&#125;.</td>
 </tr>
 <tr>
@@ -353,9 +353,9 @@ trainingInput,
 trainingOutput
 FROM google.ml.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -377,32 +377,32 @@ Creates a training or a batch prediction job.
 
 ```sql
 INSERT INTO google.ml.jobs (
-data__trainingInput,
-data__state,
+data__createTime,
+data__endTime,
 data__errorMessage,
-data__predictionOutput,
 data__etag,
 data__jobId,
-data__startTime,
-data__predictionInput,
-data__createTime,
 data__labels,
-data__endTime,
+data__predictionInput,
+data__predictionOutput,
+data__startTime,
+data__state,
+data__trainingInput,
 data__trainingOutput,
 projectsId
 )
 SELECT 
-'{{ trainingInput }}',
-'{{ state }}',
+'{{ createTime }}',
+'{{ endTime }}',
 '{{ errorMessage }}',
-'{{ predictionOutput }}',
 '{{ etag }}',
 '{{ jobId }}',
-'{{ startTime }}',
-'{{ predictionInput }}',
-'{{ createTime }}',
 '{{ labels }}',
-'{{ endTime }}',
+'{{ predictionInput }}',
+'{{ predictionOutput }}',
+'{{ startTime }}',
+'{{ state }}',
+'{{ trainingInput }}',
 '{{ trainingOutput }}',
 '{{ projectsId }}'
 RETURNING
@@ -430,123 +430,18 @@ trainingOutput
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the jobs resource.
-    - name: trainingInput
+    - name: createTime
+      value: "{{ createTime }}"
       description: |
-        Input parameters to create a training job.
-      value:
-        enableWebAccess: {{ enableWebAccess }}
-        network: "{{ network }}"
-        useChiefInTfConfig: {{ useChiefInTfConfig }}
-        scaleTier: "{{ scaleTier }}"
-        masterConfig:
-          containerCommand:
-            - "{{ containerCommand }}"
-          tpuTfVersion: "{{ tpuTfVersion }}"
-          diskConfig:
-            bootDiskType: "{{ bootDiskType }}"
-            bootDiskSizeGb: {{ bootDiskSizeGb }}
-          acceleratorConfig:
-            count: "{{ count }}"
-            type: "{{ type }}"
-          containerArgs:
-            - "{{ containerArgs }}"
-          imageUri: "{{ imageUri }}"
-        region: "{{ region }}"
-        args:
-          - "{{ args }}"
-        runtimeVersion: "{{ runtimeVersion }}"
-        encryptionConfig:
-          kmsKeyName: "{{ kmsKeyName }}"
-        hyperparameters:
-          algorithm: "{{ algorithm }}"
-          params:
-            - categoricalValues: "{{ categoricalValues }}"
-              scaleType: "{{ scaleType }}"
-              discreteValues: "{{ discreteValues }}"
-              type: "{{ type }}"
-              parameterName: "{{ parameterName }}"
-              maxValue: {{ maxValue }}
-              minValue: {{ minValue }}
-          maxParallelTrials: {{ maxParallelTrials }}
-          maxFailedTrials: {{ maxFailedTrials }}
-          goal: "{{ goal }}"
-          maxTrials: {{ maxTrials }}
-          resumePreviousJobId: "{{ resumePreviousJobId }}"
-          hyperparameterMetricTag: "{{ hyperparameterMetricTag }}"
-          enableTrialEarlyStopping: {{ enableTrialEarlyStopping }}
-        evaluatorType: "{{ evaluatorType }}"
-        pythonModule: "{{ pythonModule }}"
-        workerCount: "{{ workerCount }}"
-        evaluatorConfig:
-          containerCommand:
-            - "{{ containerCommand }}"
-          tpuTfVersion: "{{ tpuTfVersion }}"
-          diskConfig:
-            bootDiskType: "{{ bootDiskType }}"
-            bootDiskSizeGb: {{ bootDiskSizeGb }}
-          acceleratorConfig:
-            count: "{{ count }}"
-            type: "{{ type }}"
-          containerArgs:
-            - "{{ containerArgs }}"
-          imageUri: "{{ imageUri }}"
-        parameterServerConfig:
-          containerCommand:
-            - "{{ containerCommand }}"
-          tpuTfVersion: "{{ tpuTfVersion }}"
-          diskConfig:
-            bootDiskType: "{{ bootDiskType }}"
-            bootDiskSizeGb: {{ bootDiskSizeGb }}
-          acceleratorConfig:
-            count: "{{ count }}"
-            type: "{{ type }}"
-          containerArgs:
-            - "{{ containerArgs }}"
-          imageUri: "{{ imageUri }}"
-        workerType: "{{ workerType }}"
-        packageUris:
-          - "{{ packageUris }}"
-        serviceAccount: "{{ serviceAccount }}"
-        masterType: "{{ masterType }}"
-        jobDir: "{{ jobDir }}"
-        workerConfig:
-          containerCommand:
-            - "{{ containerCommand }}"
-          tpuTfVersion: "{{ tpuTfVersion }}"
-          diskConfig:
-            bootDiskType: "{{ bootDiskType }}"
-            bootDiskSizeGb: {{ bootDiskSizeGb }}
-          acceleratorConfig:
-            count: "{{ count }}"
-            type: "{{ type }}"
-          containerArgs:
-            - "{{ containerArgs }}"
-          imageUri: "{{ imageUri }}"
-        scheduling:
-          maxRunningTime: "{{ maxRunningTime }}"
-          priority: {{ priority }}
-          maxWaitTime: "{{ maxWaitTime }}"
-        pythonVersion: "{{ pythonVersion }}"
-        parameterServerCount: "{{ parameterServerCount }}"
-        evaluatorCount: "{{ evaluatorCount }}"
-        parameterServerType: "{{ parameterServerType }}"
-    - name: state
-      value: "{{ state }}"
+        Output only. When the job was created.
+    - name: endTime
+      value: "{{ endTime }}"
       description: |
-        Output only. The detailed state of a job.
-      valid_values: ['STATE_UNSPECIFIED', 'QUEUED', 'PREPARING', 'RUNNING', 'SUCCEEDED', 'FAILED', 'CANCELLING', 'CANCELLED']
+        Output only. When the job processing was completed.
     - name: errorMessage
       value: "{{ errorMessage }}"
       description: |
         Output only. The details of a failure or a cancellation.
-    - name: predictionOutput
-      description: |
-        The current prediction job result.
-      value:
-        errorCount: "{{ errorCount }}"
-        nodeHours: {{ nodeHours }}
-        predictionCount: "{{ predictionCount }}"
-        outputPath: "{{ outputPath }}"
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -555,70 +450,175 @@ trainingOutput
       value: "{{ jobId }}"
       description: |
         Required. The user-specified id of the job.
-    - name: startTime
-      value: "{{ startTime }}"
-      description: |
-        Output only. When the job processing was started.
-    - name: predictionInput
-      description: |
-        Input parameters to create a prediction job.
-      value:
-        maxWorkerCount: "{{ maxWorkerCount }}"
-        outputPath: "{{ outputPath }}"
-        dataFormat: "{{ dataFormat }}"
-        signatureName: "{{ signatureName }}"
-        outputDataFormat: "{{ outputDataFormat }}"
-        inputPaths:
-          - "{{ inputPaths }}"
-        runtimeVersion: "{{ runtimeVersion }}"
-        batchSize: "{{ batchSize }}"
-        region: "{{ region }}"
-        versionName: "{{ versionName }}"
-        modelName: "{{ modelName }}"
-        uri: "{{ uri }}"
-    - name: createTime
-      value: "{{ createTime }}"
-      description: |
-        Output only. When the job was created.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. One or more labels that you can add, to organize your jobs. Each label is a key-value pair, where both the key and the value are arbitrary strings that you supply. For more information, see the documentation on using labels.
-    - name: endTime
-      value: "{{ endTime }}"
+    - name: predictionInput
       description: |
-        Output only. When the job processing was completed.
+        Input parameters to create a prediction job.
+      value:
+        batchSize: "{{ batchSize }}"
+        dataFormat: "{{ dataFormat }}"
+        inputPaths:
+          - "{{ inputPaths }}"
+        maxWorkerCount: "{{ maxWorkerCount }}"
+        modelName: "{{ modelName }}"
+        outputDataFormat: "{{ outputDataFormat }}"
+        outputPath: "{{ outputPath }}"
+        region: "{{ region }}"
+        runtimeVersion: "{{ runtimeVersion }}"
+        signatureName: "{{ signatureName }}"
+        uri: "{{ uri }}"
+        versionName: "{{ versionName }}"
+    - name: predictionOutput
+      description: |
+        The current prediction job result.
+      value:
+        errorCount: "{{ errorCount }}"
+        nodeHours: {{ nodeHours }}
+        outputPath: "{{ outputPath }}"
+        predictionCount: "{{ predictionCount }}"
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Output only. When the job processing was started.
+    - name: state
+      value: "{{ state }}"
+      description: |
+        Output only. The detailed state of a job.
+      valid_values: ['STATE_UNSPECIFIED', 'QUEUED', 'PREPARING', 'RUNNING', 'SUCCEEDED', 'FAILED', 'CANCELLING', 'CANCELLED']
+    - name: trainingInput
+      description: |
+        Input parameters to create a training job.
+      value:
+        args:
+          - "{{ args }}"
+        enableWebAccess: {{ enableWebAccess }}
+        encryptionConfig:
+          kmsKeyName: "{{ kmsKeyName }}"
+        evaluatorConfig:
+          acceleratorConfig:
+            count: "{{ count }}"
+            type: "{{ type }}"
+          containerArgs:
+            - "{{ containerArgs }}"
+          containerCommand:
+            - "{{ containerCommand }}"
+          diskConfig:
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            bootDiskType: "{{ bootDiskType }}"
+          imageUri: "{{ imageUri }}"
+          tpuTfVersion: "{{ tpuTfVersion }}"
+        evaluatorCount: "{{ evaluatorCount }}"
+        evaluatorType: "{{ evaluatorType }}"
+        hyperparameters:
+          algorithm: "{{ algorithm }}"
+          enableTrialEarlyStopping: {{ enableTrialEarlyStopping }}
+          goal: "{{ goal }}"
+          hyperparameterMetricTag: "{{ hyperparameterMetricTag }}"
+          maxFailedTrials: {{ maxFailedTrials }}
+          maxParallelTrials: {{ maxParallelTrials }}
+          maxTrials: {{ maxTrials }}
+          params:
+            - categoricalValues: "{{ categoricalValues }}"
+              discreteValues: "{{ discreteValues }}"
+              maxValue: {{ maxValue }}
+              minValue: {{ minValue }}
+              parameterName: "{{ parameterName }}"
+              scaleType: "{{ scaleType }}"
+              type: "{{ type }}"
+          resumePreviousJobId: "{{ resumePreviousJobId }}"
+        jobDir: "{{ jobDir }}"
+        masterConfig:
+          acceleratorConfig:
+            count: "{{ count }}"
+            type: "{{ type }}"
+          containerArgs:
+            - "{{ containerArgs }}"
+          containerCommand:
+            - "{{ containerCommand }}"
+          diskConfig:
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            bootDiskType: "{{ bootDiskType }}"
+          imageUri: "{{ imageUri }}"
+          tpuTfVersion: "{{ tpuTfVersion }}"
+        masterType: "{{ masterType }}"
+        network: "{{ network }}"
+        packageUris:
+          - "{{ packageUris }}"
+        parameterServerConfig:
+          acceleratorConfig:
+            count: "{{ count }}"
+            type: "{{ type }}"
+          containerArgs:
+            - "{{ containerArgs }}"
+          containerCommand:
+            - "{{ containerCommand }}"
+          diskConfig:
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            bootDiskType: "{{ bootDiskType }}"
+          imageUri: "{{ imageUri }}"
+          tpuTfVersion: "{{ tpuTfVersion }}"
+        parameterServerCount: "{{ parameterServerCount }}"
+        parameterServerType: "{{ parameterServerType }}"
+        pythonModule: "{{ pythonModule }}"
+        pythonVersion: "{{ pythonVersion }}"
+        region: "{{ region }}"
+        runtimeVersion: "{{ runtimeVersion }}"
+        scaleTier: "{{ scaleTier }}"
+        scheduling:
+          maxRunningTime: "{{ maxRunningTime }}"
+          maxWaitTime: "{{ maxWaitTime }}"
+          priority: {{ priority }}
+        serviceAccount: "{{ serviceAccount }}"
+        useChiefInTfConfig: {{ useChiefInTfConfig }}
+        workerConfig:
+          acceleratorConfig:
+            count: "{{ count }}"
+            type: "{{ type }}"
+          containerArgs:
+            - "{{ containerArgs }}"
+          containerCommand:
+            - "{{ containerCommand }}"
+          diskConfig:
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+            bootDiskType: "{{ bootDiskType }}"
+          imageUri: "{{ imageUri }}"
+          tpuTfVersion: "{{ tpuTfVersion }}"
+        workerCount: "{{ workerCount }}"
+        workerType: "{{ workerType }}"
     - name: trainingOutput
       description: |
         The current training job result.
       value:
         builtInAlgorithmOutput:
           framework: "{{ framework }}"
-          runtimeVersion: "{{ runtimeVersion }}"
-          pythonVersion: "{{ pythonVersion }}"
           modelPath: "{{ modelPath }}"
+          pythonVersion: "{{ pythonVersion }}"
+          runtimeVersion: "{{ runtimeVersion }}"
         completedTrialCount: "{{ completedTrialCount }}"
-        isBuiltInAlgorithmJob: {{ isBuiltInAlgorithmJob }}
         consumedMLUnits: {{ consumedMLUnits }}
-        isHyperparameterTuningJob: {{ isHyperparameterTuningJob }}
         hyperparameterMetricTag: "{{ hyperparameterMetricTag }}"
+        isBuiltInAlgorithmJob: {{ isBuiltInAlgorithmJob }}
+        isHyperparameterTuningJob: {{ isHyperparameterTuningJob }}
         trials:
-          - webAccessUris: "{{ webAccessUris }}"
+          - allMetrics: "{{ allMetrics }}"
             builtInAlgorithmOutput:
               framework: "{{ framework }}"
-              runtimeVersion: "{{ runtimeVersion }}"
-              pythonVersion: "{{ pythonVersion }}"
               modelPath: "{{ modelPath }}"
-            isTrialStoppedEarly: {{ isTrialStoppedEarly }}
+              pythonVersion: "{{ pythonVersion }}"
+              runtimeVersion: "{{ runtimeVersion }}"
             endTime: "{{ endTime }}"
-            trialId: "{{ trialId }}"
-            state: "{{ state }}"
-            allMetrics: "{{ allMetrics }}"
-            hyperparameters: "{{ hyperparameters }}"
-            startTime: "{{ startTime }}"
             finalMetric:
               objectiveValue: {{ objectiveValue }}
               trainingStep: "{{ trainingStep }}"
+            hyperparameters: "{{ hyperparameters }}"
+            isTrialStoppedEarly: {{ isTrialStoppedEarly }}
+            startTime: "{{ startTime }}"
+            state: "{{ state }}"
+            trialId: "{{ trialId }}"
+            webAccessUris: "{{ webAccessUris }}"
         webAccessUris: "{{ webAccessUris }}"
 `}</CodeBlock>
 
@@ -641,17 +641,17 @@ Updates a specific job resource. Currently the only supported fields to update a
 ```sql
 UPDATE google.ml.jobs
 SET 
-data__trainingInput = '{{ trainingInput }}',
-data__state = '{{ state }}',
+data__createTime = '{{ createTime }}',
+data__endTime = '{{ endTime }}',
 data__errorMessage = '{{ errorMessage }}',
-data__predictionOutput = '{{ predictionOutput }}',
 data__etag = '{{ etag }}',
 data__jobId = '{{ jobId }}',
-data__startTime = '{{ startTime }}',
-data__predictionInput = '{{ predictionInput }}',
-data__createTime = '{{ createTime }}',
 data__labels = '{{ labels }}',
-data__endTime = '{{ endTime }}',
+data__predictionInput = '{{ predictionInput }}',
+data__predictionOutput = '{{ predictionOutput }}',
+data__startTime = '{{ startTime }}',
+data__state = '{{ state }}',
+data__trainingInput = '{{ trainingInput }}',
 data__trainingOutput = '{{ trainingOutput }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

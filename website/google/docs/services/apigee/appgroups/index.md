@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_appgroups_list"><CopyableCode code="organizations_appgroups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all AppGroups in an organization. A maximum of 1000 AppGroups are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.</td>
 </tr>
 <tr>
@@ -330,8 +330,8 @@ status
 FROM google.apigee.appgroups
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -353,25 +353,25 @@ Creates an AppGroup. Once created, user can register apps under the AppGroup to 
 
 ```sql
 INSERT INTO google.apigee.appgroups (
+data__attributes,
+data__channelId,
 data__channelUri,
 data__displayName,
-data__channelId,
 data__email,
+data__name,
 data__organization,
 data__status,
-data__name,
-data__attributes,
 organizationsId
 )
 SELECT 
+'{{ attributes }}',
+'{{ channelId }}',
 '{{ channelUri }}',
 '{{ displayName }}',
-'{{ channelId }}',
 '{{ email }}',
+'{{ name }}',
 '{{ organization }}',
 '{{ status }}',
-'{{ name }}',
-'{{ attributes }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -396,6 +396,16 @@ status
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the appgroups resource.
+    - name: attributes
+      description: |
+        A list of attributes
+      value:
+        - name: "{{ name }}"
+          value: "{{ value }}"
+    - name: channelId
+      value: "{{ channelId }}"
+      description: |
+        channel identifier identifies the owner maintaing this grouping.
     - name: channelUri
       value: "{{ channelUri }}"
       description: |
@@ -404,14 +414,14 @@ status
       value: "{{ displayName }}"
       description: |
         app group name displayed in the UI
-    - name: channelId
-      value: "{{ channelId }}"
-      description: |
-        channel identifier identifies the owner maintaing this grouping.
     - name: email
       value: "{{ email }}"
       description: |
         Optional. Email of the AppGroup.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Name of the AppGroup. Characters you can use in the name are restricted to: A-Z0-9._-$ %.
     - name: organization
       value: "{{ organization }}"
       description: |
@@ -420,16 +430,6 @@ status
       value: "{{ status }}"
       description: |
         Valid values are \`active\` or \`inactive\`. Note that the status of the AppGroup should be updated via UpdateAppGroupRequest by setting the action as \`active\` or \`inactive\`.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Name of the AppGroup. Characters you can use in the name are restricted to: A-Z0-9._-$ %.
-    - name: attributes
-      description: |
-        A list of attributes
-      value:
-        - name: "{{ name }}"
-          value: "{{ value }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -451,14 +451,14 @@ Updates an AppGroup. This API replaces the existing AppGroup details with those 
 ```sql
 REPLACE google.apigee.appgroups
 SET 
+data__attributes = '{{ attributes }}',
+data__channelId = '{{ channelId }}',
 data__channelUri = '{{ channelUri }}',
 data__displayName = '{{ displayName }}',
-data__channelId = '{{ channelId }}',
 data__email = '{{ email }}',
-data__organization = '{{ organization }}',
-data__status = '{{ status }}',
 data__name = '{{ name }}',
-data__attributes = '{{ attributes }}'
+data__organization = '{{ organization }}',
+data__status = '{{ status }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND appgroupsId = '{{ appgroupsId }}' --required

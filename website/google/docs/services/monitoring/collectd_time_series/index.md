@@ -96,14 +96,14 @@ Cloud Monitoring Agent only: Creates a new time series.This method is only for u
 
 ```sql
 INSERT INTO google.monitoring.collectd_time_series (
-data__collectdVersion,
 data__collectdPayloads,
+data__collectdVersion,
 data__resource,
 projectsId
 )
 SELECT 
-'{{ collectdVersion }}',
 '{{ collectdPayloads }}',
+'{{ collectdVersion }}',
 '{{ resource }}',
 '{{ projectsId }}'
 RETURNING
@@ -120,22 +120,22 @@ summary
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the collectd_time_series resource.
-    - name: collectdVersion
-      value: "{{ collectdVersion }}"
-      description: |
-        The version of collectd that collected the data. Example: "5.3.0-192.el6".
     - name: collectdPayloads
       description: |
         The collectd payloads representing the time series data. You must not include more than a single point for each time series, so no two payloads can have the same values for all of the fields plugin, plugin_instance, type, and type_instance.
       value:
-        - pluginInstance: "{{ pluginInstance }}"
-          startTime: "{{ startTime }}"
-          endTime: "{{ endTime }}"
-          type: "{{ type }}"
+        - endTime: "{{ endTime }}"
           metadata: "{{ metadata }}"
-          values: "{{ values }}"
-          typeInstance: "{{ typeInstance }}"
           plugin: "{{ plugin }}"
+          pluginInstance: "{{ pluginInstance }}"
+          startTime: "{{ startTime }}"
+          type: "{{ type }}"
+          typeInstance: "{{ typeInstance }}"
+          values: "{{ values }}"
+    - name: collectdVersion
+      value: "{{ collectdVersion }}"
+      description: |
+        The version of collectd that collected the data. Example: "5.3.0-192.el6".
     - name: resource
       description: |
         The monitored resource associated with the time series.

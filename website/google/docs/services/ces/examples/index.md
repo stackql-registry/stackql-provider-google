@@ -359,24 +359,24 @@ Creates a new example in the given app.
 
 ```sql
 INSERT INTO google.ces.examples (
-data__name,
-data__displayName,
 data__description,
-data__messages,
-data__etag,
+data__displayName,
 data__entryAgent,
+data__etag,
+data__messages,
+data__name,
 projectsId,
 locationsId,
 appsId,
 exampleId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
-'{{ messages }}',
-'{{ etag }}',
+'{{ displayName }}',
 '{{ entryAgent }}',
+'{{ etag }}',
+'{{ messages }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ appsId }}',
@@ -408,18 +408,22 @@ updateTime
     - name: appsId
       value: "{{ appsId }}"
       description: Required parameter for the examples resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The unique identifier of the example. Format: \`projects/{project}/locations/{location}/apps/{app}/examples/{example}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Display name of the example.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Human-readable description of the example.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name of the example.
+    - name: entryAgent
+      value: "{{ entryAgent }}"
+      description: |
+        Optional. The agent that initially handles the conversation. If not specified, the example represents a conversation that is handled by the root agent. Format: \`projects/{project}/locations/{location}/apps/{app}/agents/{agent}\`
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Etag used to ensure the object hasn't changed during a read-modify-write operation. If the etag is empty, the update will overwrite any concurrent changes.
     - name: messages
       description: |
         Optional. The collection of messages that make up the conversation.
@@ -427,14 +431,10 @@ updateTime
         - chunks: "{{ chunks }}"
           eventTime: "{{ eventTime }}"
           role: "{{ role }}"
-    - name: etag
-      value: "{{ etag }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Etag used to ensure the object hasn't changed during a read-modify-write operation. If the etag is empty, the update will overwrite any concurrent changes.
-    - name: entryAgent
-      value: "{{ entryAgent }}"
-      description: |
-        Optional. The agent that initially handles the conversation. If not specified, the example represents a conversation that is handled by the root agent. Format: \`projects/{project}/locations/{location}/apps/{app}/agents/{agent}\`
+        Identifier. The unique identifier of the example. Format: \`projects/{project}/locations/{location}/apps/{app}/examples/{example}\`
     - name: exampleId
       value: "{{ exampleId }}"
 `}</CodeBlock>
@@ -458,12 +458,12 @@ Updates the specified example.
 ```sql
 UPDATE google.ces.examples
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__messages = '{{ messages }}',
+data__displayName = '{{ displayName }}',
+data__entryAgent = '{{ entryAgent }}',
 data__etag = '{{ etag }}',
-data__entryAgent = '{{ entryAgent }}'
+data__messages = '{{ messages }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

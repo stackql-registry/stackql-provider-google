@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all instances in a given project and location.</td>
 </tr>
 <tr>
@@ -270,18 +270,18 @@ The following methods are available for this resource:
     <td>Deletes a single instance.</td>
 </tr>
 <tr>
-    <td><a href="#import_data"><CopyableCode code="import_data" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Copies data from Cloud Storage to Parallelstore.</td>
-</tr>
-<tr>
     <td><a href="#export_data"><CopyableCode code="export_data" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Copies data from Parallelstore to Cloud Storage.</td>
+</tr>
+<tr>
+    <td><a href="#import_data"><CopyableCode code="import_data" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Copies data from Cloud Storage to Parallelstore.</td>
 </tr>
 </tbody>
 </table>
@@ -413,10 +413,10 @@ updateTime
 FROM google.parallelstore.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -438,30 +438,30 @@ Creates a Parallelstore instance in a given project and location.
 
 ```sql
 INSERT INTO google.parallelstore.instances (
-data__network,
 data__capacityGib,
 data__deploymentType,
-data__directoryStripeLevel,
-data__name,
-data__fileStripeLevel,
-data__reservedIpRange,
 data__description,
+data__directoryStripeLevel,
+data__fileStripeLevel,
 data__labels,
+data__name,
+data__network,
+data__reservedIpRange,
 projectsId,
 locationsId,
 instanceId,
 requestId
 )
 SELECT 
-'{{ network }}',
 '{{ capacityGib }}',
 '{{ deploymentType }}',
-'{{ directoryStripeLevel }}',
-'{{ name }}',
-'{{ fileStripeLevel }}',
-'{{ reservedIpRange }}',
 '{{ description }}',
+'{{ directoryStripeLevel }}',
+'{{ fileStripeLevel }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ network }}',
+'{{ reservedIpRange }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}',
@@ -486,10 +486,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Optional. Immutable. The name of the Compute Engine [VPC network](https://cloud.google.com/vpc/docs/vpc) to which the instance is connected.
     - name: capacityGib
       value: "{{ capacityGib }}"
       description: |
@@ -499,32 +495,36 @@ response
       description: |
         Optional. Immutable. The deployment type of the instance. Allowed values are: * \`SCRATCH\`: the instance is a scratch instance. * \`PERSISTENT\`: the instance is a persistent instance.
       valid_values: ['DEPLOYMENT_TYPE_UNSPECIFIED', 'SCRATCH', 'PERSISTENT']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the instance. 2048 characters or less.
     - name: directoryStripeLevel
       value: "{{ directoryStripeLevel }}"
       description: |
         Optional. Immutable. Stripe level for directories. Allowed values are: * \`DIRECTORY_STRIPE_LEVEL_MIN\`: recommended when directories contain a small number of files. * \`DIRECTORY_STRIPE_LEVEL_BALANCED\`: balances performance for workloads involving a mix of small and large directories. * \`DIRECTORY_STRIPE_LEVEL_MAX\`: recommended for directories with a large number of files.
       valid_values: ['DIRECTORY_STRIPE_LEVEL_UNSPECIFIED', 'DIRECTORY_STRIPE_LEVEL_MIN', 'DIRECTORY_STRIPE_LEVEL_BALANCED', 'DIRECTORY_STRIPE_LEVEL_MAX']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the instance, in the format \`projects/{project}/locations/{location}/instances/{instance_id}\`.
     - name: fileStripeLevel
       value: "{{ fileStripeLevel }}"
       description: |
         Optional. Immutable. Stripe level for files. Allowed values are: * \`FILE_STRIPE_LEVEL_MIN\`: offers the best performance for small size files. * \`FILE_STRIPE_LEVEL_BALANCED\`: balances performance for workloads involving a mix of small and large files. * \`FILE_STRIPE_LEVEL_MAX\`: higher throughput performance for larger files.
       valid_values: ['FILE_STRIPE_LEVEL_UNSPECIFIED', 'FILE_STRIPE_LEVEL_MIN', 'FILE_STRIPE_LEVEL_BALANCED', 'FILE_STRIPE_LEVEL_MAX']
-    - name: reservedIpRange
-      value: "{{ reservedIpRange }}"
-      description: |
-        Optional. Immutable. The ID of the IP address range being used by the instance's VPC network. See [Configure a VPC network](https://cloud.google.com/parallelstore/docs/vpc#create_and_configure_the_vpc). If no ID is provided, all ranges are considered.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the instance. 2048 characters or less.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Cloud Labels are a flexible and lightweight mechanism for organizing cloud resources into groups that reflect a customer's organizational needs and deployment strategies. See https://cloud.google.com/resource-manager/docs/labels-overview for details.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the instance, in the format \`projects/{project}/locations/{location}/instances/{instance_id}\`.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Optional. Immutable. The name of the Compute Engine [VPC network](https://cloud.google.com/vpc/docs/vpc) to which the instance is connected.
+    - name: reservedIpRange
+      value: "{{ reservedIpRange }}"
+      description: |
+        Optional. Immutable. The ID of the IP address range being used by the instance's VPC network. See [Configure a VPC network](https://cloud.google.com/parallelstore/docs/vpc#create_and_configure_the_vpc). If no ID is provided, all ranges are considered.
     - name: instanceId
       value: "{{ instanceId }}"
     - name: requestId
@@ -550,15 +550,15 @@ Updates the parameters of a single instance.
 ```sql
 UPDATE google.parallelstore.instances
 SET 
-data__network = '{{ network }}',
 data__capacityGib = '{{ capacityGib }}',
 data__deploymentType = '{{ deploymentType }}',
-data__directoryStripeLevel = '{{ directoryStripeLevel }}',
-data__name = '{{ name }}',
-data__fileStripeLevel = '{{ fileStripeLevel }}',
-data__reservedIpRange = '{{ reservedIpRange }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}'
+data__directoryStripeLevel = '{{ directoryStripeLevel }}',
+data__fileStripeLevel = '{{ fileStripeLevel }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__network = '{{ network }}',
+data__reservedIpRange = '{{ reservedIpRange }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -603,32 +603,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="import_data"
+    defaultValue="export_data"
     values={[
-        { label: 'import_data', value: 'import_data' },
-        { label: 'export_data', value: 'export_data' }
+        { label: 'export_data', value: 'export_data' },
+        { label: 'import_data', value: 'import_data' }
     ]}
 >
-<TabItem value="import_data">
-
-Copies data from Cloud Storage to Parallelstore.
-
-```sql
-EXEC google.parallelstore.instances.import_data 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"sourceGcsBucket": "{{ sourceGcsBucket }}", 
-"metadataOptions": "{{ metadataOptions }}", 
-"destinationParallelstore": "{{ destinationParallelstore }}", 
-"requestId": "{{ requestId }}", 
-"serviceAccount": "{{ serviceAccount }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="export_data">
 
 Copies data from Parallelstore to Cloud Storage.
@@ -640,11 +620,31 @@ EXEC google.parallelstore.instances.export_data
 @instancesId='{{ instancesId }}' --required 
 @@json=
 '{
-"sourceParallelstore": "{{ sourceParallelstore }}", 
 "destinationGcsBucket": "{{ destinationGcsBucket }}", 
-"serviceAccount": "{{ serviceAccount }}", 
+"metadataOptions": "{{ metadataOptions }}", 
 "requestId": "{{ requestId }}", 
-"metadataOptions": "{{ metadataOptions }}"
+"serviceAccount": "{{ serviceAccount }}", 
+"sourceParallelstore": "{{ sourceParallelstore }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="import_data">
+
+Copies data from Cloud Storage to Parallelstore.
+
+```sql
+EXEC google.parallelstore.instances.import_data 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"destinationParallelstore": "{{ destinationParallelstore }}", 
+"metadataOptions": "{{ metadataOptions }}", 
+"requestId": "{{ requestId }}", 
+"serviceAccount": "{{ serviceAccount }}", 
+"sourceGcsBucket": "{{ sourceGcsBucket }}"
 }'
 ;
 ```

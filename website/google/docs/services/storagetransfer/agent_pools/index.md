@@ -135,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists agent pools.</td>
 </tr>
 <tr>
@@ -250,9 +250,9 @@ displayName,
 state
 FROM google.storagetransfer.agent_pools
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -274,16 +274,16 @@ Creates an agent pool resource.
 
 ```sql
 INSERT INTO google.storagetransfer.agent_pools (
-data__name,
-data__displayName,
 data__bandwidthLimit,
+data__displayName,
+data__name,
 projectsId,
 agentPoolId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ bandwidthLimit }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ agentPoolId }}'
 RETURNING
@@ -302,19 +302,19 @@ state
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the agent_pools resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Specifies a unique string that identifies the agent pool. Format: \`projects/{project_id}/agentPools/{agent_pool_id}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Specifies the client-specified AgentPool description.
     - name: bandwidthLimit
       description: |
         Specifies the bandwidth limit details. If this field is unspecified, the default value is set as 'No Limit'.
       value:
         limitMbps: "{{ limitMbps }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Specifies the client-specified AgentPool description.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Specifies a unique string that identifies the agent pool. Format: \`projects/{project_id}/agentPools/{agent_pool_id}\`
     - name: agentPoolId
       value: "{{ agentPoolId }}"
 `}</CodeBlock>
@@ -338,9 +338,9 @@ Updates an existing agent pool resource.
 ```sql
 UPDATE google.storagetransfer.agent_pools
 SET 
-data__name = '{{ name }}',
+data__bandwidthLimit = '{{ bandwidthLimit }}',
 data__displayName = '{{ displayName }}',
-data__bandwidthLimit = '{{ bandwidthLimit }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND agentPoolsId = '{{ agentPoolsId }}' --required

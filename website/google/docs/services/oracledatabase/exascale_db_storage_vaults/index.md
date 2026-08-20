@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the ExascaleDB Storage Vaults for the given project and location.</td>
 </tr>
 <tr>
@@ -304,8 +304,8 @@ FROM google.oracledatabase.exascale_db_storage_vaults
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -329,11 +329,11 @@ Creates a new ExascaleDB Storage Vault resource.
 ```sql
 INSERT INTO google.oracledatabase.exascale_db_storage_vaults (
 data__displayName,
+data__exadataInfrastructure,
+data__gcpOracleZone,
 data__labels,
 data__name,
-data__gcpOracleZone,
 data__properties,
-data__exadataInfrastructure,
 projectsId,
 locationsId,
 exascaleDbStorageVaultId,
@@ -341,11 +341,11 @@ requestId
 )
 SELECT 
 '{{ displayName }}',
+'{{ exadataInfrastructure }}',
+'{{ gcpOracleZone }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ gcpOracleZone }}',
 '{{ properties }}',
-'{{ exadataInfrastructure }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ exascaleDbStorageVaultId }}',
@@ -374,6 +374,14 @@ response
       value: "{{ displayName }}"
       description: |
         Required. The display name for the ExascaleDbStorageVault. The name does not have to be unique within your project. The name must be 1-255 characters long and can only contain alphanumeric characters.
+    - name: exadataInfrastructure
+      value: "{{ exadataInfrastructure }}"
+      description: |
+        Optional. The Exadata Infrastructure resource on which ExascaleDbStorageVault resource is created, in the following format: projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}
+    - name: gcpOracleZone
+      value: "{{ gcpOracleZone }}"
+      description: |
+        Optional. The GCP Oracle zone where Oracle ExascaleDbStorageVault is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -382,36 +390,28 @@ response
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the ExascaleDbStorageVault. Format: projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_storage_vault}
-    - name: gcpOracleZone
-      value: "{{ gcpOracleZone }}"
-      description: |
-        Optional. The GCP Oracle zone where Oracle ExascaleDbStorageVault is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
     - name: properties
       description: |
         Required. The properties of the ExascaleDbStorageVault.
       value:
+        additionalFlashCachePercent: {{ additionalFlashCachePercent }}
+        attachedShapeAttributes:
+          - "{{ attachedShapeAttributes }}"
+        availableShapeAttributes:
+          - "{{ availableShapeAttributes }}"
+        description: "{{ description }}"
+        exascaleDbStorageDetails:
+          availableSizeGbs: {{ availableSizeGbs }}
+          totalSizeGbs: {{ totalSizeGbs }}
+        ociUri: "{{ ociUri }}"
         ocid: "{{ ocid }}"
         state: "{{ state }}"
         timeZone:
           id: "{{ id }}"
           version: "{{ version }}"
-        attachedShapeAttributes:
-          - "{{ attachedShapeAttributes }}"
-        ociUri: "{{ ociUri }}"
-        description: "{{ description }}"
-        additionalFlashCachePercent: {{ additionalFlashCachePercent }}
-        exascaleDbStorageDetails:
-          availableSizeGbs: {{ availableSizeGbs }}
-          totalSizeGbs: {{ totalSizeGbs }}
-        availableShapeAttributes:
-          - "{{ availableShapeAttributes }}"
+        vmClusterCount: {{ vmClusterCount }}
         vmClusterIds:
           - "{{ vmClusterIds }}"
-        vmClusterCount: {{ vmClusterCount }}
-    - name: exadataInfrastructure
-      value: "{{ exadataInfrastructure }}"
-      description: |
-        Optional. The Exadata Infrastructure resource on which ExascaleDbStorageVault resource is created, in the following format: projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}
     - name: exascaleDbStorageVaultId
       value: "{{ exascaleDbStorageVaultId }}"
     - name: requestId

@@ -333,22 +333,22 @@ Creates an APIM ServiceExtension in an organization.
 
 ```sql
 INSERT INTO google.apigee.apim_service_extensions (
-data__lbForwardingRule,
-data__networkConfigs,
-data__name,
-data__extensions,
 data__extensionProcessor,
+data__extensions,
+data__lbForwardingRule,
+data__name,
 data__network,
+data__networkConfigs,
 organizationsId,
 apimServiceExtensionId
 )
 SELECT 
-'{{ lbForwardingRule }}',
-'{{ networkConfigs }}',
-'{{ name }}',
-'{{ extensions }}',
 '{{ extensionProcessor }}',
+'{{ extensions }}',
+'{{ lbForwardingRule }}',
+'{{ name }}',
 '{{ network }}',
+'{{ networkConfigs }}',
 '{{ organizationsId }}',
 '{{ apimServiceExtensionId }}'
 RETURNING
@@ -368,37 +368,37 @@ response
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the apim_service_extensions resource.
+    - name: extensionProcessor
+      value: "{{ extensionProcessor }}"
+      description: |
+        Required. Name of the proxy deployed in the Apigee X instance.
+    - name: extensions
+      description: |
+        Optional. List of extensions that are part of the service extension. Refer to https://cloud.google.com/service-extensions/docs/quotas#limits for any limits.
+      value:
+        - failOpen: {{ failOpen }}
+          hostname: "{{ hostname }}"
+          matchCondition: "{{ matchCondition }}"
+          name: "{{ name }}"
+          supportedEvents: "{{ supportedEvents }}"
     - name: lbForwardingRule
       value: "{{ lbForwardingRule }}"
       description: |
         Required. Name of the Google Cloud LB forwarding rule. Format: projects/{project}/regions/{region}/forwardingRules/{forwarding_rule} projects/{project}/global/forwardingRules/{forwarding_rule}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. unique name of the APIM service extension. The name must conform with RFC-1034, is restricted to lower-cased letters, numbers and hyphens, and can have a maximum length of 63 characters. Additionally, the first character must be a letter and the last a letter or a number.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Required. The network where the forwarding rule is created. Format: projects/{project}/global/networks/{network}
     - name: networkConfigs
       description: |
         Required. List of network configurations for the APIM service extension.
       value:
         - region: "{{ region }}"
           subnet: "{{ subnet }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. unique name of the APIM service extension. The name must conform with RFC-1034, is restricted to lower-cased letters, numbers and hyphens, and can have a maximum length of 63 characters. Additionally, the first character must be a letter and the last a letter or a number.
-    - name: extensions
-      description: |
-        Optional. List of extensions that are part of the service extension. Refer to https://cloud.google.com/service-extensions/docs/quotas#limits for any limits.
-      value:
-        - name: "{{ name }}"
-          matchCondition: "{{ matchCondition }}"
-          hostname: "{{ hostname }}"
-          failOpen: {{ failOpen }}
-          supportedEvents: "{{ supportedEvents }}"
-    - name: extensionProcessor
-      value: "{{ extensionProcessor }}"
-      description: |
-        Required. Name of the proxy deployed in the Apigee X instance.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        Required. The network where the forwarding rule is created. Format: projects/{project}/global/networks/{network}
     - name: apimServiceExtensionId
       value: "{{ apimServiceExtensionId }}"
 `}</CodeBlock>
@@ -422,12 +422,12 @@ Updates an APIM service extension in an organization.
 ```sql
 UPDATE google.apigee.apim_service_extensions
 SET 
-data__lbForwardingRule = '{{ lbForwardingRule }}',
-data__networkConfigs = '{{ networkConfigs }}',
-data__name = '{{ name }}',
-data__extensions = '{{ extensions }}',
 data__extensionProcessor = '{{ extensionProcessor }}',
-data__network = '{{ network }}'
+data__extensions = '{{ extensions }}',
+data__lbForwardingRule = '{{ lbForwardingRule }}',
+data__name = '{{ name }}',
+data__network = '{{ network }}',
+data__networkConfigs = '{{ networkConfigs }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apimServiceExtensionsId = '{{ apimServiceExtensionsId }}' --required

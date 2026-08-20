@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists EntityTypes in a given Featurestore.</td>
 </tr>
 <tr>
@@ -220,20 +220,6 @@ The following methods are available for this resource:
     <td>Deletes a single EntityType. The EntityType must not have any Features or `force` must be set to true for the request to succeed.</td>
 </tr>
 <tr>
-    <td><a href="#write_feature_values"><CopyableCode code="write_feature_values" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
-    <td></td>
-    <td>Writes Feature values of one or more entities of an EntityType. The Feature values are merged into existing entities if any. The Feature values to be written must have timestamp within the online storage retention.</td>
-</tr>
-<tr>
-    <td><a href="#streaming_read_feature_values"><CopyableCode code="streaming_read_feature_values" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
-    <td></td>
-    <td>Reads Feature values for multiple entities. Depending on their size, data for different entities may be broken up across multiple responses.</td>
-</tr>
-<tr>
     <td><a href="#delete_feature_values"><CopyableCode code="delete_feature_values" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
@@ -241,11 +227,11 @@ The following methods are available for this resource:
     <td>Delete Feature values from Featurestore. The progress of the deletion is tracked by the returned operation. The deleted feature values are guaranteed to be invisible to subsequent read operations after the operation is marked as successfully done. If a delete feature values operation fails, the feature values returned from reads and exports may be inconsistent. If consistency is required, the caller must retry the same delete request again and wait till the new operation returned is marked as successfully done.</td>
 </tr>
 <tr>
-    <td><a href="#read_feature_values"><CopyableCode code="read_feature_values" /></a></td>
+    <td><a href="#export_feature_values"><CopyableCode code="export_feature_values" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
     <td></td>
-    <td>Reads Feature values of a specific entity of an EntityType. For reading feature values of multiple entities of an EntityType, please use StreamingReadFeatureValues.</td>
+    <td>Exports Feature values from all the entities of a target EntityType.</td>
 </tr>
 <tr>
     <td><a href="#import_feature_values"><CopyableCode code="import_feature_values" /></a></td>
@@ -255,11 +241,25 @@ The following methods are available for this resource:
     <td>Imports Feature values into the Featurestore from a source storage. The progress of the import is tracked by the returned operation. The imported features are guaranteed to be visible to subsequent read operations after the operation is marked as successfully done. If an import operation fails, the Feature values returned from reads and exports may be inconsistent. If consistency is required, the caller must retry the same import request again and wait till the new operation returned is marked as successfully done. There are also scenarios where the caller can cause inconsistency. - Source data for import contains multiple distinct Feature values for the same entity ID and timestamp. - Source is modified during an import. This includes adding, updating, or removing source data and/or metadata. Examples of updating metadata include but are not limited to changing storage location, storage class, or retention policy. - Online serving cluster is under-provisioned.</td>
 </tr>
 <tr>
-    <td><a href="#export_feature_values"><CopyableCode code="export_feature_values" /></a></td>
+    <td><a href="#read_feature_values"><CopyableCode code="read_feature_values" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
     <td></td>
-    <td>Exports Feature values from all the entities of a target EntityType.</td>
+    <td>Reads Feature values of a specific entity of an EntityType. For reading feature values of multiple entities of an EntityType, please use StreamingReadFeatureValues.</td>
+</tr>
+<tr>
+    <td><a href="#streaming_read_feature_values"><CopyableCode code="streaming_read_feature_values" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
+    <td></td>
+    <td>Reads Feature values for multiple entities. Depending on their size, data for different entities may be broken up across multiple responses.</td>
+</tr>
+<tr>
+    <td><a href="#write_feature_values"><CopyableCode code="write_feature_values" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
+    <td></td>
+    <td>Writes Feature values of one or more entities of an EntityType. The Feature values are merged into existing entities if any. The Feature values to be written must have timestamp within the online storage retention.</td>
 </tr>
 </tbody>
 </table>
@@ -394,9 +394,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND featurestoresId = '{{ featurestoresId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -419,24 +419,24 @@ Creates a new EntityType in a given Featurestore.
 
 ```sql
 INSERT INTO google.aiplatform.entity_types (
-data__offlineStorageTtlDays,
-data__labels,
-data__name,
 data__description,
 data__etag,
+data__labels,
 data__monitoringConfig,
+data__name,
+data__offlineStorageTtlDays,
 projectsId,
 locationsId,
 featurestoresId,
 entityTypeId
 )
 SELECT 
-{{ offlineStorageTtlDays }},
-'{{ labels }}',
-'{{ name }}',
 '{{ description }}',
 '{{ etag }}',
+'{{ labels }}',
 '{{ monitoringConfig }}',
+'{{ name }}',
+{{ offlineStorageTtlDays }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ featurestoresId }}',
@@ -464,18 +464,6 @@ response
     - name: featurestoresId
       value: "{{ featurestoresId }}"
       description: Required parameter for the entity_types resource.
-    - name: offlineStorageTtlDays
-      value: {{ offlineStorageTtlDays }}
-      description: |
-        Optional. Config for data retention policy in offline storage. TTL in days for feature values that will be stored in offline storage. The Feature Store offline storage periodically removes obsolete feature values older than \`offline_storage_ttl_days\` since the feature generation time. If unset (or explicitly set to 0), default to 4000 days TTL.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. The labels with user-defined metadata to organize your EntityTypes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one EntityType (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Name of the EntityType. Format: \`projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}\` The last part entity_type is assigned by the client. The entity_type can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z and underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given a featurestore.
     - name: description
       value: "{{ description }}"
       description: |
@@ -484,21 +472,33 @@ response
       value: "{{ etag }}"
       description: |
         Optional. Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels with user-defined metadata to organize your EntityTypes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one EntityType (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
     - name: monitoringConfig
       description: |
         Optional. The default monitoring configuration for all Features with value type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 under this EntityType. If this is populated with [FeaturestoreMonitoringConfig.monitoring_interval] specified, snapshot analysis monitoring is enabled. Otherwise, snapshot analysis monitoring is disabled.
       value:
-        importFeaturesAnalysis:
-          state: "{{ state }}"
-          anomalyDetectionBaseline: "{{ anomalyDetectionBaseline }}"
         categoricalThresholdConfig:
+          value: {{ value }}
+        importFeaturesAnalysis:
+          anomalyDetectionBaseline: "{{ anomalyDetectionBaseline }}"
+          state: "{{ state }}"
+        numericalThresholdConfig:
           value: {{ value }}
         snapshotAnalysis:
           disabled: {{ disabled }}
           monitoringIntervalDays: {{ monitoringIntervalDays }}
           stalenessDays: {{ stalenessDays }}
-        numericalThresholdConfig:
-          value: {{ value }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Name of the EntityType. Format: \`projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}\` The last part entity_type is assigned by the client. The entity_type can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z and underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given a featurestore.
+    - name: offlineStorageTtlDays
+      value: {{ offlineStorageTtlDays }}
+      description: |
+        Optional. Config for data retention policy in offline storage. TTL in days for feature values that will be stored in offline storage. The Feature Store offline storage periodically removes obsolete feature values older than \`offline_storage_ttl_days\` since the feature generation time. If unset (or explicitly set to 0), default to 4000 days TTL.
     - name: entityTypeId
       value: "{{ entityTypeId }}"
 `}</CodeBlock>
@@ -522,12 +522,12 @@ Updates the parameters of a single EntityType.
 ```sql
 UPDATE google.aiplatform.entity_types
 SET 
-data__offlineStorageTtlDays = {{ offlineStorageTtlDays }},
-data__labels = '{{ labels }}',
-data__name = '{{ name }}',
 data__description = '{{ description }}',
 data__etag = '{{ etag }}',
-data__monitoringConfig = '{{ monitoringConfig }}'
+data__labels = '{{ labels }}',
+data__monitoringConfig = '{{ monitoringConfig }}',
+data__name = '{{ name }}',
+data__offlineStorageTtlDays = {{ offlineStorageTtlDays }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -578,51 +578,16 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="write_feature_values"
+    defaultValue="delete_feature_values"
     values={[
-        { label: 'write_feature_values', value: 'write_feature_values' },
-        { label: 'streaming_read_feature_values', value: 'streaming_read_feature_values' },
         { label: 'delete_feature_values', value: 'delete_feature_values' },
-        { label: 'read_feature_values', value: 'read_feature_values' },
+        { label: 'export_feature_values', value: 'export_feature_values' },
         { label: 'import_feature_values', value: 'import_feature_values' },
-        { label: 'export_feature_values', value: 'export_feature_values' }
+        { label: 'read_feature_values', value: 'read_feature_values' },
+        { label: 'streaming_read_feature_values', value: 'streaming_read_feature_values' },
+        { label: 'write_feature_values', value: 'write_feature_values' }
     ]}
 >
-<TabItem value="write_feature_values">
-
-Writes Feature values of one or more entities of an EntityType. The Feature values are merged into existing entities if any. The Feature values to be written must have timestamp within the online storage retention.
-
-```sql
-EXEC google.aiplatform.entity_types.write_feature_values 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@featurestoresId='{{ featurestoresId }}' --required, 
-@entityTypesId='{{ entityTypesId }}' --required 
-@@json=
-'{
-"payloads": "{{ payloads }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="streaming_read_feature_values">
-
-Reads Feature values for multiple entities. Depending on their size, data for different entities may be broken up across multiple responses.
-
-```sql
-EXEC google.aiplatform.entity_types.streaming_read_feature_values 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@featurestoresId='{{ featurestoresId }}' --required, 
-@entityTypesId='{{ entityTypesId }}' --required 
-@@json=
-'{
-"featureSelector": "{{ featureSelector }}", 
-"entityIds": "{{ entityIds }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="delete_feature_values">
 
 Delete Feature values from Featurestore. The progress of the deletion is tracked by the returned operation. The deleted feature values are guaranteed to be invisible to subsequent read operations after the operation is marked as successfully done. If a delete feature values operation fails, the feature values returned from reads and exports may be inconsistent. If consistency is required, the caller must retry the same delete request again and wait till the new operation returned is marked as successfully done.
@@ -641,20 +606,23 @@ EXEC google.aiplatform.entity_types.delete_feature_values
 ;
 ```
 </TabItem>
-<TabItem value="read_feature_values">
+<TabItem value="export_feature_values">
 
-Reads Feature values of a specific entity of an EntityType. For reading feature values of multiple entities of an EntityType, please use StreamingReadFeatureValues.
+Exports Feature values from all the entities of a target EntityType.
 
 ```sql
-EXEC google.aiplatform.entity_types.read_feature_values 
+EXEC google.aiplatform.entity_types.export_feature_values 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @featurestoresId='{{ featurestoresId }}' --required, 
 @entityTypesId='{{ entityTypesId }}' --required 
 @@json=
 '{
+"destination": "{{ destination }}", 
 "featureSelector": "{{ featureSelector }}", 
-"entityId": "{{ entityId }}"
+"fullExport": "{{ fullExport }}", 
+"settings": "{{ settings }}", 
+"snapshotExport": "{{ snapshotExport }}"
 }'
 ;
 ```
@@ -671,37 +639,69 @@ EXEC google.aiplatform.entity_types.import_feature_values
 @entityTypesId='{{ entityTypesId }}' --required 
 @@json=
 '{
-"csvSource": "{{ csvSource }}", 
-"featureTimeField": "{{ featureTimeField }}", 
-"featureTime": "{{ featureTime }}", 
 "avroSource": "{{ avroSource }}", 
 "bigquerySource": "{{ bigquerySource }}", 
-"featureSpecs": "{{ featureSpecs }}", 
+"csvSource": "{{ csvSource }}", 
+"disableIngestionAnalysis": {{ disableIngestionAnalysis }}, 
 "disableOnlineServing": {{ disableOnlineServing }}, 
 "entityIdField": "{{ entityIdField }}", 
-"workerCount": {{ workerCount }}, 
-"disableIngestionAnalysis": {{ disableIngestionAnalysis }}
+"featureSpecs": "{{ featureSpecs }}", 
+"featureTime": "{{ featureTime }}", 
+"featureTimeField": "{{ featureTimeField }}", 
+"workerCount": {{ workerCount }}
 }'
 ;
 ```
 </TabItem>
-<TabItem value="export_feature_values">
+<TabItem value="read_feature_values">
 
-Exports Feature values from all the entities of a target EntityType.
+Reads Feature values of a specific entity of an EntityType. For reading feature values of multiple entities of an EntityType, please use StreamingReadFeatureValues.
 
 ```sql
-EXEC google.aiplatform.entity_types.export_feature_values 
+EXEC google.aiplatform.entity_types.read_feature_values 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @featurestoresId='{{ featurestoresId }}' --required, 
 @entityTypesId='{{ entityTypesId }}' --required 
 @@json=
 '{
-"featureSelector": "{{ featureSelector }}", 
-"fullExport": "{{ fullExport }}", 
-"snapshotExport": "{{ snapshotExport }}", 
-"destination": "{{ destination }}", 
-"settings": "{{ settings }}"
+"entityId": "{{ entityId }}", 
+"featureSelector": "{{ featureSelector }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="streaming_read_feature_values">
+
+Reads Feature values for multiple entities. Depending on their size, data for different entities may be broken up across multiple responses.
+
+```sql
+EXEC google.aiplatform.entity_types.streaming_read_feature_values 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@featurestoresId='{{ featurestoresId }}' --required, 
+@entityTypesId='{{ entityTypesId }}' --required 
+@@json=
+'{
+"entityIds": "{{ entityIds }}", 
+"featureSelector": "{{ featureSelector }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="write_feature_values">
+
+Writes Feature values of one or more entities of an EntityType. The Feature values are merged into existing entities if any. The Feature values to be written must have timestamp within the online storage retention.
+
+```sql
+EXEC google.aiplatform.entity_types.write_feature_values 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@featurestoresId='{{ featurestoresId }}' --required, 
+@entityTypesId='{{ entityTypesId }}' --required 
+@@json=
+'{
+"payloads": "{{ payloads }}"
 }'
 ;
 ```

@@ -125,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_sharedflows_list"><CopyableCode code="organizations_sharedflows_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-includeRevisions"><code>includeRevisions</code></a>, <a href="#parameter-space"><code>space</code></a>, <a href="#parameter-includeMetaData"><code>includeMetaData</code></a></td>
+    <td><a href="#parameter-includeMetaData"><code>includeMetaData</code></a>, <a href="#parameter-includeRevisions"><code>includeRevisions</code></a>, <a href="#parameter-space"><code>space</code></a></td>
     <td>Lists all shared flows in the organization. If the resource has the `space` attribute set, the response may not return all resources. To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).</td>
 </tr>
 <tr>
@@ -238,9 +238,9 @@ SELECT
 sharedFlows
 FROM google.apigee.sharedflows
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND includeMetaData = '{{ includeMetaData }}'
 AND includeRevisions = '{{ includeRevisions }}'
 AND space = '{{ space }}'
-AND includeMetaData = '{{ includeMetaData }}'
 ;
 ```
 </TabItem>
@@ -263,8 +263,8 @@ Uploads a ZIP-formatted shared flow configuration bundle to an organization. If 
 ```sql
 INSERT INTO google.apigee.sharedflows (
 data__contentType,
-data__extensions,
 data__data,
+data__extensions,
 organizationsId,
 action,
 name,
@@ -272,8 +272,8 @@ space
 )
 SELECT 
 '{{ contentType }}',
-'{{ extensions }}',
 '{{ data }}',
+'{{ extensions }}',
 '{{ organizationsId }}',
 '{{ action }}',
 '{{ name }}',
@@ -308,14 +308,14 @@ type
       value: "{{ contentType }}"
       description: |
         The HTTP Content-Type header value specifying the content type of the body.
-    - name: extensions
-      value: "{{ extensions }}"
-      description: |
-        Application specific response metadata. Must be set in the first response for streaming APIs.
     - name: data
       value: "{{ data }}"
       description: |
         The HTTP request/response body as raw binary.
+    - name: extensions
+      value: "{{ extensions }}"
+      description: |
+        Application specific response metadata. Must be set in the first response for streaming APIs.
     - name: action
       value: "{{ action }}"
     - name: name

@@ -295,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Schedules in a Location.</td>
 </tr>
 <tr>
@@ -464,9 +464,9 @@ FROM google.aiplatform.schedules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -489,31 +489,31 @@ Creates a Schedule.
 ```sql
 INSERT INTO google.aiplatform.schedules (
 data__allowQueueing,
-data__maxRunCount,
-data__maxConcurrentRunCount,
-data__endTime,
-data__createPipelineJobRequest,
-data__displayName,
-data__name,
-data__cron,
-data__startTime,
-data__maxConcurrentActiveRunCount,
 data__createNotebookExecutionJobRequest,
+data__createPipelineJobRequest,
+data__cron,
+data__displayName,
+data__endTime,
+data__maxConcurrentActiveRunCount,
+data__maxConcurrentRunCount,
+data__maxRunCount,
+data__name,
+data__startTime,
 projectsId,
 locationsId
 )
 SELECT 
 {{ allowQueueing }},
-'{{ maxRunCount }}',
-'{{ maxConcurrentRunCount }}',
-'{{ endTime }}',
-'{{ createPipelineJobRequest }}',
-'{{ displayName }}',
-'{{ name }}',
-'{{ cron }}',
-'{{ startTime }}',
-'{{ maxConcurrentActiveRunCount }}',
 '{{ createNotebookExecutionJobRequest }}',
+'{{ createPipelineJobRequest }}',
+'{{ cron }}',
+'{{ displayName }}',
+'{{ endTime }}',
+'{{ maxConcurrentActiveRunCount }}',
+'{{ maxConcurrentRunCount }}',
+'{{ maxRunCount }}',
+'{{ name }}',
+'{{ startTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -555,203 +555,203 @@ updateTime
       value: {{ allowQueueing }}
       description: |
         Optional. Whether new scheduled runs can be queued when max_concurrent_runs limit is reached. If set to true, new runs will be queued instead of skipped. Default to false.
-    - name: maxRunCount
-      value: "{{ maxRunCount }}"
-      description: |
-        Optional. Maximum run count of the schedule. If specified, The schedule will be completed when either started_run_count >= max_run_count or when end_time is reached. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
-    - name: maxConcurrentRunCount
-      value: "{{ maxConcurrentRunCount }}"
-      description: |
-        Required. Maximum number of runs that can be started concurrently for this Schedule. This is the limit for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable).
-    - name: endTime
-      value: "{{ endTime }}"
-      description: |
-        Optional. Timestamp after which no new runs can be scheduled. If specified, The schedule will be completed when either end_time is reached or when scheduled_run_count >= max_run_count. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
-    - name: createPipelineJobRequest
-      description: |
-        Request for PipelineService.CreatePipelineJob. CreatePipelineJobRequest.parent field is required (format: projects/{project}/locations/{location}).
-      value:
-        pipelineJobId: "{{ pipelineJobId }}"
-        parent: "{{ parent }}"
-        pipelineJob:
-          displayName: "{{ displayName }}"
-          endTime: "{{ endTime }}"
-          templateMetadata:
-            version: "{{ version }}"
-          updateTime: "{{ updateTime }}"
-          pipelineSpec: "{{ pipelineSpec }}"
-          reservedIpRanges:
-            - "{{ reservedIpRanges }}"
-          state: "{{ state }}"
-          pscInterfaceConfig:
-            networkAttachment: "{{ networkAttachment }}"
-            dnsPeeringConfigs:
-              - targetNetwork: "{{ targetNetwork }}"
-                domain: "{{ domain }}"
-                targetProject: "{{ targetProject }}"
-          network: "{{ network }}"
-          scheduleName: "{{ scheduleName }}"
-          serviceAccount: "{{ serviceAccount }}"
-          createTime: "{{ createTime }}"
-          jobDetail:
-            pipelineContext:
-              displayName: "{{ displayName }}"
-              etag: "{{ etag }}"
-              updateTime: "{{ updateTime }}"
-              schemaTitle: "{{ schemaTitle }}"
-              createTime: "{{ createTime }}"
-              schemaVersion: "{{ schemaVersion }}"
-              metadata: "{{ metadata }}"
-              labels: "{{ labels }}"
-              parentContexts:
-                - "{{ parentContexts }}"
-              description: "{{ description }}"
-              name: "{{ name }}"
-            taskDetails:
-              - executorDetail:
-                  customJobDetail: "{{ customJobDetail }}"
-                  containerDetail: "{{ containerDetail }}"
-                pipelineTaskStatus: "{{ pipelineTaskStatus }}"
-                execution:
-                  name: "{{ name }}"
-                  description: "{{ description }}"
-                  state: "{{ state }}"
-                  metadata: "{{ metadata }}"
-                  labels: "{{ labels }}"
-                  createTime: "{{ createTime }}"
-                  schemaVersion: "{{ schemaVersion }}"
-                  updateTime: "{{ updateTime }}"
-                  schemaTitle: "{{ schemaTitle }}"
-                  displayName: "{{ displayName }}"
-                  etag: "{{ etag }}"
-                taskUniqueName: "{{ taskUniqueName }}"
-                state: "{{ state }}"
-                endTime: "{{ endTime }}"
-                parentTaskId: "{{ parentTaskId }}"
-                outputs: "{{ outputs }}"
-                startTime: "{{ startTime }}"
-                taskId: "{{ taskId }}"
-                taskName: "{{ taskName }}"
-                error:
-                  message: "{{ message }}"
-                  details: "{{ details }}"
-                  code: {{ code }}
-                inputs: "{{ inputs }}"
-                createTime: "{{ createTime }}"
-            pipelineRunContext:
-              displayName: "{{ displayName }}"
-              etag: "{{ etag }}"
-              updateTime: "{{ updateTime }}"
-              schemaTitle: "{{ schemaTitle }}"
-              createTime: "{{ createTime }}"
-              schemaVersion: "{{ schemaVersion }}"
-              metadata: "{{ metadata }}"
-              labels: "{{ labels }}"
-              parentContexts:
-                - "{{ parentContexts }}"
-              description: "{{ description }}"
-              name: "{{ name }}"
-          labels: "{{ labels }}"
-          startTime: "{{ startTime }}"
-          runtimeConfig:
-            gcsOutputDirectory: "{{ gcsOutputDirectory }}"
-            parameterValues: "{{ parameterValues }}"
-            inputArtifacts: "{{ inputArtifacts }}"
-            failurePolicy: "{{ failurePolicy }}"
-            parameters: "{{ parameters }}"
-          preflightValidations: {{ preflightValidations }}
-          encryptionSpec:
-            kmsKeyName: "{{ kmsKeyName }}"
-          name: "{{ name }}"
-          error:
-            message: "{{ message }}"
-            details: "{{ details }}"
-            code: {{ code }}
-          templateUri: "{{ templateUri }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. User provided name of the Schedule. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The resource name of the Schedule.
-    - name: cron
-      value: "{{ cron }}"
-      description: |
-        Cron schedule (https://en.wikipedia.org/wiki/Cron) to launch scheduled runs. To explicitly set a timezone to the cron tab, apply a prefix in the cron tab: "CRON_TZ=\${IANA_TIME_ZONE}" or "TZ=\${IANA_TIME_ZONE}". The \${IANA_TIME_ZONE} may only be a valid string from IANA time zone database. For example, "CRON_TZ=America/New_York 1 * * * *", or "TZ=America/New_York 1 * * * *".
-    - name: startTime
-      value: "{{ startTime }}"
-      description: |
-        Optional. Timestamp after which the first run can be scheduled. Default to Schedule create time if not specified.
-    - name: maxConcurrentActiveRunCount
-      value: "{{ maxConcurrentActiveRunCount }}"
-      description: |
-        Optional. Specifies the maximum number of active runs that can be executed concurrently for this Schedule. This limits the number of runs that can be in a non-terminal state at the same time. Currently, this field is only supported for requests of type CreatePipelineJobRequest.
     - name: createNotebookExecutionJobRequest
       description: |
         Request for NotebookService.CreateNotebookExecutionJob.
       value:
         notebookExecutionJob:
-          notebookRuntimeTemplateResourceName: "{{ notebookRuntimeTemplateResourceName }}"
-          jobState: "{{ jobState }}"
-          directNotebookSource:
-            content: "{{ content }}"
+          createTime: "{{ createTime }}"
           customEnvironmentSpec:
-            networkSpec:
-              network: "{{ network }}"
-              enableInternetAccess: {{ enableInternetAccess }}
-              subnetwork: "{{ subnetwork }}"
             machineSpec:
-              machineType: "{{ machineType }}"
-              tpuTopology: "{{ tpuTopology }}"
-              reservationAffinity:
-                reservationAffinityType: "{{ reservationAffinityType }}"
-                key: "{{ key }}"
-                values: "{{ values }}"
               acceleratorCount: {{ acceleratorCount }}
               acceleratorType: "{{ acceleratorType }}"
               gpuPartitionSize: "{{ gpuPartitionSize }}"
+              machineType: "{{ machineType }}"
+              reservationAffinity:
+                key: "{{ key }}"
+                reservationAffinityType: "{{ reservationAffinityType }}"
+                values: "{{ values }}"
+              tpuTopology: "{{ tpuTopology }}"
+            networkSpec:
+              enableInternetAccess: {{ enableInternetAccess }}
+              network: "{{ network }}"
+              subnetwork: "{{ subnetwork }}"
             persistentDiskSpec:
-              diskType: "{{ diskType }}"
               diskSizeGb: "{{ diskSizeGb }}"
+              diskType: "{{ diskType }}"
             shieldedInstanceConfig:
-              enableVtpm: {{ enableVtpm }}
               enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
               enableSecureBoot: {{ enableSecureBoot }}
+              enableVtpm: {{ enableVtpm }}
+          dataformRepositorySource:
+            commitSha: "{{ commitSha }}"
+            dataformRepositoryResourceName: "{{ dataformRepositoryResourceName }}"
+          directNotebookSource:
+            content: "{{ content }}"
+          displayName: "{{ displayName }}"
+          encryptionSpec:
+            kmsKeyName: "{{ kmsKeyName }}"
+          executionTimeout: "{{ executionTimeout }}"
+          executionUser: "{{ executionUser }}"
+          gcsNotebookSource:
+            generation: "{{ generation }}"
+            uri: "{{ uri }}"
+          gcsOutputUri: "{{ gcsOutputUri }}"
+          jobState: "{{ jobState }}"
+          kernelName: "{{ kernelName }}"
+          labels: "{{ labels }}"
+          name: "{{ name }}"
+          notebookRuntimeTemplateResourceName: "{{ notebookRuntimeTemplateResourceName }}"
+          scheduleResourceName: "{{ scheduleResourceName }}"
+          serviceAccount: "{{ serviceAccount }}"
+          status:
+            code: {{ code }}
+            details: "{{ details }}"
+            message: "{{ message }}"
+          updateTime: "{{ updateTime }}"
           workbenchRuntime:
-            vmImage:
-              family: "{{ family }}"
-              project: "{{ project }}"
-              name: "{{ name }}"
             customContainerImage:
               repository: "{{ repository }}"
               tag: "{{ tag }}"
-          updateTime: "{{ updateTime }}"
-          executionUser: "{{ executionUser }}"
-          displayName: "{{ displayName }}"
-          name: "{{ name }}"
-          encryptionSpec:
-            kmsKeyName: "{{ kmsKeyName }}"
-          gcsOutputUri: "{{ gcsOutputUri }}"
-          executionTimeout: "{{ executionTimeout }}"
-          labels: "{{ labels }}"
-          dataformRepositorySource:
-            dataformRepositoryResourceName: "{{ dataformRepositoryResourceName }}"
-            commitSha: "{{ commitSha }}"
-          kernelName: "{{ kernelName }}"
-          scheduleResourceName: "{{ scheduleResourceName }}"
-          createTime: "{{ createTime }}"
-          gcsNotebookSource:
-            uri: "{{ uri }}"
-            generation: "{{ generation }}"
-          serviceAccount: "{{ serviceAccount }}"
-          status:
-            message: "{{ message }}"
-            details: "{{ details }}"
-            code: {{ code }}
+            vmImage:
+              family: "{{ family }}"
+              name: "{{ name }}"
+              project: "{{ project }}"
         notebookExecutionJobId: "{{ notebookExecutionJobId }}"
         parent: "{{ parent }}"
+    - name: createPipelineJobRequest
+      description: |
+        Request for PipelineService.CreatePipelineJob. CreatePipelineJobRequest.parent field is required (format: projects/{project}/locations/{location}).
+      value:
+        parent: "{{ parent }}"
+        pipelineJob:
+          createTime: "{{ createTime }}"
+          displayName: "{{ displayName }}"
+          encryptionSpec:
+            kmsKeyName: "{{ kmsKeyName }}"
+          endTime: "{{ endTime }}"
+          error:
+            code: {{ code }}
+            details: "{{ details }}"
+            message: "{{ message }}"
+          jobDetail:
+            pipelineContext:
+              createTime: "{{ createTime }}"
+              description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              etag: "{{ etag }}"
+              labels: "{{ labels }}"
+              metadata: "{{ metadata }}"
+              name: "{{ name }}"
+              parentContexts:
+                - "{{ parentContexts }}"
+              schemaTitle: "{{ schemaTitle }}"
+              schemaVersion: "{{ schemaVersion }}"
+              updateTime: "{{ updateTime }}"
+            pipelineRunContext:
+              createTime: "{{ createTime }}"
+              description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              etag: "{{ etag }}"
+              labels: "{{ labels }}"
+              metadata: "{{ metadata }}"
+              name: "{{ name }}"
+              parentContexts:
+                - "{{ parentContexts }}"
+              schemaTitle: "{{ schemaTitle }}"
+              schemaVersion: "{{ schemaVersion }}"
+              updateTime: "{{ updateTime }}"
+            taskDetails:
+              - createTime: "{{ createTime }}"
+                endTime: "{{ endTime }}"
+                error:
+                  code: {{ code }}
+                  details: "{{ details }}"
+                  message: "{{ message }}"
+                execution:
+                  createTime: "{{ createTime }}"
+                  description: "{{ description }}"
+                  displayName: "{{ displayName }}"
+                  etag: "{{ etag }}"
+                  labels: "{{ labels }}"
+                  metadata: "{{ metadata }}"
+                  name: "{{ name }}"
+                  schemaTitle: "{{ schemaTitle }}"
+                  schemaVersion: "{{ schemaVersion }}"
+                  state: "{{ state }}"
+                  updateTime: "{{ updateTime }}"
+                executorDetail:
+                  containerDetail: "{{ containerDetail }}"
+                  customJobDetail: "{{ customJobDetail }}"
+                inputs: "{{ inputs }}"
+                outputs: "{{ outputs }}"
+                parentTaskId: "{{ parentTaskId }}"
+                pipelineTaskStatus: "{{ pipelineTaskStatus }}"
+                startTime: "{{ startTime }}"
+                state: "{{ state }}"
+                taskId: "{{ taskId }}"
+                taskName: "{{ taskName }}"
+                taskUniqueName: "{{ taskUniqueName }}"
+          labels: "{{ labels }}"
+          name: "{{ name }}"
+          network: "{{ network }}"
+          pipelineSpec: "{{ pipelineSpec }}"
+          preflightValidations: {{ preflightValidations }}
+          pscInterfaceConfig:
+            dnsPeeringConfigs:
+              - domain: "{{ domain }}"
+                targetNetwork: "{{ targetNetwork }}"
+                targetProject: "{{ targetProject }}"
+            networkAttachment: "{{ networkAttachment }}"
+          reservedIpRanges:
+            - "{{ reservedIpRanges }}"
+          runtimeConfig:
+            failurePolicy: "{{ failurePolicy }}"
+            gcsOutputDirectory: "{{ gcsOutputDirectory }}"
+            inputArtifacts: "{{ inputArtifacts }}"
+            parameterValues: "{{ parameterValues }}"
+            parameters: "{{ parameters }}"
+          scheduleName: "{{ scheduleName }}"
+          serviceAccount: "{{ serviceAccount }}"
+          startTime: "{{ startTime }}"
+          state: "{{ state }}"
+          templateMetadata:
+            version: "{{ version }}"
+          templateUri: "{{ templateUri }}"
+          updateTime: "{{ updateTime }}"
+        pipelineJobId: "{{ pipelineJobId }}"
+    - name: cron
+      value: "{{ cron }}"
+      description: |
+        Cron schedule (https://en.wikipedia.org/wiki/Cron) to launch scheduled runs. To explicitly set a timezone to the cron tab, apply a prefix in the cron tab: "CRON_TZ=\${IANA_TIME_ZONE}" or "TZ=\${IANA_TIME_ZONE}". The \${IANA_TIME_ZONE} may only be a valid string from IANA time zone database. For example, "CRON_TZ=America/New_York 1 * * * *", or "TZ=America/New_York 1 * * * *".
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. User provided name of the Schedule. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: endTime
+      value: "{{ endTime }}"
+      description: |
+        Optional. Timestamp after which no new runs can be scheduled. If specified, The schedule will be completed when either end_time is reached or when scheduled_run_count >= max_run_count. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
+    - name: maxConcurrentActiveRunCount
+      value: "{{ maxConcurrentActiveRunCount }}"
+      description: |
+        Optional. Specifies the maximum number of active runs that can be executed concurrently for this Schedule. This limits the number of runs that can be in a non-terminal state at the same time. Currently, this field is only supported for requests of type CreatePipelineJobRequest.
+    - name: maxConcurrentRunCount
+      value: "{{ maxConcurrentRunCount }}"
+      description: |
+        Required. Maximum number of runs that can be started concurrently for this Schedule. This is the limit for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable).
+    - name: maxRunCount
+      value: "{{ maxRunCount }}"
+      description: |
+        Optional. Maximum run count of the schedule. If specified, The schedule will be completed when either started_run_count >= max_run_count or when end_time is reached. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the Schedule.
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Optional. Timestamp after which the first run can be scheduled. Default to Schedule create time if not specified.
 `}</CodeBlock>
 
 </TabItem>
@@ -774,16 +774,16 @@ Updates an active or paused Schedule. When the Schedule is updated, new runs wil
 UPDATE google.aiplatform.schedules
 SET 
 data__allowQueueing = {{ allowQueueing }},
-data__maxRunCount = '{{ maxRunCount }}',
-data__maxConcurrentRunCount = '{{ maxConcurrentRunCount }}',
-data__endTime = '{{ endTime }}',
+data__createNotebookExecutionJobRequest = '{{ createNotebookExecutionJobRequest }}',
 data__createPipelineJobRequest = '{{ createPipelineJobRequest }}',
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}',
 data__cron = '{{ cron }}',
-data__startTime = '{{ startTime }}',
+data__displayName = '{{ displayName }}',
+data__endTime = '{{ endTime }}',
 data__maxConcurrentActiveRunCount = '{{ maxConcurrentActiveRunCount }}',
-data__createNotebookExecutionJobRequest = '{{ createNotebookExecutionJobRequest }}'
+data__maxConcurrentRunCount = '{{ maxConcurrentRunCount }}',
+data__maxRunCount = '{{ maxRunCount }}',
+data__name = '{{ name }}',
+data__startTime = '{{ startTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

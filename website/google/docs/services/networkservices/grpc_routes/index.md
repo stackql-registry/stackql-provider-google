@@ -353,24 +353,24 @@ Creates a new GrpcRoute in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.grpc_routes (
-data__name,
-data__labels,
 data__description,
-data__hostnames,
-data__meshes,
 data__gateways,
+data__hostnames,
+data__labels,
+data__meshes,
+data__name,
 data__rules,
 projectsId,
 locationsId,
 grpcRouteId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
 '{{ description }}',
-'{{ hostnames }}',
-'{{ meshes }}',
 '{{ gateways }}',
+'{{ hostnames }}',
+'{{ labels }}',
+'{{ meshes }}',
+'{{ name }}',
 '{{ rules }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -395,57 +395,57 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the grpc_routes resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the GrpcRoute resource. It matches pattern \`projects/*/locations/*/grpcRoutes/\`
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of label tags associated with the GrpcRoute resource.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A free-text description of the resource. Max length 1024 characters.
-    - name: hostnames
-      value:
-        - "{{ hostnames }}"
-      description: |
-        Required. Service hostnames with an optional port for which this route describes traffic. Format: [:] Hostname is the fully qualified domain name of a network host. This matches the RFC 1123 definition of a hostname with 2 notable exceptions: - IPs are not allowed. - A hostname may be prefixed with a wildcard label (\`*.\`). The wildcard label must appear by itself as the first label. Hostname can be "precise" which is a domain name without the terminating dot of a network host (e.g. \`foo.example.com\`) or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. \`*.example.com\`). Note that as per RFC1035 and RFC1123, a label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. The routes associated with a Mesh or Gateway must have unique hostnames. If you attempt to attach multiple routes with conflicting hostnames, the configuration will be rejected. For example, while it is acceptable for routes for the hostnames \`*.foo.bar.com\` and \`*.bar.com\` to be associated with the same route, it is not possible to associate two routes both with \`*.bar.com\` or both with \`bar.com\`. If a port is specified, then gRPC clients must use the channel URI with the port to match this rule (i.e. "xds:///service:123"), otherwise they must supply the URI without a port (i.e. "xds:///service").
-    - name: meshes
-      value:
-        - "{{ meshes }}"
-      description: |
-        Optional. Meshes defines a list of meshes this GrpcRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\`
     - name: gateways
       value:
         - "{{ gateways }}"
       description: |
         Optional. Gateways defines a list of gateways this GrpcRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: \`projects/*/locations/*/gateways/\`
+    - name: hostnames
+      value:
+        - "{{ hostnames }}"
+      description: |
+        Required. Service hostnames with an optional port for which this route describes traffic. Format: [:] Hostname is the fully qualified domain name of a network host. This matches the RFC 1123 definition of a hostname with 2 notable exceptions: - IPs are not allowed. - A hostname may be prefixed with a wildcard label (\`*.\`). The wildcard label must appear by itself as the first label. Hostname can be "precise" which is a domain name without the terminating dot of a network host (e.g. \`foo.example.com\`) or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. \`*.example.com\`). Note that as per RFC1035 and RFC1123, a label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. The routes associated with a Mesh or Gateway must have unique hostnames. If you attempt to attach multiple routes with conflicting hostnames, the configuration will be rejected. For example, while it is acceptable for routes for the hostnames \`*.foo.bar.com\` and \`*.bar.com\` to be associated with the same route, it is not possible to associate two routes both with \`*.bar.com\` or both with \`bar.com\`. If a port is specified, then gRPC clients must use the channel URI with the port to match this rule (i.e. "xds:///service:123"), otherwise they must supply the URI without a port (i.e. "xds:///service").
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the GrpcRoute resource.
+    - name: meshes
+      value:
+        - "{{ meshes }}"
+      description: |
+        Optional. Meshes defines a list of meshes this GrpcRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\`
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the GrpcRoute resource. It matches pattern \`projects/*/locations/*/grpcRoutes/\`
     - name: rules
       description: |
         Required. A list of detailed rules defining how to route traffic. Within a single GrpcRoute, the GrpcRoute.RouteAction associated with the first matching GrpcRoute.RouteRule will be executed. At least one rule must be supplied.
       value:
-        - matches: "{{ matches }}"
-          action:
+        - action:
             destinations:
               - serviceName: "{{ serviceName }}"
                 weight: {{ weight }}
             faultInjectionPolicy:
-              delay:
-                fixedDelay: "{{ fixedDelay }}"
-                percentage: {{ percentage }}
               abort:
                 httpStatus: {{ httpStatus }}
                 percentage: {{ percentage }}
-            timeout: "{{ timeout }}"
+              delay:
+                fixedDelay: "{{ fixedDelay }}"
+                percentage: {{ percentage }}
+            idleTimeout: "{{ idleTimeout }}"
             retryPolicy:
+              numRetries: {{ numRetries }}
               retryConditions:
                 - "{{ retryConditions }}"
-              numRetries: {{ numRetries }}
             statefulSessionAffinity:
               cookieTtl: "{{ cookieTtl }}"
-            idleTimeout: "{{ idleTimeout }}"
+            timeout: "{{ timeout }}"
+          matches: "{{ matches }}"
     - name: grpcRouteId
       value: "{{ grpcRouteId }}"
 `}</CodeBlock>
@@ -469,12 +469,12 @@ Updates the parameters of a single GrpcRoute.
 ```sql
 UPDATE google.networkservices.grpc_routes
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__hostnames = '{{ hostnames }}',
-data__meshes = '{{ meshes }}',
 data__gateways = '{{ gateways }}',
+data__hostnames = '{{ hostnames }}',
+data__labels = '{{ labels }}',
+data__meshes = '{{ meshes }}',
+data__name = '{{ name }}',
 data__rules = '{{ rules }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

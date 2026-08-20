@@ -128,15 +128,15 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_jobs_messages_list"><CopyableCode code="projects_locations_jobs_messages_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
-    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-minimumImportance"><code>minimumImportance</code></a></td>
-    <td>Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`.</td>
+    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-minimumImportance"><code>minimumImportance</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
+    <td>Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`. # IAM Permissions Requires the `dataflow.messages.list` permission on the job.</td>
 </tr>
 <tr>
     <td><a href="#projects_jobs_messages_list"><CopyableCode code="projects_jobs_messages_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-minimumImportance"><code>minimumImportance</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-endTime"><code>endTime</code></a></td>
-    <td>Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`.</td>
+    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-minimumImportance"><code>minimumImportance</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
+    <td>Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`. # IAM Permissions Requires the `dataflow.messages.list` permission on the job.</td>
 </tr>
 </tbody>
 </table>
@@ -213,7 +213,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_jobs_messages_list">
 
-Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`.
+Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`. # IAM Permissions Requires the `dataflow.messages.list` permission on the job.
 
 ```sql
 SELECT
@@ -226,16 +226,16 @@ WHERE projectId = '{{ projectId }}' -- required
 AND location = '{{ location }}' -- required
 AND jobId = '{{ jobId }}' -- required
 AND endTime = '{{ endTime }}'
+AND minimumImportance = '{{ minimumImportance }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND startTime = '{{ startTime }}'
-AND pageSize = '{{ pageSize }}'
-AND minimumImportance = '{{ minimumImportance }}'
 ;
 ```
 </TabItem>
 <TabItem value="projects_jobs_messages_list">
 
-Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`.
+Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`. # IAM Permissions Requires the `dataflow.messages.list` permission on the job.
 
 ```sql
 SELECT
@@ -246,12 +246,12 @@ time
 FROM google.dataflow.messages
 WHERE projectId = '{{ projectId }}' -- required
 AND jobId = '{{ jobId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND minimumImportance = '{{ minimumImportance }}'
-AND pageToken = '{{ pageToken }}'
-AND location = '{{ location }}'
-AND startTime = '{{ startTime }}'
 AND endTime = '{{ endTime }}'
+AND location = '{{ location }}'
+AND minimumImportance = '{{ minimumImportance }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND startTime = '{{ startTime }}'
 ;
 ```
 </TabItem>

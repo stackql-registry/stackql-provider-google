@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-packagesId"><code>packagesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists versions.</td>
 </tr>
 <tr>
@@ -331,10 +331,10 @@ AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND packagesId = '{{ packagesId }}' -- required
 AND filter = '{{ filter }}'
-AND view = '{{ view }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -356,12 +356,12 @@ Updates a version.
 ```sql
 UPDATE google.artifactregistry.versions
 SET 
+data__annotations = '{{ annotations }}',
 data__createTime = '{{ createTime }}',
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__updateTime = '{{ updateTime }}',
+data__name = '{{ name }}',
 data__relatedTags = '{{ relatedTags }}',
-data__annotations = '{{ annotations }}'
+data__updateTime = '{{ updateTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

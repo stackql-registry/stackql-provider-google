@@ -251,22 +251,22 @@ Submit a data export job to be processed in the background. If the request is su
 
 ```sql
 INSERT INTO google.apigee.exports (
-data__description,
-data__datastoreName,
-data__outputFormat,
-data__name,
 data__csvDelimiter,
+data__datastoreName,
 data__dateRange,
+data__description,
+data__name,
+data__outputFormat,
 organizationsId,
 environmentsId
 )
 SELECT 
-'{{ description }}',
-'{{ datastoreName }}',
-'{{ outputFormat }}',
-'{{ name }}',
 '{{ csvDelimiter }}',
+'{{ datastoreName }}',
 '{{ dateRange }}',
+'{{ description }}',
+'{{ name }}',
+'{{ outputFormat }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -293,32 +293,32 @@ updated
     - name: environmentsId
       value: "{{ environmentsId }}"
       description: Required parameter for the exports resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the export job.
-    - name: datastoreName
-      value: "{{ datastoreName }}"
-      description: |
-        Required. Name of the preconfigured datastore.
-    - name: outputFormat
-      value: "{{ outputFormat }}"
-      description: |
-        Optional. Output format of the export. Valid values include: \`csv\` or \`json\`. Defaults to \`json\`. Note: Configure the delimiter for CSV output using the \`csvDelimiter\` property.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Display name of the export job.
     - name: csvDelimiter
       value: "{{ csvDelimiter }}"
       description: |
         Optional. Delimiter used in the CSV file, if \`outputFormat\` is set to \`csv\`. Defaults to the \`,\` (comma) character. Supported delimiter characters include comma (\`,\`), pipe (\`|\`), and tab (\`t\`).
+    - name: datastoreName
+      value: "{{ datastoreName }}"
+      description: |
+        Required. Name of the preconfigured datastore.
     - name: dateRange
       description: |
         Required. Date range of the data to export.
       value:
-        start: "{{ start }}"
         end: "{{ end }}"
+        start: "{{ start }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the export job.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Display name of the export job.
+    - name: outputFormat
+      value: "{{ outputFormat }}"
+      description: |
+        Optional. Output format of the export. Valid values include: \`csv\` or \`json\`. Defaults to \`json\`. Note: Configure the delimiter for CSV output using the \`csvDelimiter\` property.
 `}</CodeBlock>
 
 </TabItem>

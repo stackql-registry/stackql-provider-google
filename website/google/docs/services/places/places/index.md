@@ -112,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="currentOpeningHours" /></td>
     <td><code>object</code></td>
-    <td>Information about business hour of the place. (id: GoogleMapsPlacesV1PlaceOpeningHours)</td>
+    <td>The hours of operation for the next seven days (including today) incorporating any special opening hours. The time period starts at midnight on the date of the request and ends at 11:59 pm six days later. If the actual opening hours are outside of this range, the opening hours will be truncated. For example, if a place is open from 10pm yesterday to 6am today, the opening hours will be truncated to 12am today to 6am today. This field includes the special_days subfield of all hours, set for dates that have exceptional hours. (id: GoogleMapsPlacesV1PlaceOpeningHours)</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentSecondaryOpeningHours" /></td>
@@ -477,11 +477,11 @@ The following methods are available for this resource:
     <td>Get the details of a place based on its resource name, which is a string in the `places/&#123;place_id&#125;` format.</td>
 </tr>
 <tr>
-    <td><a href="#search_text"><CopyableCode code="search_text" /></a></td>
+    <td><a href="#autocomplete"><CopyableCode code="autocomplete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Text query based place search.</td>
+    <td>Returns predictions for the given input.</td>
 </tr>
 <tr>
     <td><a href="#search_nearby"><CopyableCode code="search_nearby" /></a></td>
@@ -491,11 +491,11 @@ The following methods are available for this resource:
     <td>Search for places near locations.</td>
 </tr>
 <tr>
-    <td><a href="#autocomplete"><CopyableCode code="autocomplete" /></a></td>
+    <td><a href="#search_text"><CopyableCode code="search_text" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Returns predictions for the given input.</td>
+    <td>Text query based place search.</td>
 </tr>
 </tbody>
 </table>
@@ -644,40 +644,34 @@ AND sessionToken = '{{ sessionToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search_text"
+    defaultValue="autocomplete"
     values={[
-        { label: 'search_text', value: 'search_text' },
+        { label: 'autocomplete', value: 'autocomplete' },
         { label: 'search_nearby', value: 'search_nearby' },
-        { label: 'autocomplete', value: 'autocomplete' }
+        { label: 'search_text', value: 'search_text' }
     ]}
 >
-<TabItem value="search_text">
+<TabItem value="autocomplete">
 
-Text query based place search.
+Returns predictions for the given input.
 
 ```sql
-EXEC google.places.places.search_text 
+EXEC google.places.places.autocomplete 
 @@json=
 '{
-"textQuery": "{{ textQuery }}", 
-"languageCode": "{{ languageCode }}", 
-"rankPreference": "{{ rankPreference }}", 
-"routingParameters": "{{ routingParameters }}", 
-"searchAlongRouteParameters": "{{ searchAlongRouteParameters }}", 
-"includedType": "{{ includedType }}", 
-"pageToken": "{{ pageToken }}", 
-"locationBias": "{{ locationBias }}", 
-"evOptions": "{{ evOptions }}", 
-"pageSize": {{ pageSize }}, 
-"minRating": {{ minRating }}, 
-"regionCode": "{{ regionCode }}", 
-"priceLevels": "{{ priceLevels }}", 
-"includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}, 
-"locationRestriction": "{{ locationRestriction }}", 
-"strictTypeFiltering": {{ strictTypeFiltering }}, 
 "includeFutureOpeningBusinesses": {{ includeFutureOpeningBusinesses }}, 
-"maxResultCount": {{ maxResultCount }}, 
-"openNow": {{ openNow }}
+"includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}, 
+"includeQueryPredictions": {{ includeQueryPredictions }}, 
+"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
+"includedRegionCodes": "{{ includedRegionCodes }}", 
+"input": "{{ input }}", 
+"inputOffset": {{ inputOffset }}, 
+"languageCode": "{{ languageCode }}", 
+"locationBias": "{{ locationBias }}", 
+"locationRestriction": "{{ locationRestriction }}", 
+"origin": "{{ origin }}", 
+"regionCode": "{{ regionCode }}", 
+"sessionToken": "{{ sessionToken }}"
 }'
 ;
 ```
@@ -690,42 +684,48 @@ Search for places near locations.
 EXEC google.places.places.search_nearby 
 @@json=
 '{
-"regionCode": "{{ regionCode }}", 
-"excludedTypes": "{{ excludedTypes }}", 
 "excludedPrimaryTypes": "{{ excludedPrimaryTypes }}", 
-"routingParameters": "{{ routingParameters }}", 
-"languageCode": "{{ languageCode }}", 
-"rankPreference": "{{ rankPreference }}", 
-"includedTypes": "{{ includedTypes }}", 
-"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
-"maxResultCount": {{ maxResultCount }}, 
+"excludedTypes": "{{ excludedTypes }}", 
 "includeFutureOpeningBusinesses": {{ includeFutureOpeningBusinesses }}, 
-"locationRestriction": "{{ locationRestriction }}"
+"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
+"includedTypes": "{{ includedTypes }}", 
+"languageCode": "{{ languageCode }}", 
+"locationRestriction": "{{ locationRestriction }}", 
+"maxResultCount": {{ maxResultCount }}, 
+"rankPreference": "{{ rankPreference }}", 
+"regionCode": "{{ regionCode }}", 
+"routingParameters": "{{ routingParameters }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="autocomplete">
+<TabItem value="search_text">
 
-Returns predictions for the given input.
+Text query based place search.
 
 ```sql
-EXEC google.places.places.autocomplete 
+EXEC google.places.places.search_text 
 @@json=
 '{
-"origin": "{{ origin }}", 
-"regionCode": "{{ regionCode }}", 
+"evOptions": "{{ evOptions }}", 
 "includeFutureOpeningBusinesses": {{ includeFutureOpeningBusinesses }}, 
-"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
-"sessionToken": "{{ sessionToken }}", 
-"locationRestriction": "{{ locationRestriction }}", 
-"inputOffset": {{ inputOffset }}, 
 "includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}, 
+"includedType": "{{ includedType }}", 
 "languageCode": "{{ languageCode }}", 
-"input": "{{ input }}", 
-"includedRegionCodes": "{{ includedRegionCodes }}", 
 "locationBias": "{{ locationBias }}", 
-"includeQueryPredictions": {{ includeQueryPredictions }}
+"locationRestriction": "{{ locationRestriction }}", 
+"maxResultCount": {{ maxResultCount }}, 
+"minRating": {{ minRating }}, 
+"openNow": {{ openNow }}, 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"priceLevels": "{{ priceLevels }}", 
+"rankPreference": "{{ rankPreference }}", 
+"regionCode": "{{ regionCode }}", 
+"routingParameters": "{{ routingParameters }}", 
+"searchAlongRouteParameters": "{{ searchAlongRouteParameters }}", 
+"strictTypeFiltering": {{ strictTypeFiltering }}, 
+"textQuery": "{{ textQuery }}"
 }'
 ;
 ```

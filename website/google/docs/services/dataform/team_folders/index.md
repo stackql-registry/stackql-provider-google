@@ -135,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#query_contents"><CopyableCode code="query_contents" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-teamFoldersId"><code>teamFoldersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns the contents of a given TeamFolder.</td>
 </tr>
 <tr>
@@ -265,10 +265,10 @@ FROM google.dataform.team_folders
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND teamFoldersId = '{{ teamFoldersId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -290,14 +290,14 @@ Creates a new TeamFolder in a given project and location.
 
 ```sql
 INSERT INTO google.dataform.team_folders (
-data__name,
 data__displayName,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -321,14 +321,14 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the team_folders resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The TeamFolder's name.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Required. The TeamFolder's user-friendly name.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The TeamFolder's name.
 `}</CodeBlock>
 
 </TabItem>
@@ -350,8 +350,8 @@ Updates a single TeamFolder.
 ```sql
 UPDATE google.dataform.team_folders
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

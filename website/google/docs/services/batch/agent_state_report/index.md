@@ -104,9 +104,9 @@ EXEC google.batch.agent_state_report.report
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"metadata": "{{ metadata }}", 
+"agentInfo": "{{ agentInfo }}", 
 "agentTimingInfo": "{{ agentTimingInfo }}", 
-"agentInfo": "{{ agentInfo }}"
+"metadata": "{{ metadata }}"
 }'
 ;
 ```

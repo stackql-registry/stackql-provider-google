@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the DbSystems for the given project and location.</td>
 </tr>
 <tr>
@@ -327,10 +327,10 @@ properties
 FROM google.oracledatabase.db_systems
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -352,26 +352,26 @@ Creates a new DbSystem in a given project and location.
 
 ```sql
 INSERT INTO google.oracledatabase.db_systems (
-data__properties,
 data__displayName,
-data__odbSubnet,
-data__odbNetwork,
-data__name,
 data__gcpOracleZone,
 data__labels,
+data__name,
+data__odbNetwork,
+data__odbSubnet,
+data__properties,
 projectsId,
 locationsId,
 dbSystemId,
 requestId
 )
 SELECT 
-'{{ properties }}',
 '{{ displayName }}',
-'{{ odbSubnet }}',
-'{{ odbNetwork }}',
-'{{ name }}',
 '{{ gcpOracleZone }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ odbNetwork }}',
+'{{ odbSubnet }}',
+'{{ properties }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dbSystemId }}',
@@ -396,88 +396,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the db_systems resource.
-    - name: properties
-      description: |
-        Optional. The properties of the DbSystem.
-      value:
-        initialDataStorageSizeGb: {{ initialDataStorageSizeGb }}
-        dataStorageSizeGb: {{ dataStorageSizeGb }}
-        computeModel: "{{ computeModel }}"
-        memorySizeGb: {{ memorySizeGb }}
-        timeZone:
-          id: "{{ id }}"
-          version: "{{ version }}"
-        sshPublicKeys:
-          - "{{ sshPublicKeys }}"
-        licenseModel: "{{ licenseModel }}"
-        hostname: "{{ hostname }}"
-        dbHome:
-          dbVersion: "{{ dbVersion }}"
-          database:
-            createTime: "{{ createTime }}"
-            pluggableDatabaseId: "{{ pluggableDatabaseId }}"
-            ncharacterSet: "{{ ncharacterSet }}"
-            tdeWalletPasswordSecretVersion: "{{ tdeWalletPasswordSecretVersion }}"
-            ociUrl: "{{ ociUrl }}"
-            opsInsightsStatus: "{{ opsInsightsStatus }}"
-            name: "{{ name }}"
-            dbUniqueName: "{{ dbUniqueName }}"
-            adminPassword: "{{ adminPassword }}"
-            pluggableDatabaseName: "{{ pluggableDatabaseName }}"
-            properties:
-              dbVersion: "{{ dbVersion }}"
-              dbBackupConfig:
-                autoBackupEnabled: {{ autoBackupEnabled }}
-                autoIncrementalBackupWindow: "{{ autoIncrementalBackupWindow }}"
-                autoFullBackupDay: "{{ autoFullBackupDay }}"
-                autoFullBackupWindow: "{{ autoFullBackupWindow }}"
-                backupDestinationDetails: "{{ backupDestinationDetails }}"
-                retentionPeriodDays: {{ retentionPeriodDays }}
-                backupDeletionPolicy: "{{ backupDeletionPolicy }}"
-              databaseManagementConfig:
-                managementState: "{{ managementState }}"
-                managementType: "{{ managementType }}"
-              state: "{{ state }}"
-            characterSet: "{{ characterSet }}"
-            databaseId: "{{ databaseId }}"
-            tdeWalletPassword: "{{ tdeWalletPassword }}"
-            dbName: "{{ dbName }}"
-            dbHomeName: "{{ dbHomeName }}"
-            adminPasswordSecretVersion: "{{ adminPasswordSecretVersion }}"
-            gcpOracleZone: "{{ gcpOracleZone }}"
-          isUnifiedAuditingEnabled: {{ isUnifiedAuditingEnabled }}
-          displayName: "{{ displayName }}"
-        privateIp: "{{ privateIp }}"
-        dataCollectionOptions:
-          isDiagnosticsEventsEnabled: {{ isDiagnosticsEventsEnabled }}
-          isIncidentLogsEnabled: {{ isIncidentLogsEnabled }}
-        hostnamePrefix: "{{ hostnamePrefix }}"
-        domain: "{{ domain }}"
-        shape: "{{ shape }}"
-        nodeCount: {{ nodeCount }}
-        dbSystemOptions:
-          storageManagement: "{{ storageManagement }}"
-        ocid: "{{ ocid }}"
-        computeCount: {{ computeCount }}
-        recoStorageSizeGb: {{ recoStorageSizeGb }}
-        lifecycleState: "{{ lifecycleState }}"
-        databaseEdition: "{{ databaseEdition }}"
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Required. The display name for the System db. The name does not have to be unique within your project.
-    - name: odbSubnet
-      value: "{{ odbSubnet }}"
-      description: |
-        Required. The name of the OdbSubnet associated with the DbSystem for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
-    - name: odbNetwork
-      value: "{{ odbNetwork }}"
-      description: |
-        Optional. The name of the OdbNetwork associated with the DbSystem. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the DbSystem resource in the following format: projects/{project}/locations/{region}/dbSystems/{db_system}
     - name: gcpOracleZone
       value: "{{ gcpOracleZone }}"
       description: |
@@ -486,6 +408,84 @@ response
       value: "{{ labels }}"
       description: |
         Optional. The labels or tags associated with the DbSystem.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the DbSystem resource in the following format: projects/{project}/locations/{region}/dbSystems/{db_system}
+    - name: odbNetwork
+      value: "{{ odbNetwork }}"
+      description: |
+        Optional. The name of the OdbNetwork associated with the DbSystem. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
+    - name: odbSubnet
+      value: "{{ odbSubnet }}"
+      description: |
+        Required. The name of the OdbSubnet associated with the DbSystem for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+    - name: properties
+      description: |
+        Optional. The properties of the DbSystem.
+      value:
+        computeCount: {{ computeCount }}
+        computeModel: "{{ computeModel }}"
+        dataCollectionOptions:
+          isDiagnosticsEventsEnabled: {{ isDiagnosticsEventsEnabled }}
+          isIncidentLogsEnabled: {{ isIncidentLogsEnabled }}
+        dataStorageSizeGb: {{ dataStorageSizeGb }}
+        databaseEdition: "{{ databaseEdition }}"
+        dbHome:
+          database:
+            adminPassword: "{{ adminPassword }}"
+            adminPasswordSecretVersion: "{{ adminPasswordSecretVersion }}"
+            characterSet: "{{ characterSet }}"
+            createTime: "{{ createTime }}"
+            databaseId: "{{ databaseId }}"
+            dbHomeName: "{{ dbHomeName }}"
+            dbName: "{{ dbName }}"
+            dbUniqueName: "{{ dbUniqueName }}"
+            gcpOracleZone: "{{ gcpOracleZone }}"
+            name: "{{ name }}"
+            ncharacterSet: "{{ ncharacterSet }}"
+            ociUrl: "{{ ociUrl }}"
+            opsInsightsStatus: "{{ opsInsightsStatus }}"
+            pluggableDatabaseId: "{{ pluggableDatabaseId }}"
+            pluggableDatabaseName: "{{ pluggableDatabaseName }}"
+            properties:
+              databaseManagementConfig:
+                managementState: "{{ managementState }}"
+                managementType: "{{ managementType }}"
+              dbBackupConfig:
+                autoBackupEnabled: {{ autoBackupEnabled }}
+                autoFullBackupDay: "{{ autoFullBackupDay }}"
+                autoFullBackupWindow: "{{ autoFullBackupWindow }}"
+                autoIncrementalBackupWindow: "{{ autoIncrementalBackupWindow }}"
+                backupDeletionPolicy: "{{ backupDeletionPolicy }}"
+                backupDestinationDetails: "{{ backupDestinationDetails }}"
+                retentionPeriodDays: {{ retentionPeriodDays }}
+              dbVersion: "{{ dbVersion }}"
+              state: "{{ state }}"
+            tdeWalletPassword: "{{ tdeWalletPassword }}"
+            tdeWalletPasswordSecretVersion: "{{ tdeWalletPasswordSecretVersion }}"
+          dbVersion: "{{ dbVersion }}"
+          displayName: "{{ displayName }}"
+          isUnifiedAuditingEnabled: {{ isUnifiedAuditingEnabled }}
+        dbSystemOptions:
+          storageManagement: "{{ storageManagement }}"
+        domain: "{{ domain }}"
+        hostname: "{{ hostname }}"
+        hostnamePrefix: "{{ hostnamePrefix }}"
+        initialDataStorageSizeGb: {{ initialDataStorageSizeGb }}
+        licenseModel: "{{ licenseModel }}"
+        lifecycleState: "{{ lifecycleState }}"
+        memorySizeGb: {{ memorySizeGb }}
+        nodeCount: {{ nodeCount }}
+        ocid: "{{ ocid }}"
+        privateIp: "{{ privateIp }}"
+        recoStorageSizeGb: {{ recoStorageSizeGb }}
+        shape: "{{ shape }}"
+        sshPublicKeys:
+          - "{{ sshPublicKeys }}"
+        timeZone:
+          id: "{{ id }}"
+          version: "{{ version }}"
     - name: dbSystemId
       value: "{{ dbSystemId }}"
     - name: requestId

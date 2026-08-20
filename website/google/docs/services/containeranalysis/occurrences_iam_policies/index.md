@@ -143,16 +143,16 @@ The following methods are available for this resource:
     <td>Sets the access control policy on the specified note or occurrence. Requires `containeranalysis.notes.setIamPolicy` or `containeranalysis.occurrences.setIamPolicy` permission if the resource is a note or an occurrence, respectively. The resource takes the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.</td>
 </tr>
 <tr>
-    <td><a href="#projects_occurrences_test_iam_permissions"><CopyableCode code="projects_occurrences_test_iam_permissions" /></a></td>
+    <td><a href="#projects_locations_occurrences_test_iam_permissions"><CopyableCode code="projects_locations_occurrences_test_iam_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-occurrencesId"><code>occurrencesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-occurrencesId"><code>occurrencesId</code></a></td>
     <td></td>
     <td>Returns the permissions that a caller has on the specified note or occurrence. Requires list permission on the project (for example, `containeranalysis.notes.list`). The resource takes the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_occurrences_test_iam_permissions"><CopyableCode code="projects_locations_occurrences_test_iam_permissions" /></a></td>
+    <td><a href="#projects_occurrences_test_iam_permissions"><CopyableCode code="projects_occurrences_test_iam_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-occurrencesId"><code>occurrencesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-occurrencesId"><code>occurrencesId</code></a></td>
     <td></td>
     <td>Returns the permissions that a caller has on the specified note or occurrence. Requires list permission on the project (for example, `containeranalysis.notes.list`). The resource takes the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.</td>
 </tr>
@@ -283,27 +283,12 @@ version;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_occurrences_test_iam_permissions"
+    defaultValue="projects_locations_occurrences_test_iam_permissions"
     values={[
-        { label: 'projects_occurrences_test_iam_permissions', value: 'projects_occurrences_test_iam_permissions' },
-        { label: 'projects_locations_occurrences_test_iam_permissions', value: 'projects_locations_occurrences_test_iam_permissions' }
+        { label: 'projects_locations_occurrences_test_iam_permissions', value: 'projects_locations_occurrences_test_iam_permissions' },
+        { label: 'projects_occurrences_test_iam_permissions', value: 'projects_occurrences_test_iam_permissions' }
     ]}
 >
-<TabItem value="projects_occurrences_test_iam_permissions">
-
-Returns the permissions that a caller has on the specified note or occurrence. Requires list permission on the project (for example, `containeranalysis.notes.list`). The resource takes the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
-
-```sql
-EXEC google.containeranalysis.occurrences_iam_policies.projects_occurrences_test_iam_permissions 
-@projectsId='{{ projectsId }}' --required, 
-@occurrencesId='{{ occurrencesId }}' --required 
-@@json=
-'{
-"permissions": "{{ permissions }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_occurrences_test_iam_permissions">
 
 Returns the permissions that a caller has on the specified note or occurrence. Requires list permission on the project (for example, `containeranalysis.notes.list`). The resource takes the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
@@ -312,6 +297,21 @@ Returns the permissions that a caller has on the specified note or occurrence. R
 EXEC google.containeranalysis.occurrences_iam_policies.projects_locations_occurrences_test_iam_permissions 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@occurrencesId='{{ occurrencesId }}' --required 
+@@json=
+'{
+"permissions": "{{ permissions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_occurrences_test_iam_permissions">
+
+Returns the permissions that a caller has on the specified note or occurrence. Requires list permission on the project (for example, `containeranalysis.notes.list`). The resource takes the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
+
+```sql
+EXEC google.containeranalysis.occurrences_iam_policies.projects_occurrences_test_iam_permissions 
+@projectsId='{{ projectsId }}' --required, 
 @occurrencesId='{{ occurrencesId }}' --required 
 @@json=
 '{

@@ -118,7 +118,7 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-pixelSizeMeters"><code>pixelSizeMeters</code></a>, <a href="#parameter-requiredQuality"><code>requiredQuality</code></a>, <a href="#parameter-exactQualityRequired"><code>exactQualityRequired</code></a>, <a href="#parameter-radiusMeters"><code>radiusMeters</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a>, <a href="#parameter-experiments"><code>experiments</code></a></td>
+    <td><a href="#parameter-exactQualityRequired"><code>exactQualityRequired</code></a>, <a href="#parameter-experiments"><code>experiments</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a>, <a href="#parameter-pixelSizeMeters"><code>pixelSizeMeters</code></a>, <a href="#parameter-radiusMeters"><code>radiusMeters</code></a>, <a href="#parameter-requiredQuality"><code>requiredQuality</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Gets solar information for a region surrounding a location. Returns an error with code `NOT_FOUND` if the location is outside the coverage area.</td>
 </tr>
 </tbody>
@@ -204,14 +204,14 @@ maskUrl,
 monthlyFluxUrl,
 rgbUrl
 FROM google.solar.data_layers
-WHERE location.latitude = '{{ location.latitude }}'
-AND pixelSizeMeters = '{{ pixelSizeMeters }}'
-AND requiredQuality = '{{ requiredQuality }}'
-AND exactQualityRequired = '{{ exactQualityRequired }}'
-AND radiusMeters = '{{ radiusMeters }}'
-AND view = '{{ view }}'
-AND location.longitude = '{{ location.longitude }}'
+WHERE exactQualityRequired = '{{ exactQualityRequired }}'
 AND experiments = '{{ experiments }}'
+AND location.latitude = '{{ location.latitude }}'
+AND location.longitude = '{{ location.longitude }}'
+AND pixelSizeMeters = '{{ pixelSizeMeters }}'
+AND radiusMeters = '{{ radiusMeters }}'
+AND requiredQuality = '{{ requiredQuality }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>

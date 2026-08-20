@@ -272,19 +272,19 @@ Creates a glossary entry.
 
 ```sql
 INSERT INTO google.translate.glossary_entries (
-data__name,
-data__termsSet,
-data__termsPair,
 data__description,
+data__name,
+data__termsPair,
+data__termsSet,
 projectsId,
 locationsId,
 glossariesId
 )
 SELECT 
-'{{ name }}',
-'{{ termsSet }}',
-'{{ termsPair }}',
 '{{ description }}',
+'{{ name }}',
+'{{ termsPair }}',
+'{{ termsSet }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ glossariesId }}'
@@ -310,10 +310,24 @@ termsSet
     - name: glossariesId
       value: "{{ glossariesId }}"
       description: Required parameter for the glossary_entries resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Describes the glossary entry.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the entry. Format: \`projects/*/locations/*/glossaries/*/glossaryEntries/*\`
+    - name: termsPair
+      description: |
+        Used for an unidirectional glossary.
+      value:
+        sourceTerm:
+          languageCode: "{{ languageCode }}"
+          text: "{{ text }}"
+        targetTerm:
+          languageCode: "{{ languageCode }}"
+          text: "{{ text }}"
     - name: termsSet
       description: |
         Used for an equivalent term sets glossary.
@@ -321,20 +335,6 @@ termsSet
         terms:
           - languageCode: "{{ languageCode }}"
             text: "{{ text }}"
-    - name: termsPair
-      description: |
-        Used for an unidirectional glossary.
-      value:
-        targetTerm:
-          languageCode: "{{ languageCode }}"
-          text: "{{ text }}"
-        sourceTerm:
-          languageCode: "{{ languageCode }}"
-          text: "{{ text }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Describes the glossary entry.
 `}</CodeBlock>
 
 </TabItem>
@@ -356,10 +356,10 @@ Updates a glossary entry.
 ```sql
 UPDATE google.translate.glossary_entries
 SET 
+data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__termsSet = '{{ termsSet }}',
 data__termsPair = '{{ termsPair }}',
-data__description = '{{ description }}'
+data__termsSet = '{{ termsSet }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

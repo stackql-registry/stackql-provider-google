@@ -299,19 +299,19 @@ Creates a new DnsThreatDetector in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.dns_threat_detectors (
+data__excludedNetworks,
+data__labels,
 data__name,
 data__provider,
-data__labels,
-data__excludedNetworks,
 projectsId,
 locationsId,
 dnsThreatDetectorId
 )
 SELECT 
+'{{ excludedNetworks }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ provider }}',
-'{{ labels }}',
-'{{ excludedNetworks }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dnsThreatDetectorId }}'
@@ -336,6 +336,15 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the dns_threat_detectors resource.
+    - name: excludedNetworks
+      value:
+        - "{{ excludedNetworks }}"
+      description: |
+        Optional. A list of network resource names which aren't monitored by this DnsThreatDetector. Example: \`projects/PROJECT_ID/global/networks/NETWORK_NAME\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Any labels associated with the DnsThreatDetector, listed as key value pairs.
     - name: name
       value: "{{ name }}"
       description: |
@@ -345,15 +354,6 @@ updateTime
       description: |
         Required. The provider used for DNS threat analysis.
       valid_values: ['PROVIDER_UNSPECIFIED', 'INFOBLOX']
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Any labels associated with the DnsThreatDetector, listed as key value pairs.
-    - name: excludedNetworks
-      value:
-        - "{{ excludedNetworks }}"
-      description: |
-        Optional. A list of network resource names which aren't monitored by this DnsThreatDetector. Example: \`projects/PROJECT_ID/global/networks/NETWORK_NAME\`.
     - name: dnsThreatDetectorId
       value: "{{ dnsThreatDetectorId }}"
 `}</CodeBlock>
@@ -377,10 +377,10 @@ Updates a single DnsThreatDetector.
 ```sql
 UPDATE google.networksecurity.dns_threat_detectors
 SET 
-data__name = '{{ name }}',
-data__provider = '{{ provider }}',
+data__excludedNetworks = '{{ excludedNetworks }}',
 data__labels = '{{ labels }}',
-data__excludedNetworks = '{{ excludedNetworks }}'
+data__name = '{{ name }}',
+data__provider = '{{ provider }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

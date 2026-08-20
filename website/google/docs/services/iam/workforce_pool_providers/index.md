@@ -408,35 +408,35 @@ Creates a new WorkforcePoolProvider in a WorkforcePool. You cannot reuse the nam
 
 ```sql
 INSERT INTO google.iam.workforce_pool_providers (
-data__name,
-data__displayName,
-data__scimUsage,
+data__attributeCondition,
 data__attributeMapping,
 data__description,
-data__oidc,
-data__extendedAttributesOauth2Client,
 data__detailedAuditLogging,
-data__extraAttributesOauth2Client,
-data__saml,
-data__attributeCondition,
 data__disabled,
+data__displayName,
+data__extendedAttributesOauth2Client,
+data__extraAttributesOauth2Client,
+data__name,
+data__oidc,
+data__saml,
+data__scimUsage,
 locationsId,
 workforcePoolsId,
 workforcePoolProviderId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ scimUsage }}',
+'{{ attributeCondition }}',
 '{{ attributeMapping }}',
 '{{ description }}',
-'{{ oidc }}',
-'{{ extendedAttributesOauth2Client }}',
 {{ detailedAuditLogging }},
-'{{ extraAttributesOauth2Client }}',
-'{{ saml }}',
-'{{ attributeCondition }}',
 {{ disabled }},
+'{{ displayName }}',
+'{{ extendedAttributesOauth2Client }}',
+'{{ extraAttributesOauth2Client }}',
+'{{ name }}',
+'{{ oidc }}',
+'{{ saml }}',
+'{{ scimUsage }}',
 '{{ locationsId }}',
 '{{ workforcePoolsId }}',
 '{{ workforcePoolProviderId }}'
@@ -460,19 +460,10 @@ response
     - name: workforcePoolsId
       value: "{{ workforcePoolsId }}"
       description: Required parameter for the workforce_pool_providers resource.
-    - name: name
-      value: "{{ name }}"
+    - name: attributeCondition
+      value: "{{ attributeCondition }}"
       description: |
-        Identifier. The resource name of the provider. Format: \`locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_id}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. A display name for the provider. Cannot exceed 32 characters.
-    - name: scimUsage
-      value: "{{ scimUsage }}"
-      description: |
-        Optional. Gemini Enterprise only. Specifies whether the workforce identity pool provider uses SCIM-managed groups instead of the \`google.groups\` attribute mapping for authorization checks. The \`scim_usage\` and \`extended_attributes_oauth2_client\` fields are mutually exclusive. A request that enables both fields on the same workforce identity pool provider will produce an error.
-      valid_values: ['SCIM_USAGE_UNSPECIFIED', 'ENABLED_FOR_GROUPS']
+        Optional. A [Common Expression Language](https://opensource.google/projects/cel) expression, in plain text, to restrict what otherwise valid authentication credentials issued by the provider should not be accepted. The expression must output a boolean representing whether to allow the federation. The following keywords may be referenced in the expressions: * \`assertion\`: JSON representing the authentication credential issued by the provider. * \`google\`: The Google attributes mapped from the assertion in the \`attribute_mappings\`. \`google.profile_photo\`, \`google.display_name\` and \`google.posix_username\` are not supported. * \`attribute\`: The custom attributes mapped from the assertion in the \`attribute_mappings\`. The maximum length of the attribute condition expression is 4096 characters. If unspecified, all valid authentication credentials will be accepted. The following example shows how to only allow credentials with a mapped \`google.groups\` value of \`admins\`: \`\`\` "'admins' in google.groups" \`\`\`
     - name: attributeMapping
       value: "{{ attributeMapping }}"
       description: |
@@ -481,65 +472,74 @@ response
       value: "{{ description }}"
       description: |
         Optional. A description of the provider. Cannot exceed 256 characters.
+    - name: detailedAuditLogging
+      value: {{ detailedAuditLogging }}
+      description: |
+        Optional. If true, populates additional debug information in Cloud Audit Logs for this provider. Logged attribute mappings and values can be found in \`sts.googleapis.com\` data access logs. Default value is false.
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Disables the workforce pool provider. You cannot use a disabled provider to exchange tokens. However, existing tokens still grant access.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. A display name for the provider. Cannot exceed 32 characters.
+    - name: extendedAttributesOauth2Client
+      description: |
+        Optional. The configuration for OAuth 2.0 client used to get the extended group memberships for user identities. Only the \`AZURE_AD_GROUPS_ID\` attribute type is supported. Extended groups supports a subset of Google Cloud services. When the user accesses these services, extended group memberships override the mapped \`google.groups\` attribute. Extended group memberships cannot be used in attribute mapping or attribute condition expressions. To keep extended group memberships up to date, extended groups are retrieved when the user signs in and at regular intervals during the user's active session. Each user identity in the workforce identity pool must map to a unique Microsoft Entra ID user.
+      value:
+        attributesType: "{{ attributesType }}"
+        clientId: "{{ clientId }}"
+        clientSecret:
+          value:
+            plainText: "{{ plainText }}"
+            thumbprint: "{{ thumbprint }}"
+        issuerUri: "{{ issuerUri }}"
+        queryParameters:
+          filter: "{{ filter }}"
+    - name: extraAttributesOauth2Client
+      description: |
+        Optional. Defines the configuration for the OAuth 2.0 client that is used to get the additional user attributes in a separate backchannel call to the identity provider. This should be used when users can't get the required claims in authentication credentials. Currently, the OAuth 2.0 protocol is the only supported authorization method for this backchannel call.
+      value:
+        attributesType: "{{ attributesType }}"
+        clientId: "{{ clientId }}"
+        clientSecret:
+          value:
+            plainText: "{{ plainText }}"
+            thumbprint: "{{ thumbprint }}"
+        issuerUri: "{{ issuerUri }}"
+        queryParameters:
+          filter: "{{ filter }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the provider. Format: \`locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_id}\`
     - name: oidc
       description: |
         An OpenID Connect 1.0 identity provider configuration.
       value:
         clientId: "{{ clientId }}"
+        clientSecret:
+          value:
+            plainText: "{{ plainText }}"
+            thumbprint: "{{ thumbprint }}"
+        issuerUri: "{{ issuerUri }}"
+        jwksJson: "{{ jwksJson }}"
         webSsoConfig:
-          responseType: "{{ responseType }}"
-          assertionClaimsBehavior: "{{ assertionClaimsBehavior }}"
           additionalScopes:
             - "{{ additionalScopes }}"
-        jwksJson: "{{ jwksJson }}"
-        clientSecret:
-          value:
-            thumbprint: "{{ thumbprint }}"
-            plainText: "{{ plainText }}"
-        issuerUri: "{{ issuerUri }}"
-    - name: extendedAttributesOauth2Client
-      description: |
-        Optional. The configuration for OAuth 2.0 client used to get the extended group memberships for user identities. Only the \`AZURE_AD_GROUPS_ID\` attribute type is supported. Extended groups supports a subset of Google Cloud services. When the user accesses these services, extended group memberships override the mapped \`google.groups\` attribute. Extended group memberships cannot be used in attribute mapping or attribute condition expressions. To keep extended group memberships up to date, extended groups are retrieved when the user signs in and at regular intervals during the user's active session. Each user identity in the workforce identity pool must map to a unique Microsoft Entra ID user.
-      value:
-        clientSecret:
-          value:
-            thumbprint: "{{ thumbprint }}"
-            plainText: "{{ plainText }}"
-        attributesType: "{{ attributesType }}"
-        issuerUri: "{{ issuerUri }}"
-        clientId: "{{ clientId }}"
-        queryParameters:
-          filter: "{{ filter }}"
-    - name: detailedAuditLogging
-      value: {{ detailedAuditLogging }}
-      description: |
-        Optional. If true, populates additional debug information in Cloud Audit Logs for this provider. Logged attribute mappings and values can be found in \`sts.googleapis.com\` data access logs. Default value is false.
-    - name: extraAttributesOauth2Client
-      description: |
-        Optional. Defines the configuration for the OAuth 2.0 client that is used to get the additional user attributes in a separate backchannel call to the identity provider. This should be used when users can't get the required claims in authentication credentials. Currently, the OAuth 2.0 protocol is the only supported authorization method for this backchannel call.
-      value:
-        clientSecret:
-          value:
-            thumbprint: "{{ thumbprint }}"
-            plainText: "{{ plainText }}"
-        attributesType: "{{ attributesType }}"
-        issuerUri: "{{ issuerUri }}"
-        clientId: "{{ clientId }}"
-        queryParameters:
-          filter: "{{ filter }}"
+          assertionClaimsBehavior: "{{ assertionClaimsBehavior }}"
+          responseType: "{{ responseType }}"
     - name: saml
       description: |
         A SAML identity provider configuration.
       value:
         idpMetadataXml: "{{ idpMetadataXml }}"
-    - name: attributeCondition
-      value: "{{ attributeCondition }}"
+    - name: scimUsage
+      value: "{{ scimUsage }}"
       description: |
-        Optional. A [Common Expression Language](https://opensource.google/projects/cel) expression, in plain text, to restrict what otherwise valid authentication credentials issued by the provider should not be accepted. The expression must output a boolean representing whether to allow the federation. The following keywords may be referenced in the expressions: * \`assertion\`: JSON representing the authentication credential issued by the provider. * \`google\`: The Google attributes mapped from the assertion in the \`attribute_mappings\`. \`google.profile_photo\`, \`google.display_name\` and \`google.posix_username\` are not supported. * \`attribute\`: The custom attributes mapped from the assertion in the \`attribute_mappings\`. The maximum length of the attribute condition expression is 4096 characters. If unspecified, all valid authentication credentials will be accepted. The following example shows how to only allow credentials with a mapped \`google.groups\` value of \`admins\`: \`\`\` "'admins' in google.groups" \`\`\`
-    - name: disabled
-      value: {{ disabled }}
-      description: |
-        Optional. Disables the workforce pool provider. You cannot use a disabled provider to exchange tokens. However, existing tokens still grant access.
+        Optional. Gemini Enterprise only. Specifies whether the workforce identity pool provider uses SCIM-managed groups instead of the \`google.groups\` attribute mapping for authorization checks. The \`scim_usage\` and \`extended_attributes_oauth2_client\` fields are mutually exclusive. A request that enables both fields on the same workforce identity pool provider will produce an error.
+      valid_values: ['SCIM_USAGE_UNSPECIFIED', 'ENABLED_FOR_GROUPS']
     - name: workforcePoolProviderId
       value: "{{ workforcePoolProviderId }}"
 `}</CodeBlock>
@@ -563,18 +563,18 @@ Updates an existing WorkforcePoolProvider.
 ```sql
 UPDATE google.iam.workforce_pool_providers
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__scimUsage = '{{ scimUsage }}',
+data__attributeCondition = '{{ attributeCondition }}',
 data__attributeMapping = '{{ attributeMapping }}',
 data__description = '{{ description }}',
-data__oidc = '{{ oidc }}',
-data__extendedAttributesOauth2Client = '{{ extendedAttributesOauth2Client }}',
 data__detailedAuditLogging = {{ detailedAuditLogging }},
+data__disabled = {{ disabled }},
+data__displayName = '{{ displayName }}',
+data__extendedAttributesOauth2Client = '{{ extendedAttributesOauth2Client }}',
 data__extraAttributesOauth2Client = '{{ extraAttributesOauth2Client }}',
+data__name = '{{ name }}',
+data__oidc = '{{ oidc }}',
 data__saml = '{{ saml }}',
-data__attributeCondition = '{{ attributeCondition }}',
-data__disabled = {{ disabled }}
+data__scimUsage = '{{ scimUsage }}'
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND workforcePoolsId = '{{ workforcePoolsId }}' --required

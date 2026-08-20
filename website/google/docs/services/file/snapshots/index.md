@@ -99,6 +99,41 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the snapshot, in the format `projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;/snapshots/&#123;snapshot_id&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the snapshot was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filesystemUsedBytes" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. The amount of bytes needed to allocate a full copy of the snapshot content</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Resource labels to represent user provided metadata.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The snapshot state. (STATE_UNSPECIFIED, CREATING, READY, DELETING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: "123456789012/environment" : "production", "123456789013/costCenter" : "marketing" See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -130,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists all snapshots in a project for either a specified location or for all locations.</td>
 </tr>
 <tr>
@@ -264,16 +299,22 @@ Lists all snapshots in a project for either a specified location or for all loca
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+filesystemUsedBytes,
+labels,
+state,
+tags
 FROM google.file.snapshots
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -295,18 +336,18 @@ Creates a snapshot.
 
 ```sql
 INSERT INTO google.file.snapshots (
+data__description,
 data__labels,
 data__tags,
-data__description,
 projectsId,
 locationsId,
 instancesId,
 snapshotId
 )
 SELECT 
+'{{ description }}',
 '{{ labels }}',
 '{{ tags }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instancesId }}',
@@ -334,6 +375,10 @@ response
     - name: instancesId
       value: "{{ instancesId }}"
       description: Required parameter for the snapshots resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -342,10 +387,6 @@ response
       value: "{{ tags }}"
       description: |
         Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: "123456789012/environment" : "production", "123456789013/costCenter" : "marketing" See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
-    - name: description
-      value: "{{ description }}"
-      description: |
-        A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
     - name: snapshotId
       value: "{{ snapshotId }}"
 `}</CodeBlock>
@@ -369,9 +410,9 @@ Updates the settings of a specific snapshot.
 ```sql
 UPDATE google.file.snapshots
 SET 
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__tags = '{{ tags }}',
-data__description = '{{ description }}'
+data__tags = '{{ tags }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -37,9 +37,9 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_collections_data_stores_controls_get', value: 'projects_locations_collections_data_stores_controls_get' },
         { label: 'projects_locations_collections_engines_controls_get', value: 'projects_locations_collections_engines_controls_get' },
-        { label: 'projects_locations_data_stores_controls_get', value: 'projects_locations_data_stores_controls_get' },
         { label: 'projects_locations_collections_data_stores_controls_list', value: 'projects_locations_collections_data_stores_controls_list' },
         { label: 'projects_locations_collections_engines_controls_list', value: 'projects_locations_collections_engines_controls_list' },
+        { label: 'projects_locations_data_stores_controls_get', value: 'projects_locations_data_stores_controls_get' },
         { label: 'projects_locations_data_stores_controls_list', value: 'projects_locations_data_stores_controls_list' }
     ]}
 >
@@ -181,75 +181,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_data_stores_controls_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Fully qualified name `projects/*/locations/global/dataStore/*/controls/*`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="associatedServingConfigIds" /></td>
-    <td><code>array</code></td>
-    <td>Output only. List of all ServingConfig IDs this control is attached to. May take up to 10 minutes to update after changes.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="boostAction" /></td>
-    <td><code>object</code></td>
-    <td>Defines a boost-type control (id: GoogleCloudDiscoveryengineV1ControlBoostAction)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="conditions" /></td>
-    <td><code>array</code></td>
-    <td>Determines when the associated action will trigger. Omit to always apply the action. Currently only a single condition may be specified. Otherwise an INVALID ARGUMENT error is thrown.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Required. Human readable name. The identifier used in UI views. Must be UTF-8 encoded string. Length limit is 128 characters. Otherwise an INVALID ARGUMENT error is thrown.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filterAction" /></td>
-    <td><code>object</code></td>
-    <td>Defines a filter-type control Currently not supported by Recommendation (id: GoogleCloudDiscoveryengineV1ControlFilterAction)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="promoteAction" /></td>
-    <td><code>object</code></td>
-    <td>Promote certain links based on predefined trigger queries. (id: GoogleCloudDiscoveryengineV1ControlPromoteAction)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="redirectAction" /></td>
-    <td><code>object</code></td>
-    <td>Defines a redirect-type control. (id: GoogleCloudDiscoveryengineV1ControlRedirectAction)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="solutionType" /></td>
-    <td><code>string</code></td>
-    <td>Required. Immutable. What solution the control belongs to. Must be compatible with vertical of resource. Otherwise an INVALID ARGUMENT error is thrown. (SOLUTION_TYPE_UNSPECIFIED, SOLUTION_TYPE_RECOMMENDATION, SOLUTION_TYPE_SEARCH, SOLUTION_TYPE_CHAT, SOLUTION_TYPE_GENERATIVE_CHAT, SOLUTION_TYPE_AI_MODE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="synonymsAction" /></td>
-    <td><code>object</code></td>
-    <td>Treats a group of terms as synonyms of one another. (id: GoogleCloudDiscoveryengineV1ControlSynonymsAction)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="useCases" /></td>
-    <td><code>array</code></td>
-    <td>Specifies the use case for the control. Affects what condition fields can be set. Only applies to SOLUTION_TYPE_SEARCH. Currently only allow one use case per control. Must be set when solution_type is SolutionType.SOLUTION_TYPE_SEARCH.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_controls_list">
 
 <table>
@@ -320,6 +251,75 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_locations_collections_engines_controls_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Fully qualified name `projects/*/locations/global/dataStore/*/controls/*`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="associatedServingConfigIds" /></td>
+    <td><code>array</code></td>
+    <td>Output only. List of all ServingConfig IDs this control is attached to. May take up to 10 minutes to update after changes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="boostAction" /></td>
+    <td><code>object</code></td>
+    <td>Defines a boost-type control (id: GoogleCloudDiscoveryengineV1ControlBoostAction)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="conditions" /></td>
+    <td><code>array</code></td>
+    <td>Determines when the associated action will trigger. Omit to always apply the action. Currently only a single condition may be specified. Otherwise an INVALID ARGUMENT error is thrown.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Required. Human readable name. The identifier used in UI views. Must be UTF-8 encoded string. Length limit is 128 characters. Otherwise an INVALID ARGUMENT error is thrown.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filterAction" /></td>
+    <td><code>object</code></td>
+    <td>Defines a filter-type control Currently not supported by Recommendation (id: GoogleCloudDiscoveryengineV1ControlFilterAction)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="promoteAction" /></td>
+    <td><code>object</code></td>
+    <td>Promote certain links based on predefined trigger queries. (id: GoogleCloudDiscoveryengineV1ControlPromoteAction)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="redirectAction" /></td>
+    <td><code>object</code></td>
+    <td>Defines a redirect-type control. (id: GoogleCloudDiscoveryengineV1ControlRedirectAction)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="solutionType" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. What solution the control belongs to. Must be compatible with vertical of resource. Otherwise an INVALID ARGUMENT error is thrown. (SOLUTION_TYPE_UNSPECIFIED, SOLUTION_TYPE_RECOMMENDATION, SOLUTION_TYPE_SEARCH, SOLUTION_TYPE_CHAT, SOLUTION_TYPE_GENERATIVE_CHAT, SOLUTION_TYPE_AI_MODE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="synonymsAction" /></td>
+    <td><code>object</code></td>
+    <td>Treats a group of terms as synonyms of one another. (id: GoogleCloudDiscoveryengineV1ControlSynonymsAction)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="useCases" /></td>
+    <td><code>array</code></td>
+    <td>Specifies the use case for the control. Affects what condition fields can be set. Only applies to SOLUTION_TYPE_SEARCH. Currently only allow one use case per control. Must be set when solution_type is SolutionType.SOLUTION_TYPE_SEARCH.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_data_stores_controls_get">
 
 <table>
 <thead>
@@ -489,6 +489,20 @@ The following methods are available for this resource:
     <td>Gets a Control.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_collections_data_stores_controls_list"><CopyableCode code="projects_locations_collections_data_stores_controls_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all Controls by their parent DataStore.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_engines_controls_list"><CopyableCode code="projects_locations_collections_engines_controls_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all Controls by their parent DataStore.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_data_stores_controls_get"><CopyableCode code="projects_locations_data_stores_controls_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-controlsId"><code>controlsId</code></a></td>
@@ -496,24 +510,10 @@ The following methods are available for this resource:
     <td>Gets a Control.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_controls_list"><CopyableCode code="projects_locations_collections_data_stores_controls_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists all Controls by their parent DataStore.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_engines_controls_list"><CopyableCode code="projects_locations_collections_engines_controls_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists all Controls by their parent DataStore.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_stores_controls_list"><CopyableCode code="projects_locations_data_stores_controls_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all Controls by their parent DataStore.</td>
 </tr>
 <tr>
@@ -660,9 +660,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_collections_data_stores_controls_get', value: 'projects_locations_collections_data_stores_controls_get' },
         { label: 'projects_locations_collections_engines_controls_get', value: 'projects_locations_collections_engines_controls_get' },
-        { label: 'projects_locations_data_stores_controls_get', value: 'projects_locations_data_stores_controls_get' },
         { label: 'projects_locations_collections_data_stores_controls_list', value: 'projects_locations_collections_data_stores_controls_list' },
         { label: 'projects_locations_collections_engines_controls_list', value: 'projects_locations_collections_engines_controls_list' },
+        { label: 'projects_locations_data_stores_controls_get', value: 'projects_locations_data_stores_controls_get' },
         { label: 'projects_locations_data_stores_controls_list', value: 'projects_locations_data_stores_controls_list' }
     ]}
 >
@@ -718,31 +718,6 @@ AND controlsId = '{{ controlsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_stores_controls_get">
-
-Gets a Control.
-
-```sql
-SELECT
-name,
-associatedServingConfigIds,
-boostAction,
-conditions,
-displayName,
-filterAction,
-promoteAction,
-redirectAction,
-solutionType,
-synonymsAction,
-useCases
-FROM google.discoveryengine.controls
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND controlsId = '{{ controlsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_controls_list">
 
 Lists all Controls by their parent DataStore.
@@ -765,9 +740,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -793,9 +768,34 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND enginesId = '{{ enginesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_controls_get">
+
+Gets a Control.
+
+```sql
+SELECT
+name,
+associatedServingConfigIds,
+boostAction,
+conditions,
+displayName,
+filterAction,
+promoteAction,
+redirectAction,
+solutionType,
+synonymsAction,
+useCases
+FROM google.discoveryengine.controls
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND controlsId = '{{ controlsId }}' -- required
 ;
 ```
 </TabItem>
@@ -820,9 +820,9 @@ FROM google.discoveryengine.controls
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -846,16 +846,16 @@ Creates a Control. By default 1000 controls are allowed for a data store. A requ
 
 ```sql
 INSERT INTO google.discoveryengine.controls (
-data__solutionType,
-data__filterAction,
-data__useCases,
-data__name,
-data__displayName,
-data__conditions,
 data__boostAction,
-data__synonymsAction,
-data__redirectAction,
+data__conditions,
+data__displayName,
+data__filterAction,
+data__name,
 data__promoteAction,
+data__redirectAction,
+data__solutionType,
+data__synonymsAction,
+data__useCases,
 projectsId,
 locationsId,
 collectionsId,
@@ -863,16 +863,16 @@ dataStoresId,
 controlId
 )
 SELECT 
-'{{ solutionType }}',
-'{{ filterAction }}',
-'{{ useCases }}',
-'{{ name }}',
-'{{ displayName }}',
-'{{ conditions }}',
 '{{ boostAction }}',
-'{{ synonymsAction }}',
-'{{ redirectAction }}',
+'{{ conditions }}',
+'{{ displayName }}',
+'{{ filterAction }}',
+'{{ name }}',
 '{{ promoteAction }}',
+'{{ redirectAction }}',
+'{{ solutionType }}',
+'{{ synonymsAction }}',
+'{{ useCases }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -899,16 +899,16 @@ Creates a Control. By default 1000 controls are allowed for a data store. A requ
 
 ```sql
 INSERT INTO google.discoveryengine.controls (
-data__solutionType,
-data__filterAction,
-data__useCases,
-data__name,
-data__displayName,
-data__conditions,
 data__boostAction,
-data__synonymsAction,
-data__redirectAction,
+data__conditions,
+data__displayName,
+data__filterAction,
+data__name,
 data__promoteAction,
+data__redirectAction,
+data__solutionType,
+data__synonymsAction,
+data__useCases,
 projectsId,
 locationsId,
 collectionsId,
@@ -916,16 +916,16 @@ enginesId,
 controlId
 )
 SELECT 
-'{{ solutionType }}',
-'{{ filterAction }}',
-'{{ useCases }}',
-'{{ name }}',
-'{{ displayName }}',
-'{{ conditions }}',
 '{{ boostAction }}',
-'{{ synonymsAction }}',
-'{{ redirectAction }}',
+'{{ conditions }}',
+'{{ displayName }}',
+'{{ filterAction }}',
+'{{ name }}',
 '{{ promoteAction }}',
+'{{ redirectAction }}',
+'{{ solutionType }}',
+'{{ synonymsAction }}',
+'{{ useCases }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -952,32 +952,32 @@ Creates a Control. By default 1000 controls are allowed for a data store. A requ
 
 ```sql
 INSERT INTO google.discoveryengine.controls (
-data__solutionType,
-data__filterAction,
-data__useCases,
-data__name,
-data__displayName,
-data__conditions,
 data__boostAction,
-data__synonymsAction,
-data__redirectAction,
+data__conditions,
+data__displayName,
+data__filterAction,
+data__name,
 data__promoteAction,
+data__redirectAction,
+data__solutionType,
+data__synonymsAction,
+data__useCases,
 projectsId,
 locationsId,
 dataStoresId,
 controlId
 )
 SELECT 
-'{{ solutionType }}',
-'{{ filterAction }}',
-'{{ useCases }}',
-'{{ name }}',
-'{{ displayName }}',
-'{{ conditions }}',
 '{{ boostAction }}',
-'{{ synonymsAction }}',
-'{{ redirectAction }}',
+'{{ conditions }}',
+'{{ displayName }}',
+'{{ filterAction }}',
+'{{ name }}',
 '{{ promoteAction }}',
+'{{ redirectAction }}',
+'{{ solutionType }}',
+'{{ synonymsAction }}',
+'{{ useCases }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataStoresId }}',
@@ -1017,75 +1017,75 @@ useCases
     - name: enginesId
       value: "{{ enginesId }}"
       description: Required parameter for the controls resource.
-    - name: solutionType
-      value: "{{ solutionType }}"
+    - name: boostAction
       description: |
-        Required. Immutable. What solution the control belongs to. Must be compatible with vertical of resource. Otherwise an INVALID ARGUMENT error is thrown.
-      valid_values: ['SOLUTION_TYPE_UNSPECIFIED', 'SOLUTION_TYPE_RECOMMENDATION', 'SOLUTION_TYPE_SEARCH', 'SOLUTION_TYPE_CHAT', 'SOLUTION_TYPE_GENERATIVE_CHAT', 'SOLUTION_TYPE_AI_MODE']
+        Defines a boost-type control
+      value:
+        boost: {{ boost }}
+        dataStore: "{{ dataStore }}"
+        filter: "{{ filter }}"
+        fixedBoost: {{ fixedBoost }}
+        interpolationBoostSpec:
+          attributeType: "{{ attributeType }}"
+          controlPoints:
+            - attributeValue: "{{ attributeValue }}"
+              boostAmount: {{ boostAmount }}
+          fieldName: "{{ fieldName }}"
+          interpolationType: "{{ interpolationType }}"
+    - name: conditions
+      description: |
+        Determines when the associated action will trigger. Omit to always apply the action. Currently only a single condition may be specified. Otherwise an INVALID ARGUMENT error is thrown.
+      value:
+        - activeTimeRange: "{{ activeTimeRange }}"
+          queryRegex: "{{ queryRegex }}"
+          queryTerms: "{{ queryTerms }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Human readable name. The identifier used in UI views. Must be UTF-8 encoded string. Length limit is 128 characters. Otherwise an INVALID ARGUMENT error is thrown.
     - name: filterAction
       description: |
         Defines a filter-type control Currently not supported by Recommendation
       value:
         dataStore: "{{ dataStore }}"
         filter: "{{ filter }}"
-    - name: useCases
-      value:
-        - "{{ useCases }}"
-      description: |
-        Specifies the use case for the control. Affects what condition fields can be set. Only applies to SOLUTION_TYPE_SEARCH. Currently only allow one use case per control. Must be set when solution_type is SolutionType.SOLUTION_TYPE_SEARCH.
     - name: name
       value: "{{ name }}"
       description: |
         Immutable. Fully qualified name \`projects/*/locations/global/dataStore/*/controls/*\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Human readable name. The identifier used in UI views. Must be UTF-8 encoded string. Length limit is 128 characters. Otherwise an INVALID ARGUMENT error is thrown.
-    - name: conditions
-      description: |
-        Determines when the associated action will trigger. Omit to always apply the action. Currently only a single condition may be specified. Otherwise an INVALID ARGUMENT error is thrown.
-      value:
-        - queryRegex: "{{ queryRegex }}"
-          queryTerms: "{{ queryTerms }}"
-          activeTimeRange: "{{ activeTimeRange }}"
-    - name: boostAction
-      description: |
-        Defines a boost-type control
-      value:
-        filter: "{{ filter }}"
-        fixedBoost: {{ fixedBoost }}
-        dataStore: "{{ dataStore }}"
-        interpolationBoostSpec:
-          attributeType: "{{ attributeType }}"
-          interpolationType: "{{ interpolationType }}"
-          controlPoints:
-            - attributeValue: "{{ attributeValue }}"
-              boostAmount: {{ boostAmount }}
-          fieldName: "{{ fieldName }}"
-        boost: {{ boost }}
-    - name: synonymsAction
-      description: |
-        Treats a group of terms as synonyms of one another.
-      value:
-        synonyms:
-          - "{{ synonyms }}"
-    - name: redirectAction
-      description: |
-        Defines a redirect-type control.
-      value:
-        redirectUri: "{{ redirectUri }}"
     - name: promoteAction
       description: |
         Promote certain links based on predefined trigger queries.
       value:
         dataStore: "{{ dataStore }}"
         searchLinkPromotion:
-          imageUri: "{{ imageUri }}"
-          enabled: {{ enabled }}
           description: "{{ description }}"
+          document: "{{ document }}"
+          enabled: {{ enabled }}
+          imageUri: "{{ imageUri }}"
           title: "{{ title }}"
           uri: "{{ uri }}"
-          document: "{{ document }}"
+    - name: redirectAction
+      description: |
+        Defines a redirect-type control.
+      value:
+        redirectUri: "{{ redirectUri }}"
+    - name: solutionType
+      value: "{{ solutionType }}"
+      description: |
+        Required. Immutable. What solution the control belongs to. Must be compatible with vertical of resource. Otherwise an INVALID ARGUMENT error is thrown.
+      valid_values: ['SOLUTION_TYPE_UNSPECIFIED', 'SOLUTION_TYPE_RECOMMENDATION', 'SOLUTION_TYPE_SEARCH', 'SOLUTION_TYPE_CHAT', 'SOLUTION_TYPE_GENERATIVE_CHAT', 'SOLUTION_TYPE_AI_MODE']
+    - name: synonymsAction
+      description: |
+        Treats a group of terms as synonyms of one another.
+      value:
+        synonyms:
+          - "{{ synonyms }}"
+    - name: useCases
+      value:
+        - "{{ useCases }}"
+      description: |
+        Specifies the use case for the control. Affects what condition fields can be set. Only applies to SOLUTION_TYPE_SEARCH. Currently only allow one use case per control. Must be set when solution_type is SolutionType.SOLUTION_TYPE_SEARCH.
     - name: controlId
       value: "{{ controlId }}"
 `}</CodeBlock>
@@ -1111,16 +1111,16 @@ Updates a Control. Control action type cannot be changed. If the Control to upda
 ```sql
 UPDATE google.discoveryengine.controls
 SET 
-data__solutionType = '{{ solutionType }}',
-data__filterAction = '{{ filterAction }}',
-data__useCases = '{{ useCases }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__conditions = '{{ conditions }}',
 data__boostAction = '{{ boostAction }}',
-data__synonymsAction = '{{ synonymsAction }}',
+data__conditions = '{{ conditions }}',
+data__displayName = '{{ displayName }}',
+data__filterAction = '{{ filterAction }}',
+data__name = '{{ name }}',
+data__promoteAction = '{{ promoteAction }}',
 data__redirectAction = '{{ redirectAction }}',
-data__promoteAction = '{{ promoteAction }}'
+data__solutionType = '{{ solutionType }}',
+data__synonymsAction = '{{ synonymsAction }}',
+data__useCases = '{{ useCases }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1149,16 +1149,16 @@ Updates a Control. Control action type cannot be changed. If the Control to upda
 ```sql
 UPDATE google.discoveryengine.controls
 SET 
-data__solutionType = '{{ solutionType }}',
-data__filterAction = '{{ filterAction }}',
-data__useCases = '{{ useCases }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__conditions = '{{ conditions }}',
 data__boostAction = '{{ boostAction }}',
-data__synonymsAction = '{{ synonymsAction }}',
+data__conditions = '{{ conditions }}',
+data__displayName = '{{ displayName }}',
+data__filterAction = '{{ filterAction }}',
+data__name = '{{ name }}',
+data__promoteAction = '{{ promoteAction }}',
 data__redirectAction = '{{ redirectAction }}',
-data__promoteAction = '{{ promoteAction }}'
+data__solutionType = '{{ solutionType }}',
+data__synonymsAction = '{{ synonymsAction }}',
+data__useCases = '{{ useCases }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1187,16 +1187,16 @@ Updates a Control. Control action type cannot be changed. If the Control to upda
 ```sql
 UPDATE google.discoveryengine.controls
 SET 
-data__solutionType = '{{ solutionType }}',
-data__filterAction = '{{ filterAction }}',
-data__useCases = '{{ useCases }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__conditions = '{{ conditions }}',
 data__boostAction = '{{ boostAction }}',
-data__synonymsAction = '{{ synonymsAction }}',
+data__conditions = '{{ conditions }}',
+data__displayName = '{{ displayName }}',
+data__filterAction = '{{ filterAction }}',
+data__name = '{{ name }}',
+data__promoteAction = '{{ promoteAction }}',
 data__redirectAction = '{{ redirectAction }}',
-data__promoteAction = '{{ promoteAction }}'
+data__solutionType = '{{ solutionType }}',
+data__synonymsAction = '{{ synonymsAction }}',
+data__useCases = '{{ useCases }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

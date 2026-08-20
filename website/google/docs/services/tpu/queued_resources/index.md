@@ -175,14 +175,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists queued resources.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-queuedResourceId"><code>queuedResourceId</code></a></td>
+    <td><a href="#parameter-queuedResourceId"><code>queuedResourceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a QueuedResource TPU instance.</td>
 </tr>
 <tr>
@@ -305,8 +305,8 @@ tpu
 FROM google.tpu.queued_resources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -328,26 +328,26 @@ Creates a QueuedResource TPU instance.
 
 ```sql
 INSERT INTO google.tpu.queued_resources (
-data__tpu,
-data__spot,
-data__reservationName,
-data__queueingPolicy,
 data__guaranteed,
+data__queueingPolicy,
+data__reservationName,
+data__spot,
+data__tpu,
 projectsId,
 locationsId,
-requestId,
-queuedResourceId
+queuedResourceId,
+requestId
 )
 SELECT 
-'{{ tpu }}',
-'{{ spot }}',
-'{{ reservationName }}',
-'{{ queueingPolicy }}',
 '{{ guaranteed }}',
+'{{ queueingPolicy }}',
+'{{ reservationName }}',
+'{{ spot }}',
+'{{ tpu }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ queuedResourceId }}'
+'{{ queuedResourceId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -368,110 +368,110 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the queued_resources resource.
+    - name: guaranteed
+      description: |
+        Optional. The Guaranteed tier
+      value:
+        minDuration: "{{ minDuration }}"
+    - name: queueingPolicy
+      description: |
+        Optional. The queueing policy of the QueuedRequest.
+      value:
+        validAfterDuration: "{{ validAfterDuration }}"
+        validAfterTime: "{{ validAfterTime }}"
+        validInterval:
+          endTime: "{{ endTime }}"
+          startTime: "{{ startTime }}"
+        validUntilDuration: "{{ validUntilDuration }}"
+        validUntilTime: "{{ validUntilTime }}"
+    - name: reservationName
+      value: "{{ reservationName }}"
+      description: |
+        Optional. Name of the reservation in which the resource should be provisioned. Format: projects/{project}/locations/{zone}/reservations/{reservation}
+    - name: spot
+      value: "{{ spot }}"
+      description: |
+        Optional. The Spot tier.
     - name: tpu
       description: |
         Optional. Defines a TPU resource.
       value:
         nodeSpec:
-          - nodeId: "{{ nodeId }}"
-            parent: "{{ parent }}"
-            multisliceParams:
+          - multisliceParams:
               nodeCount: {{ nodeCount }}
               nodeIdPrefix: "{{ nodeIdPrefix }}"
             node:
-              upcomingMaintenance:
-                maintenanceStatus: "{{ maintenanceStatus }}"
-                canReschedule: {{ canReschedule }}
-                windowStartTime: "{{ windowStartTime }}"
+              acceleratorConfig:
+                topology: "{{ topology }}"
                 type: "{{ type }}"
-                windowEndTime: "{{ windowEndTime }}"
-                latestWindowStartTime: "{{ latestWindowStartTime }}"
-              name: "{{ name }}"
-              schedulingConfig:
-                preemptible: {{ preemptible }}
-                reserved: {{ reserved }}
-                spot: {{ spot }}
+              acceleratorType: "{{ acceleratorType }}"
+              apiVersion: "{{ apiVersion }}"
+              bootDiskConfig:
+                customerEncryptionKey:
+                  kmsKeyName: "{{ kmsKeyName }}"
               cidrBlock: "{{ cidrBlock }}"
+              createTime: "{{ createTime }}"
+              dataDisks:
+                - mode: "{{ mode }}"
+                  sourceDisk: "{{ sourceDisk }}"
+              description: "{{ description }}"
               health: "{{ health }}"
-              runtimeVersion: "{{ runtimeVersion }}"
+              healthDescription: "{{ healthDescription }}"
+              id: "{{ id }}"
+              labels: "{{ labels }}"
               metadata: "{{ metadata }}"
-              shieldedInstanceConfig:
-                enableSecureBoot: {{ enableSecureBoot }}
+              multisliceNode: {{ multisliceNode }}
+              name: "{{ name }}"
+              networkConfig:
+                canIpForward: {{ canIpForward }}
+                enableExternalIps: {{ enableExternalIps }}
+                network: "{{ network }}"
+                queueCount: {{ queueCount }}
+                subnetwork: "{{ subnetwork }}"
+              networkConfigs:
+                - canIpForward: {{ canIpForward }}
+                  enableExternalIps: {{ enableExternalIps }}
+                  network: "{{ network }}"
+                  queueCount: {{ queueCount }}
+                  subnetwork: "{{ subnetwork }}"
               networkEndpoints:
                 - accessConfig:
                     externalIp: "{{ externalIp }}"
                   ipAddress: "{{ ipAddress }}"
                   port: {{ port }}
               queuedResource: "{{ queuedResource }}"
+              runtimeVersion: "{{ runtimeVersion }}"
+              schedulingConfig:
+                preemptible: {{ preemptible }}
+                reserved: {{ reserved }}
+                spot: {{ spot }}
+              serviceAccount:
+                email: "{{ email }}"
+                scope:
+                  - "{{ scope }}"
+              shieldedInstanceConfig:
+                enableSecureBoot: {{ enableSecureBoot }}
               state: "{{ state }}"
-              networkConfigs:
-                - subnetwork: "{{ subnetwork }}"
-                  enableExternalIps: {{ enableExternalIps }}
-                  network: "{{ network }}"
-                  queueCount: {{ queueCount }}
-                  canIpForward: {{ canIpForward }}
-              labels: "{{ labels }}"
-              tags:
-                - "{{ tags }}"
-              acceleratorConfig:
-                type: "{{ type }}"
-                topology: "{{ topology }}"
-              multisliceNode: {{ multisliceNode }}
-              id: "{{ id }}"
-              description: "{{ description }}"
-              acceleratorType: "{{ acceleratorType }}"
-              createTime: "{{ createTime }}"
               symptoms:
                 - createTime: "{{ createTime }}"
                   details: "{{ details }}"
                   symptomType: "{{ symptomType }}"
                   workerId: "{{ workerId }}"
-              apiVersion: "{{ apiVersion }}"
-              networkConfig:
-                subnetwork: "{{ subnetwork }}"
-                enableExternalIps: {{ enableExternalIps }}
-                network: "{{ network }}"
-                queueCount: {{ queueCount }}
-                canIpForward: {{ canIpForward }}
-              bootDiskConfig:
-                customerEncryptionKey:
-                  kmsKeyName: "{{ kmsKeyName }}"
-              dataDisks:
-                - sourceDisk: "{{ sourceDisk }}"
-                  mode: "{{ mode }}"
-              healthDescription: "{{ healthDescription }}"
-              serviceAccount:
-                email: "{{ email }}"
-                scope:
-                  - "{{ scope }}"
-    - name: spot
-      value: "{{ spot }}"
-      description: |
-        Optional. The Spot tier.
-    - name: reservationName
-      value: "{{ reservationName }}"
-      description: |
-        Optional. Name of the reservation in which the resource should be provisioned. Format: projects/{project}/locations/{zone}/reservations/{reservation}
-    - name: queueingPolicy
-      description: |
-        Optional. The queueing policy of the QueuedRequest.
-      value:
-        validInterval:
-          endTime: "{{ endTime }}"
-          startTime: "{{ startTime }}"
-        validUntilDuration: "{{ validUntilDuration }}"
-        validUntilTime: "{{ validUntilTime }}"
-        validAfterDuration: "{{ validAfterDuration }}"
-        validAfterTime: "{{ validAfterTime }}"
-    - name: guaranteed
-      description: |
-        Optional. The Guaranteed tier
-      value:
-        minDuration: "{{ minDuration }}"
-    - name: requestId
-      value: "{{ requestId }}"
+              tags:
+                - "{{ tags }}"
+              upcomingMaintenance:
+                canReschedule: {{ canReschedule }}
+                latestWindowStartTime: "{{ latestWindowStartTime }}"
+                maintenanceStatus: "{{ maintenanceStatus }}"
+                type: "{{ type }}"
+                windowEndTime: "{{ windowEndTime }}"
+                windowStartTime: "{{ windowStartTime }}"
+            nodeId: "{{ nodeId }}"
+            parent: "{{ parent }}"
     - name: queuedResourceId
       value: "{{ queuedResourceId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>

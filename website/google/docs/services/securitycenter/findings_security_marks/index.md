@@ -51,10 +51,17 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_sources_findings_update_security_marks"><CopyableCode code="folders_sources_findings_update_security_marks" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
+    <td><a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_sources_findings_update_security_marks"><CopyableCode code="organizations_sources_findings_update_security_marks" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
+    <td><a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -62,13 +69,6 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
     <td><a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_sources_findings_update_security_marks"><CopyableCode code="folders_sources_findings_update_security_marks" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
     <td></td>
 </tr>
 </tbody>
@@ -128,13 +128,35 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="organizations_sources_findings_update_security_marks"
+    defaultValue="folders_sources_findings_update_security_marks"
     values={[
+        { label: 'folders_sources_findings_update_security_marks', value: 'folders_sources_findings_update_security_marks' },
         { label: 'organizations_sources_findings_update_security_marks', value: 'organizations_sources_findings_update_security_marks' },
-        { label: 'projects_sources_findings_update_security_marks', value: 'projects_sources_findings_update_security_marks' },
-        { label: 'folders_sources_findings_update_security_marks', value: 'folders_sources_findings_update_security_marks' }
+        { label: 'projects_sources_findings_update_security_marks', value: 'projects_sources_findings_update_security_marks' }
     ]}
 >
+<TabItem value="folders_sources_findings_update_security_marks">
+
+No description available.
+
+```sql
+UPDATE google.securitycenter.findings_security_marks
+SET 
+data__canonicalName = '{{ canonicalName }}',
+data__marks = '{{ marks }}',
+data__name = '{{ name }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
+AND sourcesId = '{{ sourcesId }}' --required
+AND findingsId = '{{ findingsId }}' --required
+AND startTime = '{{ startTime}}'
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+canonicalName,
+marks;
+```
+</TabItem>
 <TabItem value="organizations_sources_findings_update_security_marks">
 
 No description available.
@@ -143,14 +165,14 @@ No description available.
 UPDATE google.securitycenter.findings_security_marks
 SET 
 data__canonicalName = '{{ canonicalName }}',
-data__name = '{{ name }}',
-data__marks = '{{ marks }}'
+data__marks = '{{ marks }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
 AND findingsId = '{{ findingsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND startTime = '{{ startTime}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 canonicalName,
@@ -165,36 +187,14 @@ No description available.
 UPDATE google.securitycenter.findings_security_marks
 SET 
 data__canonicalName = '{{ canonicalName }}',
-data__name = '{{ name }}',
-data__marks = '{{ marks }}'
+data__marks = '{{ marks }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
 AND findingsId = '{{ findingsId }}' --required
 AND startTime = '{{ startTime}}'
 AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-canonicalName,
-marks;
-```
-</TabItem>
-<TabItem value="folders_sources_findings_update_security_marks">
-
-No description available.
-
-```sql
-UPDATE google.securitycenter.findings_security_marks
-SET 
-data__canonicalName = '{{ canonicalName }}',
-data__name = '{{ name }}',
-data__marks = '{{ marks }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
-AND sourcesId = '{{ sourcesId }}' --required
-AND findingsId = '{{ findingsId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND startTime = '{{ startTime}}'
 RETURNING
 name,
 canonicalName,

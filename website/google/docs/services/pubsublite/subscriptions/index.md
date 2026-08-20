@@ -33,27 +33,13 @@ Creates, updates, deletes, gets or lists a <code>subscriptions</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="admin_projects_locations_topics_subscriptions_list"
+    defaultValue="admin_projects_locations_subscriptions_get"
     values={[
-        { label: 'admin_projects_locations_topics_subscriptions_list', value: 'admin_projects_locations_topics_subscriptions_list' },
         { label: 'admin_projects_locations_subscriptions_get', value: 'admin_projects_locations_subscriptions_get' },
+        { label: 'admin_projects_locations_topics_subscriptions_list', value: 'admin_projects_locations_topics_subscriptions_list' },
         { label: 'admin_projects_locations_subscriptions_list', value: 'admin_projects_locations_subscriptions_list' }
     ]}
 >
-<TabItem value="admin_projects_locations_topics_subscriptions_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="admin_projects_locations_subscriptions_get">
 
 <table>
@@ -85,6 +71,20 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>The name of the topic this subscription is attached to. Structured like: projects/&#123;project_number&#125;/locations/&#123;location&#125;/topics/&#123;topic_id&#125;</td>
 </tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="admin_projects_locations_topics_subscriptions_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -140,18 +140,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#admin_projects_locations_topics_subscriptions_list"><CopyableCode code="admin_projects_locations_topics_subscriptions_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists the subscriptions attached to the specified topic.</td>
-</tr>
-<tr>
     <td><a href="#admin_projects_locations_subscriptions_get"><CopyableCode code="admin_projects_locations_subscriptions_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
     <td></td>
     <td>Returns the subscription configuration.</td>
+</tr>
+<tr>
+    <td><a href="#admin_projects_locations_topics_subscriptions_list"><CopyableCode code="admin_projects_locations_topics_subscriptions_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the subscriptions attached to the specified topic.</td>
 </tr>
 <tr>
     <td><a href="#admin_projects_locations_subscriptions_list"><CopyableCode code="admin_projects_locations_subscriptions_list" /></a></td>
@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#admin_projects_locations_subscriptions_create"><CopyableCode code="admin_projects_locations_subscriptions_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-subscriptionId"><code>subscriptionId</code></a>, <a href="#parameter-skipBacklog"><code>skipBacklog</code></a></td>
+    <td><a href="#parameter-skipBacklog"><code>skipBacklog</code></a>, <a href="#parameter-subscriptionId"><code>subscriptionId</code></a></td>
     <td>Creates a new subscription.</td>
 </tr>
 <tr>
@@ -262,29 +262,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="admin_projects_locations_topics_subscriptions_list"
+    defaultValue="admin_projects_locations_subscriptions_get"
     values={[
-        { label: 'admin_projects_locations_topics_subscriptions_list', value: 'admin_projects_locations_topics_subscriptions_list' },
         { label: 'admin_projects_locations_subscriptions_get', value: 'admin_projects_locations_subscriptions_get' },
+        { label: 'admin_projects_locations_topics_subscriptions_list', value: 'admin_projects_locations_topics_subscriptions_list' },
         { label: 'admin_projects_locations_subscriptions_list', value: 'admin_projects_locations_subscriptions_list' }
     ]}
 >
-<TabItem value="admin_projects_locations_topics_subscriptions_list">
-
-Lists the subscriptions attached to the specified topic.
-
-```sql
-SELECT
-*
-FROM google.pubsublite.subscriptions
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND topicsId = '{{ topicsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="admin_projects_locations_subscriptions_get">
 
 Returns the subscription configuration.
@@ -299,6 +283,22 @@ FROM google.pubsublite.subscriptions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND subscriptionsId = '{{ subscriptionsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="admin_projects_locations_topics_subscriptions_list">
+
+Lists the subscriptions attached to the specified topic.
+
+```sql
+SELECT
+*
+FROM google.pubsublite.subscriptions
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND topicsId = '{{ topicsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -344,8 +344,8 @@ data__name,
 data__topic,
 projectsId,
 locationsId,
-subscriptionId,
-skipBacklog
+skipBacklog,
+subscriptionId
 )
 SELECT 
 '{{ deliveryConfig }}',
@@ -354,8 +354,8 @@ SELECT
 '{{ topic }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ subscriptionId }}',
-'{{ skipBacklog }}'
+'{{ skipBacklog }}',
+'{{ subscriptionId }}'
 RETURNING
 name,
 deliveryConfig,
@@ -385,10 +385,10 @@ topic
         If present, messages are automatically written from the Pub/Sub Lite topic associated with this subscription to a destination.
       value:
         currentState: "{{ currentState }}"
+        deadLetterTopic: "{{ deadLetterTopic }}"
         desiredState: "{{ desiredState }}"
         pubsubConfig:
           topic: "{{ topic }}"
-        deadLetterTopic: "{{ deadLetterTopic }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -397,10 +397,10 @@ topic
       value: "{{ topic }}"
       description: |
         The name of the topic this subscription is attached to. Structured like: projects/{project_number}/locations/{location}/topics/{topic_id}
-    - name: subscriptionId
-      value: "{{ subscriptionId }}"
     - name: skipBacklog
       value: {{ skipBacklog }}
+    - name: subscriptionId
+      value: "{{ subscriptionId }}"
 `}</CodeBlock>
 
 </TabItem>

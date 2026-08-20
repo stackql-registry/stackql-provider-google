@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_catalogs_event_stores_operations_get"
     values={[
         { label: 'projects_locations_catalogs_event_stores_operations_get', value: 'projects_locations_catalogs_event_stores_operations_get' },
-        { label: 'projects_locations_catalogs_operations_get', value: 'projects_locations_catalogs_operations_get' },
         { label: 'projects_locations_catalogs_event_stores_operations_list', value: 'projects_locations_catalogs_event_stores_operations_list' },
+        { label: 'projects_locations_catalogs_operations_get', value: 'projects_locations_catalogs_operations_get' },
         { label: 'projects_locations_catalogs_operations_list', value: 'projects_locations_catalogs_operations_list' }
     ]}
 >
@@ -80,7 +80,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_catalogs_operations_get">
+<TabItem value="projects_locations_catalogs_event_stores_operations_list">
 
 <table>
 <thead>
@@ -119,7 +119,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_catalogs_event_stores_operations_list">
+<TabItem value="projects_locations_catalogs_operations_get">
 
 <table>
 <thead>
@@ -222,6 +222,13 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_catalogs_event_stores_operations_list"><CopyableCode code="projects_locations_catalogs_event_stores_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-eventStoresId"><code>eventStoresId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_catalogs_operations_get"><CopyableCode code="projects_locations_catalogs_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
@@ -229,17 +236,10 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_event_stores_operations_list"><CopyableCode code="projects_locations_catalogs_event_stores_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-eventStoresId"><code>eventStoresId</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_catalogs_operations_list"><CopyableCode code="projects_locations_catalogs_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 </tbody>
@@ -312,8 +312,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_catalogs_event_stores_operations_get"
     values={[
         { label: 'projects_locations_catalogs_event_stores_operations_get', value: 'projects_locations_catalogs_event_stores_operations_get' },
-        { label: 'projects_locations_catalogs_operations_get', value: 'projects_locations_catalogs_operations_get' },
         { label: 'projects_locations_catalogs_event_stores_operations_list', value: 'projects_locations_catalogs_event_stores_operations_list' },
+        { label: 'projects_locations_catalogs_operations_get', value: 'projects_locations_catalogs_operations_get' },
         { label: 'projects_locations_catalogs_operations_list', value: 'projects_locations_catalogs_operations_list' }
     ]}
 >
@@ -337,6 +337,29 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_catalogs_event_stores_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+name,
+done,
+error,
+metadata,
+response
+FROM google.recommendationengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND catalogsId = '{{ catalogsId }}' -- required
+AND eventStoresId = '{{ eventStoresId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_catalogs_operations_get">
 
 Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
@@ -356,29 +379,6 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_catalogs_event_stores_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.recommendationengine.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND catalogsId = '{{ catalogsId }}' -- required
-AND eventStoresId = '{{ eventStoresId }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_catalogs_operations_list">
 
 Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
@@ -394,10 +394,10 @@ FROM google.recommendationengine.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND catalogsId = '{{ catalogsId }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

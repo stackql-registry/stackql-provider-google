@@ -365,29 +365,29 @@ Creates a new EndpointPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.endpoint_policies (
-data__name,
-data__labels,
-data__type,
 data__authorizationPolicy,
-data__endpointMatcher,
-data__trafficPortSelector,
-data__description,
-data__serverTlsPolicy,
 data__clientTlsPolicy,
+data__description,
+data__endpointMatcher,
+data__labels,
+data__name,
+data__serverTlsPolicy,
+data__trafficPortSelector,
+data__type,
 projectsId,
 locationsId,
 endpointPolicyId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ type }}',
 '{{ authorizationPolicy }}',
-'{{ endpointMatcher }}',
-'{{ trafficPortSelector }}',
-'{{ description }}',
-'{{ serverTlsPolicy }}',
 '{{ clientTlsPolicy }}',
+'{{ description }}',
+'{{ endpointMatcher }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ serverTlsPolicy }}',
+'{{ trafficPortSelector }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ endpointPolicyId }}'
@@ -411,23 +411,18 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the endpoint_policies resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the EndpointPolicy resource. It matches pattern \`projects/{project}/locations/*/endpointPolicies/{endpoint_policy}\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of label tags associated with the EndpointPolicy resource.
-    - name: type
-      value: "{{ type }}"
-      description: |
-        Required. The type of endpoint policy. This is primarily used to validate the configuration.
-      valid_values: ['ENDPOINT_POLICY_TYPE_UNSPECIFIED', 'SIDECAR_PROXY', 'GRPC_SERVER']
     - name: authorizationPolicy
       value: "{{ authorizationPolicy }}"
       description: |
         Optional. This field specifies the URL of AuthorizationPolicy resource that applies authorization policies to the inbound traffic at the matched endpoints. Refer to Authorization. If this field is not specified, authorization is disabled(no authz checks) for this endpoint.
+    - name: clientTlsPolicy
+      value: "{{ clientTlsPolicy }}"
+      description: |
+        Optional. Deprecated: This field is not used and is a no-op. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be set to specify the authentication for traffic from the proxy to the actual endpoints. More specifically, it is applied to the outgoing traffic from the proxy to the endpoint. This is typically used for sidecar model where the proxy identifies itself as endpoint to the control plane, with the connection between sidecar and endpoint requiring authentication. If this field is not set, authentication is disabled(open). Applicable only when EndpointPolicyType is SIDECAR_PROXY.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A free-text description of the resource. Max length 1024 characters.
     - name: endpointMatcher
       description: |
         Required. A matcher that selects endpoints to which the policies should be applied.
@@ -437,24 +432,29 @@ response
           metadataLabels:
             - labelName: "{{ labelName }}"
               labelValue: "{{ labelValue }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the EndpointPolicy resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the EndpointPolicy resource. It matches pattern \`projects/{project}/locations/*/endpointPolicies/{endpoint_policy}\`.
+    - name: serverTlsPolicy
+      value: "{{ serverTlsPolicy }}"
+      description: |
+        Optional. A URL referring to ServerTlsPolicy resource. ServerTlsPolicy is used to determine the authentication policy to be applied to terminate the inbound traffic at the identified backends. If this field is not set, authentication is disabled(open) for this endpoint.
     - name: trafficPortSelector
       description: |
         Optional. Port selector for the (matched) endpoints. If no port selector is provided, the matched config is applied to all ports.
       value:
         ports:
           - "{{ ports }}"
-    - name: description
-      value: "{{ description }}"
+    - name: type
+      value: "{{ type }}"
       description: |
-        Optional. A free-text description of the resource. Max length 1024 characters.
-    - name: serverTlsPolicy
-      value: "{{ serverTlsPolicy }}"
-      description: |
-        Optional. A URL referring to ServerTlsPolicy resource. ServerTlsPolicy is used to determine the authentication policy to be applied to terminate the inbound traffic at the identified backends. If this field is not set, authentication is disabled(open) for this endpoint.
-    - name: clientTlsPolicy
-      value: "{{ clientTlsPolicy }}"
-      description: |
-        Optional. Deprecated: This field is not used and is a no-op. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be set to specify the authentication for traffic from the proxy to the actual endpoints. More specifically, it is applied to the outgoing traffic from the proxy to the endpoint. This is typically used for sidecar model where the proxy identifies itself as endpoint to the control plane, with the connection between sidecar and endpoint requiring authentication. If this field is not set, authentication is disabled(open). Applicable only when EndpointPolicyType is SIDECAR_PROXY.
+        Required. The type of endpoint policy. This is primarily used to validate the configuration.
+      valid_values: ['ENDPOINT_POLICY_TYPE_UNSPECIFIED', 'SIDECAR_PROXY', 'GRPC_SERVER']
     - name: endpointPolicyId
       value: "{{ endpointPolicyId }}"
 `}</CodeBlock>
@@ -478,15 +478,15 @@ Updates the parameters of a single EndpointPolicy.
 ```sql
 UPDATE google.networkservices.endpoint_policies
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__type = '{{ type }}',
 data__authorizationPolicy = '{{ authorizationPolicy }}',
-data__endpointMatcher = '{{ endpointMatcher }}',
-data__trafficPortSelector = '{{ trafficPortSelector }}',
+data__clientTlsPolicy = '{{ clientTlsPolicy }}',
 data__description = '{{ description }}',
+data__endpointMatcher = '{{ endpointMatcher }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__serverTlsPolicy = '{{ serverTlsPolicy }}',
-data__clientTlsPolicy = '{{ clientTlsPolicy }}'
+data__trafficPortSelector = '{{ trafficPortSelector }}',
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -82,6 +82,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The version of `@dataform/core` that was used for compilation.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="gcsRepositorySnapshotMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata about the repository snapshot used by scheduled notebooks. (id: GcsRepositorySnapshotMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="gitCommitish" /></td>
     <td><code>string</code></td>
     <td>Immutable. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: `12ade345` - a tag: `tag1` - a branch name: `branch1`</td>
@@ -180,6 +185,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The version of `@dataform/core` that was used for compilation.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="gcsRepositorySnapshotMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata about the repository snapshot used by scheduled notebooks. (id: GcsRepositorySnapshotMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="gitCommitish" /></td>
     <td><code>string</code></td>
     <td>Immutable. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: `12ade345` - a tag: `tag1` - a branch name: `branch1`</td>
@@ -240,14 +250,14 @@ The following methods are available for this resource:
     <td><a href="#query"><CopyableCode code="query" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-compilationResultsId"><code>compilationResultsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns CompilationResultActions in a given CompilationResult.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CompilationResults in a given Repository.</td>
 </tr>
 <tr>
@@ -338,6 +348,7 @@ compilationErrors,
 createTime,
 dataEncryptionState,
 dataformCoreVersion,
+gcsRepositorySnapshotMetadata,
 gitCommitish,
 internalMetadata,
 privateResourceMetadata,
@@ -365,8 +376,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND compilationResultsId = '{{ compilationResultsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -383,6 +394,7 @@ compilationErrors,
 createTime,
 dataEncryptionState,
 dataformCoreVersion,
+gcsRepositorySnapshotMetadata,
 gitCommitish,
 internalMetadata,
 privateResourceMetadata,
@@ -393,10 +405,10 @@ FROM google.dataform.compilation_results
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -418,19 +430,19 @@ Creates a new CompilationResult in a given project and location.
 
 ```sql
 INSERT INTO google.dataform.compilation_results (
-data__workspace,
-data__releaseConfig,
-data__gitCommitish,
 data__codeCompilationConfig,
+data__gitCommitish,
+data__releaseConfig,
+data__workspace,
 projectsId,
 locationsId,
 repositoriesId
 )
 SELECT 
-'{{ workspace }}',
-'{{ releaseConfig }}',
-'{{ gitCommitish }}',
 '{{ codeCompilationConfig }}',
+'{{ gitCommitish }}',
+'{{ releaseConfig }}',
+'{{ workspace }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}'
@@ -441,6 +453,7 @@ compilationErrors,
 createTime,
 dataEncryptionState,
 dataformCoreVersion,
+gcsRepositorySnapshotMetadata,
 gitCommitish,
 internalMetadata,
 privateResourceMetadata,
@@ -464,34 +477,39 @@ workspace
     - name: repositoriesId
       value: "{{ repositoriesId }}"
       description: Required parameter for the compilation_results resource.
-    - name: workspace
-      value: "{{ workspace }}"
-      description: |
-        Immutable. The name of the workspace to compile. Must be in the format \`projects/*/locations/*/repositories/*/workspaces/*\`.
-    - name: releaseConfig
-      value: "{{ releaseConfig }}"
-      description: |
-        Immutable. The name of the release config to compile. Must be in the format \`projects/*/locations/*/repositories/*/releaseConfigs/*\`.
-    - name: gitCommitish
-      value: "{{ gitCommitish }}"
-      description: |
-        Immutable. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: \`12ade345\` - a tag: \`tag1\` - a branch name: \`branch1\`
     - name: codeCompilationConfig
       description: |
         Immutable. If set, fields of \`code_compilation_config\` override the default compilation settings that are specified in dataform.json.
       value:
         assertionSchema: "{{ assertionSchema }}"
-        defaultLocation: "{{ defaultLocation }}"
+        builtinAssertionNamePrefix: "{{ builtinAssertionNamePrefix }}"
+        databaseSuffix: "{{ databaseSuffix }}"
         defaultDatabase: "{{ defaultDatabase }}"
-        vars: "{{ vars }}"
+        defaultLocation: "{{ defaultLocation }}"
         defaultNotebookRuntimeOptions:
           aiPlatformNotebookRuntimeTemplate: "{{ aiPlatformNotebookRuntimeTemplate }}"
           gcsOutputBucket: "{{ gcsOutputBucket }}"
+          gcsRepositorySnapshotDestination:
+            repositorySnapshotUri: "{{ repositorySnapshotUri }}"
+        defaultSchema: "{{ defaultSchema }}"
+        pipelineConfig:
+          path: "{{ path }}"
+          pipelineType: "{{ pipelineType }}"
         schemaSuffix: "{{ schemaSuffix }}"
         tablePrefix: "{{ tablePrefix }}"
-        databaseSuffix: "{{ databaseSuffix }}"
-        defaultSchema: "{{ defaultSchema }}"
-        builtinAssertionNamePrefix: "{{ builtinAssertionNamePrefix }}"
+        vars: "{{ vars }}"
+    - name: gitCommitish
+      value: "{{ gitCommitish }}"
+      description: |
+        Immutable. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: \`12ade345\` - a tag: \`tag1\` - a branch name: \`branch1\`
+    - name: releaseConfig
+      value: "{{ releaseConfig }}"
+      description: |
+        Immutable. The name of the release config to compile. Must be in the format \`projects/*/locations/*/repositories/*/releaseConfigs/*\`.
+    - name: workspace
+      value: "{{ workspace }}"
+      description: |
+        Immutable. The name of the workspace to compile. Must be in the format \`projects/*/locations/*/repositories/*/workspaces/*\`.
 `}</CodeBlock>
 
 </TabItem>

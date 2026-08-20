@@ -33,13 +33,77 @@ Creates, updates, deletes, gets or lists an <code>event_threat_detection_modules
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_list"
+    defaultValue="folders_event_threat_detection_settings_custom_modules_list"
     values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_list', value: 'folders_event_threat_detection_settings_custom_modules_list' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_list', value: 'organizations_event_threat_detection_settings_custom_modules_list' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_list', value: 'projects_event_threat_detection_settings_custom_modules_list' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_list', value: 'folders_event_threat_detection_settings_custom_modules_list' }
+        { label: 'projects_event_threat_detection_settings_custom_modules_list', value: 'projects_event_threat_detection_settings_custom_modules_list' }
     ]}
 >
+<TabItem value="folders_event_threat_detection_settings_custom_modules_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="ancestorModule" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudProvider" /></td>
+    <td><code>string</code></td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="config" /></td>
+    <td><code>object</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="enablementState" /></td>
+    <td><code>string</code></td>
+    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastEditor" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_list">
 
 <table>
@@ -105,70 +169,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_event_threat_detection_settings_custom_modules_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="ancestorModule" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="cloudProvider" /></td>
-    <td><code>string</code></td>
-    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="config" /></td>
-    <td><code>object</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="enablementState" /></td>
-    <td><code>string</code></td>
-    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastEditor" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_list">
 
 <table>
 <thead>
@@ -250,24 +250,31 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_list"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_event_threat_detection_settings_custom_modules_list"><CopyableCode code="organizations_event_threat_detection_settings_custom_modules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#projects_event_threat_detection_settings_custom_modules_list"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_list"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_create"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
     <td></td>
 </tr>
 <tr>
@@ -285,9 +292,9 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_create"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#folders_event_threat_detection_settings_custom_modules_delete"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -302,13 +309,6 @@ The following methods are available for this resource:
     <td><a href="#projects_event_threat_detection_settings_custom_modules_delete"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_event_threat_detection_settings_custom_modules_delete"><CopyableCode code="folders_event_threat_detection_settings_custom_modules_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -364,13 +364,36 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_list"
+    defaultValue="folders_event_threat_detection_settings_custom_modules_list"
     values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_list', value: 'folders_event_threat_detection_settings_custom_modules_list' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_list', value: 'organizations_event_threat_detection_settings_custom_modules_list' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_list', value: 'projects_event_threat_detection_settings_custom_modules_list' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_list', value: 'folders_event_threat_detection_settings_custom_modules_list' }
+        { label: 'projects_event_threat_detection_settings_custom_modules_list', value: 'projects_event_threat_detection_settings_custom_modules_list' }
     ]}
 >
+<TabItem value="folders_event_threat_detection_settings_custom_modules_list">
+
+Successful response
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+config,
+description,
+displayName,
+enablementState,
+lastEditor,
+type,
+updateTime
+FROM google.securitycenter.event_threat_detection_modules
+WHERE foldersId = '{{ foldersId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_list">
 
 Successful response
@@ -389,8 +412,8 @@ type,
 updateTime
 FROM google.securitycenter.event_threat_detection_modules
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -412,17 +435,50 @@ type,
 updateTime
 FROM google.securitycenter.event_threat_detection_modules
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_list">
+</Tabs>
 
-Successful response
+
+## `INSERT` examples
+
+<Tabs
+    defaultValue="folders_event_threat_detection_settings_custom_modules_create"
+    values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_create', value: 'folders_event_threat_detection_settings_custom_modules_create' },
+        { label: 'organizations_event_threat_detection_settings_custom_modules_create', value: 'organizations_event_threat_detection_settings_custom_modules_create' },
+        { label: 'projects_event_threat_detection_settings_custom_modules_create', value: 'projects_event_threat_detection_settings_custom_modules_create' },
+        { label: 'Manifest', value: 'manifest' }
+    ]}
+>
+<TabItem value="folders_event_threat_detection_settings_custom_modules_create">
+
+No description available.
 
 ```sql
-SELECT
+INSERT INTO google.securitycenter.event_threat_detection_modules (
+data__cloudProvider,
+data__config,
+data__description,
+data__displayName,
+data__enablementState,
+data__name,
+data__type,
+foldersId
+)
+SELECT 
+'{{ cloudProvider }}',
+'{{ config }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ enablementState }}',
+'{{ name }}',
+'{{ type }}',
+'{{ foldersId }}'
+RETURNING
 name,
 ancestorModule,
 cloudProvider,
@@ -433,50 +489,32 @@ enablementState,
 lastEditor,
 type,
 updateTime
-FROM google.securitycenter.event_threat_detection_modules
-WHERE foldersId = '{{ foldersId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
-</Tabs>
-
-
-## `INSERT` examples
-
-<Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_create"
-    values={[
-        { label: 'organizations_event_threat_detection_settings_custom_modules_create', value: 'organizations_event_threat_detection_settings_custom_modules_create' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_create', value: 'projects_event_threat_detection_settings_custom_modules_create' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_create', value: 'folders_event_threat_detection_settings_custom_modules_create' },
-        { label: 'Manifest', value: 'manifest' }
-    ]}
->
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_create">
 
 No description available.
 
 ```sql
 INSERT INTO google.securitycenter.event_threat_detection_modules (
-data__name,
-data__config,
-data__displayName,
-data__description,
-data__type,
 data__cloudProvider,
+data__config,
+data__description,
+data__displayName,
 data__enablementState,
+data__name,
+data__type,
 organizationsId
 )
 SELECT 
-'{{ name }}',
-'{{ config }}',
-'{{ displayName }}',
-'{{ description }}',
-'{{ type }}',
 '{{ cloudProvider }}',
+'{{ config }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ enablementState }}',
+'{{ name }}',
+'{{ type }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -498,62 +536,24 @@ No description available.
 
 ```sql
 INSERT INTO google.securitycenter.event_threat_detection_modules (
-data__name,
-data__config,
-data__displayName,
-data__description,
-data__type,
 data__cloudProvider,
+data__config,
+data__description,
+data__displayName,
 data__enablementState,
+data__name,
+data__type,
 projectsId
 )
 SELECT 
-'{{ name }}',
-'{{ config }}',
-'{{ displayName }}',
-'{{ description }}',
-'{{ type }}',
 '{{ cloudProvider }}',
+'{{ config }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ enablementState }}',
+'{{ name }}',
+'{{ type }}',
 '{{ projectsId }}'
-RETURNING
-name,
-ancestorModule,
-cloudProvider,
-config,
-description,
-displayName,
-enablementState,
-lastEditor,
-type,
-updateTime
-;
-```
-</TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_create">
-
-No description available.
-
-```sql
-INSERT INTO google.securitycenter.event_threat_detection_modules (
-data__name,
-data__config,
-data__displayName,
-data__description,
-data__type,
-data__cloudProvider,
-data__enablementState,
-foldersId
-)
-SELECT 
-'{{ name }}',
-'{{ config }}',
-'{{ displayName }}',
-'{{ description }}',
-'{{ type }}',
-'{{ cloudProvider }}',
-'{{ enablementState }}',
-'{{ foldersId }}'
 RETURNING
 name,
 ancestorModule,
@@ -573,31 +573,31 @@ updateTime
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: event_threat_detection_modules
   props:
+    - name: foldersId
+      value: "{{ foldersId }}"
+      description: Required parameter for the event_threat_detection_modules resource.
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the event_threat_detection_modules resource.
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the event_threat_detection_modules resource.
-    - name: foldersId
-      value: "{{ foldersId }}"
-      description: Required parameter for the event_threat_detection_modules resource.
-    - name: name
-      value: "{{ name }}"
-    - name: config
-      value: "{{ config }}"
-    - name: displayName
-      value: "{{ displayName }}"
-    - name: description
-      value: "{{ description }}"
-    - name: type
-      value: "{{ type }}"
     - name: cloudProvider
       value: "{{ cloudProvider }}"
       valid_values: ['CLOUD_PROVIDER_UNSPECIFIED', 'GOOGLE_CLOUD_PLATFORM', 'AMAZON_WEB_SERVICES', 'MICROSOFT_AZURE']
+    - name: config
+      value: "{{ config }}"
+    - name: description
+      value: "{{ description }}"
+    - name: displayName
+      value: "{{ displayName }}"
     - name: enablementState
       value: "{{ enablementState }}"
       valid_values: ['ENABLEMENT_STATE_UNSPECIFIED', 'ENABLED', 'DISABLED', 'INHERITED']
+    - name: name
+      value: "{{ name }}"
+    - name: type
+      value: "{{ type }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -607,13 +607,24 @@ updateTime
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="organizations_event_threat_detection_settings_custom_modules_delete"
+    defaultValue="folders_event_threat_detection_settings_custom_modules_delete"
     values={[
+        { label: 'folders_event_threat_detection_settings_custom_modules_delete', value: 'folders_event_threat_detection_settings_custom_modules_delete' },
         { label: 'organizations_event_threat_detection_settings_custom_modules_delete', value: 'organizations_event_threat_detection_settings_custom_modules_delete' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_delete', value: 'projects_event_threat_detection_settings_custom_modules_delete' },
-        { label: 'folders_event_threat_detection_settings_custom_modules_delete', value: 'folders_event_threat_detection_settings_custom_modules_delete' }
+        { label: 'projects_event_threat_detection_settings_custom_modules_delete', value: 'projects_event_threat_detection_settings_custom_modules_delete' }
     ]}
 >
+<TabItem value="folders_event_threat_detection_settings_custom_modules_delete">
+
+No description available.
+
+```sql
+DELETE FROM google.securitycenter.event_threat_detection_modules
+WHERE foldersId = '{{ foldersId }}' --required
+AND customModulesId = '{{ customModulesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_custom_modules_delete">
 
 No description available.
@@ -632,17 +643,6 @@ No description available.
 ```sql
 DELETE FROM google.securitycenter.event_threat_detection_modules
 WHERE projectsId = '{{ projectsId }}' --required
-AND customModulesId = '{{ customModulesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="folders_event_threat_detection_settings_custom_modules_delete">
-
-No description available.
-
-```sql
-DELETE FROM google.securitycenter.event_threat_detection_modules
-WHERE foldersId = '{{ foldersId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
 ;
 ```

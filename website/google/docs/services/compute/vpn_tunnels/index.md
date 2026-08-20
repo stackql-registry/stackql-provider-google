@@ -400,14 +400,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of VpnTunnel resources contained in the specified<br />project and region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of VPN tunnels.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -574,9 +574,9 @@ warning
 FROM google.compute.vpn_tunnels
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -616,12 +616,12 @@ vpnGateway,
 vpnGatewayInterface
 FROM google.compute.vpn_tunnels
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
@@ -644,59 +644,59 @@ Creates a VpnTunnel resource in the specified project and region using<br />the 
 
 ```sql
 INSERT INTO google.compute.vpn_tunnels (
-data__remoteTrafficSelector,
-data__sharedSecretHash,
-data__peerExternalGatewayInterface,
-data__targetVpnGateway,
+data__cipherSuite,
 data__description,
 data__detailedStatus,
 data__id,
-data__peerGcpGateway,
-data__name,
-data__status,
-data__router,
-data__peerExternalGateway,
-data__sharedSecret,
-data__region,
 data__ikeVersion,
-data__localTrafficSelector,
-data__labels,
-data__cipherSuite,
-data__vpnGateway,
-data__selfLink,
-data__params,
-data__vpnGatewayInterface,
-data__peerIp,
 data__labelFingerprint,
+data__labels,
+data__localTrafficSelector,
+data__name,
+data__params,
+data__peerExternalGateway,
+data__peerExternalGatewayInterface,
+data__peerGcpGateway,
+data__peerIp,
+data__region,
+data__remoteTrafficSelector,
+data__router,
+data__selfLink,
+data__sharedSecret,
+data__sharedSecretHash,
+data__status,
+data__targetVpnGateway,
+data__vpnGateway,
+data__vpnGatewayInterface,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ remoteTrafficSelector }}',
-'{{ sharedSecretHash }}',
-{{ peerExternalGatewayInterface }},
-'{{ targetVpnGateway }}',
+'{{ cipherSuite }}',
 '{{ description }}',
 '{{ detailedStatus }}',
 '{{ id }}',
-'{{ peerGcpGateway }}',
-'{{ name }}',
-'{{ status }}',
-'{{ router }}',
-'{{ peerExternalGateway }}',
-'{{ sharedSecret }}',
-'{{ region }}',
 {{ ikeVersion }},
-'{{ localTrafficSelector }}',
-'{{ labels }}',
-'{{ cipherSuite }}',
-'{{ vpnGateway }}',
-'{{ selfLink }}',
-'{{ params }}',
-{{ vpnGatewayInterface }},
-'{{ peerIp }}',
 '{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ localTrafficSelector }}',
+'{{ name }}',
+'{{ params }}',
+'{{ peerExternalGateway }}',
+{{ peerExternalGatewayInterface }},
+'{{ peerGcpGateway }}',
+'{{ peerIp }}',
+'{{ region }}',
+'{{ remoteTrafficSelector }}',
+'{{ router }}',
+'{{ selfLink }}',
+'{{ sharedSecret }}',
+'{{ sharedSecretHash }}',
+'{{ status }}',
+'{{ targetVpnGateway }}',
+'{{ vpnGateway }}',
+{{ vpnGatewayInterface }},
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -742,32 +742,27 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the vpn_tunnels resource.
-    - name: remoteTrafficSelector
+    - name: cipherSuite
+      description: |
+        User specified list of ciphers to use for the phase 1 and phase 2 of the
+        IKE protocol.
       value:
-        - "{{ remoteTrafficSelector }}"
-      description: |
-        Remote traffic selectors to use when establishing the VPN tunnel with
-        the peer VPN gateway. The value should be a CIDR formatted string,
-        for example: 192.168.0.0/16. The ranges should be disjoint. Only IPv4 is
-        supported for Classic VPN tunnels. This field is output only for HA VPN
-        tunnels.
-    - name: sharedSecretHash
-      value: "{{ sharedSecretHash }}"
-      description: |
-        Hash of the shared secret.
-    - name: peerExternalGatewayInterface
-      value: {{ peerExternalGatewayInterface }}
-      description: |
-        The interface ID of the external VPN gateway to which this VPN tunnel is
-        connected. Provided by the client when the VPN tunnel is created.
-        Possible values are: \`0\`, \`1\`, \`2\`, \`3\`. The number of IDs in use
-        depends on the external VPN gateway redundancy type.
-    - name: targetVpnGateway
-      value: "{{ targetVpnGateway }}"
-      description: |
-        URL of the Target VPN gateway with which this VPN tunnel is associated.
-        Provided by the client when the VPN tunnel is created.
-        This field can be set only for Classic VPN tunnels.
+        phase1:
+          dh:
+            - "{{ dh }}"
+          encryption:
+            - "{{ encryption }}"
+          integrity:
+            - "{{ integrity }}"
+          prf:
+            - "{{ prf }}"
+        phase2:
+          encryption:
+            - "{{ encryption }}"
+          integrity:
+            - "{{ integrity }}"
+          pfs:
+            - "{{ pfs }}"
     - name: description
       value: "{{ description }}"
       description: |
@@ -782,15 +777,37 @@ zone
       description: |
         [Output Only] The unique identifier for the resource. This identifier is
         defined by the server.
-    - name: peerGcpGateway
-      value: "{{ peerGcpGateway }}"
+    - name: ikeVersion
+      value: {{ ikeVersion }}
       description: |
-        URL of the peer side HA VPN gateway to which this VPN tunnel
-        is connected. Provided by the client when the VPN tunnel is created.
-        This field can be used when creating highly available VPN from VPC network
-        to VPC network, the field is exclusive with the field peerExternalGateway.
-        If provided, the VPN tunnel will automatically use the same
-        vpnGatewayInterface ID in the peer Google Cloud VPN gateway.
+        IKE protocol version to use when establishing the VPN tunnel with the peer
+        VPN gateway. Acceptable IKE versions are 1 or 2.
+        The default version is 2.
+    - name: labelFingerprint
+      value: "{{ labelFingerprint }}"
+      description: |
+        A fingerprint for the labels being applied to this VpnTunnel, which is
+        essentially a hash of the labels set used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update labels. You must always provide an
+        up-to-date fingerprint hash in order to update or change labels,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve a VpnTunnel.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
+        Label values may be empty.
+    - name: localTrafficSelector
+      value:
+        - "{{ localTrafficSelector }}"
+      description: |
+        Local traffic selector to use when establishing the VPN tunnel with the
+        peer VPN gateway. The value should be a CIDR formatted string, for
+        example: 192.168.0.0/16. The ranges must be disjoint.
+        Only IPv4 is supported for Classic VPN tunnels. This field is output only
+        for HA VPN tunnels.
     - name: name
       value: "{{ name }}"
       description: |
@@ -801,6 +818,72 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: peerExternalGateway
+      value: "{{ peerExternalGateway }}"
+      description: |
+        URL of the peer side external VPN gateway to which this VPN tunnel is
+        connected.
+        Provided by the client when the VPN tunnel is created.
+        This field is exclusive with the field peerGcpGateway.
+    - name: peerExternalGatewayInterface
+      value: {{ peerExternalGatewayInterface }}
+      description: |
+        The interface ID of the external VPN gateway to which this VPN tunnel is
+        connected. Provided by the client when the VPN tunnel is created.
+        Possible values are: \`0\`, \`1\`, \`2\`, \`3\`. The number of IDs in use
+        depends on the external VPN gateway redundancy type.
+    - name: peerGcpGateway
+      value: "{{ peerGcpGateway }}"
+      description: |
+        URL of the peer side HA VPN gateway to which this VPN tunnel
+        is connected. Provided by the client when the VPN tunnel is created.
+        This field can be used when creating highly available VPN from VPC network
+        to VPC network, the field is exclusive with the field peerExternalGateway.
+        If provided, the VPN tunnel will automatically use the same
+        vpnGatewayInterface ID in the peer Google Cloud VPN gateway.
+    - name: peerIp
+      value: "{{ peerIp }}"
+      description: |
+        IP address of the peer VPN gateway. Only IPv4 is supported. This field can
+        be set only for Classic VPN tunnels.
+    - name: region
+      value: "{{ region }}"
+      description: |
+        [Output Only] URL of the region where the VPN tunnel resides.
+        You must specify this field as part of the HTTP request URL. It is
+        not settable as a field in the request body.
+    - name: remoteTrafficSelector
+      value:
+        - "{{ remoteTrafficSelector }}"
+      description: |
+        Remote traffic selectors to use when establishing the VPN tunnel with
+        the peer VPN gateway. The value should be a CIDR formatted string,
+        for example: 192.168.0.0/16. The ranges should be disjoint. Only IPv4 is
+        supported for Classic VPN tunnels. This field is output only for HA VPN
+        tunnels.
+    - name: router
+      value: "{{ router }}"
+      description: |
+        URL of the router resource to be used for dynamic routing.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: sharedSecret
+      value: "{{ sharedSecret }}"
+      description: |
+        Shared secret used to set the secure session between the Cloud VPN gateway
+        and the peer VPN gateway.
+    - name: sharedSecretHash
+      value: "{{ sharedSecretHash }}"
+      description: |
+        Hash of the shared secret.
     - name: status
       value: "{{ status }}"
       description: |
@@ -836,69 +919,12 @@ zone
         - TS_NARROWING_NOT_ALLOWED: Traffic selector
         narrowing not allowed for an HA-VPN tunnel.
       valid_values: ['ALLOCATING_RESOURCES', 'AUTHORIZATION_ERROR', 'DEPROVISIONING', 'ESTABLISHED', 'FAILED', 'FIRST_HANDSHAKE', 'NEGOTIATION_FAILURE', 'NETWORK_ERROR', 'NO_INCOMING_PACKETS', 'PROVISIONING', 'REJECTED', 'STOPPED', 'WAITING_FOR_FULL_CONFIG']
-    - name: router
-      value: "{{ router }}"
+    - name: targetVpnGateway
+      value: "{{ targetVpnGateway }}"
       description: |
-        URL of the router resource to be used for dynamic routing.
-    - name: peerExternalGateway
-      value: "{{ peerExternalGateway }}"
-      description: |
-        URL of the peer side external VPN gateway to which this VPN tunnel is
-        connected.
+        URL of the Target VPN gateway with which this VPN tunnel is associated.
         Provided by the client when the VPN tunnel is created.
-        This field is exclusive with the field peerGcpGateway.
-    - name: sharedSecret
-      value: "{{ sharedSecret }}"
-      description: |
-        Shared secret used to set the secure session between the Cloud VPN gateway
-        and the peer VPN gateway.
-    - name: region
-      value: "{{ region }}"
-      description: |
-        [Output Only] URL of the region where the VPN tunnel resides.
-        You must specify this field as part of the HTTP request URL. It is
-        not settable as a field in the request body.
-    - name: ikeVersion
-      value: {{ ikeVersion }}
-      description: |
-        IKE protocol version to use when establishing the VPN tunnel with the peer
-        VPN gateway. Acceptable IKE versions are 1 or 2.
-        The default version is 2.
-    - name: localTrafficSelector
-      value:
-        - "{{ localTrafficSelector }}"
-      description: |
-        Local traffic selector to use when establishing the VPN tunnel with the
-        peer VPN gateway. The value should be a CIDR formatted string, for
-        example: 192.168.0.0/16. The ranges must be disjoint.
-        Only IPv4 is supported for Classic VPN tunnels. This field is output only
-        for HA VPN tunnels.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
-        Label values may be empty.
-    - name: cipherSuite
-      description: |
-        User specified list of ciphers to use for the phase 1 and phase 2 of the
-        IKE protocol.
-      value:
-        phase1:
-          dh:
-            - "{{ dh }}"
-          encryption:
-            - "{{ encryption }}"
-          integrity:
-            - "{{ integrity }}"
-          prf:
-            - "{{ prf }}"
-        phase2:
-          encryption:
-            - "{{ encryption }}"
-          integrity:
-            - "{{ integrity }}"
-          pfs:
-            - "{{ pfs }}"
+        This field can be set only for Classic VPN tunnels.
     - name: vpnGateway
       value: "{{ vpnGateway }}"
       description: |
@@ -906,38 +932,12 @@ zone
         Provided by the client when the VPN tunnel is created. This must be
         used (instead of target_vpn_gateway) if a High Availability VPN gateway
         resource is created.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: vpnGatewayInterface
       value: {{ vpnGatewayInterface }}
       description: |
         The interface ID of the VPN gateway with which this VPN tunnel is
         associated.
         Possible values are: \`0\`, \`1\`.
-    - name: peerIp
-      value: "{{ peerIp }}"
-      description: |
-        IP address of the peer VPN gateway. Only IPv4 is supported. This field can
-        be set only for Classic VPN tunnels.
-    - name: labelFingerprint
-      value: "{{ labelFingerprint }}"
-      description: |
-        A fingerprint for the labels being applied to this VpnTunnel, which is
-        essentially a hash of the labels set used for optimistic locking. The
-        fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update labels. You must always provide an
-        up-to-date fingerprint hash in order to update or change labels,
-        otherwise the request will fail with error412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve a VpnTunnel.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -990,8 +990,8 @@ EXEC google.compute.vpn_tunnels.set_labels
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

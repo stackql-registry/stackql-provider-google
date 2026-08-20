@@ -352,24 +352,24 @@ Creates a SemanticGovernancePolicy.
 
 ```sql
 INSERT INTO google.aiplatform.semantic_governance_policies (
-data__mcpTools,
-data__description,
-data__name,
-data__etag,
-data__displayName,
 data__agent,
+data__description,
+data__displayName,
+data__etag,
+data__mcpTools,
+data__name,
 data__naturalLanguageConstraint,
 projectsId,
 locationsId,
 semanticGovernancePolicyId
 )
 SELECT 
-'{{ mcpTools }}',
-'{{ description }}',
-'{{ name }}',
-'{{ etag }}',
-'{{ displayName }}',
 '{{ agent }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ etag }}',
+'{{ mcpTools }}',
+'{{ name }}',
 '{{ naturalLanguageConstraint }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -394,32 +394,32 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the semantic_governance_policies resource.
+    - name: agent
+      value: "{{ agent }}"
+      description: |
+        Required. The name of the agent in Agent Registry that is affected by this policy.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the SemanticGovernancePolicy.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The user-defined name of the SemanticGovernancePolicy.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Used to perform consistent read-modify-write transactions. If provided, the request will only succeed if the etag matches the current value. Otherwise, an ABORTED error will be returned.
     - name: mcpTools
       description: |
         Optional. The McpTools that are affected by this policy.
       value:
         - mcpServer: "{{ mcpServer }}"
           tools: "{{ tools }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the SemanticGovernancePolicy.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Resource name of the SemanticGovernancePolicy.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Used to perform consistent read-modify-write transactions. If provided, the request will only succeed if the etag matches the current value. Otherwise, an ABORTED error will be returned.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. The user-defined name of the SemanticGovernancePolicy.
-    - name: agent
-      value: "{{ agent }}"
-      description: |
-        Required. The name of the agent in Agent Registry that is affected by this policy.
     - name: naturalLanguageConstraint
       value: "{{ naturalLanguageConstraint }}"
       description: |
@@ -447,12 +447,12 @@ Updates a SemanticGovernancePolicy.
 ```sql
 UPDATE google.aiplatform.semantic_governance_policies
 SET 
-data__mcpTools = '{{ mcpTools }}',
-data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
-data__displayName = '{{ displayName }}',
 data__agent = '{{ agent }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
+data__mcpTools = '{{ mcpTools }}',
+data__name = '{{ name }}',
 data__naturalLanguageConstraint = '{{ naturalLanguageConstraint }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

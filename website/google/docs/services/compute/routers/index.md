@@ -300,14 +300,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of Router resources available to the specified project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of routers.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -487,10 +487,10 @@ warning
 FROM google.compute.routers
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -519,13 +519,13 @@ region,
 selfLink
 FROM google.compute.routers
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -548,38 +548,38 @@ Creates a Router resource in the specified project and region using<br />the dat
 ```sql
 INSERT INTO google.compute.routers (
 data__bgp,
-data__region,
+data__bgpPeers,
+data__description,
+data__encryptedInterconnectRouter,
+data__id,
+data__interfaces,
 data__md5AuthenticationKeys,
+data__name,
+data__nats,
+data__nccGateway,
 data__network,
 data__params,
-data__bgpPeers,
-data__name,
-data__interfaces,
-data__nccGateway,
-data__description,
-data__nats,
+data__region,
 data__selfLink,
-data__id,
-data__encryptedInterconnectRouter,
 project,
 region,
 requestId
 )
 SELECT 
 '{{ bgp }}',
-'{{ region }}',
+'{{ bgpPeers }}',
+'{{ description }}',
+{{ encryptedInterconnectRouter }},
+'{{ id }}',
+'{{ interfaces }}',
 '{{ md5AuthenticationKeys }}',
+'{{ name }}',
+'{{ nats }}',
+'{{ nccGateway }}',
 '{{ network }}',
 '{{ params }}',
-'{{ bgpPeers }}',
-'{{ name }}',
-'{{ interfaces }}',
-'{{ nccGateway }}',
-'{{ description }}',
-'{{ nats }}',
+'{{ region }}',
 '{{ selfLink }}',
-'{{ id }}',
-{{ encryptedInterconnectRouter }},
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -630,80 +630,63 @@ zone
         BGP information specific to this router.
       value:
         advertiseMode: "{{ advertiseMode }}"
-        keepaliveInterval: {{ keepaliveInterval }}
-        asn: {{ asn }}
-        advertisedIpRanges:
-          - range: "{{ range }}"
-            description: "{{ description }}"
-        identifierRange: "{{ identifierRange }}"
         advertisedGroups:
           - "{{ advertisedGroups }}"
-    - name: region
-      value: "{{ region }}"
-      description: |
-        [Output Only] URI of the region where the router resides.
-        You must specify this field as part of the HTTP request URL. It is
-        not settable as a field in the request body.
-    - name: md5AuthenticationKeys
-      description: |
-        Keys used for MD5 authentication.
-      value:
-        - key: "{{ key }}"
-          name: "{{ name }}"
-    - name: network
-      value: "{{ network }}"
-      description: |
-        URI of the network to which this router belongs.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
+        advertisedIpRanges:
+          - description: "{{ description }}"
+            range: "{{ range }}"
+        asn: {{ asn }}
+        identifierRange: "{{ identifierRange }}"
+        keepaliveInterval: {{ keepaliveInterval }}
     - name: bgpPeers
       description: |
         BGP information that must be configured into the routing stack to
         establish BGP peering. This information must specify the peer ASN and
         either the interface name, IP address, or peer IP address. Please refer toRFC4273.
       value:
-        - ipAddress: "{{ ipAddress }}"
-          routerApplianceInstance: "{{ routerApplianceInstance }}"
-          enableIpv6: {{ enableIpv6 }}
-          peerIpv4NexthopAddress: "{{ peerIpv4NexthopAddress }}"
-          name: "{{ name }}"
-          peerAsn: {{ peerAsn }}
-          md5AuthenticationKeyName: "{{ md5AuthenticationKeyName }}"
-          interfaceName: "{{ interfaceName }}"
-          advertiseMode: "{{ advertiseMode }}"
-          importPolicies: "{{ importPolicies }}"
+        - advertiseMode: "{{ advertiseMode }}"
           advertisedGroups: "{{ advertisedGroups }}"
-          customLearnedIpRanges: "{{ customLearnedIpRanges }}"
-          ipv6NexthopAddress: "{{ ipv6NexthopAddress }}"
           advertisedIpRanges: "{{ advertisedIpRanges }}"
-          exportPolicies: "{{ exportPolicies }}"
-          ipv4NexthopAddress: "{{ ipv4NexthopAddress }}"
-          customLearnedRoutePriority: {{ customLearnedRoutePriority }}
+          advertisedRoutePriority: {{ advertisedRoutePriority }}
           bfd:
-            minTransmitInterval: {{ minTransmitInterval }}
             minReceiveInterval: {{ minReceiveInterval }}
+            minTransmitInterval: {{ minTransmitInterval }}
             multiplier: {{ multiplier }}
             sessionInitializationMode: "{{ sessionInitializationMode }}"
-          enableIpv4: {{ enableIpv4 }}
-          managementType: "{{ managementType }}"
+          customLearnedIpRanges: "{{ customLearnedIpRanges }}"
+          customLearnedRoutePriority: {{ customLearnedRoutePriority }}
           enable: "{{ enable }}"
+          enableIpv4: {{ enableIpv4 }}
+          enableIpv6: {{ enableIpv6 }}
+          exportPolicies: "{{ exportPolicies }}"
+          importPolicies: "{{ importPolicies }}"
+          interfaceName: "{{ interfaceName }}"
+          ipAddress: "{{ ipAddress }}"
+          ipv4NexthopAddress: "{{ ipv4NexthopAddress }}"
+          ipv6NexthopAddress: "{{ ipv6NexthopAddress }}"
+          managementType: "{{ managementType }}"
+          md5AuthenticationKeyName: "{{ md5AuthenticationKeyName }}"
+          name: "{{ name }}"
+          peerAsn: {{ peerAsn }}
           peerIpAddress: "{{ peerIpAddress }}"
+          peerIpv4NexthopAddress: "{{ peerIpv4NexthopAddress }}"
           peerIpv6NexthopAddress: "{{ peerIpv6NexthopAddress }}"
-          advertisedRoutePriority: {{ advertisedRoutePriority }}
-    - name: name
-      value: "{{ name }}"
+          routerApplianceInstance: "{{ routerApplianceInstance }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: encryptedInterconnectRouter
+      value: {{ encryptedInterconnectRouter }}
+      description: |
+        Indicates if a router is dedicated for use with encrypted VLAN
+        attachments (interconnectAttachments).
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
     - name: interfaces
       description: |
         Router interfaces.
@@ -715,67 +698,84 @@ zone
         You can create a router interface without any of these fields specified.
         However, you cannot create a BGP peer that uses that interface.
       value:
-        - ipVersion: "{{ ipVersion }}"
-          name: "{{ name }}"
-          redundantInterface: "{{ redundantInterface }}"
-          privateIpAddress: "{{ privateIpAddress }}"
-          ipRange: "{{ ipRange }}"
-          linkedVpnTunnel: "{{ linkedVpnTunnel }}"
-          subnetwork: "{{ subnetwork }}"
-          managementType: "{{ managementType }}"
+        - ipRange: "{{ ipRange }}"
+          ipVersion: "{{ ipVersion }}"
           linkedInterconnectAttachment: "{{ linkedInterconnectAttachment }}"
-    - name: nccGateway
-      value: "{{ nccGateway }}"
+          linkedVpnTunnel: "{{ linkedVpnTunnel }}"
+          managementType: "{{ managementType }}"
+          name: "{{ name }}"
+          privateIpAddress: "{{ privateIpAddress }}"
+          redundantInterface: "{{ redundantInterface }}"
+          subnetwork: "{{ subnetwork }}"
+    - name: md5AuthenticationKeys
       description: |
-        URI of the ncc_gateway to which this router associated.
-    - name: description
-      value: "{{ description }}"
+        Keys used for MD5 authentication.
+      value:
+        - key: "{{ key }}"
+          name: "{{ name }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: nats
       description: |
         A list of NAT services created in this router.
       value:
-        - natIpAllocateOption: "{{ natIpAllocateOption }}"
+        - autoNetworkTier: "{{ autoNetworkTier }}"
+          drainNatIps: "{{ drainNatIps }}"
+          effectiveTcpTimeWaitTimeoutSec: {{ effectiveTcpTimeWaitTimeoutSec }}
+          enableDynamicPortAllocation: {{ enableDynamicPortAllocation }}
+          enableEndpointIndependentMapping: {{ enableEndpointIndependentMapping }}
+          endpointTypes: "{{ endpointTypes }}"
           icmpIdleTimeoutSec: {{ icmpIdleTimeoutSec }}
-          nat64Subnetworks: "{{ nat64Subnetworks }}"
-          natIps: "{{ natIps }}"
-          minPortsPerVm: {{ minPortsPerVm }}
           logConfig:
             enable: {{ enable }}
             filter: "{{ filter }}"
-          drainNatIps: "{{ drainNatIps }}"
-          effectiveTcpTimeWaitTimeoutSec: {{ effectiveTcpTimeWaitTimeoutSec }}
-          type: "{{ type }}"
+          maxPortsPerVm: {{ maxPortsPerVm }}
+          minPortsPerVm: {{ minPortsPerVm }}
           name: "{{ name }}"
-          autoNetworkTier: "{{ autoNetworkTier }}"
-          tcpEstablishedIdleTimeoutSec: {{ tcpEstablishedIdleTimeoutSec }}
-          udpIdleTimeoutSec: {{ udpIdleTimeoutSec }}
+          nat64Subnetworks: "{{ nat64Subnetworks }}"
+          natIpAllocateOption: "{{ natIpAllocateOption }}"
+          natIps: "{{ natIps }}"
           rules: "{{ rules }}"
-          tcpTransitoryIdleTimeoutSec: {{ tcpTransitoryIdleTimeoutSec }}
-          subnetworks: "{{ subnetworks }}"
           sourceSubnetworkIpRangesToNat: "{{ sourceSubnetworkIpRangesToNat }}"
           sourceSubnetworkIpRangesToNat64: "{{ sourceSubnetworkIpRangesToNat64 }}"
-          maxPortsPerVm: {{ maxPortsPerVm }}
-          enableEndpointIndependentMapping: {{ enableEndpointIndependentMapping }}
+          subnetworks: "{{ subnetworks }}"
+          tcpEstablishedIdleTimeoutSec: {{ tcpEstablishedIdleTimeoutSec }}
           tcpTimeWaitTimeoutSec: {{ tcpTimeWaitTimeoutSec }}
-          enableDynamicPortAllocation: {{ enableDynamicPortAllocation }}
-          endpointTypes: "{{ endpointTypes }}"
+          tcpTransitoryIdleTimeoutSec: {{ tcpTransitoryIdleTimeoutSec }}
+          type: "{{ type }}"
+          udpIdleTimeoutSec: {{ udpIdleTimeoutSec }}
+    - name: nccGateway
+      value: "{{ nccGateway }}"
+      description: |
+        URI of the ncc_gateway to which this router associated.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        URI of the network to which this router belongs.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: region
+      value: "{{ region }}"
+      description: |
+        [Output Only] URI of the region where the router resides.
+        You must specify this field as part of the HTTP request URL. It is
+        not settable as a field in the request body.
     - name: selfLink
       value: "{{ selfLink }}"
       description: |
         [Output Only] Server-defined URL for the resource.
-    - name: id
-      value: "{{ id }}"
-      description: |
-        [Output Only] The unique identifier for the resource. This identifier is
-        defined by the server.
-    - name: encryptedInterconnectRouter
-      value: {{ encryptedInterconnectRouter }}
-      description: |
-        Indicates if a router is dedicated for use with encrypted VLAN
-        attachments (interconnectAttachments).
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -802,19 +802,19 @@ Patches the specified Router resource with the data included in the<br />request
 UPDATE google.compute.routers
 SET 
 data__bgp = '{{ bgp }}',
-data__region = '{{ region }}',
+data__bgpPeers = '{{ bgpPeers }}',
+data__description = '{{ description }}',
+data__encryptedInterconnectRouter = {{ encryptedInterconnectRouter }},
+data__id = '{{ id }}',
+data__interfaces = '{{ interfaces }}',
 data__md5AuthenticationKeys = '{{ md5AuthenticationKeys }}',
+data__name = '{{ name }}',
+data__nats = '{{ nats }}',
+data__nccGateway = '{{ nccGateway }}',
 data__network = '{{ network }}',
 data__params = '{{ params }}',
-data__bgpPeers = '{{ bgpPeers }}',
-data__name = '{{ name }}',
-data__interfaces = '{{ interfaces }}',
-data__nccGateway = '{{ nccGateway }}',
-data__description = '{{ description }}',
-data__nats = '{{ nats }}',
-data__selfLink = '{{ selfLink }}',
-data__id = '{{ id }}',
-data__encryptedInterconnectRouter = {{ encryptedInterconnectRouter }}
+data__region = '{{ region }}',
+data__selfLink = '{{ selfLink }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -858,10 +858,10 @@ Patches Named Set
 UPDATE google.compute.routers
 SET 
 data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__type = '{{ type }}',
 data__elements = '{{ elements }}',
-data__fingerprint = '{{ fingerprint }}'
+data__fingerprint = '{{ fingerprint }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -904,11 +904,11 @@ Patches Route Policy
 ```sql
 UPDATE google.compute.routers
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__name = '{{ name }}',
 data__terms = '{{ terms }}',
-data__type = '{{ type }}',
-data__fingerprint = '{{ fingerprint }}'
+data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -963,19 +963,19 @@ Updates the specified Router resource with the data included in the<br />request
 REPLACE google.compute.routers
 SET 
 data__bgp = '{{ bgp }}',
-data__region = '{{ region }}',
+data__bgpPeers = '{{ bgpPeers }}',
+data__description = '{{ description }}',
+data__encryptedInterconnectRouter = {{ encryptedInterconnectRouter }},
+data__id = '{{ id }}',
+data__interfaces = '{{ interfaces }}',
 data__md5AuthenticationKeys = '{{ md5AuthenticationKeys }}',
+data__name = '{{ name }}',
+data__nats = '{{ nats }}',
+data__nccGateway = '{{ nccGateway }}',
 data__network = '{{ network }}',
 data__params = '{{ params }}',
-data__bgpPeers = '{{ bgpPeers }}',
-data__name = '{{ name }}',
-data__interfaces = '{{ interfaces }}',
-data__nccGateway = '{{ nccGateway }}',
-data__description = '{{ description }}',
-data__nats = '{{ nats }}',
-data__selfLink = '{{ selfLink }}',
-data__id = '{{ id }}',
-data__encryptedInterconnectRouter = {{ encryptedInterconnectRouter }}
+data__region = '{{ region }}',
+data__selfLink = '{{ selfLink }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -1058,19 +1058,19 @@ EXEC google.compute.routers.preview
 @@json=
 '{
 "bgp": "{{ bgp }}", 
-"region": "{{ region }}", 
+"bgpPeers": "{{ bgpPeers }}", 
+"description": "{{ description }}", 
+"encryptedInterconnectRouter": {{ encryptedInterconnectRouter }}, 
+"id": "{{ id }}", 
+"interfaces": "{{ interfaces }}", 
 "md5AuthenticationKeys": "{{ md5AuthenticationKeys }}", 
+"name": "{{ name }}", 
+"nats": "{{ nats }}", 
+"nccGateway": "{{ nccGateway }}", 
 "network": "{{ network }}", 
 "params": "{{ params }}", 
-"bgpPeers": "{{ bgpPeers }}", 
-"name": "{{ name }}", 
-"interfaces": "{{ interfaces }}", 
-"nccGateway": "{{ nccGateway }}", 
-"description": "{{ description }}", 
-"nats": "{{ nats }}", 
-"selfLink": "{{ selfLink }}", 
-"id": "{{ id }}", 
-"encryptedInterconnectRouter": {{ encryptedInterconnectRouter }}
+"region": "{{ region }}", 
+"selfLink": "{{ selfLink }}"
 }'
 ;
 ```

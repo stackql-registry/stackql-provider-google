@@ -225,14 +225,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Evaluations in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-evaluationId"><code>evaluationId</code></a></td>
+    <td><a href="#parameter-evaluationId"><code>evaluationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Evaluation in a given project and location.</td>
 </tr>
 <tr>
@@ -381,8 +381,8 @@ FROM google.workloadmanager.evaluations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -405,36 +405,36 @@ Creates a new Evaluation in a given project and location.
 
 ```sql
 INSERT INTO google.workloadmanager.evaluations (
-data__resourceFilter,
-data__labels,
-data__schedule,
+data__bigQueryDestination,
 data__customRulesBucket,
 data__description,
-data__name,
-data__bigQueryDestination,
-data__kmsKey,
 data__evaluationType,
+data__kmsKey,
+data__labels,
+data__name,
+data__resourceFilter,
 data__ruleNames,
+data__schedule,
 projectsId,
 locationsId,
-requestId,
-evaluationId
+evaluationId,
+requestId
 )
 SELECT 
-'{{ resourceFilter }}',
-'{{ labels }}',
-'{{ schedule }}',
+'{{ bigQueryDestination }}',
 '{{ customRulesBucket }}',
 '{{ description }}',
-'{{ name }}',
-'{{ bigQueryDestination }}',
-'{{ kmsKey }}',
 '{{ evaluationType }}',
+'{{ kmsKey }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ resourceFilter }}',
 '{{ ruleNames }}',
+'{{ schedule }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ evaluationId }}'
+'{{ evaluationId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -455,26 +455,12 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the evaluations resource.
-    - name: resourceFilter
+    - name: bigQueryDestination
       description: |
-        Resource filter for an evaluation defining the scope of resources to be evaluated.
+        Optional. The BigQuery destination for detailed evaluation results. If this field is specified, the results of each evaluation execution are exported to BigQuery.
       value:
-        resourceIdPatterns:
-          - "{{ resourceIdPatterns }}"
-        gceInstanceFilter:
-          serviceAccounts:
-            - "{{ serviceAccounts }}"
-        scopes:
-          - "{{ scopes }}"
-        inclusionLabels: "{{ inclusionLabels }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels as key value pairs.
-    - name: schedule
-      value: "{{ schedule }}"
-      description: |
-        Crontab format schedule for scheduled evaluation, currently only supports the following fixed schedules: * \`0 */1 * * *\` # Hourly * \`0 */6 * * *\` # Every 6 hours * \`0 */12 * * *\` # Every 12 hours * \`0 0 */1 * *\` # Daily * \`0 0 */7 * *\` # Weekly * \`0 0 */14 * *\` # Every 14 days * \`0 0 1 */1 *\` # Monthly
+        createNewResultsTable: {{ createNewResultsTable }}
+        destinationDataset: "{{ destinationDataset }}"
     - name: customRulesBucket
       value: "{{ customRulesBucket }}"
       description: |
@@ -483,34 +469,48 @@ response
       value: "{{ description }}"
       description: |
         Description of the Evaluation.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of resource that has the form \`projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}\`.
-    - name: bigQueryDestination
-      description: |
-        Optional. The BigQuery destination for detailed evaluation results. If this field is specified, the results of each evaluation execution are exported to BigQuery.
-      value:
-        destinationDataset: "{{ destinationDataset }}"
-        createNewResultsTable: {{ createNewResultsTable }}
-    - name: kmsKey
-      value: "{{ kmsKey }}"
-      description: |
-        Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*. The key will be used for CMEK encryption of the evaluation resource.
     - name: evaluationType
       value: "{{ evaluationType }}"
       description: |
         Evaluation type.
       valid_values: ['EVALUATION_TYPE_UNSPECIFIED', 'SAP', 'SQL_SERVER', 'OTHER']
+    - name: kmsKey
+      value: "{{ kmsKey }}"
+      description: |
+        Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*. The key will be used for CMEK encryption of the evaluation resource.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of resource that has the form \`projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}\`.
+    - name: resourceFilter
+      description: |
+        Resource filter for an evaluation defining the scope of resources to be evaluated.
+      value:
+        gceInstanceFilter:
+          serviceAccounts:
+            - "{{ serviceAccounts }}"
+        inclusionLabels: "{{ inclusionLabels }}"
+        resourceIdPatterns:
+          - "{{ resourceIdPatterns }}"
+        scopes:
+          - "{{ scopes }}"
     - name: ruleNames
       value:
         - "{{ ruleNames }}"
       description: |
         The names of the rules used for this evaluation.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: schedule
+      value: "{{ schedule }}"
+      description: |
+        Crontab format schedule for scheduled evaluation, currently only supports the following fixed schedules: * \`0 */1 * * *\` # Hourly * \`0 */6 * * *\` # Every 6 hours * \`0 */12 * * *\` # Every 12 hours * \`0 0 */1 * *\` # Daily * \`0 0 */7 * *\` # Weekly * \`0 0 */14 * *\` # Every 14 days * \`0 0 1 */1 *\` # Monthly
     - name: evaluationId
       value: "{{ evaluationId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -532,16 +532,16 @@ Updates the parameters of a single Evaluation.
 ```sql
 UPDATE google.workloadmanager.evaluations
 SET 
-data__resourceFilter = '{{ resourceFilter }}',
-data__labels = '{{ labels }}',
-data__schedule = '{{ schedule }}',
+data__bigQueryDestination = '{{ bigQueryDestination }}',
 data__customRulesBucket = '{{ customRulesBucket }}',
 data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__bigQueryDestination = '{{ bigQueryDestination }}',
-data__kmsKey = '{{ kmsKey }}',
 data__evaluationType = '{{ evaluationType }}',
-data__ruleNames = '{{ ruleNames }}'
+data__kmsKey = '{{ kmsKey }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__resourceFilter = '{{ resourceFilter }}',
+data__ruleNames = '{{ ruleNames }}',
+data__schedule = '{{ schedule }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

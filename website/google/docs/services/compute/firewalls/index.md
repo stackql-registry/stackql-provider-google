@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of firewall rules available to the specified<br />project.</td>
 </tr>
 <tr>
@@ -370,9 +370,9 @@ selfLink,
 warning
 FROM google.compute.firewalls
 WHERE project = '{{ project }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -396,43 +396,43 @@ Creates a firewall rule in the specified project using the data<br />included in
 
 ```sql
 INSERT INTO google.compute.firewalls (
-data__description,
-data__sourceRanges,
-data__sourceServiceAccounts,
-data__selfLink,
-data__name,
 data__allowed,
 data__denied,
-data__sourceTags,
+data__description,
+data__destinationRanges,
+data__direction,
+data__disabled,
+data__logConfig,
+data__name,
+data__network,
 data__params,
 data__priority,
+data__selfLink,
+data__sourceRanges,
+data__sourceServiceAccounts,
+data__sourceTags,
 data__targetServiceAccounts,
-data__logConfig,
-data__direction,
-data__destinationRanges,
-data__network,
-data__disabled,
 data__targetTags,
 project,
 requestId
 )
 SELECT 
-'{{ description }}',
-'{{ sourceRanges }}',
-'{{ sourceServiceAccounts }}',
-'{{ selfLink }}',
-'{{ name }}',
 '{{ allowed }}',
 '{{ denied }}',
-'{{ sourceTags }}',
+'{{ description }}',
+'{{ destinationRanges }}',
+'{{ direction }}',
+{{ disabled }},
+'{{ logConfig }}',
+'{{ name }}',
+'{{ network }}',
 '{{ params }}',
 {{ priority }},
+'{{ selfLink }}',
+'{{ sourceRanges }}',
+'{{ sourceServiceAccounts }}',
+'{{ sourceTags }}',
 '{{ targetServiceAccounts }}',
-'{{ logConfig }}',
-'{{ direction }}',
-'{{ destinationRanges }}',
-'{{ network }}',
-{{ disabled }},
 '{{ targetTags }}',
 '{{ project }}',
 '{{ requestId }}'
@@ -475,11 +475,98 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the firewalls resource.
+    - name: allowed
+      description: |
+        The list of ALLOW rules specified by this firewall. Each rule specifies a
+        protocol and port-range tuple that describes a permitted connection.
+      value:
+        - IPProtocol: "{{ IPProtocol }}"
+          ports: "{{ ports }}"
+    - name: denied
+      description: |
+        The list of DENY rules specified by this firewall. Each rule specifies a
+        protocol and port-range tuple that describes a denied connection.
+      value:
+        - IPProtocol: "{{ IPProtocol }}"
+          ports: "{{ ports }}"
     - name: description
       value: "{{ description }}"
       description: |
         An optional description of this resource. Provide this field when you
         create the resource.
+    - name: destinationRanges
+      value:
+        - "{{ destinationRanges }}"
+      description: |
+        If destination ranges are specified, the firewall rule applies only to
+        traffic that has destination IP address in these ranges. These ranges must
+        be expressed inCIDR format. Both IPv4 and IPv6 are supported.
+    - name: direction
+      value: "{{ direction }}"
+      description: |
+        Direction of traffic to which this firewall applies, either \`INGRESS\` or
+        \`EGRESS\`. The default is \`INGRESS\`. For \`EGRESS\` traffic, you cannot
+        specify the sourceTags fields.
+      valid_values: ['EGRESS', 'INGRESS']
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Denotes whether the firewall rule is disabled. When set to true, the
+        firewall rule is not enforced and the network behaves as if it did not
+        exist. If this is unspecified, the firewall rule will be enabled.
+    - name: logConfig
+      description: |
+        This field denotes the logging options for a particular firewall rule. If
+        logging is enabled, logs will be exported to Cloud Logging.
+      value:
+        enable: {{ enable }}
+        metadata: "{{ metadata }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource; provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`. The first character
+        must be a lowercase letter, and all following characters (except for the
+        last character) must be a dash, lowercase letter, or digit. The last
+        character must be a lowercase letter or digit.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        URL of the network resource for this firewall rule. If not
+        specified when creating a firewall rule, the default network
+        is used:
+        global/networks/default
+        If you choose to specify this field, you can specify the network as a full
+        or partial URL. For example, the following are all valid URLs:
+        -
+        https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network
+        - projects/myproject/global/networks/my-network
+        - global/networks/default
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: priority
+      value: {{ priority }}
+      description: |
+        Priority for this rule.
+        This is an integer between \`0\` and \`65535\`, both inclusive.
+        The default value is \`1000\`.
+        Relative priorities determine which rule takes effect if multiple rules
+        apply. Lower values indicate higher priority. For example, a rule with
+        priority \`0\` has higher precedence than a rule with priority \`1\`.
+        DENY rules take precedence over ALLOW rules if they have equal priority.
+        Note that VPC networks have implied
+        rules with a priority of \`65535\`. To avoid conflicts with the implied
+        rules, use a priority number less than \`65535\`.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
     - name: sourceRanges
       value:
         - "{{ sourceRanges }}"
@@ -506,34 +593,6 @@ zone
         has a source IP address within the sourceRanges OR a source
         IP that belongs to an instance with service account listed insourceServiceAccount. The connection does not need to match
         both fields for the firewall to apply.sourceServiceAccounts cannot be used at the same time assourceTags or targetTags.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource; provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`. The first character
-        must be a lowercase letter, and all following characters (except for the
-        last character) must be a dash, lowercase letter, or digit. The last
-        character must be a lowercase letter or digit.
-    - name: allowed
-      description: |
-        The list of ALLOW rules specified by this firewall. Each rule specifies a
-        protocol and port-range tuple that describes a permitted connection.
-      value:
-        - IPProtocol: "{{ IPProtocol }}"
-          ports: "{{ ports }}"
-    - name: denied
-      description: |
-        The list of DENY rules specified by this firewall. Each rule specifies a
-        protocol and port-range tuple that describes a denied connection.
-      value:
-        - IPProtocol: "{{ IPProtocol }}"
-          ports: "{{ ports }}"
     - name: sourceTags
       value:
         - "{{ sourceTags }}"
@@ -550,25 +609,6 @@ zone
         resource with a matching tag listed in the sourceTags
         field. The connection does not need to match both fields for the
         firewall to apply.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: priority
-      value: {{ priority }}
-      description: |
-        Priority for this rule.
-        This is an integer between \`0\` and \`65535\`, both inclusive.
-        The default value is \`1000\`.
-        Relative priorities determine which rule takes effect if multiple rules
-        apply. Lower values indicate higher priority. For example, a rule with
-        priority \`0\` has higher precedence than a rule with priority \`1\`.
-        DENY rules take precedence over ALLOW rules if they have equal priority.
-        Note that VPC networks have implied
-        rules with a priority of \`65535\`. To avoid conflicts with the implied
-        rules, use a priority number less than \`65535\`.
     - name: targetServiceAccounts
       value:
         - "{{ targetServiceAccounts }}"
@@ -578,46 +618,6 @@ zone
         If neither targetServiceAccounts nor targetTags
         are specified, the firewall rule applies to all instances on the specified
         network.
-    - name: logConfig
-      description: |
-        This field denotes the logging options for a particular firewall rule. If
-        logging is enabled, logs will be exported to Cloud Logging.
-      value:
-        enable: {{ enable }}
-        metadata: "{{ metadata }}"
-    - name: direction
-      value: "{{ direction }}"
-      description: |
-        Direction of traffic to which this firewall applies, either \`INGRESS\` or
-        \`EGRESS\`. The default is \`INGRESS\`. For \`EGRESS\` traffic, you cannot
-        specify the sourceTags fields.
-      valid_values: ['EGRESS', 'INGRESS']
-    - name: destinationRanges
-      value:
-        - "{{ destinationRanges }}"
-      description: |
-        If destination ranges are specified, the firewall rule applies only to
-        traffic that has destination IP address in these ranges. These ranges must
-        be expressed inCIDR format. Both IPv4 and IPv6 are supported.
-    - name: network
-      value: "{{ network }}"
-      description: |
-        URL of the network resource for this firewall rule. If not
-        specified when creating a firewall rule, the default network
-        is used:
-        global/networks/default
-        If you choose to specify this field, you can specify the network as a full
-        or partial URL. For example, the following are all valid URLs:
-        -
-        https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network
-        - projects/myproject/global/networks/my-network
-        - global/networks/default
-    - name: disabled
-      value: {{ disabled }}
-      description: |
-        Denotes whether the firewall rule is disabled. When set to true, the
-        firewall rule is not enforced and the network behaves as if it did not
-        exist. If this is unspecified, the firewall rule will be enabled.
     - name: targetTags
       value:
         - "{{ targetTags }}"
@@ -650,22 +650,22 @@ Updates the specified firewall rule with the data included in the<br />request. 
 ```sql
 UPDATE google.compute.firewalls
 SET 
-data__description = '{{ description }}',
-data__sourceRanges = '{{ sourceRanges }}',
-data__sourceServiceAccounts = '{{ sourceServiceAccounts }}',
-data__selfLink = '{{ selfLink }}',
-data__name = '{{ name }}',
 data__allowed = '{{ allowed }}',
 data__denied = '{{ denied }}',
-data__sourceTags = '{{ sourceTags }}',
+data__description = '{{ description }}',
+data__destinationRanges = '{{ destinationRanges }}',
+data__direction = '{{ direction }}',
+data__disabled = {{ disabled }},
+data__logConfig = '{{ logConfig }}',
+data__name = '{{ name }}',
+data__network = '{{ network }}',
 data__params = '{{ params }}',
 data__priority = {{ priority }},
+data__selfLink = '{{ selfLink }}',
+data__sourceRanges = '{{ sourceRanges }}',
+data__sourceServiceAccounts = '{{ sourceServiceAccounts }}',
+data__sourceTags = '{{ sourceTags }}',
 data__targetServiceAccounts = '{{ targetServiceAccounts }}',
-data__logConfig = '{{ logConfig }}',
-data__direction = '{{ direction }}',
-data__destinationRanges = '{{ destinationRanges }}',
-data__network = '{{ network }}',
-data__disabled = {{ disabled }},
 data__targetTags = '{{ targetTags }}'
 WHERE 
 project = '{{ project }}' --required
@@ -719,22 +719,22 @@ Updates the specified firewall rule with the data included in the<br />request.<
 ```sql
 REPLACE google.compute.firewalls
 SET 
-data__description = '{{ description }}',
-data__sourceRanges = '{{ sourceRanges }}',
-data__sourceServiceAccounts = '{{ sourceServiceAccounts }}',
-data__selfLink = '{{ selfLink }}',
-data__name = '{{ name }}',
 data__allowed = '{{ allowed }}',
 data__denied = '{{ denied }}',
-data__sourceTags = '{{ sourceTags }}',
+data__description = '{{ description }}',
+data__destinationRanges = '{{ destinationRanges }}',
+data__direction = '{{ direction }}',
+data__disabled = {{ disabled }},
+data__logConfig = '{{ logConfig }}',
+data__name = '{{ name }}',
+data__network = '{{ network }}',
 data__params = '{{ params }}',
 data__priority = {{ priority }},
+data__selfLink = '{{ selfLink }}',
+data__sourceRanges = '{{ sourceRanges }}',
+data__sourceServiceAccounts = '{{ sourceServiceAccounts }}',
+data__sourceTags = '{{ sourceTags }}',
 data__targetServiceAccounts = '{{ targetServiceAccounts }}',
-data__logConfig = '{{ logConfig }}',
-data__direction = '{{ direction }}',
-data__destinationRanges = '{{ destinationRanges }}',
-data__network = '{{ network }}',
-data__disabled = {{ disabled }},
 data__targetTags = '{{ targetTags }}'
 WHERE 
 project = '{{ project }}' --required

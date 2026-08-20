@@ -225,14 +225,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ServiceConnectionMaps in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-serviceConnectionMapId"><code>serviceConnectionMapId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-serviceConnectionMapId"><code>serviceConnectionMapId</code></a></td>
     <td>Creates a new ServiceConnectionMap in a given project and location.</td>
 </tr>
 <tr>
@@ -380,9 +380,9 @@ updateTime
 FROM google.networkconnectivity.service_connection_maps
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -405,32 +405,32 @@ Creates a new ServiceConnectionMap in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.service_connection_maps (
-data__serviceClass,
-data__labels,
-data__producerPscConfigs,
 data__consumerPscConfigs,
-data__etag,
-data__token,
 data__description,
+data__etag,
+data__labels,
 data__name,
+data__producerPscConfigs,
+data__serviceClass,
+data__token,
 projectsId,
 locationsId,
-serviceConnectionMapId,
-requestId
+requestId,
+serviceConnectionMapId
 )
 SELECT 
-'{{ serviceClass }}',
-'{{ labels }}',
-'{{ producerPscConfigs }}',
 '{{ consumerPscConfigs }}',
-'{{ etag }}',
-'{{ token }}',
 '{{ description }}',
+'{{ etag }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ producerPscConfigs }}',
+'{{ serviceClass }}',
+'{{ token }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ serviceConnectionMapId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ serviceConnectionMapId }}'
 RETURNING
 name,
 done,
@@ -451,56 +451,56 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the service_connection_maps resource.
-    - name: serviceClass
-      value: "{{ serviceClass }}"
-      description: |
-        The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnectivity.serviceClasses.use IAM permission for the service class.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        User-defined labels.
-    - name: producerPscConfigs
-      description: |
-        The PSC configurations on producer side.
-      value:
-        - serviceAttachmentUri: "{{ serviceAttachmentUri }}"
-          automatedDnsCreationSpec:
-            dnsSuffix: "{{ dnsSuffix }}"
-            ttl: "{{ ttl }}"
-            hostname: "{{ hostname }}"
     - name: consumerPscConfigs
       description: |
         The PSC configurations on consumer side.
       value:
-        - disableGlobalAccess: {{ disableGlobalAccess }}
-          project: "{{ project }}"
+        - consumerInstanceProject: "{{ consumerInstanceProject }}"
+          disableGlobalAccess: {{ disableGlobalAccess }}
           ipVersion: "{{ ipVersion }}"
-          producerInstanceMetadata: "{{ producerInstanceMetadata }}"
-          consumerInstanceProject: "{{ consumerInstanceProject }}"
+          network: "{{ network }}"
           producerInstanceId: "{{ producerInstanceId }}"
+          producerInstanceMetadata: "{{ producerInstanceMetadata }}"
+          project: "{{ project }}"
           serviceAttachmentIpAddressMap: "{{ serviceAttachmentIpAddressMap }}"
           state: "{{ state }}"
-          network: "{{ network }}"
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: token
-      value: "{{ token }}"
-      description: |
-        The token provided by the consumer. This token authenticates that the consumer can create a connection within the specified project and network.
     - name: description
       value: "{{ description }}"
       description: |
         A description of this resource.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels.
     - name: name
       value: "{{ name }}"
       description: |
         Immutable. The name of a ServiceConnectionMap. Format: projects/{project}/locations/{location}/serviceConnectionMaps/{service_connection_map} See: https://google.aip.dev/122#fields-representing-resource-names
-    - name: serviceConnectionMapId
-      value: "{{ serviceConnectionMapId }}"
+    - name: producerPscConfigs
+      description: |
+        The PSC configurations on producer side.
+      value:
+        - automatedDnsCreationSpec:
+            dnsSuffix: "{{ dnsSuffix }}"
+            hostname: "{{ hostname }}"
+            ttl: "{{ ttl }}"
+          serviceAttachmentUri: "{{ serviceAttachmentUri }}"
+    - name: serviceClass
+      value: "{{ serviceClass }}"
+      description: |
+        The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnectivity.serviceClasses.use IAM permission for the service class.
+    - name: token
+      value: "{{ token }}"
+      description: |
+        The token provided by the consumer. This token authenticates that the consumer can create a connection within the specified project and network.
     - name: requestId
       value: "{{ requestId }}"
+    - name: serviceConnectionMapId
+      value: "{{ serviceConnectionMapId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -522,14 +522,14 @@ Updates the parameters of a single ServiceConnectionMap.
 ```sql
 UPDATE google.networkconnectivity.service_connection_maps
 SET 
-data__serviceClass = '{{ serviceClass }}',
-data__labels = '{{ labels }}',
-data__producerPscConfigs = '{{ producerPscConfigs }}',
 data__consumerPscConfigs = '{{ consumerPscConfigs }}',
-data__etag = '{{ etag }}',
-data__token = '{{ token }}',
 data__description = '{{ description }}',
-data__name = '{{ name }}'
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__producerPscConfigs = '{{ producerPscConfigs }}',
+data__serviceClass = '{{ serviceClass }}',
+data__token = '{{ token }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -152,7 +152,7 @@ The following methods are available for this resource:
     <td><a href="#search_document_chunks"><CopyableCode code="search_document_chunks" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Searches for developer knowledge across Google's developer documentation. Returns DocumentChunks based on the user's query. There may be many chunks from the same Document. To retrieve full documents, use DeveloperKnowledge.GetDocument or DeveloperKnowledge.BatchGetDocuments with the DocumentChunk.parent returned in the SearchDocumentChunksResponse.results.</td>
 </tr>
 </tbody>
@@ -269,10 +269,10 @@ Searches for developer knowledge across Google's developer documentation. Return
 
 ```sql
 EXEC google.developerknowledge.documents.search_document_chunks 
-@query='{{ query }}', 
-@pageSize='{{ pageSize }}', 
 @filter='{{ filter }}', 
-@pageToken='{{ pageToken }}'
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@query='{{ query }}'
 ;
 ```
 </TabItem>

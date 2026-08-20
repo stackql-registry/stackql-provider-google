@@ -250,14 +250,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of TargetInstance resources available to the specified<br />project and zone.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of target instances.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -404,11 +404,11 @@ warning
 FROM google.compute.target_instances
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -431,13 +431,13 @@ selfLink,
 zone
 FROM google.compute.target_instances
 WHERE project = '{{ project }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -459,26 +459,26 @@ Creates a TargetInstance resource in the specified project and zone using<br />t
 
 ```sql
 INSERT INTO google.compute.target_instances (
-data__name,
-data__securityPolicy,
-data__natPolicy,
-data__instance,
 data__description,
 data__id,
+data__instance,
+data__name,
+data__natPolicy,
 data__network,
+data__securityPolicy,
 data__selfLink,
 project,
 zone,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ securityPolicy }}',
-'{{ natPolicy }}',
-'{{ instance }}',
 '{{ description }}',
 '{{ id }}',
+'{{ instance }}',
+'{{ name }}',
+'{{ natPolicy }}',
 '{{ network }}',
+'{{ securityPolicy }}',
 '{{ selfLink }}',
 '{{ project }}',
 '{{ zone }}',
@@ -525,38 +525,6 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the target_instances resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
-    - name: securityPolicy
-      value: "{{ securityPolicy }}"
-      description: |
-        [Output Only] The resource URL for the security policy associated with this
-        target instance.
-    - name: natPolicy
-      value: "{{ natPolicy }}"
-      description: |
-        Must have a value of NO_NAT.
-        Protocol forwarding delivers packets while preserving the destination IP
-        address of the forwarding rule referencing the target instance.
-      valid_values: ['NO_NAT']
-    - name: instance
-      value: "{{ instance }}"
-      description: |
-        A URL to the virtual machine instance that handles traffic for this target
-        instance. When creating a target instance, you can provide the
-        fully-qualified URL or a valid partial URL to the desired virtual machine.
-        For example, the following are all valid URLs:
-        - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance
-        - projects/project/zones/zone/instances/instance
-        - zones/zone/instances/instance
     - name: description
       value: "{{ description }}"
       description: |
@@ -567,12 +535,44 @@ zone
       description: |
         [Output Only] The unique identifier for the resource. This identifier is
         defined by the server.
+    - name: instance
+      value: "{{ instance }}"
+      description: |
+        A URL to the virtual machine instance that handles traffic for this target
+        instance. When creating a target instance, you can provide the
+        fully-qualified URL or a valid partial URL to the desired virtual machine.
+        For example, the following are all valid URLs:
+        - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance
+        - projects/project/zones/zone/instances/instance
+        - zones/zone/instances/instance
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: natPolicy
+      value: "{{ natPolicy }}"
+      description: |
+        Must have a value of NO_NAT.
+        Protocol forwarding delivers packets while preserving the destination IP
+        address of the forwarding rule referencing the target instance.
+      valid_values: ['NO_NAT']
     - name: network
       value: "{{ network }}"
       description: |
         The URL of the network this target instance uses to forward traffic.
         If not specified, the traffic will be forwarded to the network that
         the default network interface belongs to.
+    - name: securityPolicy
+      value: "{{ securityPolicy }}"
+      description: |
+        [Output Only] The resource URL for the security policy associated with this
+        target instance.
     - name: selfLink
       value: "{{ selfLink }}"
       description: |

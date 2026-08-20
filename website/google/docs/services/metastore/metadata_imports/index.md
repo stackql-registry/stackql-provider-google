@@ -165,14 +165,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists imports in a service.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-metadataImportId"><code>metadataImportId</code></a></td>
+    <td><a href="#parameter-metadataImportId"><code>metadataImportId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new MetadataImport in a given project and location.</td>
 </tr>
 <tr>
@@ -303,9 +303,9 @@ FROM google.metastore.metadata_imports
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND servicesId = '{{ servicesId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -328,24 +328,24 @@ Creates a new MetadataImport in a given project and location.
 
 ```sql
 INSERT INTO google.metastore.metadata_imports (
-data__description,
 data__databaseDump,
+data__description,
 data__name,
 projectsId,
 locationsId,
 servicesId,
-requestId,
-metadataImportId
+metadataImportId,
+requestId
 )
 SELECT 
-'{{ description }}',
 '{{ databaseDump }}',
+'{{ description }}',
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ servicesId }}',
-'{{ requestId }}',
-'{{ metadataImportId }}'
+'{{ metadataImportId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -369,26 +369,26 @@ response
     - name: servicesId
       value: "{{ servicesId }}"
       description: Required parameter for the metadata_imports resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the metadata import.
     - name: databaseDump
       description: |
         Immutable. A database dump from a pre-existing metastore's database.
       value:
         databaseType: "{{ databaseType }}"
-        type: "{{ type }}"
-        sourceDatabase: "{{ sourceDatabase }}"
         gcsUri: "{{ gcsUri }}"
+        sourceDatabase: "{{ sourceDatabase }}"
+        type: "{{ type }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the metadata import.
     - name: name
       value: "{{ name }}"
       description: |
         Immutable. Identifier. The relative resource name of the metadata import, of the form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{metadata_import_id}.
-    - name: requestId
-      value: "{{ requestId }}"
     - name: metadataImportId
       value: "{{ metadataImportId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -410,8 +410,8 @@ Updates a single import. Only the description field of MetadataImport is support
 ```sql
 UPDATE google.metastore.metadata_imports
 SET 
-data__description = '{{ description }}',
 data__databaseDump = '{{ databaseDump }}',
+data__description = '{{ description }}',
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

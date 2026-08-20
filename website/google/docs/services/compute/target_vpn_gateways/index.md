@@ -280,14 +280,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of target VPN gateways available to the specified<br />project and region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of target VPN gateways.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -442,10 +442,10 @@ warning
 FROM google.compute.target_vpn_gateways
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -472,13 +472,13 @@ status,
 tunnels
 FROM google.compute.target_vpn_gateways
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -500,35 +500,35 @@ Creates a target VPN gateway in the specified project and region using<br />the 
 
 ```sql
 INSERT INTO google.compute.target_vpn_gateways (
-data__region,
-data__tunnels,
-data__forwardingRules,
-data__network,
-data__labelFingerprint,
-data__status,
-data__params,
-data__name,
-data__selfLink,
-data__id,
 data__description,
+data__forwardingRules,
+data__id,
+data__labelFingerprint,
 data__labels,
+data__name,
+data__network,
+data__params,
+data__region,
+data__selfLink,
+data__status,
+data__tunnels,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ region }}',
-'{{ tunnels }}',
-'{{ forwardingRules }}',
-'{{ network }}',
-'{{ labelFingerprint }}',
-'{{ status }}',
-'{{ params }}',
-'{{ name }}',
-'{{ selfLink }}',
-'{{ id }}',
 '{{ description }}',
+'{{ forwardingRules }}',
+'{{ id }}',
+'{{ labelFingerprint }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ network }}',
+'{{ params }}',
+'{{ region }}',
+'{{ selfLink }}',
+'{{ status }}',
+'{{ tunnels }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -574,19 +574,11 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the target_vpn_gateways resource.
-    - name: region
-      value: "{{ region }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        [Output Only] URL of the region where the target VPN gateway resides.
-        You must specify this field as part of the HTTP request URL. It is
-        not settable as a field in the request body.
-    - name: tunnels
-      value:
-        - "{{ tunnels }}"
-      description: |
-        [Output Only] A list of URLs to VpnTunnel resources. VpnTunnels are
-        created using the compute.vpntunnels.insert method and
-        associated with a VPN gateway.
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: forwardingRules
       value:
         - "{{ forwardingRules }}"
@@ -594,11 +586,11 @@ zone
         [Output Only] A list of URLs to the ForwardingRule resources.
         ForwardingRules are created usingcompute.forwardingRules.insert and associated with a VPN
         gateway.
-    - name: network
-      value: "{{ network }}"
+    - name: id
+      value: "{{ id }}"
       description: |
-        URL of the network to which this VPN gateway is attached. Provided by the
-        client when the VPN gateway is created.
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
     - name: labelFingerprint
       value: "{{ labelFingerprint }}"
       description: |
@@ -610,18 +602,11 @@ zone
         otherwise the request will fail with error412 conditionNotMet.
         To see the latest fingerprint, make a get() request to
         retrieve a TargetVpnGateway.
-    - name: status
-      value: "{{ status }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        [Output Only] The status of the VPN gateway,
-        which can be one of the following: CREATING, READY, FAILED, or DELETING.
-      valid_values: ['CREATING', 'DELETING', 'FAILED', 'READY']
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
+        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
+        Label values may be empty.
     - name: name
       value: "{{ name }}"
       description: |
@@ -632,25 +617,40 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        URL of the network to which this VPN gateway is attached. Provided by the
+        client when the VPN gateway is created.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: region
+      value: "{{ region }}"
+      description: |
+        [Output Only] URL of the region where the target VPN gateway resides.
+        You must specify this field as part of the HTTP request URL. It is
+        not settable as a field in the request body.
     - name: selfLink
       value: "{{ selfLink }}"
       description: |
         [Output Only] Server-defined URL for the resource.
-    - name: id
-      value: "{{ id }}"
+    - name: status
+      value: "{{ status }}"
       description: |
-        [Output Only] The unique identifier for the resource. This identifier is
-        defined by the server.
-    - name: description
-      value: "{{ description }}"
+        [Output Only] The status of the VPN gateway,
+        which can be one of the following: CREATING, READY, FAILED, or DELETING.
+      valid_values: ['CREATING', 'DELETING', 'FAILED', 'READY']
+    - name: tunnels
+      value:
+        - "{{ tunnels }}"
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
-        Label values may be empty.
+        [Output Only] A list of URLs to VpnTunnel resources. VpnTunnels are
+        created using the compute.vpntunnels.insert method and
+        associated with a VPN gateway.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -703,8 +703,8 @@ EXEC google.compute.target_vpn_gateways.set_labels
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

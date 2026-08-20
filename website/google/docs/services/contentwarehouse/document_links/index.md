@@ -118,15 +118,15 @@ Create a link between a source document and a target document.
 
 ```sql
 INSERT INTO google.contentwarehouse.document_links (
-data__requestMetadata,
 data__documentLink,
+data__requestMetadata,
 projectsId,
 locationsId,
 documentsId
 )
 SELECT 
-'{{ requestMetadata }}',
 '{{ documentLink }}',
+'{{ requestMetadata }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ documentsId }}'
@@ -155,6 +155,35 @@ updateTime
     - name: documentsId
       value: "{{ documentsId }}"
       description: Required parameter for the document_links resource.
+    - name: documentLink
+      description: |
+        Required. Document links associated with the source documents (source_document_id).
+      value:
+        createTime: "{{ createTime }}"
+        description: "{{ description }}"
+        name: "{{ name }}"
+        sourceDocumentReference:
+          createTime: "{{ createTime }}"
+          deleteTime: "{{ deleteTime }}"
+          displayName: "{{ displayName }}"
+          documentIsFolder: {{ documentIsFolder }}
+          documentIsLegalHoldFolder: {{ documentIsLegalHoldFolder }}
+          documentIsRetentionFolder: {{ documentIsRetentionFolder }}
+          documentName: "{{ documentName }}"
+          snippet: "{{ snippet }}"
+          updateTime: "{{ updateTime }}"
+        state: "{{ state }}"
+        targetDocumentReference:
+          createTime: "{{ createTime }}"
+          deleteTime: "{{ deleteTime }}"
+          displayName: "{{ displayName }}"
+          documentIsFolder: {{ documentIsFolder }}
+          documentIsLegalHoldFolder: {{ documentIsLegalHoldFolder }}
+          documentIsRetentionFolder: {{ documentIsRetentionFolder }}
+          documentName: "{{ documentName }}"
+          snippet: "{{ snippet }}"
+          updateTime: "{{ updateTime }}"
+        updateTime: "{{ updateTime }}"
     - name: requestMetadata
       description: |
         The meta information collected about the document creator, used to enforce access control for the service.
@@ -163,35 +192,6 @@ updateTime
           groupIds:
             - "{{ groupIds }}"
           id: "{{ id }}"
-    - name: documentLink
-      description: |
-        A document-link between source and target document.
-      value:
-        updateTime: "{{ updateTime }}"
-        state: "{{ state }}"
-        targetDocumentReference:
-          documentName: "{{ documentName }}"
-          displayName: "{{ displayName }}"
-          updateTime: "{{ updateTime }}"
-          documentIsFolder: {{ documentIsFolder }}
-          documentIsLegalHoldFolder: {{ documentIsLegalHoldFolder }}
-          snippet: "{{ snippet }}"
-          deleteTime: "{{ deleteTime }}"
-          createTime: "{{ createTime }}"
-          documentIsRetentionFolder: {{ documentIsRetentionFolder }}
-        name: "{{ name }}"
-        sourceDocumentReference:
-          documentName: "{{ documentName }}"
-          displayName: "{{ displayName }}"
-          updateTime: "{{ updateTime }}"
-          documentIsFolder: {{ documentIsFolder }}
-          documentIsLegalHoldFolder: {{ documentIsLegalHoldFolder }}
-          snippet: "{{ snippet }}"
-          deleteTime: "{{ deleteTime }}"
-          createTime: "{{ createTime }}"
-          documentIsRetentionFolder: {{ documentIsRetentionFolder }}
-        description: "{{ description }}"
-        createTime: "{{ createTime }}"
 `}</CodeBlock>
 
 </TabItem>

@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the client states for the given search query.</td>
 </tr>
 <tr>
@@ -340,10 +340,10 @@ scoreReason
 FROM google.cloudidentity.client_states
 WHERE devicesId = '{{ devicesId }}' -- required
 AND deviceUsersId = '{{ deviceUsersId }}' -- required
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND customer = '{{ customer }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -367,12 +367,12 @@ UPDATE google.cloudidentity.client_states
 SET 
 data__assetTags = '{{ assetTags }}',
 data__complianceState = '{{ complianceState }}',
-data__etag = '{{ etag }}',
 data__customId = '{{ customId }}',
+data__etag = '{{ etag }}',
 data__healthScore = '{{ healthScore }}',
-data__scoreReason = '{{ scoreReason }}',
 data__keyValuePairs = '{{ keyValuePairs }}',
-data__managed = '{{ managed }}'
+data__managed = '{{ managed }}',
+data__scoreReason = '{{ scoreReason }}'
 WHERE 
 devicesId = '{{ devicesId }}' --required
 AND deviceUsersId = '{{ deviceUsersId }}' --required

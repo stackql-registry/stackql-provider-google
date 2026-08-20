@@ -108,7 +108,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-toolNames"><code>toolNames</code></a>, <a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-toolNames"><code>toolNames</code></a></td>
     <td>Lists all available tools.</td>
 </tr>
 <tr>
@@ -202,10 +202,10 @@ FROM google.connectors.tools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND toolNames = '{{ toolNames }}'
 AND executionConfig.headers = '{{ executionConfig.headers }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND toolNames = '{{ toolNames }}'
 ;
 ```
 </TabItem>
@@ -232,8 +232,8 @@ EXEC google.connectors.tools.execute
 @toolsId='{{ toolsId }}' --required 
 @@json=
 '{
-"parameters": "{{ parameters }}", 
 "executionConfig": "{{ executionConfig }}", 
+"parameters": "{{ parameters }}", 
 "toolDefinition": "{{ toolDefinition }}"
 }'
 ;

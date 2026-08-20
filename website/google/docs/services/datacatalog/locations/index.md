@@ -51,16 +51,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_set_config"><CopyableCode code="projects_locations_set_config" /></a></td>
+    <td><a href="#organizations_locations_set_config"><CopyableCode code="organizations_locations_set_config" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Sets the configuration related to the migration to Dataplex Universal Catalog for an organization or project.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_set_config"><CopyableCode code="organizations_locations_set_config" /></a></td>
+    <td><a href="#projects_locations_set_config"><CopyableCode code="projects_locations_set_config" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Sets the configuration related to the migration to Dataplex Universal Catalog for an organization or project.</td>
 </tr>
@@ -101,28 +101,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_set_config"
+    defaultValue="organizations_locations_set_config"
     values={[
-        { label: 'projects_locations_set_config', value: 'projects_locations_set_config' },
-        { label: 'organizations_locations_set_config', value: 'organizations_locations_set_config' }
+        { label: 'organizations_locations_set_config', value: 'organizations_locations_set_config' },
+        { label: 'projects_locations_set_config', value: 'projects_locations_set_config' }
     ]}
 >
-<TabItem value="projects_locations_set_config">
-
-Sets the configuration related to the migration to Dataplex Universal Catalog for an organization or project.
-
-```sql
-EXEC google.datacatalog.locations.projects_locations_set_config 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"tagTemplateMigration": "{{ tagTemplateMigration }}", 
-"catalogUiExperience": "{{ catalogUiExperience }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_set_config">
 
 Sets the configuration related to the migration to Dataplex Universal Catalog for an organization or project.
@@ -133,8 +117,24 @@ EXEC google.datacatalog.locations.organizations_locations_set_config
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"tagTemplateMigration": "{{ tagTemplateMigration }}", 
-"catalogUiExperience": "{{ catalogUiExperience }}"
+"catalogUiExperience": "{{ catalogUiExperience }}", 
+"tagTemplateMigration": "{{ tagTemplateMigration }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_set_config">
+
+Sets the configuration related to the migration to Dataplex Universal Catalog for an organization or project.
+
+```sql
+EXEC google.datacatalog.locations.projects_locations_set_config 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"catalogUiExperience": "{{ catalogUiExperience }}", 
+"tagTemplateMigration": "{{ tagTemplateMigration }}"
 }'
 ;
 ```

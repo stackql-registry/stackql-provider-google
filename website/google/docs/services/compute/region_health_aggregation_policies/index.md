@@ -200,14 +200,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the HealthAggregationPolicies for a project in the given region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all HealthAggregationPolicy resources,<br />regional and global, available to the specified project.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -355,10 +355,10 @@ warning
 FROM google.compute.region_health_aggregation_policies
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -372,13 +372,13 @@ SELECT
 *
 FROM google.compute.region_health_aggregation_policies
 WHERE project = '{{ project }}' -- required
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -400,22 +400,22 @@ Create a HealthAggregationPolicy in the specified project in the given<br />regi
 
 ```sql
 INSERT INTO google.compute.region_health_aggregation_policies (
-data__name,
-data__healthyPercentThreshold,
-data__fingerprint,
 data__description,
+data__fingerprint,
+data__healthyPercentThreshold,
 data__minHealthyThreshold,
+data__name,
 data__policyType,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ name }}',
-{{ healthyPercentThreshold }},
-'{{ fingerprint }}',
 '{{ description }}',
+'{{ fingerprint }}',
+{{ healthyPercentThreshold }},
 {{ minHealthyThreshold }},
+'{{ name }}',
 '{{ policyType }}',
 '{{ project }}',
 '{{ region }}',
@@ -462,16 +462,21 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the region_health_aggregation_policies resource.
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: fingerprint
+      value: "{{ fingerprint }}"
+      description: |
+        Fingerprint of this resource. A hash of the contents stored in this object.
+        This field is used in optimistic locking. This field will be ignored when
+        inserting a HealthAggregationPolicy. An up-to-date fingerprint
+        must be provided in order to patch the HealthAggregationPolicy; Otherwise,
+        the request will fail with error 412 conditionNotMet. To see
+        the latest fingerprint, make a get() request to retrieve the
+        HealthAggregationPolicy.
     - name: healthyPercentThreshold
       value: {{ healthyPercentThreshold }}
       description: |
@@ -484,21 +489,6 @@ zone
         for HEALTHY to be the aggregated result. "Endpoints" refers to network
         endpoints within a Network Endpoint Group or instances within an Instance
         Group.
-    - name: fingerprint
-      value: "{{ fingerprint }}"
-      description: |
-        Fingerprint of this resource. A hash of the contents stored in this object.
-        This field is used in optimistic locking. This field will be ignored when
-        inserting a HealthAggregationPolicy. An up-to-date fingerprint
-        must be provided in order to patch the HealthAggregationPolicy; Otherwise,
-        the request will fail with error 412 conditionNotMet. To see
-        the latest fingerprint, make a get() request to retrieve the
-        HealthAggregationPolicy.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: minHealthyThreshold
       value: {{ minHealthyThreshold }}
       description: |
@@ -511,6 +501,16 @@ zone
         order for HEALTHY to be the aggregated result. "Endpoints" refers to
         network endpoints within a Network Endpoint Group or instances within an
         Instance Group.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: policyType
       value: "{{ policyType }}"
       description: |
@@ -543,11 +543,11 @@ Updates the specified regional HealthAggregationPolicy<br />resource with the da
 ```sql
 UPDATE google.compute.region_health_aggregation_policies
 SET 
-data__name = '{{ name }}',
-data__healthyPercentThreshold = {{ healthyPercentThreshold }},
-data__fingerprint = '{{ fingerprint }}',
 data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__healthyPercentThreshold = {{ healthyPercentThreshold }},
 data__minHealthyThreshold = {{ minHealthyThreshold }},
+data__name = '{{ name }}',
 data__policyType = '{{ policyType }}'
 WHERE 
 project = '{{ project }}' --required

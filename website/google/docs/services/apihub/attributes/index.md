@@ -365,25 +365,25 @@ Create a user defined attribute. Certain pre defined attributes are already crea
 
 ```sql
 INSERT INTO google.apihub.attributes (
-data__description,
-data__scope,
-data__dataType,
-data__cardinality,
-data__name,
-data__displayName,
 data__allowedValues,
+data__cardinality,
+data__dataType,
+data__description,
+data__displayName,
+data__name,
+data__scope,
 projectsId,
 locationsId,
 attributeId
 )
 SELECT 
-'{{ description }}',
-'{{ scope }}',
-'{{ dataType }}',
-{{ cardinality }},
-'{{ name }}',
-'{{ displayName }}',
 '{{ allowedValues }}',
+{{ cardinality }},
+'{{ dataType }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
+'{{ scope }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ attributeId }}'
@@ -413,40 +413,40 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the attributes resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the attribute.
-    - name: scope
-      value: "{{ scope }}"
-      description: |
-        Required. The scope of the attribute. It represents the resource in the API Hub to which the attribute can be linked.
-      valid_values: ['SCOPE_UNSPECIFIED', 'API', 'VERSION', 'SPEC', 'API_OPERATION', 'DEPLOYMENT', 'DEPENDENCY', 'DEFINITION', 'EXTERNAL_API', 'PLUGIN']
-    - name: dataType
-      value: "{{ dataType }}"
-      description: |
-        Required. The type of the data of the attribute.
-      valid_values: ['DATA_TYPE_UNSPECIFIED', 'ENUM', 'JSON', 'STRING', 'URI']
-    - name: cardinality
-      value: {{ cardinality }}
-      description: |
-        Optional. The maximum number of values that the attribute can have when associated with an API Hub resource. Cardinality 1 would represent a single-valued attribute. It must not be less than 1 or greater than 20. If not specified, the cardinality would be set to 1 by default and represent a single-valued attribute.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the attribute in the API Hub. Format: \`projects/{project}/locations/{location}/attributes/{attribute}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the attribute.
     - name: allowedValues
       description: |
         Optional. The list of allowed values when the attribute value is of type enum. This is required when the data_type of the attribute is ENUM. The maximum number of allowed values of an attribute will be 1000.
       value:
         - description: "{{ description }}"
-          id: "{{ id }}"
           displayName: "{{ displayName }}"
+          id: "{{ id }}"
           immutable: {{ immutable }}
+    - name: cardinality
+      value: {{ cardinality }}
+      description: |
+        Optional. The maximum number of values that the attribute can have when associated with an API Hub resource. Cardinality 1 would represent a single-valued attribute. It must not be less than 1 or greater than 20. If not specified, the cardinality would be set to 1 by default and represent a single-valued attribute.
+    - name: dataType
+      value: "{{ dataType }}"
+      description: |
+        Required. The type of the data of the attribute.
+      valid_values: ['DATA_TYPE_UNSPECIFIED', 'ENUM', 'JSON', 'STRING', 'URI']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the attribute.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the attribute.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the attribute in the API Hub. Format: \`projects/{project}/locations/{location}/attributes/{attribute}\`
+    - name: scope
+      value: "{{ scope }}"
+      description: |
+        Required. The scope of the attribute. It represents the resource in the API Hub to which the attribute can be linked.
+      valid_values: ['SCOPE_UNSPECIFIED', 'API', 'VERSION', 'SPEC', 'API_OPERATION', 'DEPLOYMENT', 'DEPENDENCY', 'DEFINITION', 'EXTERNAL_API', 'PLUGIN']
     - name: attributeId
       value: "{{ attributeId }}"
 `}</CodeBlock>
@@ -470,13 +470,13 @@ Update the attribute. The following fields in the Attribute resource can be upda
 ```sql
 UPDATE google.apihub.attributes
 SET 
-data__description = '{{ description }}',
-data__scope = '{{ scope }}',
-data__dataType = '{{ dataType }}',
+data__allowedValues = '{{ allowedValues }}',
 data__cardinality = {{ cardinality }},
-data__name = '{{ name }}',
+data__dataType = '{{ dataType }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__allowedValues = '{{ allowedValues }}'
+data__name = '{{ name }}',
+data__scope = '{{ scope }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

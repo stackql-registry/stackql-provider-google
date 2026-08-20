@@ -78,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deployment" /></td>
     <td><code>string</code></td>
-    <td>Optional. Optional deployment reference. If specified, the preview will be performed using the provided deployment's current state and use any relevant fields from the deployment unless explicitly specified in the preview create request.</td>
+    <td>Optional. Deployment reference. If specified, the preview will be performed using the provided deployment's current state and use any relevant fields from the deployment unless explicitly specified in the preview create request.</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorCode" /></td>
@@ -197,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deployment" /></td>
     <td><code>string</code></td>
-    <td>Optional. Optional deployment reference. If specified, the preview will be performed using the provided deployment's current state and use any relevant fields from the deployment unless explicitly specified in the preview create request.</td>
+    <td>Optional. Deployment reference. If specified, the preview will be performed using the provided deployment's current state and use any relevant fields from the deployment unless explicitly specified in the preview create request.</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorCode" /></td>
@@ -305,7 +305,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Previews in a given project and location.</td>
 </tr>
 <tr>
@@ -467,9 +467,9 @@ FROM google.config.previews
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -491,34 +491,34 @@ Creates a Preview.
 
 ```sql
 INSERT INTO google.config.previews (
-data__previewMode,
-data__labels,
-data__deployment,
-data__workerPool,
 data__annotations,
-data__serviceAccount,
-data__tfVersionConstraint,
-data__providerConfig,
 data__artifactsGcsBucket,
+data__deployment,
+data__labels,
 data__name,
+data__previewMode,
+data__providerConfig,
+data__serviceAccount,
 data__terraformBlueprint,
+data__tfVersionConstraint,
+data__workerPool,
 projectsId,
 locationsId,
 previewId,
 requestId
 )
 SELECT 
-'{{ previewMode }}',
-'{{ labels }}',
-'{{ deployment }}',
-'{{ workerPool }}',
 '{{ annotations }}',
-'{{ serviceAccount }}',
-'{{ tfVersionConstraint }}',
-'{{ providerConfig }}',
 '{{ artifactsGcsBucket }}',
+'{{ deployment }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ previewMode }}',
+'{{ providerConfig }}',
+'{{ serviceAccount }}',
 '{{ terraformBlueprint }}',
+'{{ tfVersionConstraint }}',
+'{{ workerPool }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ previewId }}',
@@ -543,59 +543,59 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the previews resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Arbitrary key-value metadata storage e.g. to help client tools identify preview during automation. See https://google.aip.dev/148#annotations for details on format and size limitations.
+    - name: artifactsGcsBucket
+      value: "{{ artifactsGcsBucket }}"
+      description: |
+        User-defined location of Cloud Build logs, artifacts, and in Google Cloud Storage. Format: \`gs://{bucket}/{folder}\` A default bucket will be bootstrapped if the field is not set or empty Default Bucket Format: \`gs://--blueprint-config\` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of \`gcs_source\` If omitted and deployment resource ref provided has artifacts_gcs_bucket defined, that artifact bucket is used.
+    - name: deployment
+      value: "{{ deployment }}"
+      description: |
+        Optional. Deployment reference. If specified, the preview will be performed using the provided deployment's current state and use any relevant fields from the deployment unless explicitly specified in the preview create request.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the preview.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the preview. Resource name can be user provided or server generated ID if unspecified. Format: \`projects/{project}/locations/{location}/previews/{preview}\`
     - name: previewMode
       value: "{{ previewMode }}"
       description: |
         Optional. Current mode of preview.
       valid_values: ['PREVIEW_MODE_UNSPECIFIED', 'DEFAULT', 'DELETE']
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the preview.
-    - name: deployment
-      value: "{{ deployment }}"
-      description: |
-        Optional. Optional deployment reference. If specified, the preview will be performed using the provided deployment's current state and use any relevant fields from the deployment unless explicitly specified in the preview create request.
-    - name: workerPool
-      value: "{{ workerPool }}"
-      description: |
-        The user-specified Worker Pool resource in which the Cloud Build job will execute. Format projects/{project}/locations/{location}/workerPools/{workerPoolId} If this field is unspecified, the default Cloud Build worker pool will be used. If omitted and deployment resource ref provided has worker_pool defined, that worker pool is used.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. Arbitrary key-value metadata storage e.g. to help client tools identify preview during automation. See https://google.aip.dev/148#annotations for details on format and size limitations.
-    - name: serviceAccount
-      value: "{{ serviceAccount }}"
-      description: |
-        Required. User-specified Service Account (SA) credentials to be used when previewing resources. Format: \`projects/{projectID}/serviceAccounts/{serviceAccount}\`
-    - name: tfVersionConstraint
-      value: "{{ tfVersionConstraint }}"
-      description: |
-        The user-specified Terraform version constraint. Example: "=1.3.10".
     - name: providerConfig
       description: |
         Optional. This field specifies the provider configurations.
       value:
         sourceType: "{{ sourceType }}"
-    - name: artifactsGcsBucket
-      value: "{{ artifactsGcsBucket }}"
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
       description: |
-        User-defined location of Cloud Build logs, artifacts, and in Google Cloud Storage. Format: \`gs://{bucket}/{folder}\` A default bucket will be bootstrapped if the field is not set or empty Default Bucket Format: \`gs://--blueprint-config\` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of \`gcs_source\` If omitted and deployment resource ref provided has artifacts_gcs_bucket defined, that artifact bucket is used.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name of the preview. Resource name can be user provided or server generated ID if unspecified. Format: \`projects/{project}/locations/{location}/previews/{preview}\`
+        Required. User-specified Service Account (SA) credentials to be used when previewing resources. Format: \`projects/{projectID}/serviceAccounts/{serviceAccount}\`
     - name: terraformBlueprint
       description: |
         The terraform blueprint to preview.
       value:
+        externalValues: "{{ externalValues }}"
+        gcsSource: "{{ gcsSource }}"
         gitSource:
+          directory: "{{ directory }}"
           ref: "{{ ref }}"
           repo: "{{ repo }}"
-          directory: "{{ directory }}"
-        gcsSource: "{{ gcsSource }}"
-        externalValues: "{{ externalValues }}"
         inputValues: "{{ inputValues }}"
+    - name: tfVersionConstraint
+      value: "{{ tfVersionConstraint }}"
+      description: |
+        The user-specified Terraform version constraint. Example: "=1.3.10".
+    - name: workerPool
+      value: "{{ workerPool }}"
+      description: |
+        The user-specified Worker Pool resource in which the Cloud Build job will execute. Format projects/{project}/locations/{location}/workerPools/{workerPoolId} If this field is unspecified, the default Cloud Build worker pool will be used. If omitted and deployment resource ref provided has worker_pool defined, that worker pool is used.
     - name: previewId
       value: "{{ previewId }}"
     - name: requestId

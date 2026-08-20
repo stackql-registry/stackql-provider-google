@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_processors_list"><CopyableCode code="projects_locations_processors_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all processors which belong to this project.</td>
 </tr>
 <tr>
@@ -240,18 +240,11 @@ The following methods are available for this resource:
     <td>LRO endpoint to batch process many documents. The output is written to Cloud Storage as JSON in the [Document] format.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_processors_set_default_processor_version"><CopyableCode code="projects_locations_processors_set_default_processor_version" /></a></td>
+    <td><a href="#projects_locations_processors_disable"><CopyableCode code="projects_locations_processors_disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
     <td></td>
-    <td>Set the default (active) version of a Processor that will be used in ProcessDocument and BatchProcessDocuments.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_processors_process"><CopyableCode code="projects_locations_processors_process" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
-    <td></td>
-    <td>Processes a single document.</td>
+    <td>Disables a processor</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_processors_enable"><CopyableCode code="projects_locations_processors_enable" /></a></td>
@@ -261,11 +254,18 @@ The following methods are available for this resource:
     <td>Enables a processor</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_processors_disable"><CopyableCode code="projects_locations_processors_disable" /></a></td>
+    <td><a href="#projects_locations_processors_process"><CopyableCode code="projects_locations_processors_process" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
     <td></td>
-    <td>Disables a processor</td>
+    <td>Processes a single document.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_processors_set_default_processor_version"><CopyableCode code="projects_locations_processors_set_default_processor_version" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
+    <td></td>
+    <td>Set the default (active) version of a Processor that will be used in ProcessDocument and BatchProcessDocuments.</td>
 </tr>
 </tbody>
 </table>
@@ -366,8 +366,8 @@ type
 FROM google.documentai.processors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -389,19 +389,19 @@ Creates a processor from the ProcessorType provided. The processor will be at `E
 
 ```sql
 INSERT INTO google.documentai.processors (
+data__activeSchemaVersion,
 data__defaultProcessorVersion,
 data__displayName,
 data__kmsKeyName,
-data__activeSchemaVersion,
 data__type,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ activeSchemaVersion }}',
 '{{ defaultProcessorVersion }}',
 '{{ displayName }}',
 '{{ kmsKeyName }}',
-'{{ activeSchemaVersion }}',
 '{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -432,6 +432,10 @@ type
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the processors resource.
+    - name: activeSchemaVersion
+      value: "{{ activeSchemaVersion }}"
+      description: |
+        Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is \`projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}.
     - name: defaultProcessorVersion
       value: "{{ defaultProcessorVersion }}"
       description: |
@@ -444,10 +448,6 @@ type
       value: "{{ kmsKeyName }}"
       description: |
         The [KMS key](https://cloud.google.com/security-key-management) used for encryption and decryption in CMEK scenarios.
-    - name: activeSchemaVersion
-      value: "{{ activeSchemaVersion }}"
-      description: |
-        Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is \`projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}.
     - name: type
       value: "{{ type }}"
       description: |
@@ -487,10 +487,10 @@ AND processorsId = '{{ processorsId }}' --required
     defaultValue="projects_locations_processors_batch_process"
     values={[
         { label: 'projects_locations_processors_batch_process', value: 'projects_locations_processors_batch_process' },
-        { label: 'projects_locations_processors_set_default_processor_version', value: 'projects_locations_processors_set_default_processor_version' },
-        { label: 'projects_locations_processors_process', value: 'projects_locations_processors_process' },
+        { label: 'projects_locations_processors_disable', value: 'projects_locations_processors_disable' },
         { label: 'projects_locations_processors_enable', value: 'projects_locations_processors_enable' },
-        { label: 'projects_locations_processors_disable', value: 'projects_locations_processors_disable' }
+        { label: 'projects_locations_processors_process', value: 'projects_locations_processors_process' },
+        { label: 'projects_locations_processors_set_default_processor_version', value: 'projects_locations_processors_set_default_processor_version' }
     ]}
 >
 <TabItem value="projects_locations_processors_batch_process">
@@ -504,11 +504,58 @@ EXEC google.documentai.processors.projects_locations_processors_batch_process
 @processorsId='{{ processorsId }}' --required 
 @@json=
 '{
+"documentOutputConfig": "{{ documentOutputConfig }}", 
 "inputDocuments": "{{ inputDocuments }}", 
-"skipHumanReview": {{ skipHumanReview }}, 
-"processOptions": "{{ processOptions }}", 
 "labels": "{{ labels }}", 
-"documentOutputConfig": "{{ documentOutputConfig }}"
+"processOptions": "{{ processOptions }}", 
+"skipHumanReview": {{ skipHumanReview }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_processors_disable">
+
+Disables a processor
+
+```sql
+EXEC google.documentai.processors.projects_locations_processors_disable 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@processorsId='{{ processorsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_processors_enable">
+
+Enables a processor
+
+```sql
+EXEC google.documentai.processors.projects_locations_processors_enable 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@processorsId='{{ processorsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_processors_process">
+
+Processes a single document.
+
+```sql
+EXEC google.documentai.processors.projects_locations_processors_process 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@processorsId='{{ processorsId }}' --required 
+@@json=
+'{
+"fieldMask": "{{ fieldMask }}", 
+"gcsDocument": "{{ gcsDocument }}", 
+"imagelessMode": {{ imagelessMode }}, 
+"inlineDocument": "{{ inlineDocument }}", 
+"labels": "{{ labels }}", 
+"processOptions": "{{ processOptions }}", 
+"rawDocument": "{{ rawDocument }}", 
+"skipHumanReview": {{ skipHumanReview }}
 }'
 ;
 ```
@@ -526,53 +573,6 @@ EXEC google.documentai.processors.projects_locations_processors_set_default_proc
 '{
 "defaultProcessorVersion": "{{ defaultProcessorVersion }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_processors_process">
-
-Processes a single document.
-
-```sql
-EXEC google.documentai.processors.projects_locations_processors_process 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@processorsId='{{ processorsId }}' --required 
-@@json=
-'{
-"inlineDocument": "{{ inlineDocument }}", 
-"labels": "{{ labels }}", 
-"fieldMask": "{{ fieldMask }}", 
-"skipHumanReview": {{ skipHumanReview }}, 
-"processOptions": "{{ processOptions }}", 
-"imagelessMode": {{ imagelessMode }}, 
-"rawDocument": "{{ rawDocument }}", 
-"gcsDocument": "{{ gcsDocument }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_processors_enable">
-
-Enables a processor
-
-```sql
-EXEC google.documentai.processors.projects_locations_processors_enable 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@processorsId='{{ processorsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_processors_disable">
-
-Disables a processor
-
-```sql
-EXEC google.documentai.processors.projects_locations_processors_disable 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@processorsId='{{ processorsId }}' --required
 ;
 ```
 </TabItem>

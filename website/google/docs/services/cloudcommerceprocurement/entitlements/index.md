@@ -373,6 +373,20 @@ The following methods are available for this resource:
     <td>Approves an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to approve the creation of the entitlement resource.</td>
 </tr>
 <tr>
+    <td><a href="#approve_plan_change"><CopyableCode code="approve_plan_change" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
+    <td></td>
+    <td>Approves an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.</td>
+</tr>
+<tr>
+    <td><a href="#reject"><CopyableCode code="reject" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
+    <td></td>
+    <td>Rejects an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to reject the creation of the entitlement resource.</td>
+</tr>
+<tr>
     <td><a href="#reject_plan_change"><CopyableCode code="reject_plan_change" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
@@ -385,20 +399,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
     <td></td>
     <td>Requests suspension of an active Entitlement. This is not yet supported.</td>
-</tr>
-<tr>
-    <td><a href="#reject"><CopyableCode code="reject" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
-    <td></td>
-    <td>Rejects an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to reject the creation of the entitlement resource.</td>
-</tr>
-<tr>
-    <td><a href="#approve_plan_change"><CopyableCode code="approve_plan_change" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
-    <td></td>
-    <td>Approves an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.</td>
 </tr>
 </tbody>
 </table>
@@ -554,19 +554,19 @@ Updates an existing Entitlement.
 ```sql
 UPDATE google.cloudcommerceprocurement.entitlements
 SET 
-data__state = '{{ state }}',
-data__messageToUser = '{{ messageToUser }}',
+data__account = '{{ account }}',
 data__consumers = '{{ consumers }}',
-data__plan = '{{ plan }}',
-data__usageReportingId = '{{ usageReportingId }}',
 data__createTime = '{{ createTime }}',
+data__inputProperties = '{{ inputProperties }}',
+data__messageToUser = '{{ messageToUser }}',
+data__name = '{{ name }}',
 data__newPendingPlan = '{{ newPendingPlan }}',
-data__updateTime = '{{ updateTime }}',
+data__plan = '{{ plan }}',
 data__product = '{{ product }}',
 data__provider = '{{ provider }}',
-data__name = '{{ name }}',
-data__inputProperties = '{{ inputProperties }}',
-data__account = '{{ account }}'
+data__state = '{{ state }}',
+data__updateTime = '{{ updateTime }}',
+data__usageReportingId = '{{ usageReportingId }}'
 WHERE 
 providersId = '{{ providersId }}' --required
 AND entitlementsId = '{{ entitlementsId }}' --required
@@ -609,10 +609,10 @@ usageReportingId;
     defaultValue="approve"
     values={[
         { label: 'approve', value: 'approve' },
-        { label: 'reject_plan_change', value: 'reject_plan_change' },
-        { label: 'suspend', value: 'suspend' },
+        { label: 'approve_plan_change', value: 'approve_plan_change' },
         { label: 'reject', value: 'reject' },
-        { label: 'approve_plan_change', value: 'approve_plan_change' }
+        { label: 'reject_plan_change', value: 'reject_plan_change' },
+        { label: 'suspend', value: 'suspend' }
     ]}
 >
 <TabItem value="approve">
@@ -625,39 +625,23 @@ EXEC google.cloudcommerceprocurement.entitlements.approve
 @entitlementsId='{{ entitlementsId }}' --required 
 @@json=
 '{
-"properties": "{{ properties }}", 
-"entitlementMigrated": "{{ entitlementMigrated }}"
+"entitlementMigrated": "{{ entitlementMigrated }}", 
+"properties": "{{ properties }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="reject_plan_change">
+<TabItem value="approve_plan_change">
 
-Rejects an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to reject the plan change on the entitlement resource.
+Approves an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.
 
 ```sql
-EXEC google.cloudcommerceprocurement.entitlements.reject_plan_change 
+EXEC google.cloudcommerceprocurement.entitlements.approve_plan_change 
 @providersId='{{ providersId }}' --required, 
 @entitlementsId='{{ entitlementsId }}' --required 
 @@json=
 '{
-"reason": "{{ reason }}", 
 "pendingPlanName": "{{ pendingPlanName }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="suspend">
-
-Requests suspension of an active Entitlement. This is not yet supported.
-
-```sql
-EXEC google.cloudcommerceprocurement.entitlements.suspend 
-@providersId='{{ providersId }}' --required, 
-@entitlementsId='{{ entitlementsId }}' --required 
-@@json=
-'{
-"reason": "{{ reason }}"
 }'
 ;
 ```
@@ -677,17 +661,33 @@ EXEC google.cloudcommerceprocurement.entitlements.reject
 ;
 ```
 </TabItem>
-<TabItem value="approve_plan_change">
+<TabItem value="reject_plan_change">
 
-Approves an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.
+Rejects an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to reject the plan change on the entitlement resource.
 
 ```sql
-EXEC google.cloudcommerceprocurement.entitlements.approve_plan_change 
+EXEC google.cloudcommerceprocurement.entitlements.reject_plan_change 
 @providersId='{{ providersId }}' --required, 
 @entitlementsId='{{ entitlementsId }}' --required 
 @@json=
 '{
-"pendingPlanName": "{{ pendingPlanName }}"
+"pendingPlanName": "{{ pendingPlanName }}", 
+"reason": "{{ reason }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="suspend">
+
+Requests suspension of an active Entitlement. This is not yet supported.
+
+```sql
+EXEC google.cloudcommerceprocurement.entitlements.suspend 
+@providersId='{{ providersId }}' --required, 
+@entitlementsId='{{ entitlementsId }}' --required 
+@@json=
+'{
+"reason": "{{ reason }}"
 }'
 ;
 ```

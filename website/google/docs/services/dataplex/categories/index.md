@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_glossaries_categories_list"><CopyableCode code="projects_locations_glossaries_categories_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-glossariesId"><code>glossariesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists GlossaryCategory resources in a Glossary.</td>
 </tr>
 <tr>
@@ -318,8 +318,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND glossariesId = '{{ glossariesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -342,20 +342,20 @@ Creates a new GlossaryCategory resource.
 
 ```sql
 INSERT INTO google.dataplex.categories (
+data__description,
+data__displayName,
 data__labels,
 data__parent,
-data__displayName,
-data__description,
 projectsId,
 locationsId,
 glossariesId,
 categoryId
 )
 SELECT 
+'{{ description }}',
+'{{ displayName }}',
 '{{ labels }}',
 '{{ parent }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ glossariesId }}',
@@ -386,6 +386,14 @@ updateTime
     - name: glossariesId
       value: "{{ glossariesId }}"
       description: Required parameter for the categories resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The user-mutable description of the GlossaryCategory.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name of the GlossaryCategory. This is user-mutable. This will be same as the GlossaryCategoryId, if not specified.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -394,14 +402,6 @@ updateTime
       value: "{{ parent }}"
       description: |
         Required. The immediate parent of the GlossaryCategory in the resource-hierarchy. It can either be a Glossary or a GlossaryCategory. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} OR projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id}
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User friendly display name of the GlossaryCategory. This is user-mutable. This will be same as the GlossaryCategoryId, if not specified.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The user-mutable description of the GlossaryCategory.
     - name: categoryId
       value: "{{ categoryId }}"
 `}</CodeBlock>
@@ -425,10 +425,10 @@ Updates a GlossaryCategory resource.
 ```sql
 UPDATE google.dataplex.categories
 SET 
-data__labels = '{{ labels }}',
-data__parent = '{{ parent }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}'
+data__labels = '{{ labels }}',
+data__parent = '{{ parent }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -116,8 +116,8 @@ EXEC google.ces.toolsets_tools.retrieve_tools
 @toolsetsId='{{ toolsetsId }}' --required 
 @@json=
 '{
-"toolIds": "{{ toolIds }}", 
-"bypassPersistenceConfig": {{ bypassPersistenceConfig }}
+"bypassPersistenceConfig": {{ bypassPersistenceConfig }}, 
+"toolIds": "{{ toolIds }}"
 }'
 ;
 ```

@@ -98,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_databases_get_scans"><CopyableCode code="projects_instances_databases_get_scans" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-endTime"><code>endTime</code></a></td>
+    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Request a specific scan with Database-specific data for Cloud Key Visualizer.</td>
 </tr>
 </tbody>
@@ -173,9 +173,9 @@ FROM google.spanner.databases_scans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
-AND view = '{{ view }}'
-AND startTime = '{{ startTime }}'
 AND endTime = '{{ endTime }}'
+AND startTime = '{{ startTime }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>

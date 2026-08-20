@@ -495,7 +495,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists Instances in a given project and location.</td>
 </tr>
 <tr>
@@ -520,18 +520,11 @@ The following methods are available for this resource:
     <td>Delete instance.</td>
 </tr>
 <tr>
-    <td><a href="#restart"><CopyableCode code="restart" /></a></td>
+    <td><a href="#export"><CopyableCode code="export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>Restart instance.</td>
-</tr>
-<tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Undeletes Looker instance.</td>
+    <td>Export instance.</td>
 </tr>
 <tr>
     <td><a href="#import"><CopyableCode code="import" /></a></td>
@@ -541,6 +534,13 @@ The following methods are available for this resource:
     <td>Import instance.</td>
 </tr>
 <tr>
+    <td><a href="#restart"><CopyableCode code="restart" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Restart instance.</td>
+</tr>
+<tr>
     <td><a href="#restore"><CopyableCode code="restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
@@ -548,11 +548,11 @@ The following methods are available for this resource:
     <td>Restore Looker instance.</td>
 </tr>
 <tr>
-    <td><a href="#export"><CopyableCode code="export" /></a></td>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>Export instance.</td>
+    <td>Undeletes Looker instance.</td>
 </tr>
 </tbody>
 </table>
@@ -729,9 +729,9 @@ userMetadata
 FROM google.looker.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -753,63 +753,63 @@ Creates a new Instance in a given project and location.
 
 ```sql
 INSERT INTO google.looker.instances (
-data__consumerNetwork,
-data__customDomain,
-data__releaseChannel,
-data__controlledEgressConfig,
-data__userMetadata,
-data__controlledEgressEnabled,
-data__ingressIpAllowlistConfig,
-data__publicIpEnabled,
+data__acceleratedSecurityPatchEnabled,
 data__adminSettings,
 data__catalogIntegrationOptOut,
-data__platformEdition,
-data__geminiEnabled,
-data__pscEnabled,
-data__linkedLspProjectNumber,
 data__classType,
-data__oauthConfig,
+data__consumerNetwork,
+data__controlledEgressConfig,
+data__controlledEgressEnabled,
+data__customDomain,
+data__denyMaintenancePeriod,
 data__encryptionConfig,
-data__reservedRange,
+data__fipsEnabled,
+data__geminiEnabled,
+data__ingressIpAllowlistConfig,
+data__linkedLspProjectNumber,
+data__maintenanceSchedule,
+data__maintenanceWindow,
+data__oauthConfig,
+data__periodicExportConfig,
+data__platformEdition,
 data__privateIpEnabled,
 data__pscConfig,
-data__periodicExportConfig,
-data__denyMaintenancePeriod,
-data__acceleratedSecurityPatchEnabled,
-data__maintenanceWindow,
-data__fipsEnabled,
-data__maintenanceSchedule,
+data__pscEnabled,
+data__publicIpEnabled,
+data__releaseChannel,
+data__reservedRange,
+data__userMetadata,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ consumerNetwork }}',
-'{{ customDomain }}',
-'{{ releaseChannel }}',
-'{{ controlledEgressConfig }}',
-'{{ userMetadata }}',
-{{ controlledEgressEnabled }},
-'{{ ingressIpAllowlistConfig }}',
-{{ publicIpEnabled }},
+{{ acceleratedSecurityPatchEnabled }},
 '{{ adminSettings }}',
 {{ catalogIntegrationOptOut }},
-'{{ platformEdition }}',
-{{ geminiEnabled }},
-{{ pscEnabled }},
-'{{ linkedLspProjectNumber }}',
 '{{ classType }}',
-'{{ oauthConfig }}',
+'{{ consumerNetwork }}',
+'{{ controlledEgressConfig }}',
+{{ controlledEgressEnabled }},
+'{{ customDomain }}',
+'{{ denyMaintenancePeriod }}',
 '{{ encryptionConfig }}',
-'{{ reservedRange }}',
+{{ fipsEnabled }},
+{{ geminiEnabled }},
+'{{ ingressIpAllowlistConfig }}',
+'{{ linkedLspProjectNumber }}',
+'{{ maintenanceSchedule }}',
+'{{ maintenanceWindow }}',
+'{{ oauthConfig }}',
+'{{ periodicExportConfig }}',
+'{{ platformEdition }}',
 {{ privateIpEnabled }},
 '{{ pscConfig }}',
-'{{ periodicExportConfig }}',
-'{{ denyMaintenancePeriod }}',
-{{ acceleratedSecurityPatchEnabled }},
-'{{ maintenanceWindow }}',
-{{ fipsEnabled }},
-'{{ maintenanceSchedule }}',
+{{ pscEnabled }},
+{{ publicIpEnabled }},
+'{{ releaseChannel }}',
+'{{ reservedRange }}',
+'{{ userMetadata }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -833,54 +833,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: consumerNetwork
-      value: "{{ consumerNetwork }}"
+    - name: acceleratedSecurityPatchEnabled
+      value: {{ acceleratedSecurityPatchEnabled }}
       description: |
-        Network name in the consumer project. Format: \`projects/{project}/global/networks/{network}\`. Note that the consumer network may be in a different GCP project than the consumer project that is hosting the Looker Instance.
-    - name: customDomain
-      description: |
-        Custom domain configuration for the instance.
-      value:
-        domain: "{{ domain }}"
-        state: "{{ state }}"
-    - name: releaseChannel
-      value: "{{ releaseChannel }}"
-      description: |
-        Optional. The selected release channel for the instance.
-      valid_values: ['RELEASE_CHANNEL_UNSPECIFIED', 'RAPID', 'REGULAR', 'STABLE']
-    - name: controlledEgressConfig
-      description: |
-        Optional. Controlled egress configuration.
-      value:
-        webProxyIps:
-          - "{{ webProxyIps }}"
-        egressFqdns:
-          - "{{ egressFqdns }}"
-        marketplaceEnabled: {{ marketplaceEnabled }}
-    - name: userMetadata
-      description: |
-        Optional. User metadata.
-      value:
-        additionalDeveloperUserCount: {{ additionalDeveloperUserCount }}
-        additionalViewerUserCount: {{ additionalViewerUserCount }}
-        additionalStandardUserCount: {{ additionalStandardUserCount }}
-    - name: controlledEgressEnabled
-      value: {{ controlledEgressEnabled }}
-      description: |
-        Optional. Whether controlled egress is enabled on the Looker instance.
-    - name: ingressIpAllowlistConfig
-      description: |
-        Optional. Ingress IP allowlist configuration for the Looker instance.
-      value:
-        enabled: {{ enabled }}
-        googleServicesEnabled: {{ googleServicesEnabled }}
-        allowlistRules:
-          - description: "{{ description }}"
-            ipRange: "{{ ipRange }}"
-    - name: publicIpEnabled
-      value: {{ publicIpEnabled }}
-      description: |
-        Whether public IP is enabled on the Looker instance.
+        Optional. Accelerated security patch enabled for the instance.
     - name: adminSettings
       description: |
         Looker Instance Admin settings.
@@ -891,46 +847,118 @@ response
       value: {{ catalogIntegrationOptOut }}
       description: |
         Optional. Indicates whether catalog integration is disabled for the Looker instance.
-    - name: platformEdition
-      value: "{{ platformEdition }}"
-      description: |
-        Platform edition.
-      valid_values: ['PLATFORM_EDITION_UNSPECIFIED', 'LOOKER_CORE_TRIAL', 'LOOKER_CORE_STANDARD', 'LOOKER_CORE_STANDARD_ANNUAL', 'LOOKER_CORE_ENTERPRISE_ANNUAL', 'LOOKER_CORE_EMBED_ANNUAL', 'LOOKER_CORE_NONPROD_STANDARD_ANNUAL', 'LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL', 'LOOKER_CORE_NONPROD_EMBED_ANNUAL', 'LOOKER_CORE_TRIAL_STANDARD', 'LOOKER_CORE_TRIAL_ENTERPRISE', 'LOOKER_CORE_TRIAL_EMBED']
-    - name: geminiEnabled
-      value: {{ geminiEnabled }}
-      description: |
-        Optional. Whether Gemini feature is enabled on the Looker instance or not.
-    - name: pscEnabled
-      value: {{ pscEnabled }}
-      description: |
-        Optional. Whether to use Private Service Connect (PSC) for private IP connectivity. If true, neither \`public_ip_enabled\` nor \`private_ip_enabled\` can be true.
-    - name: linkedLspProjectNumber
-      value: "{{ linkedLspProjectNumber }}"
-      description: |
-        Optional. Linked Google Cloud Project Number for Looker Studio Pro.
     - name: classType
       value: "{{ classType }}"
       description: |
         Optional. Storage class of the instance.
       valid_values: ['CLASS_TYPE_UNSPECIFIED', 'R1', 'P1']
-    - name: oauthConfig
+    - name: consumerNetwork
+      value: "{{ consumerNetwork }}"
       description: |
-        Looker instance OAuth login settings.
+        Network name in the consumer project. Format: \`projects/{project}/global/networks/{network}\`. Note that the consumer network may be in a different GCP project than the consumer project that is hosting the Looker Instance.
+    - name: controlledEgressConfig
+      description: |
+        Optional. Controlled egress configuration.
       value:
-        clientSecret: "{{ clientSecret }}"
-        sharedOauthClientEnabled: {{ sharedOauthClientEnabled }}
-        clientId: "{{ clientId }}"
+        egressFqdns:
+          - "{{ egressFqdns }}"
+        marketplaceEnabled: {{ marketplaceEnabled }}
+        webProxyIps:
+          - "{{ webProxyIps }}"
+    - name: controlledEgressEnabled
+      value: {{ controlledEgressEnabled }}
+      description: |
+        Optional. Whether controlled egress is enabled on the Looker instance.
+    - name: customDomain
+      description: |
+        Custom domain configuration for the instance.
+      value:
+        domain: "{{ domain }}"
+        state: "{{ state }}"
+    - name: denyMaintenancePeriod
+      description: |
+        Maintenance denial period for this instance.
+      value:
+        endDate:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        startDate:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        time:
+          hours: {{ hours }}
+          minutes: {{ minutes }}
+          nanos: {{ nanos }}
+          seconds: {{ seconds }}
     - name: encryptionConfig
       description: |
         Encryption configuration (CMEK). Only set if CMEK has been enabled on the instance.
       value:
-        kmsKeyState: "{{ kmsKeyState }}"
         kmsKeyName: "{{ kmsKeyName }}"
         kmsKeyNameVersion: "{{ kmsKeyNameVersion }}"
-    - name: reservedRange
-      value: "{{ reservedRange }}"
+        kmsKeyState: "{{ kmsKeyState }}"
+    - name: fipsEnabled
+      value: {{ fipsEnabled }}
       description: |
-        Name of a reserved IP address range within the Instance.consumer_network, to be used for private services access connection. May or may not be specified in a create request.
+        Optional. Whether FIPS is enabled on the Looker instance.
+    - name: geminiEnabled
+      value: {{ geminiEnabled }}
+      description: |
+        Optional. Whether Gemini feature is enabled on the Looker instance or not.
+    - name: ingressIpAllowlistConfig
+      description: |
+        Optional. Ingress IP allowlist configuration for the Looker instance.
+      value:
+        allowlistRules:
+          - description: "{{ description }}"
+            ipRange: "{{ ipRange }}"
+        enabled: {{ enabled }}
+        googleServicesEnabled: {{ googleServicesEnabled }}
+    - name: linkedLspProjectNumber
+      value: "{{ linkedLspProjectNumber }}"
+      description: |
+        Optional. Linked Google Cloud Project Number for Looker Studio Pro.
+    - name: maintenanceSchedule
+      description: |
+        Maintenance schedule for this instance.
+      value:
+        endTime: "{{ endTime }}"
+        startTime: "{{ startTime }}"
+    - name: maintenanceWindow
+      description: |
+        Maintenance window for this instance.
+      value:
+        dayOfWeek: "{{ dayOfWeek }}"
+        startTime:
+          hours: {{ hours }}
+          minutes: {{ minutes }}
+          nanos: {{ nanos }}
+          seconds: {{ seconds }}
+    - name: oauthConfig
+      description: |
+        Looker instance OAuth login settings.
+      value:
+        clientId: "{{ clientId }}"
+        clientSecret: "{{ clientSecret }}"
+        sharedOauthClientEnabled: {{ sharedOauthClientEnabled }}
+    - name: periodicExportConfig
+      description: |
+        Optional. Configuration for periodic export.
+      value:
+        gcsUri: "{{ gcsUri }}"
+        kmsKey: "{{ kmsKey }}"
+        startTime:
+          hours: {{ hours }}
+          minutes: {{ minutes }}
+          nanos: {{ nanos }}
+          seconds: {{ seconds }}
+    - name: platformEdition
+      value: "{{ platformEdition }}"
+      description: |
+        Platform edition.
+      valid_values: ['PLATFORM_EDITION_UNSPECIFIED', 'LOOKER_CORE_TRIAL', 'LOOKER_CORE_STANDARD', 'LOOKER_CORE_STANDARD_ANNUAL', 'LOOKER_CORE_ENTERPRISE_ANNUAL', 'LOOKER_CORE_EMBED_ANNUAL', 'LOOKER_CORE_NONPROD_STANDARD_ANNUAL', 'LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL', 'LOOKER_CORE_NONPROD_EMBED_ANNUAL', 'LOOKER_CORE_TRIAL_STANDARD', 'LOOKER_CORE_TRIAL_ENTERPRISE', 'LOOKER_CORE_TRIAL_EMBED']
     - name: privateIpEnabled
       value: {{ privateIpEnabled }}
       description: |
@@ -939,67 +967,39 @@ response
       description: |
         Optional. PSC configuration. Used when \`psc_enabled\` is true.
       value:
-        serviceAttachments:
-          - localFqdn: "{{ localFqdn }}"
-            connectionStatus: "{{ connectionStatus }}"
-            localFqdns: "{{ localFqdns }}"
-            failureReason: "{{ failureReason }}"
-            targetServiceAttachmentUri: "{{ targetServiceAttachmentUri }}"
-        lookerServiceAttachmentUri: "{{ lookerServiceAttachmentUri }}"
         allowedVpcs:
           - "{{ allowedVpcs }}"
-    - name: periodicExportConfig
+        lookerServiceAttachmentUri: "{{ lookerServiceAttachmentUri }}"
+        serviceAttachments:
+          - connectionStatus: "{{ connectionStatus }}"
+            failureReason: "{{ failureReason }}"
+            localFqdn: "{{ localFqdn }}"
+            localFqdns: "{{ localFqdns }}"
+            targetServiceAttachmentUri: "{{ targetServiceAttachmentUri }}"
+    - name: pscEnabled
+      value: {{ pscEnabled }}
       description: |
-        Optional. Configuration for periodic export.
+        Optional. Whether to use Private Service Connect (PSC) for private IP connectivity. If true, neither \`public_ip_enabled\` nor \`private_ip_enabled\` can be true.
+    - name: publicIpEnabled
+      value: {{ publicIpEnabled }}
+      description: |
+        Whether public IP is enabled on the Looker instance.
+    - name: releaseChannel
+      value: "{{ releaseChannel }}"
+      description: |
+        Optional. The selected release channel for the instance.
+      valid_values: ['RELEASE_CHANNEL_UNSPECIFIED', 'RAPID', 'REGULAR', 'STABLE']
+    - name: reservedRange
+      value: "{{ reservedRange }}"
+      description: |
+        Name of a reserved IP address range within the Instance.consumer_network, to be used for private services access connection. May or may not be specified in a create request.
+    - name: userMetadata
+      description: |
+        Optional. User metadata.
       value:
-        startTime:
-          minutes: {{ minutes }}
-          seconds: {{ seconds }}
-          hours: {{ hours }}
-          nanos: {{ nanos }}
-        gcsUri: "{{ gcsUri }}"
-        kmsKey: "{{ kmsKey }}"
-    - name: denyMaintenancePeriod
-      description: |
-        Maintenance denial period for this instance.
-      value:
-        startDate:
-          month: {{ month }}
-          year: {{ year }}
-          day: {{ day }}
-        endDate:
-          month: {{ month }}
-          year: {{ year }}
-          day: {{ day }}
-        time:
-          minutes: {{ minutes }}
-          seconds: {{ seconds }}
-          hours: {{ hours }}
-          nanos: {{ nanos }}
-    - name: acceleratedSecurityPatchEnabled
-      value: {{ acceleratedSecurityPatchEnabled }}
-      description: |
-        Optional. Accelerated security patch enabled for the instance.
-    - name: maintenanceWindow
-      description: |
-        Maintenance window for this instance.
-      value:
-        dayOfWeek: "{{ dayOfWeek }}"
-        startTime:
-          minutes: {{ minutes }}
-          seconds: {{ seconds }}
-          hours: {{ hours }}
-          nanos: {{ nanos }}
-    - name: fipsEnabled
-      value: {{ fipsEnabled }}
-      description: |
-        Optional. Whether FIPS is enabled on the Looker instance.
-    - name: maintenanceSchedule
-      description: |
-        Maintenance schedule for this instance.
-      value:
-        startTime: "{{ startTime }}"
-        endTime: "{{ endTime }}"
+        additionalDeveloperUserCount: {{ additionalDeveloperUserCount }}
+        additionalStandardUserCount: {{ additionalStandardUserCount }}
+        additionalViewerUserCount: {{ additionalViewerUserCount }}
     - name: instanceId
       value: "{{ instanceId }}"
 `}</CodeBlock>
@@ -1023,32 +1023,32 @@ Update Instance.
 ```sql
 UPDATE google.looker.instances
 SET 
-data__consumerNetwork = '{{ consumerNetwork }}',
-data__customDomain = '{{ customDomain }}',
-data__releaseChannel = '{{ releaseChannel }}',
-data__controlledEgressConfig = '{{ controlledEgressConfig }}',
-data__userMetadata = '{{ userMetadata }}',
-data__controlledEgressEnabled = {{ controlledEgressEnabled }},
-data__ingressIpAllowlistConfig = '{{ ingressIpAllowlistConfig }}',
-data__publicIpEnabled = {{ publicIpEnabled }},
+data__acceleratedSecurityPatchEnabled = {{ acceleratedSecurityPatchEnabled }},
 data__adminSettings = '{{ adminSettings }}',
 data__catalogIntegrationOptOut = {{ catalogIntegrationOptOut }},
-data__platformEdition = '{{ platformEdition }}',
-data__geminiEnabled = {{ geminiEnabled }},
-data__pscEnabled = {{ pscEnabled }},
-data__linkedLspProjectNumber = '{{ linkedLspProjectNumber }}',
 data__classType = '{{ classType }}',
-data__oauthConfig = '{{ oauthConfig }}',
+data__consumerNetwork = '{{ consumerNetwork }}',
+data__controlledEgressConfig = '{{ controlledEgressConfig }}',
+data__controlledEgressEnabled = {{ controlledEgressEnabled }},
+data__customDomain = '{{ customDomain }}',
+data__denyMaintenancePeriod = '{{ denyMaintenancePeriod }}',
 data__encryptionConfig = '{{ encryptionConfig }}',
-data__reservedRange = '{{ reservedRange }}',
+data__fipsEnabled = {{ fipsEnabled }},
+data__geminiEnabled = {{ geminiEnabled }},
+data__ingressIpAllowlistConfig = '{{ ingressIpAllowlistConfig }}',
+data__linkedLspProjectNumber = '{{ linkedLspProjectNumber }}',
+data__maintenanceSchedule = '{{ maintenanceSchedule }}',
+data__maintenanceWindow = '{{ maintenanceWindow }}',
+data__oauthConfig = '{{ oauthConfig }}',
+data__periodicExportConfig = '{{ periodicExportConfig }}',
+data__platformEdition = '{{ platformEdition }}',
 data__privateIpEnabled = {{ privateIpEnabled }},
 data__pscConfig = '{{ pscConfig }}',
-data__periodicExportConfig = '{{ periodicExportConfig }}',
-data__denyMaintenancePeriod = '{{ denyMaintenancePeriod }}',
-data__acceleratedSecurityPatchEnabled = {{ acceleratedSecurityPatchEnabled }},
-data__maintenanceWindow = '{{ maintenanceWindow }}',
-data__fipsEnabled = {{ fipsEnabled }},
-data__maintenanceSchedule = '{{ maintenanceSchedule }}'
+data__pscEnabled = {{ pscEnabled }},
+data__publicIpEnabled = {{ publicIpEnabled }},
+data__releaseChannel = '{{ releaseChannel }}',
+data__reservedRange = '{{ reservedRange }}',
+data__userMetadata = '{{ userMetadata }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1092,36 +1092,29 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="restart"
+    defaultValue="export"
     values={[
-        { label: 'restart', value: 'restart' },
-        { label: 'undelete', value: 'undelete' },
+        { label: 'export', value: 'export' },
         { label: 'import', value: 'import' },
+        { label: 'restart', value: 'restart' },
         { label: 'restore', value: 'restore' },
-        { label: 'export', value: 'export' }
+        { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="restart">
+<TabItem value="export">
 
-Restart instance.
-
-```sql
-EXEC google.looker.instances.restart 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="undelete">
-
-Undeletes Looker instance.
+Export instance.
 
 ```sql
-EXEC google.looker.instances.undelete 
+EXEC google.looker.instances.export 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"encryptionConfig": "{{ encryptionConfig }}", 
+"gcsUri": "{{ gcsUri }}"
+}'
 ;
 ```
 </TabItem>
@@ -1141,6 +1134,18 @@ EXEC google.looker.instances.import
 ;
 ```
 </TabItem>
+<TabItem value="restart">
+
+Restart instance.
+
+```sql
+EXEC google.looker.instances.restart 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="restore">
 
 Restore Looker instance.
@@ -1157,20 +1162,15 @@ EXEC google.looker.instances.restore
 ;
 ```
 </TabItem>
-<TabItem value="export">
+<TabItem value="undelete">
 
-Export instance.
+Undeletes Looker instance.
 
 ```sql
-EXEC google.looker.instances.export 
+EXEC google.looker.instances.undelete 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"gcsUri": "{{ gcsUri }}", 
-"encryptionConfig": "{{ encryptionConfig }}"
-}'
+@instancesId='{{ instancesId }}' --required
 ;
 ```
 </TabItem>

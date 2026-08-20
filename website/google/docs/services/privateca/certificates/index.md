@@ -58,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="certificateDescription" /></td>
     <td><code>object</code></td>
-    <td>A CertificateDescription describes an X.509 certificate or CSR that has been issued, as an alternative to using ASN.1 / X.509. (id: CertificateDescription)</td>
+    <td>Output only. A structured description of the issued X.509 certificate. (id: CertificateDescription)</td>
 </tr>
 <tr>
     <td><CopyableCode code="certificateTemplate" /></td>
@@ -147,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="certificateDescription" /></td>
     <td><code>object</code></td>
-    <td>A CertificateDescription describes an X.509 certificate or CSR that has been issued, as an alternative to using ASN.1 / X.509. (id: CertificateDescription)</td>
+    <td>Output only. A structured description of the issued X.509 certificate. (id: CertificateDescription)</td>
 </tr>
 <tr>
     <td><CopyableCode code="certificateTemplate" /></td>
@@ -245,14 +245,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Certificates.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-certificateId"><code>certificateId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-issuingCertificateAuthorityId"><code>issuingCertificateAuthorityId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-certificateId"><code>certificateId</code></a>, <a href="#parameter-issuingCertificateAuthorityId"><code>issuingCertificateAuthorityId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new Certificate in a given Project, Location from a particular CaPool.</td>
 </tr>
 <tr>
@@ -416,10 +416,10 @@ FROM google.privateca.certificates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND caPoolsId = '{{ caPoolsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -441,38 +441,38 @@ Create a new Certificate in a given Project, Location from a particular CaPool.
 
 ```sql
 INSERT INTO google.privateca.certificates (
-data__pemCsr,
+data__certificateTemplate,
 data__config,
 data__labels,
-data__certificateTemplate,
-data__name,
 data__lifetime,
-data__subjectMode,
+data__name,
+data__pemCsr,
 data__requestedNotBeforeTime,
+data__subjectMode,
 projectsId,
 locationsId,
 caPoolsId,
 certificateId,
-validateOnly,
 issuingCertificateAuthorityId,
-requestId
+requestId,
+validateOnly
 )
 SELECT 
-'{{ pemCsr }}',
+'{{ certificateTemplate }}',
 '{{ config }}',
 '{{ labels }}',
-'{{ certificateTemplate }}',
-'{{ name }}',
 '{{ lifetime }}',
-'{{ subjectMode }}',
+'{{ name }}',
+'{{ pemCsr }}',
 '{{ requestedNotBeforeTime }}',
+'{{ subjectMode }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ caPoolsId }}',
 '{{ certificateId }}',
-'{{ validateOnly }}',
 '{{ issuingCertificateAuthorityId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 certificateDescription,
@@ -506,130 +506,130 @@ updateTime
     - name: caPoolsId
       value: "{{ caPoolsId }}"
       description: Required parameter for the certificates resource.
-    - name: pemCsr
-      value: "{{ pemCsr }}"
+    - name: certificateTemplate
+      value: "{{ certificateTemplate }}"
       description: |
-        Immutable. A pem-encoded X.509 certificate signing request (CSR).
+        Immutable. The resource name for a CertificateTemplate used to issue this certificate, in the format \`projects/*/locations/*/certificateTemplates/*\`. If this is specified, the caller must have the necessary permission to use this template. If this is omitted, no template will be used. This template must be in the same location as the Certificate.
     - name: config
       description: |
         Immutable. A description of the certificate and key that does not require X.509 or ASN.1.
       value:
-        subjectKeyId:
-          keyId: "{{ keyId }}"
+        publicKey:
+          format: "{{ format }}"
+          key: "{{ key }}"
         subjectConfig:
           subject:
-            organizationalUnit: "{{ organizationalUnit }}"
-            streetAddress: "{{ streetAddress }}"
             commonName: "{{ commonName }}"
-            organization: "{{ organization }}"
-            province: "{{ province }}"
+            countryCode: "{{ countryCode }}"
             locality: "{{ locality }}"
+            organization: "{{ organization }}"
+            organizationalUnit: "{{ organizationalUnit }}"
             postalCode: "{{ postalCode }}"
+            province: "{{ province }}"
             rdnSequence:
               - attributes: "{{ attributes }}"
-            countryCode: "{{ countryCode }}"
+            streetAddress: "{{ streetAddress }}"
           subjectAltName:
-            ipAddresses:
-              - "{{ ipAddresses }}"
-            dnsNames:
-              - "{{ dnsNames }}"
-            emailAddresses:
-              - "{{ emailAddresses }}"
-            uris:
-              - "{{ uris }}"
             customSans:
               - critical: {{ critical }}
                 objectId:
                   objectIdPath: "{{ objectIdPath }}"
                 value: "{{ value }}"
-        publicKey:
-          format: "{{ format }}"
-          key: "{{ key }}"
+            dnsNames:
+              - "{{ dnsNames }}"
+            emailAddresses:
+              - "{{ emailAddresses }}"
+            ipAddresses:
+              - "{{ ipAddresses }}"
+            uris:
+              - "{{ uris }}"
+        subjectKeyId:
+          keyId: "{{ keyId }}"
         x509Config:
-          caOptions:
-            isCa: {{ isCa }}
-            maxIssuerPathLength: {{ maxIssuerPathLength }}
-          aiaOcspServers:
-            - "{{ aiaOcspServers }}"
           additionalExtensions:
             - critical: {{ critical }}
               objectId:
                 objectIdPath:
                   - {{ objectIdPath }}
               value: "{{ value }}"
-          policyIds:
-            - objectIdPath: "{{ objectIdPath }}"
-          nameConstraints:
-            critical: {{ critical }}
-            excludedIpRanges:
-              - "{{ excludedIpRanges }}"
-            permittedEmailAddresses:
-              - "{{ permittedEmailAddresses }}"
-            excludedDnsNames:
-              - "{{ excludedDnsNames }}"
-            permittedUris:
-              - "{{ permittedUris }}"
-            excludedEmailAddresses:
-              - "{{ excludedEmailAddresses }}"
-            excludedUris:
-              - "{{ excludedUris }}"
-            permittedIpRanges:
-              - "{{ permittedIpRanges }}"
-            permittedDnsNames:
-              - "{{ permittedDnsNames }}"
+          aiaOcspServers:
+            - "{{ aiaOcspServers }}"
+          caOptions:
+            isCa: {{ isCa }}
+            maxIssuerPathLength: {{ maxIssuerPathLength }}
           keyUsage:
             baseKeyUsage:
-              keyEncipherment: {{ keyEncipherment }}
               certSign: {{ certSign }}
-              digitalSignature: {{ digitalSignature }}
               contentCommitment: {{ contentCommitment }}
-              encipherOnly: {{ encipherOnly }}
-              decipherOnly: {{ decipherOnly }}
-              dataEncipherment: {{ dataEncipherment }}
               crlSign: {{ crlSign }}
+              dataEncipherment: {{ dataEncipherment }}
+              decipherOnly: {{ decipherOnly }}
+              digitalSignature: {{ digitalSignature }}
+              encipherOnly: {{ encipherOnly }}
               keyAgreement: {{ keyAgreement }}
+              keyEncipherment: {{ keyEncipherment }}
             extendedKeyUsage:
-              serverAuth: {{ serverAuth }}
               clientAuth: {{ clientAuth }}
+              codeSigning: {{ codeSigning }}
               emailProtection: {{ emailProtection }}
               ocspSigning: {{ ocspSigning }}
-              codeSigning: {{ codeSigning }}
+              serverAuth: {{ serverAuth }}
               timeStamping: {{ timeStamping }}
             unknownExtendedKeyUsages:
               - objectIdPath: "{{ objectIdPath }}"
+          nameConstraints:
+            critical: {{ critical }}
+            excludedDnsNames:
+              - "{{ excludedDnsNames }}"
+            excludedEmailAddresses:
+              - "{{ excludedEmailAddresses }}"
+            excludedIpRanges:
+              - "{{ excludedIpRanges }}"
+            excludedUris:
+              - "{{ excludedUris }}"
+            permittedDnsNames:
+              - "{{ permittedDnsNames }}"
+            permittedEmailAddresses:
+              - "{{ permittedEmailAddresses }}"
+            permittedIpRanges:
+              - "{{ permittedIpRanges }}"
+            permittedUris:
+              - "{{ permittedUris }}"
+          policyIds:
+            - objectIdPath: "{{ objectIdPath }}"
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels with user-defined metadata.
-    - name: certificateTemplate
-      value: "{{ certificateTemplate }}"
-      description: |
-        Immutable. The resource name for a CertificateTemplate used to issue this certificate, in the format \`projects/*/locations/*/certificateTemplates/*\`. If this is specified, the caller must have the necessary permission to use this template. If this is omitted, no template will be used. This template must be in the same location as the Certificate.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name for this Certificate in the format \`projects/*/locations/*/caPools/*/certificates/*\`.
     - name: lifetime
       value: "{{ lifetime }}"
       description: |
         Required. Immutable. The desired lifetime of a certificate. Used to create the "not_before_time" and "not_after_time" fields inside an X.509 certificate. Note that the lifetime may be truncated if it would extend past the life of any certificate authority in the issuing chain.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name for this Certificate in the format \`projects/*/locations/*/caPools/*/certificates/*\`.
+    - name: pemCsr
+      value: "{{ pemCsr }}"
+      description: |
+        Immutable. A pem-encoded X.509 certificate signing request (CSR).
+    - name: requestedNotBeforeTime
+      value: "{{ requestedNotBeforeTime }}"
+      description: |
+        Optional. The requested not_before_time of this Certificate. This field may only be set if the CaPool.IssuancePolicy.allow_requester_specified_not_before_time field is set to true for the issuing CaPool. If this field is specified, the certificate will be issued with this 'not_before_time'. If this is not specified, the 'not_before_time' will be set to the issuance time or issuance time minus backdate_duration depending on the CaPool configuration.
     - name: subjectMode
       value: "{{ subjectMode }}"
       description: |
         Immutable. Specifies how the Certificate's identity fields are to be decided. If this is omitted, the \`DEFAULT\` subject mode will be used.
       valid_values: ['SUBJECT_REQUEST_MODE_UNSPECIFIED', 'DEFAULT', 'RDN_SEQUENCE', 'REFLECTED_SPIFFE']
-    - name: requestedNotBeforeTime
-      value: "{{ requestedNotBeforeTime }}"
-      description: |
-        Optional. The requested not_before_time of this Certificate. This field may only be set if the CaPool.IssuancePolicy.allow_requester_specified_not_before_time field is set to true for the issuing CaPool. If this field is specified, the certificate will be issued with this 'not_before_time'. If this is not specified, the 'not_before_time' will be set to the issuance time or issuance time minus backdate_duration depending on the CaPool configuration.
     - name: certificateId
       value: "{{ certificateId }}"
-    - name: validateOnly
-      value: {{ validateOnly }}
     - name: issuingCertificateAuthorityId
       value: "{{ issuingCertificateAuthorityId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -651,14 +651,14 @@ Update a Certificate. Currently, the only field you can update is the labels fie
 ```sql
 UPDATE google.privateca.certificates
 SET 
-data__pemCsr = '{{ pemCsr }}',
+data__certificateTemplate = '{{ certificateTemplate }}',
 data__config = '{{ config }}',
 data__labels = '{{ labels }}',
-data__certificateTemplate = '{{ certificateTemplate }}',
-data__name = '{{ name }}',
 data__lifetime = '{{ lifetime }}',
-data__subjectMode = '{{ subjectMode }}',
-data__requestedNotBeforeTime = '{{ requestedNotBeforeTime }}'
+data__name = '{{ name }}',
+data__pemCsr = '{{ pemCsr }}',
+data__requestedNotBeforeTime = '{{ requestedNotBeforeTime }}',
+data__subjectMode = '{{ subjectMode }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

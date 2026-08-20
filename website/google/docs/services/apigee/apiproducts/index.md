@@ -220,7 +220,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_apiproducts_list"><CopyableCode code="organizations_apiproducts_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-attributename"><code>attributename</code></a>, <a href="#parameter-space"><code>space</code></a>, <a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-attributevalue"><code>attributevalue</code></a>, <a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-count"><code>count</code></a></td>
+    <td><a href="#parameter-attributename"><code>attributename</code></a>, <a href="#parameter-attributevalue"><code>attributevalue</code></a>, <a href="#parameter-count"><code>count</code></a>, <a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-space"><code>space</code></a>, <a href="#parameter-startKey"><code>startKey</code></a></td>
     <td>Lists all API product names for an organization. Filter the list by passing an `attributename` and `attibutevalue`. The maximum number of API products returned is 1000. You can paginate the list of API products returned using the `startKey` and `count` query parameters. If the resource has the `space` attribute set, the response may not return all resources. To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).</td>
 </tr>
 <tr>
@@ -252,13 +252,6 @@ The following methods are available for this resource:
     <td>Deletes an API product from an organization. Deleting an API product causes app requests to the resource URIs defined in the API product to fail. Ensure that you create a new API product to serve existing apps, unless your intention is to disable access to the resources defined in the API product. The API product name required in the request URL is the internal name of the product, not the display name. While they may be the same, it depends on whether the API product was created via the UI or the API. View the list of API products to verify the internal name.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product"><CopyableCode code="organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
-    <td><a href="#parameter-action"><code>action</code></a></td>
-    <td>Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.</td>
-</tr>
-<tr>
     <td><a href="#organizations_apiproducts_attributes"><CopyableCode code="organizations_apiproducts_attributes" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
@@ -271,6 +264,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
     <td></td>
     <td>Moves an API product to a different space.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product"><CopyableCode code="organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
+    <td><a href="#parameter-action"><code>action</code></a></td>
+    <td>Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.</td>
 </tr>
 </tbody>
 </table>
@@ -406,11 +406,11 @@ apiProduct
 FROM google.apigee.apiproducts
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND attributename = '{{ attributename }}'
+AND attributevalue = '{{ attributevalue }}'
+AND count = '{{ count }}'
+AND expand = '{{ expand }}'
 AND space = '{{ space }}'
 AND startKey = '{{ startKey }}'
-AND attributevalue = '{{ attributevalue }}'
-AND expand = '{{ expand }}'
-AND count = '{{ count }}'
 ;
 ```
 </TabItem>
@@ -432,57 +432,57 @@ Creates an API product in an organization. You create API products after you hav
 
 ```sql
 INSERT INTO google.apigee.apiproducts (
-data__description,
-data__llmQuotaInterval,
-data__quotaTimeUnit,
-data__llmQuota,
-data__lastModifiedAt,
-data__grpcOperationGroup,
 data__apiResources,
-data__quotaInterval,
+data__approvalType,
 data__attributes,
+data__createdAt,
+data__description,
+data__displayName,
+data__environments,
+data__graphqlOperationGroup,
+data__grpcOperationGroup,
+data__lastModifiedAt,
+data__llmOperationGroup,
+data__llmQuota,
+data__llmQuotaInterval,
 data__llmQuotaTimeUnit,
 data__name,
 data__operationGroup,
-data__approvalType,
-data__quota,
-data__displayName,
-data__space,
-data__llmOperationGroup,
 data__payloadOperationGroup,
-data__environments,
-data__createdAt,
-data__quotaCounterScope,
 data__proxies,
+data__quota,
+data__quotaCounterScope,
+data__quotaInterval,
+data__quotaTimeUnit,
 data__scopes,
-data__graphqlOperationGroup,
+data__space,
 organizationsId
 )
 SELECT 
-'{{ description }}',
-'{{ llmQuotaInterval }}',
-'{{ quotaTimeUnit }}',
-'{{ llmQuota }}',
-'{{ lastModifiedAt }}',
-'{{ grpcOperationGroup }}',
 '{{ apiResources }}',
-'{{ quotaInterval }}',
+'{{ approvalType }}',
 '{{ attributes }}',
+'{{ createdAt }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ environments }}',
+'{{ graphqlOperationGroup }}',
+'{{ grpcOperationGroup }}',
+'{{ lastModifiedAt }}',
+'{{ llmOperationGroup }}',
+'{{ llmQuota }}',
+'{{ llmQuotaInterval }}',
 '{{ llmQuotaTimeUnit }}',
 '{{ name }}',
 '{{ operationGroup }}',
-'{{ approvalType }}',
-'{{ quota }}',
-'{{ displayName }}',
-'{{ space }}',
-'{{ llmOperationGroup }}',
 '{{ payloadOperationGroup }}',
-'{{ environments }}',
-'{{ createdAt }}',
-'{{ quotaCounterScope }}',
 '{{ proxies }}',
+'{{ quota }}',
+'{{ quotaCounterScope }}',
+'{{ quotaInterval }}',
+'{{ quotaTimeUnit }}',
 '{{ scopes }}',
-'{{ graphqlOperationGroup }}',
+'{{ space }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -520,54 +520,88 @@ space
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the apiproducts resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Description of the API product. Include key information about the API product that is not captured by other fields.
-    - name: llmQuotaInterval
-      value: "{{ llmQuotaInterval }}"
-      description: |
-        Optional. Time interval over which the number of tokens from LLM responses is calculated.
-    - name: quotaTimeUnit
-      value: "{{ quotaTimeUnit }}"
-      description: |
-        Time unit defined for the \`quotaInterval\`. Valid values include \`minute\`, \`hour\`, \`day\`, or \`month\`.
-    - name: llmQuota
-      value: "{{ llmQuota }}"
-      description: |
-        Optional. Number of LLM tokens permitted per app by this API product for the specified \`llm_quota_interval\` and \`llm_quota_time_unit\`. For example, an \`llm_quota\` of 50,000, for an \`llm_quota_interval\` of 12 and an \`llm_quota_time_unit\` of hours means 50,000 llm tokens are allowed to be used every 12 hours.
-    - name: lastModifiedAt
-      value: "{{ lastModifiedAt }}"
-      description: |
-        Response only. Modified time of this environment as milliseconds since epoch.
-    - name: grpcOperationGroup
-      description: |
-        Optional. Configuration used to group Apigee proxies with gRPC services and method names. This grouping allows us to set quota for a particular proxy with the gRPC service name and method. If a method name is not set, this implies quota and authorization are applied to all gRPC methods implemented by that proxy for that particular gRPC service.
-      value:
-        operationConfigs:
-          - apiSource: "{{ apiSource }}"
-            service: "{{ service }}"
-            methods: "{{ methods }}"
-            attributes: "{{ attributes }}"
-            quota:
-              limit: "{{ limit }}"
-              timeUnit: "{{ timeUnit }}"
-              interval: "{{ interval }}"
     - name: apiResources
       value:
         - "{{ apiResources }}"
       description: |
         Comma-separated list of API resources to be bundled in the API product. By default, the resource paths are mapped from the \`proxy.pathsuffix\` variable. The proxy path suffix is defined as the URI fragment following the ProxyEndpoint base path. For example, if the \`apiResources\` element is defined to be \`/forecastrss\` and the base path defined for the API proxy is \`/weather\`, then only requests to \`/weather/forecastrss\` are permitted by the API product. You can select a specific path, or you can select all subpaths with the following wildcard: - \`/**\`: Indicates that all sub-URIs are included. - \`/*\` : Indicates that only URIs one level down are included. By default, / supports the same resources as /** as well as the base path defined by the API proxy. For example, if the base path of the API proxy is \`/v1/weatherapikey\`, then the API product supports requests to \`/v1/weatherapikey\` and to any sub-URIs, such as \`/v1/weatherapikey/forecastrss\`, \`/v1/weatherapikey/region/CA\`, and so on. For more information, see Managing API products.
-    - name: quotaInterval
-      value: "{{ quotaInterval }}"
+    - name: approvalType
+      value: "{{ approvalType }}"
       description: |
-        Time interval over which the number of request messages is calculated.
+        Flag that specifies how API keys are approved to access the APIs defined by the API product. If set to \`manual\`, the consumer key is generated and returned in "pending" state. In this case, the API keys won't work until they have been explicitly approved. If set to \`auto\`, the consumer key is generated and returned in "approved" state and can be used immediately. **Note:** Typically, \`auto\` is used to provide access to free or trial API products that provide limited quota or capabilities.
     - name: attributes
       description: |
         Array of attributes that may be used to extend the default API product profile with customer-specific metadata. You can specify a maximum of 18 attributes. Use this property to specify the access level of the API product as either \`public\`, \`private\`, or \`internal\`. Only products marked \`public\` are available to developers in the Apigee developer portal. For example, you can set a product to \`internal\` while it is in development and then change access to \`public\` when it is ready to release on the portal. API products marked as \`private\` do not appear on the portal, but can be accessed by external developers.
       value:
         - name: "{{ name }}"
           value: "{{ value }}"
+    - name: createdAt
+      value: "{{ createdAt }}"
+      description: |
+        Response only. Creation time of this environment as milliseconds since epoch.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the API product. Include key information about the API product that is not captured by other fields.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Name displayed in the UI or developer portal to developers registering for API access.
+    - name: environments
+      value:
+        - "{{ environments }}"
+      description: |
+        Comma-separated list of environment names to which the API product is bound. Requests to environments that are not listed are rejected. By specifying one or more environments, you can bind the resources listed in the API product to a specific environment, preventing developers from accessing those resources through API proxies deployed in another environment. This setting is used, for example, to prevent resources associated with API proxies in \`prod\` from being accessed by API proxies deployed in \`test\`.
+    - name: graphqlOperationGroup
+      description: |
+        Configuration used to group Apigee proxies or remote services with graphQL operation name, graphQL operation type and quotas. This grouping allows us to precisely set quota for a particular combination of graphQL name and operation type for a particular proxy request. If graphQL name is not set, this would imply quota will be applied on all graphQL requests matching the operation type.
+      value:
+        operationConfigType: "{{ operationConfigType }}"
+        operationConfigs:
+          - apiSource: "{{ apiSource }}"
+            attributes: "{{ attributes }}"
+            operations: "{{ operations }}"
+            quota:
+              interval: "{{ interval }}"
+              limit: "{{ limit }}"
+              timeUnit: "{{ timeUnit }}"
+    - name: grpcOperationGroup
+      description: |
+        Optional. Configuration used to group Apigee proxies with gRPC services and method names. This grouping allows us to set quota for a particular proxy with the gRPC service name and method. If a method name is not set, this implies quota and authorization are applied to all gRPC methods implemented by that proxy for that particular gRPC service.
+      value:
+        operationConfigs:
+          - apiSource: "{{ apiSource }}"
+            attributes: "{{ attributes }}"
+            methods: "{{ methods }}"
+            quota:
+              interval: "{{ interval }}"
+              limit: "{{ limit }}"
+              timeUnit: "{{ timeUnit }}"
+            service: "{{ service }}"
+    - name: lastModifiedAt
+      value: "{{ lastModifiedAt }}"
+      description: |
+        Response only. Modified time of this environment as milliseconds since epoch.
+    - name: llmOperationGroup
+      description: |
+        Optional. Configuration used to group Apigee proxies with resources, method types, LLM model and quotas. The resource refers to the resource URI (excluding the base path). With this grouping, the API product creator is able to fine-tune and give precise control over which REST methods have access to specific resources, specific LLM model and how many calls can be made (using the \`quota\` setting). **Note:** The \`api_resources\` setting cannot be specified for both the API product and llm operation group; otherwise the call will fail.
+      value:
+        operationConfigs:
+          - apiSource: "{{ apiSource }}"
+            attributes: "{{ attributes }}"
+            llmOperations: "{{ llmOperations }}"
+            llmTokenQuota:
+              interval: "{{ interval }}"
+              limit: "{{ limit }}"
+              timeUnit: "{{ timeUnit }}"
+    - name: llmQuota
+      value: "{{ llmQuota }}"
+      description: |
+        Optional. Number of LLM tokens permitted per app by this API product for the specified \`llm_quota_interval\` and \`llm_quota_time_unit\`. For example, an \`llm_quota\` of 50,000, for an \`llm_quota_interval\` of 12 and an \`llm_quota_time_unit\` of hours means 50,000 llm tokens are allowed to be used every 12 hours.
+    - name: llmQuotaInterval
+      value: "{{ llmQuotaInterval }}"
+      description: |
+        Optional. Time interval over which the number of tokens from LLM responses is calculated.
     - name: llmQuotaTimeUnit
       value: "{{ llmQuotaTimeUnit }}"
       description: |
@@ -580,40 +614,12 @@ space
       description: |
         Configuration used to group Apigee proxies or remote services with resources, method types, and quotas. The resource refers to the resource URI (excluding the base path). With this grouping, the API product creator is able to fine-tune and give precise control over which REST methods have access to specific resources and how many calls can be made (using the \`quota\` setting). **Note:** The \`api_resources\` setting cannot be specified for both the API product and operation group; otherwise the call will fail.
       value:
-        operationConfigs:
-          - operations: "{{ operations }}"
-            quota:
-              limit: "{{ limit }}"
-              timeUnit: "{{ timeUnit }}"
-              interval: "{{ interval }}"
-            attributes: "{{ attributes }}"
-            apiSource: "{{ apiSource }}"
         operationConfigType: "{{ operationConfigType }}"
-    - name: approvalType
-      value: "{{ approvalType }}"
-      description: |
-        Flag that specifies how API keys are approved to access the APIs defined by the API product. If set to \`manual\`, the consumer key is generated and returned in "pending" state. In this case, the API keys won't work until they have been explicitly approved. If set to \`auto\`, the consumer key is generated and returned in "approved" state and can be used immediately. **Note:** Typically, \`auto\` is used to provide access to free or trial API products that provide limited quota or capabilities.
-    - name: quota
-      value: "{{ quota }}"
-      description: |
-        Number of request messages permitted per app by this API product for the specified \`quotaInterval\` and \`quotaTimeUnit\`. For example, a \`quota\` of 50, for a \`quotaInterval\` of 12 and a \`quotaTimeUnit\` of hours means 50 requests are allowed every 12 hours.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Name displayed in the UI or developer portal to developers registering for API access.
-    - name: space
-      value: "{{ space }}"
-      description: |
-        Optional. The resource ID of the parent Space. If not set, the parent resource will be the Organization. To learn how Spaces can be used to manage resources, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
-    - name: llmOperationGroup
-      description: |
-        Optional. Configuration used to group Apigee proxies with resources, method types, LLM model and quotas. The resource refers to the resource URI (excluding the base path). With this grouping, the API product creator is able to fine-tune and give precise control over which REST methods have access to specific resources, specific LLM model and how many calls can be made (using the \`quota\` setting). **Note:** The \`api_resources\` setting cannot be specified for both the API product and llm operation group; otherwise the call will fail.
-      value:
         operationConfigs:
           - apiSource: "{{ apiSource }}"
-            llmOperations: "{{ llmOperations }}"
             attributes: "{{ attributes }}"
-            llmTokenQuota:
+            operations: "{{ operations }}"
+            quota:
               interval: "{{ interval }}"
               limit: "{{ limit }}"
               timeUnit: "{{ timeUnit }}"
@@ -622,50 +628,44 @@ space
         Optional. Configuration used to group Apigee proxies with payload-based operations and quotas. Unlike \`operation_group\`, which matches on the URL path, this grouping matches on operation identifiers extracted from the request payload (for example, JSON-RPC method and tool names). This enables fine-grained authorization and quota enforcement for protocols such as MCP where multiple operations share a single endpoint. **Note:** The \`proxies\` and \`api_resources\` settings cannot be specified for both the API product and payload operation group; otherwise the call will fail.
       value:
         operationConfigs:
-          - attributes: "{{ attributes }}"
-            apiSource: "{{ apiSource }}"
+          - apiSource: "{{ apiSource }}"
+            attributes: "{{ attributes }}"
             operations: "{{ operations }}"
             quota:
+              interval: "{{ interval }}"
               limit: "{{ limit }}"
               timeUnit: "{{ timeUnit }}"
-              interval: "{{ interval }}"
-    - name: environments
-      value:
-        - "{{ environments }}"
-      description: |
-        Comma-separated list of environment names to which the API product is bound. Requests to environments that are not listed are rejected. By specifying one or more environments, you can bind the resources listed in the API product to a specific environment, preventing developers from accessing those resources through API proxies deployed in another environment. This setting is used, for example, to prevent resources associated with API proxies in \`prod\` from being accessed by API proxies deployed in \`test\`.
-    - name: createdAt
-      value: "{{ createdAt }}"
-      description: |
-        Response only. Creation time of this environment as milliseconds since epoch.
-    - name: quotaCounterScope
-      value: "{{ quotaCounterScope }}"
-      description: |
-        Scope of the quota decides how the quota counter gets applied and evaluate for quota violation. If the Scope is set as PROXY, then all the operations defined for the APIproduct that are associated with the same proxy will share the same quota counter set at the APIproduct level, making it a global counter at a proxy level. If the Scope is set as OPERATION, then each operations get the counter set at the API product dedicated, making it a local counter. Note that, the QuotaCounterScope applies only when an operation does not have dedicated quota set for itself.
-      valid_values: ['QUOTA_COUNTER_SCOPE_UNSPECIFIED', 'PROXY', 'OPERATION', 'PRODUCT']
     - name: proxies
       value:
         - "{{ proxies }}"
       description: |
         Comma-separated list of API proxy names to which this API product is bound. By specifying API proxies, you can associate resources in the API product with specific API proxies, preventing developers from accessing those resources through other API proxies. Apigee rejects requests to API proxies that are not listed. **Note:** The API proxy names must already exist in the specified environment as they will be validated upon creation.
+    - name: quota
+      value: "{{ quota }}"
+      description: |
+        Number of request messages permitted per app by this API product for the specified \`quotaInterval\` and \`quotaTimeUnit\`. For example, a \`quota\` of 50, for a \`quotaInterval\` of 12 and a \`quotaTimeUnit\` of hours means 50 requests are allowed every 12 hours.
+    - name: quotaCounterScope
+      value: "{{ quotaCounterScope }}"
+      description: |
+        Scope of the quota decides how the quota counter gets applied and evaluate for quota violation. If the Scope is set as PROXY, then all the operations defined for the APIproduct that are associated with the same proxy will share the same quota counter set at the APIproduct level, making it a global counter at a proxy level. If the Scope is set as OPERATION, then each operations get the counter set at the API product dedicated, making it a local counter. Note that, the QuotaCounterScope applies only when an operation does not have dedicated quota set for itself.
+      valid_values: ['QUOTA_COUNTER_SCOPE_UNSPECIFIED', 'PROXY', 'OPERATION', 'PRODUCT']
+    - name: quotaInterval
+      value: "{{ quotaInterval }}"
+      description: |
+        Time interval over which the number of request messages is calculated.
+    - name: quotaTimeUnit
+      value: "{{ quotaTimeUnit }}"
+      description: |
+        Time unit defined for the \`quotaInterval\`. Valid values include \`minute\`, \`hour\`, \`day\`, or \`month\`.
     - name: scopes
       value:
         - "{{ scopes }}"
       description: |
         Comma-separated list of OAuth scopes that are validated at runtime. Apigee validates that the scopes in any access token presented match the scopes defined in the OAuth policy associated with the API product.
-    - name: graphqlOperationGroup
+    - name: space
+      value: "{{ space }}"
       description: |
-        Configuration used to group Apigee proxies or remote services with graphQL operation name, graphQL operation type and quotas. This grouping allows us to precisely set quota for a particular combination of graphQL name and operation type for a particular proxy request. If graphQL name is not set, this would imply quota will be applied on all graphQL requests matching the operation type.
-      value:
-        operationConfigs:
-          - operations: "{{ operations }}"
-            quota:
-              limit: "{{ limit }}"
-              timeUnit: "{{ timeUnit }}"
-              interval: "{{ interval }}"
-            apiSource: "{{ apiSource }}"
-            attributes: "{{ attributes }}"
-        operationConfigType: "{{ operationConfigType }}"
+        Optional. The resource ID of the parent Space. If not set, the parent resource will be the Organization. To learn how Spaces can be used to manage resources, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 `}</CodeBlock>
 
 </TabItem>
@@ -687,30 +687,30 @@ Updates an existing API product. You must include all required values, whether o
 ```sql
 REPLACE google.apigee.apiproducts
 SET 
-data__description = '{{ description }}',
-data__llmQuotaInterval = '{{ llmQuotaInterval }}',
-data__quotaTimeUnit = '{{ quotaTimeUnit }}',
-data__llmQuota = '{{ llmQuota }}',
-data__lastModifiedAt = '{{ lastModifiedAt }}',
-data__grpcOperationGroup = '{{ grpcOperationGroup }}',
 data__apiResources = '{{ apiResources }}',
-data__quotaInterval = '{{ quotaInterval }}',
+data__approvalType = '{{ approvalType }}',
 data__attributes = '{{ attributes }}',
+data__createdAt = '{{ createdAt }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__environments = '{{ environments }}',
+data__graphqlOperationGroup = '{{ graphqlOperationGroup }}',
+data__grpcOperationGroup = '{{ grpcOperationGroup }}',
+data__lastModifiedAt = '{{ lastModifiedAt }}',
+data__llmOperationGroup = '{{ llmOperationGroup }}',
+data__llmQuota = '{{ llmQuota }}',
+data__llmQuotaInterval = '{{ llmQuotaInterval }}',
 data__llmQuotaTimeUnit = '{{ llmQuotaTimeUnit }}',
 data__name = '{{ name }}',
 data__operationGroup = '{{ operationGroup }}',
-data__approvalType = '{{ approvalType }}',
-data__quota = '{{ quota }}',
-data__displayName = '{{ displayName }}',
-data__space = '{{ space }}',
-data__llmOperationGroup = '{{ llmOperationGroup }}',
 data__payloadOperationGroup = '{{ payloadOperationGroup }}',
-data__environments = '{{ environments }}',
-data__createdAt = '{{ createdAt }}',
-data__quotaCounterScope = '{{ quotaCounterScope }}',
 data__proxies = '{{ proxies }}',
+data__quota = '{{ quota }}',
+data__quotaCounterScope = '{{ quotaCounterScope }}',
+data__quotaInterval = '{{ quotaInterval }}',
+data__quotaTimeUnit = '{{ quotaTimeUnit }}',
 data__scopes = '{{ scopes }}',
-data__graphqlOperationGroup = '{{ graphqlOperationGroup }}'
+data__space = '{{ space }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apiproductsId = '{{ apiproductsId }}' --required
@@ -784,28 +784,13 @@ AND apiproductsId = '{{ apiproductsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product"
+    defaultValue="organizations_apiproducts_attributes"
     values={[
-        { label: 'organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product', value: 'organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product' },
         { label: 'organizations_apiproducts_attributes', value: 'organizations_apiproducts_attributes' },
-        { label: 'organizations_apiproducts_move', value: 'organizations_apiproducts_move' }
+        { label: 'organizations_apiproducts_move', value: 'organizations_apiproducts_move' },
+        { label: 'organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product', value: 'organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product' }
     ]}
 >
-<TabItem value="organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product">
-
-Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.
-
-```sql
-EXEC google.apigee.apiproducts.organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product 
-@organizationsId='{{ organizationsId }}' --required, 
-@appgroupsId='{{ appgroupsId }}' --required, 
-@appsId='{{ appsId }}' --required, 
-@keysId='{{ keysId }}' --required, 
-@apiproductsId='{{ apiproductsId }}' --required, 
-@action='{{ action }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_apiproducts_attributes">
 
 Updates or creates API product attributes. This API **replaces** the current list of attributes with the attributes specified in the request body. In this way, you can update existing attributes, add new attributes, or delete existing attributes by omitting them from the request body. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with entities also get cached for at least 180 seconds after entity is accessed during runtime. In this case, the `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.
@@ -833,6 +818,21 @@ EXEC google.apigee.apiproducts.organizations_apiproducts_move
 '{
 "space": "{{ space }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product">
+
+Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.
+
+```sql
+EXEC google.apigee.apiproducts.organizations_appgroups_apps_keys_apiproducts_update_app_group_app_key_api_product 
+@organizationsId='{{ organizationsId }}' --required, 
+@appgroupsId='{{ appgroupsId }}' --required, 
+@appsId='{{ appsId }}' --required, 
+@keysId='{{ keysId }}' --required, 
+@apiproductsId='{{ apiproductsId }}' --required, 
+@action='{{ action }}'
 ;
 ```
 </TabItem>

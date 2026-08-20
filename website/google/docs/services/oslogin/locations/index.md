@@ -104,10 +104,10 @@ EXEC google.oslogin.locations.sign_ssh_public_key
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"serviceAccount": "{{ serviceAccount }}", 
 "appEngineInstance": "{{ appEngineInstance }}", 
 "cloudRunResource": "{{ cloudRunResource }}", 
 "computeInstance": "{{ computeInstance }}", 
+"serviceAccount": "{{ serviceAccount }}", 
 "sshPublicKey": "{{ sshPublicKey }}"
 }'
 ;

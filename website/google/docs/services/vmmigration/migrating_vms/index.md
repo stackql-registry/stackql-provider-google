@@ -335,7 +335,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists MigratingVms in a given Source.</td>
 </tr>
 <tr>
@@ -349,7 +349,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single MigratingVm.</td>
 </tr>
 <tr>
@@ -358,6 +358,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
     <td></td>
     <td>Deletes a single MigratingVm.</td>
+</tr>
+<tr>
+    <td><a href="#extend_migration"><CopyableCode code="extend_migration" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
+    <td></td>
+    <td>Extend the migrating VM time to live.</td>
 </tr>
 <tr>
     <td><a href="#finalize_migration"><CopyableCode code="finalize_migration" /></a></td>
@@ -374,11 +381,11 @@ The following methods are available for this resource:
     <td>Pauses a migration for a VM. If cycle tasks are running they will be cancelled, preserving source task data. Further replication cycles will not be triggered while the VM is paused.</td>
 </tr>
 <tr>
-    <td><a href="#extend_migration"><CopyableCode code="extend_migration" /></a></td>
+    <td><a href="#resume_migration"><CopyableCode code="resume_migration" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
     <td></td>
-    <td>Extend the migrating VM time to live.</td>
+    <td>Resumes a migration for a VM. When called on a paused migration, will start the process of uploading data and creating snapshots; when called on a completed cut-over migration, will update the migration to active state and start the process of uploading data and creating snapshots.</td>
 </tr>
 <tr>
     <td><a href="#start_migration"><CopyableCode code="start_migration" /></a></td>
@@ -386,13 +393,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
     <td></td>
     <td>Starts migration for a VM. Starts the process of uploading data and creating snapshots, in replication cycles scheduled by the policy.</td>
-</tr>
-<tr>
-    <td><a href="#resume_migration"><CopyableCode code="resume_migration" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
-    <td></td>
-    <td>Resumes a migration for a VM. When called on a paused migration, will start the process of uploading data and creating snapshots; when called on a completed cut-over migration, will update the migration to active state and start the process of uploading data and creating snapshots.</td>
 </tr>
 </tbody>
 </table>
@@ -555,10 +555,10 @@ FROM google.vmmigration.migrating_vms
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND sourcesId = '{{ sourcesId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
 ;
 ```
@@ -581,13 +581,13 @@ Creates a new MigratingVm in a given Source.
 
 ```sql
 INSERT INTO google.vmmigration.migrating_vms (
-data__sourceVmId,
-data__labels,
+data__computeEngineDisksTargetDefaults,
+data__computeEngineTargetDefaults,
 data__description,
 data__displayName,
-data__computeEngineTargetDefaults,
-data__computeEngineDisksTargetDefaults,
+data__labels,
 data__policy,
+data__sourceVmId,
 projectsId,
 locationsId,
 sourcesId,
@@ -595,13 +595,13 @@ migratingVmId,
 requestId
 )
 SELECT 
-'{{ sourceVmId }}',
-'{{ labels }}',
+'{{ computeEngineDisksTargetDefaults }}',
+'{{ computeEngineTargetDefaults }}',
 '{{ description }}',
 '{{ displayName }}',
-'{{ computeEngineTargetDefaults }}',
-'{{ computeEngineDisksTargetDefaults }}',
+'{{ labels }}',
 '{{ policy }}',
+'{{ sourceVmId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourcesId }}',
@@ -630,14 +630,119 @@ response
     - name: sourcesId
       value: "{{ sourcesId }}"
       description: Required parameter for the migrating_vms resource.
-    - name: sourceVmId
-      value: "{{ sourceVmId }}"
+    - name: computeEngineDisksTargetDefaults
       description: |
-        The unique ID of the VM in the source. The VM's name in vSphere can be changed, so this is not the VM's name but rather its moRef id. This id is of the form vm-.
-    - name: labels
-      value: "{{ labels }}"
+        Details of the target Persistent Disks in Compute Engine.
+      value:
+        disks:
+          - additionalLabels: "{{ additionalLabels }}"
+            diskName: "{{ diskName }}"
+            diskType: "{{ diskType }}"
+            encryption:
+              kmsKey: "{{ kmsKey }}"
+            sourceDiskNumber: {{ sourceDiskNumber }}
+            vmAttachmentDetails:
+              deviceName: "{{ deviceName }}"
+        disksTargetDefaults: "{{ disksTargetDefaults }}"
+        targetProject: "{{ targetProject }}"
+        vmTargetDefaults:
+          additionalLicenses:
+            - "{{ additionalLicenses }}"
+          bootDiskDefaults:
+            deviceName: "{{ deviceName }}"
+            diskName: "{{ diskName }}"
+            diskType: "{{ diskType }}"
+            encryption:
+              kmsKey: "{{ kmsKey }}"
+            image:
+              sourceImage: "{{ sourceImage }}"
+          computeScheduling:
+            minNodeCpus: {{ minNodeCpus }}
+            nodeAffinities:
+              - key: "{{ key }}"
+                operator: "{{ operator }}"
+                values: "{{ values }}"
+            onHostMaintenance: "{{ onHostMaintenance }}"
+            restartType: "{{ restartType }}"
+          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+          enableVtpm: {{ enableVtpm }}
+          encryption:
+            kmsKey: "{{ kmsKey }}"
+          hostname: "{{ hostname }}"
+          labels: "{{ labels }}"
+          machineType: "{{ machineType }}"
+          machineTypeSeries: "{{ machineTypeSeries }}"
+          metadata: "{{ metadata }}"
+          networkInterfaces:
+            - externalIp: "{{ externalIp }}"
+              internalIp: "{{ internalIp }}"
+              network: "{{ network }}"
+              networkTier: "{{ networkTier }}"
+              subnetwork: "{{ subnetwork }}"
+          networkTags:
+            - "{{ networkTags }}"
+          secureBoot: {{ secureBoot }}
+          serviceAccount: "{{ serviceAccount }}"
+          vmName: "{{ vmName }}"
+        zone: "{{ zone }}"
+    - name: computeEngineTargetDefaults
       description: |
-        The labels of the migrating VM.
+        Details of the target VM in Compute Engine.
+      value:
+        adaptationModifiers:
+          - modifier: "{{ modifier }}"
+            value: "{{ value }}"
+        additionalLicenses:
+          - "{{ additionalLicenses }}"
+        appliedLicense:
+          osLicense: "{{ osLicense }}"
+          type: "{{ type }}"
+        bootConversion: "{{ bootConversion }}"
+        bootOption: "{{ bootOption }}"
+        computeScheduling:
+          minNodeCpus: {{ minNodeCpus }}
+          nodeAffinities:
+            - key: "{{ key }}"
+              operator: "{{ operator }}"
+              values: "{{ values }}"
+          onHostMaintenance: "{{ onHostMaintenance }}"
+          restartType: "{{ restartType }}"
+        diskReplicaZones:
+          - "{{ diskReplicaZones }}"
+        diskType: "{{ diskType }}"
+        disks:
+          - additionalLabels: "{{ additionalLabels }}"
+            diskName: "{{ diskName }}"
+            diskType: "{{ diskType }}"
+            encryption:
+              kmsKey: "{{ kmsKey }}"
+            sourceDiskNumber: {{ sourceDiskNumber }}
+            vmAttachmentDetails:
+              deviceName: "{{ deviceName }}"
+        enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+        enableVtpm: {{ enableVtpm }}
+        encryption:
+          kmsKey: "{{ kmsKey }}"
+        hostname: "{{ hostname }}"
+        labels: "{{ labels }}"
+        licenseType: "{{ licenseType }}"
+        machineType: "{{ machineType }}"
+        machineTypeSeries: "{{ machineTypeSeries }}"
+        metadata: "{{ metadata }}"
+        networkInterfaces:
+          - externalIp: "{{ externalIp }}"
+            internalIp: "{{ internalIp }}"
+            network: "{{ network }}"
+            networkTier: "{{ networkTier }}"
+            subnetwork: "{{ subnetwork }}"
+        networkTags:
+          - "{{ networkTags }}"
+        secureBoot: {{ secureBoot }}
+        serviceAccount: "{{ serviceAccount }}"
+        storagePool: "{{ storagePool }}"
+        targetProject: "{{ targetProject }}"
+        vmName: "{{ vmName }}"
+        zone: "{{ zone }}"
     - name: description
       value: "{{ description }}"
       description: |
@@ -646,125 +751,20 @@ response
       value: "{{ displayName }}"
       description: |
         The display name attached to the MigratingVm by the user.
-    - name: computeEngineTargetDefaults
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Details of the target VM in Compute Engine.
-      value:
-        bootConversion: "{{ bootConversion }}"
-        vmName: "{{ vmName }}"
-        machineType: "{{ machineType }}"
-        appliedLicense:
-          type: "{{ type }}"
-          osLicense: "{{ osLicense }}"
-        enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-        licenseType: "{{ licenseType }}"
-        disks:
-          - diskName: "{{ diskName }}"
-            vmAttachmentDetails:
-              deviceName: "{{ deviceName }}"
-            additionalLabels: "{{ additionalLabels }}"
-            diskType: "{{ diskType }}"
-            encryption:
-              kmsKey: "{{ kmsKey }}"
-            sourceDiskNumber: {{ sourceDiskNumber }}
-        diskType: "{{ diskType }}"
-        encryption:
-          kmsKey: "{{ kmsKey }}"
-        storagePool: "{{ storagePool }}"
-        targetProject: "{{ targetProject }}"
-        adaptationModifiers:
-          - modifier: "{{ modifier }}"
-            value: "{{ value }}"
-        networkInterfaces:
-          - network: "{{ network }}"
-            subnetwork: "{{ subnetwork }}"
-            networkTier: "{{ networkTier }}"
-            internalIp: "{{ internalIp }}"
-            externalIp: "{{ externalIp }}"
-        enableVtpm: {{ enableVtpm }}
-        zone: "{{ zone }}"
-        diskReplicaZones:
-          - "{{ diskReplicaZones }}"
-        hostname: "{{ hostname }}"
-        metadata: "{{ metadata }}"
-        networkTags:
-          - "{{ networkTags }}"
-        bootOption: "{{ bootOption }}"
-        secureBoot: {{ secureBoot }}
-        serviceAccount: "{{ serviceAccount }}"
-        labels: "{{ labels }}"
-        additionalLicenses:
-          - "{{ additionalLicenses }}"
-        computeScheduling:
-          minNodeCpus: {{ minNodeCpus }}
-          onHostMaintenance: "{{ onHostMaintenance }}"
-          restartType: "{{ restartType }}"
-          nodeAffinities:
-            - key: "{{ key }}"
-              values: "{{ values }}"
-              operator: "{{ operator }}"
-        machineTypeSeries: "{{ machineTypeSeries }}"
-    - name: computeEngineDisksTargetDefaults
-      description: |
-        Details of the target Persistent Disks in Compute Engine.
-      value:
-        zone: "{{ zone }}"
-        disksTargetDefaults: "{{ disksTargetDefaults }}"
-        vmTargetDefaults:
-          computeScheduling:
-            minNodeCpus: {{ minNodeCpus }}
-            onHostMaintenance: "{{ onHostMaintenance }}"
-            restartType: "{{ restartType }}"
-            nodeAffinities:
-              - key: "{{ key }}"
-                values: "{{ values }}"
-                operator: "{{ operator }}"
-          machineTypeSeries: "{{ machineTypeSeries }}"
-          additionalLicenses:
-            - "{{ additionalLicenses }}"
-          labels: "{{ labels }}"
-          networkInterfaces:
-            - network: "{{ network }}"
-              subnetwork: "{{ subnetwork }}"
-              networkTier: "{{ networkTier }}"
-              internalIp: "{{ internalIp }}"
-              externalIp: "{{ externalIp }}"
-          enableVtpm: {{ enableVtpm }}
-          serviceAccount: "{{ serviceAccount }}"
-          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-          secureBoot: {{ secureBoot }}
-          bootDiskDefaults:
-            diskType: "{{ diskType }}"
-            encryption:
-              kmsKey: "{{ kmsKey }}"
-            image:
-              sourceImage: "{{ sourceImage }}"
-            deviceName: "{{ deviceName }}"
-            diskName: "{{ diskName }}"
-          encryption:
-            kmsKey: "{{ kmsKey }}"
-          metadata: "{{ metadata }}"
-          hostname: "{{ hostname }}"
-          machineType: "{{ machineType }}"
-          networkTags:
-            - "{{ networkTags }}"
-          vmName: "{{ vmName }}"
-        targetProject: "{{ targetProject }}"
-        disks:
-          - diskName: "{{ diskName }}"
-            vmAttachmentDetails:
-              deviceName: "{{ deviceName }}"
-            additionalLabels: "{{ additionalLabels }}"
-            diskType: "{{ diskType }}"
-            encryption:
-              kmsKey: "{{ kmsKey }}"
-            sourceDiskNumber: {{ sourceDiskNumber }}
+        The labels of the migrating VM.
     - name: policy
       description: |
         The replication schedule policy.
       value:
         idleDuration: "{{ idleDuration }}"
         skipOsAdaptation: {{ skipOsAdaptation }}
+    - name: sourceVmId
+      value: "{{ sourceVmId }}"
+      description: |
+        The unique ID of the VM in the source. The VM's name in vSphere can be changed, so this is not the VM's name but rather its moRef id. This id is of the form vm-.
     - name: migratingVmId
       value: "{{ migratingVmId }}"
     - name: requestId
@@ -790,20 +790,20 @@ Updates the parameters of a single MigratingVm.
 ```sql
 UPDATE google.vmmigration.migrating_vms
 SET 
-data__sourceVmId = '{{ sourceVmId }}',
-data__labels = '{{ labels }}',
+data__computeEngineDisksTargetDefaults = '{{ computeEngineDisksTargetDefaults }}',
+data__computeEngineTargetDefaults = '{{ computeEngineTargetDefaults }}',
 data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__computeEngineTargetDefaults = '{{ computeEngineTargetDefaults }}',
-data__computeEngineDisksTargetDefaults = '{{ computeEngineDisksTargetDefaults }}',
-data__policy = '{{ policy }}'
+data__labels = '{{ labels }}',
+data__policy = '{{ policy }}',
+data__sourceVmId = '{{ sourceVmId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
 AND migratingVmsId = '{{ migratingVmsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -842,15 +842,28 @@ AND migratingVmsId = '{{ migratingVmsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="finalize_migration"
+    defaultValue="extend_migration"
     values={[
+        { label: 'extend_migration', value: 'extend_migration' },
         { label: 'finalize_migration', value: 'finalize_migration' },
         { label: 'pause_migration', value: 'pause_migration' },
-        { label: 'extend_migration', value: 'extend_migration' },
-        { label: 'start_migration', value: 'start_migration' },
-        { label: 'resume_migration', value: 'resume_migration' }
+        { label: 'resume_migration', value: 'resume_migration' },
+        { label: 'start_migration', value: 'start_migration' }
     ]}
 >
+<TabItem value="extend_migration">
+
+Extend the migrating VM time to live.
+
+```sql
+EXEC google.vmmigration.migrating_vms.extend_migration 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@sourcesId='{{ sourcesId }}' --required, 
+@migratingVmsId='{{ migratingVmsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="finalize_migration">
 
 Marks a migration as completed, deleting migration resources that are no longer being used. Only applicable after cutover is done.
@@ -877,12 +890,12 @@ EXEC google.vmmigration.migrating_vms.pause_migration
 ;
 ```
 </TabItem>
-<TabItem value="extend_migration">
+<TabItem value="resume_migration">
 
-Extend the migrating VM time to live.
+Resumes a migration for a VM. When called on a paused migration, will start the process of uploading data and creating snapshots; when called on a completed cut-over migration, will update the migration to active state and start the process of uploading data and creating snapshots.
 
 ```sql
-EXEC google.vmmigration.migrating_vms.extend_migration 
+EXEC google.vmmigration.migrating_vms.resume_migration 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @sourcesId='{{ sourcesId }}' --required, 
@@ -896,19 +909,6 @@ Starts migration for a VM. Starts the process of uploading data and creating sna
 
 ```sql
 EXEC google.vmmigration.migrating_vms.start_migration 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@sourcesId='{{ sourcesId }}' --required, 
-@migratingVmsId='{{ migratingVmsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="resume_migration">
-
-Resumes a migration for a VM. When called on a paused migration, will start the process of uploading data and creating snapshots; when called on a completed cut-over migration, will update the migration to active state and start the process of uploading data and creating snapshots.
-
-```sql
-EXEC google.vmmigration.migrating_vms.resume_migration 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @sourcesId='{{ sourcesId }}' --required, 

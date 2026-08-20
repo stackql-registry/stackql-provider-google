@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_agents_intents_list"><CopyableCode code="projects_locations_agents_intents_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-intentView"><code>intentView</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-intentView"><code>intentView</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -199,7 +199,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_agents_intents_patch"><CopyableCode code="projects_locations_agents_intents_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-intentsId"><code>intentsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -210,14 +210,14 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_agents_intents_import"><CopyableCode code="projects_locations_agents_intents_import" /></a></td>
+    <td><a href="#projects_locations_agents_intents_export"><CopyableCode code="projects_locations_agents_intents_export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_agents_intents_export"><CopyableCode code="projects_locations_agents_intents_export" /></a></td>
+    <td><a href="#projects_locations_agents_intents_import"><CopyableCode code="projects_locations_agents_intents_import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
@@ -339,9 +339,9 @@ FROM google.dialogflow.intents
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND languageCode = '{{ languageCode }}'
 AND intentView = '{{ intentView }}'
+AND languageCode = '{{ languageCode }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -364,30 +364,30 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.intents (
-data__trainingPhrases,
-data__priority,
-data__displayName,
-data__parameters,
-data__isFallback,
-data__dtmfPattern,
-data__name,
-data__labels,
 data__description,
+data__displayName,
+data__dtmfPattern,
+data__isFallback,
+data__labels,
+data__name,
+data__parameters,
+data__priority,
+data__trainingPhrases,
 projectsId,
 locationsId,
 agentsId,
 languageCode
 )
 SELECT 
-'{{ trainingPhrases }}',
-{{ priority }},
-'{{ displayName }}',
-'{{ parameters }}',
-{{ isFallback }},
-'{{ dtmfPattern }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ dtmfPattern }}',
+{{ isFallback }},
+'{{ labels }}',
+'{{ name }}',
+'{{ parameters }}',
+{{ priority }},
+'{{ trainingPhrases }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -419,31 +419,31 @@ trainingPhrases
     - name: agentsId
       value: "{{ agentsId }}"
       description: Required parameter for the intents resource.
-    - name: trainingPhrases
-      value:
-        - parts: "{{ parts }}"
-          repeatCount: {{ repeatCount }}
-          id: "{{ id }}"
-    - name: priority
-      value: {{ priority }}
+    - name: description
+      value: "{{ description }}"
     - name: displayName
       value: "{{ displayName }}"
+    - name: dtmfPattern
+      value: "{{ dtmfPattern }}"
+    - name: isFallback
+      value: {{ isFallback }}
+    - name: labels
+      value: "{{ labels }}"
+    - name: name
+      value: "{{ name }}"
     - name: parameters
       value:
         - entityType: "{{ entityType }}"
-          redact: {{ redact }}
           id: "{{ id }}"
           isList: {{ isList }}
-    - name: isFallback
-      value: {{ isFallback }}
-    - name: dtmfPattern
-      value: "{{ dtmfPattern }}"
-    - name: name
-      value: "{{ name }}"
-    - name: labels
-      value: "{{ labels }}"
-    - name: description
-      value: "{{ description }}"
+          redact: {{ redact }}
+    - name: priority
+      value: {{ priority }}
+    - name: trainingPhrases
+      value:
+        - id: "{{ id }}"
+          parts: "{{ parts }}"
+          repeatCount: {{ repeatCount }}
     - name: languageCode
       value: "{{ languageCode }}"
 `}</CodeBlock>
@@ -467,22 +467,22 @@ No description available.
 ```sql
 UPDATE google.dialogflow.intents
 SET 
-data__trainingPhrases = '{{ trainingPhrases }}',
-data__priority = {{ priority }},
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__parameters = '{{ parameters }}',
-data__isFallback = {{ isFallback }},
 data__dtmfPattern = '{{ dtmfPattern }}',
-data__name = '{{ name }}',
+data__isFallback = {{ isFallback }},
 data__labels = '{{ labels }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}',
+data__parameters = '{{ parameters }}',
+data__priority = {{ priority }},
+data__trainingPhrases = '{{ trainingPhrases }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND agentsId = '{{ agentsId }}' --required
 AND intentsId = '{{ intentsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND languageCode = '{{ languageCode}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 description,
@@ -525,30 +525,12 @@ AND intentsId = '{{ intentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_agents_intents_import"
+    defaultValue="projects_locations_agents_intents_export"
     values={[
-        { label: 'projects_locations_agents_intents_import', value: 'projects_locations_agents_intents_import' },
-        { label: 'projects_locations_agents_intents_export', value: 'projects_locations_agents_intents_export' }
+        { label: 'projects_locations_agents_intents_export', value: 'projects_locations_agents_intents_export' },
+        { label: 'projects_locations_agents_intents_import', value: 'projects_locations_agents_intents_import' }
     ]}
 >
-<TabItem value="projects_locations_agents_intents_import">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.intents.projects_locations_agents_intents_import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required 
-@@json=
-'{
-"intentsUri": "{{ intentsUri }}", 
-"intentsContent": "{{ intentsContent }}", 
-"mergeOption": "{{ mergeOption }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_agents_intents_export">
 
 Successful response
@@ -562,8 +544,26 @@ EXEC google.dialogflow.intents.projects_locations_agents_intents_export
 '{
 "dataFormat": "{{ dataFormat }}", 
 "intents": "{{ intents }}", 
+"intentsContentInline": {{ intentsContentInline }}, 
+"intentsUri": "{{ intentsUri }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_intents_import">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.intents.projects_locations_agents_intents_import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required 
+@@json=
+'{
+"intentsContent": "{{ intentsContent }}", 
 "intentsUri": "{{ intentsUri }}", 
-"intentsContentInline": {{ intentsContentInline }}
+"mergeOption": "{{ mergeOption }}"
 }'
 ;
 ```

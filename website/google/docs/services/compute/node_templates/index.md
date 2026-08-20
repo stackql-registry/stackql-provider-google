@@ -300,14 +300,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of node templates available to the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of node templates.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -452,10 +452,10 @@ warning
 FROM google.compute.node_templates
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -484,13 +484,13 @@ status,
 statusMessage
 FROM google.compute.node_templates
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -512,29 +512,29 @@ Creates a NodeTemplate resource in the specified project using the data<br />inc
 
 ```sql
 INSERT INTO google.compute.node_templates (
+data__accelerators,
+data__cpuOvercommitType,
 data__description,
 data__disks,
-data__nodeType,
-data__serverBinding,
 data__name,
 data__nodeAffinityLabels,
-data__cpuOvercommitType,
+data__nodeType,
 data__nodeTypeFlexibility,
-data__accelerators,
+data__serverBinding,
 project,
 region,
 requestId
 )
 SELECT 
+'{{ accelerators }}',
+'{{ cpuOvercommitType }}',
 '{{ description }}',
 '{{ disks }}',
-'{{ nodeType }}',
-'{{ serverBinding }}',
 '{{ name }}',
 '{{ nodeAffinityLabels }}',
-'{{ cpuOvercommitType }}',
+'{{ nodeType }}',
 '{{ nodeTypeFlexibility }}',
-'{{ accelerators }}',
+'{{ serverBinding }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -580,6 +580,15 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the node_templates resource.
+    - name: accelerators
+      value:
+        - acceleratorCount: {{ acceleratorCount }}
+          acceleratorType: "{{ acceleratorType }}"
+    - name: cpuOvercommitType
+      value: "{{ cpuOvercommitType }}"
+      description: |
+        CPU overcommit.
+      valid_values: ['CPU_OVERCOMMIT_TYPE_UNSPECIFIED', 'ENABLED', 'NONE']
     - name: description
       value: "{{ description }}"
       description: |
@@ -587,25 +596,9 @@ zone
         create the resource.
     - name: disks
       value:
-        - diskSizeGb: {{ diskSizeGb }}
-          diskCount: {{ diskCount }}
+        - diskCount: {{ diskCount }}
+          diskSizeGb: {{ diskSizeGb }}
           diskType: "{{ diskType }}"
-    - name: nodeType
-      value: "{{ nodeType }}"
-      description: |
-        The node type to use for nodes group that are created from this template.
-    - name: serverBinding
-      description: |
-        Sets the binding properties for the physical server. Valid values include:
-        - *[Default]* RESTART_NODE_ON_ANY_SERVER:
-        Restarts VMs on any available
-        physical server
-        - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same
-        physical server whenever possible
-        See Sole-tenant
-        node options for more information.
-      value:
-        type: "{{ type }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -621,22 +614,29 @@ zone
       value: "{{ nodeAffinityLabels }}"
       description: |
         Labels to use for node affinity, which will be used in instance scheduling.
-    - name: cpuOvercommitType
-      value: "{{ cpuOvercommitType }}"
+    - name: nodeType
+      value: "{{ nodeType }}"
       description: |
-        CPU overcommit.
-      valid_values: ['CPU_OVERCOMMIT_TYPE_UNSPECIFIED', 'ENABLED', 'NONE']
+        The node type to use for nodes group that are created from this template.
     - name: nodeTypeFlexibility
       description: |
         Do not use. Instead, use the node_type property.
       value:
         cpus: "{{ cpus }}"
-        memory: "{{ memory }}"
         localSsd: "{{ localSsd }}"
-    - name: accelerators
+        memory: "{{ memory }}"
+    - name: serverBinding
+      description: |
+        Sets the binding properties for the physical server. Valid values include:
+        - *[Default]* RESTART_NODE_ON_ANY_SERVER:
+        Restarts VMs on any available
+        physical server
+        - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same
+        physical server whenever possible
+        See Sole-tenant
+        node options for more information.
       value:
-        - acceleratorType: "{{ acceleratorType }}"
-          acceleratorCount: {{ acceleratorCount }}
+        type: "{{ type }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

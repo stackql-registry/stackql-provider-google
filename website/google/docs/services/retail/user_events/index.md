@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_catalogs_user_events_write"><CopyableCode code="projects_locations_catalogs_user_events_write" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-writeAsync"><code>writeAsync</code></a></td>
-    <td>Writes a single user event.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_catalogs_user_events_collect"><CopyableCode code="projects_locations_catalogs_user_events_collect" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
     <td></td>
     <td>Writes a single user event from the browser. For larger user event payload over 16 KB, the POST method should be used instead, otherwise a 400 Bad Request error is returned. This method is used only by the AI Commerce Search API JavaScript pixel and Google Tag Manager. Users should not call this method directly.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_catalogs_user_events_import"><CopyableCode code="projects_locations_catalogs_user_events_import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
+    <td></td>
+    <td>Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. `Operation.response` is of type `ImportResponse`. Note that it is possible for a subset of the items to be successfully inserted. `Operation.metadata` is of type `ImportMetadata`.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_catalogs_user_events_purge"><CopyableCode code="projects_locations_catalogs_user_events_purge" /></a></td>
@@ -79,11 +79,11 @@ The following methods are available for this resource:
     <td>Starts a user-event rejoin operation with latest product catalog. Events are not annotated with detailed product information for products that are missing from the catalog when the user event is ingested. These events are stored as unjoined events with limited usage on training and serving. You can use this method to start a join operation on specified events with the latest version of product catalog. You can also use this method to correct events joined with the wrong product catalog. A rejoin operation can take hours or days to complete.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_user_events_import"><CopyableCode code="projects_locations_catalogs_user_events_import" /></a></td>
+    <td><a href="#projects_locations_catalogs_user_events_write"><CopyableCode code="projects_locations_catalogs_user_events_write" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td></td>
-    <td>Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. `Operation.response` is of type `ImportResponse`. Note that it is possible for a subset of the items to be successfully inserted. `Operation.metadata` is of type `ImportMetadata`.</td>
+    <td><a href="#parameter-writeAsync"><code>writeAsync</code></a></td>
+    <td>Writes a single user event.</td>
 </tr>
 </tbody>
 </table>
@@ -127,53 +127,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_catalogs_user_events_write"
+    defaultValue="projects_locations_catalogs_user_events_collect"
     values={[
-        { label: 'projects_locations_catalogs_user_events_write', value: 'projects_locations_catalogs_user_events_write' },
         { label: 'projects_locations_catalogs_user_events_collect', value: 'projects_locations_catalogs_user_events_collect' },
+        { label: 'projects_locations_catalogs_user_events_import', value: 'projects_locations_catalogs_user_events_import' },
         { label: 'projects_locations_catalogs_user_events_purge', value: 'projects_locations_catalogs_user_events_purge' },
         { label: 'projects_locations_catalogs_user_events_rejoin', value: 'projects_locations_catalogs_user_events_rejoin' },
-        { label: 'projects_locations_catalogs_user_events_import', value: 'projects_locations_catalogs_user_events_import' }
+        { label: 'projects_locations_catalogs_user_events_write', value: 'projects_locations_catalogs_user_events_write' }
     ]}
 >
-<TabItem value="projects_locations_catalogs_user_events_write">
-
-Writes a single user event.
-
-```sql
-EXEC google.retail.user_events.projects_locations_catalogs_user_events_write 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required, 
-@writeAsync={{ writeAsync }} 
-@@json=
-'{
-"attributionToken": "{{ attributionToken }}", 
-"orderBy": "{{ orderBy }}", 
-"pageCategories": "{{ pageCategories }}", 
-"sessionId": "{{ sessionId }}", 
-"eventTime": "{{ eventTime }}", 
-"entity": "{{ entity }}", 
-"cartId": "{{ cartId }}", 
-"filter": "{{ filter }}", 
-"visitorId": "{{ visitorId }}", 
-"experimentIds": "{{ experimentIds }}", 
-"searchQuery": "{{ searchQuery }}", 
-"offset": {{ offset }}, 
-"panels": "{{ panels }}", 
-"completionDetail": "{{ completionDetail }}", 
-"uri": "{{ uri }}", 
-"referrerUri": "{{ referrerUri }}", 
-"userInfo": "{{ userInfo }}", 
-"attributes": "{{ attributes }}", 
-"pageViewId": "{{ pageViewId }}", 
-"eventType": "{{ eventType }}", 
-"productDetails": "{{ productDetails }}", 
-"purchaseTransaction": "{{ purchaseTransaction }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_catalogs_user_events_collect">
 
 Writes a single user event from the browser. For larger user event payload over 16 KB, the POST method should be used instead, otherwise a 400 Bad Request error is returned. This method is used only by the AI Commerce Search API JavaScript pixel and Google Tag Manager. Users should not call this method directly.
@@ -185,11 +147,28 @@ EXEC google.retail.user_events.projects_locations_catalogs_user_events_collect
 @catalogsId='{{ catalogsId }}' --required 
 @@json=
 '{
-"userEvent": "{{ userEvent }}", 
-"uri": "{{ uri }}", 
-"rawJson": "{{ rawJson }}", 
 "ets": "{{ ets }}", 
-"prebuiltRule": "{{ prebuiltRule }}"
+"prebuiltRule": "{{ prebuiltRule }}", 
+"rawJson": "{{ rawJson }}", 
+"uri": "{{ uri }}", 
+"userEvent": "{{ userEvent }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_user_events_import">
+
+Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. `Operation.response` is of type `ImportResponse`. Note that it is possible for a subset of the items to be successfully inserted. `Operation.metadata` is of type `ImportMetadata`.
+
+```sql
+EXEC google.retail.user_events.projects_locations_catalogs_user_events_import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required 
+@@json=
+'{
+"errorsConfig": "{{ errorsConfig }}", 
+"inputConfig": "{{ inputConfig }}"
 }'
 ;
 ```
@@ -227,19 +206,40 @@ EXEC google.retail.user_events.projects_locations_catalogs_user_events_rejoin
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_catalogs_user_events_import">
+<TabItem value="projects_locations_catalogs_user_events_write">
 
-Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. `Operation.response` is of type `ImportResponse`. Note that it is possible for a subset of the items to be successfully inserted. `Operation.metadata` is of type `ImportMetadata`.
+Writes a single user event.
 
 ```sql
-EXEC google.retail.user_events.projects_locations_catalogs_user_events_import 
+EXEC google.retail.user_events.projects_locations_catalogs_user_events_write 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required 
+@catalogsId='{{ catalogsId }}' --required, 
+@writeAsync={{ writeAsync }} 
 @@json=
 '{
-"inputConfig": "{{ inputConfig }}", 
-"errorsConfig": "{{ errorsConfig }}"
+"attributes": "{{ attributes }}", 
+"attributionToken": "{{ attributionToken }}", 
+"cartId": "{{ cartId }}", 
+"completionDetail": "{{ completionDetail }}", 
+"entity": "{{ entity }}", 
+"eventTime": "{{ eventTime }}", 
+"eventType": "{{ eventType }}", 
+"experimentIds": "{{ experimentIds }}", 
+"filter": "{{ filter }}", 
+"offset": {{ offset }}, 
+"orderBy": "{{ orderBy }}", 
+"pageCategories": "{{ pageCategories }}", 
+"pageViewId": "{{ pageViewId }}", 
+"panels": "{{ panels }}", 
+"productDetails": "{{ productDetails }}", 
+"purchaseTransaction": "{{ purchaseTransaction }}", 
+"referrerUri": "{{ referrerUri }}", 
+"searchQuery": "{{ searchQuery }}", 
+"sessionId": "{{ sessionId }}", 
+"uri": "{{ uri }}", 
+"userInfo": "{{ userInfo }}", 
+"visitorId": "{{ visitorId }}"
 }'
 ;
 ```

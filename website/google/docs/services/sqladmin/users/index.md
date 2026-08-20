@@ -111,6 +111,11 @@ The following fields are returned by `SELECT` queries:
     <td>The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable. Can be omitted for `update` because it is already specified on the URL.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="serverRoles" /></td>
+    <td><code>array</code></td>
+    <td>Optional. The server roles for the SQL Server login.</td>
+</tr>
+<tr>
     <td><CopyableCode code="sqlserverUserDetails" /></td>
     <td><code>object</code></td>
     <td>Represents a Sql Server user on the Cloud SQL instance. (id: SqlServerUserDetails)</td>
@@ -195,6 +200,11 @@ The following fields are returned by `SELECT` queries:
     <td>The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable. Can be omitted for `update` because it is already specified on the URL.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="serverRoles" /></td>
+    <td><code>array</code></td>
+    <td>Optional. The server roles for the SQL Server login.</td>
+</tr>
+<tr>
     <td><CopyableCode code="sqlserverUserDetails" /></td>
     <td><code>object</code></td>
     <td>Represents a Sql Server user on the Cloud SQL instance. (id: SqlServerUserDetails)</td>
@@ -249,7 +259,7 @@ The following methods are available for this resource:
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-databaseRoles"><code>databaseRoles</code></a>, <a href="#parameter-host"><code>host</code></a>, <a href="#parameter-revokeExistingRoles"><code>revokeExistingRoles</code></a></td>
+    <td><a href="#parameter-databaseRoles"><code>databaseRoles</code></a>, <a href="#parameter-host"><code>host</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-revokeExistingRoles"><code>revokeExistingRoles</code></a>, <a href="#parameter-revokeExistingServerRoles"><code>revokeExistingServerRoles</code></a>, <a href="#parameter-serverRoles"><code>serverRoles</code></a></td>
     <td>Updates an existing user in a Cloud SQL instance.</td>
 </tr>
 <tr>
@@ -310,6 +320,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>boolean</code></td>
     <td></td>
 </tr>
+<tr id="parameter-revokeExistingServerRoles">
+    <td><CopyableCode code="revokeExistingServerRoles" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-serverRoles">
+    <td><CopyableCode code="serverRoles" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -340,6 +360,7 @@ kind,
 password,
 passwordPolicy,
 project,
+serverRoles,
 sqlserverUserDetails,
 type
 FROM google.sqladmin.users
@@ -368,6 +389,7 @@ kind,
 password,
 passwordPolicy,
 project,
+serverRoles,
 sqlserverUserDetails,
 type
 FROM google.sqladmin.users
@@ -394,38 +416,40 @@ Creates a new user in a Cloud SQL instance.
 
 ```sql
 INSERT INTO google.sqladmin.users (
-data__name,
 data__databaseRoles,
-data__host,
-data__etag,
-data__iamEmail,
-data__type,
-data__passwordPolicy,
-data__password,
-data__instance,
-data__project,
-data__iamStatus,
-data__kind,
 data__dualPasswordType,
+data__etag,
+data__host,
+data__iamEmail,
+data__iamStatus,
+data__instance,
+data__kind,
+data__name,
+data__password,
+data__passwordPolicy,
+data__project,
+data__serverRoles,
 data__sqlserverUserDetails,
+data__type,
 project,
 instance
 )
 SELECT 
-'{{ name }}',
 '{{ databaseRoles }}',
-'{{ host }}',
-'{{ etag }}',
-'{{ iamEmail }}',
-'{{ type }}',
-'{{ passwordPolicy }}',
-'{{ password }}',
-'{{ instance }}',
-'{{ project }}',
-'{{ iamStatus }}',
-'{{ kind }}',
 '{{ dualPasswordType }}',
+'{{ etag }}',
+'{{ host }}',
+'{{ iamEmail }}',
+'{{ iamStatus }}',
+'{{ instance }}',
+'{{ kind }}',
+'{{ name }}',
+'{{ password }}',
+'{{ passwordPolicy }}',
+'{{ project }}',
+'{{ serverRoles }}',
 '{{ sqlserverUserDetails }}',
+'{{ type }}',
 '{{ project }}',
 '{{ instance }}'
 RETURNING
@@ -463,69 +487,69 @@ user
     - name: instance
       value: "{{ instance }}"
       description: Required parameter for the users resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of the user in the Cloud SQL instance. Can be omitted for \`update\` because it is already specified in the URL.
     - name: databaseRoles
       value:
         - "{{ databaseRoles }}"
       description: |
         Optional. Role memberships of the user
-    - name: host
-      value: "{{ host }}"
-      description: |
-        Optional. The host from which the user can connect. For \`insert\` operations, host defaults to an empty string. For \`update\` operations, host is specified as part of the request URL. The host name cannot be updated after insertion. For a MySQL instance, it's required; for a PostgreSQL or SQL Server instance, it's optional.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This field is deprecated and will be removed from a future version of the API.
-    - name: iamEmail
-      value: "{{ iamEmail }}"
-      description: |
-        Optional. The full email for an IAM user. For normal database users, this will not be filled. Only applicable to MySQL database users.
-    - name: type
-      value: "{{ type }}"
-      description: |
-        The user type. It determines the method to authenticate the user during login. The default is the database's built-in user type.
-      valid_values: ['BUILT_IN', 'CLOUD_IAM_USER', 'CLOUD_IAM_SERVICE_ACCOUNT', 'CLOUD_IAM_GROUP', 'CLOUD_IAM_GROUP_USER', 'CLOUD_IAM_GROUP_SERVICE_ACCOUNT', 'CLOUD_IAM_WORKFORCE_IDENTITY', 'ENTRAID_USER']
-    - name: passwordPolicy
-      description: |
-        User level password validation policy.
-      value:
-        enablePasswordVerification: {{ enablePasswordVerification }}
-        allowedFailedAttempts: {{ allowedFailedAttempts }}
-        passwordExpirationDuration: "{{ passwordExpirationDuration }}"
-        enableFailedAttemptsCheck: {{ enableFailedAttemptsCheck }}
-        status:
-          locked: {{ locked }}
-          passwordExpirationTime: "{{ passwordExpirationTime }}"
-    - name: password
-      value: "{{ password }}"
-      description: |
-        The password for the user.
-    - name: instance
-      value: "{{ instance }}"
-      description: |
-        The name of the Cloud SQL instance. This does not include the project ID. Can be omitted for \`update\` because it is already specified on the URL.
-    - name: project
-      value: "{{ project }}"
-      description: |
-        The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable. Can be omitted for \`update\` because it is already specified on the URL.
-    - name: iamStatus
-      value: "{{ iamStatus }}"
-      description: |
-        Indicates if a group is active or inactive for IAM database authentication.
-      valid_values: ['IAM_STATUS_UNSPECIFIED', 'INACTIVE', 'ACTIVE']
-    - name: kind
-      value: "{{ kind }}"
-      description: |
-        This is always \`sql#user\`.
     - name: dualPasswordType
       value: "{{ dualPasswordType }}"
       description: |
         Dual password status for the user.
       valid_values: ['DUAL_PASSWORD_TYPE_UNSPECIFIED', 'NO_MODIFY_DUAL_PASSWORD', 'NO_DUAL_PASSWORD', 'DUAL_PASSWORD']
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This field is deprecated and will be removed from a future version of the API.
+    - name: host
+      value: "{{ host }}"
+      description: |
+        Optional. The host from which the user can connect. For \`insert\` operations, host defaults to an empty string. For \`update\` operations, host is specified as part of the request URL. The host name cannot be updated after insertion. For a MySQL instance, it's required; for a PostgreSQL or SQL Server instance, it's optional.
+    - name: iamEmail
+      value: "{{ iamEmail }}"
+      description: |
+        Optional. The full email for an IAM user. For normal database users, this will not be filled. Only applicable to MySQL database users.
+    - name: iamStatus
+      value: "{{ iamStatus }}"
+      description: |
+        Indicates if a group is active or inactive for IAM database authentication.
+      valid_values: ['IAM_STATUS_UNSPECIFIED', 'INACTIVE', 'ACTIVE']
+    - name: instance
+      value: "{{ instance }}"
+      description: |
+        The name of the Cloud SQL instance. This does not include the project ID. Can be omitted for \`update\` because it is already specified on the URL.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        This is always \`sql#user\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the user in the Cloud SQL instance. Can be omitted for \`update\` because it is already specified in the URL.
+    - name: password
+      value: "{{ password }}"
+      description: |
+        The password for the user.
+    - name: passwordPolicy
+      description: |
+        User level password validation policy.
+      value:
+        allowedFailedAttempts: {{ allowedFailedAttempts }}
+        enableFailedAttemptsCheck: {{ enableFailedAttemptsCheck }}
+        enablePasswordVerification: {{ enablePasswordVerification }}
+        passwordExpirationDuration: "{{ passwordExpirationDuration }}"
+        status:
+          locked: {{ locked }}
+          passwordExpirationTime: "{{ passwordExpirationTime }}"
+    - name: project
+      value: "{{ project }}"
+      description: |
+        The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable. Can be omitted for \`update\` because it is already specified on the URL.
+    - name: serverRoles
+      value:
+        - "{{ serverRoles }}"
+      description: |
+        Optional. The server roles for the SQL Server login.
     - name: sqlserverUserDetails
       description: |
         Represents a Sql Server user on the Cloud SQL instance.
@@ -533,6 +557,11 @@ user
         disabled: {{ disabled }}
         serverRoles:
           - "{{ serverRoles }}"
+    - name: type
+      value: "{{ type }}"
+      description: |
+        The user type. It determines the method to authenticate the user during login. The default is the database's built-in user type.
+      valid_values: ['BUILT_IN', 'CLOUD_IAM_USER', 'CLOUD_IAM_SERVICE_ACCOUNT', 'CLOUD_IAM_GROUP', 'CLOUD_IAM_GROUP_USER', 'CLOUD_IAM_GROUP_SERVICE_ACCOUNT', 'CLOUD_IAM_WORKFORCE_IDENTITY', 'ENTRAID_USER']
 `}</CodeBlock>
 
 </TabItem>
@@ -554,27 +583,30 @@ Updates an existing user in a Cloud SQL instance.
 ```sql
 REPLACE google.sqladmin.users
 SET 
-data__name = '{{ name }}',
 data__databaseRoles = '{{ databaseRoles }}',
-data__host = '{{ host }}',
-data__etag = '{{ etag }}',
-data__iamEmail = '{{ iamEmail }}',
-data__type = '{{ type }}',
-data__passwordPolicy = '{{ passwordPolicy }}',
-data__password = '{{ password }}',
-data__instance = '{{ instance }}',
-data__project = '{{ project }}',
-data__iamStatus = '{{ iamStatus }}',
-data__kind = '{{ kind }}',
 data__dualPasswordType = '{{ dualPasswordType }}',
-data__sqlserverUserDetails = '{{ sqlserverUserDetails }}'
+data__etag = '{{ etag }}',
+data__host = '{{ host }}',
+data__iamEmail = '{{ iamEmail }}',
+data__iamStatus = '{{ iamStatus }}',
+data__instance = '{{ instance }}',
+data__kind = '{{ kind }}',
+data__name = '{{ name }}',
+data__password = '{{ password }}',
+data__passwordPolicy = '{{ passwordPolicy }}',
+data__project = '{{ project }}',
+data__serverRoles = '{{ serverRoles }}',
+data__sqlserverUserDetails = '{{ sqlserverUserDetails }}',
+data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
-AND name = '{{ name}}'
 AND databaseRoles = '{{ databaseRoles}}'
 AND host = '{{ host}}'
+AND name = '{{ name}}'
 AND revokeExistingRoles = {{ revokeExistingRoles}}
+AND revokeExistingServerRoles = {{ revokeExistingServerRoles}}
+AND serverRoles = '{{ serverRoles}}'
 RETURNING
 name,
 acquireSsrsLeaseContext,

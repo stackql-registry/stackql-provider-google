@@ -92,12 +92,12 @@ The Current Conditions endpoint provides hourly air quality information in more 
 EXEC google.airquality.current_conditions.lookup 
 @@json=
 '{
-"universalAqi": {{ universalAqi }}, 
 "customLocalAqis": "{{ customLocalAqis }}", 
 "extraComputations": "{{ extraComputations }}", 
-"uaqiColorPalette": "{{ uaqiColorPalette }}", 
+"languageCode": "{{ languageCode }}", 
 "location": "{{ location }}", 
-"languageCode": "{{ languageCode }}"
+"uaqiColorPalette": "{{ uaqiColorPalette }}", 
+"universalAqi": {{ universalAqi }}
 }'
 ;
 ```

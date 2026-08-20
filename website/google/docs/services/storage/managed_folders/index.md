@@ -81,6 +81,11 @@ The following fields are returned by `SELECT` queries:
     <td>The version of the metadata for this managed folder. Used for preconditions and for detecting changes in metadata.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="rapidCacheConfig" /></td>
+    <td><code>object</code></td>
+    <td>The rapid cache configuration for the managed folder. (id: RapidCacheConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
     <td>The link to this managed folder.</td>
@@ -135,6 +140,11 @@ The following fields are returned by `SELECT` queries:
     <td>The version of the metadata for this managed folder. Used for preconditions and for detecting changes in metadata.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="rapidCacheConfig" /></td>
+    <td><code>object</code></td>
+    <td>The rapid cache configuration for the managed folder. (id: RapidCacheConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
     <td>The link to this managed folder.</td>
@@ -186,10 +196,17 @@ The following methods are available for this resource:
     <td>Creates a new managed folder.</td>
 </tr>
 <tr>
+    <td><a href="#update"><CopyableCode code="update" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-managedFolder"><code>managedFolder</code></a></td>
+    <td><a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a></td>
+    <td>Updates a managed folder using patch semantics.</td>
+</tr>
+<tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-managedFolder"><code>managedFolder</code></a></td>
-    <td><a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-allowNonEmpty"><code>allowNonEmpty</code></a></td>
+    <td><a href="#parameter-allowNonEmpty"><code>allowNonEmpty</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a></td>
     <td>Permanently deletes a managed folder.</td>
 </tr>
 </tbody>
@@ -272,6 +289,7 @@ bucket,
 createTime,
 kind,
 metageneration,
+rapidCacheConfig,
 selfLink,
 updateTime
 FROM google.storage.managed_folders
@@ -294,6 +312,7 @@ bucket,
 createTime,
 kind,
 metageneration,
+rapidCacheConfig,
 selfLink,
 updateTime
 FROM google.storage.managed_folders
@@ -323,23 +342,25 @@ Creates a new managed folder.
 ```sql
 INSERT INTO google.storage.managed_folders (
 data__bucket,
+data__createTime,
 data__id,
 data__kind,
 data__metageneration,
 data__name,
+data__rapidCacheConfig,
 data__selfLink,
-data__createTime,
 data__updateTime,
 bucket
 )
 SELECT 
 '{{ bucket }}',
+'{{ createTime }}',
 '{{ id }}',
 '{{ kind }}',
 '{{ metageneration }}',
 '{{ name }}',
+'{{ rapidCacheConfig }}',
 '{{ selfLink }}',
-'{{ createTime }}',
 '{{ updateTime }}',
 '{{ bucket }}'
 RETURNING
@@ -349,6 +370,7 @@ bucket,
 createTime,
 kind,
 metageneration,
+rapidCacheConfig,
 selfLink,
 updateTime
 ;
@@ -366,6 +388,10 @@ updateTime
       value: "{{ bucket }}"
       description: |
         The name of the bucket containing this managed folder.
+    - name: createTime
+      value: "{{ createTime }}"
+      description: |
+        The creation time of the managed folder in RFC 3339 format.
     - name: id
       value: "{{ id }}"
       description: |
@@ -383,20 +409,65 @@ updateTime
       value: "{{ name }}"
       description: |
         The name of the managed folder. Required if not specified by URL parameter.
+    - name: rapidCacheConfig
+      description: |
+        The rapid cache configuration for the managed folder.
+      value:
+        policies: "{{ policies }}"
     - name: selfLink
       value: "{{ selfLink }}"
       description: |
         The link to this managed folder.
-    - name: createTime
-      value: "{{ createTime }}"
-      description: |
-        The creation time of the managed folder in RFC 3339 format.
     - name: updateTime
       value: "{{ updateTime }}"
       description: |
         The last update time of the managed folder metadata in RFC 3339 format.
 `}</CodeBlock>
 
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="update"
+    values={[
+        { label: 'update', value: 'update' }
+    ]}
+>
+<TabItem value="update">
+
+Updates a managed folder using patch semantics.
+
+```sql
+UPDATE google.storage.managed_folders
+SET 
+data__bucket = '{{ bucket }}',
+data__createTime = '{{ createTime }}',
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
+data__metageneration = '{{ metageneration }}',
+data__name = '{{ name }}',
+data__rapidCacheConfig = '{{ rapidCacheConfig }}',
+data__selfLink = '{{ selfLink }}',
+data__updateTime = '{{ updateTime }}'
+WHERE 
+bucket = '{{ bucket }}' --required
+AND managedFolder = '{{ managedFolder }}' --required
+AND ifMetagenerationMatch = '{{ ifMetagenerationMatch}}'
+AND ifMetagenerationNotMatch = '{{ ifMetagenerationNotMatch}}'
+RETURNING
+id,
+name,
+bucket,
+createTime,
+kind,
+metageneration,
+rapidCacheConfig,
+selfLink,
+updateTime;
+```
 </TabItem>
 </Tabs>
 
@@ -417,9 +488,9 @@ Permanently deletes a managed folder.
 DELETE FROM google.storage.managed_folders
 WHERE bucket = '{{ bucket }}' --required
 AND managedFolder = '{{ managedFolder }}' --required
+AND allowNonEmpty = '{{ allowNonEmpty }}'
 AND ifMetagenerationMatch = '{{ ifMetagenerationMatch }}'
 AND ifMetagenerationNotMatch = '{{ ifMetagenerationNotMatch }}'
-AND allowNonEmpty = '{{ allowNonEmpty }}'
 ;
 ```
 </TabItem>

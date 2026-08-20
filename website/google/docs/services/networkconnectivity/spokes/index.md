@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list_spokes', value: 'list_spokes' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'list_spokes', value: 'list_spokes' }
     ]}
 >
 <TabItem value="get">
@@ -149,7 +149,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="list_spokes">
+<TabItem value="list">
 
 <table>
 <thead>
@@ -258,7 +258,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="list">
+<TabItem value="list_spokes">
 
 <table>
 <thead>
@@ -392,18 +392,18 @@ The following methods are available for this resource:
     <td>Gets details about a Network Connectivity Center spoke.</td>
 </tr>
 <tr>
-    <td><a href="#list_spokes"><CopyableCode code="list_spokes" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td><a href="#parameter-spokeLocations"><code>spokeLocations</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
-    <td>Lists the Network Connectivity Center spokes associated with a specified hub and location. The list includes both spokes that are attached to the hub and spokes that have been proposed but not yet accepted.</td>
-</tr>
-<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Network Connectivity Center spokes in a specified project and location.</td>
+</tr>
+<tr>
+    <td><a href="#list_spokes"><CopyableCode code="list_spokes" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-spokeLocations"><code>spokeLocations</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td>Lists the Network Connectivity Center spokes associated with a specified hub and location. The list includes both spokes that are attached to the hub and spokes that have been proposed but not yet accepted.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -516,8 +516,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list_spokes', value: 'list_spokes' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'list_spokes', value: 'list_spokes' }
     ]}
 >
 <TabItem value="get">
@@ -552,43 +552,6 @@ AND spokesId = '{{ spokesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="list_spokes">
-
-Lists the Network Connectivity Center spokes associated with a specified hub and location. The list includes both spokes that are attached to the hub and spokes that have been proposed but not yet accepted.
-
-```sql
-SELECT
-name,
-createTime,
-description,
-etag,
-fieldPathsPendingUpdate,
-gateway,
-group,
-hub,
-labels,
-linkedInterconnectAttachments,
-linkedProducerVpcNetwork,
-linkedRouterApplianceInstances,
-linkedVpcNetwork,
-linkedVpnTunnels,
-reasons,
-spokeType,
-state,
-uniqueId,
-updateTime
-FROM google.networkconnectivity.spokes
-WHERE projectsId = '{{ projectsId }}' -- required
-AND hubsId = '{{ hubsId }}' -- required
-AND spokeLocations = '{{ spokeLocations }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND view = '{{ view }}'
-;
-```
-</TabItem>
 <TabItem value="list">
 
 Lists the Network Connectivity Center spokes in a specified project and location.
@@ -617,10 +580,47 @@ updateTime
 FROM google.networkconnectivity.spokes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="list_spokes">
+
+Lists the Network Connectivity Center spokes associated with a specified hub and location. The list includes both spokes that are attached to the hub and spokes that have been proposed but not yet accepted.
+
+```sql
+SELECT
+name,
+createTime,
+description,
+etag,
+fieldPathsPendingUpdate,
+gateway,
+group,
+hub,
+labels,
+linkedInterconnectAttachments,
+linkedProducerVpcNetwork,
+linkedRouterApplianceInstances,
+linkedVpcNetwork,
+linkedVpnTunnels,
+reasons,
+spokeType,
+state,
+uniqueId,
+updateTime
+FROM google.networkconnectivity.spokes
+WHERE projectsId = '{{ projectsId }}' -- required
+AND hubsId = '{{ hubsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND spokeLocations = '{{ spokeLocations }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -642,38 +642,38 @@ Creates a Network Connectivity Center spoke.
 
 ```sql
 INSERT INTO google.networkconnectivity.spokes (
-data__linkedInterconnectAttachments,
-data__linkedRouterApplianceInstances,
-data__linkedVpcNetwork,
 data__description,
-data__gateway,
-data__name,
-data__group,
 data__etag,
-data__linkedProducerVpcNetwork,
 data__fieldPathsPendingUpdate,
+data__gateway,
+data__group,
 data__hub,
 data__labels,
+data__linkedInterconnectAttachments,
+data__linkedProducerVpcNetwork,
+data__linkedRouterApplianceInstances,
+data__linkedVpcNetwork,
 data__linkedVpnTunnels,
+data__name,
 projectsId,
 locationsId,
 requestId,
 spokeId
 )
 SELECT 
-'{{ linkedInterconnectAttachments }}',
-'{{ linkedRouterApplianceInstances }}',
-'{{ linkedVpcNetwork }}',
 '{{ description }}',
-'{{ gateway }}',
-'{{ name }}',
-'{{ group }}',
 '{{ etag }}',
-'{{ linkedProducerVpcNetwork }}',
 '{{ fieldPathsPendingUpdate }}',
+'{{ gateway }}',
+'{{ group }}',
 '{{ hub }}',
 '{{ labels }}',
+'{{ linkedInterconnectAttachments }}',
+'{{ linkedProducerVpcNetwork }}',
+'{{ linkedRouterApplianceInstances }}',
+'{{ linkedVpcNetwork }}',
 '{{ linkedVpnTunnels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
@@ -698,101 +698,33 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the spokes resource.
-    - name: linkedInterconnectAttachments
-      description: |
-        Optional. VLAN attachments that are associated with the spoke.
-      value:
-        includeExportRanges:
-          - "{{ includeExportRanges }}"
-        vpcNetwork: "{{ vpcNetwork }}"
-        excludeExportRanges:
-          - "{{ excludeExportRanges }}"
-        includeImportRanges:
-          - "{{ includeImportRanges }}"
-        uris:
-          - "{{ uris }}"
-        excludeImportRanges:
-          - "{{ excludeImportRanges }}"
-        siteToSiteDataTransfer: {{ siteToSiteDataTransfer }}
-    - name: linkedRouterApplianceInstances
-      description: |
-        Optional. Router appliance instances that are associated with the spoke.
-      value:
-        excludeImportRanges:
-          - "{{ excludeImportRanges }}"
-        siteToSiteDataTransfer: {{ siteToSiteDataTransfer }}
-        instances:
-          - ipAddress: "{{ ipAddress }}"
-            virtualMachine: "{{ virtualMachine }}"
-        includeImportRanges:
-          - "{{ includeImportRanges }}"
-        includeExportRanges:
-          - "{{ includeExportRanges }}"
-        vpcNetwork: "{{ vpcNetwork }}"
-        excludeExportRanges:
-          - "{{ excludeExportRanges }}"
-    - name: linkedVpcNetwork
-      description: |
-        Optional. VPC network that is associated with the spoke.
-      value:
-        proposedIncludeExportRanges:
-          - "{{ proposedIncludeExportRanges }}"
-        proposedExcludeExportRanges:
-          - "{{ proposedExcludeExportRanges }}"
-        uri: "{{ uri }}"
-        producerVpcSpokes:
-          - "{{ producerVpcSpokes }}"
-        excludeExportRanges:
-          - "{{ excludeExportRanges }}"
-        includeExportRanges:
-          - "{{ includeExportRanges }}"
     - name: description
       value: "{{ description }}"
       description: |
         Optional. An optional description of the spoke.
-    - name: gateway
-      description: |
-        Optional. This is a gateway that can apply specialized processing to traffic going through it.
-      value:
-        cloudRouters:
-          - "{{ cloudRouters }}"
-        capacity: "{{ capacity }}"
-        ipRangeReservations:
-          - ipRange: "{{ ipRange }}"
-        sacAttachment: "{{ sacAttachment }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The name of the spoke. Spoke names must be unique. They use the following form: \`projects/{project_number}/locations/{region}/spokes/{spoke_id}\`
-    - name: group
-      value: "{{ group }}"
-      description: |
-        Optional. The name of the group that this spoke is associated with.
     - name: etag
       value: "{{ etag }}"
       description: |
         Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: linkedProducerVpcNetwork
-      description: |
-        Optional. The linked producer VPC that is associated with the spoke.
-      value:
-        includeExportRanges:
-          - "{{ includeExportRanges }}"
-        serviceConsumerVpcSpoke: "{{ serviceConsumerVpcSpoke }}"
-        peering: "{{ peering }}"
-        producerNetwork: "{{ producerNetwork }}"
-        excludeExportRanges:
-          - "{{ excludeExportRanges }}"
-        proposedExcludeExportRanges:
-          - "{{ proposedExcludeExportRanges }}"
-        proposedIncludeExportRanges:
-          - "{{ proposedIncludeExportRanges }}"
-        network: "{{ network }}"
     - name: fieldPathsPendingUpdate
       value:
         - "{{ fieldPathsPendingUpdate }}"
       description: |
         Optional. The list of fields waiting for hub administrator's approval.
+    - name: gateway
+      description: |
+        Optional. This is a gateway that can apply specialized processing to traffic going through it.
+      value:
+        capacity: "{{ capacity }}"
+        cloudRouters:
+          - "{{ cloudRouters }}"
+        ipRangeReservations:
+          - ipRange: "{{ ipRange }}"
+        sacAttachment: "{{ sacAttachment }}"
+    - name: group
+      value: "{{ group }}"
+      description: |
+        Optional. The name of the group that this spoke is associated with.
     - name: hub
       value: "{{ hub }}"
       description: |
@@ -801,22 +733,90 @@ response
       value: "{{ labels }}"
       description: |
         Optional labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
-    - name: linkedVpnTunnels
+    - name: linkedInterconnectAttachments
       description: |
-        Optional. VPN tunnels that are associated with the spoke.
+        Optional. VLAN attachments that are associated with the spoke.
       value:
-        vpcNetwork: "{{ vpcNetwork }}"
         excludeExportRanges:
           - "{{ excludeExportRanges }}"
+        excludeImportRanges:
+          - "{{ excludeImportRanges }}"
         includeExportRanges:
           - "{{ includeExportRanges }}"
         includeImportRanges:
           - "{{ includeImportRanges }}"
+        siteToSiteDataTransfer: {{ siteToSiteDataTransfer }}
         uris:
           - "{{ uris }}"
-        siteToSiteDataTransfer: {{ siteToSiteDataTransfer }}
+        vpcNetwork: "{{ vpcNetwork }}"
+    - name: linkedProducerVpcNetwork
+      description: |
+        Optional. The linked producer VPC that is associated with the spoke.
+      value:
+        excludeExportRanges:
+          - "{{ excludeExportRanges }}"
+        includeExportRanges:
+          - "{{ includeExportRanges }}"
+        network: "{{ network }}"
+        peering: "{{ peering }}"
+        producerNetwork: "{{ producerNetwork }}"
+        proposedExcludeExportRanges:
+          - "{{ proposedExcludeExportRanges }}"
+        proposedIncludeExportRanges:
+          - "{{ proposedIncludeExportRanges }}"
+        serviceConsumerVpcSpoke: "{{ serviceConsumerVpcSpoke }}"
+    - name: linkedRouterApplianceInstances
+      description: |
+        Optional. Router appliance instances that are associated with the spoke.
+      value:
+        excludeExportRanges:
+          - "{{ excludeExportRanges }}"
         excludeImportRanges:
           - "{{ excludeImportRanges }}"
+        includeExportRanges:
+          - "{{ includeExportRanges }}"
+        includeImportRanges:
+          - "{{ includeImportRanges }}"
+        instances:
+          - ipAddress: "{{ ipAddress }}"
+            virtualMachine: "{{ virtualMachine }}"
+        siteToSiteDataTransfer: {{ siteToSiteDataTransfer }}
+        vpcNetwork: "{{ vpcNetwork }}"
+    - name: linkedVpcNetwork
+      description: |
+        Optional. VPC network that is associated with the spoke.
+      value:
+        excludeExportRanges:
+          - "{{ excludeExportRanges }}"
+        includeExportRanges:
+          - "{{ includeExportRanges }}"
+        producerVpcSpokes:
+          - "{{ producerVpcSpokes }}"
+        proposedExcludeExportRanges:
+          - "{{ proposedExcludeExportRanges }}"
+        proposedIncludeExportRanges:
+          - "{{ proposedIncludeExportRanges }}"
+        uri: "{{ uri }}"
+    - name: linkedVpnTunnels
+      description: |
+        Optional. VPN tunnels that are associated with the spoke.
+      value:
+        excludeExportRanges:
+          - "{{ excludeExportRanges }}"
+        excludeImportRanges:
+          - "{{ excludeImportRanges }}"
+        includeExportRanges:
+          - "{{ includeExportRanges }}"
+        includeImportRanges:
+          - "{{ includeImportRanges }}"
+        siteToSiteDataTransfer: {{ siteToSiteDataTransfer }}
+        uris:
+          - "{{ uris }}"
+        vpcNetwork: "{{ vpcNetwork }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The name of the spoke. Spoke names must be unique. They use the following form: \`projects/{project_number}/locations/{region}/spokes/{spoke_id}\`
     - name: requestId
       value: "{{ requestId }}"
     - name: spokeId
@@ -842,19 +842,19 @@ Updates the parameters of a Network Connectivity Center spoke.
 ```sql
 UPDATE google.networkconnectivity.spokes
 SET 
-data__linkedInterconnectAttachments = '{{ linkedInterconnectAttachments }}',
-data__linkedRouterApplianceInstances = '{{ linkedRouterApplianceInstances }}',
-data__linkedVpcNetwork = '{{ linkedVpcNetwork }}',
 data__description = '{{ description }}',
-data__gateway = '{{ gateway }}',
-data__name = '{{ name }}',
-data__group = '{{ group }}',
 data__etag = '{{ etag }}',
-data__linkedProducerVpcNetwork = '{{ linkedProducerVpcNetwork }}',
 data__fieldPathsPendingUpdate = '{{ fieldPathsPendingUpdate }}',
+data__gateway = '{{ gateway }}',
+data__group = '{{ group }}',
 data__hub = '{{ hub }}',
 data__labels = '{{ labels }}',
-data__linkedVpnTunnels = '{{ linkedVpnTunnels }}'
+data__linkedInterconnectAttachments = '{{ linkedInterconnectAttachments }}',
+data__linkedProducerVpcNetwork = '{{ linkedProducerVpcNetwork }}',
+data__linkedRouterApplianceInstances = '{{ linkedRouterApplianceInstances }}',
+data__linkedVpcNetwork = '{{ linkedVpcNetwork }}',
+data__linkedVpnTunnels = '{{ linkedVpnTunnels }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

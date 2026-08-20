@@ -51,18 +51,11 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_developers_balance_credit"><CopyableCode code="organizations_developers_balance_credit" /></a></td>
+    <td><a href="#organizations_appgroups_balance_adjust"><CopyableCode code="organizations_appgroups_balance_adjust" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a></td>
     <td></td>
-    <td>Credits the account balance for the developer.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_developers_balance_adjust"><CopyableCode code="organizations_developers_balance_adjust" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a></td>
-    <td></td>
-    <td>Adjust the prepaid balance for the developer. This API will be used in scenarios where the developer has been under-charged or over-charged.</td>
+    <td>Adjust the prepaid balance for the AppGroup. This API will be used in scenarios where the AppGroup has been under-charged or over-charged.</td>
 </tr>
 <tr>
     <td><a href="#organizations_appgroups_balance_credit"><CopyableCode code="organizations_appgroups_balance_credit" /></a></td>
@@ -72,11 +65,18 @@ The following methods are available for this resource:
     <td>Credits the account balance for the AppGroup.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_appgroups_balance_adjust"><CopyableCode code="organizations_appgroups_balance_adjust" /></a></td>
+    <td><a href="#organizations_developers_balance_adjust"><CopyableCode code="organizations_developers_balance_adjust" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a></td>
     <td></td>
-    <td>Adjust the prepaid balance for the AppGroup. This API will be used in scenarios where the AppGroup has been under-charged or over-charged.</td>
+    <td>Adjust the prepaid balance for the developer. This API will be used in scenarios where the developer has been under-charged or over-charged.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_developers_balance_credit"><CopyableCode code="organizations_developers_balance_credit" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a></td>
+    <td></td>
+    <td>Credits the account balance for the developer.</td>
 </tr>
 </tbody>
 </table>
@@ -115,38 +115,22 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_developers_balance_credit"
+    defaultValue="organizations_appgroups_balance_adjust"
     values={[
-        { label: 'organizations_developers_balance_credit', value: 'organizations_developers_balance_credit' },
-        { label: 'organizations_developers_balance_adjust', value: 'organizations_developers_balance_adjust' },
+        { label: 'organizations_appgroups_balance_adjust', value: 'organizations_appgroups_balance_adjust' },
         { label: 'organizations_appgroups_balance_credit', value: 'organizations_appgroups_balance_credit' },
-        { label: 'organizations_appgroups_balance_adjust', value: 'organizations_appgroups_balance_adjust' }
+        { label: 'organizations_developers_balance_adjust', value: 'organizations_developers_balance_adjust' },
+        { label: 'organizations_developers_balance_credit', value: 'organizations_developers_balance_credit' }
     ]}
 >
-<TabItem value="organizations_developers_balance_credit">
+<TabItem value="organizations_appgroups_balance_adjust">
 
-Credits the account balance for the developer.
-
-```sql
-EXEC google.apigee.balance.organizations_developers_balance_credit 
-@organizationsId='{{ organizationsId }}' --required, 
-@developersId='{{ developersId }}' --required 
-@@json=
-'{
-"transactionId": "{{ transactionId }}", 
-"transactionAmount": "{{ transactionAmount }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="organizations_developers_balance_adjust">
-
-Adjust the prepaid balance for the developer. This API will be used in scenarios where the developer has been under-charged or over-charged.
+Adjust the prepaid balance for the AppGroup. This API will be used in scenarios where the AppGroup has been under-charged or over-charged.
 
 ```sql
-EXEC google.apigee.balance.organizations_developers_balance_adjust 
+EXEC google.apigee.balance.organizations_appgroups_balance_adjust 
 @organizationsId='{{ organizationsId }}' --required, 
-@developersId='{{ developersId }}' --required 
+@appgroupsId='{{ appgroupsId }}' --required 
 @@json=
 '{
 "adjustment": "{{ adjustment }}"
@@ -170,17 +154,33 @@ EXEC google.apigee.balance.organizations_appgroups_balance_credit
 ;
 ```
 </TabItem>
-<TabItem value="organizations_appgroups_balance_adjust">
+<TabItem value="organizations_developers_balance_adjust">
 
-Adjust the prepaid balance for the AppGroup. This API will be used in scenarios where the AppGroup has been under-charged or over-charged.
+Adjust the prepaid balance for the developer. This API will be used in scenarios where the developer has been under-charged or over-charged.
 
 ```sql
-EXEC google.apigee.balance.organizations_appgroups_balance_adjust 
+EXEC google.apigee.balance.organizations_developers_balance_adjust 
 @organizationsId='{{ organizationsId }}' --required, 
-@appgroupsId='{{ appgroupsId }}' --required 
+@developersId='{{ developersId }}' --required 
 @@json=
 '{
 "adjustment": "{{ adjustment }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="organizations_developers_balance_credit">
+
+Credits the account balance for the developer.
+
+```sql
+EXEC google.apigee.balance.organizations_developers_balance_credit 
+@organizationsId='{{ organizationsId }}' --required, 
+@developersId='{{ developersId }}' --required 
+@@json=
+'{
+"transactionAmount": "{{ transactionAmount }}", 
+"transactionId": "{{ transactionId }}"
 }'
 ;
 ```

@@ -88,7 +88,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-relatedaccountgroupsId"><code>relatedaccountgroupsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Get memberships in a group of related accounts.</td>
 </tr>
 </tbody>
@@ -150,8 +150,8 @@ hashedAccountId
 FROM google.recaptchaenterprise.memberships
 WHERE projectsId = '{{ projectsId }}' -- required
 AND relatedaccountgroupsId = '{{ relatedaccountgroupsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

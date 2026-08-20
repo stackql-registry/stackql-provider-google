@@ -125,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists KeyHandles.</td>
 </tr>
 <tr>
@@ -226,9 +226,9 @@ resourceTypeSelector
 FROM google.cloudkms.key_handles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -250,15 +250,15 @@ Creates a new KeyHandle, triggering the provisioning of a new CryptoKey for CMEK
 
 ```sql
 INSERT INTO google.cloudkms.key_handles (
-data__resourceTypeSelector,
 data__name,
+data__resourceTypeSelector,
 projectsId,
 locationsId,
 keyHandleId
 )
 SELECT 
-'{{ resourceTypeSelector }}',
 '{{ name }}',
+'{{ resourceTypeSelector }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyHandleId }}'
@@ -282,14 +282,14 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the key_handles resource.
-    - name: resourceTypeSelector
-      value: "{{ resourceTypeSelector }}"
-      description: |
-        Required. Indicates the resource type that the resulting CryptoKey is meant to protect, e.g. \`{SERVICE}.googleapis.com/{TYPE}\`. See documentation for supported resource types.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Name of the KeyHandle resource, e.g. \`projects/{PROJECT_ID}/locations/{LOCATION}/keyHandles/{KEY_HANDLE_ID}\`.
+    - name: resourceTypeSelector
+      value: "{{ resourceTypeSelector }}"
+      description: |
+        Required. Indicates the resource type that the resulting CryptoKey is meant to protect, e.g. \`{SERVICE}.googleapis.com/{TYPE}\`. See documentation for supported resource types.
     - name: keyHandleId
       value: "{{ keyHandleId }}"
 `}</CodeBlock>

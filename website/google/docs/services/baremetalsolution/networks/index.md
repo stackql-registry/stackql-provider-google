@@ -265,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List network in a given project and location.</td>
 </tr>
 <tr>
@@ -401,9 +401,9 @@ vrfAttachment
 FROM google.baremetalsolution.networks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -425,21 +425,21 @@ Update details of a single network.
 ```sql
 UPDATE google.baremetalsolution.networks
 SET 
-data__mountPoints = '{{ mountPoints }}',
-data__id = '{{ id }}',
-data__state = '{{ state }}',
-data__vlanId = '{{ vlanId }}',
-data__vrfAttachment = '{{ vrfAttachment }}',
-data__jumboFramesEnabled = {{ jumboFramesEnabled }},
-data__pod = '{{ pod }}',
 data__cidr = '{{ cidr }}',
+data__id = '{{ id }}',
 data__ipAddress = '{{ ipAddress }}',
-data__reservations = '{{ reservations }}',
-data__type = '{{ type }}',
-data__vrf = '{{ vrf }}',
-data__servicesCidr = '{{ servicesCidr }}',
+data__jumboFramesEnabled = {{ jumboFramesEnabled }},
+data__labels = '{{ labels }}',
 data__macAddress = '{{ macAddress }}',
-data__labels = '{{ labels }}'
+data__mountPoints = '{{ mountPoints }}',
+data__pod = '{{ pod }}',
+data__reservations = '{{ reservations }}',
+data__servicesCidr = '{{ servicesCidr }}',
+data__state = '{{ state }}',
+data__type = '{{ type }}',
+data__vlanId = '{{ vlanId }}',
+data__vrf = '{{ vrf }}',
+data__vrfAttachment = '{{ vrfAttachment }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

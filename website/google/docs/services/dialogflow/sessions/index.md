@@ -51,37 +51,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_agents_sessions_fulfill_intent"><CopyableCode code="projects_locations_agents_sessions_fulfill_intent" /></a></td>
+    <td><a href="#projects_locations_agents_environments_sessions_detect_intent"><CopyableCode code="projects_locations_agents_environments_sessions_detect_intent" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_sessions_detect_intent"><CopyableCode code="projects_locations_agents_sessions_detect_intent" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_sessions_server_streaming_detect_intent"><CopyableCode code="projects_locations_agents_sessions_server_streaming_detect_intent" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_sessions_match_intent"><CopyableCode code="projects_locations_agents_sessions_match_intent" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_sessions_submit_answer_feedback"><CopyableCode code="projects_locations_agents_sessions_submit_answer_feedback" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -100,16 +72,44 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_agents_environments_sessions_detect_intent"><CopyableCode code="projects_locations_agents_environments_sessions_detect_intent" /></a></td>
+    <td><a href="#projects_locations_agents_environments_sessions_server_streaming_detect_intent"><CopyableCode code="projects_locations_agents_environments_sessions_server_streaming_detect_intent" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_agents_environments_sessions_server_streaming_detect_intent"><CopyableCode code="projects_locations_agents_environments_sessions_server_streaming_detect_intent" /></a></td>
+    <td><a href="#projects_locations_agents_sessions_detect_intent"><CopyableCode code="projects_locations_agents_sessions_detect_intent" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_sessions_fulfill_intent"><CopyableCode code="projects_locations_agents_sessions_fulfill_intent" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_sessions_match_intent"><CopyableCode code="projects_locations_agents_sessions_match_intent" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_sessions_server_streaming_detect_intent"><CopyableCode code="projects_locations_agents_sessions_server_streaming_detect_intent" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_sessions_submit_answer_feedback"><CopyableCode code="projects_locations_agents_sessions_submit_answer_feedback" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -160,112 +160,36 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_agents_sessions_fulfill_intent"
+    defaultValue="projects_locations_agents_environments_sessions_detect_intent"
     values={[
-        { label: 'projects_locations_agents_sessions_fulfill_intent', value: 'projects_locations_agents_sessions_fulfill_intent' },
-        { label: 'projects_locations_agents_sessions_detect_intent', value: 'projects_locations_agents_sessions_detect_intent' },
-        { label: 'projects_locations_agents_sessions_server_streaming_detect_intent', value: 'projects_locations_agents_sessions_server_streaming_detect_intent' },
-        { label: 'projects_locations_agents_sessions_match_intent', value: 'projects_locations_agents_sessions_match_intent' },
-        { label: 'projects_locations_agents_sessions_submit_answer_feedback', value: 'projects_locations_agents_sessions_submit_answer_feedback' },
+        { label: 'projects_locations_agents_environments_sessions_detect_intent', value: 'projects_locations_agents_environments_sessions_detect_intent' },
         { label: 'projects_locations_agents_environments_sessions_fulfill_intent', value: 'projects_locations_agents_environments_sessions_fulfill_intent' },
         { label: 'projects_locations_agents_environments_sessions_match_intent', value: 'projects_locations_agents_environments_sessions_match_intent' },
-        { label: 'projects_locations_agents_environments_sessions_detect_intent', value: 'projects_locations_agents_environments_sessions_detect_intent' },
-        { label: 'projects_locations_agents_environments_sessions_server_streaming_detect_intent', value: 'projects_locations_agents_environments_sessions_server_streaming_detect_intent' }
+        { label: 'projects_locations_agents_environments_sessions_server_streaming_detect_intent', value: 'projects_locations_agents_environments_sessions_server_streaming_detect_intent' },
+        { label: 'projects_locations_agents_sessions_detect_intent', value: 'projects_locations_agents_sessions_detect_intent' },
+        { label: 'projects_locations_agents_sessions_fulfill_intent', value: 'projects_locations_agents_sessions_fulfill_intent' },
+        { label: 'projects_locations_agents_sessions_match_intent', value: 'projects_locations_agents_sessions_match_intent' },
+        { label: 'projects_locations_agents_sessions_server_streaming_detect_intent', value: 'projects_locations_agents_sessions_server_streaming_detect_intent' },
+        { label: 'projects_locations_agents_sessions_submit_answer_feedback', value: 'projects_locations_agents_sessions_submit_answer_feedback' }
     ]}
 >
-<TabItem value="projects_locations_agents_sessions_fulfill_intent">
+<TabItem value="projects_locations_agents_environments_sessions_detect_intent">
 
 Successful response
 
 ```sql
-EXEC google.dialogflow.sessions.projects_locations_agents_sessions_fulfill_intent 
+EXEC google.dialogflow.sessions.projects_locations_agents_environments_sessions_detect_intent 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @agentsId='{{ agentsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required, 
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"match": "{{ match }}", 
-"matchIntentRequest": "{{ matchIntentRequest }}", 
-"outputAudioConfig": "{{ outputAudioConfig }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_sessions_detect_intent">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.sessions.projects_locations_agents_sessions_detect_intent 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
-"queryParams": "{{ queryParams }}", 
-"queryInput": "{{ queryInput }}", 
 "outputAudioConfig": "{{ outputAudioConfig }}", 
-"responseView": "{{ responseView }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_sessions_server_streaming_detect_intent">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.sessions.projects_locations_agents_sessions_server_streaming_detect_intent 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
-"queryParams": "{{ queryParams }}", 
 "queryInput": "{{ queryInput }}", 
-"outputAudioConfig": "{{ outputAudioConfig }}", 
-"responseView": "{{ responseView }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_sessions_match_intent">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.sessions.projects_locations_agents_sessions_match_intent 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
 "queryParams": "{{ queryParams }}", 
-"queryInput": "{{ queryInput }}", 
-"persistParameterChanges": {{ persistParameterChanges }}
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_sessions_submit_answer_feedback">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.sessions.projects_locations_agents_sessions_submit_answer_feedback 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
-"updateMask": "{{ updateMask }}", 
-"responseId": "{{ responseId }}", 
-"answerFeedback": "{{ answerFeedback }}"
+"responseView": "{{ responseView }}"
 }'
 ;
 ```
@@ -303,30 +227,9 @@ EXEC google.dialogflow.sessions.projects_locations_agents_environments_sessions_
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"queryParams": "{{ queryParams }}", 
+"persistParameterChanges": {{ persistParameterChanges }}, 
 "queryInput": "{{ queryInput }}", 
-"persistParameterChanges": {{ persistParameterChanges }}
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_environments_sessions_detect_intent">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.sessions.projects_locations_agents_environments_sessions_detect_intent 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
-"queryParams": "{{ queryParams }}", 
-"queryInput": "{{ queryInput }}", 
-"outputAudioConfig": "{{ outputAudioConfig }}", 
-"responseView": "{{ responseView }}"
+"queryParams": "{{ queryParams }}"
 }'
 ;
 ```
@@ -344,10 +247,107 @@ EXEC google.dialogflow.sessions.projects_locations_agents_environments_sessions_
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"queryParams": "{{ queryParams }}", 
-"queryInput": "{{ queryInput }}", 
 "outputAudioConfig": "{{ outputAudioConfig }}", 
+"queryInput": "{{ queryInput }}", 
+"queryParams": "{{ queryParams }}", 
 "responseView": "{{ responseView }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_sessions_detect_intent">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.sessions.projects_locations_agents_sessions_detect_intent 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"outputAudioConfig": "{{ outputAudioConfig }}", 
+"queryInput": "{{ queryInput }}", 
+"queryParams": "{{ queryParams }}", 
+"responseView": "{{ responseView }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_sessions_fulfill_intent">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.sessions.projects_locations_agents_sessions_fulfill_intent 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"match": "{{ match }}", 
+"matchIntentRequest": "{{ matchIntentRequest }}", 
+"outputAudioConfig": "{{ outputAudioConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_sessions_match_intent">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.sessions.projects_locations_agents_sessions_match_intent 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"persistParameterChanges": {{ persistParameterChanges }}, 
+"queryInput": "{{ queryInput }}", 
+"queryParams": "{{ queryParams }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_sessions_server_streaming_detect_intent">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.sessions.projects_locations_agents_sessions_server_streaming_detect_intent 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"outputAudioConfig": "{{ outputAudioConfig }}", 
+"queryInput": "{{ queryInput }}", 
+"queryParams": "{{ queryParams }}", 
+"responseView": "{{ responseView }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_sessions_submit_answer_feedback">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.sessions.projects_locations_agents_sessions_submit_answer_feedback 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"answerFeedback": "{{ answerFeedback }}", 
+"responseId": "{{ responseId }}", 
+"updateMask": "{{ updateMask }}"
 }'
 ;
 ```

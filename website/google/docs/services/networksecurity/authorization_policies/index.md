@@ -311,21 +311,21 @@ Creates a new AuthorizationPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.authorization_policies (
-data__labels,
-data__rules,
 data__action,
 data__description,
+data__labels,
 data__name,
+data__rules,
 projectsId,
 locationsId,
 authorizationPolicyId
 )
 SELECT 
-'{{ labels }}',
-'{{ rules }}',
 '{{ action }}',
 '{{ description }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ rules }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authorizationPolicyId }}'
@@ -349,16 +349,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the authorization_policies resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of label tags associated with the AuthorizationPolicy resource.
-    - name: rules
-      description: |
-        Optional. List of rules to match. Note that at least one of the rules must match in order for the action specified in the 'action' field to be taken. A rule is a match if there is a matching source and destination. If left blank, the action specified in the \`action\` field will be applied on every request.
-      value:
-        - sources: "{{ sources }}"
-          destinations: "{{ destinations }}"
     - name: action
       value: "{{ action }}"
       description: |
@@ -368,10 +358,20 @@ response
       value: "{{ description }}"
       description: |
         Optional. Free-text description of the resource.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the AuthorizationPolicy resource.
     - name: name
       value: "{{ name }}"
       description: |
         Required. Name of the AuthorizationPolicy resource. It matches pattern \`projects/{project}/locations/{location}/authorizationPolicies/\`.
+    - name: rules
+      description: |
+        Optional. List of rules to match. Note that at least one of the rules must match in order for the action specified in the 'action' field to be taken. A rule is a match if there is a matching source and destination. If left blank, the action specified in the \`action\` field will be applied on every request.
+      value:
+        - destinations: "{{ destinations }}"
+          sources: "{{ sources }}"
     - name: authorizationPolicyId
       value: "{{ authorizationPolicyId }}"
 `}</CodeBlock>
@@ -395,11 +395,11 @@ Updates the parameters of a single AuthorizationPolicy.
 ```sql
 UPDATE google.networksecurity.authorization_policies
 SET 
-data__labels = '{{ labels }}',
-data__rules = '{{ rules }}',
 data__action = '{{ action }}',
 data__description = '{{ description }}',
-data__name = '{{ name }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__rules = '{{ rules }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

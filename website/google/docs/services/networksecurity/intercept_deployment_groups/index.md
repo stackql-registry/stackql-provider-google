@@ -205,14 +205,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_intercept_deployment_groups_list"><CopyableCode code="projects_locations_intercept_deployment_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployment groups in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_intercept_deployment_groups_create"><CopyableCode code="projects_locations_intercept_deployment_groups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-interceptDeploymentGroupId"><code>interceptDeploymentGroupId</code></a></td>
+    <td><a href="#parameter-interceptDeploymentGroupId"><code>interceptDeploymentGroupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a deployment group in a given project and location. See https://google.aip.dev/133.</td>
 </tr>
 <tr>
@@ -351,10 +351,10 @@ updateTime
 FROM google.networksecurity.intercept_deployment_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -376,24 +376,24 @@ Creates a deployment group in a given project and location. See https://google.a
 
 ```sql
 INSERT INTO google.networksecurity.intercept_deployment_groups (
-data__network,
+data__description,
 data__labels,
 data__name,
-data__description,
+data__network,
 projectsId,
 locationsId,
-requestId,
-interceptDeploymentGroupId
+interceptDeploymentGroupId,
+requestId
 )
 SELECT 
-'{{ network }}',
+'{{ description }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ description }}',
+'{{ network }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ interceptDeploymentGroupId }}'
+'{{ interceptDeploymentGroupId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -414,10 +414,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the intercept_deployment_groups resource.
-    - name: network
-      value: "{{ network }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Required. Immutable. The network that will be used for all child deployments, for example: \`projects/{project}/global/networks/{network}\`. See https://google.aip.dev/124.
+        Optional. User-provided description of the deployment group. Used as additional context for the deployment group.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -426,14 +426,14 @@ response
       value: "{{ name }}"
       description: |
         Immutable. Identifier. The resource name of this deployment group, for example: \`projects/123456789/locations/global/interceptDeploymentGroups/my-dg\`. See https://google.aip.dev/122 for more details.
-    - name: description
-      value: "{{ description }}"
+    - name: network
+      value: "{{ network }}"
       description: |
-        Optional. User-provided description of the deployment group. Used as additional context for the deployment group.
-    - name: requestId
-      value: "{{ requestId }}"
+        Required. Immutable. The network that will be used for all child deployments, for example: \`projects/{project}/global/networks/{network}\`. See https://google.aip.dev/124.
     - name: interceptDeploymentGroupId
       value: "{{ interceptDeploymentGroupId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -455,10 +455,10 @@ Updates a deployment group. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.intercept_deployment_groups
 SET 
-data__network = '{{ network }}',
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__network = '{{ network }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

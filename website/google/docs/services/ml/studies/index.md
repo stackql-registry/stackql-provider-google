@@ -273,41 +273,41 @@ studyConfig
       description: |
         Required. Configuration of the study.
       value:
+        algorithm: "{{ algorithm }}"
+        automatedStoppingConfig:
+          decayCurveStoppingConfig:
+            useElapsedTime: {{ useElapsedTime }}
+          medianAutomatedStoppingConfig:
+            useElapsedTime: {{ useElapsedTime }}
+        metrics:
+          - goal: "{{ goal }}"
+            metric: "{{ metric }}"
         parameters:
-          - parentCategoricalValues:
+          - categoricalValueSpec:
               values:
                 - "{{ values }}"
-            type: "{{ type }}"
-            categoricalValueSpec:
-              values:
-                - "{{ values }}"
-            scaleType: "{{ scaleType }}"
             childParameterSpecs: "{{ childParameterSpecs }}"
-            parentIntValues:
-              values:
-                - "{{ values }}"
-            doubleValueSpec:
-              maxValue: {{ maxValue }}
-              minValue: {{ minValue }}
-            parentDiscreteValues:
-              values:
-                - {{ values }}
-            parameter: "{{ parameter }}"
-            integerValueSpec:
-              minValue: "{{ minValue }}"
-              maxValue: "{{ maxValue }}"
             discreteValueSpec:
               values:
                 - {{ values }}
-        algorithm: "{{ algorithm }}"
-        metrics:
-          - metric: "{{ metric }}"
-            goal: "{{ goal }}"
-        automatedStoppingConfig:
-          medianAutomatedStoppingConfig:
-            useElapsedTime: {{ useElapsedTime }}
-          decayCurveStoppingConfig:
-            useElapsedTime: {{ useElapsedTime }}
+            doubleValueSpec:
+              maxValue: {{ maxValue }}
+              minValue: {{ minValue }}
+            integerValueSpec:
+              maxValue: "{{ maxValue }}"
+              minValue: "{{ minValue }}"
+            parameter: "{{ parameter }}"
+            parentCategoricalValues:
+              values:
+                - "{{ values }}"
+            parentDiscreteValues:
+              values:
+                - {{ values }}
+            parentIntValues:
+              values:
+                - "{{ values }}"
+            scaleType: "{{ scaleType }}"
+            type: "{{ type }}"
     - name: studyId
       value: "{{ studyId }}"
 `}</CodeBlock>

@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-filter"><code>filter</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists transfer jobs.</td>
 </tr>
 <tr>
@@ -379,8 +379,8 @@ status,
 transferSpec
 FROM google.storagetransfer.transfer_jobs
 WHERE filter = '{{ filter }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -402,32 +402,32 @@ Creates a transfer job that runs periodically.
 
 ```sql
 INSERT INTO google.storagetransfer.transfer_jobs (
+data__description,
+data__eventStream,
 data__latestOperationName,
 data__loggingConfig,
 data__name,
+data__notificationConfig,
+data__projectId,
 data__replicationSpec,
-data__eventStream,
-data__transferSpec,
-data__description,
+data__schedule,
 data__serviceAccount,
 data__status,
-data__projectId,
-data__notificationConfig,
-data__schedule
+data__transferSpec
 )
 SELECT 
+'{{ description }}',
+'{{ eventStream }}',
 '{{ latestOperationName }}',
 '{{ loggingConfig }}',
 '{{ name }}',
+'{{ notificationConfig }}',
+'{{ projectId }}',
 '{{ replicationSpec }}',
-'{{ eventStream }}',
-'{{ transferSpec }}',
-'{{ description }}',
+'{{ schedule }}',
 '{{ serviceAccount }}',
 '{{ status }}',
-'{{ projectId }}',
-'{{ notificationConfig }}',
-'{{ schedule }}'
+'{{ transferSpec }}'
 RETURNING
 name,
 creationTime,
@@ -452,6 +452,17 @@ transferSpec
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: transfer_jobs
   props:
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.
+    - name: eventStream
+      description: |
+        Specifies the event stream for the transfer job for event-driven transfers. When EventStream is specified, the Schedule fields are ignored.
+      value:
+        eventStreamExpirationTime: "{{ eventStreamExpirationTime }}"
+        eventStreamStartTime: "{{ eventStreamStartTime }}"
+        name: "{{ name }}"
     - name: latestOperationName
       value: "{{ latestOperationName }}"
       description: |
@@ -461,151 +472,88 @@ transferSpec
         Logging configuration.
       value:
         enableOnpremGcsTransferLogs: {{ enableOnpremGcsTransferLogs }}
-        logActions:
-          - "{{ logActions }}"
         logActionStates:
           - "{{ logActionStates }}"
+        logActions:
+          - "{{ logActions }}"
     - name: name
       value: "{{ name }}"
       description: |
         A unique name (within the transfer project) assigned when the job is created. If this field is empty in a CreateTransferJobRequest, Storage Transfer Service assigns a unique name. Otherwise, the specified name is used as the unique name for this job. If the specified name is in use by a job, the creation request fails with an ALREADY_EXISTS error. This name must start with \`"transferJobs/"\` prefix and end with a letter or a number, and should be no more than 128 characters. For transfers involving PosixFilesystem, this name must start with \`transferJobs/OPI\` specifically. For all other transfer types, this name must not start with \`transferJobs/OPI\`. Non-PosixFilesystem example: \`"transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$"\` PosixFilesystem example: \`"transferJobs/OPI^[A-Za-z0-9-._~]*[A-Za-z0-9]$"\` Applications must not rely on the enforcement of naming requirements involving OPI. Invalid job names fail with an INVALID_ARGUMENT error.
+    - name: notificationConfig
+      description: |
+        Notification configuration.
+      value:
+        eventTypes:
+          - "{{ eventTypes }}"
+        payloadFormat: "{{ payloadFormat }}"
+        pubsubTopic: "{{ pubsubTopic }}"
+    - name: projectId
+      value: "{{ projectId }}"
+      description: |
+        The ID of the Google Cloud project that owns the job.
     - name: replicationSpec
       description: |
         Replication specification.
       value:
-        transferOptions:
-          deleteObjectsUniqueInSink: {{ deleteObjectsUniqueInSink }}
-          overwriteObjectsAlreadyExistingInSink: {{ overwriteObjectsAlreadyExistingInSink }}
-          overwriteWhen: "{{ overwriteWhen }}"
-          metadataOptions:
-            acl: "{{ acl }}"
-            storageClass: "{{ storageClass }}"
-            temporaryHold: "{{ temporaryHold }}"
-            kmsKey: "{{ kmsKey }}"
-            gid: "{{ gid }}"
-            uid: "{{ uid }}"
-            timeCreated: "{{ timeCreated }}"
-            mode: "{{ mode }}"
-            symlink: "{{ symlink }}"
-          deleteObjectsFromSourceAfterTransfer: {{ deleteObjectsFromSourceAfterTransfer }}
-        gcsDataSource:
-          bucketName: "{{ bucketName }}"
-          path: "{{ path }}"
-          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
         gcsDataSink:
           bucketName: "{{ bucketName }}"
-          path: "{{ path }}"
           managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
-        objectConditions:
-          minTimeElapsedSinceLastModification: "{{ minTimeElapsedSinceLastModification }}"
-          maxTimeElapsedSinceLastModification: "{{ maxTimeElapsedSinceLastModification }}"
-          includePrefixes:
-            - "{{ includePrefixes }}"
-          excludePrefixes:
-            - "{{ excludePrefixes }}"
-          lastModifiedBefore: "{{ lastModifiedBefore }}"
-          includeStorageClasses:
-            - "{{ includeStorageClasses }}"
-          matchGlob: "{{ matchGlob }}"
-          lastModifiedSince: "{{ lastModifiedSince }}"
-    - name: eventStream
-      description: |
-        Specifies the event stream for the transfer job for event-driven transfers. When EventStream is specified, the Schedule fields are ignored.
-      value:
-        name: "{{ name }}"
-        eventStreamStartTime: "{{ eventStreamStartTime }}"
-        eventStreamExpirationTime: "{{ eventStreamExpirationTime }}"
-    - name: transferSpec
-      description: |
-        Transfer specification.
-      value:
+          path: "{{ path }}"
         gcsDataSource:
           bucketName: "{{ bucketName }}"
-          path: "{{ path }}"
           managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
-        httpDataSource:
-          listUrl: "{{ listUrl }}"
-        azureBlobStorageDataSource:
-          azureCredentials:
-            sasToken: "{{ sasToken }}"
-          privateNetworkService: "{{ privateNetworkService }}"
-          storageAccount: "{{ storageAccount }}"
-          credentialsSecret: "{{ credentialsSecret }}"
-          container: "{{ container }}"
           path: "{{ path }}"
-          federatedIdentityConfig:
-            clientId: "{{ clientId }}"
-            tenantId: "{{ tenantId }}"
-        gcsIntermediateDataLocation:
-          bucketName: "{{ bucketName }}"
-          path: "{{ path }}"
-          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
-        posixDataSource:
-          rootDirectory: "{{ rootDirectory }}"
-        awsS3DataSource:
-          managedPrivateNetwork: {{ managedPrivateNetwork }}
-          roleArn: "{{ roleArn }}"
-          cloudfrontDomain: "{{ cloudfrontDomain }}"
-          privateNetworkService: "{{ privateNetworkService }}"
-          credentialsSecret: "{{ credentialsSecret }}"
-          bucketName: "{{ bucketName }}"
-          awsAccessKey:
-            accessKeyId: "{{ accessKeyId }}"
-            secretAccessKey: "{{ secretAccessKey }}"
-          path: "{{ path }}"
-        transferManifest:
-          location: "{{ location }}"
-        gcsDataSink:
-          bucketName: "{{ bucketName }}"
-          path: "{{ path }}"
-          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
-        posixDataSink:
-          rootDirectory: "{{ rootDirectory }}"
-        sinkAgentPoolName: "{{ sinkAgentPoolName }}"
-        hdfsDataSource:
-          path: "{{ path }}"
-        awsS3CompatibleDataSource:
-          path: "{{ path }}"
-          s3Metadata:
-            authMethod: "{{ authMethod }}"
-            protocol: "{{ protocol }}"
-            listApi: "{{ listApi }}"
-            requestModel: "{{ requestModel }}"
-          bucketName: "{{ bucketName }}"
-          region: "{{ region }}"
-          endpoint: "{{ endpoint }}"
-        transferOptions:
-          deleteObjectsUniqueInSink: {{ deleteObjectsUniqueInSink }}
-          overwriteObjectsAlreadyExistingInSink: {{ overwriteObjectsAlreadyExistingInSink }}
-          overwriteWhen: "{{ overwriteWhen }}"
-          metadataOptions:
-            acl: "{{ acl }}"
-            storageClass: "{{ storageClass }}"
-            temporaryHold: "{{ temporaryHold }}"
-            kmsKey: "{{ kmsKey }}"
-            gid: "{{ gid }}"
-            uid: "{{ uid }}"
-            timeCreated: "{{ timeCreated }}"
-            mode: "{{ mode }}"
-            symlink: "{{ symlink }}"
-          deleteObjectsFromSourceAfterTransfer: {{ deleteObjectsFromSourceAfterTransfer }}
-        sourceAgentPoolName: "{{ sourceAgentPoolName }}"
         objectConditions:
-          minTimeElapsedSinceLastModification: "{{ minTimeElapsedSinceLastModification }}"
-          maxTimeElapsedSinceLastModification: "{{ maxTimeElapsedSinceLastModification }}"
-          includePrefixes:
-            - "{{ includePrefixes }}"
           excludePrefixes:
             - "{{ excludePrefixes }}"
-          lastModifiedBefore: "{{ lastModifiedBefore }}"
+          includePrefixes:
+            - "{{ includePrefixes }}"
           includeStorageClasses:
             - "{{ includeStorageClasses }}"
-          matchGlob: "{{ matchGlob }}"
+          lastModifiedBefore: "{{ lastModifiedBefore }}"
           lastModifiedSince: "{{ lastModifiedSince }}"
-    - name: description
-      value: "{{ description }}"
+          matchGlob: "{{ matchGlob }}"
+          maxTimeElapsedSinceLastModification: "{{ maxTimeElapsedSinceLastModification }}"
+          minTimeElapsedSinceLastModification: "{{ minTimeElapsedSinceLastModification }}"
+        transferOptions:
+          deleteObjectsFromSourceAfterTransfer: {{ deleteObjectsFromSourceAfterTransfer }}
+          deleteObjectsUniqueInSink: {{ deleteObjectsUniqueInSink }}
+          metadataOptions:
+            acl: "{{ acl }}"
+            gid: "{{ gid }}"
+            kmsKey: "{{ kmsKey }}"
+            mode: "{{ mode }}"
+            storageClass: "{{ storageClass }}"
+            symlink: "{{ symlink }}"
+            temporaryHold: "{{ temporaryHold }}"
+            timeCreated: "{{ timeCreated }}"
+            uid: "{{ uid }}"
+          overwriteObjectsAlreadyExistingInSink: {{ overwriteObjectsAlreadyExistingInSink }}
+          overwriteWhen: "{{ overwriteWhen }}"
+    - name: schedule
       description: |
-        A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.
+        Specifies schedule for the transfer job. This is an optional field. When the field is not set, the job never executes a transfer, unless you invoke RunTransferJob or update the job to have a non-empty schedule.
+      value:
+        endTimeOfDay:
+          hours: {{ hours }}
+          minutes: {{ minutes }}
+          nanos: {{ nanos }}
+          seconds: {{ seconds }}
+        repeatInterval: "{{ repeatInterval }}"
+        scheduleEndDate:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        scheduleStartDate:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        startTimeOfDay:
+          hours: {{ hours }}
+          minutes: {{ minutes }}
+          nanos: {{ nanos }}
+          seconds: {{ seconds }}
     - name: serviceAccount
       value: "{{ serviceAccount }}"
       description: |
@@ -615,41 +563,93 @@ transferSpec
       description: |
         Status of the job. This value MUST be specified for \`CreateTransferJobRequests\`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation.
       valid_values: ['STATUS_UNSPECIFIED', 'ENABLED', 'DISABLED', 'DELETED']
-    - name: projectId
-      value: "{{ projectId }}"
+    - name: transferSpec
       description: |
-        The ID of the Google Cloud project that owns the job.
-    - name: notificationConfig
-      description: |
-        Notification configuration.
+        Transfer specification.
       value:
-        eventTypes:
-          - "{{ eventTypes }}"
-        payloadFormat: "{{ payloadFormat }}"
-        pubsubTopic: "{{ pubsubTopic }}"
-    - name: schedule
-      description: |
-        Specifies schedule for the transfer job. This is an optional field. When the field is not set, the job never executes a transfer, unless you invoke RunTransferJob or update the job to have a non-empty schedule.
-      value:
-        startTimeOfDay:
-          hours: {{ hours }}
-          seconds: {{ seconds }}
-          nanos: {{ nanos }}
-          minutes: {{ minutes }}
-        scheduleEndDate:
-          month: {{ month }}
-          year: {{ year }}
-          day: {{ day }}
-        scheduleStartDate:
-          month: {{ month }}
-          year: {{ year }}
-          day: {{ day }}
-        endTimeOfDay:
-          hours: {{ hours }}
-          seconds: {{ seconds }}
-          nanos: {{ nanos }}
-          minutes: {{ minutes }}
-        repeatInterval: "{{ repeatInterval }}"
+        awsS3CompatibleDataSource:
+          bucketName: "{{ bucketName }}"
+          endpoint: "{{ endpoint }}"
+          path: "{{ path }}"
+          region: "{{ region }}"
+          s3Metadata:
+            authMethod: "{{ authMethod }}"
+            listApi: "{{ listApi }}"
+            protocol: "{{ protocol }}"
+            requestModel: "{{ requestModel }}"
+        awsS3DataSource:
+          awsAccessKey:
+            accessKeyId: "{{ accessKeyId }}"
+            secretAccessKey: "{{ secretAccessKey }}"
+          bucketName: "{{ bucketName }}"
+          cloudfrontDomain: "{{ cloudfrontDomain }}"
+          credentialsSecret: "{{ credentialsSecret }}"
+          managedPrivateNetwork: {{ managedPrivateNetwork }}
+          path: "{{ path }}"
+          privateNetworkService: "{{ privateNetworkService }}"
+          roleArn: "{{ roleArn }}"
+        azureBlobStorageDataSource:
+          azureCredentials:
+            sasToken: "{{ sasToken }}"
+          container: "{{ container }}"
+          credentialsSecret: "{{ credentialsSecret }}"
+          federatedIdentityConfig:
+            clientId: "{{ clientId }}"
+            tenantId: "{{ tenantId }}"
+          path: "{{ path }}"
+          privateNetworkService: "{{ privateNetworkService }}"
+          storageAccount: "{{ storageAccount }}"
+        gcsDataSink:
+          bucketName: "{{ bucketName }}"
+          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
+          path: "{{ path }}"
+        gcsDataSource:
+          bucketName: "{{ bucketName }}"
+          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
+          path: "{{ path }}"
+        gcsIntermediateDataLocation:
+          bucketName: "{{ bucketName }}"
+          managedFolderTransferEnabled: {{ managedFolderTransferEnabled }}
+          path: "{{ path }}"
+        hdfsDataSource:
+          path: "{{ path }}"
+        httpDataSource:
+          listUrl: "{{ listUrl }}"
+        objectConditions:
+          excludePrefixes:
+            - "{{ excludePrefixes }}"
+          includePrefixes:
+            - "{{ includePrefixes }}"
+          includeStorageClasses:
+            - "{{ includeStorageClasses }}"
+          lastModifiedBefore: "{{ lastModifiedBefore }}"
+          lastModifiedSince: "{{ lastModifiedSince }}"
+          matchGlob: "{{ matchGlob }}"
+          maxTimeElapsedSinceLastModification: "{{ maxTimeElapsedSinceLastModification }}"
+          minTimeElapsedSinceLastModification: "{{ minTimeElapsedSinceLastModification }}"
+        posixDataSink:
+          rootDirectory: "{{ rootDirectory }}"
+        posixDataSource:
+          rootDirectory: "{{ rootDirectory }}"
+        sinkAgentPoolName: "{{ sinkAgentPoolName }}"
+        sourceAgentPoolName: "{{ sourceAgentPoolName }}"
+        transferManifest:
+          location: "{{ location }}"
+        transferOptions:
+          deleteObjectsFromSourceAfterTransfer: {{ deleteObjectsFromSourceAfterTransfer }}
+          deleteObjectsUniqueInSink: {{ deleteObjectsUniqueInSink }}
+          metadataOptions:
+            acl: "{{ acl }}"
+            gid: "{{ gid }}"
+            kmsKey: "{{ kmsKey }}"
+            mode: "{{ mode }}"
+            storageClass: "{{ storageClass }}"
+            symlink: "{{ symlink }}"
+            temporaryHold: "{{ temporaryHold }}"
+            timeCreated: "{{ timeCreated }}"
+            uid: "{{ uid }}"
+          overwriteObjectsAlreadyExistingInSink: {{ overwriteObjectsAlreadyExistingInSink }}
+          overwriteWhen: "{{ overwriteWhen }}"
 `}</CodeBlock>
 
 </TabItem>

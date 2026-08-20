@@ -265,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_agents_playbooks_list"><CopyableCode code="projects_locations_agents_playbooks_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -424,8 +424,8 @@ FROM google.dialogflow.playbooks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -447,33 +447,33 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.playbooks (
+data__codeBlock,
 data__displayName,
+data__goal,
+data__handlers,
+data__inputParameterDefinitions,
+data__instruction,
 data__llmModelSettings,
 data__name,
-data__instruction,
-data__playbookType,
-data__inputParameterDefinitions,
-data__goal,
 data__outputParameterDefinitions,
+data__playbookType,
 data__referencedTools,
-data__handlers,
-data__codeBlock,
 projectsId,
 locationsId,
 agentsId
 )
 SELECT 
+'{{ codeBlock }}',
 '{{ displayName }}',
+'{{ goal }}',
+'{{ handlers }}',
+'{{ inputParameterDefinitions }}',
+'{{ instruction }}',
 '{{ llmModelSettings }}',
 '{{ name }}',
-'{{ instruction }}',
-'{{ playbookType }}',
-'{{ inputParameterDefinitions }}',
-'{{ goal }}',
 '{{ outputParameterDefinitions }}',
+'{{ playbookType }}',
 '{{ referencedTools }}',
-'{{ handlers }}',
-'{{ codeBlock }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}'
@@ -512,195 +512,197 @@ updateTime
     - name: agentsId
       value: "{{ agentsId }}"
       description: Required parameter for the playbooks resource.
+    - name: codeBlock
+      value:
+        code: "{{ code }}"
     - name: displayName
       value: "{{ displayName }}"
-    - name: llmModelSettings
+    - name: goal
+      value: "{{ goal }}"
+    - name: handlers
       value:
-        model: "{{ model }}"
-        promptText: "{{ promptText }}"
-    - name: name
-      value: "{{ name }}"
+        - eventHandler:
+            condition: "{{ condition }}"
+            event: "{{ event }}"
+            fulfillment:
+              advancedSettings:
+                audioExportGcsDestination:
+                  uri: "{{ uri }}"
+                dtmfSettings:
+                  enabled: {{ enabled }}
+                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+                  finishDigit: "{{ finishDigit }}"
+                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                  maxDigits: {{ maxDigits }}
+                loggingSettings:
+                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                  enableInteractionLogging: {{ enableInteractionLogging }}
+                  enableStackdriverLogging: {{ enableStackdriverLogging }}
+                speechSettings:
+                  endpointerSensitivity: {{ endpointerSensitivity }}
+                  models: "{{ models }}"
+                  noSpeechTimeout: "{{ noSpeechTimeout }}"
+                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+              codeBlockFunction: "{{ codeBlockFunction }}"
+              conditionalCases:
+                - cases: "{{ cases }}"
+              enableGenerativeFallback: {{ enableGenerativeFallback }}
+              generators:
+                - generator: "{{ generator }}"
+                  inputParameters: "{{ inputParameters }}"
+                  outputParameter: "{{ outputParameter }}"
+              messages:
+                - channel: "{{ channel }}"
+                  conversationSuccess:
+                    metadata: "{{ metadata }}"
+                  endInteraction: "{{ endInteraction }}"
+                  knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                  liveAgentHandoff:
+                    metadata: "{{ metadata }}"
+                  mixedAudio:
+                    segments: "{{ segments }}"
+                  outputAudioText:
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    ssml: "{{ ssml }}"
+                    text: "{{ text }}"
+                  payload: "{{ payload }}"
+                  playAudio:
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    audioUri: "{{ audioUri }}"
+                  responseType: "{{ responseType }}"
+                  telephonyTransferCall:
+                    phoneNumber: "{{ phoneNumber }}"
+                  text:
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    text: "{{ text }}"
+                  toolCall:
+                    action: "{{ action }}"
+                    inputParameters: "{{ inputParameters }}"
+                    tool: "{{ tool }}"
+              returnPartialResponses: {{ returnPartialResponses }}
+              setParameterActions:
+                - parameter: "{{ parameter }}"
+                  value: "{{ value }}"
+              tag: "{{ tag }}"
+              webhook: "{{ webhook }}"
+          lifecycleHandler:
+            condition: "{{ condition }}"
+            fulfillment:
+              advancedSettings:
+                audioExportGcsDestination:
+                  uri: "{{ uri }}"
+                dtmfSettings:
+                  enabled: {{ enabled }}
+                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+                  finishDigit: "{{ finishDigit }}"
+                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                  maxDigits: {{ maxDigits }}
+                loggingSettings:
+                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                  enableInteractionLogging: {{ enableInteractionLogging }}
+                  enableStackdriverLogging: {{ enableStackdriverLogging }}
+                speechSettings:
+                  endpointerSensitivity: {{ endpointerSensitivity }}
+                  models: "{{ models }}"
+                  noSpeechTimeout: "{{ noSpeechTimeout }}"
+                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+              codeBlockFunction: "{{ codeBlockFunction }}"
+              conditionalCases:
+                - cases: "{{ cases }}"
+              enableGenerativeFallback: {{ enableGenerativeFallback }}
+              generators:
+                - generator: "{{ generator }}"
+                  inputParameters: "{{ inputParameters }}"
+                  outputParameter: "{{ outputParameter }}"
+              messages:
+                - channel: "{{ channel }}"
+                  conversationSuccess:
+                    metadata: "{{ metadata }}"
+                  endInteraction: "{{ endInteraction }}"
+                  knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                  liveAgentHandoff:
+                    metadata: "{{ metadata }}"
+                  mixedAudio:
+                    segments: "{{ segments }}"
+                  outputAudioText:
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    ssml: "{{ ssml }}"
+                    text: "{{ text }}"
+                  payload: "{{ payload }}"
+                  playAudio:
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    audioUri: "{{ audioUri }}"
+                  responseType: "{{ responseType }}"
+                  telephonyTransferCall:
+                    phoneNumber: "{{ phoneNumber }}"
+                  text:
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    text: "{{ text }}"
+                  toolCall:
+                    action: "{{ action }}"
+                    inputParameters: "{{ inputParameters }}"
+                    tool: "{{ tool }}"
+              returnPartialResponses: {{ returnPartialResponses }}
+              setParameterActions:
+                - parameter: "{{ parameter }}"
+                  value: "{{ value }}"
+              tag: "{{ tag }}"
+              webhook: "{{ webhook }}"
+            lifecycleStage: "{{ lifecycleStage }}"
+    - name: inputParameterDefinitions
+      value:
+        - description: "{{ description }}"
+          name: "{{ name }}"
+          type: "{{ type }}"
+          typeSchema:
+            inlineSchema:
+              items:
+                inlineSchema:
+                  items: "{{ items }}"
+                  type: "{{ type }}"
+                schemaReference:
+                  schema: "{{ schema }}"
+                  tool: "{{ tool }}"
+              type: "{{ type }}"
+            schemaReference:
+              schema: "{{ schema }}"
+              tool: "{{ tool }}"
     - name: instruction
       value:
         guidelines: "{{ guidelines }}"
         steps:
           - steps: "{{ steps }}"
             text: "{{ text }}"
+    - name: llmModelSettings
+      value:
+        model: "{{ model }}"
+        promptText: "{{ promptText }}"
+    - name: name
+      value: "{{ name }}"
+    - name: outputParameterDefinitions
+      value:
+        - description: "{{ description }}"
+          name: "{{ name }}"
+          type: "{{ type }}"
+          typeSchema:
+            inlineSchema:
+              items:
+                inlineSchema:
+                  items: "{{ items }}"
+                  type: "{{ type }}"
+                schemaReference:
+                  schema: "{{ schema }}"
+                  tool: "{{ tool }}"
+              type: "{{ type }}"
+            schemaReference:
+              schema: "{{ schema }}"
+              tool: "{{ tool }}"
     - name: playbookType
       value: "{{ playbookType }}"
       valid_values: ['PLAYBOOK_TYPE_UNSPECIFIED', 'TASK', 'ROUTINE']
-    - name: inputParameterDefinitions
-      value:
-        - name: "{{ name }}"
-          type: "{{ type }}"
-          typeSchema:
-            schemaReference:
-              tool: "{{ tool }}"
-              schema: "{{ schema }}"
-            inlineSchema:
-              type: "{{ type }}"
-              items:
-                schemaReference:
-                  tool: "{{ tool }}"
-                  schema: "{{ schema }}"
-                inlineSchema:
-                  type: "{{ type }}"
-                  items: "{{ items }}"
-          description: "{{ description }}"
-    - name: goal
-      value: "{{ goal }}"
-    - name: outputParameterDefinitions
-      value:
-        - name: "{{ name }}"
-          type: "{{ type }}"
-          typeSchema:
-            schemaReference:
-              tool: "{{ tool }}"
-              schema: "{{ schema }}"
-            inlineSchema:
-              type: "{{ type }}"
-              items:
-                schemaReference:
-                  tool: "{{ tool }}"
-                  schema: "{{ schema }}"
-                inlineSchema:
-                  type: "{{ type }}"
-                  items: "{{ items }}"
-          description: "{{ description }}"
     - name: referencedTools
       value:
         - "{{ referencedTools }}"
-    - name: handlers
-      value:
-        - eventHandler:
-            event: "{{ event }}"
-            condition: "{{ condition }}"
-            fulfillment:
-              returnPartialResponses: {{ returnPartialResponses }}
-              generators:
-                - inputParameters: "{{ inputParameters }}"
-                  generator: "{{ generator }}"
-                  outputParameter: "{{ outputParameter }}"
-              webhook: "{{ webhook }}"
-              enableGenerativeFallback: {{ enableGenerativeFallback }}
-              setParameterActions:
-                - parameter: "{{ parameter }}"
-                  value: "{{ value }}"
-              tag: "{{ tag }}"
-              advancedSettings:
-                loggingSettings:
-                  enableInteractionLogging: {{ enableInteractionLogging }}
-                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
-                  enableStackdriverLogging: {{ enableStackdriverLogging }}
-                audioExportGcsDestination:
-                  uri: "{{ uri }}"
-                speechSettings:
-                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
-                  models: "{{ models }}"
-                  endpointerSensitivity: {{ endpointerSensitivity }}
-                  noSpeechTimeout: "{{ noSpeechTimeout }}"
-                dtmfSettings:
-                  maxDigits: {{ maxDigits }}
-                  finishDigit: "{{ finishDigit }}"
-                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
-                  enabled: {{ enabled }}
-                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
-              messages:
-                - playAudio:
-                    audioUri: "{{ audioUri }}"
-                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                  toolCall:
-                    tool: "{{ tool }}"
-                    action: "{{ action }}"
-                    inputParameters: "{{ inputParameters }}"
-                  knowledgeInfoCard: "{{ knowledgeInfoCard }}"
-                  endInteraction: "{{ endInteraction }}"
-                  conversationSuccess:
-                    metadata: "{{ metadata }}"
-                  channel: "{{ channel }}"
-                  text:
-                    text: "{{ text }}"
-                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                  telephonyTransferCall:
-                    phoneNumber: "{{ phoneNumber }}"
-                  responseType: "{{ responseType }}"
-                  payload: "{{ payload }}"
-                  outputAudioText:
-                    text: "{{ text }}"
-                    ssml: "{{ ssml }}"
-                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                  mixedAudio:
-                    segments: "{{ segments }}"
-                  liveAgentHandoff:
-                    metadata: "{{ metadata }}"
-              conditionalCases:
-                - cases: "{{ cases }}"
-          lifecycleHandler:
-            lifecycleStage: "{{ lifecycleStage }}"
-            condition: "{{ condition }}"
-            fulfillment:
-              returnPartialResponses: {{ returnPartialResponses }}
-              generators:
-                - inputParameters: "{{ inputParameters }}"
-                  generator: "{{ generator }}"
-                  outputParameter: "{{ outputParameter }}"
-              webhook: "{{ webhook }}"
-              enableGenerativeFallback: {{ enableGenerativeFallback }}
-              setParameterActions:
-                - parameter: "{{ parameter }}"
-                  value: "{{ value }}"
-              tag: "{{ tag }}"
-              advancedSettings:
-                loggingSettings:
-                  enableInteractionLogging: {{ enableInteractionLogging }}
-                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
-                  enableStackdriverLogging: {{ enableStackdriverLogging }}
-                audioExportGcsDestination:
-                  uri: "{{ uri }}"
-                speechSettings:
-                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
-                  models: "{{ models }}"
-                  endpointerSensitivity: {{ endpointerSensitivity }}
-                  noSpeechTimeout: "{{ noSpeechTimeout }}"
-                dtmfSettings:
-                  maxDigits: {{ maxDigits }}
-                  finishDigit: "{{ finishDigit }}"
-                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
-                  enabled: {{ enabled }}
-                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
-              messages:
-                - playAudio:
-                    audioUri: "{{ audioUri }}"
-                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                  toolCall:
-                    tool: "{{ tool }}"
-                    action: "{{ action }}"
-                    inputParameters: "{{ inputParameters }}"
-                  knowledgeInfoCard: "{{ knowledgeInfoCard }}"
-                  endInteraction: "{{ endInteraction }}"
-                  conversationSuccess:
-                    metadata: "{{ metadata }}"
-                  channel: "{{ channel }}"
-                  text:
-                    text: "{{ text }}"
-                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                  telephonyTransferCall:
-                    phoneNumber: "{{ phoneNumber }}"
-                  responseType: "{{ responseType }}"
-                  payload: "{{ payload }}"
-                  outputAudioText:
-                    text: "{{ text }}"
-                    ssml: "{{ ssml }}"
-                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                  mixedAudio:
-                    segments: "{{ segments }}"
-                  liveAgentHandoff:
-                    metadata: "{{ metadata }}"
-              conditionalCases:
-                - cases: "{{ cases }}"
-    - name: codeBlock
-      value:
-        code: "{{ code }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -722,17 +724,17 @@ No description available.
 ```sql
 UPDATE google.dialogflow.playbooks
 SET 
+data__codeBlock = '{{ codeBlock }}',
 data__displayName = '{{ displayName }}',
+data__goal = '{{ goal }}',
+data__handlers = '{{ handlers }}',
+data__inputParameterDefinitions = '{{ inputParameterDefinitions }}',
+data__instruction = '{{ instruction }}',
 data__llmModelSettings = '{{ llmModelSettings }}',
 data__name = '{{ name }}',
-data__instruction = '{{ instruction }}',
-data__playbookType = '{{ playbookType }}',
-data__inputParameterDefinitions = '{{ inputParameterDefinitions }}',
-data__goal = '{{ goal }}',
 data__outputParameterDefinitions = '{{ outputParameterDefinitions }}',
-data__referencedTools = '{{ referencedTools }}',
-data__handlers = '{{ handlers }}',
-data__codeBlock = '{{ codeBlock }}'
+data__playbookType = '{{ playbookType }}',
+data__referencedTools = '{{ referencedTools }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -807,8 +809,8 @@ EXEC google.dialogflow.playbooks.projects_locations_agents_playbooks_export
 @playbooksId='{{ playbooksId }}' --required 
 @@json=
 '{
-"playbookUri": "{{ playbookUri }}", 
-"dataFormat": "{{ dataFormat }}"
+"dataFormat": "{{ dataFormat }}", 
+"playbookUri": "{{ playbookUri }}"
 }'
 ;
 ```
@@ -825,8 +827,8 @@ EXEC google.dialogflow.playbooks.projects_locations_agents_playbooks_import
 @@json=
 '{
 "importStrategy": "{{ importStrategy }}", 
-"playbookUri": "{{ playbookUri }}", 
-"playbookContent": "{{ playbookContent }}"
+"playbookContent": "{{ playbookContent }}", 
+"playbookUri": "{{ playbookUri }}"
 }'
 ;
 ```

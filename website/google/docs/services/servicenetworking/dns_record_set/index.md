@@ -93,7 +93,7 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-domain"><code>domain</code></a>, <a href="#parameter-consumerNetwork"><code>consumerNetwork</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
+    <td><a href="#parameter-consumerNetwork"><code>consumerNetwork</code></a>, <a href="#parameter-domain"><code>domain</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td>Producers can use this method to retrieve information about the DNS record set added to the private zone inside the shared tenant host project associated with a consumer network.</td>
 </tr>
 </tbody>
@@ -160,8 +160,8 @@ ttl,
 type
 FROM google.servicenetworking.dns_record_set
 WHERE servicesId = '{{ servicesId }}' -- required
-AND domain = '{{ domain }}'
 AND consumerNetwork = '{{ consumerNetwork }}'
+AND domain = '{{ domain }}'
 AND type = '{{ type }}'
 AND zone = '{{ zone }}'
 ;

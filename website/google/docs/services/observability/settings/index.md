@@ -179,9 +179,9 @@ Update Settings
 ```sql
 UPDATE google.observability.settings
 SET 
-data__name = '{{ name }}',
+data__defaultStorageLocation = '{{ defaultStorageLocation }}',
 data__kmsKeyName = '{{ kmsKeyName }}',
-data__defaultStorageLocation = '{{ defaultStorageLocation }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

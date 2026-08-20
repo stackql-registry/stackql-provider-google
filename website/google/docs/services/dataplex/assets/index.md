@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_zones_assets_list"><CopyableCode code="projects_locations_lakes_zones_assets_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-zonesId"><code>zonesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists asset resources in a zone.</td>
 </tr>
 <tr>
@@ -389,10 +389,10 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
 AND zonesId = '{{ zonesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -414,11 +414,11 @@ Creates an asset resource.
 
 ```sql
 INSERT INTO google.dataplex.assets (
+data__description,
+data__discoverySpec,
+data__displayName,
 data__labels,
 data__resourceSpec,
-data__description,
-data__displayName,
-data__discoverySpec,
 projectsId,
 locationsId,
 lakesId,
@@ -427,11 +427,11 @@ assetId,
 validateOnly
 )
 SELECT 
+'{{ description }}',
+'{{ discoverySpec }}',
+'{{ displayName }}',
 '{{ labels }}',
 '{{ resourceSpec }}',
-'{{ description }}',
-'{{ displayName }}',
-'{{ discoverySpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakesId }}',
@@ -464,6 +464,32 @@ response
     - name: zonesId
       value: "{{ zonesId }}"
       description: Required parameter for the assets resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the asset.
+    - name: discoverySpec
+      description: |
+        Optional. Specification of the discovery feature applied to data referenced by this asset. When this spec is left unset, the asset will use the spec set on the parent zone.
+      value:
+        csvOptions:
+          delimiter: "{{ delimiter }}"
+          disableTypeInference: {{ disableTypeInference }}
+          encoding: "{{ encoding }}"
+          headerRows: {{ headerRows }}
+        enabled: {{ enabled }}
+        excludePatterns:
+          - "{{ excludePatterns }}"
+        includePatterns:
+          - "{{ includePatterns }}"
+        jsonOptions:
+          disableTypeInference: {{ disableTypeInference }}
+          encoding: "{{ encoding }}"
+        schedule: "{{ schedule }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -473,34 +499,8 @@ response
         Required. Specification of the resource that is referenced by this asset.
       value:
         name: "{{ name }}"
-        type: "{{ type }}"
         readAccessMode: "{{ readAccessMode }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the asset.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User friendly display name.
-    - name: discoverySpec
-      description: |
-        Optional. Specification of the discovery feature applied to data referenced by this asset. When this spec is left unset, the asset will use the spec set on the parent zone.
-      value:
-        includePatterns:
-          - "{{ includePatterns }}"
-        enabled: {{ enabled }}
-        jsonOptions:
-          disableTypeInference: {{ disableTypeInference }}
-          encoding: "{{ encoding }}"
-        excludePatterns:
-          - "{{ excludePatterns }}"
-        schedule: "{{ schedule }}"
-        csvOptions:
-          headerRows: {{ headerRows }}
-          disableTypeInference: {{ disableTypeInference }}
-          encoding: "{{ encoding }}"
-          delimiter: "{{ delimiter }}"
+        type: "{{ type }}"
     - name: assetId
       value: "{{ assetId }}"
     - name: validateOnly
@@ -526,11 +526,11 @@ Updates an asset resource.
 ```sql
 UPDATE google.dataplex.assets
 SET 
-data__labels = '{{ labels }}',
-data__resourceSpec = '{{ resourceSpec }}',
 data__description = '{{ description }}',
+data__discoverySpec = '{{ discoverySpec }}',
 data__displayName = '{{ displayName }}',
-data__discoverySpec = '{{ discoverySpec }}'
+data__labels = '{{ labels }}',
+data__resourceSpec = '{{ resourceSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

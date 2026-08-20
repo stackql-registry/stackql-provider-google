@@ -255,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_list"><CopyableCode code="projects_instances_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-instanceDeadline"><code>instanceDeadline</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-instanceDeadline"><code>instanceDeadline</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all instances in the given project.</td>
 </tr>
 <tr>
@@ -402,10 +402,10 @@ state,
 updateTime
 FROM google.spanner.instances
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND instanceDeadline = '{{ instanceDeadline }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -427,13 +427,13 @@ Creates an instance and begins preparing it to begin serving. The returned long-
 
 ```sql
 INSERT INTO google.spanner.instances (
-data__instanceId,
 data__instance,
+data__instanceId,
 projectsId
 )
 SELECT 
-'{{ instanceId }}',
 '{{ instance }}',
+'{{ instanceId }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -452,60 +452,60 @@ response
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
-    - name: instanceId
-      value: "{{ instanceId }}"
-      description: |
-        Required. The ID of the instance to create. Valid identifiers are of the form \`a-z*[a-z0-9]\` and must be between 2 and 64 characters in length.
     - name: instance
       description: |
-        An isolated set of Cloud Spanner resources on which databases can be hosted.
+        Required. The instance to create. The name may be omitted, but if specified must be \`/instances/\`.
       value:
-        name: "{{ name }}"
-        config: "{{ config }}"
-        displayName: "{{ displayName }}"
-        nodeCount: {{ nodeCount }}
-        processingUnits: {{ processingUnits }}
-        replicaComputeCapacity:
-          - replicaSelection:
-              location: "{{ location }}"
-            nodeCount: {{ nodeCount }}
-            processingUnits: {{ processingUnits }}
         autoscalingConfig:
-          autoscalingLimits:
-            minNodes: {{ minNodes }}
-            minProcessingUnits: {{ minProcessingUnits }}
-            maxNodes: {{ maxNodes }}
-            maxProcessingUnits: {{ maxProcessingUnits }}
-          autoscalingTargets:
-            highPriorityCpuUtilizationPercent: {{ highPriorityCpuUtilizationPercent }}
-            totalCpuUtilizationPercent: {{ totalCpuUtilizationPercent }}
-            storageUtilizationPercent: {{ storageUtilizationPercent }}
           asymmetricAutoscalingOptions:
-            - replicaSelection:
-                location: "{{ location }}"
-              overrides:
+            - overrides:
                 autoscalingLimits:
-                  minNodes: {{ minNodes }}
-                  minProcessingUnits: {{ minProcessingUnits }}
                   maxNodes: {{ maxNodes }}
                   maxProcessingUnits: {{ maxProcessingUnits }}
+                  minNodes: {{ minNodes }}
+                  minProcessingUnits: {{ minProcessingUnits }}
                 autoscalingTargetHighPriorityCpuUtilizationPercent: {{ autoscalingTargetHighPriorityCpuUtilizationPercent }}
                 autoscalingTargetTotalCpuUtilizationPercent: {{ autoscalingTargetTotalCpuUtilizationPercent }}
                 disableHighPriorityCpuAutoscaling: {{ disableHighPriorityCpuAutoscaling }}
                 disableTotalCpuAutoscaling: {{ disableTotalCpuAutoscaling }}
-        state: "{{ state }}"
-        labels: "{{ labels }}"
-        instanceType: "{{ instanceType }}"
+              replicaSelection:
+                location: "{{ location }}"
+          autoscalingLimits:
+            maxNodes: {{ maxNodes }}
+            maxProcessingUnits: {{ maxProcessingUnits }}
+            minNodes: {{ minNodes }}
+            minProcessingUnits: {{ minProcessingUnits }}
+          autoscalingTargets:
+            highPriorityCpuUtilizationPercent: {{ highPriorityCpuUtilizationPercent }}
+            storageUtilizationPercent: {{ storageUtilizationPercent }}
+            totalCpuUtilizationPercent: {{ totalCpuUtilizationPercent }}
+        config: "{{ config }}"
+        createTime: "{{ createTime }}"
+        defaultBackupScheduleType: "{{ defaultBackupScheduleType }}"
+        displayName: "{{ displayName }}"
+        edition: "{{ edition }}"
         endpointUris:
           - "{{ endpointUris }}"
-        createTime: "{{ createTime }}"
-        updateTime: "{{ updateTime }}"
         freeInstanceMetadata:
+          expireBehavior: "{{ expireBehavior }}"
           expireTime: "{{ expireTime }}"
           upgradeTime: "{{ upgradeTime }}"
-          expireBehavior: "{{ expireBehavior }}"
-        edition: "{{ edition }}"
-        defaultBackupScheduleType: "{{ defaultBackupScheduleType }}"
+        instanceType: "{{ instanceType }}"
+        labels: "{{ labels }}"
+        name: "{{ name }}"
+        nodeCount: {{ nodeCount }}
+        processingUnits: {{ processingUnits }}
+        replicaComputeCapacity:
+          - nodeCount: {{ nodeCount }}
+            processingUnits: {{ processingUnits }}
+            replicaSelection:
+              location: "{{ location }}"
+        state: "{{ state }}"
+        updateTime: "{{ updateTime }}"
+    - name: instanceId
+      value: "{{ instanceId }}"
+      description: |
+        Required. The ID of the instance to create. Valid identifiers are of the form \`a-z*[a-z0-9]\` and must be between 2 and 64 characters in length.
 `}</CodeBlock>
 
 </TabItem>
@@ -527,8 +527,8 @@ Updates an instance, and begins allocating or releasing resources as requested. 
 ```sql
 UPDATE google.spanner.instances
 SET 
-data__instance = '{{ instance }}',
-data__fieldMask = '{{ fieldMask }}'
+data__fieldMask = '{{ fieldMask }}',
+data__instance = '{{ instance }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

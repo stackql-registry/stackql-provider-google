@@ -230,14 +230,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of machine images that are contained within<br />the specified project.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-sourceInstance"><code>sourceInstance</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceInstance"><code>sourceInstance</code></a></td>
     <td>Creates a machine image in the specified project using the<br />data that is included in the request. If you are creating a new machine<br />image to update an existing instance, your new machine image should use the<br />same network or, if applicable, the same subnetwork as the original<br />instance.</td>
 </tr>
 <tr>
@@ -379,9 +379,9 @@ selfLink,
 warning
 FROM google.compute.machine_images
 WHERE project = '{{ project }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -405,36 +405,36 @@ Creates a machine image in the specified project using the<br />data that is inc
 
 ```sql
 INSERT INTO google.compute.machine_images (
-data__machineImageEncryptionKey,
-data__sourceInstance,
-data__instanceProperties,
-data__storageLocations,
-data__sourceDiskEncryptionKeys,
-data__name,
+data__description,
 data__guestFlush,
-data__params,
+data__instanceProperties,
 data__labelFingerprint,
 data__labels,
-data__description,
+data__machineImageEncryptionKey,
+data__name,
+data__params,
+data__sourceDiskEncryptionKeys,
+data__sourceInstance,
+data__storageLocations,
 project,
-sourceInstance,
-requestId
+requestId,
+sourceInstance
 )
 SELECT 
-'{{ machineImageEncryptionKey }}',
-'{{ sourceInstance }}',
-'{{ instanceProperties }}',
-'{{ storageLocations }}',
-'{{ sourceDiskEncryptionKeys }}',
-'{{ name }}',
+'{{ description }}',
 {{ guestFlush }},
-'{{ params }}',
+'{{ instanceProperties }}',
 '{{ labelFingerprint }}',
 '{{ labels }}',
-'{{ description }}',
-'{{ project }}',
+'{{ machineImageEncryptionKey }}',
+'{{ name }}',
+'{{ params }}',
+'{{ sourceDiskEncryptionKeys }}',
 '{{ sourceInstance }}',
-'{{ requestId }}'
+'{{ storageLocations }}',
+'{{ project }}',
+'{{ requestId }}',
+'{{ sourceInstance }}'
 RETURNING
 id,
 name,
@@ -474,251 +474,194 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the machine_images resource.
-    - name: machineImageEncryptionKey
+    - name: description
+      value: "{{ description }}"
       description: |
-        Encrypts the machine image using acustomer-supplied
-        encryption key.
-        After you encrypt a machine image using a customer-supplied key, you must
-        provide the same key if you use the machine image later. For example, you
-        must provide the encryption key when you create an instance from the
-        encrypted machine image in a future request.
-        Customer-supplied encryption keys do not protect access to metadata of the
-        machine image.
-        If you do not provide an encryption key when creating the machine image,
-        then the machine image will be encrypted using an automatically generated
-        key and you do not need to provide a key to use the machine image later.
-      value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-        kmsKeyName: "{{ kmsKeyName }}"
-        sha256: "{{ sha256 }}"
-    - name: sourceInstance
-      value: "{{ sourceInstance }}"
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: guestFlush
+      value: {{ guestFlush }}
       description: |
-        The source instance used to create the machine image. You can provide this
-        as a partial or full URL to the resource. For example, the following are
-        valid values:
-        - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance
-        - projects/project/zones/zone/instances/instance
+        [Input Only] Whether to attempt an application consistent machine image by
+        informing the OS to prepare for the snapshot process.
     - name: instanceProperties
       description: |
         [Output Only] Properties of source instance
       value:
-        scheduling:
-          onHostMaintenance: "{{ onHostMaintenance }}"
-          hostErrorTimeoutSeconds: {{ hostErrorTimeoutSeconds }}
-          provisioningModel: "{{ provisioningModel }}"
-          availabilityDomain: {{ availabilityDomain }}
-          onInstanceStopAction:
-            discardLocalSsd: {{ discardLocalSsd }}
-          nodeAffinities:
-            - values: "{{ values }}"
-              key: "{{ key }}"
-              operator: "{{ operator }}"
-          maxRunDuration:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-          instanceTerminationAction: "{{ instanceTerminationAction }}"
-          preemptionNoticeDuration:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-          preemptible: {{ preemptible }}
-          skipGuestOsShutdown: {{ skipGuestOsShutdown }}
-          terminationTime: "{{ terminationTime }}"
-          localSsdRecoveryTimeout:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-          minNodeCpus: {{ minNodeCpus }}
-          gracefulShutdown:
-            enabled: {{ enabled }}
-            maxDuration:
-              nanos: {{ nanos }}
-              seconds: "{{ seconds }}"
-          automaticRestart: {{ automaticRestart }}
-          locationHint: "{{ locationHint }}"
-        guestAccelerators:
-          - acceleratorType: "{{ acceleratorType }}"
-            acceleratorCount: {{ acceleratorCount }}
-        privateIpv6GoogleAccess: "{{ privateIpv6GoogleAccess }}"
-        reservationAffinity:
-          consumeReservationType: "{{ consumeReservationType }}"
-          key: "{{ key }}"
-          values:
-            - "{{ values }}"
-        machineType: "{{ machineType }}"
-        shieldedInstanceConfig:
-          enableSecureBoot: {{ enableSecureBoot }}
-          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-          enableVtpm: {{ enableVtpm }}
-        networkPerformanceConfig:
-          totalEgressBandwidthTier: "{{ totalEgressBandwidthTier }}"
-        resourcePolicies:
-          - "{{ resourcePolicies }}"
+        advancedMachineFeatures:
+          enableNestedVirtualization: {{ enableNestedVirtualization }}
+          enableUefiNetworking: {{ enableUefiNetworking }}
+          performanceMonitoringUnit: "{{ performanceMonitoringUnit }}"
+          threadsPerCore: {{ threadsPerCore }}
+          turboMode: "{{ turboMode }}"
+          visibleCoreCount: {{ visibleCoreCount }}
         canIpForward: {{ canIpForward }}
-        localSsdEncryptionMode: "{{ localSsdEncryptionMode }}"
-        tags:
-          items:
-            - "{{ items }}"
-          fingerprint: "{{ fingerprint }}"
-        minCpuPlatform: "{{ minCpuPlatform }}"
         confidentialInstanceConfig:
-          enableConfidentialCompute: {{ enableConfidentialCompute }}
           confidentialInstanceType: "{{ confidentialInstanceType }}"
-        workloadIdentityConfig:
-          identityCertificateEnabled: {{ identityCertificateEnabled }}
-          identity: "{{ identity }}"
-        networkInterfaces:
-          - ipv6Address: "{{ ipv6Address }}"
-            parentNicName: "{{ parentNicName }}"
-            fingerprint: "{{ fingerprint }}"
-            igmpQuery: "{{ igmpQuery }}"
-            serviceClassId: "{{ serviceClassId }}"
-            subnetwork: "{{ subnetwork }}"
-            network: "{{ network }}"
-            stackType: "{{ stackType }}"
-            ipv6AccessType: "{{ ipv6AccessType }}"
-            accessConfigs: "{{ accessConfigs }}"
-            networkAttachment: "{{ networkAttachment }}"
-            queueCount: {{ queueCount }}
-            name: "{{ name }}"
-            kind: "{{ kind }}"
-            networkIP: "{{ networkIP }}"
-            vlan: {{ vlan }}
-            internalIpv6PrefixLength: {{ internalIpv6PrefixLength }}
-            nicType: "{{ nicType }}"
-            aliasIpRanges: "{{ aliasIpRanges }}"
-            ipv6AccessConfigs: "{{ ipv6AccessConfigs }}"
-            aliasIpv6Ranges: "{{ aliasIpv6Ranges }}"
-            enableVpcScopedDns: {{ enableVpcScopedDns }}
-        serviceAccounts:
-          - scopes: "{{ scopes }}"
-            email: "{{ email }}"
-        keyRevocationActionType: "{{ keyRevocationActionType }}"
-        metadata:
-          fingerprint: "{{ fingerprint }}"
-          items:
-            - key: "{{ key }}"
-              value: "{{ value }}"
-          kind: "{{ kind }}"
+          enableConfidentialCompute: {{ enableConfidentialCompute }}
         description: "{{ description }}"
         disks:
-          - diskSizeGb: "{{ diskSizeGb }}"
+          - architecture: "{{ architecture }}"
+            autoDelete: {{ autoDelete }}
             boot: {{ boot }}
-            architecture: "{{ architecture }}"
             deviceName: "{{ deviceName }}"
-            savedState: "{{ savedState }}"
             diskEncryptionKey:
-              rawKey: "{{ rawKey }}"
-              kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-              rsaEncryptedKey: "{{ rsaEncryptedKey }}"
               kmsKeyName: "{{ kmsKeyName }}"
+              kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+              rawKey: "{{ rawKey }}"
+              rsaEncryptedKey: "{{ rsaEncryptedKey }}"
               sha256: "{{ sha256 }}"
+            diskSizeGb: "{{ diskSizeGb }}"
+            forceAttach: {{ forceAttach }}
+            guestOsFeatures: "{{ guestOsFeatures }}"
+            index: {{ index }}
+            initializeParams:
+              architecture: "{{ architecture }}"
+              description: "{{ description }}"
+              diskName: "{{ diskName }}"
+              diskSizeGb: "{{ diskSizeGb }}"
+              diskType: "{{ diskType }}"
+              enableConfidentialCompute: {{ enableConfidentialCompute }}
+              labels: "{{ labels }}"
+              licenses:
+                - "{{ licenses }}"
+              onUpdateAction: "{{ onUpdateAction }}"
+              provisionedIops: "{{ provisionedIops }}"
+              provisionedThroughput: "{{ provisionedThroughput }}"
+              replicaZones:
+                - "{{ replicaZones }}"
+              resourceManagerTags: "{{ resourceManagerTags }}"
+              resourcePolicies:
+                - "{{ resourcePolicies }}"
+              sourceImage: "{{ sourceImage }}"
+              sourceImageEncryptionKey:
+                kmsKeyName: "{{ kmsKeyName }}"
+                kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+                rawKey: "{{ rawKey }}"
+                rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+                sha256: "{{ sha256 }}"
+              sourceSnapshot: "{{ sourceSnapshot }}"
+              sourceSnapshotEncryptionKey:
+                kmsKeyName: "{{ kmsKeyName }}"
+                kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+                rawKey: "{{ rawKey }}"
+                rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+                sha256: "{{ sha256 }}"
+              storagePool: "{{ storagePool }}"
             interface: "{{ interface }}"
-            mode: "{{ mode }}"
-            source: "{{ source }}"
             kind: "{{ kind }}"
             licenses: "{{ licenses }}"
+            mode: "{{ mode }}"
+            savedState: "{{ savedState }}"
             shieldedInstanceInitialState:
-              pk:
-                content: "{{ content }}"
-                fileType: "{{ fileType }}"
-              keks:
-                - content: "{{ content }}"
-                  fileType: "{{ fileType }}"
               dbs:
                 - content: "{{ content }}"
                   fileType: "{{ fileType }}"
               dbxs:
                 - content: "{{ content }}"
                   fileType: "{{ fileType }}"
+              keks:
+                - content: "{{ content }}"
+                  fileType: "{{ fileType }}"
+              pk:
+                content: "{{ content }}"
+                fileType: "{{ fileType }}"
+            source: "{{ source }}"
             type: "{{ type }}"
-            index: {{ index }}
-            autoDelete: {{ autoDelete }}
-            guestOsFeatures: "{{ guestOsFeatures }}"
-            forceAttach: {{ forceAttach }}
-            initializeParams:
-              resourcePolicies:
-                - "{{ resourcePolicies }}"
-              storagePool: "{{ storagePool }}"
-              replicaZones:
-                - "{{ replicaZones }}"
-              diskSizeGb: "{{ diskSizeGb }}"
-              architecture: "{{ architecture }}"
-              sourceImage: "{{ sourceImage }}"
-              enableConfidentialCompute: {{ enableConfidentialCompute }}
-              sourceImageEncryptionKey:
-                rawKey: "{{ rawKey }}"
-                kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-                rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-                kmsKeyName: "{{ kmsKeyName }}"
-                sha256: "{{ sha256 }}"
-              description: "{{ description }}"
-              provisionedIops: "{{ provisionedIops }}"
-              labels: "{{ labels }}"
-              provisionedThroughput: "{{ provisionedThroughput }}"
-              diskName: "{{ diskName }}"
-              sourceSnapshotEncryptionKey:
-                rawKey: "{{ rawKey }}"
-                kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-                rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-                kmsKeyName: "{{ kmsKeyName }}"
-                sha256: "{{ sha256 }}"
-              resourceManagerTags: "{{ resourceManagerTags }}"
-              diskType: "{{ diskType }}"
-              licenses:
-                - "{{ licenses }}"
-              onUpdateAction: "{{ onUpdateAction }}"
-              sourceSnapshot: "{{ sourceSnapshot }}"
-        advancedMachineFeatures:
-          enableUefiNetworking: {{ enableUefiNetworking }}
-          performanceMonitoringUnit: "{{ performanceMonitoringUnit }}"
-          threadsPerCore: {{ threadsPerCore }}
-          visibleCoreCount: {{ visibleCoreCount }}
-          enableNestedVirtualization: {{ enableNestedVirtualization }}
-          turboMode: "{{ turboMode }}"
+        guestAccelerators:
+          - acceleratorCount: {{ acceleratorCount }}
+            acceleratorType: "{{ acceleratorType }}"
+        keyRevocationActionType: "{{ keyRevocationActionType }}"
         labels: "{{ labels }}"
+        localSsdEncryptionMode: "{{ localSsdEncryptionMode }}"
+        machineType: "{{ machineType }}"
+        metadata:
+          fingerprint: "{{ fingerprint }}"
+          items:
+            - key: "{{ key }}"
+              value: "{{ value }}"
+          kind: "{{ kind }}"
+        minCpuPlatform: "{{ minCpuPlatform }}"
+        networkInterfaces:
+          - accessConfigs: "{{ accessConfigs }}"
+            aliasIpRanges: "{{ aliasIpRanges }}"
+            aliasIpv6Ranges: "{{ aliasIpv6Ranges }}"
+            enableVpcScopedDns: {{ enableVpcScopedDns }}
+            fingerprint: "{{ fingerprint }}"
+            igmpQuery: "{{ igmpQuery }}"
+            internalIpv6PrefixLength: {{ internalIpv6PrefixLength }}
+            ipv6AccessConfigs: "{{ ipv6AccessConfigs }}"
+            ipv6AccessType: "{{ ipv6AccessType }}"
+            ipv6Address: "{{ ipv6Address }}"
+            kind: "{{ kind }}"
+            name: "{{ name }}"
+            network: "{{ network }}"
+            networkAttachment: "{{ networkAttachment }}"
+            networkIP: "{{ networkIP }}"
+            nicType: "{{ nicType }}"
+            parentNicName: "{{ parentNicName }}"
+            queueCount: {{ queueCount }}
+            serviceClassId: "{{ serviceClassId }}"
+            stackType: "{{ stackType }}"
+            subnetwork: "{{ subnetwork }}"
+            vlan: {{ vlan }}
+        networkPerformanceConfig:
+          totalEgressBandwidthTier: "{{ totalEgressBandwidthTier }}"
+        privateIpv6GoogleAccess: "{{ privateIpv6GoogleAccess }}"
+        reservationAffinity:
+          consumeReservationType: "{{ consumeReservationType }}"
+          key: "{{ key }}"
+          values:
+            - "{{ values }}"
         resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: storageLocations
-      value:
-        - "{{ storageLocations }}"
-      description: |
-        The regional or multi-regional Cloud Storage bucket location where themachine image is
-        stored.
-    - name: sourceDiskEncryptionKeys
-      description: |
-        [Input Only] Thecustomer-supplied
-        encryption key of the disks attached to the source instance. Required
-        if the source disk is protected by a customer-supplied encryption key.
-      value:
-        - sourceDisk: "{{ sourceDisk }}"
-          diskEncryptionKey:
-            rawKey: "{{ rawKey }}"
-            kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-            rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-            kmsKeyName: "{{ kmsKeyName }}"
-            sha256: "{{ sha256 }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource; provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must be
-        a dash, lowercase letter, or digit, except the last character, which cannot
-        be a dash.
-    - name: guestFlush
-      value: {{ guestFlush }}
-      description: |
-        [Input Only] Whether to attempt an application consistent machine image by
-        informing the OS to prepare for the snapshot process.
-    - name: params
-      description: |
-        Input only. [Input Only] Additional parameters that are passed in the request, but are
-        not persisted in the resource.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
+        resourcePolicies:
+          - "{{ resourcePolicies }}"
+        scheduling:
+          automaticRestart: {{ automaticRestart }}
+          availabilityDomain: {{ availabilityDomain }}
+          gracefulShutdown:
+            enabled: {{ enabled }}
+            maxDuration:
+              nanos: {{ nanos }}
+              seconds: "{{ seconds }}"
+          hostErrorTimeoutSeconds: {{ hostErrorTimeoutSeconds }}
+          instanceTerminationAction: "{{ instanceTerminationAction }}"
+          localSsdRecoveryTimeout:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+          locationHint: "{{ locationHint }}"
+          maxRunDuration:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+          minNodeCpus: {{ minNodeCpus }}
+          nodeAffinities:
+            - key: "{{ key }}"
+              operator: "{{ operator }}"
+              values: "{{ values }}"
+          onHostMaintenance: "{{ onHostMaintenance }}"
+          onInstanceStopAction:
+            discardLocalSsd: {{ discardLocalSsd }}
+          preemptible: {{ preemptible }}
+          preemptionNoticeDuration:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+          provisioningModel: "{{ provisioningModel }}"
+          skipGuestOsShutdown: {{ skipGuestOsShutdown }}
+          terminationTime: "{{ terminationTime }}"
+        serviceAccounts:
+          - email: "{{ email }}"
+            scopes: "{{ scopes }}"
+        shieldedInstanceConfig:
+          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+          enableSecureBoot: {{ enableSecureBoot }}
+          enableVtpm: {{ enableVtpm }}
+        tags:
+          fingerprint: "{{ fingerprint }}"
+          items:
+            - "{{ items }}"
+        workloadIdentityConfig:
+          identity: "{{ identity }}"
+          identityCertificateEnabled: {{ identityCertificateEnabled }}
     - name: labelFingerprint
       value: "{{ labelFingerprint }}"
       description: |
@@ -734,15 +677,72 @@ zone
       description: |
         Labels to apply to this machine image. These can be later modified by
         the setLabels method.
-    - name: description
-      value: "{{ description }}"
+    - name: machineImageEncryptionKey
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
+        Encrypts the machine image using acustomer-supplied
+        encryption key.
+        After you encrypt a machine image using a customer-supplied key, you must
+        provide the same key if you use the machine image later. For example, you
+        must provide the encryption key when you create an instance from the
+        encrypted machine image in a future request.
+        Customer-supplied encryption keys do not protect access to metadata of the
+        machine image.
+        If you do not provide an encryption key when creating the machine image,
+        then the machine image will be encrypted using an automatically generated
+        key and you do not need to provide a key to use the machine image later.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+        sha256: "{{ sha256 }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource; provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional parameters that are passed in the request, but are
+        not persisted in the resource.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: sourceDiskEncryptionKeys
+      description: |
+        [Input Only] Thecustomer-supplied
+        encryption key of the disks attached to the source instance. Required
+        if the source disk is protected by a customer-supplied encryption key.
+      value:
+        - diskEncryptionKey:
+            kmsKeyName: "{{ kmsKeyName }}"
+            kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+            rawKey: "{{ rawKey }}"
+            rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+            sha256: "{{ sha256 }}"
+          sourceDisk: "{{ sourceDisk }}"
     - name: sourceInstance
       value: "{{ sourceInstance }}"
+      description: |
+        The source instance used to create the machine image. You can provide this
+        as a partial or full URL to the resource. For example, the following are
+        valid values:
+        - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance
+        - projects/project/zones/zone/instances/instance
+    - name: storageLocations
+      value:
+        - "{{ storageLocations }}"
+      description: |
+        The regional or multi-regional Cloud Storage bucket location where themachine image is
+        stored.
     - name: requestId
       value: "{{ requestId }}"
+    - name: sourceInstance
+      value: "{{ sourceInstance }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -790,8 +790,8 @@ EXEC google.compute.machine_images.set_labels
 @resource='{{ resource }}' --required 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

@@ -225,14 +225,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_tasks_list"><CopyableCode code="projects_locations_lakes_tasks_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists tasks under the given lake.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_lakes_tasks_create"><CopyableCode code="projects_locations_lakes_tasks_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-taskId"><code>taskId</code></a></td>
+    <td><a href="#parameter-taskId"><code>taskId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a task resource within a lake.</td>
 </tr>
 <tr>
@@ -389,10 +389,10 @@ FROM google.dataplex.tasks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -414,32 +414,32 @@ Creates a task resource within a lake.
 
 ```sql
 INSERT INTO google.dataplex.tasks (
-data__spark,
-data__executionSpec,
-data__displayName,
 data__description,
-data__triggerSpec,
-data__notebook,
+data__displayName,
+data__executionSpec,
 data__labels,
+data__notebook,
+data__spark,
+data__triggerSpec,
 projectsId,
 locationsId,
 lakesId,
-validateOnly,
-taskId
+taskId,
+validateOnly
 )
 SELECT 
-'{{ spark }}',
-'{{ executionSpec }}',
-'{{ displayName }}',
 '{{ description }}',
-'{{ triggerSpec }}',
-'{{ notebook }}',
+'{{ displayName }}',
+'{{ executionSpec }}',
 '{{ labels }}',
+'{{ notebook }}',
+'{{ spark }}',
+'{{ triggerSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakesId }}',
-'{{ validateOnly }}',
-'{{ taskId }}'
+'{{ taskId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -463,94 +463,94 @@ response
     - name: lakesId
       value: "{{ lakesId }}"
       description: Required parameter for the tasks resource.
-    - name: spark
+    - name: description
+      value: "{{ description }}"
       description: |
-        Config related to running custom Spark tasks.
-      value:
-        fileUris:
-          - "{{ fileUris }}"
-        sqlScript: "{{ sqlScript }}"
-        infrastructureSpec:
-          containerImage:
-            pythonPackages:
-              - "{{ pythonPackages }}"
-            properties: "{{ properties }}"
-            image: "{{ image }}"
-            javaJars:
-              - "{{ javaJars }}"
-          batch:
-            executorsCount: {{ executorsCount }}
-            maxExecutorsCount: {{ maxExecutorsCount }}
-          vpcNetwork:
-            subNetwork: "{{ subNetwork }}"
-            networkTags:
-              - "{{ networkTags }}"
-            network: "{{ network }}"
-        mainJarFileUri: "{{ mainJarFileUri }}"
-        mainClass: "{{ mainClass }}"
-        sqlScriptFile: "{{ sqlScriptFile }}"
-        archiveUris:
-          - "{{ archiveUris }}"
-        pythonScriptFile: "{{ pythonScriptFile }}"
+        Optional. Description of the task.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
     - name: executionSpec
       description: |
         Required. Spec related to how a task is executed.
       value:
         args: "{{ args }}"
+        kmsKey: "{{ kmsKey }}"
         maxJobExecutionLifetime: "{{ maxJobExecutionLifetime }}"
         project: "{{ project }}"
-        kmsKey: "{{ kmsKey }}"
         serviceAccount: "{{ serviceAccount }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User friendly display name.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the task.
-    - name: triggerSpec
-      description: |
-        Required. Spec related to how often and when a task should be triggered.
-      value:
-        type: "{{ type }}"
-        startTime: "{{ startTime }}"
-        disabled: {{ disabled }}
-        maxRetries: {{ maxRetries }}
-        schedule: "{{ schedule }}"
-    - name: notebook
-      description: |
-        Config related to running scheduled Notebooks.
-      value:
-        notebook: "{{ notebook }}"
-        fileUris:
-          - "{{ fileUris }}"
-        archiveUris:
-          - "{{ archiveUris }}"
-        infrastructureSpec:
-          containerImage:
-            pythonPackages:
-              - "{{ pythonPackages }}"
-            properties: "{{ properties }}"
-            image: "{{ image }}"
-            javaJars:
-              - "{{ javaJars }}"
-          batch:
-            executorsCount: {{ executorsCount }}
-            maxExecutorsCount: {{ maxExecutorsCount }}
-          vpcNetwork:
-            subNetwork: "{{ subNetwork }}"
-            networkTags:
-              - "{{ networkTags }}"
-            network: "{{ network }}"
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. User-defined labels for the task.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: notebook
+      description: |
+        Config related to running scheduled Notebooks.
+      value:
+        archiveUris:
+          - "{{ archiveUris }}"
+        fileUris:
+          - "{{ fileUris }}"
+        infrastructureSpec:
+          batch:
+            executorsCount: {{ executorsCount }}
+            maxExecutorsCount: {{ maxExecutorsCount }}
+          containerImage:
+            image: "{{ image }}"
+            javaJars:
+              - "{{ javaJars }}"
+            properties: "{{ properties }}"
+            pythonPackages:
+              - "{{ pythonPackages }}"
+          vpcNetwork:
+            network: "{{ network }}"
+            networkTags:
+              - "{{ networkTags }}"
+            subNetwork: "{{ subNetwork }}"
+        notebook: "{{ notebook }}"
+    - name: spark
+      description: |
+        Config related to running custom Spark tasks.
+      value:
+        archiveUris:
+          - "{{ archiveUris }}"
+        fileUris:
+          - "{{ fileUris }}"
+        infrastructureSpec:
+          batch:
+            executorsCount: {{ executorsCount }}
+            maxExecutorsCount: {{ maxExecutorsCount }}
+          containerImage:
+            image: "{{ image }}"
+            javaJars:
+              - "{{ javaJars }}"
+            properties: "{{ properties }}"
+            pythonPackages:
+              - "{{ pythonPackages }}"
+          vpcNetwork:
+            network: "{{ network }}"
+            networkTags:
+              - "{{ networkTags }}"
+            subNetwork: "{{ subNetwork }}"
+        mainClass: "{{ mainClass }}"
+        mainJarFileUri: "{{ mainJarFileUri }}"
+        pythonScriptFile: "{{ pythonScriptFile }}"
+        sqlScript: "{{ sqlScript }}"
+        sqlScriptFile: "{{ sqlScriptFile }}"
+    - name: triggerSpec
+      description: |
+        Required. Spec related to how often and when a task should be triggered.
+      value:
+        disabled: {{ disabled }}
+        maxRetries: {{ maxRetries }}
+        schedule: "{{ schedule }}"
+        startTime: "{{ startTime }}"
+        type: "{{ type }}"
     - name: taskId
       value: "{{ taskId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -572,13 +572,13 @@ Update the task resource.
 ```sql
 UPDATE google.dataplex.tasks
 SET 
-data__spark = '{{ spark }}',
-data__executionSpec = '{{ executionSpec }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__triggerSpec = '{{ triggerSpec }}',
+data__displayName = '{{ displayName }}',
+data__executionSpec = '{{ executionSpec }}',
+data__labels = '{{ labels }}',
 data__notebook = '{{ notebook }}',
-data__labels = '{{ labels }}'
+data__spark = '{{ spark }}',
+data__triggerSpec = '{{ triggerSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -641,8 +641,8 @@ EXEC google.dataplex.tasks.projects_locations_lakes_tasks_run
 @tasksId='{{ tasksId }}' --required 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"args": "{{ args }}"
+"args": "{{ args }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

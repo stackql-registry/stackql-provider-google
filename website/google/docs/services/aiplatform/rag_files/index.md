@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ragCorporaId"><code>ragCorporaId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists RagFiles in a RagCorpus.</td>
 </tr>
 <tr>
@@ -236,18 +236,18 @@ The following methods are available for this resource:
     <td>Deletes a RagFile.</td>
 </tr>
 <tr>
-    <td><a href="#upload"><CopyableCode code="upload" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ragCorporaId"><code>ragCorporaId</code></a></td>
-    <td></td>
-    <td>Upload a file into a RagCorpus.</td>
-</tr>
-<tr>
     <td><a href="#import"><CopyableCode code="import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ragCorporaId"><code>ragCorporaId</code></a></td>
     <td></td>
     <td>Import files from Google Cloud Storage or Google Drive into a RagCorpus.</td>
+</tr>
+<tr>
+    <td><a href="#upload"><CopyableCode code="upload" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ragCorporaId"><code>ragCorporaId</code></a></td>
+    <td></td>
+    <td>Upload a file into a RagCorpus.</td>
 </tr>
 </tbody>
 </table>
@@ -362,8 +362,8 @@ FROM google.aiplatform.rag_files
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND ragCorporaId = '{{ ragCorporaId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -398,12 +398,28 @@ AND forceDelete = '{{ forceDelete }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="upload"
+    defaultValue="import"
     values={[
-        { label: 'upload', value: 'upload' },
-        { label: 'import', value: 'import' }
+        { label: 'import', value: 'import' },
+        { label: 'upload', value: 'upload' }
     ]}
 >
+<TabItem value="import">
+
+Import files from Google Cloud Storage or Google Drive into a RagCorpus.
+
+```sql
+EXEC google.aiplatform.rag_files.import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@ragCorporaId='{{ ragCorporaId }}' --required 
+@@json=
+'{
+"importRagFilesConfig": "{{ importRagFilesConfig }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="upload">
 
 Upload a file into a RagCorpus.
@@ -417,22 +433,6 @@ EXEC google.aiplatform.rag_files.upload
 '{
 "ragFile": "{{ ragFile }}", 
 "uploadRagFileConfig": "{{ uploadRagFileConfig }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="import">
-
-Import files from Google Cloud Storage or Google Drive into a RagCorpus.
-
-```sql
-EXEC google.aiplatform.rag_files.import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@ragCorporaId='{{ ragCorporaId }}' --required 
-@@json=
-'{
-"importRagFilesConfig": "{{ importRagFilesConfig }}"
 }'
 ;
 ```

@@ -167,9 +167,9 @@ Updates the Settings for the Project.
 ```sql
 UPDATE google.artifactregistry.project_settings
 SET 
-data__pullPercent = {{ pullPercent }},
+data__legacyRedirectionState = '{{ legacyRedirectionState }}',
 data__name = '{{ name }}',
-data__legacyRedirectionState = '{{ legacyRedirectionState }}'
+data__pullPercent = {{ pullPercent }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND updateMask = '{{ updateMask}}'

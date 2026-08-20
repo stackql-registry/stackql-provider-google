@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_agents_test_cases_list"><CopyableCode code="projects_locations_agents_test_cases_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -200,14 +200,7 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_agents_test_cases_import"><CopyableCode code="projects_locations_agents_test_cases_import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_test_cases_export"><CopyableCode code="projects_locations_agents_test_cases_export" /></a></td>
+    <td><a href="#projects_locations_agents_test_cases_batch_run"><CopyableCode code="projects_locations_agents_test_cases_batch_run" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
@@ -221,16 +214,23 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_agents_test_cases_run"><CopyableCode code="projects_locations_agents_test_cases_run" /></a></td>
+    <td><a href="#projects_locations_agents_test_cases_export"><CopyableCode code="projects_locations_agents_test_cases_export" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_agents_test_cases_batch_run"><CopyableCode code="projects_locations_agents_test_cases_batch_run" /></a></td>
+    <td><a href="#projects_locations_agents_test_cases_import"><CopyableCode code="projects_locations_agents_test_cases_import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_test_cases_run"><CopyableCode code="projects_locations_agents_test_cases_run" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -348,8 +348,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND view = '{{ view }}'
 AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -371,25 +371,25 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.test_cases (
-data__tags,
-data__notes,
-data__name,
-data__testCaseConversationTurns,
-data__lastTestResult,
-data__testConfig,
 data__displayName,
+data__lastTestResult,
+data__name,
+data__notes,
+data__tags,
+data__testCaseConversationTurns,
+data__testConfig,
 projectsId,
 locationsId,
 agentsId
 )
 SELECT 
-'{{ tags }}',
-'{{ notes }}',
-'{{ name }}',
-'{{ testCaseConversationTurns }}',
-'{{ lastTestResult }}',
-'{{ testConfig }}',
 '{{ displayName }}',
+'{{ lastTestResult }}',
+'{{ name }}',
+'{{ notes }}',
+'{{ tags }}',
+'{{ testCaseConversationTurns }}',
+'{{ testConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}'
@@ -419,346 +419,353 @@ testConfig
     - name: agentsId
       value: "{{ agentsId }}"
       description: Required parameter for the test_cases resource.
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: lastTestResult
+      value:
+        conversationTurns:
+          - userInput:
+              enableSentimentAnalysis: {{ enableSentimentAnalysis }}
+              injectedParameters: "{{ injectedParameters }}"
+              input:
+                audio:
+                  audio: "{{ audio }}"
+                  config: "{{ config }}"
+                dtmf:
+                  digits: "{{ digits }}"
+                  finishDigit: "{{ finishDigit }}"
+                event:
+                  event: "{{ event }}"
+                intent:
+                  intent: "{{ intent }}"
+                languageCode: "{{ languageCode }}"
+                text:
+                  text: "{{ text }}"
+                toolCallResult:
+                  action: "{{ action }}"
+                  error: "{{ error }}"
+                  outputParameters: "{{ outputParameters }}"
+                  tool: "{{ tool }}"
+              isWebhookEnabled: {{ isWebhookEnabled }}
+            virtualAgentOutput:
+              currentPage:
+                advancedSettings:
+                  audioExportGcsDestination: "{{ audioExportGcsDestination }}"
+                  dtmfSettings: "{{ dtmfSettings }}"
+                  loggingSettings: "{{ loggingSettings }}"
+                  speechSettings: "{{ speechSettings }}"
+                description: "{{ description }}"
+                displayName: "{{ displayName }}"
+                entryFulfillment:
+                  advancedSettings: "{{ advancedSettings }}"
+                  codeBlockFunction: "{{ codeBlockFunction }}"
+                  conditionalCases: "{{ conditionalCases }}"
+                  enableGenerativeFallback: {{ enableGenerativeFallback }}
+                  generators: "{{ generators }}"
+                  messages: "{{ messages }}"
+                  returnPartialResponses: {{ returnPartialResponses }}
+                  setParameterActions: "{{ setParameterActions }}"
+                  tag: "{{ tag }}"
+                  webhook: "{{ webhook }}"
+                eventHandlers:
+                  - event: "{{ event }}"
+                    name: "{{ name }}"
+                    targetFlow: "{{ targetFlow }}"
+                    targetPage: "{{ targetPage }}"
+                    targetPlaybook: "{{ targetPlaybook }}"
+                    triggerFulfillment:
+                      advancedSettings: "{{ advancedSettings }}"
+                      codeBlockFunction: "{{ codeBlockFunction }}"
+                      conditionalCases: "{{ conditionalCases }}"
+                      enableGenerativeFallback: {{ enableGenerativeFallback }}
+                      generators: "{{ generators }}"
+                      messages: "{{ messages }}"
+                      returnPartialResponses: {{ returnPartialResponses }}
+                      setParameterActions: "{{ setParameterActions }}"
+                      tag: "{{ tag }}"
+                      webhook: "{{ webhook }}"
+                form:
+                  parameters: "{{ parameters }}"
+                knowledgeConnectorSettings:
+                  dataStoreConnections: "{{ dataStoreConnections }}"
+                  enabled: {{ enabled }}
+                  targetFlow: "{{ targetFlow }}"
+                  targetPage: "{{ targetPage }}"
+                  triggerFulfillment: "{{ triggerFulfillment }}"
+                name: "{{ name }}"
+                transitionRouteGroups:
+                  - "{{ transitionRouteGroups }}"
+                transitionRoutes:
+                  - condition: "{{ condition }}"
+                    description: "{{ description }}"
+                    intent: "{{ intent }}"
+                    name: "{{ name }}"
+                    targetFlow: "{{ targetFlow }}"
+                    targetPage: "{{ targetPage }}"
+                    triggerFulfillment:
+                      advancedSettings: "{{ advancedSettings }}"
+                      codeBlockFunction: "{{ codeBlockFunction }}"
+                      conditionalCases: "{{ conditionalCases }}"
+                      enableGenerativeFallback: {{ enableGenerativeFallback }}
+                      generators: "{{ generators }}"
+                      messages: "{{ messages }}"
+                      returnPartialResponses: {{ returnPartialResponses }}
+                      setParameterActions: "{{ setParameterActions }}"
+                      tag: "{{ tag }}"
+                      webhook: "{{ webhook }}"
+              diagnosticInfo: "{{ diagnosticInfo }}"
+              differences:
+                - description: "{{ description }}"
+                  type: "{{ type }}"
+              sessionParameters: "{{ sessionParameters }}"
+              status:
+                code: {{ code }}
+                details: "{{ details }}"
+                message: "{{ message }}"
+              textResponses:
+                - allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                  text: "{{ text }}"
+              triggeredIntent:
+                description: "{{ description }}"
+                displayName: "{{ displayName }}"
+                dtmfPattern: "{{ dtmfPattern }}"
+                isFallback: {{ isFallback }}
+                labels: "{{ labels }}"
+                name: "{{ name }}"
+                parameters:
+                  - entityType: "{{ entityType }}"
+                    id: "{{ id }}"
+                    isList: {{ isList }}
+                    redact: {{ redact }}
+                priority: {{ priority }}
+                trainingPhrases:
+                  - id: "{{ id }}"
+                    parts: "{{ parts }}"
+                    repeatCount: {{ repeatCount }}
+        environment: "{{ environment }}"
+        name: "{{ name }}"
+        testResult: "{{ testResult }}"
+        testTime: "{{ testTime }}"
+    - name: name
+      value: "{{ name }}"
+    - name: notes
+      value: "{{ notes }}"
     - name: tags
       value:
         - "{{ tags }}"
-    - name: notes
-      value: "{{ notes }}"
-    - name: name
-      value: "{{ name }}"
     - name: testCaseConversationTurns
       value:
         - userInput:
-            isWebhookEnabled: {{ isWebhookEnabled }}
-            injectedParameters: "{{ injectedParameters }}"
             enableSentimentAnalysis: {{ enableSentimentAnalysis }}
+            injectedParameters: "{{ injectedParameters }}"
             input:
-              text:
-                text: "{{ text }}"
               audio:
+                audio: "{{ audio }}"
                 config:
-                  sampleRateHertz: {{ sampleRateHertz }}
-                  model: "{{ model }}"
-                  bargeInConfig: "{{ bargeInConfig }}"
                   audioEncoding: "{{ audioEncoding }}"
+                  bargeInConfig: "{{ bargeInConfig }}"
                   enableWordInfo: {{ enableWordInfo }}
-                  singleUtterance: {{ singleUtterance }}
+                  model: "{{ model }}"
                   modelVariant: "{{ modelVariant }}"
                   optOutConformerModelMigration: {{ optOutConformerModelMigration }}
                   phraseHints: "{{ phraseHints }}"
-                audio: "{{ audio }}"
+                  sampleRateHertz: {{ sampleRateHertz }}
+                  singleUtterance: {{ singleUtterance }}
               dtmf:
-                finishDigit: "{{ finishDigit }}"
                 digits: "{{ digits }}"
+                finishDigit: "{{ finishDigit }}"
+              event:
+                event: "{{ event }}"
               intent:
                 intent: "{{ intent }}"
+              languageCode: "{{ languageCode }}"
+              text:
+                text: "{{ text }}"
               toolCallResult:
-                tool: "{{ tool }}"
                 action: "{{ action }}"
                 error:
                   message: "{{ message }}"
                 outputParameters: "{{ outputParameters }}"
-              languageCode: "{{ languageCode }}"
-              event:
-                event: "{{ event }}"
+                tool: "{{ tool }}"
+            isWebhookEnabled: {{ isWebhookEnabled }}
           virtualAgentOutput:
-            differences:
-              - description: "{{ description }}"
-                type: "{{ type }}"
-            triggeredIntent:
-              trainingPhrases:
-                - parts: "{{ parts }}"
-                  repeatCount: {{ repeatCount }}
-                  id: "{{ id }}"
-              priority: {{ priority }}
-              displayName: "{{ displayName }}"
-              parameters:
-                - entityType: "{{ entityType }}"
-                  redact: {{ redact }}
-                  id: "{{ id }}"
-                  isList: {{ isList }}
-              isFallback: {{ isFallback }}
-              dtmfPattern: "{{ dtmfPattern }}"
-              name: "{{ name }}"
-              labels: "{{ labels }}"
-              description: "{{ description }}"
-            sessionParameters: "{{ sessionParameters }}"
             currentPage:
-              eventHandlers:
-                - name: "{{ name }}"
-                  event: "{{ event }}"
-                  targetPage: "{{ targetPage }}"
-                  triggerFulfillment:
-                    returnPartialResponses: {{ returnPartialResponses }}
-                    generators: "{{ generators }}"
-                    webhook: "{{ webhook }}"
-                    enableGenerativeFallback: {{ enableGenerativeFallback }}
-                    setParameterActions: "{{ setParameterActions }}"
-                    tag: "{{ tag }}"
-                    advancedSettings: "{{ advancedSettings }}"
-                    messages: "{{ messages }}"
-                    conditionalCases: "{{ conditionalCases }}"
-                  targetFlow: "{{ targetFlow }}"
-                  targetPlaybook: "{{ targetPlaybook }}"
-              form:
-                parameters:
-                  - required: {{ required }}
-                    isList: {{ isList }}
-                    redact: {{ redact }}
-                    displayName: "{{ displayName }}"
-                    advancedSettings:
-                      loggingSettings: "{{ loggingSettings }}"
-                      audioExportGcsDestination: "{{ audioExportGcsDestination }}"
-                      speechSettings: "{{ speechSettings }}"
-                      dtmfSettings: "{{ dtmfSettings }}"
-                    entityType: "{{ entityType }}"
-                    fillBehavior:
-                      initialPromptFulfillment: "{{ initialPromptFulfillment }}"
-                      repromptEventHandlers: "{{ repromptEventHandlers }}"
-                    defaultValue: "{{ defaultValue }}"
-              displayName: "{{ displayName }}"
-              transitionRouteGroups:
-                - "{{ transitionRouteGroups }}"
-              knowledgeConnectorSettings:
-                targetFlow: "{{ targetFlow }}"
-                dataStoreConnections:
-                  - dataStore: "{{ dataStore }}"
-                    documentProcessingMode: "{{ documentProcessingMode }}"
-                    dataStoreType: "{{ dataStoreType }}"
-                triggerFulfillment:
-                  returnPartialResponses: {{ returnPartialResponses }}
-                  generators: "{{ generators }}"
-                  webhook: "{{ webhook }}"
-                  enableGenerativeFallback: {{ enableGenerativeFallback }}
-                  setParameterActions: "{{ setParameterActions }}"
-                  tag: "{{ tag }}"
-                  advancedSettings: "{{ advancedSettings }}"
-                  messages: "{{ messages }}"
-                  conditionalCases: "{{ conditionalCases }}"
-                enabled: {{ enabled }}
-                targetPage: "{{ targetPage }}"
-              name: "{{ name }}"
-              transitionRoutes:
-                - name: "{{ name }}"
-                  targetPage: "{{ targetPage }}"
-                  condition: "{{ condition }}"
-                  description: "{{ description }}"
-                  targetFlow: "{{ targetFlow }}"
-                  intent: "{{ intent }}"
-                  triggerFulfillment:
-                    returnPartialResponses: {{ returnPartialResponses }}
-                    generators: "{{ generators }}"
-                    webhook: "{{ webhook }}"
-                    enableGenerativeFallback: {{ enableGenerativeFallback }}
-                    setParameterActions: "{{ setParameterActions }}"
-                    tag: "{{ tag }}"
-                    advancedSettings: "{{ advancedSettings }}"
-                    messages: "{{ messages }}"
-                    conditionalCases: "{{ conditionalCases }}"
+              advancedSettings:
+                audioExportGcsDestination:
+                  uri: "{{ uri }}"
+                dtmfSettings:
+                  enabled: {{ enabled }}
+                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+                  finishDigit: "{{ finishDigit }}"
+                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                  maxDigits: {{ maxDigits }}
+                loggingSettings:
+                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                  enableInteractionLogging: {{ enableInteractionLogging }}
+                  enableStackdriverLogging: {{ enableStackdriverLogging }}
+                speechSettings:
+                  endpointerSensitivity: {{ endpointerSensitivity }}
+                  models: "{{ models }}"
+                  noSpeechTimeout: "{{ noSpeechTimeout }}"
+                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
               description: "{{ description }}"
+              displayName: "{{ displayName }}"
               entryFulfillment:
-                returnPartialResponses: {{ returnPartialResponses }}
-                generators:
-                  - inputParameters: "{{ inputParameters }}"
-                    generator: "{{ generator }}"
-                    outputParameter: "{{ outputParameter }}"
-                webhook: "{{ webhook }}"
+                advancedSettings:
+                  audioExportGcsDestination: "{{ audioExportGcsDestination }}"
+                  dtmfSettings: "{{ dtmfSettings }}"
+                  loggingSettings: "{{ loggingSettings }}"
+                  speechSettings: "{{ speechSettings }}"
+                codeBlockFunction: "{{ codeBlockFunction }}"
+                conditionalCases:
+                  - cases: "{{ cases }}"
                 enableGenerativeFallback: {{ enableGenerativeFallback }}
+                generators:
+                  - generator: "{{ generator }}"
+                    inputParameters: "{{ inputParameters }}"
+                    outputParameter: "{{ outputParameter }}"
+                messages:
+                  - channel: "{{ channel }}"
+                    conversationSuccess:
+                      metadata: "{{ metadata }}"
+                    endInteraction: "{{ endInteraction }}"
+                    knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                    liveAgentHandoff:
+                      metadata: "{{ metadata }}"
+                    mixedAudio:
+                      segments: "{{ segments }}"
+                    outputAudioText:
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                      ssml: "{{ ssml }}"
+                      text: "{{ text }}"
+                    payload: "{{ payload }}"
+                    playAudio:
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                      audioUri: "{{ audioUri }}"
+                    responseType: "{{ responseType }}"
+                    telephonyTransferCall:
+                      phoneNumber: "{{ phoneNumber }}"
+                    text:
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                      text: "{{ text }}"
+                    toolCall:
+                      action: "{{ action }}"
+                      inputParameters: "{{ inputParameters }}"
+                      tool: "{{ tool }}"
+                returnPartialResponses: {{ returnPartialResponses }}
                 setParameterActions:
                   - parameter: "{{ parameter }}"
                     value: "{{ value }}"
                 tag: "{{ tag }}"
-                advancedSettings:
-                  loggingSettings: "{{ loggingSettings }}"
-                  audioExportGcsDestination: "{{ audioExportGcsDestination }}"
-                  speechSettings: "{{ speechSettings }}"
-                  dtmfSettings: "{{ dtmfSettings }}"
-                messages:
-                  - playAudio:
-                      audioUri: "{{ audioUri }}"
-                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                    toolCall:
-                      tool: "{{ tool }}"
-                      action: "{{ action }}"
-                      inputParameters: "{{ inputParameters }}"
-                    knowledgeInfoCard: "{{ knowledgeInfoCard }}"
-                    endInteraction: "{{ endInteraction }}"
-                    conversationSuccess:
-                      metadata: "{{ metadata }}"
-                    channel: "{{ channel }}"
-                    text:
-                      text: "{{ text }}"
-                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                    telephonyTransferCall:
-                      phoneNumber: "{{ phoneNumber }}"
-                    responseType: "{{ responseType }}"
-                    payload: "{{ payload }}"
-                    outputAudioText:
-                      text: "{{ text }}"
-                      ssml: "{{ ssml }}"
-                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-                    mixedAudio:
-                      segments: "{{ segments }}"
-                    liveAgentHandoff:
-                      metadata: "{{ metadata }}"
-                conditionalCases:
-                  - cases: "{{ cases }}"
-              advancedSettings:
-                loggingSettings:
-                  enableInteractionLogging: {{ enableInteractionLogging }}
-                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
-                  enableStackdriverLogging: {{ enableStackdriverLogging }}
-                audioExportGcsDestination:
-                  uri: "{{ uri }}"
-                speechSettings:
-                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
-                  models: "{{ models }}"
-                  endpointerSensitivity: {{ endpointerSensitivity }}
-                  noSpeechTimeout: "{{ noSpeechTimeout }}"
-                dtmfSettings:
-                  maxDigits: {{ maxDigits }}
-                  finishDigit: "{{ finishDigit }}"
-                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
-                  enabled: {{ enabled }}
-                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
-            textResponses:
-              - text: "{{ text }}"
-                allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-            status:
-              code: {{ code }}
-              message: "{{ message }}"
-              details: "{{ details }}"
-            diagnosticInfo: "{{ diagnosticInfo }}"
-    - name: lastTestResult
-      value:
-        testResult: "{{ testResult }}"
-        testTime: "{{ testTime }}"
-        conversationTurns:
-          - userInput:
-              isWebhookEnabled: {{ isWebhookEnabled }}
-              injectedParameters: "{{ injectedParameters }}"
-              enableSentimentAnalysis: {{ enableSentimentAnalysis }}
-              input:
-                text:
-                  text: "{{ text }}"
-                audio:
-                  config: "{{ config }}"
-                  audio: "{{ audio }}"
-                dtmf:
-                  finishDigit: "{{ finishDigit }}"
-                  digits: "{{ digits }}"
-                intent:
-                  intent: "{{ intent }}"
-                toolCallResult:
-                  tool: "{{ tool }}"
-                  action: "{{ action }}"
-                  error: "{{ error }}"
-                  outputParameters: "{{ outputParameters }}"
-                languageCode: "{{ languageCode }}"
-                event:
-                  event: "{{ event }}"
-            virtualAgentOutput:
-              differences:
-                - description: "{{ description }}"
-                  type: "{{ type }}"
-              triggeredIntent:
-                trainingPhrases:
-                  - parts: "{{ parts }}"
-                    repeatCount: {{ repeatCount }}
-                    id: "{{ id }}"
-                priority: {{ priority }}
-                displayName: "{{ displayName }}"
-                parameters:
-                  - entityType: "{{ entityType }}"
-                    redact: {{ redact }}
-                    id: "{{ id }}"
-                    isList: {{ isList }}
-                isFallback: {{ isFallback }}
-                dtmfPattern: "{{ dtmfPattern }}"
-                name: "{{ name }}"
-                labels: "{{ labels }}"
-                description: "{{ description }}"
-              sessionParameters: "{{ sessionParameters }}"
-              currentPage:
-                eventHandlers:
-                  - name: "{{ name }}"
-                    event: "{{ event }}"
-                    targetPage: "{{ targetPage }}"
-                    triggerFulfillment:
-                      returnPartialResponses: {{ returnPartialResponses }}
-                      generators: "{{ generators }}"
-                      webhook: "{{ webhook }}"
-                      enableGenerativeFallback: {{ enableGenerativeFallback }}
-                      setParameterActions: "{{ setParameterActions }}"
-                      tag: "{{ tag }}"
-                      advancedSettings: "{{ advancedSettings }}"
-                      messages: "{{ messages }}"
-                      conditionalCases: "{{ conditionalCases }}"
-                    targetFlow: "{{ targetFlow }}"
-                    targetPlaybook: "{{ targetPlaybook }}"
-                form:
-                  parameters: "{{ parameters }}"
-                displayName: "{{ displayName }}"
-                transitionRouteGroups:
-                  - "{{ transitionRouteGroups }}"
-                knowledgeConnectorSettings:
+                webhook: "{{ webhook }}"
+              eventHandlers:
+                - event: "{{ event }}"
+                  name: "{{ name }}"
                   targetFlow: "{{ targetFlow }}"
-                  dataStoreConnections: "{{ dataStoreConnections }}"
-                  triggerFulfillment: "{{ triggerFulfillment }}"
-                  enabled: {{ enabled }}
                   targetPage: "{{ targetPage }}"
-                name: "{{ name }}"
-                transitionRoutes:
-                  - name: "{{ name }}"
-                    targetPage: "{{ targetPage }}"
-                    condition: "{{ condition }}"
-                    description: "{{ description }}"
-                    targetFlow: "{{ targetFlow }}"
-                    intent: "{{ intent }}"
-                    triggerFulfillment:
-                      returnPartialResponses: {{ returnPartialResponses }}
-                      generators: "{{ generators }}"
-                      webhook: "{{ webhook }}"
-                      enableGenerativeFallback: {{ enableGenerativeFallback }}
-                      setParameterActions: "{{ setParameterActions }}"
-                      tag: "{{ tag }}"
-                      advancedSettings: "{{ advancedSettings }}"
-                      messages: "{{ messages }}"
-                      conditionalCases: "{{ conditionalCases }}"
-                description: "{{ description }}"
-                entryFulfillment:
-                  returnPartialResponses: {{ returnPartialResponses }}
-                  generators: "{{ generators }}"
-                  webhook: "{{ webhook }}"
+                  targetPlaybook: "{{ targetPlaybook }}"
+                  triggerFulfillment:
+                    advancedSettings: "{{ advancedSettings }}"
+                    codeBlockFunction: "{{ codeBlockFunction }}"
+                    conditionalCases: "{{ conditionalCases }}"
+                    enableGenerativeFallback: {{ enableGenerativeFallback }}
+                    generators: "{{ generators }}"
+                    messages: "{{ messages }}"
+                    returnPartialResponses: {{ returnPartialResponses }}
+                    setParameterActions: "{{ setParameterActions }}"
+                    tag: "{{ tag }}"
+                    webhook: "{{ webhook }}"
+              form:
+                parameters:
+                  - advancedSettings:
+                      audioExportGcsDestination: "{{ audioExportGcsDestination }}"
+                      dtmfSettings: "{{ dtmfSettings }}"
+                      loggingSettings: "{{ loggingSettings }}"
+                      speechSettings: "{{ speechSettings }}"
+                    defaultValue: "{{ defaultValue }}"
+                    displayName: "{{ displayName }}"
+                    entityType: "{{ entityType }}"
+                    fillBehavior:
+                      initialPromptFulfillment: "{{ initialPromptFulfillment }}"
+                      repromptEventHandlers: "{{ repromptEventHandlers }}"
+                    isList: {{ isList }}
+                    redact: {{ redact }}
+                    required: {{ required }}
+              knowledgeConnectorSettings:
+                dataStoreConnections:
+                  - dataStore: "{{ dataStore }}"
+                    dataStoreType: "{{ dataStoreType }}"
+                    documentProcessingMode: "{{ documentProcessingMode }}"
+                enabled: {{ enabled }}
+                targetFlow: "{{ targetFlow }}"
+                targetPage: "{{ targetPage }}"
+                triggerFulfillment:
+                  advancedSettings: "{{ advancedSettings }}"
+                  codeBlockFunction: "{{ codeBlockFunction }}"
+                  conditionalCases: "{{ conditionalCases }}"
                   enableGenerativeFallback: {{ enableGenerativeFallback }}
+                  generators: "{{ generators }}"
+                  messages: "{{ messages }}"
+                  returnPartialResponses: {{ returnPartialResponses }}
                   setParameterActions: "{{ setParameterActions }}"
                   tag: "{{ tag }}"
-                  advancedSettings: "{{ advancedSettings }}"
-                  messages: "{{ messages }}"
-                  conditionalCases: "{{ conditionalCases }}"
-                advancedSettings:
-                  loggingSettings: "{{ loggingSettings }}"
-                  audioExportGcsDestination: "{{ audioExportGcsDestination }}"
-                  speechSettings: "{{ speechSettings }}"
-                  dtmfSettings: "{{ dtmfSettings }}"
-              textResponses:
-                - text: "{{ text }}"
-                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
-              status:
-                code: {{ code }}
-                message: "{{ message }}"
-                details: "{{ details }}"
-              diagnosticInfo: "{{ diagnosticInfo }}"
-        environment: "{{ environment }}"
-        name: "{{ name }}"
+                  webhook: "{{ webhook }}"
+              name: "{{ name }}"
+              transitionRouteGroups:
+                - "{{ transitionRouteGroups }}"
+              transitionRoutes:
+                - condition: "{{ condition }}"
+                  description: "{{ description }}"
+                  intent: "{{ intent }}"
+                  name: "{{ name }}"
+                  targetFlow: "{{ targetFlow }}"
+                  targetPage: "{{ targetPage }}"
+                  triggerFulfillment:
+                    advancedSettings: "{{ advancedSettings }}"
+                    codeBlockFunction: "{{ codeBlockFunction }}"
+                    conditionalCases: "{{ conditionalCases }}"
+                    enableGenerativeFallback: {{ enableGenerativeFallback }}
+                    generators: "{{ generators }}"
+                    messages: "{{ messages }}"
+                    returnPartialResponses: {{ returnPartialResponses }}
+                    setParameterActions: "{{ setParameterActions }}"
+                    tag: "{{ tag }}"
+                    webhook: "{{ webhook }}"
+            diagnosticInfo: "{{ diagnosticInfo }}"
+            differences:
+              - description: "{{ description }}"
+                type: "{{ type }}"
+            sessionParameters: "{{ sessionParameters }}"
+            status:
+              code: {{ code }}
+              details: "{{ details }}"
+              message: "{{ message }}"
+            textResponses:
+              - allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                text: "{{ text }}"
+            triggeredIntent:
+              description: "{{ description }}"
+              displayName: "{{ displayName }}"
+              dtmfPattern: "{{ dtmfPattern }}"
+              isFallback: {{ isFallback }}
+              labels: "{{ labels }}"
+              name: "{{ name }}"
+              parameters:
+                - entityType: "{{ entityType }}"
+                  id: "{{ id }}"
+                  isList: {{ isList }}
+                  redact: {{ redact }}
+              priority: {{ priority }}
+              trainingPhrases:
+                - id: "{{ id }}"
+                  parts: "{{ parts }}"
+                  repeatCount: {{ repeatCount }}
     - name: testConfig
       value:
-        page: "{{ page }}"
         flow: "{{ flow }}"
+        page: "{{ page }}"
         trackingParameters:
           - "{{ trackingParameters }}"
-    - name: displayName
-      value: "{{ displayName }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -780,13 +787,13 @@ No description available.
 ```sql
 UPDATE google.dialogflow.test_cases
 SET 
-data__tags = '{{ tags }}',
-data__notes = '{{ notes }}',
-data__name = '{{ name }}',
-data__testCaseConversationTurns = '{{ testCaseConversationTurns }}',
+data__displayName = '{{ displayName }}',
 data__lastTestResult = '{{ lastTestResult }}',
-data__testConfig = '{{ testConfig }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}',
+data__notes = '{{ notes }}',
+data__tags = '{{ tags }}',
+data__testCaseConversationTurns = '{{ testCaseConversationTurns }}',
+data__testConfig = '{{ testConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -833,29 +840,42 @@ AND agentsId = '{{ agentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_agents_test_cases_import"
+    defaultValue="projects_locations_agents_test_cases_batch_run"
     values={[
-        { label: 'projects_locations_agents_test_cases_import', value: 'projects_locations_agents_test_cases_import' },
-        { label: 'projects_locations_agents_test_cases_export', value: 'projects_locations_agents_test_cases_export' },
+        { label: 'projects_locations_agents_test_cases_batch_run', value: 'projects_locations_agents_test_cases_batch_run' },
         { label: 'projects_locations_agents_test_cases_calculate_coverage', value: 'projects_locations_agents_test_cases_calculate_coverage' },
-        { label: 'projects_locations_agents_test_cases_run', value: 'projects_locations_agents_test_cases_run' },
-        { label: 'projects_locations_agents_test_cases_batch_run', value: 'projects_locations_agents_test_cases_batch_run' }
+        { label: 'projects_locations_agents_test_cases_export', value: 'projects_locations_agents_test_cases_export' },
+        { label: 'projects_locations_agents_test_cases_import', value: 'projects_locations_agents_test_cases_import' },
+        { label: 'projects_locations_agents_test_cases_run', value: 'projects_locations_agents_test_cases_run' }
     ]}
 >
-<TabItem value="projects_locations_agents_test_cases_import">
+<TabItem value="projects_locations_agents_test_cases_batch_run">
 
 Successful response
 
 ```sql
-EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_import 
+EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_batch_run 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @agentsId='{{ agentsId }}' --required 
 @@json=
 '{
-"gcsUri": "{{ gcsUri }}", 
-"content": "{{ content }}"
+"environment": "{{ environment }}", 
+"testCases": "{{ testCases }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_test_cases_calculate_coverage">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_calculate_coverage 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required, 
+@type='{{ type }}'
 ;
 ```
 </TabItem>
@@ -877,16 +897,20 @@ EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_export
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_agents_test_cases_calculate_coverage">
+<TabItem value="projects_locations_agents_test_cases_import">
 
 Successful response
 
 ```sql
-EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_calculate_coverage 
+EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_import 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required, 
-@type='{{ type }}'
+@agentsId='{{ agentsId }}' --required 
+@@json=
+'{
+"content": "{{ content }}", 
+"gcsUri": "{{ gcsUri }}"
+}'
 ;
 ```
 </TabItem>
@@ -903,23 +927,6 @@ EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_run
 @@json=
 '{
 "environment": "{{ environment }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_agents_test_cases_batch_run">
-
-Successful response
-
-```sql
-EXEC google.dialogflow.test_cases.projects_locations_agents_test_cases_batch_run 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required 
-@@json=
-'{
-"environment": "{{ environment }}", 
-"testCases": "{{ testCases }}"
 }'
 ;
 ```

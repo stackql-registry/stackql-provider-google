@@ -192,7 +192,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_list"><CopyableCode code="projects_locations_products_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists products in an unspecified order. Possible errors: * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.</td>
 </tr>
 <tr>
@@ -344,8 +344,8 @@ productLabels
 FROM google.vision.products
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -367,21 +367,21 @@ Creates and returns a new product resource. Possible errors: * Returns INVALID_A
 
 ```sql
 INSERT INTO google.vision.products (
-data__productCategory,
-data__displayName,
-data__productLabels,
-data__name,
 data__description,
+data__displayName,
+data__name,
+data__productCategory,
+data__productLabels,
 projectsId,
 locationsId,
 productId
 )
 SELECT 
-'{{ productCategory }}',
-'{{ displayName }}',
-'{{ productLabels }}',
-'{{ name }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
+'{{ productCategory }}',
+'{{ productLabels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productId }}'
@@ -405,28 +405,28 @@ productLabels
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the products resource.
-    - name: productCategory
-      value: "{{ productCategory }}"
-      description: |
-        Immutable. The category for the product identified by the reference image. This should be one of "homegoods-v2", "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The legacy categories "homegoods", "apparel", and "toys" are still supported, but these should not be used for new products.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        The user-provided name for this Product. Must not be empty. Must be at most 4096 characters long.
-    - name: productLabels
-      description: |
-        Key-value pairs that can be attached to a product. At query time, constraints can be specified based on the product_labels. Note that integer values can be provided as strings, e.g. "1199". Only strings with integer values can match a range-based restriction which is to be supported soon. Multiple values can be assigned to the same key. One product may have up to 500 product_labels. Notice that the total number of distinct product_labels over all products in one ProductSet cannot exceed 1M, otherwise the product search pipeline will refuse to work for that ProductSet.
-      value:
-        - value: "{{ value }}"
-          key: "{{ key }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The resource name of the product. Format is: \`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID\`. This field is ignored when creating a product.
     - name: description
       value: "{{ description }}"
       description: |
         User-provided metadata to be stored with this product. Must be at most 4096 characters long.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The user-provided name for this Product. Must not be empty. Must be at most 4096 characters long.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the product. Format is: \`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID\`. This field is ignored when creating a product.
+    - name: productCategory
+      value: "{{ productCategory }}"
+      description: |
+        Immutable. The category for the product identified by the reference image. This should be one of "homegoods-v2", "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The legacy categories "homegoods", "apparel", and "toys" are still supported, but these should not be used for new products.
+    - name: productLabels
+      description: |
+        Key-value pairs that can be attached to a product. At query time, constraints can be specified based on the product_labels. Note that integer values can be provided as strings, e.g. "1199". Only strings with integer values can match a range-based restriction which is to be supported soon. Multiple values can be assigned to the same key. One product may have up to 500 product_labels. Notice that the total number of distinct product_labels over all products in one ProductSet cannot exceed 1M, otherwise the product search pipeline will refuse to work for that ProductSet.
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
     - name: productId
       value: "{{ productId }}"
 `}</CodeBlock>
@@ -450,11 +450,11 @@ Makes changes to a Product resource. Only the `display_name`, `description`, and
 ```sql
 UPDATE google.vision.products
 SET 
-data__productCategory = '{{ productCategory }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__productLabels = '{{ productLabels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__productCategory = '{{ productCategory }}',
+data__productLabels = '{{ productLabels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

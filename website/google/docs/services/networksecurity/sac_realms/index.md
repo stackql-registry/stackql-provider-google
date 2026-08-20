@@ -165,14 +165,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_sac_realms_list"><CopyableCode code="projects_locations_sac_realms_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists SACRealms in a given project.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_sac_realms_create"><CopyableCode code="projects_locations_sac_realms_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-sacRealmId"><code>sacRealmId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sacRealmId"><code>sacRealmId</code></a></td>
     <td>Creates a new SACRealm in a given project.</td>
 </tr>
 <tr>
@@ -291,10 +291,10 @@ updateTime
 FROM google.networksecurity.sac_realms
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -317,21 +317,21 @@ Creates a new SACRealm in a given project.
 ```sql
 INSERT INTO google.networksecurity.sac_realms (
 data__labels,
-data__securityService,
 data__name,
+data__securityService,
 projectsId,
 locationsId,
-sacRealmId,
-requestId
+requestId,
+sacRealmId
 )
 SELECT 
 '{{ labels }}',
-'{{ securityService }}',
 '{{ name }}',
+'{{ securityService }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ sacRealmId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ sacRealmId }}'
 RETURNING
 name,
 done,
@@ -356,19 +356,19 @@ response
       value: "{{ labels }}"
       description: |
         Optional. Optional list of labels applied to the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name, in the form \`projects/{project}/locations/global/sacRealms/{sacRealm}\`.
     - name: securityService
       value: "{{ securityService }}"
       description: |
         Immutable. SSE service provider associated with the realm.
       valid_values: ['SECURITY_SERVICE_UNSPECIFIED', 'PALO_ALTO_PRISMA_ACCESS']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name, in the form \`projects/{project}/locations/global/sacRealms/{sacRealm}\`.
-    - name: sacRealmId
-      value: "{{ sacRealmId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: sacRealmId
+      value: "{{ sacRealmId }}"
 `}</CodeBlock>
 
 </TabItem>

@@ -89,6 +89,31 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="done" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="error" /></td>
+    <td><code>object</code></td>
+    <td> (id: Status)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="response" /></td>
+    <td><code>object</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -120,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_operations_list"><CopyableCode code="organizations_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -218,13 +243,17 @@ Successful response
 
 ```sql
 SELECT
-*
+name,
+done,
+error,
+metadata,
+response
 FROM google.securitycenter.operations
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND filter = '{{ filter }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

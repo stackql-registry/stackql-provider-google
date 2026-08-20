@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all groups in a given project and location.</td>
 </tr>
 <tr>
@@ -169,7 +169,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a group.</td>
 </tr>
 <tr>
@@ -292,9 +292,9 @@ FROM google.migrationcenter.groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -316,8 +316,8 @@ Creates a new group in a given project and location.
 
 ```sql
 INSERT INTO google.migrationcenter.groups (
-data__displayName,
 data__description,
+data__displayName,
 data__labels,
 projectsId,
 locationsId,
@@ -325,8 +325,8 @@ groupId,
 requestId
 )
 SELECT 
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -352,14 +352,14 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the groups resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User-friendly display name.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. The description of the group.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User-friendly display name.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -389,15 +389,15 @@ Updates the parameters of a group.
 ```sql
 UPDATE google.migrationcenter.groups
 SET 
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND groupsId = '{{ groupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

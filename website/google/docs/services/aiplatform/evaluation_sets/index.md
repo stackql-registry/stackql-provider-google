@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Evaluation Sets.</td>
 </tr>
 <tr>
@@ -312,10 +312,10 @@ updateTime
 FROM google.aiplatform.evaluation_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -337,22 +337,22 @@ Creates an Evaluation Set.
 
 ```sql
 INSERT INTO google.aiplatform.evaluation_sets (
-data__evaluationItems,
-data__displayName,
-data__metadata,
 data__agentConfigs,
-data__name,
+data__displayName,
 data__encryptionSpec,
+data__evaluationItems,
+data__metadata,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ evaluationItems }}',
-'{{ displayName }}',
-'{{ metadata }}',
 '{{ agentConfigs }}',
-'{{ name }}',
+'{{ displayName }}',
 '{{ encryptionSpec }}',
+'{{ evaluationItems }}',
+'{{ metadata }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -378,32 +378,32 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the evaluation_sets resource.
-    - name: evaluationItems
-      value:
-        - "{{ evaluationItems }}"
-      description: |
-        Required. The EvaluationItems that are part of this dataset.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the EvaluationSet.
-    - name: metadata
-      value: "{{ metadata }}"
-      description: |
-        Optional. Metadata for the EvaluationSet.
     - name: agentConfigs
       value: "{{ agentConfigs }}"
       description: |
         Optional. Static configurations for each agent associated with the items in this set. Key: \`agent_id\` (matches the \`author\` field in \`events\`). Value: The static configuration of the agent.
-    - name: name
-      value: "{{ name }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Identifier. The resource name of the EvaluationSet. Format: \`projects/{project}/locations/{location}/evaluationSets/{evaluation_set}\`
+        Required. The display name of the EvaluationSet.
     - name: encryptionSpec
       description: |
         Optional. Customer-managed encryption key spec for this EvaluationSet. If set, this EvaluationSet and its sub-resources will be secured by this key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
+    - name: evaluationItems
+      value:
+        - "{{ evaluationItems }}"
+      description: |
+        Required. The EvaluationItems that are part of this dataset.
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. Metadata for the EvaluationSet.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the EvaluationSet. Format: \`projects/{project}/locations/{location}/evaluationSets/{evaluation_set}\`
 `}</CodeBlock>
 
 </TabItem>
@@ -425,12 +425,12 @@ Updates an Evaluation Set.
 ```sql
 UPDATE google.aiplatform.evaluation_sets
 SET 
-data__evaluationItems = '{{ evaluationItems }}',
-data__displayName = '{{ displayName }}',
-data__metadata = '{{ metadata }}',
 data__agentConfigs = '{{ agentConfigs }}',
-data__name = '{{ name }}',
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__displayName = '{{ displayName }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
+data__evaluationItems = '{{ evaluationItems }}',
+data__metadata = '{{ metadata }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -493,11 +493,12 @@ EXEC google.aiplatform.evaluation_sets.import
 '{
 "agentEngineSource": "{{ agentEngineSource }}", 
 "bigquerySource": "{{ bigquerySource }}", 
-"inlineSource": "{{ inlineSource }}", 
-"gcsSource": "{{ gcsSource }}", 
-"evaluationSet": "{{ evaluationSet }}", 
 "cloudTraceSource": "{{ cloudTraceSource }}", 
-"gcsDestination": "{{ gcsDestination }}"
+"evaluationSet": "{{ evaluationSet }}", 
+"gcsDestination": "{{ gcsDestination }}", 
+"gcsSource": "{{ gcsSource }}", 
+"inlineSource": "{{ inlineSource }}", 
+"interactionsSource": "{{ interactionsSource }}"
 }'
 ;
 ```

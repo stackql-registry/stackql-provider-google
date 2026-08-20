@@ -110,11 +110,11 @@ EXEC google.contactcenterinsights.segments.bulk_analyze
 @conversationsId='{{ conversationsId }}' --required 
 @@json=
 '{
-"relabel": {{ relabel }}, 
-"parent": "{{ parent }}", 
 "analysisPercentage": {{ analysisPercentage }}, 
+"annotatorSelector": "{{ annotatorSelector }}", 
 "filter": "{{ filter }}", 
-"annotatorSelector": "{{ annotatorSelector }}"
+"parent": "{{ parent }}", 
+"relabel": {{ relabel }}
 }'
 ;
 ```

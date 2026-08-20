@@ -18,7 +18,7 @@ firestore service documentation.
 
 :::info[Service Summary]
 
-total resources: __10__  
+total resources: __11__  
 
 :::
 
@@ -27,6 +27,7 @@ total resources: __10__
 <div class="providerDocColumn">
 <a href="/services/firestore/backup_schedules/">backup_schedules</a><br />
 <a href="/services/firestore/backups/">backups</a><br />
+<a href="/services/firestore/change_streams/">change_streams</a><br />
 <a href="/services/firestore/databases/">databases</a><br />
 <a href="/services/firestore/documents/">documents</a><br />
 <a href="/services/firestore/documents_collection_ids/">documents_collection_ids</a>

@@ -119,6 +119,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Required. Identifier. The name of the posture, in the format `organizations/&#123;organization&#125;/locations/global/postures/&#123;posture_id&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="annotations" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The user-specified annotations for the posture. For details about the values you can use in an annotation, see [AIP-148: Standard fields](https://google.aip.dev/148#annotations).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="categories" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The categories that the posture belongs to, as determined by the Security Posture API.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the posture was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A description of the posture.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. An opaque identifier for the current version of the posture at the specified `revision_id`. To prevent concurrent updates from overwriting each other, always provide the `etag` when you update a posture. You can also provide the `etag` when you delete a posture, to help ensure that you're deleting the intended version of the posture.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="policySets" /></td>
+    <td><code>array</code></td>
+    <td>Required. The PolicySet resources that the posture includes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="reconciling" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Whether the posture is in the process of being updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="revisionId" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Immutable. An opaque eight-character string that identifies the revision of the posture. A posture can have multiple revisions; when you deploy a posture, you deploy a specific revision of the posture.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Required. The state of the posture at the specified `revision_id`. (STATE_UNSPECIFIED, DEPRECATED, DRAFT, ACTIVE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the posture was last updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -150,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the most recent revisions of all Posture resources in a specified organization and location.</td>
 </tr>
 <tr>
@@ -164,7 +219,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-posturesId"><code>posturesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-revisionId"><code>revisionId</code></a></td>
+    <td><a href="#parameter-revisionId"><code>revisionId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a revision of an existing Posture. If the posture revision that you update is currently deployed, then a new revision of the posture is created. To prevent concurrent updates from overwriting each other, always follow the read-modify-write pattern when you update a posture: 1. Call GetPosture to get the current version of the posture. 2. Update the fields in the posture as needed. 3. Call UpdatePosture to update the posture. Ensure that your request includes the `etag` value from the GetPosture response. **Important:** If you omit the `etag` when you call UpdatePosture, then the updated posture unconditionally overwrites the existing posture.</td>
 </tr>
 <tr>
@@ -290,12 +345,22 @@ Lists the most recent revisions of all Posture resources in a specified organiza
 
 ```sql
 SELECT
-*
+name,
+annotations,
+categories,
+createTime,
+description,
+etag,
+policySets,
+reconciling,
+revisionId,
+state,
+updateTime
 FROM google.securityposture.postures
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -318,23 +383,23 @@ Creates a new Posture.
 
 ```sql
 INSERT INTO google.securityposture.postures (
-data__name,
-data__state,
+data__annotations,
 data__description,
 data__etag,
+data__name,
 data__policySets,
-data__annotations,
+data__state,
 organizationsId,
 locationsId,
 postureId
 )
 SELECT 
-'{{ name }}',
-'{{ state }}',
+'{{ annotations }}',
 '{{ description }}',
 '{{ etag }}',
+'{{ name }}',
 '{{ policySets }}',
-'{{ annotations }}',
+'{{ state }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ postureId }}'
@@ -358,15 +423,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the postures resource.
-    - name: name
-      value: "{{ name }}"
+    - name: annotations
+      value: "{{ annotations }}"
       description: |
-        Required. Identifier. The name of the posture, in the format \`organizations/{organization}/locations/global/postures/{posture_id}\`.
-    - name: state
-      value: "{{ state }}"
-      description: |
-        Required. The state of the posture at the specified \`revision_id\`.
-      valid_values: ['STATE_UNSPECIFIED', 'DEPRECATED', 'DRAFT', 'ACTIVE']
+        Optional. The user-specified annotations for the posture. For details about the values you can use in an annotation, see [AIP-148: Standard fields](https://google.aip.dev/148#annotations).
     - name: description
       value: "{{ description }}"
       description: |
@@ -375,17 +435,22 @@ response
       value: "{{ etag }}"
       description: |
         Optional. An opaque identifier for the current version of the posture at the specified \`revision_id\`. To prevent concurrent updates from overwriting each other, always provide the \`etag\` when you update a posture. You can also provide the \`etag\` when you delete a posture, to help ensure that you're deleting the intended version of the posture.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. The name of the posture, in the format \`organizations/{organization}/locations/global/postures/{posture_id}\`.
     - name: policySets
       description: |
         Required. The PolicySet resources that the posture includes.
       value:
-        - policySetId: "{{ policySetId }}"
+        - description: "{{ description }}"
           policies: "{{ policies }}"
-          description: "{{ description }}"
-    - name: annotations
-      value: "{{ annotations }}"
+          policySetId: "{{ policySetId }}"
+    - name: state
+      value: "{{ state }}"
       description: |
-        Optional. The user-specified annotations for the posture. For details about the values you can use in an annotation, see [AIP-148: Standard fields](https://google.aip.dev/148#annotations).
+        Required. The state of the posture at the specified \`revision_id\`.
+      valid_values: ['STATE_UNSPECIFIED', 'DEPRECATED', 'DRAFT', 'ACTIVE']
     - name: postureId
       value: "{{ postureId }}"
 `}</CodeBlock>
@@ -409,18 +474,18 @@ Updates a revision of an existing Posture. If the posture revision that you upda
 ```sql
 UPDATE google.securityposture.postures
 SET 
-data__name = '{{ name }}',
-data__state = '{{ state }}',
+data__annotations = '{{ annotations }}',
 data__description = '{{ description }}',
 data__etag = '{{ etag }}',
+data__name = '{{ name }}',
 data__policySets = '{{ policySets }}',
-data__annotations = '{{ annotations }}'
+data__state = '{{ state }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND posturesId = '{{ posturesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND revisionId = '{{ revisionId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

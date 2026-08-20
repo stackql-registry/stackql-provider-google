@@ -106,10 +106,10 @@ EXEC google.servicecontrol.services.check
 @serviceName='{{ serviceName }}' --required 
 @@json=
 '{
-"serviceConfigId": "{{ serviceConfigId }}", 
+"attributes": "{{ attributes }}", 
 "flags": "{{ flags }}", 
 "resources": "{{ resources }}", 
-"attributes": "{{ attributes }}"
+"serviceConfigId": "{{ serviceConfigId }}"
 }'
 ;
 ```
@@ -123,8 +123,8 @@ EXEC google.servicecontrol.services.report
 @serviceName='{{ serviceName }}' --required 
 @@json=
 '{
-"serviceConfigId": "{{ serviceConfigId }}", 
-"operations": "{{ operations }}"
+"operations": "{{ operations }}", 
+"serviceConfigId": "{{ serviceConfigId }}"
 }'
 ;
 ```

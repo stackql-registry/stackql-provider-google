@@ -162,8 +162,8 @@ Default ACL configuration for use in a location of a customer's project. Updates
 ```sql
 UPDATE google.discoveryengine.acl_config
 SET 
-data__name = '{{ name }}',
-data__idpConfig = '{{ idpConfig }}'
+data__idpConfig = '{{ idpConfig }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

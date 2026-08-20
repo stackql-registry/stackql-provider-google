@@ -135,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Gemini Enterprise only. Lists all non-deleted WorkforcePoolProviderScimTokenss in a WorkforcePoolProviderScimTenant. If `show_deleted` is set to `true`, then deleted SCIM tokens are also listed.</td>
 </tr>
 <tr>
@@ -271,9 +271,9 @@ WHERE locationsId = '{{ locationsId }}' -- required
 AND workforcePoolsId = '{{ workforcePoolsId }}' -- required
 AND providersId = '{{ providersId }}' -- required
 AND scimTenantsId = '{{ scimTenantsId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -295,8 +295,8 @@ Gemini Enterprise only. Creates a new WorkforcePoolProviderScimToken in a Workfo
 
 ```sql
 INSERT INTO google.iam.tokens (
-data__name,
 data__displayName,
+data__name,
 locationsId,
 workforcePoolsId,
 providersId,
@@ -304,8 +304,8 @@ scimTenantsId,
 workforcePoolProviderScimTokenId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ locationsId }}',
 '{{ workforcePoolsId }}',
 '{{ providersId }}',
@@ -336,14 +336,14 @@ state
     - name: scimTenantsId
       value: "{{ scimTenantsId }}"
       description: Required parameter for the tokens resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Gemini Enterprise only. The resource name of the SCIM Token. Format: \`locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}/tokens/{token}\`
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. Gemini Enterprise only. The display name of the SCIM token. Cannot exceed 32 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Gemini Enterprise only. The resource name of the SCIM Token. Format: \`locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}/tokens/{token}\`
     - name: workforcePoolProviderScimTokenId
       value: "{{ workforcePoolProviderScimTokenId }}"
 `}</CodeBlock>
@@ -367,8 +367,8 @@ Gemini Enterprise only. Updates an existing WorkforcePoolProviderScimToken.
 ```sql
 UPDATE google.iam.tokens
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND workforcePoolsId = '{{ workforcePoolsId }}' --required

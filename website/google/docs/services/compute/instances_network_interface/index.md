@@ -123,52 +123,52 @@ Adds one dynamic network interface to an active instance.
 
 ```sql
 INSERT INTO google.compute.instances_network_interface (
-data__ipv6Address,
-data__parentNicName,
-data__fingerprint,
-data__igmpQuery,
-data__serviceClassId,
-data__subnetwork,
-data__network,
-data__stackType,
 data__accessConfigs,
-data__networkAttachment,
-data__queueCount,
-data__name,
-data__networkIP,
-data__vlan,
-data__internalIpv6PrefixLength,
-data__nicType,
 data__aliasIpRanges,
-data__ipv6AccessConfigs,
 data__aliasIpv6Ranges,
 data__enableVpcScopedDns,
+data__fingerprint,
+data__igmpQuery,
+data__internalIpv6PrefixLength,
+data__ipv6AccessConfigs,
+data__ipv6Address,
+data__name,
+data__network,
+data__networkAttachment,
+data__networkIP,
+data__nicType,
+data__parentNicName,
+data__queueCount,
+data__serviceClassId,
+data__stackType,
+data__subnetwork,
+data__vlan,
 project,
 zone,
 instance,
 requestId
 )
 SELECT 
-'{{ ipv6Address }}',
-'{{ parentNicName }}',
-'{{ fingerprint }}',
-'{{ igmpQuery }}',
-'{{ serviceClassId }}',
-'{{ subnetwork }}',
-'{{ network }}',
-'{{ stackType }}',
 '{{ accessConfigs }}',
-'{{ networkAttachment }}',
-{{ queueCount }},
-'{{ name }}',
-'{{ networkIP }}',
-{{ vlan }},
-{{ internalIpv6PrefixLength }},
-'{{ nicType }}',
 '{{ aliasIpRanges }}',
-'{{ ipv6AccessConfigs }}',
 '{{ aliasIpv6Ranges }}',
 {{ enableVpcScopedDns }},
+'{{ fingerprint }}',
+'{{ igmpQuery }}',
+{{ internalIpv6PrefixLength }},
+'{{ ipv6AccessConfigs }}',
+'{{ ipv6Address }}',
+'{{ name }}',
+'{{ network }}',
+'{{ networkAttachment }}',
+'{{ networkIP }}',
+'{{ nicType }}',
+'{{ parentNicName }}',
+{{ queueCount }},
+'{{ serviceClassId }}',
+'{{ stackType }}',
+'{{ subnetwork }}',
+{{ vlan }},
 '{{ project }}',
 '{{ zone }}',
 '{{ instance }}',
@@ -218,17 +218,41 @@ zone
     - name: instance
       value: "{{ instance }}"
       description: Required parameter for the instances_network_interface resource.
-    - name: ipv6Address
-      value: "{{ ipv6Address }}"
+    - name: accessConfigs
       description: |
-        An IPv6 internal network address for this network interface. To
-        use a static internal IP address, it must be unused and in the same region
-        as the instance's zone. If not specified, Google Cloud will automatically
-        assign an internal IPv6 address from the instance's subnetwork.
-    - name: parentNicName
-      value: "{{ parentNicName }}"
+        An array of configurations for this interface. Currently, only one access
+        config, ONE_TO_ONE_NAT, is supported. If there are noaccessConfigs specified, then this instance will have
+        no external internet access.
+      value:
+        - externalIpv6: "{{ externalIpv6 }}"
+          externalIpv6PrefixLength: {{ externalIpv6PrefixLength }}
+          kind: "{{ kind }}"
+          name: "{{ name }}"
+          natIP: "{{ natIP }}"
+          networkTier: "{{ networkTier }}"
+          publicPtrDomainName: "{{ publicPtrDomainName }}"
+          securityPolicy: "{{ securityPolicy }}"
+          setPublicPtr: {{ setPublicPtr }}
+          type: "{{ type }}"
+    - name: aliasIpRanges
       description: |
-        Name of the parent network interface of a dynamic network interface.
+        An array of alias IP ranges for this network interface.
+        You can only specify this field for network interfaces in VPC networks.
+      value:
+        - ipCidrRange: "{{ ipCidrRange }}"
+          subnetworkRangeName: "{{ subnetworkRangeName }}"
+    - name: aliasIpv6Ranges
+      description: |
+        An array of alias IPv6 ranges for this network interface.
+        You can only specify this field for network interfaces in VPC networks.
+      value:
+        - ipCidrRange: "{{ ipCidrRange }}"
+          subnetworkRangeName: "{{ subnetworkRangeName }}"
+    - name: enableVpcScopedDns
+      value: {{ enableVpcScopedDns }}
+      description: |
+        Optional. If true, DNS resolution will be enabled over this interface. Only valid
+        with network_attachment.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -242,25 +266,40 @@ zone
         Indicate whether igmp query is enabled on the network interface
         or not. If enabled, also indicates the version of IGMP supported.
       valid_values: ['IGMP_QUERY_DISABLED', 'IGMP_QUERY_V2']
-    - name: serviceClassId
-      value: "{{ serviceClassId }}"
+    - name: internalIpv6PrefixLength
+      value: {{ internalIpv6PrefixLength }}
       description: |
-        Optional. Producer Service's Service class Id for the region of this network
-        interface. Can only be used with network_attachment. It is not possible to
-        use on its own however, network_attachment can be used without
-        service_class_id.
-    - name: subnetwork
-      value: "{{ subnetwork }}"
+        The prefix length of the primary internal IPv6 range.
+    - name: ipv6AccessConfigs
       description: |
-        The URL of the Subnetwork resource for this instance. If the network
-        resource is inlegacy
-        mode, do not specify this field. If the network is in auto subnet
-        mode, specifying the subnetwork is optional. If the network is in custom
-        subnet mode, specifying the subnetwork is required. If you specify this
-        field, you can specify the subnetwork as a full or partial URL. For
-        example, the following are all valid URLs:
-        - https://www.googleapis.com/compute/v1/projects/project/regions/region/subnetworks/subnetwork
-        - regions/region/subnetworks/subnetwork
+        An array of IPv6 access configurations for this interface. Currently, only
+        one IPv6 access config, DIRECT_IPV6, is supported. If there
+        is no ipv6AccessConfig specified, then this instance will
+        have no external IPv6 Internet access.
+      value:
+        - externalIpv6: "{{ externalIpv6 }}"
+          externalIpv6PrefixLength: {{ externalIpv6PrefixLength }}
+          kind: "{{ kind }}"
+          name: "{{ name }}"
+          natIP: "{{ natIP }}"
+          networkTier: "{{ networkTier }}"
+          publicPtrDomainName: "{{ publicPtrDomainName }}"
+          securityPolicy: "{{ securityPolicy }}"
+          setPublicPtr: {{ setPublicPtr }}
+          type: "{{ type }}"
+    - name: ipv6Address
+      value: "{{ ipv6Address }}"
+      description: |
+        An IPv6 internal network address for this network interface. To
+        use a static internal IP address, it must be unused and in the same region
+        as the instance's zone. If not specified, Google Cloud will automatically
+        assign an internal IPv6 address from the instance's subnetwork.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        [Output Only] The name of the network interface, which is generated by the
+        server. For a VM, the network interface uses the nicN naming
+        format. Where N is a value between 0 and7. The default interface value is nic0.
     - name: network
       value: "{{ network }}"
       description: |
@@ -275,6 +314,41 @@ zone
         - https://www.googleapis.com/compute/v1/projects/project/global/networks/network
         - projects/project/global/networks/network
         - global/networks/default
+    - name: networkAttachment
+      value: "{{ networkAttachment }}"
+      description: |
+        The URL of the network attachment that this interface should connect
+        to in the following format:
+        projects/{project_number}/regions/{region_name}/networkAttachments/{network_attachment_name}.
+    - name: networkIP
+      value: "{{ networkIP }}"
+      description: |
+        An IPv4 internal IP address to assign to the instance for this network
+        interface. If not specified by the user, an unused internal IP is
+        assigned by the system.
+    - name: nicType
+      value: "{{ nicType }}"
+      description: |
+        The type of vNIC to be used on this interface. This may be gVNIC or
+        VirtioNet.
+      valid_values: ['GVNIC', 'IDPF', 'IRDMA', 'MRDMA', 'UNSPECIFIED_NIC_TYPE', 'VIRTIO_NET']
+    - name: parentNicName
+      value: "{{ parentNicName }}"
+      description: |
+        Name of the parent network interface of a dynamic network interface.
+    - name: queueCount
+      value: {{ queueCount }}
+      description: |
+        The networking queue count that's specified by users for the network
+        interface. Both Rx and Tx queues will be set to this number. It'll be empty
+        if not specified by the users.
+    - name: serviceClassId
+      value: "{{ serviceClassId }}"
+      description: |
+        Optional. Producer Service's Service class Id for the region of this network
+        interface. Can only be used with network_attachment. It is not possible to
+        use on its own however, network_attachment can be used without
+        service_class_id.
     - name: stackType
       value: "{{ stackType }}"
       description: |
@@ -283,97 +357,23 @@ zone
         This field can be both set at instance creation and update network
         interface operations.
       valid_values: ['IPV4_IPV6', 'IPV4_ONLY', 'IPV6_ONLY']
-    - name: accessConfigs
+    - name: subnetwork
+      value: "{{ subnetwork }}"
       description: |
-        An array of configurations for this interface. Currently, only one access
-        config, ONE_TO_ONE_NAT, is supported. If there are noaccessConfigs specified, then this instance will have
-        no external internet access.
-      value:
-        - publicPtrDomainName: "{{ publicPtrDomainName }}"
-          natIP: "{{ natIP }}"
-          setPublicPtr: {{ setPublicPtr }}
-          networkTier: "{{ networkTier }}"
-          kind: "{{ kind }}"
-          externalIpv6PrefixLength: {{ externalIpv6PrefixLength }}
-          securityPolicy: "{{ securityPolicy }}"
-          name: "{{ name }}"
-          externalIpv6: "{{ externalIpv6 }}"
-          type: "{{ type }}"
-    - name: networkAttachment
-      value: "{{ networkAttachment }}"
-      description: |
-        The URL of the network attachment that this interface should connect
-        to in the following format:
-        projects/{project_number}/regions/{region_name}/networkAttachments/{network_attachment_name}.
-    - name: queueCount
-      value: {{ queueCount }}
-      description: |
-        The networking queue count that's specified by users for the network
-        interface. Both Rx and Tx queues will be set to this number. It'll be empty
-        if not specified by the users.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        [Output Only] The name of the network interface, which is generated by the
-        server. For a VM, the network interface uses the nicN naming
-        format. Where N is a value between 0 and7. The default interface value is nic0.
-    - name: networkIP
-      value: "{{ networkIP }}"
-      description: |
-        An IPv4 internal IP address to assign to the instance for this network
-        interface. If not specified by the user, an unused internal IP is
-        assigned by the system.
+        The URL of the Subnetwork resource for this instance. If the network
+        resource is inlegacy
+        mode, do not specify this field. If the network is in auto subnet
+        mode, specifying the subnetwork is optional. If the network is in custom
+        subnet mode, specifying the subnetwork is required. If you specify this
+        field, you can specify the subnetwork as a full or partial URL. For
+        example, the following are all valid URLs:
+        - https://www.googleapis.com/compute/v1/projects/project/regions/region/subnetworks/subnetwork
+        - regions/region/subnetworks/subnetwork
     - name: vlan
       value: {{ vlan }}
       description: |
         VLAN tag of a dynamic network interface, must be  an integer in the range
         from 2 to 255 inclusively.
-    - name: internalIpv6PrefixLength
-      value: {{ internalIpv6PrefixLength }}
-      description: |
-        The prefix length of the primary internal IPv6 range.
-    - name: nicType
-      value: "{{ nicType }}"
-      description: |
-        The type of vNIC to be used on this interface. This may be gVNIC or
-        VirtioNet.
-      valid_values: ['GVNIC', 'IDPF', 'IRDMA', 'MRDMA', 'UNSPECIFIED_NIC_TYPE', 'VIRTIO_NET']
-    - name: aliasIpRanges
-      description: |
-        An array of alias IP ranges for this network interface.
-        You can only specify this field for network interfaces in VPC networks.
-      value:
-        - ipCidrRange: "{{ ipCidrRange }}"
-          subnetworkRangeName: "{{ subnetworkRangeName }}"
-    - name: ipv6AccessConfigs
-      description: |
-        An array of IPv6 access configurations for this interface. Currently, only
-        one IPv6 access config, DIRECT_IPV6, is supported. If there
-        is no ipv6AccessConfig specified, then this instance will
-        have no external IPv6 Internet access.
-      value:
-        - publicPtrDomainName: "{{ publicPtrDomainName }}"
-          natIP: "{{ natIP }}"
-          setPublicPtr: {{ setPublicPtr }}
-          networkTier: "{{ networkTier }}"
-          kind: "{{ kind }}"
-          externalIpv6PrefixLength: {{ externalIpv6PrefixLength }}
-          securityPolicy: "{{ securityPolicy }}"
-          name: "{{ name }}"
-          externalIpv6: "{{ externalIpv6 }}"
-          type: "{{ type }}"
-    - name: aliasIpv6Ranges
-      description: |
-        An array of alias IPv6 ranges for this network interface.
-        You can only specify this field for network interfaces in VPC networks.
-      value:
-        - ipCidrRange: "{{ ipCidrRange }}"
-          subnetworkRangeName: "{{ subnetworkRangeName }}"
-    - name: enableVpcScopedDns
-      value: {{ enableVpcScopedDns }}
-      description: |
-        Optional. If true, DNS resolution will be enabled over this interface. Only valid
-        with network_attachment.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

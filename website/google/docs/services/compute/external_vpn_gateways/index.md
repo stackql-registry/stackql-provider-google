@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of ExternalVpnGateway available to the specified<br />project.</td>
 </tr>
 <tr>
@@ -320,11 +320,11 @@ selfLink,
 warning
 FROM google.compute.external_vpn_gateways
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -346,23 +346,23 @@ Creates a ExternalVpnGateway in the specified project using<br />the data includ
 
 ```sql
 INSERT INTO google.compute.external_vpn_gateways (
-data__name,
+data__description,
 data__interfaces,
-data__params,
 data__labelFingerprint,
 data__labels,
-data__description,
+data__name,
+data__params,
 data__redundancyType,
 project,
 requestId
 )
 SELECT 
-'{{ name }}',
+'{{ description }}',
 '{{ interfaces }}',
-'{{ params }}',
 '{{ labelFingerprint }}',
 '{{ labels }}',
-'{{ description }}',
+'{{ name }}',
+'{{ params }}',
 '{{ redundancyType }}',
 '{{ project }}',
 '{{ requestId }}'
@@ -405,16 +405,11 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the external_vpn_gateways resource.
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must be
-        a dash, lowercase letter, or digit, except the last character, which cannot
-        be a dash.
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: interfaces
       description: |
         A list of interfaces for this external VPN gateway.
@@ -426,12 +421,6 @@ zone
         - id: {{ id }}
           ipAddress: "{{ ipAddress }}"
           ipv6Address: "{{ ipv6Address }}"
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: labelFingerprint
       value: "{{ labelFingerprint }}"
       description: |
@@ -448,11 +437,22 @@ zone
       description: |
         Labels for this resource. These can only be added or modified by thesetLabels method. Each label key/value pair must comply withRFC1035.
         Label values may be empty.
-    - name: description
-      value: "{{ description }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: redundancyType
       value: "{{ redundancyType }}"
       description: |
@@ -507,8 +507,8 @@ EXEC google.compute.external_vpn_gateways.set_labels
 @resource='{{ resource }}' --required 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

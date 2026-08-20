@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_attribute_bindings_list"><CopyableCode code="projects_locations_data_attribute_bindings_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DataAttributeBinding resources in a project and location.</td>
 </tr>
 <tr>
@@ -356,10 +356,10 @@ updateTime
 FROM google.dataplex.data_attribute_bindings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -382,12 +382,12 @@ Create a DataAttributeBinding resource.
 ```sql
 INSERT INTO google.dataplex.data_attribute_bindings (
 data__attributes,
-data__paths,
-data__etag,
 data__description,
-data__resource,
-data__labels,
 data__displayName,
+data__etag,
+data__labels,
+data__paths,
+data__resource,
 projectsId,
 locationsId,
 dataAttributeBindingId,
@@ -395,12 +395,12 @@ validateOnly
 )
 SELECT 
 '{{ attributes }}',
-'{{ paths }}',
-'{{ etag }}',
 '{{ description }}',
-'{{ resource }}',
-'{{ labels }}',
 '{{ displayName }}',
+'{{ etag }}',
+'{{ labels }}',
+'{{ paths }}',
+'{{ resource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataAttributeBindingId }}',
@@ -430,32 +430,32 @@ response
         - "{{ attributes }}"
       description: |
         Optional. List of attributes to be associated with the resource, provided in the form: projects/{project}/locations/{location}/dataTaxonomies/{dataTaxonomy}/attributes/{data_attribute_id}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the DataAttributeBinding.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Etags must be used when calling the DeleteDataAttributeBinding and the UpdateDataAttributeBinding method.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the DataAttributeBinding.
     - name: paths
       description: |
         Optional. The list of paths for items within the associated resource (eg. columns and partitions within a table) along with attribute bindings.
       value:
         - attributes: "{{ attributes }}"
           name: "{{ name }}"
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Etags must be used when calling the DeleteDataAttributeBinding and the UpdateDataAttributeBinding method.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the DataAttributeBinding.
     - name: resource
       value: "{{ resource }}"
       description: |
         Optional. Immutable. The resource name of the resource that is associated to attributes. Presently, only entity resource is supported in the form: projects/{project}/locations/{location}/lakes/{lake}/zones/{zone}/entities/{entity_id} Must belong in the same project and region as the attribute binding, and there can only exist one active binding for a resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the DataAttributeBinding.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User friendly display name.
     - name: dataAttributeBindingId
       value: "{{ dataAttributeBindingId }}"
     - name: validateOnly
@@ -482,12 +482,12 @@ Updates a DataAttributeBinding resource.
 UPDATE google.dataplex.data_attribute_bindings
 SET 
 data__attributes = '{{ attributes }}',
-data__paths = '{{ paths }}',
-data__etag = '{{ etag }}',
 data__description = '{{ description }}',
-data__resource = '{{ resource }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}'
+data__paths = '{{ paths }}',
+data__resource = '{{ resource }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

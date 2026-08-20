@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists multicast group consumer activations in a given project and location.</td>
 </tr>
 <tr>
@@ -229,7 +229,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicastGroupConsumerActivationsId"><code>multicastGroupConsumerActivationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single multicast group consumer activation.</td>
 </tr>
 <tr>
@@ -363,10 +363,10 @@ updateTime
 FROM google.networkservices.multicast_group_consumer_activations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -388,26 +388,26 @@ Creates a new multicast group consumer activation in a given project and locatio
 
 ```sql
 INSERT INTO google.networkservices.multicast_group_consumer_activations (
-data__name,
+data__description,
 data__labels,
+data__logConfig,
 data__multicastConsumerAssociation,
 data__multicastGroup,
-data__description,
 data__multicastGroupRangeActivation,
-data__logConfig,
+data__name,
 projectsId,
 locationsId,
 multicastGroupConsumerActivationId,
 requestId
 )
 SELECT 
-'{{ name }}',
+'{{ description }}',
 '{{ labels }}',
+'{{ logConfig }}',
 '{{ multicastConsumerAssociation }}',
 '{{ multicastGroup }}',
-'{{ description }}',
 '{{ multicastGroupRangeActivation }}',
-'{{ logConfig }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ multicastGroupConsumerActivationId }}',
@@ -432,14 +432,19 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the multicast_group_consumer_activations resource.
-    - name: name
-      value: "{{ name }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Identifier. The resource name of the multicast group consumer activation. Use the following format: \`projects/*/locations/*/multicastGroupConsumerActivations/*\`.
+        Optional. An optional text description of the multicast group consumer activation.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels as key-value pairs
+    - name: logConfig
+      description: |
+        Optional. Specifies the logging options for the activities performed related to the multicast group consumer activation. Defaults to false. If logging is enabled, logs are exported to Cloud Logging.
+      value:
+        enabled: {{ enabled }}
     - name: multicastConsumerAssociation
       value: "{{ multicastConsumerAssociation }}"
       description: |
@@ -448,19 +453,14 @@ response
       value: "{{ multicastGroup }}"
       description: |
         Optional. The resource name of the multicast group created by the admin in the same zone as this multicast group consumer activation. Use the following format: // \`projects/*/locations/*/multicastGroups/*\`. This field is deprecated. Use multicast_group_range_activation instead.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. An optional text description of the multicast group consumer activation.
     - name: multicastGroupRangeActivation
       value: "{{ multicastGroupRangeActivation }}"
       description: |
         Required. The resource name of the multicast group range activation created by the admin in the same zone as this multicast group consumer activation. Use the following format: // \`projects/*/locations/*/multicastGroupRangeActivations/*\`.
-    - name: logConfig
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. Specifies the logging options for the activities performed related to the multicast group consumer activation. Defaults to false. If logging is enabled, logs are exported to Cloud Logging.
-      value:
-        enabled: {{ enabled }}
+        Identifier. The resource name of the multicast group consumer activation. Use the following format: \`projects/*/locations/*/multicastGroupConsumerActivations/*\`.
     - name: multicastGroupConsumerActivationId
       value: "{{ multicastGroupConsumerActivationId }}"
     - name: requestId
@@ -486,19 +486,19 @@ Updates the parameters of a single multicast group consumer activation.
 ```sql
 UPDATE google.networkservices.multicast_group_consumer_activations
 SET 
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
+data__logConfig = '{{ logConfig }}',
 data__multicastConsumerAssociation = '{{ multicastConsumerAssociation }}',
 data__multicastGroup = '{{ multicastGroup }}',
-data__description = '{{ description }}',
 data__multicastGroupRangeActivation = '{{ multicastGroupRangeActivation }}',
-data__logConfig = '{{ logConfig }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND multicastGroupConsumerActivationsId = '{{ multicastGroupConsumerActivationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

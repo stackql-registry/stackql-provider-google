@@ -329,21 +329,21 @@ Creates a new Mesh in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.meshes (
-data__name,
-data__labels,
 data__description,
-data__interceptionPort,
 data__envoyHeaders,
+data__interceptionPort,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 meshId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
 '{{ description }}',
-{{ interceptionPort }},
 '{{ envoyHeaders }}',
+{{ interceptionPort }},
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ meshId }}'
@@ -367,27 +367,27 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the meshes resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the Mesh resource. It matches pattern \`projects/*/locations/*/meshes/\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of label tags associated with the Mesh resource.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A free-text description of the resource. Max length 1024 characters.
-    - name: interceptionPort
-      value: {{ interceptionPort }}
-      description: |
-        Optional. If set to a valid TCP port (1-65535), instructs the SIDECAR proxy to listen on the specified port of localhost (127.0.0.1) address. The SIDECAR proxy will expect all traffic to be redirected to this port regardless of its actual ip:port destination. If unset, a port '15001' is used as the interception port. This is applicable only for sidecar proxy deployments.
     - name: envoyHeaders
       value: "{{ envoyHeaders }}"
       description: |
         Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.
       valid_values: ['ENVOY_HEADERS_UNSPECIFIED', 'NONE', 'DEBUG_HEADERS']
+    - name: interceptionPort
+      value: {{ interceptionPort }}
+      description: |
+        Optional. If set to a valid TCP port (1-65535), instructs the SIDECAR proxy to listen on the specified port of localhost (127.0.0.1) address. The SIDECAR proxy will expect all traffic to be redirected to this port regardless of its actual ip:port destination. If unset, a port '15001' is used as the interception port. This is applicable only for sidecar proxy deployments.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the Mesh resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the Mesh resource. It matches pattern \`projects/*/locations/*/meshes/\`.
     - name: meshId
       value: "{{ meshId }}"
 `}</CodeBlock>
@@ -411,11 +411,11 @@ Updates the parameters of a single Mesh.
 ```sql
 UPDATE google.networkservices.meshes
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
+data__envoyHeaders = '{{ envoyHeaders }}',
 data__interceptionPort = {{ interceptionPort }},
-data__envoyHeaders = '{{ envoyHeaders }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

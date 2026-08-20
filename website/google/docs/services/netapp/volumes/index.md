@@ -535,7 +535,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Volumes in a given project.</td>
 </tr>
 <tr>
@@ -775,10 +775,10 @@ zone
 FROM google.netapp.volumes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -800,63 +800,63 @@ Creates a new Volume in a given project and location.
 
 ```sql
 INSERT INTO google.netapp.volumes (
-data__largeCapacityConfig,
-data__tieringPolicy,
-data__capacityGib,
-data__largeCapacity,
+data__backupConfig,
 data__blockDevices,
-data__unixPermissions,
-data__labels,
-data__exportPolicy,
-data__snapshotDirectory,
-data__protocols,
-data__hybridReplicationParameters,
-data__storagePool,
-data__name,
-data__kerberosEnabled,
+data__cacheParameters,
+data__capacityGib,
 data__description,
-data__throughputMibps,
+data__exportPolicy,
+data__hybridReplicationParameters,
+data__kerberosEnabled,
+data__labels,
+data__largeCapacity,
+data__largeCapacityConfig,
+data__multipleEndpoints,
+data__name,
+data__protocols,
+data__restoreParameters,
 data__restrictedActions,
 data__securityStyle,
-data__smbSettings,
-data__cacheParameters,
-data__multipleEndpoints,
-data__snapReserve,
 data__shareName,
-data__backupConfig,
-data__restoreParameters,
+data__smbSettings,
+data__snapReserve,
+data__snapshotDirectory,
 data__snapshotPolicy,
+data__storagePool,
+data__throughputMibps,
+data__tieringPolicy,
+data__unixPermissions,
 projectsId,
 locationsId,
 volumeId
 )
 SELECT 
-'{{ largeCapacityConfig }}',
-'{{ tieringPolicy }}',
-'{{ capacityGib }}',
-{{ largeCapacity }},
+'{{ backupConfig }}',
 '{{ blockDevices }}',
-'{{ unixPermissions }}',
-'{{ labels }}',
-'{{ exportPolicy }}',
-{{ snapshotDirectory }},
-'{{ protocols }}',
-'{{ hybridReplicationParameters }}',
-'{{ storagePool }}',
-'{{ name }}',
-{{ kerberosEnabled }},
+'{{ cacheParameters }}',
+'{{ capacityGib }}',
 '{{ description }}',
-{{ throughputMibps }},
+'{{ exportPolicy }}',
+'{{ hybridReplicationParameters }}',
+{{ kerberosEnabled }},
+'{{ labels }}',
+{{ largeCapacity }},
+'{{ largeCapacityConfig }}',
+{{ multipleEndpoints }},
+'{{ name }}',
+'{{ protocols }}',
+'{{ restoreParameters }}',
 '{{ restrictedActions }}',
 '{{ securityStyle }}',
-'{{ smbSettings }}',
-'{{ cacheParameters }}',
-{{ multipleEndpoints }},
-{{ snapReserve }},
 '{{ shareName }}',
-'{{ backupConfig }}',
-'{{ restoreParameters }}',
+'{{ smbSettings }}',
+{{ snapReserve }},
+{{ snapshotDirectory }},
 '{{ snapshotPolicy }}',
+'{{ storagePool }}',
+{{ throughputMibps }},
+'{{ tieringPolicy }}',
+'{{ unixPermissions }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumeId }}'
@@ -880,106 +880,127 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the volumes resource.
-    - name: largeCapacityConfig
+    - name: backupConfig
       description: |
-        Optional. Large capacity config for the volume. Enables and configures large capacity for volumes in Unified pools with File protocols. Not applicable for Block protocols in Unified pools. This field and the legacy \`large_capacity\` boolean field are mutually exclusive.
+        BackupConfig of the volume.
       value:
-        constituentCount: {{ constituentCount }}
-    - name: tieringPolicy
-      description: |
-        Tiering policy for the volume.
-      value:
-        tierAction: "{{ tierAction }}"
-        coolingThresholdDays: {{ coolingThresholdDays }}
-        hotTierBypassModeEnabled: {{ hotTierBypassModeEnabled }}
-    - name: capacityGib
-      value: "{{ capacityGib }}"
-      description: |
-        Required. Capacity in GIB of the volume
-    - name: largeCapacity
-      value: {{ largeCapacity }}
-      description: |
-        Optional. Flag indicating if the volume will be a large capacity volume or a regular volume. This field is used for legacy FILE pools. For Unified pools, use the \`large_capacity_config\` field instead. This field and \`large_capacity_config\` are mutually exclusive.
+        backupChainBytes: "{{ backupChainBytes }}"
+        backupPolicies:
+          - "{{ backupPolicies }}"
+        backupVault: "{{ backupVault }}"
+        scheduledBackupEnabled: {{ scheduledBackupEnabled }}
     - name: blockDevices
       description: |
         Optional. Block devices for the volume. Currently, only one block device is permitted per Volume.
       value:
         - hostGroups: "{{ hostGroups }}"
-          sizeGib: "{{ sizeGib }}"
-          name: "{{ name }}"
           identifier: "{{ identifier }}"
+          name: "{{ name }}"
           osType: "{{ osType }}"
-    - name: unixPermissions
-      value: "{{ unixPermissions }}"
+          sizeGib: "{{ sizeGib }}"
+    - name: cacheParameters
       description: |
-        Optional. Default unix style permission (e.g. 777) the mount point will be created with. Applicable for NFS protocol types only.
-    - name: labels
-      value: "{{ labels }}"
+        Optional. Cache parameters for the volume.
+      value:
+        cacheConfig:
+          cachePrePopulate:
+            excludePathList:
+              - "{{ excludePathList }}"
+            pathList:
+              - "{{ pathList }}"
+            recursion: {{ recursion }}
+          cachePrePopulateState: "{{ cachePrePopulateState }}"
+          cifsChangeNotifyEnabled: {{ cifsChangeNotifyEnabled }}
+          writebackEnabled: {{ writebackEnabled }}
+        cacheState: "{{ cacheState }}"
+        command: "{{ command }}"
+        enableGlobalFileLock: {{ enableGlobalFileLock }}
+        passphrase: "{{ passphrase }}"
+        peerClusterName: "{{ peerClusterName }}"
+        peerIpAddresses:
+          - "{{ peerIpAddresses }}"
+        peerSvmName: "{{ peerSvmName }}"
+        peerVolumeName: "{{ peerVolumeName }}"
+        peeringCommandExpiryTime: "{{ peeringCommandExpiryTime }}"
+        stateDetails: "{{ stateDetails }}"
+    - name: capacityGib
+      value: "{{ capacityGib }}"
       description: |
-        Optional. Labels as key value pairs
+        Required. Capacity in GIB of the volume
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the volume
     - name: exportPolicy
       description: |
         Optional. Export policy of the volume
       value:
         rules:
-          - squashMode: "{{ squashMode }}"
-            kerberos5iReadOnly: {{ kerberos5iReadOnly }}
-            kerberos5ReadWrite: {{ kerberos5ReadWrite }}
-            kerberos5ReadOnly: {{ kerberos5ReadOnly }}
-            accessType: "{{ accessType }}"
+          - accessType: "{{ accessType }}"
             allowedClients: "{{ allowedClients }}"
-            hasRootAccess: "{{ hasRootAccess }}"
-            nfsv3: {{ nfsv3 }}
-            kerberos5pReadOnly: {{ kerberos5pReadOnly }}
-            nfsv4: {{ nfsv4 }}
-            kerberos5pReadWrite: {{ kerberos5pReadWrite }}
-            kerberos5iReadWrite: {{ kerberos5iReadWrite }}
             anonUid: "{{ anonUid }}"
-    - name: snapshotDirectory
-      value: {{ snapshotDirectory }}
+            hasRootAccess: "{{ hasRootAccess }}"
+            kerberos5ReadOnly: {{ kerberos5ReadOnly }}
+            kerberos5ReadWrite: {{ kerberos5ReadWrite }}
+            kerberos5iReadOnly: {{ kerberos5iReadOnly }}
+            kerberos5iReadWrite: {{ kerberos5iReadWrite }}
+            kerberos5pReadOnly: {{ kerberos5pReadOnly }}
+            kerberos5pReadWrite: {{ kerberos5pReadWrite }}
+            nfsv3: {{ nfsv3 }}
+            nfsv4: {{ nfsv4 }}
+            squashMode: "{{ squashMode }}"
+    - name: hybridReplicationParameters
       description: |
-        Optional. Snapshot_directory if enabled (true) the volume will contain a read-only .snapshot directory which provides access to each of the volume's snapshots.
+        Optional. The Hybrid Replication parameters for the volume.
+      value:
+        clusterLocation: "{{ clusterLocation }}"
+        description: "{{ description }}"
+        hybridReplicationType: "{{ hybridReplicationType }}"
+        labels: "{{ labels }}"
+        largeVolumeConstituentCount: {{ largeVolumeConstituentCount }}
+        peerClusterName: "{{ peerClusterName }}"
+        peerIpAddresses:
+          - "{{ peerIpAddresses }}"
+        peerSvmName: "{{ peerSvmName }}"
+        peerVolumeName: "{{ peerVolumeName }}"
+        replication: "{{ replication }}"
+        replicationSchedule: "{{ replicationSchedule }}"
+    - name: kerberosEnabled
+      value: {{ kerberosEnabled }}
+      description: |
+        Optional. Flag indicating if the volume is a kerberos volume or not, export policy rules control kerberos security modes (krb5, krb5i, krb5p).
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs
+    - name: largeCapacity
+      value: {{ largeCapacity }}
+      description: |
+        Optional. Flag indicating if the volume will be a large capacity volume or a regular volume. This field is used for legacy FILE pools. For Unified pools, use the \`large_capacity_config\` field instead. This field and \`large_capacity_config\` are mutually exclusive.
+    - name: largeCapacityConfig
+      description: |
+        Optional. Large capacity config for the volume. Enables and configures large capacity for volumes in Unified pools with File protocols. Not applicable for Block protocols in Unified pools. This field and the legacy \`large_capacity\` boolean field are mutually exclusive.
+      value:
+        constituentCount: {{ constituentCount }}
+    - name: multipleEndpoints
+      value: {{ multipleEndpoints }}
+      description: |
+        Optional. Flag indicating if the volume will have an IP address per node for volumes supporting multiple IP endpoints. Only the volume with large_capacity will be allowed to have multiple endpoints.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the volume
     - name: protocols
       value:
         - "{{ protocols }}"
       description: |
         Required. Protocols required for the volume
-    - name: hybridReplicationParameters
+    - name: restoreParameters
       description: |
-        Optional. The Hybrid Replication parameters for the volume.
+        Optional. Specifies the source of the volume to be created from.
       value:
-        hybridReplicationType: "{{ hybridReplicationType }}"
-        description: "{{ description }}"
-        largeVolumeConstituentCount: {{ largeVolumeConstituentCount }}
-        peerVolumeName: "{{ peerVolumeName }}"
-        peerSvmName: "{{ peerSvmName }}"
-        replicationSchedule: "{{ replicationSchedule }}"
-        clusterLocation: "{{ clusterLocation }}"
-        peerIpAddresses:
-          - "{{ peerIpAddresses }}"
-        replication: "{{ replication }}"
-        labels: "{{ labels }}"
-        peerClusterName: "{{ peerClusterName }}"
-    - name: storagePool
-      value: "{{ storagePool }}"
-      description: |
-        Required. StoragePool name of the volume
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the volume
-    - name: kerberosEnabled
-      value: {{ kerberosEnabled }}
-      description: |
-        Optional. Flag indicating if the volume is a kerberos volume or not, export policy rules control kerberos security modes (krb5, krb5i, krb5p).
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the volume
-    - name: throughputMibps
-      value: {{ throughputMibps }}
-      description: |
-        Optional. Throughput of the volume (in MiB/s)
+        sourceBackup: "{{ sourceBackup }}"
+        sourceSnapshot: "{{ sourceSnapshot }}"
     - name: restrictedActions
       value:
         - "{{ restrictedActions }}"
@@ -990,85 +1011,64 @@ response
       description: |
         Optional. Security Style of the Volume
       valid_values: ['SECURITY_STYLE_UNSPECIFIED', 'NTFS', 'UNIX']
+    - name: shareName
+      value: "{{ shareName }}"
+      description: |
+        Required. Share name of the volume
     - name: smbSettings
       value:
         - "{{ smbSettings }}"
       description: |
         Optional. SMB share settings for the volume.
-    - name: cacheParameters
-      description: |
-        Optional. Cache parameters for the volume.
-      value:
-        peerIpAddresses:
-          - "{{ peerIpAddresses }}"
-        peerClusterName: "{{ peerClusterName }}"
-        enableGlobalFileLock: {{ enableGlobalFileLock }}
-        command: "{{ command }}"
-        peerSvmName: "{{ peerSvmName }}"
-        peerVolumeName: "{{ peerVolumeName }}"
-        cacheConfig:
-          cachePrePopulate:
-            recursion: {{ recursion }}
-            pathList:
-              - "{{ pathList }}"
-            excludePathList:
-              - "{{ excludePathList }}"
-          writebackEnabled: {{ writebackEnabled }}
-          cachePrePopulateState: "{{ cachePrePopulateState }}"
-          cifsChangeNotifyEnabled: {{ cifsChangeNotifyEnabled }}
-        stateDetails: "{{ stateDetails }}"
-        peeringCommandExpiryTime: "{{ peeringCommandExpiryTime }}"
-        cacheState: "{{ cacheState }}"
-        passphrase: "{{ passphrase }}"
-    - name: multipleEndpoints
-      value: {{ multipleEndpoints }}
-      description: |
-        Optional. Flag indicating if the volume will have an IP address per node for volumes supporting multiple IP endpoints. Only the volume with large_capacity will be allowed to have multiple endpoints.
     - name: snapReserve
       value: {{ snapReserve }}
       description: |
         Optional. Snap_reserve specifies percentage of volume storage reserved for snapshot storage. Default is 0 percent.
-    - name: shareName
-      value: "{{ shareName }}"
+    - name: snapshotDirectory
+      value: {{ snapshotDirectory }}
       description: |
-        Required. Share name of the volume
-    - name: backupConfig
-      description: |
-        BackupConfig of the volume.
-      value:
-        backupPolicies:
-          - "{{ backupPolicies }}"
-        backupVault: "{{ backupVault }}"
-        backupChainBytes: "{{ backupChainBytes }}"
-        scheduledBackupEnabled: {{ scheduledBackupEnabled }}
-    - name: restoreParameters
-      description: |
-        Optional. Specifies the source of the volume to be created from.
-      value:
-        sourceBackup: "{{ sourceBackup }}"
-        sourceSnapshot: "{{ sourceSnapshot }}"
+        Optional. Snapshot_directory if enabled (true) the volume will contain a read-only .snapshot directory which provides access to each of the volume's snapshots.
     - name: snapshotPolicy
       description: |
         Optional. SnapshotPolicy for a volume.
       value:
-        hourlySchedule:
-          snapshotsToKeep: {{ snapshotsToKeep }}
-          minute: {{ minute }}
         dailySchedule:
-          minute: {{ minute }}
-          snapshotsToKeep: {{ snapshotsToKeep }}
-          hour: {{ hour }}
-        weeklySchedule:
-          snapshotsToKeep: {{ snapshotsToKeep }}
           hour: {{ hour }}
           minute: {{ minute }}
-          day: "{{ day }}"
+          snapshotsToKeep: {{ snapshotsToKeep }}
         enabled: {{ enabled }}
-        monthlySchedule:
+        hourlySchedule:
+          minute: {{ minute }}
           snapshotsToKeep: {{ snapshotsToKeep }}
+        monthlySchedule:
           daysOfMonth: "{{ daysOfMonth }}"
           hour: {{ hour }}
           minute: {{ minute }}
+          snapshotsToKeep: {{ snapshotsToKeep }}
+        weeklySchedule:
+          day: "{{ day }}"
+          hour: {{ hour }}
+          minute: {{ minute }}
+          snapshotsToKeep: {{ snapshotsToKeep }}
+    - name: storagePool
+      value: "{{ storagePool }}"
+      description: |
+        Required. StoragePool name of the volume
+    - name: throughputMibps
+      value: {{ throughputMibps }}
+      description: |
+        Optional. Throughput of the volume (in MiB/s)
+    - name: tieringPolicy
+      description: |
+        Tiering policy for the volume.
+      value:
+        coolingThresholdDays: {{ coolingThresholdDays }}
+        hotTierBypassModeEnabled: {{ hotTierBypassModeEnabled }}
+        tierAction: "{{ tierAction }}"
+    - name: unixPermissions
+      value: "{{ unixPermissions }}"
+      description: |
+        Optional. Default unix style permission (e.g. 777) the mount point will be created with. Applicable for NFS protocol types only.
     - name: volumeId
       value: "{{ volumeId }}"
 `}</CodeBlock>
@@ -1092,32 +1092,32 @@ Updates the parameters of a single Volume.
 ```sql
 UPDATE google.netapp.volumes
 SET 
-data__largeCapacityConfig = '{{ largeCapacityConfig }}',
-data__tieringPolicy = '{{ tieringPolicy }}',
-data__capacityGib = '{{ capacityGib }}',
-data__largeCapacity = {{ largeCapacity }},
+data__backupConfig = '{{ backupConfig }}',
 data__blockDevices = '{{ blockDevices }}',
-data__unixPermissions = '{{ unixPermissions }}',
-data__labels = '{{ labels }}',
-data__exportPolicy = '{{ exportPolicy }}',
-data__snapshotDirectory = {{ snapshotDirectory }},
-data__protocols = '{{ protocols }}',
-data__hybridReplicationParameters = '{{ hybridReplicationParameters }}',
-data__storagePool = '{{ storagePool }}',
-data__name = '{{ name }}',
-data__kerberosEnabled = {{ kerberosEnabled }},
+data__cacheParameters = '{{ cacheParameters }}',
+data__capacityGib = '{{ capacityGib }}',
 data__description = '{{ description }}',
-data__throughputMibps = {{ throughputMibps }},
+data__exportPolicy = '{{ exportPolicy }}',
+data__hybridReplicationParameters = '{{ hybridReplicationParameters }}',
+data__kerberosEnabled = {{ kerberosEnabled }},
+data__labels = '{{ labels }}',
+data__largeCapacity = {{ largeCapacity }},
+data__largeCapacityConfig = '{{ largeCapacityConfig }}',
+data__multipleEndpoints = {{ multipleEndpoints }},
+data__name = '{{ name }}',
+data__protocols = '{{ protocols }}',
+data__restoreParameters = '{{ restoreParameters }}',
 data__restrictedActions = '{{ restrictedActions }}',
 data__securityStyle = '{{ securityStyle }}',
-data__smbSettings = '{{ smbSettings }}',
-data__cacheParameters = '{{ cacheParameters }}',
-data__multipleEndpoints = {{ multipleEndpoints }},
-data__snapReserve = {{ snapReserve }},
 data__shareName = '{{ shareName }}',
-data__backupConfig = '{{ backupConfig }}',
-data__restoreParameters = '{{ restoreParameters }}',
-data__snapshotPolicy = '{{ snapshotPolicy }}'
+data__smbSettings = '{{ smbSettings }}',
+data__snapReserve = {{ snapReserve }},
+data__snapshotDirectory = {{ snapshotDirectory }},
+data__snapshotPolicy = '{{ snapshotPolicy }}',
+data__storagePool = '{{ storagePool }}',
+data__throughputMibps = {{ throughputMibps }},
+data__tieringPolicy = '{{ tieringPolicy }}',
+data__unixPermissions = '{{ unixPermissions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1182,8 +1182,8 @@ EXEC google.netapp.volumes.establish_peering
 '{
 "peerClusterName": "{{ peerClusterName }}", 
 "peerIpAddresses": "{{ peerIpAddresses }}", 
-"peerVolumeName": "{{ peerVolumeName }}", 
-"peerSvmName": "{{ peerSvmName }}"
+"peerSvmName": "{{ peerSvmName }}", 
+"peerVolumeName": "{{ peerVolumeName }}"
 }'
 ;
 ```
@@ -1200,8 +1200,8 @@ EXEC google.netapp.volumes.restore
 @@json=
 '{
 "backup": "{{ backup }}", 
-"restoreDestinationPath": "{{ restoreDestinationPath }}", 
-"fileList": "{{ fileList }}"
+"fileList": "{{ fileList }}", 
+"restoreDestinationPath": "{{ restoreDestinationPath }}"
 }'
 ;
 ```

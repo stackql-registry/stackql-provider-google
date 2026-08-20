@@ -88,8 +88,22 @@ The following methods are available for this resource:
     <td><a href="#query_products"><CopyableCode code="query_products" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>QueryProducts provides a list of all possible products which can be used to filter database resources.</td>
+</tr>
+<tr>
+    <td><a href="#aggregate_fleet"><CopyableCode code="aggregate_fleet" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td><a href="#parameter-baselineDate.day"><code>baselineDate.day</code></a>, <a href="#parameter-baselineDate.month"><code>baselineDate.month</code></a>, <a href="#parameter-baselineDate.year"><code>baselineDate.year</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-groupBy"><code>groupBy</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
+    <td>AggregateFleet provides statistics about the fleet grouped by various fields.</td>
+</tr>
+<tr>
+    <td><a href="#aggregate_issue_stats"><CopyableCode code="aggregate_issue_stats" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>AggregateIssueStats provides database resource issues statistics.</td>
 </tr>
 <tr>
     <td><a href="#query_database_resource_groups"><CopyableCode code="query_database_resource_groups" /></a></td>
@@ -104,20 +118,6 @@ The following methods are available for this resource:
     <td></td>
     <td></td>
     <td>QueryIssues provides a list of issues and recommendations that a user has access to and that are within the requested scope.</td>
-</tr>
-<tr>
-    <td><a href="#aggregate_issue_stats"><CopyableCode code="aggregate_issue_stats" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>AggregateIssueStats provides database resource issues statistics.</td>
-</tr>
-<tr>
-    <td><a href="#aggregate_fleet"><CopyableCode code="aggregate_fleet" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-groupBy"><code>groupBy</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-baselineDate.month"><code>baselineDate.month</code></a>, <a href="#parameter-baselineDate.day"><code>baselineDate.day</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-baselineDate.year"><code>baselineDate.year</code></a></td>
-    <td>AggregateFleet provides statistics about the fleet grouped by various fields.</td>
 </tr>
 </tbody>
 </table>
@@ -201,9 +201,9 @@ nextPageToken,
 products,
 unreachable
 FROM google.databasecenter.databasecenter
-WHERE parent = '{{ parent }}'
+WHERE pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
@@ -213,14 +213,48 @@ AND pageSize = '{{ pageSize }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="query_database_resource_groups"
+    defaultValue="aggregate_fleet"
     values={[
-        { label: 'query_database_resource_groups', value: 'query_database_resource_groups' },
-        { label: 'query_issues', value: 'query_issues' },
+        { label: 'aggregate_fleet', value: 'aggregate_fleet' },
         { label: 'aggregate_issue_stats', value: 'aggregate_issue_stats' },
-        { label: 'aggregate_fleet', value: 'aggregate_fleet' }
+        { label: 'query_database_resource_groups', value: 'query_database_resource_groups' },
+        { label: 'query_issues', value: 'query_issues' }
     ]}
 >
+<TabItem value="aggregate_fleet">
+
+AggregateFleet provides statistics about the fleet grouped by various fields.
+
+```sql
+EXEC google.databasecenter.databasecenter.aggregate_fleet 
+@baselineDate.day='{{ baselineDate.day }}', 
+@baselineDate.month='{{ baselineDate.month }}', 
+@baselineDate.year='{{ baselineDate.year }}', 
+@filter='{{ filter }}', 
+@groupBy='{{ groupBy }}', 
+@orderBy='{{ orderBy }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@parent='{{ parent }}'
+;
+```
+</TabItem>
+<TabItem value="aggregate_issue_stats">
+
+AggregateIssueStats provides database resource issues statistics.
+
+```sql
+EXEC google.databasecenter.databasecenter.aggregate_issue_stats 
+@@json=
+'{
+"baselineDate": "{{ baselineDate }}", 
+"filter": "{{ filter }}", 
+"parent": "{{ parent }}", 
+"signalTypeGroups": "{{ signalTypeGroups }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="query_database_resource_groups">
 
 QueryDatabaseResourceGroups returns paginated results of database groups.
@@ -229,14 +263,14 @@ QueryDatabaseResourceGroups returns paginated results of database groups.
 EXEC google.databasecenter.databasecenter.query_database_resource_groups 
 @@json=
 '{
-"orderBy": "{{ orderBy }}", 
-"parent": "{{ parent }}", 
-"signalTypeGroups": "{{ signalTypeGroups }}", 
-"pageToken": "{{ pageToken }}", 
-"signalProductsFilters": "{{ signalProductsFilters }}", 
-"signalFilters": "{{ signalFilters }}", 
 "filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}
+"orderBy": "{{ orderBy }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"parent": "{{ parent }}", 
+"signalFilters": "{{ signalFilters }}", 
+"signalProductsFilters": "{{ signalProductsFilters }}", 
+"signalTypeGroups": "{{ signalTypeGroups }}"
 }'
 ;
 ```
@@ -249,47 +283,13 @@ QueryIssues provides a list of issues and recommendations that a user has access
 EXEC google.databasecenter.databasecenter.query_issues 
 @@json=
 '{
-"signalProductsFilters": "{{ signalProductsFilters }}", 
-"orderBy": "{{ orderBy }}", 
-"parent": "{{ parent }}", 
-"pageToken": "{{ pageToken }}", 
 "filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}
-}'
-;
-```
-</TabItem>
-<TabItem value="aggregate_issue_stats">
-
-AggregateIssueStats provides database resource issues statistics.
-
-```sql
-EXEC google.databasecenter.databasecenter.aggregate_issue_stats 
-@@json=
-'{
+"orderBy": "{{ orderBy }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
 "parent": "{{ parent }}", 
-"signalTypeGroups": "{{ signalTypeGroups }}", 
-"baselineDate": "{{ baselineDate }}", 
-"filter": "{{ filter }}"
+"signalProductsFilters": "{{ signalProductsFilters }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="aggregate_fleet">
-
-AggregateFleet provides statistics about the fleet grouped by various fields.
-
-```sql
-EXEC google.databasecenter.databasecenter.aggregate_fleet 
-@pageSize='{{ pageSize }}', 
-@groupBy='{{ groupBy }}', 
-@parent='{{ parent }}', 
-@pageToken='{{ pageToken }}', 
-@orderBy='{{ orderBy }}', 
-@baselineDate.month='{{ baselineDate.month }}', 
-@baselineDate.day='{{ baselineDate.day }}', 
-@filter='{{ filter }}', 
-@baselineDate.year='{{ baselineDate.year }}'
 ;
 ```
 </TabItem>

@@ -102,18 +102,18 @@ The following methods are available for this resource:
     <td>Gets the Trial state for a given project</td>
 </tr>
 <tr>
-    <td><a href="#subscribe"><CopyableCode code="subscribe" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Subscribes to a trial for a project</td>
-</tr>
-<tr>
     <td><a href="#end"><CopyableCode code="end" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Ends the trial for a project</td>
+</tr>
+<tr>
+    <td><a href="#subscribe"><CopyableCode code="subscribe" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Subscribes to a trial for a project</td>
 </tr>
 </tbody>
 </table>
@@ -175,23 +175,12 @@ AND locationsId = '{{ locationsId }}' -- required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="subscribe"
+    defaultValue="end"
     values={[
-        { label: 'subscribe', value: 'subscribe' },
-        { label: 'end', value: 'end' }
+        { label: 'end', value: 'end' },
+        { label: 'subscribe', value: 'subscribe' }
     ]}
 >
-<TabItem value="subscribe">
-
-Subscribes to a trial for a project
-
-```sql
-EXEC google.backupdr.trial.subscribe 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="end">
 
 Ends the trial for a project
@@ -204,6 +193,17 @@ EXEC google.backupdr.trial.end
 '{
 "endReason": "{{ endReason }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="subscribe">
+
+Subscribes to a trial for a project
+
+```sql
+EXEC google.backupdr.trial.subscribe 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required
 ;
 ```
 </TabItem>

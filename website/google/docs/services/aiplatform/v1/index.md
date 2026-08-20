@@ -116,8 +116,8 @@ EXEC google.aiplatform.v1.responses
 @deployedModelId='{{ deployedModelId }}' 
 @@json=
 '{
-"data": "{{ data }}", 
 "contentType": "{{ contentType }}", 
+"data": "{{ data }}", 
 "extensions": "{{ extensions }}"
 }'
 ;

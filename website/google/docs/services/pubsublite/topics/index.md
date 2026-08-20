@@ -33,13 +33,27 @@ Creates, updates, deletes, gets or lists a <code>topics</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="admin_projects_locations_topics_get"
+    defaultValue="admin_projects_locations_reservations_topics_list"
     values={[
-        { label: 'admin_projects_locations_topics_get', value: 'admin_projects_locations_topics_get' },
         { label: 'admin_projects_locations_reservations_topics_list', value: 'admin_projects_locations_reservations_topics_list' },
+        { label: 'admin_projects_locations_topics_get', value: 'admin_projects_locations_topics_get' },
         { label: 'admin_projects_locations_topics_list', value: 'admin_projects_locations_topics_list' }
     ]}
 >
+<TabItem value="admin_projects_locations_reservations_topics_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="admin_projects_locations_topics_get">
 
 <table>
@@ -71,20 +85,6 @@ The following fields are returned by `SELECT` queries:
     <td><code>object</code></td>
     <td>The settings for this topic's message retention. (id: RetentionConfig)</td>
 </tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="admin_projects_locations_reservations_topics_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -140,18 +140,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#admin_projects_locations_reservations_topics_list"><CopyableCode code="admin_projects_locations_reservations_topics_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reservationsId"><code>reservationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the topics attached to the specified reservation.</td>
+</tr>
+<tr>
     <td><a href="#admin_projects_locations_topics_get"><CopyableCode code="admin_projects_locations_topics_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
     <td></td>
     <td>Returns the topic configuration.</td>
-</tr>
-<tr>
-    <td><a href="#admin_projects_locations_reservations_topics_list"><CopyableCode code="admin_projects_locations_reservations_topics_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reservationsId"><code>reservationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists the topics attached to the specified reservation.</td>
 </tr>
 <tr>
     <td><a href="#admin_projects_locations_topics_list"><CopyableCode code="admin_projects_locations_topics_list" /></a></td>
@@ -189,18 +189,18 @@ The following methods are available for this resource:
     <td>Compute the head cursor for the partition. The head cursor's offset is guaranteed to be less than or equal to all messages which have not yet been acknowledged as published, and greater than the offset of any message whose publish has already been acknowledged. It is zero if there have never been messages in the partition.</td>
 </tr>
 <tr>
-    <td><a href="#topic_stats_projects_locations_topics_compute_time_cursor"><CopyableCode code="topic_stats_projects_locations_topics_compute_time_cursor" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
-    <td></td>
-    <td>Compute the corresponding cursor for a publish or event time in a topic partition.</td>
-</tr>
-<tr>
     <td><a href="#topic_stats_projects_locations_topics_compute_message_stats"><CopyableCode code="topic_stats_projects_locations_topics_compute_message_stats" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
     <td></td>
     <td>Compute statistics about a range of messages in a given topic and partition.</td>
+</tr>
+<tr>
+    <td><a href="#topic_stats_projects_locations_topics_compute_time_cursor"><CopyableCode code="topic_stats_projects_locations_topics_compute_time_cursor" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
+    <td></td>
+    <td>Compute the corresponding cursor for a publish or event time in a topic partition.</td>
 </tr>
 </tbody>
 </table>
@@ -264,13 +264,29 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="admin_projects_locations_topics_get"
+    defaultValue="admin_projects_locations_reservations_topics_list"
     values={[
-        { label: 'admin_projects_locations_topics_get', value: 'admin_projects_locations_topics_get' },
         { label: 'admin_projects_locations_reservations_topics_list', value: 'admin_projects_locations_reservations_topics_list' },
+        { label: 'admin_projects_locations_topics_get', value: 'admin_projects_locations_topics_get' },
         { label: 'admin_projects_locations_topics_list', value: 'admin_projects_locations_topics_list' }
     ]}
 >
+<TabItem value="admin_projects_locations_reservations_topics_list">
+
+Lists the topics attached to the specified reservation.
+
+```sql
+SELECT
+*
+FROM google.pubsublite.topics
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND reservationsId = '{{ reservationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="admin_projects_locations_topics_get">
 
 Returns the topic configuration.
@@ -285,22 +301,6 @@ FROM google.pubsublite.topics
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND topicsId = '{{ topicsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="admin_projects_locations_reservations_topics_list">
-
-Lists the topics attached to the specified reservation.
-
-```sql
-SELECT
-*
-FROM google.pubsublite.topics
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND reservationsId = '{{ reservationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -342,8 +342,8 @@ Creates a new topic.
 INSERT INTO google.pubsublite.topics (
 data__name,
 data__partitionConfig,
-data__retentionConfig,
 data__reservationConfig,
+data__retentionConfig,
 projectsId,
 locationsId,
 topicId
@@ -351,8 +351,8 @@ topicId
 SELECT 
 '{{ name }}',
 '{{ partitionConfig }}',
-'{{ retentionConfig }}',
 '{{ reservationConfig }}',
+'{{ retentionConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ topicId }}'
@@ -383,22 +383,22 @@ retentionConfig
       description: |
         The settings for this topic's partitions.
       value:
-        count: "{{ count }}"
         capacity:
           publishMibPerSec: {{ publishMibPerSec }}
           subscribeMibPerSec: {{ subscribeMibPerSec }}
+        count: "{{ count }}"
         scale: {{ scale }}
+    - name: reservationConfig
+      description: |
+        The settings for this topic's Reservation usage.
+      value:
+        throughputReservation: "{{ throughputReservation }}"
     - name: retentionConfig
       description: |
         The settings for this topic's message retention.
       value:
         perPartitionBytes: "{{ perPartitionBytes }}"
         period: "{{ period }}"
-    - name: reservationConfig
-      description: |
-        The settings for this topic's Reservation usage.
-      value:
-        throughputReservation: "{{ throughputReservation }}"
     - name: topicId
       value: "{{ topicId }}"
 `}</CodeBlock>
@@ -424,8 +424,8 @@ UPDATE google.pubsublite.topics
 SET 
 data__name = '{{ name }}',
 data__partitionConfig = '{{ partitionConfig }}',
-data__retentionConfig = '{{ retentionConfig }}',
-data__reservationConfig = '{{ reservationConfig }}'
+data__reservationConfig = '{{ reservationConfig }}',
+data__retentionConfig = '{{ retentionConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -470,8 +470,8 @@ AND topicsId = '{{ topicsId }}' --required
     defaultValue="topic_stats_projects_locations_topics_compute_head_cursor"
     values={[
         { label: 'topic_stats_projects_locations_topics_compute_head_cursor', value: 'topic_stats_projects_locations_topics_compute_head_cursor' },
-        { label: 'topic_stats_projects_locations_topics_compute_time_cursor', value: 'topic_stats_projects_locations_topics_compute_time_cursor' },
-        { label: 'topic_stats_projects_locations_topics_compute_message_stats', value: 'topic_stats_projects_locations_topics_compute_message_stats' }
+        { label: 'topic_stats_projects_locations_topics_compute_message_stats', value: 'topic_stats_projects_locations_topics_compute_message_stats' },
+        { label: 'topic_stats_projects_locations_topics_compute_time_cursor', value: 'topic_stats_projects_locations_topics_compute_time_cursor' }
     ]}
 >
 <TabItem value="topic_stats_projects_locations_topics_compute_head_cursor">
@@ -490,6 +490,24 @@ EXEC google.pubsublite.topics.topic_stats_projects_locations_topics_compute_head
 ;
 ```
 </TabItem>
+<TabItem value="topic_stats_projects_locations_topics_compute_message_stats">
+
+Compute statistics about a range of messages in a given topic and partition.
+
+```sql
+EXEC google.pubsublite.topics.topic_stats_projects_locations_topics_compute_message_stats 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@topicsId='{{ topicsId }}' --required 
+@@json=
+'{
+"endCursor": "{{ endCursor }}", 
+"partition": "{{ partition }}", 
+"startCursor": "{{ startCursor }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="topic_stats_projects_locations_topics_compute_time_cursor">
 
 Compute the corresponding cursor for a publish or event time in a topic partition.
@@ -503,24 +521,6 @@ EXEC google.pubsublite.topics.topic_stats_projects_locations_topics_compute_time
 '{
 "partition": "{{ partition }}", 
 "target": "{{ target }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="topic_stats_projects_locations_topics_compute_message_stats">
-
-Compute statistics about a range of messages in a given topic and partition.
-
-```sql
-EXEC google.pubsublite.topics.topic_stats_projects_locations_topics_compute_message_stats 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@topicsId='{{ topicsId }}' --required 
-@@json=
-'{
-"partition": "{{ partition }}", 
-"startCursor": "{{ startCursor }}", 
-"endCursor": "{{ endCursor }}"
 }'
 ;
 ```

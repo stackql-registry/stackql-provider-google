@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists assistant sessions.</td>
 </tr>
 <tr>
@@ -281,9 +281,9 @@ updateTime
 FROM google.contactcenterinsights.assistant_sessions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -305,17 +305,17 @@ Creates an assistant session.
 
 ```sql
 INSERT INTO google.contactcenterinsights.assistant_sessions (
+data__displayName,
 data__messages,
 data__name,
-data__displayName,
 projectsId,
 locationsId,
 assistantSessionId
 )
 SELECT 
+'{{ displayName }}',
 '{{ messages }}',
 '{{ name }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ assistantSessionId }}'
@@ -341,6 +341,10 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the assistant_sessions resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the session.
     - name: messages
       description: |
         Optional. History of messages in the session.
@@ -352,10 +356,6 @@ updateTime
       value: "{{ name }}"
       description: |
         Identifier. Resource name of the session. Format: projects/{project}/locations/{location}/assistantSessions/{assistant_session}
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. The display name of the session.
     - name: assistantSessionId
       value: "{{ assistantSessionId }}"
 `}</CodeBlock>

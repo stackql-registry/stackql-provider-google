@@ -187,8 +187,8 @@ Sets the access control policy on the specified resource. Replaces any existing 
 ```sql
 REPLACE google.dataplex.encryption_configs_iam_policies
 SET 
-data__updateMask = '{{ updateMask }}',
-data__policy = '{{ policy }}'
+data__policy = '{{ policy }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

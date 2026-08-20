@@ -98,8 +98,8 @@ EXEC google.dataflow.projects.projects_worker_messages
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"workerMessages": "{{ workerMessages }}", 
-"location": "{{ location }}"
+"location": "{{ location }}", 
+"workerMessages": "{{ workerMessages }}"
 }'
 ;
 ```

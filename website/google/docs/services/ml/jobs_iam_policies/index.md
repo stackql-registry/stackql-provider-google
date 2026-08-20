@@ -181,8 +181,8 @@ Sets the access control policy on the specified resource. Replaces any existing 
 ```sql
 REPLACE google.ml.jobs_iam_policies
 SET 
-data__updateMask = '{{ updateMask }}',
-data__policy = '{{ policy }}'
+data__policy = '{{ policy }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND jobsId = '{{ jobsId }}' --required

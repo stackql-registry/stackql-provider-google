@@ -280,14 +280,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of SslCertificate resources available to the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all SslCertificate resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -423,11 +423,11 @@ selfLink,
 warning
 FROM google.compute.ssl_certificates
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -453,13 +453,13 @@ subjectAlternativeNames,
 type
 FROM google.compute.ssl_certificates
 WHERE project = '{{ project }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -481,30 +481,30 @@ Creates a SslCertificate resource in the specified project using the data<br />i
 
 ```sql
 INSERT INTO google.compute.ssl_certificates (
-data__selfManaged,
-data__creationTimestamp,
 data__certificate,
-data__type,
-data__name,
-data__id,
-data__selfLink,
-data__managed,
+data__creationTimestamp,
 data__description,
+data__id,
+data__managed,
+data__name,
 data__privateKey,
+data__selfLink,
+data__selfManaged,
+data__type,
 project,
 requestId
 )
 SELECT 
-'{{ selfManaged }}',
-'{{ creationTimestamp }}',
 '{{ certificate }}',
-'{{ type }}',
-'{{ name }}',
-'{{ id }}',
-'{{ selfLink }}',
-'{{ managed }}',
+'{{ creationTimestamp }}',
 '{{ description }}',
+'{{ id }}',
+'{{ managed }}',
+'{{ name }}',
 '{{ privateKey }}',
+'{{ selfLink }}',
+'{{ selfManaged }}',
+'{{ type }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -546,29 +546,35 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the ssl_certificates resource.
-    - name: selfManaged
-      description: |
-        Configuration and status of a self-managed SSL certificate.
-      value:
-        certificate: "{{ certificate }}"
-        privateKey: "{{ privateKey }}"
-    - name: creationTimestamp
-      value: "{{ creationTimestamp }}"
-      description: |
-        [Output Only] Creation timestamp inRFC3339
-        text format.
     - name: certificate
       value: "{{ certificate }}"
       description: |
         A value read into memory from a certificate file. The certificate file must
         be in PEM format. The certificate chain must be no greater than 5 certs
         long. The chain must include at least one intermediate cert.
-    - name: type
-      value: "{{ type }}"
+    - name: creationTimestamp
+      value: "{{ creationTimestamp }}"
       description: |
-        (Optional) Specifies the type of SSL certificate, either "SELF_MANAGED" or
-        "MANAGED". If not specified, the certificate is self-managed and the fieldscertificate and private_key are used.
-      valid_values: ['MANAGED', 'SELF_MANAGED', 'TYPE_UNSPECIFIED']
+        [Output Only] Creation timestamp inRFC3339
+        text format.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
+    - name: managed
+      description: |
+        Configuration and status of a managed SSL certificate.
+      value:
+        domainStatus: "{{ domainStatus }}"
+        domains:
+          - "{{ domains }}"
+        status: "{{ status }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -579,34 +585,28 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
-    - name: id
-      value: "{{ id }}"
-      description: |
-        [Output Only] The unique identifier for the resource. This identifier is
-        defined by the server.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output only] Server-defined URL for the resource.
-    - name: managed
-      description: |
-        Configuration and status of a managed SSL certificate.
-      value:
-        domainStatus: "{{ domainStatus }}"
-        status: "{{ status }}"
-        domains:
-          - "{{ domains }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: privateKey
       value: "{{ privateKey }}"
       description: |
         A value read into memory from a write-only private key file. The private
         key file must be in PEM format. For security, only insert
         requests include this field.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output only] Server-defined URL for the resource.
+    - name: selfManaged
+      description: |
+        Configuration and status of a self-managed SSL certificate.
+      value:
+        certificate: "{{ certificate }}"
+        privateKey: "{{ privateKey }}"
+    - name: type
+      value: "{{ type }}"
+      description: |
+        (Optional) Specifies the type of SSL certificate, either "SELF_MANAGED" or
+        "MANAGED". If not specified, the certificate is self-managed and the fieldscertificate and private_key are used.
+      valid_values: ['MANAGED', 'SELF_MANAGED', 'TYPE_UNSPECIFIED']
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>

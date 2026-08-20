@@ -33,20 +33,20 @@ Creates, updates, deletes, gets or lists a <code>deployments</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_sharedflows_revisions_deployments_list"
+    defaultValue="organizations_apis_revisions_deployments_list"
     values={[
-        { label: 'organizations_sharedflows_revisions_deployments_list', value: 'organizations_sharedflows_revisions_deployments_list' },
-        { label: 'organizations_environments_apis_deployments_list', value: 'organizations_environments_apis_deployments_list' },
-        { label: 'organizations_environments_sharedflows_deployments_list', value: 'organizations_environments_sharedflows_deployments_list' },
-        { label: 'organizations_environments_deployments_get', value: 'organizations_environments_deployments_get' },
         { label: 'organizations_apis_revisions_deployments_list', value: 'organizations_apis_revisions_deployments_list' },
-        { label: 'organizations_sharedflows_deployments_list', value: 'organizations_sharedflows_deployments_list' },
-        { label: 'organizations_environments_deployments_list', value: 'organizations_environments_deployments_list' },
+        { label: 'organizations_environments_apis_deployments_list', value: 'organizations_environments_apis_deployments_list' },
+        { label: 'organizations_environments_deployments_get', value: 'organizations_environments_deployments_get' },
+        { label: 'organizations_environments_sharedflows_deployments_list', value: 'organizations_environments_sharedflows_deployments_list' },
+        { label: 'organizations_sharedflows_revisions_deployments_list', value: 'organizations_sharedflows_revisions_deployments_list' },
         { label: 'organizations_apis_deployments_list', value: 'organizations_apis_deployments_list' },
+        { label: 'organizations_environments_deployments_list', value: 'organizations_environments_deployments_list' },
+        { label: 'organizations_sharedflows_deployments_list', value: 'organizations_sharedflows_deployments_list' },
         { label: 'organizations_deployments_list', value: 'organizations_deployments_list' }
     ]}
 >
-<TabItem value="organizations_sharedflows_revisions_deployments_list">
+<TabItem value="organizations_apis_revisions_deployments_list">
 
 <table>
 <thead>
@@ -66,25 +66,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_environments_apis_deployments_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="deployments" /></td>
-    <td><code>array</code></td>
-    <td>List of deployments.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="organizations_environments_sharedflows_deployments_list">
 
 <table>
 <thead>
@@ -172,7 +153,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_apis_revisions_deployments_list">
+<TabItem value="organizations_environments_sharedflows_deployments_list">
 
 <table>
 <thead>
@@ -191,7 +172,26 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_sharedflows_deployments_list">
+<TabItem value="organizations_sharedflows_revisions_deployments_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="deployments" /></td>
+    <td><code>array</code></td>
+    <td>List of deployments.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_apis_deployments_list">
 
 <table>
 <thead>
@@ -229,7 +229,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_apis_deployments_list">
+<TabItem value="organizations_sharedflows_deployments_list">
 
 <table>
 <thead>
@@ -285,11 +285,11 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_sharedflows_revisions_deployments_list"><CopyableCode code="organizations_sharedflows_revisions_deployments_list" /></a></td>
+    <td><a href="#organizations_apis_revisions_deployments_list"><CopyableCode code="organizations_apis_revisions_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
-    <td>Lists all deployments of a shared flow revision.</td>
+    <td>Lists all deployments of an API proxy revision.</td>
 </tr>
 <tr>
     <td><a href="#organizations_environments_apis_deployments_list"><CopyableCode code="organizations_environments_apis_deployments_list" /></a></td>
@@ -299,13 +299,6 @@ The following methods are available for this resource:
     <td>Lists all deployments of an API proxy in an environment.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_sharedflows_deployments_list"><CopyableCode code="organizations_environments_sharedflows_deployments_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a></td>
-    <td></td>
-    <td>Lists all deployments of a shared flow in an environment.</td>
-</tr>
-<tr>
     <td><a href="#organizations_environments_deployments_get"><CopyableCode code="organizations_environments_deployments_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
@@ -313,18 +306,25 @@ The following methods are available for this resource:
     <td>Gets a particular deployment of Api proxy or a shared flow in an environment</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apis_revisions_deployments_list"><CopyableCode code="organizations_apis_revisions_deployments_list" /></a></td>
+    <td><a href="#organizations_environments_sharedflows_deployments_list"><CopyableCode code="organizations_environments_sharedflows_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a></td>
     <td></td>
-    <td>Lists all deployments of an API proxy revision.</td>
+    <td>Lists all deployments of a shared flow in an environment.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_sharedflows_deployments_list"><CopyableCode code="organizations_sharedflows_deployments_list" /></a></td>
+    <td><a href="#organizations_sharedflows_revisions_deployments_list"><CopyableCode code="organizations_sharedflows_revisions_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
-    <td>Lists all deployments of a shared flow.</td>
+    <td>Lists all deployments of a shared flow revision.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_apis_deployments_list"><CopyableCode code="organizations_apis_deployments_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
+    <td></td>
+    <td>Lists all deployments of an API proxy.</td>
 </tr>
 <tr>
     <td><a href="#organizations_environments_deployments_list"><CopyableCode code="organizations_environments_deployments_list" /></a></td>
@@ -334,11 +334,11 @@ The following methods are available for this resource:
     <td>Lists all deployments of API proxies or shared flows in an environment.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apis_deployments_list"><CopyableCode code="organizations_apis_deployments_list" /></a></td>
+    <td><a href="#organizations_sharedflows_deployments_list"><CopyableCode code="organizations_sharedflows_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a></td>
     <td></td>
-    <td>Lists all deployments of an API proxy.</td>
+    <td>Lists all deployments of a shared flow.</td>
 </tr>
 <tr>
     <td><a href="#organizations_deployments_list"><CopyableCode code="organizations_deployments_list" /></a></td>
@@ -423,29 +423,29 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_sharedflows_revisions_deployments_list"
+    defaultValue="organizations_apis_revisions_deployments_list"
     values={[
-        { label: 'organizations_sharedflows_revisions_deployments_list', value: 'organizations_sharedflows_revisions_deployments_list' },
-        { label: 'organizations_environments_apis_deployments_list', value: 'organizations_environments_apis_deployments_list' },
-        { label: 'organizations_environments_sharedflows_deployments_list', value: 'organizations_environments_sharedflows_deployments_list' },
-        { label: 'organizations_environments_deployments_get', value: 'organizations_environments_deployments_get' },
         { label: 'organizations_apis_revisions_deployments_list', value: 'organizations_apis_revisions_deployments_list' },
-        { label: 'organizations_sharedflows_deployments_list', value: 'organizations_sharedflows_deployments_list' },
-        { label: 'organizations_environments_deployments_list', value: 'organizations_environments_deployments_list' },
+        { label: 'organizations_environments_apis_deployments_list', value: 'organizations_environments_apis_deployments_list' },
+        { label: 'organizations_environments_deployments_get', value: 'organizations_environments_deployments_get' },
+        { label: 'organizations_environments_sharedflows_deployments_list', value: 'organizations_environments_sharedflows_deployments_list' },
+        { label: 'organizations_sharedflows_revisions_deployments_list', value: 'organizations_sharedflows_revisions_deployments_list' },
         { label: 'organizations_apis_deployments_list', value: 'organizations_apis_deployments_list' },
+        { label: 'organizations_environments_deployments_list', value: 'organizations_environments_deployments_list' },
+        { label: 'organizations_sharedflows_deployments_list', value: 'organizations_sharedflows_deployments_list' },
         { label: 'organizations_deployments_list', value: 'organizations_deployments_list' }
     ]}
 >
-<TabItem value="organizations_sharedflows_revisions_deployments_list">
+<TabItem value="organizations_apis_revisions_deployments_list">
 
-Lists all deployments of a shared flow revision.
+Lists all deployments of an API proxy revision.
 
 ```sql
 SELECT
 deployments
 FROM google.apigee.deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND sharedflowsId = '{{ sharedflowsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
 AND revisionsId = '{{ revisionsId }}' -- required
 ;
 ```
@@ -461,20 +461,6 @@ FROM google.apigee.deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="organizations_environments_sharedflows_deployments_list">
-
-Lists all deployments of a shared flow in an environment.
-
-```sql
-SELECT
-deployments
-FROM google.apigee.deployments
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND environmentsId = '{{ environmentsId }}' -- required
-AND sharedflowsId = '{{ sharedflowsId }}' -- required
 ;
 ```
 </TabItem>
@@ -502,23 +488,23 @@ AND deploymentsId = '{{ deploymentsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_apis_revisions_deployments_list">
+<TabItem value="organizations_environments_sharedflows_deployments_list">
 
-Lists all deployments of an API proxy revision.
+Lists all deployments of a shared flow in an environment.
 
 ```sql
 SELECT
 deployments
 FROM google.apigee.deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
-AND revisionsId = '{{ revisionsId }}' -- required
+AND environmentsId = '{{ environmentsId }}' -- required
+AND sharedflowsId = '{{ sharedflowsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_sharedflows_deployments_list">
+<TabItem value="organizations_sharedflows_revisions_deployments_list">
 
-Lists all deployments of a shared flow.
+Lists all deployments of a shared flow revision.
 
 ```sql
 SELECT
@@ -526,6 +512,20 @@ deployments
 FROM google.apigee.deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND sharedflowsId = '{{ sharedflowsId }}' -- required
+AND revisionsId = '{{ revisionsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_apis_deployments_list">
+
+Lists all deployments of an API proxy.
+
+```sql
+SELECT
+deployments
+FROM google.apigee.deployments
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
 ;
 ```
 </TabItem>
@@ -543,16 +543,16 @@ AND sharedFlows = '{{ sharedFlows }}'
 ;
 ```
 </TabItem>
-<TabItem value="organizations_apis_deployments_list">
+<TabItem value="organizations_sharedflows_deployments_list">
 
-Lists all deployments of an API proxy.
+Lists all deployments of a shared flow.
 
 ```sql
 SELECT
 deployments
 FROM google.apigee.deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
+AND sharedflowsId = '{{ sharedflowsId }}' -- required
 ;
 ```
 </TabItem>

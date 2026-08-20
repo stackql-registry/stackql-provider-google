@@ -155,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the preference sets in a given project and location.</td>
 </tr>
 <tr>
@@ -169,7 +169,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-preferenceSetsId"><code>preferenceSetsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a preference set.</td>
 </tr>
 <tr>
@@ -286,9 +286,9 @@ virtualMachinePreferences
 FROM google.migrationcenter.preference_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -310,8 +310,8 @@ Creates a new preference set in a given project and location.
 
 ```sql
 INSERT INTO google.migrationcenter.preference_sets (
-data__displayName,
 data__description,
+data__displayName,
 data__virtualMachinePreferences,
 projectsId,
 locationsId,
@@ -319,8 +319,8 @@ preferenceSetId,
 requestId
 )
 SELECT 
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ virtualMachinePreferences }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -346,41 +346,41 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the preference_sets resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        User-friendly display name. Maximum length is 63 characters.
     - name: description
       value: "{{ description }}"
       description: |
         A description of the preference set.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-friendly display name. Maximum length is 63 characters.
     - name: virtualMachinePreferences
       description: |
         Optional. A set of preferences that applies to all virtual machines in the context.
       value:
-        soleTenancyPreferences:
-          nodeTypes:
-            - nodeName: "{{ nodeName }}"
-          hostMaintenancePolicy: "{{ hostMaintenancePolicy }}"
-          commitmentPlan: "{{ commitmentPlan }}"
-          cpuOvercommitRatio: {{ cpuOvercommitRatio }}
+        commitmentPlan: "{{ commitmentPlan }}"
         computeEnginePreferences:
-          persistentDiskType: "{{ persistentDiskType }}"
+          licenseType: "{{ licenseType }}"
           machinePreferences:
             allowedMachineSeries:
               - code: "{{ code }}"
-          licenseType: "{{ licenseType }}"
-        targetProduct: "{{ targetProduct }}"
-        commitmentPlan: "{{ commitmentPlan }}"
-        vmwareEnginePreferences:
-          storageDeduplicationCompressionRatio: {{ storageDeduplicationCompressionRatio }}
-          memoryOvercommitRatio: {{ memoryOvercommitRatio }}
-          commitmentPlan: "{{ commitmentPlan }}"
-          cpuOvercommitRatio: {{ cpuOvercommitRatio }}
+          persistentDiskType: "{{ persistentDiskType }}"
         regionPreferences:
           preferredRegions:
             - "{{ preferredRegions }}"
         sizingOptimizationStrategy: "{{ sizingOptimizationStrategy }}"
+        soleTenancyPreferences:
+          commitmentPlan: "{{ commitmentPlan }}"
+          cpuOvercommitRatio: {{ cpuOvercommitRatio }}
+          hostMaintenancePolicy: "{{ hostMaintenancePolicy }}"
+          nodeTypes:
+            - nodeName: "{{ nodeName }}"
+        targetProduct: "{{ targetProduct }}"
+        vmwareEnginePreferences:
+          commitmentPlan: "{{ commitmentPlan }}"
+          cpuOvercommitRatio: {{ cpuOvercommitRatio }}
+          memoryOvercommitRatio: {{ memoryOvercommitRatio }}
+          storageDeduplicationCompressionRatio: {{ storageDeduplicationCompressionRatio }}
     - name: preferenceSetId
       value: "{{ preferenceSetId }}"
     - name: requestId
@@ -406,15 +406,15 @@ Updates the parameters of a preference set.
 ```sql
 UPDATE google.migrationcenter.preference_sets
 SET 
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__virtualMachinePreferences = '{{ virtualMachinePreferences }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND preferenceSetsId = '{{ preferenceSetsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

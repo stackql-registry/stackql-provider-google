@@ -562,7 +562,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
+    <td><a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a Redis cluster based on the specified properties. The creation is executed asynchronously and callers may check the returned operation to track its progress. Once the operation is completed the Redis cluster will be fully functional. The completed longrunning.Operation will contain the new cluster object in the response field. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.</td>
 </tr>
 <tr>
@@ -580,18 +580,18 @@ The following methods are available for this resource:
     <td>Deletes a specific Redis cluster. Cluster stops serving and data is deleted.</td>
 </tr>
 <tr>
-    <td><a href="#reschedule_cluster_maintenance"><CopyableCode code="reschedule_cluster_maintenance" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Reschedules upcoming maintenance event.</td>
-</tr>
-<tr>
     <td><a href="#backup"><CopyableCode code="backup" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td></td>
     <td>Backup Redis Cluster. If this is the first time a backup is being created, a backup collection will be created at the backend, and this backup belongs to this collection. Both collection and backup will have a resource name. Backup will be executed for each shard. A replica (primary if nonHA) will be selected to perform the execution. Backup call will be rejected if there is an ongoing backup or update operation. Be aware that during preview, if the cluster's internal software version is too old, critical update will be performed before actual backup. Once the internal software version is updated to the minimum version required by the backup feature, subsequent backups will not require critical update. After preview, there will be no critical update needed for backup.</td>
+</tr>
+<tr>
+    <td><a href="#reschedule_cluster_maintenance"><CopyableCode code="reschedule_cluster_maintenance" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Reschedules upcoming maintenance event.</td>
 </tr>
 </tbody>
 </table>
@@ -798,72 +798,72 @@ Creates a Redis cluster based on the specified properties. The creation is execu
 
 ```sql
 INSERT INTO google.redis.clusters (
-data__name,
-data__transitEncryptionMode,
-data__kmsKey,
+data__aclPolicy,
+data__allowFewerZonesDeployment,
+data__asyncClusterEndpointsDeletionEnabled,
+data__authorizationMode,
 data__automatedBackupConfig,
+data__clusterEndpoints,
+data__crossClusterReplicationConfig,
+data__deletionProtectionEnabled,
+data__gcsSource,
+data__kmsKey,
 data__labels,
-data__replicaCount,
-data__persistenceConfig,
 data__maintenancePolicy,
+data__maintenanceVersion,
+data__managedBackupSource,
+data__name,
+data__nodeType,
+data__ondemandMaintenance,
+data__persistenceConfig,
+data__pscConfigs,
 data__redisConfigs,
+data__replicaCount,
+data__rotateServerCertificate,
+data__serverCaMode,
+data__serverCaPool,
 data__shardCount,
 data__simulateMaintenanceEvent,
-data__managedBackupSource,
-data__serverCaPool,
-data__gcsSource,
-data__asyncClusterEndpointsDeletionEnabled,
-data__deletionProtectionEnabled,
-data__maintenanceVersion,
-data__rotateServerCertificate,
-data__clusterEndpoints,
-data__allowFewerZonesDeployment,
+data__transitEncryptionMode,
 data__zoneDistributionConfig,
-data__ondemandMaintenance,
-data__pscConfigs,
-data__crossClusterReplicationConfig,
-data__serverCaMode,
-data__aclPolicy,
-data__nodeType,
-data__authorizationMode,
 projectsId,
 locationsId,
-requestId,
-clusterId
+clusterId,
+requestId
 )
 SELECT 
-'{{ name }}',
-'{{ transitEncryptionMode }}',
-'{{ kmsKey }}',
+'{{ aclPolicy }}',
+{{ allowFewerZonesDeployment }},
+{{ asyncClusterEndpointsDeletionEnabled }},
+'{{ authorizationMode }}',
 '{{ automatedBackupConfig }}',
+'{{ clusterEndpoints }}',
+'{{ crossClusterReplicationConfig }}',
+{{ deletionProtectionEnabled }},
+'{{ gcsSource }}',
+'{{ kmsKey }}',
 '{{ labels }}',
-{{ replicaCount }},
-'{{ persistenceConfig }}',
 '{{ maintenancePolicy }}',
+'{{ maintenanceVersion }}',
+'{{ managedBackupSource }}',
+'{{ name }}',
+'{{ nodeType }}',
+{{ ondemandMaintenance }},
+'{{ persistenceConfig }}',
+'{{ pscConfigs }}',
 '{{ redisConfigs }}',
+{{ replicaCount }},
+{{ rotateServerCertificate }},
+'{{ serverCaMode }}',
+'{{ serverCaPool }}',
 {{ shardCount }},
 {{ simulateMaintenanceEvent }},
-'{{ managedBackupSource }}',
-'{{ serverCaPool }}',
-'{{ gcsSource }}',
-{{ asyncClusterEndpointsDeletionEnabled }},
-{{ deletionProtectionEnabled }},
-'{{ maintenanceVersion }}',
-{{ rotateServerCertificate }},
-'{{ clusterEndpoints }}',
-{{ allowFewerZonesDeployment }},
+'{{ transitEncryptionMode }}',
 '{{ zoneDistributionConfig }}',
-{{ ondemandMaintenance }},
-'{{ pscConfigs }}',
-'{{ crossClusterReplicationConfig }}',
-'{{ serverCaMode }}',
-'{{ aclPolicy }}',
-'{{ nodeType }}',
-'{{ authorizationMode }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ clusterId }}'
+'{{ clusterId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -884,39 +884,112 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the clusters resource.
-    - name: name
-      value: "{{ name }}"
+    - name: aclPolicy
+      value: "{{ aclPolicy }}"
       description: |
-        Required. Identifier. Unique name of the resource in this scope including project and location using the form: \`projects/{project_id}/locations/{location_id}/clusters/{cluster_id}\`
-    - name: transitEncryptionMode
-      value: "{{ transitEncryptionMode }}"
+        Optional. The ACL policy to be applied to the cluster.
+    - name: allowFewerZonesDeployment
+      value: {{ allowFewerZonesDeployment }}
       description: |
-        Optional. The in-transit encryption for the Redis cluster. If not provided, encryption is disabled for the cluster.
-      valid_values: ['TRANSIT_ENCRYPTION_MODE_UNSPECIFIED', 'TRANSIT_ENCRYPTION_MODE_DISABLED', 'TRANSIT_ENCRYPTION_MODE_SERVER_AUTHENTICATION']
-    - name: kmsKey
-      value: "{{ kmsKey }}"
+        Optional. Immutable. Deprecated, do not use.
+    - name: asyncClusterEndpointsDeletionEnabled
+      value: {{ asyncClusterEndpointsDeletionEnabled }}
       description: |
-        Optional. The KMS key used to encrypt the at-rest data of the cluster.
+        Optional. If true, cluster endpoints that are created and registered by customers can be deleted asynchronously. That is, such a cluster endpoint can be de-registered before the forwarding rules in the cluster endpoint are deleted.
+    - name: authorizationMode
+      value: "{{ authorizationMode }}"
+      description: |
+        Optional. The authorization mode of the Redis cluster. If not provided, auth feature is disabled for the cluster.
+      valid_values: ['AUTH_MODE_UNSPECIFIED', 'AUTH_MODE_IAM_AUTH', 'AUTH_MODE_DISABLED', 'AUTH_MODE_TOKEN_AUTH']
     - name: automatedBackupConfig
       description: |
         Optional. The automated backup config for the cluster.
       value:
         automatedBackupMode: "{{ automatedBackupMode }}"
-        retention: "{{ retention }}"
         fixedFrequencySchedule:
           startTime:
-            seconds: {{ seconds }}
-            nanos: {{ nanos }}
-            minutes: {{ minutes }}
             hours: {{ hours }}
+            minutes: {{ minutes }}
+            nanos: {{ nanos }}
+            seconds: {{ seconds }}
+        retention: "{{ retention }}"
+    - name: clusterEndpoints
+      description: |
+        Optional. A list of cluster endpoints.
+      value:
+        - connections: "{{ connections }}"
+    - name: crossClusterReplicationConfig
+      description: |
+        Optional. Cross cluster replication config.
+      value:
+        clusterRole: "{{ clusterRole }}"
+        membership:
+          primaryCluster:
+            cluster: "{{ cluster }}"
+            uid: "{{ uid }}"
+          secondaryClusters:
+            - cluster: "{{ cluster }}"
+              uid: "{{ uid }}"
+        primaryCluster:
+          cluster: "{{ cluster }}"
+          uid: "{{ uid }}"
+        secondaryClusters:
+          - cluster: "{{ cluster }}"
+            uid: "{{ uid }}"
+        updateTime: "{{ updateTime }}"
+    - name: deletionProtectionEnabled
+      value: {{ deletionProtectionEnabled }}
+      description: |
+        Optional. The delete operation will fail when the value is set to true.
+    - name: gcsSource
+      description: |
+        Optional. Backups stored in Cloud Storage buckets. The Cloud Storage buckets need to be the same region as the clusters. Read permission is required to import from the provided Cloud Storage objects.
+      value:
+        uris:
+          - "{{ uris }}"
+    - name: kmsKey
+      value: "{{ kmsKey }}"
+      description: |
+        Optional. The KMS key used to encrypt the at-rest data of the cluster.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Labels to represent user-provided metadata.
-    - name: replicaCount
-      value: {{ replicaCount }}
+    - name: maintenancePolicy
       description: |
-        Optional. The number of replica nodes per shard.
+        Optional. ClusterMaintenancePolicy determines when to allow or deny updates.
+      value:
+        createTime: "{{ createTime }}"
+        updateTime: "{{ updateTime }}"
+        weeklyMaintenanceWindow:
+          - day: "{{ day }}"
+            startTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+    - name: maintenanceVersion
+      value: "{{ maintenanceVersion }}"
+      description: |
+        Optional. This field can be used to trigger self service update to indicate the desired maintenance version. The input to this field can be determined by the available_maintenance_versions field.
+    - name: managedBackupSource
+      description: |
+        Optional. Backups generated and managed by memorystore service.
+      value:
+        backup: "{{ backup }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. Unique name of the resource in this scope including project and location using the form: \`projects/{project_id}/locations/{location_id}/clusters/{cluster_id}\`
+    - name: nodeType
+      value: "{{ nodeType }}"
+      description: |
+        Optional. The type of a redis node in the cluster. NodeType determines the underlying machine-type of a redis node.
+      valid_values: ['NODE_TYPE_UNSPECIFIED', 'REDIS_SHARED_CORE_NANO', 'REDIS_HIGHMEM_MEDIUM', 'REDIS_HIGHMEM_XLARGE', 'REDIS_STANDARD_SMALL', 'REDIS_HIGHCPU_MEDIUM', 'REDIS_STANDARD_LARGE', 'REDIS_HIGHMEM_2XLARGE']
+    - name: ondemandMaintenance
+      value: {{ ondemandMaintenance }}
+      description: |
+        Optional. Input only. Ondemand maintenance for the cluster. This field can be used to trigger ondemand critical update on the cluster.
     - name: persistenceConfig
       description: |
         Optional. Persistence config (RDB, AOF) for the cluster.
@@ -927,23 +1000,32 @@ response
         rdbConfig:
           rdbSnapshotPeriod: "{{ rdbSnapshotPeriod }}"
           rdbSnapshotStartTime: "{{ rdbSnapshotStartTime }}"
-    - name: maintenancePolicy
+    - name: pscConfigs
       description: |
-        Optional. ClusterMaintenancePolicy determines when to allow or deny updates.
+        Optional. Each PscConfig configures the consumer network where IPs will be designated to the cluster for client access through Private Service Connect Automation. Currently, only one PscConfig is supported.
       value:
-        updateTime: "{{ updateTime }}"
-        createTime: "{{ createTime }}"
-        weeklyMaintenanceWindow:
-          - day: "{{ day }}"
-            startTime:
-              seconds: {{ seconds }}
-              nanos: {{ nanos }}
-              minutes: {{ minutes }}
-              hours: {{ hours }}
+        - network: "{{ network }}"
     - name: redisConfigs
       value: "{{ redisConfigs }}"
       description: |
         Optional. Key/Value pairs of customer overrides for mutable Redis Configs
+    - name: replicaCount
+      value: {{ replicaCount }}
+      description: |
+        Optional. The number of replica nodes per shard.
+    - name: rotateServerCertificate
+      value: {{ rotateServerCertificate }}
+      description: |
+        Optional. Input only. Rotate the server certificates.
+    - name: serverCaMode
+      value: "{{ serverCaMode }}"
+      description: |
+        Optional. Server CA mode for the cluster.
+      valid_values: ['SERVER_CA_MODE_UNSPECIFIED', 'SERVER_CA_MODE_GOOGLE_MANAGED_PER_INSTANCE_CA', 'SERVER_CA_MODE_GOOGLE_MANAGED_SHARED_CA', 'SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA']
+    - name: serverCaPool
+      value: "{{ serverCaPool }}"
+      description: |
+        Optional. Customer-managed CA pool for the cluster. Only applicable for BYOCA i.e. if server_ca_mode is SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA. Format: "projects/{project}/locations/{region}/caPools/{ca_pool}".
     - name: shardCount
       value: {{ shardCount }}
       description: |
@@ -952,105 +1034,23 @@ response
       value: {{ simulateMaintenanceEvent }}
       description: |
         Optional. Input only. Simulate a maintenance event.
-    - name: managedBackupSource
+    - name: transitEncryptionMode
+      value: "{{ transitEncryptionMode }}"
       description: |
-        Optional. Backups generated and managed by memorystore service.
-      value:
-        backup: "{{ backup }}"
-    - name: serverCaPool
-      value: "{{ serverCaPool }}"
-      description: |
-        Optional. Customer-managed CA pool for the cluster. Only applicable for BYOCA i.e. if server_ca_mode is SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA. Format: "projects/{project}/locations/{region}/caPools/{ca_pool}".
-    - name: gcsSource
-      description: |
-        Optional. Backups stored in Cloud Storage buckets. The Cloud Storage buckets need to be the same region as the clusters. Read permission is required to import from the provided Cloud Storage objects.
-      value:
-        uris:
-          - "{{ uris }}"
-    - name: asyncClusterEndpointsDeletionEnabled
-      value: {{ asyncClusterEndpointsDeletionEnabled }}
-      description: |
-        Optional. If true, cluster endpoints that are created and registered by customers can be deleted asynchronously. That is, such a cluster endpoint can be de-registered before the forwarding rules in the cluster endpoint are deleted.
-    - name: deletionProtectionEnabled
-      value: {{ deletionProtectionEnabled }}
-      description: |
-        Optional. The delete operation will fail when the value is set to true.
-    - name: maintenanceVersion
-      value: "{{ maintenanceVersion }}"
-      description: |
-        Optional. This field can be used to trigger self service update to indicate the desired maintenance version. The input to this field can be determined by the available_maintenance_versions field.
-    - name: rotateServerCertificate
-      value: {{ rotateServerCertificate }}
-      description: |
-        Optional. Input only. Rotate the server certificates.
-    - name: clusterEndpoints
-      description: |
-        Optional. A list of cluster endpoints.
-      value:
-        - connections: "{{ connections }}"
-    - name: allowFewerZonesDeployment
-      value: {{ allowFewerZonesDeployment }}
-      description: |
-        Optional. Immutable. Deprecated, do not use.
+        Optional. The in-transit encryption for the Redis cluster. If not provided, encryption is disabled for the cluster.
+      valid_values: ['TRANSIT_ENCRYPTION_MODE_UNSPECIFIED', 'TRANSIT_ENCRYPTION_MODE_DISABLED', 'TRANSIT_ENCRYPTION_MODE_SERVER_AUTHENTICATION']
     - name: zoneDistributionConfig
       description: |
         Optional. This config will be used to determine how the customer wants us to distribute cluster resources within the region.
       value:
-        zone: "{{ zone }}"
         mode: "{{ mode }}"
+        zone: "{{ zone }}"
         zones:
           - "{{ zones }}"
-    - name: ondemandMaintenance
-      value: {{ ondemandMaintenance }}
-      description: |
-        Optional. Input only. Ondemand maintenance for the cluster. This field can be used to trigger ondemand critical update on the cluster.
-    - name: pscConfigs
-      description: |
-        Optional. Each PscConfig configures the consumer network where IPs will be designated to the cluster for client access through Private Service Connect Automation. Currently, only one PscConfig is supported.
-      value:
-        - network: "{{ network }}"
-    - name: crossClusterReplicationConfig
-      description: |
-        Optional. Cross cluster replication config.
-      value:
-        primaryCluster:
-          cluster: "{{ cluster }}"
-          uid: "{{ uid }}"
-        clusterRole: "{{ clusterRole }}"
-        secondaryClusters:
-          - cluster: "{{ cluster }}"
-            uid: "{{ uid }}"
-        updateTime: "{{ updateTime }}"
-        membership:
-          primaryCluster:
-            cluster: "{{ cluster }}"
-            uid: "{{ uid }}"
-          secondaryClusters:
-            - cluster: "{{ cluster }}"
-              uid: "{{ uid }}"
-    - name: serverCaMode
-      value: "{{ serverCaMode }}"
-      description: |
-        Optional. Server CA mode for the cluster.
-      valid_values: ['SERVER_CA_MODE_UNSPECIFIED', 'SERVER_CA_MODE_GOOGLE_MANAGED_PER_INSTANCE_CA', 'SERVER_CA_MODE_GOOGLE_MANAGED_SHARED_CA', 'SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA']
-    - name: aclPolicy
-      value: "{{ aclPolicy }}"
-      description: |
-        Optional. The ACL policy to be applied to the cluster.
-    - name: nodeType
-      value: "{{ nodeType }}"
-      description: |
-        Optional. The type of a redis node in the cluster. NodeType determines the underlying machine-type of a redis node.
-      valid_values: ['NODE_TYPE_UNSPECIFIED', 'REDIS_SHARED_CORE_NANO', 'REDIS_HIGHMEM_MEDIUM', 'REDIS_HIGHMEM_XLARGE', 'REDIS_STANDARD_SMALL', 'REDIS_HIGHCPU_MEDIUM', 'REDIS_STANDARD_LARGE', 'REDIS_HIGHMEM_2XLARGE']
-    - name: authorizationMode
-      value: "{{ authorizationMode }}"
-      description: |
-        Optional. The authorization mode of the Redis cluster. If not provided, auth feature is disabled for the cluster.
-      valid_values: ['AUTH_MODE_UNSPECIFIED', 'AUTH_MODE_IAM_AUTH', 'AUTH_MODE_DISABLED', 'AUTH_MODE_TOKEN_AUTH']
-    - name: requestId
-      value: "{{ requestId }}"
     - name: clusterId
       value: "{{ clusterId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -1072,34 +1072,34 @@ Updates the metadata and configuration of a specific Redis cluster. Completed lo
 ```sql
 UPDATE google.redis.clusters
 SET 
-data__name = '{{ name }}',
-data__transitEncryptionMode = '{{ transitEncryptionMode }}',
-data__kmsKey = '{{ kmsKey }}',
+data__aclPolicy = '{{ aclPolicy }}',
+data__allowFewerZonesDeployment = {{ allowFewerZonesDeployment }},
+data__asyncClusterEndpointsDeletionEnabled = {{ asyncClusterEndpointsDeletionEnabled }},
+data__authorizationMode = '{{ authorizationMode }}',
 data__automatedBackupConfig = '{{ automatedBackupConfig }}',
+data__clusterEndpoints = '{{ clusterEndpoints }}',
+data__crossClusterReplicationConfig = '{{ crossClusterReplicationConfig }}',
+data__deletionProtectionEnabled = {{ deletionProtectionEnabled }},
+data__gcsSource = '{{ gcsSource }}',
+data__kmsKey = '{{ kmsKey }}',
 data__labels = '{{ labels }}',
-data__replicaCount = {{ replicaCount }},
-data__persistenceConfig = '{{ persistenceConfig }}',
 data__maintenancePolicy = '{{ maintenancePolicy }}',
+data__maintenanceVersion = '{{ maintenanceVersion }}',
+data__managedBackupSource = '{{ managedBackupSource }}',
+data__name = '{{ name }}',
+data__nodeType = '{{ nodeType }}',
+data__ondemandMaintenance = {{ ondemandMaintenance }},
+data__persistenceConfig = '{{ persistenceConfig }}',
+data__pscConfigs = '{{ pscConfigs }}',
 data__redisConfigs = '{{ redisConfigs }}',
+data__replicaCount = {{ replicaCount }},
+data__rotateServerCertificate = {{ rotateServerCertificate }},
+data__serverCaMode = '{{ serverCaMode }}',
+data__serverCaPool = '{{ serverCaPool }}',
 data__shardCount = {{ shardCount }},
 data__simulateMaintenanceEvent = {{ simulateMaintenanceEvent }},
-data__managedBackupSource = '{{ managedBackupSource }}',
-data__serverCaPool = '{{ serverCaPool }}',
-data__gcsSource = '{{ gcsSource }}',
-data__asyncClusterEndpointsDeletionEnabled = {{ asyncClusterEndpointsDeletionEnabled }},
-data__deletionProtectionEnabled = {{ deletionProtectionEnabled }},
-data__maintenanceVersion = '{{ maintenanceVersion }}',
-data__rotateServerCertificate = {{ rotateServerCertificate }},
-data__clusterEndpoints = '{{ clusterEndpoints }}',
-data__allowFewerZonesDeployment = {{ allowFewerZonesDeployment }},
-data__zoneDistributionConfig = '{{ zoneDistributionConfig }}',
-data__ondemandMaintenance = {{ ondemandMaintenance }},
-data__pscConfigs = '{{ pscConfigs }}',
-data__crossClusterReplicationConfig = '{{ crossClusterReplicationConfig }}',
-data__serverCaMode = '{{ serverCaMode }}',
-data__aclPolicy = '{{ aclPolicy }}',
-data__nodeType = '{{ nodeType }}',
-data__authorizationMode = '{{ authorizationMode }}'
+data__transitEncryptionMode = '{{ transitEncryptionMode }}',
+data__zoneDistributionConfig = '{{ zoneDistributionConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1144,29 +1144,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reschedule_cluster_maintenance"
+    defaultValue="backup"
     values={[
-        { label: 'reschedule_cluster_maintenance', value: 'reschedule_cluster_maintenance' },
-        { label: 'backup', value: 'backup' }
+        { label: 'backup', value: 'backup' },
+        { label: 'reschedule_cluster_maintenance', value: 'reschedule_cluster_maintenance' }
     ]}
 >
-<TabItem value="reschedule_cluster_maintenance">
-
-Reschedules upcoming maintenance event.
-
-```sql
-EXEC google.redis.clusters.reschedule_cluster_maintenance 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@clustersId='{{ clustersId }}' --required 
-@@json=
-'{
-"rescheduleType": "{{ rescheduleType }}", 
-"scheduleTime": "{{ scheduleTime }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="backup">
 
 Backup Redis Cluster. If this is the first time a backup is being created, a backup collection will be created at the backend, and this backup belongs to this collection. Both collection and backup will have a resource name. Backup will be executed for each shard. A replica (primary if nonHA) will be selected to perform the execution. Backup call will be rejected if there is an ongoing backup or update operation. Be aware that during preview, if the cluster's internal software version is too old, critical update will be performed before actual backup. Once the internal software version is updated to the minimum version required by the backup feature, subsequent backups will not require critical update. After preview, there will be no critical update needed for backup.
@@ -1180,6 +1163,23 @@ EXEC google.redis.clusters.backup
 '{
 "backupId": "{{ backupId }}", 
 "ttl": "{{ ttl }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reschedule_cluster_maintenance">
+
+Reschedules upcoming maintenance event.
+
+```sql
+EXEC google.redis.clusters.reschedule_cluster_maintenance 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"rescheduleType": "{{ rescheduleType }}", 
+"scheduleTime": "{{ scheduleTime }}"
 }'
 ;
 ```

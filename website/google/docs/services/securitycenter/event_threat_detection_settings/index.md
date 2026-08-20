@@ -51,6 +51,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_event_threat_detection_settings_validate_custom_module"><CopyableCode code="folders_event_threat_detection_settings_validate_custom_module" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_event_threat_detection_settings_validate_custom_module"><CopyableCode code="organizations_event_threat_detection_settings_validate_custom_module" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
@@ -61,13 +68,6 @@ The following methods are available for this resource:
     <td><a href="#projects_event_threat_detection_settings_validate_custom_module"><CopyableCode code="projects_event_threat_detection_settings_validate_custom_module" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_event_threat_detection_settings_validate_custom_module"><CopyableCode code="folders_event_threat_detection_settings_validate_custom_module" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -108,13 +108,28 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_event_threat_detection_settings_validate_custom_module"
+    defaultValue="folders_event_threat_detection_settings_validate_custom_module"
     values={[
+        { label: 'folders_event_threat_detection_settings_validate_custom_module', value: 'folders_event_threat_detection_settings_validate_custom_module' },
         { label: 'organizations_event_threat_detection_settings_validate_custom_module', value: 'organizations_event_threat_detection_settings_validate_custom_module' },
-        { label: 'projects_event_threat_detection_settings_validate_custom_module', value: 'projects_event_threat_detection_settings_validate_custom_module' },
-        { label: 'folders_event_threat_detection_settings_validate_custom_module', value: 'folders_event_threat_detection_settings_validate_custom_module' }
+        { label: 'projects_event_threat_detection_settings_validate_custom_module', value: 'projects_event_threat_detection_settings_validate_custom_module' }
     ]}
 >
+<TabItem value="folders_event_threat_detection_settings_validate_custom_module">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.event_threat_detection_settings.folders_event_threat_detection_settings_validate_custom_module 
+@foldersId='{{ foldersId }}' --required 
+@@json=
+'{
+"rawText": "{{ rawText }}", 
+"type": "{{ type }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_validate_custom_module">
 
 Successful response
@@ -137,21 +152,6 @@ Successful response
 ```sql
 EXEC google.securitycenter.event_threat_detection_settings.projects_event_threat_detection_settings_validate_custom_module 
 @projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"rawText": "{{ rawText }}", 
-"type": "{{ type }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="folders_event_threat_detection_settings_validate_custom_module">
-
-Successful response
-
-```sql
-EXEC google.securitycenter.event_threat_detection_settings.folders_event_threat_detection_settings_validate_custom_module 
-@foldersId='{{ foldersId }}' --required 
 @@json=
 '{
 "rawText": "{{ rawText }}", 

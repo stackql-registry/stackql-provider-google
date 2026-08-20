@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_taxonomies_attributes_list"><CopyableCode code="projects_locations_data_taxonomies_attributes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataTaxonomiesId"><code>dataTaxonomiesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Data Attribute resources in a DataTaxonomy.</td>
 </tr>
 <tr>
@@ -376,8 +376,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataTaxonomiesId = '{{ dataTaxonomiesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -400,13 +400,13 @@ Create a DataAttribute resource.
 
 ```sql
 INSERT INTO google.dataplex.attributes (
+data__dataAccessSpec,
+data__description,
 data__displayName,
+data__etag,
 data__labels,
 data__parentId,
 data__resourceAccessSpec,
-data__description,
-data__etag,
-data__dataAccessSpec,
 projectsId,
 locationsId,
 dataTaxonomiesId,
@@ -414,13 +414,13 @@ dataAttributeId,
 validateOnly
 )
 SELECT 
+'{{ dataAccessSpec }}',
+'{{ description }}',
 '{{ displayName }}',
+'{{ etag }}',
 '{{ labels }}',
 '{{ parentId }}',
 '{{ resourceAccessSpec }}',
-'{{ description }}',
-'{{ etag }}',
-'{{ dataAccessSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataTaxonomiesId }}',
@@ -449,10 +449,24 @@ response
     - name: dataTaxonomiesId
       value: "{{ dataTaxonomiesId }}"
       description: Required parameter for the attributes resource.
+    - name: dataAccessSpec
+      description: |
+        Optional. Specified when applied to data stored on the resource (eg: rows, columns in BigQuery Tables).
+      value:
+        readers:
+          - "{{ readers }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the DataAttribute.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. User friendly display name.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -465,26 +479,12 @@ response
       description: |
         Optional. Specified when applied to a resource (eg: Cloud Storage bucket, BigQuery dataset, BigQuery table).
       value:
+        owners:
+          - "{{ owners }}"
         readers:
           - "{{ readers }}"
         writers:
           - "{{ writers }}"
-        owners:
-          - "{{ owners }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Description of the DataAttribute.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: dataAccessSpec
-      description: |
-        Optional. Specified when applied to data stored on the resource (eg: rows, columns in BigQuery Tables).
-      value:
-        readers:
-          - "{{ readers }}"
     - name: dataAttributeId
       value: "{{ dataAttributeId }}"
     - name: validateOnly
@@ -510,13 +510,13 @@ Updates a DataAttribute resource.
 ```sql
 UPDATE google.dataplex.attributes
 SET 
+data__dataAccessSpec = '{{ dataAccessSpec }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
 data__parentId = '{{ parentId }}',
-data__resourceAccessSpec = '{{ resourceAccessSpec }}',
-data__description = '{{ description }}',
-data__etag = '{{ etag }}',
-data__dataAccessSpec = '{{ dataAccessSpec }}'
+data__resourceAccessSpec = '{{ resourceAccessSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

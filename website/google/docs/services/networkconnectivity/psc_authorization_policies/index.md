@@ -195,21 +195,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists PscAuthorizationPolicies in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-pscAuthorizationPolicyId"><code>pscAuthorizationPolicyId</code></a></td>
+    <td><a href="#parameter-pscAuthorizationPolicyId"><code>pscAuthorizationPolicyId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new PscAuthorizationPolicy in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pscAuthorizationPoliciesId"><code>pscAuthorizationPoliciesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single PscAuthorizationPolicy.</td>
 </tr>
 </tbody>
@@ -332,10 +332,10 @@ updateTime
 FROM google.networkconnectivity.psc_authorization_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -357,30 +357,30 @@ Creates a new PscAuthorizationPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.psc_authorization_policies (
-data__targetResourceUri,
-data__authorizedClientResources,
-data__labels,
-data__etag,
-data__name,
 data__authorizationMode,
+data__authorizedClientResources,
 data__description,
+data__etag,
+data__labels,
+data__name,
+data__targetResourceUri,
 projectsId,
 locationsId,
-requestId,
-pscAuthorizationPolicyId
+pscAuthorizationPolicyId,
+requestId
 )
 SELECT 
-'{{ targetResourceUri }}',
-'{{ authorizedClientResources }}',
-'{{ labels }}',
-'{{ etag }}',
-'{{ name }}',
 '{{ authorizationMode }}',
+'{{ authorizedClientResources }}',
 '{{ description }}',
+'{{ etag }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ targetResourceUri }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ pscAuthorizationPolicyId }}'
+'{{ pscAuthorizationPolicyId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -401,40 +401,40 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the psc_authorization_policies resource.
-    - name: targetResourceUri
-      value: "{{ targetResourceUri }}"
-      description: |
-        Required. The full absolute URI of the targeted resource governed by this policy. For example, for an AgentRegistry resource, the format is: \`//agentregistry.googleapis.com/projects/{project}/locations/{location}\`
-    - name: authorizedClientResources
-      value:
-        - "{{ authorizedClientResources }}"
-      description: |
-        Required. List of authorized consumer resources allowed to connect. Supported values are: 1. Project resource name (e.g., \`projects/{project_id}\`) 2. Wildcard \`"*"\` (grants global ingress authorization to the target).
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Output only. The etag of the PscAuthorizationPolicy.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of the PscAuthorizationPolicy. Format: projects/{project}/locations/{location}/pscAuthorizationPolicies/{psc_authorization_policy}
     - name: authorizationMode
       value: "{{ authorizationMode }}"
       description: |
         Required. The authorization mode.
       valid_values: ['AUTHORIZATION_MODE_UNSPECIFIED', 'AUTHORIZATION_MODE_TRANSITIVE_TO_SERVICE_ATTACHMENT']
+    - name: authorizedClientResources
+      value:
+        - "{{ authorizedClientResources }}"
+      description: |
+        Required. List of authorized consumer resources allowed to connect. Supported values are: 1. Project resource name (e.g., \`projects/{project_id}\`) 2. Wildcard \`"*"\` (grants global ingress authorization to the target).
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A description of this resource.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Output only. The etag of the PscAuthorizationPolicy.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the PscAuthorizationPolicy. Format: projects/{project}/locations/{location}/pscAuthorizationPolicies/{psc_authorization_policy}
+    - name: targetResourceUri
+      value: "{{ targetResourceUri }}"
+      description: |
+        Required. The full absolute URI of the targeted resource governed by this policy. For example, for an AgentRegistry resource, the format is: \`//agentregistry.googleapis.com/projects/{project}/locations/{location}\`
     - name: pscAuthorizationPolicyId
       value: "{{ pscAuthorizationPolicyId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -458,8 +458,8 @@ DELETE FROM google.networkconnectivity.psc_authorization_policies
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND pscAuthorizationPoliciesId = '{{ pscAuthorizationPoliciesId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

@@ -227,18 +227,18 @@ Creates an Entry Link.
 
 ```sql
 INSERT INTO google.dataplex.entry_links (
-data__entryReferences,
 data__aspects,
 data__entryLinkType,
+data__entryReferences,
 projectsId,
 locationsId,
 entryGroupsId,
 entryLinkId
 )
 SELECT 
-'{{ entryReferences }}',
 '{{ aspects }}',
 '{{ entryLinkType }}',
+'{{ entryReferences }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ entryGroupsId }}',
@@ -267,13 +267,6 @@ updateTime
     - name: entryGroupsId
       value: "{{ entryGroupsId }}"
       description: Required parameter for the entry_links resource.
-    - name: entryReferences
-      description: |
-        Required. Immutable. Specifies the Entries referenced in the Entry Link. There should be exactly two entry references.
-      value:
-        - path: "{{ path }}"
-          name: "{{ name }}"
-          type: "{{ type }}"
     - name: aspects
       value: "{{ aspects }}"
       description: |
@@ -282,6 +275,13 @@ updateTime
       value: "{{ entryLinkType }}"
       description: |
         Required. Immutable. Relative resource name of the Entry Link Type used to create this Entry Link. For example: Entry link between synonym terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/synonym Entry link between related terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/related Entry link between glossary terms and data assets: projects/dataplex-types/locations/global/entryLinkTypes/definition
+    - name: entryReferences
+      description: |
+        Required. Immutable. Specifies the Entries referenced in the Entry Link. There should be exactly two entry references.
+      value:
+        - name: "{{ name }}"
+          path: "{{ path }}"
+          type: "{{ type }}"
     - name: entryLinkId
       value: "{{ entryLinkId }}"
 `}</CodeBlock>
@@ -305,9 +305,9 @@ Updates an Entry Link.
 ```sql
 UPDATE google.dataplex.entry_links
 SET 
-data__entryReferences = '{{ entryReferences }}',
 data__aspects = '{{ aspects }}',
-data__entryLinkType = '{{ entryLinkType }}'
+data__entryLinkType = '{{ entryLinkType }}',
+data__entryReferences = '{{ entryReferences }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

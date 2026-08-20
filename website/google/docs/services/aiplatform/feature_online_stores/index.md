@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists FeatureOnlineStores in a given project and location.</td>
 </tr>
 <tr>
@@ -364,9 +364,9 @@ FROM google.aiplatform.feature_online_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -388,25 +388,25 @@ Creates a new FeatureOnlineStore in a given project and location.
 
 ```sql
 INSERT INTO google.aiplatform.feature_online_stores (
+data__bigtable,
+data__dedicatedServingEndpoint,
+data__encryptionSpec,
+data__etag,
+data__labels,
 data__name,
 data__optimized,
-data__encryptionSpec,
-data__dedicatedServingEndpoint,
-data__labels,
-data__bigtable,
-data__etag,
 projectsId,
 locationsId,
 featureOnlineStoreId
 )
 SELECT 
+'{{ bigtable }}',
+'{{ dedicatedServingEndpoint }}',
+'{{ encryptionSpec }}',
+'{{ etag }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ optimized }}',
-'{{ encryptionSpec }}',
-'{{ dedicatedServingEndpoint }}',
-'{{ labels }}',
-'{{ bigtable }}',
-'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ featureOnlineStoreId }}'
@@ -430,19 +430,20 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the feature_online_stores resource.
-    - name: name
-      value: "{{ name }}"
+    - name: bigtable
       description: |
-        Identifier. Name of the FeatureOnlineStore. Format: \`projects/{project}/locations/{location}/featureOnlineStores/{featureOnlineStore}\`
-    - name: optimized
-      value: "{{ optimized }}"
-      description: |
-        Contains settings for the Optimized store that will be created to serve featureValues for all FeatureViews under this FeatureOnlineStore. When choose Optimized storage type, need to set PrivateServiceConnectConfig.enable_private_service_connect to use private endpoint. Otherwise will use public endpoint by default.
-    - name: encryptionSpec
-      description: |
-        Optional. Customer-managed encryption key spec for data storage. If set, online store will be secured by this key.
+        Contains settings for the Cloud Bigtable instance that will be created to serve featureValues for all FeatureViews under this FeatureOnlineStore.
       value:
-        kmsKeyName: "{{ kmsKeyName }}"
+        autoScaling:
+          cpuUtilizationTarget: {{ cpuUtilizationTarget }}
+          maxNodeCount: {{ maxNodeCount }}
+          minNodeCount: {{ minNodeCount }}
+        bigtableMetadata:
+          instanceId: "{{ instanceId }}"
+          tableId: "{{ tableId }}"
+          tenantProjectId: "{{ tenantProjectId }}"
+        enableDirectBigtableAccess: {{ enableDirectBigtableAccess }}
+        zone: "{{ zone }}"
     - name: dedicatedServingEndpoint
       description: |
         Optional. The dedicated serving endpoint for this FeatureOnlineStore, which is different from common Vertex service endpoint.
@@ -451,38 +452,37 @@ response
           enablePrivateServiceConnect: {{ enablePrivateServiceConnect }}
           projectAllowlist:
             - "{{ projectAllowlist }}"
-          serviceAttachment: "{{ serviceAttachment }}"
           pscAutomationConfigs:
-            - network: "{{ network }}"
+            - errorMessage: "{{ errorMessage }}"
               forwardingRule: "{{ forwardingRule }}"
-              state: "{{ state }}"
-              errorMessage: "{{ errorMessage }}"
               ipAddress: "{{ ipAddress }}"
+              network: "{{ network }}"
               projectId: "{{ projectId }}"
+              state: "{{ state }}"
+          serviceAttachment: "{{ serviceAttachment }}"
         publicEndpointDomainName: "{{ publicEndpointDomainName }}"
         serviceAttachment: "{{ serviceAttachment }}"
-    - name: labels
-      value: "{{ labels }}"
+    - name: encryptionSpec
       description: |
-        Optional. The labels with user-defined metadata to organize your FeatureOnlineStore. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureOnlineStore(System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-    - name: bigtable
-      description: |
-        Contains settings for the Cloud Bigtable instance that will be created to serve featureValues for all FeatureViews under this FeatureOnlineStore.
+        Optional. Customer-managed encryption key spec for data storage. If set, online store will be secured by this key.
       value:
-        autoScaling:
-          maxNodeCount: {{ maxNodeCount }}
-          cpuUtilizationTarget: {{ cpuUtilizationTarget }}
-          minNodeCount: {{ minNodeCount }}
-        enableDirectBigtableAccess: {{ enableDirectBigtableAccess }}
-        zone: "{{ zone }}"
-        bigtableMetadata:
-          tenantProjectId: "{{ tenantProjectId }}"
-          tableId: "{{ tableId }}"
-          instanceId: "{{ instanceId }}"
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: etag
       value: "{{ etag }}"
       description: |
         Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels with user-defined metadata to organize your FeatureOnlineStore. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureOnlineStore(System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the FeatureOnlineStore. Format: \`projects/{project}/locations/{location}/featureOnlineStores/{featureOnlineStore}\`
+    - name: optimized
+      value: "{{ optimized }}"
+      description: |
+        Contains settings for the Optimized store that will be created to serve featureValues for all FeatureViews under this FeatureOnlineStore. When choose Optimized storage type, need to set PrivateServiceConnectConfig.enable_private_service_connect to use private endpoint. Otherwise will use public endpoint by default.
     - name: featureOnlineStoreId
       value: "{{ featureOnlineStoreId }}"
 `}</CodeBlock>
@@ -506,13 +506,13 @@ Updates the parameters of a single FeatureOnlineStore.
 ```sql
 UPDATE google.aiplatform.feature_online_stores
 SET 
-data__name = '{{ name }}',
-data__optimized = '{{ optimized }}',
-data__encryptionSpec = '{{ encryptionSpec }}',
-data__dedicatedServingEndpoint = '{{ dedicatedServingEndpoint }}',
-data__labels = '{{ labels }}',
 data__bigtable = '{{ bigtable }}',
-data__etag = '{{ etag }}'
+data__dedicatedServingEndpoint = '{{ dedicatedServingEndpoint }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__optimized = '{{ optimized }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

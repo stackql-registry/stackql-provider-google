@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists TensorboardTimeSeries in a Location.</td>
 </tr>
 <tr>
@@ -220,11 +220,11 @@ The following methods are available for this resource:
     <td>Deletes a TensorboardTimeSeries.</td>
 </tr>
 <tr>
-    <td><a href="#read_blob_data"><CopyableCode code="read_blob_data" /></a></td>
+    <td><a href="#export_tensorboard_time_series"><CopyableCode code="export_tensorboard_time_series" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a>, <a href="#parameter-timeSeriesId"><code>timeSeriesId</code></a></td>
-    <td><a href="#parameter-blobIds"><code>blobIds</code></a></td>
-    <td>Gets bytes of TensorboardBlobs. This is to allow reading blob data stored in consumer project's Cloud Storage bucket without users having to obtain Cloud Storage access permission.</td>
+    <td></td>
+    <td>Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.</td>
 </tr>
 <tr>
     <td><a href="#read"><CopyableCode code="read" /></a></td>
@@ -234,11 +234,11 @@ The following methods are available for this resource:
     <td>Reads a TensorboardTimeSeries' data. By default, if the number of data points stored is less than 1000, all data is returned. Otherwise, 1000 data points is randomly selected from this time series and returned. This value can be changed by changing max_data_points, which can't be greater than 10k.</td>
 </tr>
 <tr>
-    <td><a href="#export_tensorboard_time_series"><CopyableCode code="export_tensorboard_time_series" /></a></td>
+    <td><a href="#read_blob_data"><CopyableCode code="read_blob_data" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a>, <a href="#parameter-timeSeriesId"><code>timeSeriesId</code></a></td>
-    <td></td>
-    <td>Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.</td>
+    <td><a href="#parameter-blobIds"><code>blobIds</code></a></td>
+    <td>Gets bytes of TensorboardBlobs. This is to allow reading blob data stored in consumer project's Cloud Storage bucket without users having to obtain Cloud Storage access permission.</td>
 </tr>
 </tbody>
 </table>
@@ -391,11 +391,11 @@ AND locationsId = '{{ locationsId }}' -- required
 AND tensorboardsId = '{{ tensorboardsId }}' -- required
 AND experimentsId = '{{ experimentsId }}' -- required
 AND runsId = '{{ runsId }}' -- required
-AND readMask = '{{ readMask }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -418,11 +418,11 @@ Creates a TensorboardTimeSeries.
 ```sql
 INSERT INTO google.aiplatform.time_series (
 data__description,
-data__valueType,
-data__pluginName,
-data__pluginData,
 data__displayName,
 data__etag,
+data__pluginData,
+data__pluginName,
+data__valueType,
 projectsId,
 locationsId,
 tensorboardsId,
@@ -432,11 +432,11 @@ tensorboardTimeSeriesId
 )
 SELECT 
 '{{ description }}',
-'{{ valueType }}',
-'{{ pluginName }}',
-'{{ pluginData }}',
 '{{ displayName }}',
 '{{ etag }}',
+'{{ pluginData }}',
+'{{ pluginName }}',
+'{{ valueType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tensorboardsId }}',
@@ -481,19 +481,6 @@ valueType
       value: "{{ description }}"
       description: |
         Description of this TensorboardTimeSeries.
-    - name: valueType
-      value: "{{ valueType }}"
-      description: |
-        Required. Immutable. Type of TensorboardTimeSeries value.
-      valid_values: ['VALUE_TYPE_UNSPECIFIED', 'SCALAR', 'TENSOR', 'BLOB_SEQUENCE']
-    - name: pluginName
-      value: "{{ pluginName }}"
-      description: |
-        Immutable. Name of the plugin this time series pertain to. Such as Scalar, Tensor, Blob
-    - name: pluginData
-      value: "{{ pluginData }}"
-      description: |
-        Data of the current plugin, with the size limited to 65KB.
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -502,6 +489,19 @@ valueType
       value: "{{ etag }}"
       description: |
         Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: pluginData
+      value: "{{ pluginData }}"
+      description: |
+        Data of the current plugin, with the size limited to 65KB.
+    - name: pluginName
+      value: "{{ pluginName }}"
+      description: |
+        Immutable. Name of the plugin this time series pertain to. Such as Scalar, Tensor, Blob
+    - name: valueType
+      value: "{{ valueType }}"
+      description: |
+        Required. Immutable. Type of TensorboardTimeSeries value.
+      valid_values: ['VALUE_TYPE_UNSPECIFIED', 'SCALAR', 'TENSOR', 'BLOB_SEQUENCE']
     - name: tensorboardTimeSeriesId
       value: "{{ tensorboardTimeSeriesId }}"
 `}</CodeBlock>
@@ -526,11 +526,11 @@ Updates a TensorboardTimeSeries.
 UPDATE google.aiplatform.time_series
 SET 
 data__description = '{{ description }}',
-data__valueType = '{{ valueType }}',
-data__pluginName = '{{ pluginName }}',
-data__pluginData = '{{ pluginData }}',
 data__displayName = '{{ displayName }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__pluginData = '{{ pluginData }}',
+data__pluginName = '{{ pluginName }}',
+data__valueType = '{{ valueType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -584,26 +584,32 @@ AND timeSeriesId = '{{ timeSeriesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="read_blob_data"
+    defaultValue="export_tensorboard_time_series"
     values={[
-        { label: 'read_blob_data', value: 'read_blob_data' },
+        { label: 'export_tensorboard_time_series', value: 'export_tensorboard_time_series' },
         { label: 'read', value: 'read' },
-        { label: 'export_tensorboard_time_series', value: 'export_tensorboard_time_series' }
+        { label: 'read_blob_data', value: 'read_blob_data' }
     ]}
 >
-<TabItem value="read_blob_data">
+<TabItem value="export_tensorboard_time_series">
 
-Gets bytes of TensorboardBlobs. This is to allow reading blob data stored in consumer project's Cloud Storage bucket without users having to obtain Cloud Storage access permission.
+Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.
 
 ```sql
-EXEC google.aiplatform.time_series.read_blob_data 
+EXEC google.aiplatform.time_series.export_tensorboard_time_series 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @tensorboardsId='{{ tensorboardsId }}' --required, 
 @experimentsId='{{ experimentsId }}' --required, 
 @runsId='{{ runsId }}' --required, 
-@timeSeriesId='{{ timeSeriesId }}' --required, 
-@blobIds='{{ blobIds }}'
+@timeSeriesId='{{ timeSeriesId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"orderBy": "{{ orderBy }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}"
+}'
 ;
 ```
 </TabItem>
@@ -624,25 +630,19 @@ EXEC google.aiplatform.time_series.read
 ;
 ```
 </TabItem>
-<TabItem value="export_tensorboard_time_series">
+<TabItem value="read_blob_data">
 
-Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.
+Gets bytes of TensorboardBlobs. This is to allow reading blob data stored in consumer project's Cloud Storage bucket without users having to obtain Cloud Storage access permission.
 
 ```sql
-EXEC google.aiplatform.time_series.export_tensorboard_time_series 
+EXEC google.aiplatform.time_series.read_blob_data 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @tensorboardsId='{{ tensorboardsId }}' --required, 
 @experimentsId='{{ experimentsId }}' --required, 
 @runsId='{{ runsId }}' --required, 
-@timeSeriesId='{{ timeSeriesId }}' --required 
-@@json=
-'{
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"orderBy": "{{ orderBy }}", 
-"filter": "{{ filter }}"
-}'
+@timeSeriesId='{{ timeSeriesId }}' --required, 
+@blobIds='{{ blobIds }}'
 ;
 ```
 </TabItem>

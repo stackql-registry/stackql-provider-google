@@ -33,13 +33,13 @@ Creates, updates, deletes, gets or lists a <code>cluster_upgrade_info</code> res
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_zones_clusters_fetch_cluster_upgrade_info"
+    defaultValue="projects_locations_clusters_fetch_cluster_upgrade_info"
     values={[
-        { label: 'projects_zones_clusters_fetch_cluster_upgrade_info', value: 'projects_zones_clusters_fetch_cluster_upgrade_info' },
-        { label: 'projects_locations_clusters_fetch_cluster_upgrade_info', value: 'projects_locations_clusters_fetch_cluster_upgrade_info' }
+        { label: 'projects_locations_clusters_fetch_cluster_upgrade_info', value: 'projects_locations_clusters_fetch_cluster_upgrade_info' },
+        { label: 'projects_zones_clusters_fetch_cluster_upgrade_info', value: 'projects_zones_clusters_fetch_cluster_upgrade_info' }
     ]}
 >
-<TabItem value="projects_zones_clusters_fetch_cluster_upgrade_info">
+<TabItem value="projects_locations_clusters_fetch_cluster_upgrade_info">
 
 <table>
 <thead>
@@ -93,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_clusters_fetch_cluster_upgrade_info">
+<TabItem value="projects_zones_clusters_fetch_cluster_upgrade_info">
 
 <table>
 <thead>
@@ -165,16 +165,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_zones_clusters_fetch_cluster_upgrade_info"><CopyableCode code="projects_zones_clusters_fetch_cluster_upgrade_info" /></a></td>
+    <td><a href="#projects_locations_clusters_fetch_cluster_upgrade_info"><CopyableCode code="projects_locations_clusters_fetch_cluster_upgrade_info" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-zonesId"><code>zonesId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td><a href="#parameter-version"><code>version</code></a></td>
     <td>Fetch upgrade information of a specific cluster.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clusters_fetch_cluster_upgrade_info"><CopyableCode code="projects_locations_clusters_fetch_cluster_upgrade_info" /></a></td>
+    <td><a href="#projects_zones_clusters_fetch_cluster_upgrade_info"><CopyableCode code="projects_zones_clusters_fetch_cluster_upgrade_info" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-zonesId"><code>zonesId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td><a href="#parameter-version"><code>version</code></a></td>
     <td>Fetch upgrade information of a specific cluster.</td>
 </tr>
@@ -225,34 +225,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_zones_clusters_fetch_cluster_upgrade_info"
+    defaultValue="projects_locations_clusters_fetch_cluster_upgrade_info"
     values={[
-        { label: 'projects_zones_clusters_fetch_cluster_upgrade_info', value: 'projects_zones_clusters_fetch_cluster_upgrade_info' },
-        { label: 'projects_locations_clusters_fetch_cluster_upgrade_info', value: 'projects_locations_clusters_fetch_cluster_upgrade_info' }
+        { label: 'projects_locations_clusters_fetch_cluster_upgrade_info', value: 'projects_locations_clusters_fetch_cluster_upgrade_info' },
+        { label: 'projects_zones_clusters_fetch_cluster_upgrade_info', value: 'projects_zones_clusters_fetch_cluster_upgrade_info' }
     ]}
 >
-<TabItem value="projects_zones_clusters_fetch_cluster_upgrade_info">
-
-Fetch upgrade information of a specific cluster.
-
-```sql
-SELECT
-autoUpgradeStatus,
-endOfExtendedSupportTimestamp,
-endOfStandardSupportTimestamp,
-minorTargetVersion,
-patchTargetVersion,
-pausedReason,
-rollbackSafeUpgradeStatus,
-upgradeDetails
-FROM google.container.cluster_upgrade_info
-WHERE projectsId = '{{ projectsId }}' -- required
-AND zonesId = '{{ zonesId }}' -- required
-AND clustersId = '{{ clustersId }}' -- required
-AND version = '{{ version }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_clusters_fetch_cluster_upgrade_info">
 
 Fetch upgrade information of a specific cluster.
@@ -270,6 +248,28 @@ upgradeDetails
 FROM google.container.cluster_upgrade_info
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND clustersId = '{{ clustersId }}' -- required
+AND version = '{{ version }}'
+;
+```
+</TabItem>
+<TabItem value="projects_zones_clusters_fetch_cluster_upgrade_info">
+
+Fetch upgrade information of a specific cluster.
+
+```sql
+SELECT
+autoUpgradeStatus,
+endOfExtendedSupportTimestamp,
+endOfStandardSupportTimestamp,
+minorTargetVersion,
+patchTargetVersion,
+pausedReason,
+rollbackSafeUpgradeStatus,
+upgradeDetails
+FROM google.container.cluster_upgrade_info
+WHERE projectsId = '{{ projectsId }}' -- required
+AND zonesId = '{{ zonesId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
 AND version = '{{ version }}'
 ;

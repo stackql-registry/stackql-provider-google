@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_linkable_git_repositories"><CopyableCode code="fetch_linkable_git_repositories" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>FetchLinkableGitRepositories returns a list of git repositories from an SCM that are available to be added to a Connection.</td>
 </tr>
 </tbody>
@@ -150,8 +150,8 @@ FROM google.developerconnect.linkable_git_repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

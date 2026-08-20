@@ -109,6 +109,51 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Identifier. The resource name of this deployment, for example: `projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep`. See https://google.aip.dev/122 for more details.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was created. See https://google.aip.dev/148#timestamps.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. User-provided description of the deployment. Used as additional context for the deployment.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="forwardingRule" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. The regional forwarding rule that fronts the mirroring collectors, for example: `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See https://google.aip.dev/124.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels are key/value pairs that help to organize and filter resources.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mirroringDeploymentGroup" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. The deployment group that this deployment is a part of, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/124.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="reconciling" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. The current state of the resource does not match the user's intended state, and the system is working to reconcile them. This part of the normal operation (e.g. linking a new association to the parent group). See https://google.aip.dev/128.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The current state of the deployment. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, OUT_OF_SYNC, DELETE_FAILED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was most recently updated. See https://google.aip.dev/148#timestamps.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -140,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_deployments_list"><CopyableCode code="projects_locations_mirroring_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployments in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_mirroring_deployments_create"><CopyableCode code="projects_locations_mirroring_deployments_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-mirroringDeploymentId"><code>mirroringDeploymentId</code></a></td>
+    <td><a href="#parameter-mirroringDeploymentId"><code>mirroringDeploymentId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a deployment in a given project and location. See https://google.aip.dev/133.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_mirroring_deployments_patch"><CopyableCode code="projects_locations_mirroring_deployments_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-mirroringDeploymentsId"><code>mirroringDeploymentsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a deployment. See https://google.aip.dev/134.</td>
 </tr>
 <tr>
@@ -270,14 +315,22 @@ Lists deployments in a given project and location. See https://google.aip.dev/13
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+forwardingRule,
+labels,
+mirroringDeploymentGroup,
+reconciling,
+state,
+updateTime
 FROM google.networksecurity.mirroring_deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -299,26 +352,26 @@ Creates a deployment in a given project and location. See https://google.aip.dev
 
 ```sql
 INSERT INTO google.networksecurity.mirroring_deployments (
+data__description,
 data__forwardingRule,
 data__labels,
-data__description,
-data__name,
 data__mirroringDeploymentGroup,
+data__name,
 projectsId,
 locationsId,
-requestId,
-mirroringDeploymentId
+mirroringDeploymentId,
+requestId
 )
 SELECT 
+'{{ description }}',
 '{{ forwardingRule }}',
 '{{ labels }}',
-'{{ description }}',
-'{{ name }}',
 '{{ mirroringDeploymentGroup }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ mirroringDeploymentId }}'
+'{{ mirroringDeploymentId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -339,6 +392,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the mirroring_deployments resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User-provided description of the deployment. Used as additional context for the deployment.
     - name: forwardingRule
       value: "{{ forwardingRule }}"
       description: |
@@ -347,22 +404,18 @@ response
       value: "{{ labels }}"
       description: |
         Optional. Labels are key/value pairs that help to organize and filter resources.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. User-provided description of the deployment. Used as additional context for the deployment.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Identifier. The resource name of this deployment, for example: \`projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep\`. See https://google.aip.dev/122 for more details.
     - name: mirroringDeploymentGroup
       value: "{{ mirroringDeploymentGroup }}"
       description: |
         Required. Immutable. The deployment group that this deployment is a part of, for example: \`projects/123456789/locations/global/mirroringDeploymentGroups/my-dg\`. See https://google.aip.dev/124.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of this deployment, for example: \`projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep\`. See https://google.aip.dev/122 for more details.
     - name: mirroringDeploymentId
       value: "{{ mirroringDeploymentId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -384,17 +437,17 @@ Updates a deployment. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.mirroring_deployments
 SET 
+data__description = '{{ description }}',
 data__forwardingRule = '{{ forwardingRule }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__mirroringDeploymentGroup = '{{ mirroringDeploymentGroup }}'
+data__mirroringDeploymentGroup = '{{ mirroringDeploymentGroup }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND mirroringDeploymentsId = '{{ mirroringDeploymentsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

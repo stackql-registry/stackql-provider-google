@@ -468,14 +468,14 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-object"><code>object</code></a></td>
-    <td><a href="#parameter-generation"><code>generation</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-restoreToken"><code>restoreToken</code></a></td>
+    <td><a href="#parameter-generation"><code>generation</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-restoreToken"><code>restoreToken</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Retrieves an object or its metadata.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a></td>
-    <td><a href="#parameter-delimiter"><code>delimiter</code></a>, <a href="#parameter-endOffset"><code>endOffset</code></a>, <a href="#parameter-includeTrailingDelimiter"><code>includeTrailingDelimiter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-prefix"><code>prefix</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-startOffset"><code>startOffset</code></a>, <a href="#parameter-userProject"><code>userProject</code></a>, <a href="#parameter-versions"><code>versions</code></a>, <a href="#parameter-matchGlob"><code>matchGlob</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-includeFoldersAsPrefixes"><code>includeFoldersAsPrefixes</code></a></td>
+    <td><a href="#parameter-delimiter"><code>delimiter</code></a>, <a href="#parameter-endOffset"><code>endOffset</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeFoldersAsPrefixes"><code>includeFoldersAsPrefixes</code></a>, <a href="#parameter-includeTrailingDelimiter"><code>includeTrailingDelimiter</code></a>, <a href="#parameter-matchGlob"><code>matchGlob</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-prefix"><code>prefix</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-startOffset"><code>startOffset</code></a>, <a href="#parameter-userProject"><code>userProject</code></a>, <a href="#parameter-versions"><code>versions</code></a></td>
     <td>Retrieves a list of objects matching the criteria.</td>
 </tr>
 <tr>
@@ -507,6 +507,13 @@ The following methods are available for this resource:
     <td>Deletes an object and its metadata. Deletions are permanent if versioning is not enabled for the bucket, or if the generation parameter is used.</td>
 </tr>
 <tr>
+    <td><a href="#bulk_restore"><CopyableCode code="bulk_restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-bucket"><code>bucket</code></a></td>
+    <td></td>
+    <td>Initiates a long-running bulk restore operation on the specified bucket.</td>
+</tr>
+<tr>
     <td><a href="#compose"><CopyableCode code="compose" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-destinationBucket"><code>destinationBucket</code></a>, <a href="#parameter-destinationObject"><code>destinationObject</code></a></td>
@@ -521,32 +528,25 @@ The following methods are available for this resource:
     <td>Copies a source object to a destination object. Optionally overrides metadata.</td>
 </tr>
 <tr>
-    <td><a href="#rewrite"><CopyableCode code="rewrite" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-sourceBucket"><code>sourceBucket</code></a>, <a href="#parameter-sourceObject"><code>sourceObject</code></a>, <a href="#parameter-destinationBucket"><code>destinationBucket</code></a>, <a href="#parameter-destinationObject"><code>destinationObject</code></a></td>
-    <td><a href="#parameter-destinationKmsKeyName"><code>destinationKmsKeyName</code></a>, <a href="#parameter-destinationPredefinedAcl"><code>destinationPredefinedAcl</code></a>, <a href="#parameter-dropContextGroups"><code>dropContextGroups</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-ifSourceGenerationMatch"><code>ifSourceGenerationMatch</code></a>, <a href="#parameter-ifSourceGenerationNotMatch"><code>ifSourceGenerationNotMatch</code></a>, <a href="#parameter-ifSourceMetagenerationMatch"><code>ifSourceMetagenerationMatch</code></a>, <a href="#parameter-ifSourceMetagenerationNotMatch"><code>ifSourceMetagenerationNotMatch</code></a>, <a href="#parameter-maxBytesRewrittenPerCall"><code>maxBytesRewrittenPerCall</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-rewriteToken"><code>rewriteToken</code></a>, <a href="#parameter-sourceGeneration"><code>sourceGeneration</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
-    <td>Rewrites a source object to a destination object. Optionally overrides metadata.</td>
-</tr>
-<tr>
     <td><a href="#move"><CopyableCode code="move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-sourceObject"><code>sourceObject</code></a>, <a href="#parameter-destinationObject"><code>destinationObject</code></a></td>
-    <td><a href="#parameter-ifSourceGenerationMatch"><code>ifSourceGenerationMatch</code></a>, <a href="#parameter-ifSourceGenerationNotMatch"><code>ifSourceGenerationNotMatch</code></a>, <a href="#parameter-ifSourceMetagenerationMatch"><code>ifSourceMetagenerationMatch</code></a>, <a href="#parameter-ifSourceMetagenerationNotMatch"><code>ifSourceMetagenerationNotMatch</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
+    <td><a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-ifSourceGenerationMatch"><code>ifSourceGenerationMatch</code></a>, <a href="#parameter-ifSourceGenerationNotMatch"><code>ifSourceGenerationNotMatch</code></a>, <a href="#parameter-ifSourceMetagenerationMatch"><code>ifSourceMetagenerationMatch</code></a>, <a href="#parameter-ifSourceMetagenerationNotMatch"><code>ifSourceMetagenerationNotMatch</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Moves the source object to the destination object in the same bucket.</td>
 </tr>
 <tr>
     <td><a href="#restore"><CopyableCode code="restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-object"><code>object</code></a>, <a href="#parameter-generation"><code>generation</code></a></td>
-    <td><a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-copySourceAcl"><code>copySourceAcl</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a>, <a href="#parameter-restoreToken"><code>restoreToken</code></a></td>
+    <td><a href="#parameter-copySourceAcl"><code>copySourceAcl</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-restoreToken"><code>restoreToken</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Restores a soft-deleted object.</td>
 </tr>
 <tr>
-    <td><a href="#bulk_restore"><CopyableCode code="bulk_restore" /></a></td>
+    <td><a href="#rewrite"><CopyableCode code="rewrite" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-bucket"><code>bucket</code></a></td>
-    <td></td>
-    <td>Initiates a long-running bulk restore operation on the specified bucket.</td>
+    <td><a href="#parameter-sourceBucket"><code>sourceBucket</code></a>, <a href="#parameter-sourceObject"><code>sourceObject</code></a>, <a href="#parameter-destinationBucket"><code>destinationBucket</code></a>, <a href="#parameter-destinationObject"><code>destinationObject</code></a></td>
+    <td><a href="#parameter-destinationKmsKeyName"><code>destinationKmsKeyName</code></a>, <a href="#parameter-destinationPredefinedAcl"><code>destinationPredefinedAcl</code></a>, <a href="#parameter-dropContextGroups"><code>dropContextGroups</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-ifSourceGenerationMatch"><code>ifSourceGenerationMatch</code></a>, <a href="#parameter-ifSourceGenerationNotMatch"><code>ifSourceGenerationNotMatch</code></a>, <a href="#parameter-ifSourceMetagenerationMatch"><code>ifSourceMetagenerationMatch</code></a>, <a href="#parameter-ifSourceMetagenerationNotMatch"><code>ifSourceMetagenerationNotMatch</code></a>, <a href="#parameter-maxBytesRewrittenPerCall"><code>maxBytesRewrittenPerCall</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-rewriteToken"><code>rewriteToken</code></a>, <a href="#parameter-sourceGeneration"><code>sourceGeneration</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
+    <td>Rewrites a source object to a destination object. Optionally overrides metadata.</td>
 </tr>
 </tbody>
 </table>
@@ -844,9 +844,9 @@ AND ifGenerationNotMatch = '{{ ifGenerationNotMatch }}'
 AND ifMetagenerationMatch = '{{ ifMetagenerationMatch }}'
 AND ifMetagenerationNotMatch = '{{ ifMetagenerationNotMatch }}'
 AND projection = '{{ projection }}'
-AND userProject = '{{ userProject }}'
-AND softDeleted = '{{ softDeleted }}'
 AND restoreToken = '{{ restoreToken }}'
+AND softDeleted = '{{ softDeleted }}'
+AND userProject = '{{ userProject }}'
 ;
 ```
 </TabItem>
@@ -898,18 +898,18 @@ FROM google.storage.objects
 WHERE bucket = '{{ bucket }}' -- required
 AND delimiter = '{{ delimiter }}'
 AND endOffset = '{{ endOffset }}'
+AND filter = '{{ filter }}'
+AND includeFoldersAsPrefixes = '{{ includeFoldersAsPrefixes }}'
 AND includeTrailingDelimiter = '{{ includeTrailingDelimiter }}'
+AND matchGlob = '{{ matchGlob }}'
 AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND prefix = '{{ prefix }}'
 AND projection = '{{ projection }}'
+AND softDeleted = '{{ softDeleted }}'
 AND startOffset = '{{ startOffset }}'
 AND userProject = '{{ userProject }}'
 AND versions = '{{ versions }}'
-AND matchGlob = '{{ matchGlob }}'
-AND filter = '{{ filter }}'
-AND softDeleted = '{{ softDeleted }}'
-AND includeFoldersAsPrefixes = '{{ includeFoldersAsPrefixes }}'
 ;
 ```
 </TabItem>
@@ -939,34 +939,34 @@ data__contentDisposition,
 data__contentEncoding,
 data__contentLanguage,
 data__contentType,
+data__contexts,
 data__crc32c,
 data__customTime,
 data__customerEncryption,
 data__etag,
 data__eventBasedHold,
 data__generation,
+data__hardDeleteTime,
 data__id,
 data__kind,
 data__kmsKeyName,
 data__md5Hash,
 data__mediaLink,
 data__metadata,
-data__contexts,
-data__restoreToken,
 data__metageneration,
 data__name,
 data__owner,
-data__retentionExpirationTime,
+data__restoreToken,
 data__retention,
+data__retentionExpirationTime,
 data__selfLink,
 data__size,
+data__softDeleteTime,
 data__storageClass,
 data__temporaryHold,
 data__timeCreated,
 data__timeDeleted,
 data__timeFinalized,
-data__softDeleteTime,
-data__hardDeleteTime,
 data__timeStorageClassUpdated,
 data__updated,
 bucket,
@@ -990,34 +990,34 @@ SELECT
 '{{ contentEncoding }}',
 '{{ contentLanguage }}',
 '{{ contentType }}',
+'{{ contexts }}',
 '{{ crc32c }}',
 '{{ customTime }}',
 '{{ customerEncryption }}',
 '{{ etag }}',
 {{ eventBasedHold }},
 '{{ generation }}',
+'{{ hardDeleteTime }}',
 '{{ id }}',
 '{{ kind }}',
 '{{ kmsKeyName }}',
 '{{ md5Hash }}',
 '{{ mediaLink }}',
 '{{ metadata }}',
-'{{ contexts }}',
-'{{ restoreToken }}',
 '{{ metageneration }}',
 '{{ name }}',
 '{{ owner }}',
-'{{ retentionExpirationTime }}',
+'{{ restoreToken }}',
 '{{ retention }}',
+'{{ retentionExpirationTime }}',
 '{{ selfLink }}',
 '{{ size }}',
+'{{ softDeleteTime }}',
 '{{ storageClass }}',
 {{ temporaryHold }},
 '{{ timeCreated }}',
 '{{ timeDeleted }}',
 '{{ timeFinalized }}',
-'{{ softDeleteTime }}',
-'{{ hardDeleteTime }}',
 '{{ timeStorageClassUpdated }}',
 '{{ updated }}',
 '{{ bucket }}',
@@ -1128,6 +1128,11 @@ updated
       value: "{{ contentType }}"
       description: |
         Content-Type of the object data. If an object is stored without a Content-Type, it is served as application/octet-stream.
+    - name: contexts
+      description: |
+        User-defined or system-defined object contexts. Each object context is a key-payload pair, where the key provides the identification and the payload holds the associated value and additional metadata.
+      value:
+        custom: "{{ custom }}"
     - name: crc32c
       value: "{{ crc32c }}"
       description: |
@@ -1154,6 +1159,10 @@ updated
       value: "{{ generation }}"
       description: |
         The content generation of this object. Used for object versioning.
+    - name: hardDeleteTime
+      value: "{{ hardDeleteTime }}"
+      description: |
+        This is the time (in the future) when the soft-deleted object will no longer be restorable. It is equal to the soft delete time plus the current soft delete retention duration of the bucket.
     - name: id
       value: "{{ id }}"
       description: |
@@ -1179,15 +1188,6 @@ updated
       value: "{{ metadata }}"
       description: |
         User-provided metadata, in key/value pairs.
-    - name: contexts
-      description: |
-        User-defined or system-defined object contexts. Each object context is a key-payload pair, where the key provides the identification and the payload holds the associated value and additional metadata.
-      value:
-        custom: "{{ custom }}"
-    - name: restoreToken
-      value: "{{ restoreToken }}"
-      description: |
-        Restore token used to differentiate deleted objects with the same name and generation. This field is only returned for deleted objects in hierarchical namespace buckets.
     - name: metageneration
       value: "{{ metageneration }}"
       description: |
@@ -1202,16 +1202,20 @@ updated
       value:
         entity: "{{ entity }}"
         entityId: "{{ entityId }}"
-    - name: retentionExpirationTime
-      value: "{{ retentionExpirationTime }}"
+    - name: restoreToken
+      value: "{{ restoreToken }}"
       description: |
-        A server-determined value that specifies the earliest time that the object's retention period expires. This value is in RFC 3339 format. Note 1: This field is not provided for objects with an active event-based hold, since retention expiration is unknown until the hold is removed. Note 2: This value can be provided even when temporary hold is set (so that the user can reason about policy without having to first unset the temporary hold).
+        Restore token used to differentiate deleted objects with the same name and generation. This field is only returned for deleted objects in hierarchical namespace buckets.
     - name: retention
       description: |
         A collection of object level retention parameters.
       value:
-        retainUntilTime: "{{ retainUntilTime }}"
         mode: "{{ mode }}"
+        retainUntilTime: "{{ retainUntilTime }}"
+    - name: retentionExpirationTime
+      value: "{{ retentionExpirationTime }}"
+      description: |
+        A server-determined value that specifies the earliest time that the object's retention period expires. This value is in RFC 3339 format. Note 1: This field is not provided for objects with an active event-based hold, since retention expiration is unknown until the hold is removed. Note 2: This value can be provided even when temporary hold is set (so that the user can reason about policy without having to first unset the temporary hold).
     - name: selfLink
       value: "{{ selfLink }}"
       description: |
@@ -1220,6 +1224,10 @@ updated
       value: "{{ size }}"
       description: |
         Content-Length of the data in bytes.
+    - name: softDeleteTime
+      value: "{{ softDeleteTime }}"
+      description: |
+        The time at which the object became soft-deleted in RFC 3339 format.
     - name: storageClass
       value: "{{ storageClass }}"
       description: |
@@ -1240,14 +1248,6 @@ updated
       value: "{{ timeFinalized }}"
       description: |
         The time when the object was finalized.
-    - name: softDeleteTime
-      value: "{{ softDeleteTime }}"
-      description: |
-        The time at which the object became soft-deleted in RFC 3339 format.
-    - name: hardDeleteTime
-      value: "{{ hardDeleteTime }}"
-      description: |
-        This is the time (in the future) when the soft-deleted object will no longer be restorable. It is equal to the soft delete time plus the current soft delete retention duration of the bucket.
     - name: timeStorageClassUpdated
       value: "{{ timeStorageClassUpdated }}"
       description: |
@@ -1305,34 +1305,34 @@ data__contentDisposition = '{{ contentDisposition }}',
 data__contentEncoding = '{{ contentEncoding }}',
 data__contentLanguage = '{{ contentLanguage }}',
 data__contentType = '{{ contentType }}',
+data__contexts = '{{ contexts }}',
 data__crc32c = '{{ crc32c }}',
 data__customTime = '{{ customTime }}',
 data__customerEncryption = '{{ customerEncryption }}',
 data__etag = '{{ etag }}',
 data__eventBasedHold = {{ eventBasedHold }},
 data__generation = '{{ generation }}',
+data__hardDeleteTime = '{{ hardDeleteTime }}',
 data__id = '{{ id }}',
 data__kind = '{{ kind }}',
 data__kmsKeyName = '{{ kmsKeyName }}',
 data__md5Hash = '{{ md5Hash }}',
 data__mediaLink = '{{ mediaLink }}',
 data__metadata = '{{ metadata }}',
-data__contexts = '{{ contexts }}',
-data__restoreToken = '{{ restoreToken }}',
 data__metageneration = '{{ metageneration }}',
 data__name = '{{ name }}',
 data__owner = '{{ owner }}',
-data__retentionExpirationTime = '{{ retentionExpirationTime }}',
+data__restoreToken = '{{ restoreToken }}',
 data__retention = '{{ retention }}',
+data__retentionExpirationTime = '{{ retentionExpirationTime }}',
 data__selfLink = '{{ selfLink }}',
 data__size = '{{ size }}',
+data__softDeleteTime = '{{ softDeleteTime }}',
 data__storageClass = '{{ storageClass }}',
 data__temporaryHold = {{ temporaryHold }},
 data__timeCreated = '{{ timeCreated }}',
 data__timeDeleted = '{{ timeDeleted }}',
 data__timeFinalized = '{{ timeFinalized }}',
-data__softDeleteTime = '{{ softDeleteTime }}',
-data__hardDeleteTime = '{{ hardDeleteTime }}',
 data__timeStorageClassUpdated = '{{ timeStorageClassUpdated }}',
 data__updated = '{{ updated }}'
 WHERE 
@@ -1414,34 +1414,34 @@ data__contentDisposition = '{{ contentDisposition }}',
 data__contentEncoding = '{{ contentEncoding }}',
 data__contentLanguage = '{{ contentLanguage }}',
 data__contentType = '{{ contentType }}',
+data__contexts = '{{ contexts }}',
 data__crc32c = '{{ crc32c }}',
 data__customTime = '{{ customTime }}',
 data__customerEncryption = '{{ customerEncryption }}',
 data__etag = '{{ etag }}',
 data__eventBasedHold = {{ eventBasedHold }},
 data__generation = '{{ generation }}',
+data__hardDeleteTime = '{{ hardDeleteTime }}',
 data__id = '{{ id }}',
 data__kind = '{{ kind }}',
 data__kmsKeyName = '{{ kmsKeyName }}',
 data__md5Hash = '{{ md5Hash }}',
 data__mediaLink = '{{ mediaLink }}',
 data__metadata = '{{ metadata }}',
-data__contexts = '{{ contexts }}',
-data__restoreToken = '{{ restoreToken }}',
 data__metageneration = '{{ metageneration }}',
 data__name = '{{ name }}',
 data__owner = '{{ owner }}',
-data__retentionExpirationTime = '{{ retentionExpirationTime }}',
+data__restoreToken = '{{ restoreToken }}',
 data__retention = '{{ retention }}',
+data__retentionExpirationTime = '{{ retentionExpirationTime }}',
 data__selfLink = '{{ selfLink }}',
 data__size = '{{ size }}',
+data__softDeleteTime = '{{ softDeleteTime }}',
 data__storageClass = '{{ storageClass }}',
 data__temporaryHold = {{ temporaryHold }},
 data__timeCreated = '{{ timeCreated }}',
 data__timeDeleted = '{{ timeDeleted }}',
 data__timeFinalized = '{{ timeFinalized }}',
-data__softDeleteTime = '{{ softDeleteTime }}',
-data__hardDeleteTime = '{{ hardDeleteTime }}',
 data__timeStorageClassUpdated = '{{ timeStorageClassUpdated }}',
 data__updated = '{{ updated }}'
 WHERE 
@@ -1531,16 +1531,36 @@ AND userProject = '{{ userProject }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="compose"
+    defaultValue="bulk_restore"
     values={[
+        { label: 'bulk_restore', value: 'bulk_restore' },
         { label: 'compose', value: 'compose' },
         { label: 'copy', value: 'copy' },
-        { label: 'rewrite', value: 'rewrite' },
         { label: 'move', value: 'move' },
         { label: 'restore', value: 'restore' },
-        { label: 'bulk_restore', value: 'bulk_restore' }
+        { label: 'rewrite', value: 'rewrite' }
     ]}
 >
+<TabItem value="bulk_restore">
+
+Initiates a long-running bulk restore operation on the specified bucket.
+
+```sql
+EXEC google.storage.objects.bulk_restore 
+@bucket='{{ bucket }}' --required 
+@@json=
+'{
+"allowOverwrite": {{ allowOverwrite }}, 
+"copySourceAcl": {{ copySourceAcl }}, 
+"createdAfterTime": "{{ createdAfterTime }}", 
+"createdBeforeTime": "{{ createdBeforeTime }}", 
+"matchGlobs": "{{ matchGlobs }}", 
+"softDeletedAfterTime": "{{ softDeletedAfterTime }}", 
+"softDeletedBeforeTime": "{{ softDeletedBeforeTime }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="compose">
 
 Concatenates a list of existing objects into a new object in the same bucket.
@@ -1557,10 +1577,10 @@ EXEC google.storage.objects.compose
 @userProject='{{ userProject }}' 
 @@json=
 '{
+"deleteSourceObjects": {{ deleteSourceObjects }}, 
 "destination": "{{ destination }}", 
 "kind": "{{ kind }}", 
-"sourceObjects": "{{ sourceObjects }}", 
-"deleteSourceObjects": {{ deleteSourceObjects }}
+"sourceObjects": "{{ sourceObjects }}"
 }'
 ;
 ```
@@ -1598,37 +1618,79 @@ EXEC google.storage.objects.copy
 "contentEncoding": "{{ contentEncoding }}", 
 "contentLanguage": "{{ contentLanguage }}", 
 "contentType": "{{ contentType }}", 
+"contexts": "{{ contexts }}", 
 "crc32c": "{{ crc32c }}", 
 "customTime": "{{ customTime }}", 
 "customerEncryption": "{{ customerEncryption }}", 
 "etag": "{{ etag }}", 
 "eventBasedHold": {{ eventBasedHold }}, 
 "generation": "{{ generation }}", 
+"hardDeleteTime": "{{ hardDeleteTime }}", 
 "id": "{{ id }}", 
 "kind": "{{ kind }}", 
 "kmsKeyName": "{{ kmsKeyName }}", 
 "md5Hash": "{{ md5Hash }}", 
 "mediaLink": "{{ mediaLink }}", 
 "metadata": "{{ metadata }}", 
-"contexts": "{{ contexts }}", 
-"restoreToken": "{{ restoreToken }}", 
 "metageneration": "{{ metageneration }}", 
 "name": "{{ name }}", 
 "owner": "{{ owner }}", 
-"retentionExpirationTime": "{{ retentionExpirationTime }}", 
+"restoreToken": "{{ restoreToken }}", 
 "retention": "{{ retention }}", 
+"retentionExpirationTime": "{{ retentionExpirationTime }}", 
 "selfLink": "{{ selfLink }}", 
 "size": "{{ size }}", 
+"softDeleteTime": "{{ softDeleteTime }}", 
 "storageClass": "{{ storageClass }}", 
 "temporaryHold": {{ temporaryHold }}, 
 "timeCreated": "{{ timeCreated }}", 
 "timeDeleted": "{{ timeDeleted }}", 
 "timeFinalized": "{{ timeFinalized }}", 
-"softDeleteTime": "{{ softDeleteTime }}", 
-"hardDeleteTime": "{{ hardDeleteTime }}", 
 "timeStorageClassUpdated": "{{ timeStorageClassUpdated }}", 
 "updated": "{{ updated }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="move">
+
+Moves the source object to the destination object in the same bucket.
+
+```sql
+EXEC google.storage.objects.move 
+@bucket='{{ bucket }}' --required, 
+@sourceObject='{{ sourceObject }}' --required, 
+@destinationObject='{{ destinationObject }}' --required, 
+@ifGenerationMatch='{{ ifGenerationMatch }}', 
+@ifGenerationNotMatch='{{ ifGenerationNotMatch }}', 
+@ifMetagenerationMatch='{{ ifMetagenerationMatch }}', 
+@ifMetagenerationNotMatch='{{ ifMetagenerationNotMatch }}', 
+@ifSourceGenerationMatch='{{ ifSourceGenerationMatch }}', 
+@ifSourceGenerationNotMatch='{{ ifSourceGenerationNotMatch }}', 
+@ifSourceMetagenerationMatch='{{ ifSourceMetagenerationMatch }}', 
+@ifSourceMetagenerationNotMatch='{{ ifSourceMetagenerationNotMatch }}', 
+@projection='{{ projection }}', 
+@userProject='{{ userProject }}'
+;
+```
+</TabItem>
+<TabItem value="restore">
+
+Restores a soft-deleted object.
+
+```sql
+EXEC google.storage.objects.restore 
+@bucket='{{ bucket }}' --required, 
+@object='{{ object }}' --required, 
+@generation='{{ generation }}' --required, 
+@copySourceAcl={{ copySourceAcl }}, 
+@ifGenerationMatch='{{ ifGenerationMatch }}', 
+@ifGenerationNotMatch='{{ ifGenerationNotMatch }}', 
+@ifMetagenerationMatch='{{ ifMetagenerationMatch }}', 
+@ifMetagenerationNotMatch='{{ ifMetagenerationNotMatch }}', 
+@projection='{{ projection }}', 
+@restoreToken='{{ restoreToken }}', 
+@userProject='{{ userProject }}'
 ;
 ```
 </TabItem>
@@ -1668,98 +1730,36 @@ EXEC google.storage.objects.rewrite
 "contentEncoding": "{{ contentEncoding }}", 
 "contentLanguage": "{{ contentLanguage }}", 
 "contentType": "{{ contentType }}", 
+"contexts": "{{ contexts }}", 
 "crc32c": "{{ crc32c }}", 
 "customTime": "{{ customTime }}", 
 "customerEncryption": "{{ customerEncryption }}", 
 "etag": "{{ etag }}", 
 "eventBasedHold": {{ eventBasedHold }}, 
 "generation": "{{ generation }}", 
+"hardDeleteTime": "{{ hardDeleteTime }}", 
 "id": "{{ id }}", 
 "kind": "{{ kind }}", 
 "kmsKeyName": "{{ kmsKeyName }}", 
 "md5Hash": "{{ md5Hash }}", 
 "mediaLink": "{{ mediaLink }}", 
 "metadata": "{{ metadata }}", 
-"contexts": "{{ contexts }}", 
-"restoreToken": "{{ restoreToken }}", 
 "metageneration": "{{ metageneration }}", 
 "name": "{{ name }}", 
 "owner": "{{ owner }}", 
-"retentionExpirationTime": "{{ retentionExpirationTime }}", 
+"restoreToken": "{{ restoreToken }}", 
 "retention": "{{ retention }}", 
+"retentionExpirationTime": "{{ retentionExpirationTime }}", 
 "selfLink": "{{ selfLink }}", 
 "size": "{{ size }}", 
+"softDeleteTime": "{{ softDeleteTime }}", 
 "storageClass": "{{ storageClass }}", 
 "temporaryHold": {{ temporaryHold }}, 
 "timeCreated": "{{ timeCreated }}", 
 "timeDeleted": "{{ timeDeleted }}", 
 "timeFinalized": "{{ timeFinalized }}", 
-"softDeleteTime": "{{ softDeleteTime }}", 
-"hardDeleteTime": "{{ hardDeleteTime }}", 
 "timeStorageClassUpdated": "{{ timeStorageClassUpdated }}", 
 "updated": "{{ updated }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="move">
-
-Moves the source object to the destination object in the same bucket.
-
-```sql
-EXEC google.storage.objects.move 
-@bucket='{{ bucket }}' --required, 
-@sourceObject='{{ sourceObject }}' --required, 
-@destinationObject='{{ destinationObject }}' --required, 
-@ifSourceGenerationMatch='{{ ifSourceGenerationMatch }}', 
-@ifSourceGenerationNotMatch='{{ ifSourceGenerationNotMatch }}', 
-@ifSourceMetagenerationMatch='{{ ifSourceMetagenerationMatch }}', 
-@ifSourceMetagenerationNotMatch='{{ ifSourceMetagenerationNotMatch }}', 
-@ifGenerationMatch='{{ ifGenerationMatch }}', 
-@ifGenerationNotMatch='{{ ifGenerationNotMatch }}', 
-@ifMetagenerationMatch='{{ ifMetagenerationMatch }}', 
-@ifMetagenerationNotMatch='{{ ifMetagenerationNotMatch }}', 
-@projection='{{ projection }}', 
-@userProject='{{ userProject }}'
-;
-```
-</TabItem>
-<TabItem value="restore">
-
-Restores a soft-deleted object.
-
-```sql
-EXEC google.storage.objects.restore 
-@bucket='{{ bucket }}' --required, 
-@object='{{ object }}' --required, 
-@generation='{{ generation }}' --required, 
-@ifGenerationMatch='{{ ifGenerationMatch }}', 
-@ifGenerationNotMatch='{{ ifGenerationNotMatch }}', 
-@ifMetagenerationMatch='{{ ifMetagenerationMatch }}', 
-@ifMetagenerationNotMatch='{{ ifMetagenerationNotMatch }}', 
-@copySourceAcl={{ copySourceAcl }}, 
-@projection='{{ projection }}', 
-@userProject='{{ userProject }}', 
-@restoreToken='{{ restoreToken }}'
-;
-```
-</TabItem>
-<TabItem value="bulk_restore">
-
-Initiates a long-running bulk restore operation on the specified bucket.
-
-```sql
-EXEC google.storage.objects.bulk_restore 
-@bucket='{{ bucket }}' --required 
-@@json=
-'{
-"allowOverwrite": {{ allowOverwrite }}, 
-"softDeletedAfterTime": "{{ softDeletedAfterTime }}", 
-"softDeletedBeforeTime": "{{ softDeletedBeforeTime }}", 
-"matchGlobs": "{{ matchGlobs }}", 
-"copySourceAcl": {{ copySourceAcl }}, 
-"createdAfterTime": "{{ createdAfterTime }}", 
-"createdBeforeTime": "{{ createdBeforeTime }}"
 }'
 ;
 ```

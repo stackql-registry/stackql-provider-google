@@ -97,8 +97,8 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list_wait"><CopyableCode code="list_wait" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 </tbody>
@@ -117,8 +117,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-featureOnlineStoresId">
-    <td><CopyableCode code="featureOnlineStoresId" /></td>
+<tr id="parameter-featureGroupsId">
+    <td><CopyableCode code="featureGroupsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-featuresId">
+    <td><CopyableCode code="featuresId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -170,12 +175,13 @@ error,
 metadata,
 response
 FROM google.aiplatform.operations_wait
-WHERE featureOnlineStoresId = '{{ featureOnlineStoresId }}' -- required
+WHERE featureGroupsId = '{{ featureGroupsId }}' -- required
+AND featuresId = '{{ featuresId }}' -- required
 AND operationsId = '{{ operationsId }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

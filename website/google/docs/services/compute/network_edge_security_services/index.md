@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all NetworkEdgeSecurityService resources available to<br />the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -209,7 +209,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-networkEdgeSecurityService"><code>networkEdgeSecurityService</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-paths"><code>paths</code></a></td>
+    <td><a href="#parameter-paths"><code>paths</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Patches the specified policy with the data included in the request.</td>
 </tr>
 <tr>
@@ -358,13 +358,13 @@ selfLink,
 selfLinkWithId
 FROM google.compute.network_edge_security_services
 WHERE project = '{{ project }}' -- required
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -386,20 +386,20 @@ Creates a new service in the specified project using the data included in<br />t
 
 ```sql
 INSERT INTO google.compute.network_edge_security_services (
+data__description,
 data__fingerprint,
 data__name,
 data__securityPolicy,
-data__description,
 project,
 region,
 requestId,
 validateOnly
 )
 SELECT 
+'{{ description }}',
 '{{ fingerprint }}',
 '{{ name }}',
 '{{ securityPolicy }}',
-'{{ description }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}',
@@ -446,6 +446,11 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the network_edge_security_services resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -471,11 +476,6 @@ zone
       description: |
         The resource URL for the network edge security service associated with this
         network edge security service.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
     - name: requestId
       value: "{{ requestId }}"
     - name: validateOnly
@@ -501,17 +501,17 @@ Patches the specified policy with the data included in the request.
 ```sql
 UPDATE google.compute.network_edge_security_services
 SET 
+data__description = '{{ description }}',
 data__fingerprint = '{{ fingerprint }}',
 data__name = '{{ name }}',
-data__securityPolicy = '{{ securityPolicy }}',
-data__description = '{{ description }}'
+data__securityPolicy = '{{ securityPolicy }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
 AND networkEdgeSecurityService = '{{ networkEdgeSecurityService }}' --required
-AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
 AND paths = '{{ paths}}'
+AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 id,
 name,

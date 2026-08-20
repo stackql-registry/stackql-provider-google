@@ -99,6 +99,41 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Resource name of the repository, in the format `projects/*/locations/*/connections/*/repositories/*`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="annotations" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Allows clients to store small amounts of arbitrary data.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Server assigned timestamp for when the connection was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="remoteUri" /></td>
+    <td><code>string</code></td>
+    <td>Required. Git Clone HTTPS URI.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Server assigned timestamp for when the connection was updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="webhookId" /></td>
+    <td><code>string</code></td>
+    <td>Output only. External ID of the webhook created for the repository.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -130,15 +165,8 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_connections_repositories_list"><CopyableCode code="projects_locations_connections_repositories_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists Repositories in a given connection.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_connections_repositories_create"><CopyableCode code="projects_locations_connections_repositories_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-repositoryId"><code>repositoryId</code></a></td>
-    <td>Creates a Repository.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_connections_repositories_batch_create"><CopyableCode code="projects_locations_connections_repositories_batch_create" /></a></td>
@@ -146,6 +174,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
     <td></td>
     <td>Creates multiple repositories inside a connection.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_connections_repositories_create"><CopyableCode code="projects_locations_connections_repositories_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td><a href="#parameter-repositoryId"><code>repositoryId</code></a></td>
+    <td>Creates a Repository.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_connections_repositories_delete"><CopyableCode code="projects_locations_connections_repositories_delete" /></a></td>
@@ -278,15 +313,21 @@ Lists Repositories in a given connection.
 
 ```sql
 SELECT
-*
+name,
+annotations,
+createTime,
+etag,
+remoteUri,
+updateTime,
+webhookId
 FROM google.cloudbuild.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -296,46 +337,13 @@ AND pageSize = '{{ pageSize }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_connections_repositories_create"
+    defaultValue="projects_locations_connections_repositories_batch_create"
     values={[
-        { label: 'projects_locations_connections_repositories_create', value: 'projects_locations_connections_repositories_create' },
         { label: 'projects_locations_connections_repositories_batch_create', value: 'projects_locations_connections_repositories_batch_create' },
+        { label: 'projects_locations_connections_repositories_create', value: 'projects_locations_connections_repositories_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_connections_repositories_create">
-
-Creates a Repository.
-
-```sql
-INSERT INTO google.cloudbuild.repositories (
-data__remoteUri,
-data__name,
-data__etag,
-data__annotations,
-projectsId,
-locationsId,
-connectionsId,
-repositoryId
-)
-SELECT 
-'{{ remoteUri }}',
-'{{ name }}',
-'{{ etag }}',
-'{{ annotations }}',
-'{{ projectsId }}',
-'{{ locationsId }}',
-'{{ connectionsId }}',
-'{{ repositoryId }}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response
-;
-```
-</TabItem>
 <TabItem value="projects_locations_connections_repositories_batch_create">
 
 Creates multiple repositories inside a connection.
@@ -361,6 +369,39 @@ response
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_connections_repositories_create">
+
+Creates a Repository.
+
+```sql
+INSERT INTO google.cloudbuild.repositories (
+data__annotations,
+data__etag,
+data__name,
+data__remoteUri,
+projectsId,
+locationsId,
+connectionsId,
+repositoryId
+)
+SELECT 
+'{{ annotations }}',
+'{{ etag }}',
+'{{ name }}',
+'{{ remoteUri }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
+'{{ connectionsId }}',
+'{{ repositoryId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
@@ -375,36 +416,36 @@ response
     - name: connectionsId
       value: "{{ connectionsId }}"
       description: Required parameter for the repositories resource.
-    - name: remoteUri
-      value: "{{ remoteUri }}"
-      description: |
-        Required. Git Clone HTTPS URI.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Resource name of the repository, in the format \`projects/*/locations/*/connections/*/repositories/*\`.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. Allows clients to store small amounts of arbitrary data.
     - name: requests
       description: |
         Required. The request messages specifying the repositories to create.
       value:
-        - repository:
-            remoteUri: "{{ remoteUri }}"
-            name: "{{ name }}"
-            webhookId: "{{ webhookId }}"
+        - parent: "{{ parent }}"
+          repository:
+            annotations: "{{ annotations }}"
             createTime: "{{ createTime }}"
             etag: "{{ etag }}"
+            name: "{{ name }}"
+            remoteUri: "{{ remoteUri }}"
             updateTime: "{{ updateTime }}"
-            annotations: "{{ annotations }}"
+            webhookId: "{{ webhookId }}"
           repositoryId: "{{ repositoryId }}"
-          parent: "{{ parent }}"
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Allows clients to store small amounts of arbitrary data.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Resource name of the repository, in the format \`projects/*/locations/*/connections/*/repositories/*\`.
+    - name: remoteUri
+      value: "{{ remoteUri }}"
+      description: |
+        Required. Git Clone HTTPS URI.
     - name: repositoryId
       value: "{{ repositoryId }}"
 `}</CodeBlock>

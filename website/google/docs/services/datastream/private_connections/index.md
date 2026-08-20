@@ -205,21 +205,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Use this method to list private connectivity configurations in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Use this method to create a private connectivity configuration.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateConnectionsId"><code>privateConnectionsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Use this method to delete a private connectivity configuration.</td>
 </tr>
 </tbody>
@@ -349,10 +349,10 @@ vpcPeeringConfig
 FROM google.datastream.private_connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -374,28 +374,28 @@ Use this method to create a private connectivity configuration.
 
 ```sql
 INSERT INTO google.datastream.private_connections (
-data__labels,
-data__vpcPeeringConfig,
-data__pscInterfaceConfig,
 data__displayName,
+data__labels,
+data__pscInterfaceConfig,
+data__vpcPeeringConfig,
 projectsId,
 locationsId,
 force,
+privateConnectionId,
 requestId,
-validateOnly,
-privateConnectionId
+validateOnly
 )
 SELECT 
-'{{ labels }}',
-'{{ vpcPeeringConfig }}',
-'{{ pscInterfaceConfig }}',
 '{{ displayName }}',
+'{{ labels }}',
+'{{ pscInterfaceConfig }}',
+'{{ vpcPeeringConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ force }}',
+'{{ privateConnectionId }}',
 '{{ requestId }}',
-'{{ validateOnly }}',
-'{{ privateConnectionId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -416,33 +416,33 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the private_connections resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name.
     - name: labels
       value: "{{ labels }}"
       description: |
         Labels.
-    - name: vpcPeeringConfig
-      description: |
-        VPC Peering Config.
-      value:
-        vpc: "{{ vpc }}"
-        subnet: "{{ subnet }}"
     - name: pscInterfaceConfig
       description: |
         PSC Interface Config.
       value:
         networkAttachment: "{{ networkAttachment }}"
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: vpcPeeringConfig
       description: |
-        Required. Display name.
+        VPC Peering Config.
+      value:
+        subnet: "{{ subnet }}"
+        vpc: "{{ vpc }}"
     - name: force
       value: {{ force }}
+    - name: privateConnectionId
+      value: "{{ privateConnectionId }}"
     - name: requestId
       value: "{{ requestId }}"
     - name: validateOnly
       value: {{ validateOnly }}
-    - name: privateConnectionId
-      value: "{{ privateConnectionId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -466,8 +466,8 @@ DELETE FROM google.datastream.private_connections
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateConnectionsId = '{{ privateConnectionsId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

@@ -12,6 +12,9 @@
  *   5. start the VM (EXEC), observe state
  *   6. delete the VM, subnet and VPC, observing state each time
  *   7. create, read, update (labels) and delete a GCS bucket
+ *   8. object content CRUD in the bucket: INSERT a tfstate specimen via
+ *      google.storage.objects_content, SELECT it back (byte-exact), REPLACE
+ *      it, then DELETE via google.storage.objects
  *
  * By default the locally generated provider (./openapi) is used. Pass --live to
  * run the same test against the latest google provider from the hosted registry.
@@ -269,6 +272,50 @@ async function main() {
         fail('bucket read did not return expected location/storageClass');
     }
 
+    // -----------------------------------------------------------------------
+    // GCS object content CRUD (google.storage.objects_content)
+    // text objects only - the specimen is a fictitious terraform.tfstate
+    // -----------------------------------------------------------------------
+
+    const objectName = 'env/terraform.tfstate';
+    // object names containing '/' must be URL-encoded in the {object} path
+    // parameter (applies to objects.get/delete and objects_content.download)
+    const objectPathParam = encodeURIComponent(objectName);
+    const tfstate = fs.readFileSync(path.join(__dirname, 'fixtures', 'terraform.tfstate'), 'utf8');
+    // stackql string literals are MySQL-style: escape backslashes and quotes;
+    // string() stops the parser converting valid-JSON content into an object
+    const sqlString = (s) => `string('${s.replace(/\\/g, '\\\\').replace(/'/g, "''")}')`;
+    const contentState = `SELECT contents FROM google.storage.objects_content WHERE bucket = '${bucketName}' AND object = '${objectPathParam}'`;
+
+    step(`write object content (INSERT ${objectName}, ${tfstate.length} bytes)`);
+    mutate(`INSERT INTO google.storage.objects_content(bucket, name, data__contents) SELECT '${bucketName}', '${objectName}', ${sqlString(tfstate)}`);
+
+    step('read object content back (byte-exact)');
+    const contentRows = select(contentState, { quiet: true });
+    if (contentRows.length !== 1 || contentRows[0].contents !== tfstate) {
+        fail(`object content read mismatch: got ${contentRows.length} row(s), ${contentRows[0] ? String(contentRows[0].contents).length : 0} bytes vs ${tfstate.length} expected`);
+    }
+    console.log(`  <-- contents match specimen exactly (${tfstate.length} bytes)`);
+
+    step('read object metadata (objects.get must still work)');
+    const metaRows = select(`SELECT name, size FROM google.storage.objects WHERE bucket = '${bucketName}' AND object = '${objectPathParam}'`);
+    if (metaRows.length !== 1 || metaRows[0].name !== objectName || Number(metaRows[0].size) !== tfstate.length) {
+        fail('object metadata read did not return expected name/size');
+    }
+
+    step('overwrite object content (REPLACE)');
+    const tfstateReplaced = tfstate.replace('"serial": 42', '"serial": 43');
+    mutate(`REPLACE google.storage.objects_content SET data__contents = ${sqlString(tfstateReplaced)} WHERE bucket = '${bucketName}' AND name = '${objectName}'`);
+    const replacedRows = select(contentState, { quiet: true });
+    if (replacedRows.length !== 1 || replacedRows[0].contents !== tfstateReplaced) {
+        fail('replaced object content did not read back exactly');
+    }
+    console.log(`  <-- replaced contents match exactly (serial 42 -> 43)`);
+
+    step('delete object (objects.delete must still work)');
+    mutate(`DELETE FROM google.storage.objects WHERE bucket = '${bucketName}' AND object = '${objectPathParam}'`);
+    await waitFor('object to be deleted', `SELECT name FROM google.storage.objects WHERE bucket = '${bucketName}'`, (r) => r.length === 0, { retries: 6, delay: 5 });
+
     step('update GCS bucket (labels)');
     mutate(`UPDATE google.storage.buckets SET data__labels = '{"provisioner": "stackql", "purpose": "smoke-test"}' WHERE bucket = '${bucketName}'`);
     await waitFor('bucket labels to be applied', bucketState, (r) => {
@@ -300,6 +347,8 @@ async function cleanup() {
         await mutateWithRetry(`DELETE FROM google.compute.networks WHERE network = '${vpcName}' AND project = '${project}'`, { retries: 20 }).catch(() => {});
     }
     if (created.bucket) {
+        // best-effort object cleanup first - bucket delete requires an empty bucket
+        mutate(`DELETE FROM google.storage.objects WHERE bucket = '${bucketName}' AND object = '${encodeURIComponent('env/terraform.tfstate')}'`, { allowErrors: true });
         mutate(`DELETE FROM google.storage.buckets WHERE bucket = '${bucketName}'`, { allowErrors: true });
     }
 }

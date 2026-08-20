@@ -409,18 +409,18 @@ Create a QaQuestion.
 
 ```sql
 INSERT INTO google.contactcenterinsights.qa_questions (
-data__questionType,
-data__answerInstructions,
-data__tags,
-data__tuningMetadata,
-data__metrics,
 data__abbreviation,
-data__questionBody,
-data__name,
-data__qaQuestionDataOptions,
 data__answerChoices,
+data__answerInstructions,
+data__metrics,
+data__name,
 data__order,
 data__predefinedQuestionConfig,
+data__qaQuestionDataOptions,
+data__questionBody,
+data__questionType,
+data__tags,
+data__tuningMetadata,
 projectsId,
 locationsId,
 qaScorecardsId,
@@ -428,18 +428,18 @@ revisionsId,
 qaQuestionId
 )
 SELECT 
-'{{ questionType }}',
-'{{ answerInstructions }}',
-'{{ tags }}',
-'{{ tuningMetadata }}',
-'{{ metrics }}',
 '{{ abbreviation }}',
-'{{ questionBody }}',
-'{{ name }}',
-'{{ qaQuestionDataOptions }}',
 '{{ answerChoices }}',
+'{{ answerInstructions }}',
+'{{ metrics }}',
+'{{ name }}',
 {{ order }},
 '{{ predefinedQuestionConfig }}',
+'{{ qaQuestionDataOptions }}',
+'{{ questionBody }}',
+'{{ questionType }}',
+'{{ tags }}',
+'{{ tuningMetadata }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaScorecardsId }}',
@@ -480,61 +480,33 @@ updateTime
     - name: revisionsId
       value: "{{ revisionsId }}"
       description: Required parameter for the qa_questions resource.
-    - name: questionType
-      value: "{{ questionType }}"
+    - name: abbreviation
+      value: "{{ abbreviation }}"
       description: |
-        The type of question.
-      valid_values: ['QA_QUESTION_TYPE_UNSPECIFIED', 'CUSTOMIZABLE', 'PREDEFINED']
+        Short, descriptive string, used in the UI where it's not practical to display the full question body. E.g., "Greeting".
+    - name: answerChoices
+      description: |
+        A list of valid answers to the question, which the LLM must choose from.
+      value:
+        - boolValue: {{ boolValue }}
+          key: "{{ key }}"
+          naValue: {{ naValue }}
+          numValue: {{ numValue }}
+          score: {{ score }}
+          strValue: "{{ strValue }}"
     - name: answerInstructions
       value: "{{ answerInstructions }}"
       description: |
         Instructions describing how to determine the answer.
-    - name: tags
-      value:
-        - "{{ tags }}"
-      description: |
-        Questions are tagged for categorization and scoring. Tags can either be: - Default Tags: These are predefined categories. They are identified by their string value (e.g., "BUSINESS", "COMPLIANCE", and "CUSTOMER"). - Custom Tags: These are user-defined categories. They are identified by their full resource name (e.g., projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag}). Both default and custom tags are used to group questions and to influence the scoring of each question.
-    - name: tuningMetadata
-      description: |
-        Metadata about the tuning operation for the question.This field will only be populated if and only if the question is part of a scorecard revision that has been tuned.
-      value:
-        tuningError: "{{ tuningError }}"
-        totalValidLabelCount: "{{ totalValidLabelCount }}"
-        datasetValidationWarnings:
-          - "{{ datasetValidationWarnings }}"
     - name: metrics
       description: |
         Metrics of the underlying tuned LLM over a holdout/test set while fine tuning the underlying LLM for the given question. This field will only be populated if and only if the question is part of a scorecard revision that has been tuned.
       value:
         accuracy: {{ accuracy }}
-    - name: abbreviation
-      value: "{{ abbreviation }}"
-      description: |
-        Short, descriptive string, used in the UI where it's not practical to display the full question body. E.g., "Greeting".
-    - name: questionBody
-      value: "{{ questionBody }}"
-      description: |
-        Question text. E.g., "Did the agent greet the customer?"
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the question. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions/{revision}/qaQuestions/{qa_question}
-    - name: qaQuestionDataOptions
-      description: |
-        Options for configuring the data used to generate the QA question.
-      value:
-        conversationDataOptions:
-          includeDialogflowInteractionData: {{ includeDialogflowInteractionData }}
-    - name: answerChoices
-      description: |
-        A list of valid answers to the question, which the LLM must choose from.
-      value:
-        - strValue: "{{ strValue }}"
-          score: {{ score }}
-          numValue: {{ numValue }}
-          boolValue: {{ boolValue }}
-          naValue: {{ naValue }}
-          key: "{{ key }}"
     - name: order
       value: {{ order }}
       description: |
@@ -544,6 +516,34 @@ updateTime
         The configuration of the predefined question. This field will only be set if the Question Type is predefined.
       value:
         type: "{{ type }}"
+    - name: qaQuestionDataOptions
+      description: |
+        Options for configuring the data used to generate the QA question.
+      value:
+        conversationDataOptions:
+          includeDialogflowInteractionData: {{ includeDialogflowInteractionData }}
+    - name: questionBody
+      value: "{{ questionBody }}"
+      description: |
+        Question text. E.g., "Did the agent greet the customer?"
+    - name: questionType
+      value: "{{ questionType }}"
+      description: |
+        The type of question.
+      valid_values: ['QA_QUESTION_TYPE_UNSPECIFIED', 'CUSTOMIZABLE', 'PREDEFINED']
+    - name: tags
+      value:
+        - "{{ tags }}"
+      description: |
+        Questions are tagged for categorization and scoring. Tags can either be: - Default Tags: These are predefined categories. They are identified by their string value (e.g., "BUSINESS", "COMPLIANCE", and "CUSTOMER"). - Custom Tags: These are user-defined categories. They are identified by their full resource name (e.g., projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag}). Both default and custom tags are used to group questions and to influence the scoring of each question.
+    - name: tuningMetadata
+      description: |
+        Metadata about the tuning operation for the question.This field will only be populated if and only if the question is part of a scorecard revision that has been tuned.
+      value:
+        datasetValidationWarnings:
+          - "{{ datasetValidationWarnings }}"
+        totalValidLabelCount: "{{ totalValidLabelCount }}"
+        tuningError: "{{ tuningError }}"
     - name: qaQuestionId
       value: "{{ qaQuestionId }}"
 `}</CodeBlock>
@@ -567,18 +567,18 @@ Updates a QaQuestion.
 ```sql
 UPDATE google.contactcenterinsights.qa_questions
 SET 
-data__questionType = '{{ questionType }}',
-data__answerInstructions = '{{ answerInstructions }}',
-data__tags = '{{ tags }}',
-data__tuningMetadata = '{{ tuningMetadata }}',
-data__metrics = '{{ metrics }}',
 data__abbreviation = '{{ abbreviation }}',
-data__questionBody = '{{ questionBody }}',
-data__name = '{{ name }}',
-data__qaQuestionDataOptions = '{{ qaQuestionDataOptions }}',
 data__answerChoices = '{{ answerChoices }}',
+data__answerInstructions = '{{ answerInstructions }}',
+data__metrics = '{{ metrics }}',
+data__name = '{{ name }}',
 data__order = {{ order }},
-data__predefinedQuestionConfig = '{{ predefinedQuestionConfig }}'
+data__predefinedQuestionConfig = '{{ predefinedQuestionConfig }}',
+data__qaQuestionDataOptions = '{{ qaQuestionDataOptions }}',
+data__questionBody = '{{ questionBody }}',
+data__questionType = '{{ questionType }}',
+data__tags = '{{ tags }}',
+data__tuningMetadata = '{{ tuningMetadata }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

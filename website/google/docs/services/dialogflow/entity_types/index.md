@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_agents_environments_sessions_entity_types_get"
     values={[
         { label: 'projects_locations_agents_environments_sessions_entity_types_get', value: 'projects_locations_agents_environments_sessions_entity_types_get' },
-        { label: 'projects_locations_agents_sessions_entity_types_get', value: 'projects_locations_agents_sessions_entity_types_get' },
         { label: 'projects_locations_agents_environments_sessions_entity_types_list', value: 'projects_locations_agents_environments_sessions_entity_types_list' },
+        { label: 'projects_locations_agents_sessions_entity_types_get', value: 'projects_locations_agents_sessions_entity_types_get' },
         { label: 'projects_locations_agents_entity_types_get', value: 'projects_locations_agents_entity_types_get' },
         { label: 'projects_locations_agents_sessions_entity_types_list', value: 'projects_locations_agents_sessions_entity_types_list' },
         { label: 'projects_locations_agents_entity_types_list', value: 'projects_locations_agents_entity_types_list' }
@@ -72,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_agents_sessions_entity_types_get">
+<TabItem value="projects_locations_agents_environments_sessions_entity_types_list">
 
 <table>
 <thead>
@@ -101,7 +101,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_agents_environments_sessions_entity_types_list">
+<TabItem value="projects_locations_agents_sessions_entity_types_get">
 
 <table>
 <thead>
@@ -292,17 +292,17 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_agents_environments_sessions_entity_types_list"><CopyableCode code="projects_locations_agents_environments_sessions_entity_types_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#projects_locations_agents_sessions_entity_types_get"><CopyableCode code="projects_locations_agents_sessions_entity_types_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
     <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_environments_sessions_entity_types_list"><CopyableCode code="projects_locations_agents_environments_sessions_entity_types_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -323,7 +323,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_agents_entity_types_list"><CopyableCode code="projects_locations_agents_entity_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -483,8 +483,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_agents_environments_sessions_entity_types_get"
     values={[
         { label: 'projects_locations_agents_environments_sessions_entity_types_get', value: 'projects_locations_agents_environments_sessions_entity_types_get' },
-        { label: 'projects_locations_agents_sessions_entity_types_get', value: 'projects_locations_agents_sessions_entity_types_get' },
         { label: 'projects_locations_agents_environments_sessions_entity_types_list', value: 'projects_locations_agents_environments_sessions_entity_types_list' },
+        { label: 'projects_locations_agents_sessions_entity_types_get', value: 'projects_locations_agents_sessions_entity_types_get' },
         { label: 'projects_locations_agents_entity_types_get', value: 'projects_locations_agents_entity_types_get' },
         { label: 'projects_locations_agents_sessions_entity_types_list', value: 'projects_locations_agents_sessions_entity_types_list' },
         { label: 'projects_locations_agents_entity_types_list', value: 'projects_locations_agents_entity_types_list' }
@@ -509,24 +509,6 @@ AND entityTypesId = '{{ entityTypesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_agents_sessions_entity_types_get">
-
-Successful response
-
-```sql
-SELECT
-name,
-entities,
-entityOverrideMode
-FROM google.dialogflow.entity_types
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND agentsId = '{{ agentsId }}' -- required
-AND sessionsId = '{{ sessionsId }}' -- required
-AND entityTypesId = '{{ entityTypesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_agents_environments_sessions_entity_types_list">
 
 Successful response
@@ -542,8 +524,26 @@ AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
 AND sessionsId = '{{ sessionsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_sessions_entity_types_get">
+
+Successful response
+
+```sql
+SELECT
+name,
+entities,
+entityOverrideMode
+FROM google.dialogflow.entity_types
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND agentsId = '{{ agentsId }}' -- required
+AND sessionsId = '{{ sessionsId }}' -- required
+AND entityTypesId = '{{ entityTypesId }}' -- required
 ;
 ```
 </TabItem>
@@ -607,9 +607,9 @@ FROM google.dialogflow.entity_types
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND languageCode = '{{ languageCode }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -633,9 +633,9 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.entity_types (
-data__name,
-data__entityOverrideMode,
 data__entities,
+data__entityOverrideMode,
+data__name,
 projectsId,
 locationsId,
 agentsId,
@@ -643,9 +643,9 @@ environmentsId,
 sessionsId
 )
 SELECT 
-'{{ name }}',
-'{{ entityOverrideMode }}',
 '{{ entities }}',
+'{{ entityOverrideMode }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -664,18 +664,18 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.entity_types (
-data__name,
-data__entityOverrideMode,
 data__entities,
+data__entityOverrideMode,
+data__name,
 projectsId,
 locationsId,
 agentsId,
 sessionsId
 )
 SELECT 
-'{{ name }}',
-'{{ entityOverrideMode }}',
 '{{ entities }}',
+'{{ entityOverrideMode }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -693,28 +693,28 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.entity_types (
+data__autoExpansionMode,
+data__displayName,
+data__enableFuzzyExtraction,
 data__entities,
 data__excludedPhrases,
-data__redact,
-data__displayName,
 data__kind,
-data__autoExpansionMode,
-data__enableFuzzyExtraction,
 data__name,
+data__redact,
 projectsId,
 locationsId,
 agentsId,
 languageCode
 )
 SELECT 
+'{{ autoExpansionMode }}',
+'{{ displayName }}',
+{{ enableFuzzyExtraction }},
 '{{ entities }}',
 '{{ excludedPhrases }}',
-{{ redact }},
-'{{ displayName }}',
 '{{ kind }}',
-'{{ autoExpansionMode }}',
-{{ enableFuzzyExtraction }},
 '{{ name }}',
+{{ redact }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -751,30 +751,30 @@ redact
     - name: sessionsId
       value: "{{ sessionsId }}"
       description: Required parameter for the entity_types resource.
-    - name: name
-      value: "{{ name }}"
+    - name: entities
+      value:
+        - synonyms: "{{ synonyms }}"
+          value: "{{ value }}"
     - name: entityOverrideMode
       value: "{{ entityOverrideMode }}"
       valid_values: ['ENTITY_OVERRIDE_MODE_UNSPECIFIED', 'ENTITY_OVERRIDE_MODE_OVERRIDE', 'ENTITY_OVERRIDE_MODE_SUPPLEMENT']
-    - name: entities
-      value:
-        - value: "{{ value }}"
-          synonyms: "{{ synonyms }}"
-    - name: excludedPhrases
-      value:
-        - value: "{{ value }}"
-    - name: redact
-      value: {{ redact }}
-    - name: displayName
-      value: "{{ displayName }}"
-    - name: kind
-      value: "{{ kind }}"
-      valid_values: ['KIND_UNSPECIFIED', 'KIND_MAP', 'KIND_LIST', 'KIND_REGEXP']
+    - name: name
+      value: "{{ name }}"
     - name: autoExpansionMode
       value: "{{ autoExpansionMode }}"
       valid_values: ['AUTO_EXPANSION_MODE_UNSPECIFIED', 'AUTO_EXPANSION_MODE_DEFAULT']
+    - name: displayName
+      value: "{{ displayName }}"
     - name: enableFuzzyExtraction
       value: {{ enableFuzzyExtraction }}
+    - name: excludedPhrases
+      value:
+        - value: "{{ value }}"
+    - name: kind
+      value: "{{ kind }}"
+      valid_values: ['KIND_UNSPECIFIED', 'KIND_MAP', 'KIND_LIST', 'KIND_REGEXP']
+    - name: redact
+      value: {{ redact }}
     - name: languageCode
       value: "{{ languageCode }}"
 `}</CodeBlock>
@@ -800,9 +800,9 @@ No description available.
 ```sql
 UPDATE google.dialogflow.entity_types
 SET 
-data__name = '{{ name }}',
+data__entities = '{{ entities }}',
 data__entityOverrideMode = '{{ entityOverrideMode }}',
-data__entities = '{{ entities }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -824,9 +824,9 @@ No description available.
 ```sql
 UPDATE google.dialogflow.entity_types
 SET 
-data__name = '{{ name }}',
+data__entities = '{{ entities }}',
 data__entityOverrideMode = '{{ entityOverrideMode }}',
-data__entities = '{{ entities }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -847,14 +847,14 @@ No description available.
 ```sql
 UPDATE google.dialogflow.entity_types
 SET 
+data__autoExpansionMode = '{{ autoExpansionMode }}',
+data__displayName = '{{ displayName }}',
+data__enableFuzzyExtraction = {{ enableFuzzyExtraction }},
 data__entities = '{{ entities }}',
 data__excludedPhrases = '{{ excludedPhrases }}',
-data__redact = {{ redact }},
-data__displayName = '{{ displayName }}',
 data__kind = '{{ kind }}',
-data__autoExpansionMode = '{{ autoExpansionMode }}',
-data__enableFuzzyExtraction = {{ enableFuzzyExtraction }},
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__redact = {{ redact }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -952,11 +952,11 @@ EXEC google.dialogflow.entity_types.projects_locations_agents_entity_types_expor
 @agentsId='{{ agentsId }}' --required 
 @@json=
 '{
-"languageCode": "{{ languageCode }}", 
-"entityTypesUri": "{{ entityTypesUri }}", 
+"dataFormat": "{{ dataFormat }}", 
 "entityTypes": "{{ entityTypes }}", 
 "entityTypesContentInline": {{ entityTypesContentInline }}, 
-"dataFormat": "{{ dataFormat }}"
+"entityTypesUri": "{{ entityTypesUri }}", 
+"languageCode": "{{ languageCode }}"
 }'
 ;
 ```
@@ -972,8 +972,8 @@ EXEC google.dialogflow.entity_types.projects_locations_agents_entity_types_impor
 @agentsId='{{ agentsId }}' --required 
 @@json=
 '{
-"entityTypesUri": "{{ entityTypesUri }}", 
 "entityTypesContent": "{{ entityTypesContent }}", 
+"entityTypesUri": "{{ entityTypesUri }}", 
 "mergeOption": "{{ mergeOption }}", 
 "targetEntityType": "{{ targetEntityType }}"
 }'

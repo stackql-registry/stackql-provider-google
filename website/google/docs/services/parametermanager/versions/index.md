@@ -89,6 +89,31 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the TemplateVersion in the format `projects/*/locations/*/templates/*/versions/*`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create time stamp</td>
+</tr>
+<tr>
+    <td><CopyableCode code="disabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Disabled boolean to determine if a TemplateVersion acts as a metadata only resource (payload is never returned if disabled is true).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="payload" /></td>
+    <td><code>object</code></td>
+    <td>Required. Immutable. Payload content of a TemplateVersion resource. (id: TemplateVersionPayload)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Update time stamp</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -120,21 +145,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists TemplateVersions in a given project, location, and template.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a></td>
-    <td><a href="#parameter-templateVersionId"><code>templateVersionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-templateVersionId"><code>templateVersionId</code></a></td>
     <td>Creates a new TemplateVersion in a given project, location, and template.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a single TemplateVersion.</td>
 </tr>
 <tr>
@@ -270,15 +295,19 @@ Lists TemplateVersions in a given project, location, and template.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+disabled,
+payload,
+updateTime
 FROM google.parametermanager.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND templatesId = '{{ templatesId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -300,24 +329,24 @@ Creates a new TemplateVersion in a given project, location, and template.
 
 ```sql
 INSERT INTO google.parametermanager.versions (
-data__name,
 data__disabled,
+data__name,
 data__payload,
 projectsId,
 locationsId,
 templatesId,
-templateVersionId,
-requestId
+requestId,
+templateVersionId
 )
 SELECT 
-'{{ name }}',
 {{ disabled }},
+'{{ name }}',
 '{{ payload }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ templatesId }}',
-'{{ templateVersionId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ templateVersionId }}'
 RETURNING
 name,
 createTime,
@@ -341,23 +370,23 @@ updateTime
     - name: templatesId
       value: "{{ templatesId }}"
       description: Required parameter for the versions resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the TemplateVersion in the format \`projects/*/locations/*/templates/*/versions/*\`.
     - name: disabled
       value: {{ disabled }}
       description: |
         Optional. Disabled boolean to determine if a TemplateVersion acts as a metadata only resource (payload is never returned if disabled is true).
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the TemplateVersion in the format \`projects/*/locations/*/templates/*/versions/*\`.
     - name: payload
       description: |
         Required. Immutable. Payload content of a TemplateVersion resource.
       value:
         data: "{{ data }}"
-    - name: templateVersionId
-      value: "{{ templateVersionId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: templateVersionId
+      value: "{{ templateVersionId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -379,16 +408,16 @@ Updates a single TemplateVersion.
 ```sql
 UPDATE google.parametermanager.versions
 SET 
-data__name = '{{ name }}',
 data__disabled = {{ disabled }},
+data__name = '{{ name }}',
 data__payload = '{{ payload }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND templatesId = '{{ templatesId }}' --required
 AND versionsId = '{{ versionsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 createTime,

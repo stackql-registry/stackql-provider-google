@@ -137,8 +137,8 @@ EXEC google.discoveryengine.message.projects_locations_collections_engines_assis
 @@json=
 '{
 "configuration": "{{ configuration }}", 
-"metadata": "{{ metadata }}", 
-"message": "{{ message }}"
+"message": "{{ message }}", 
+"metadata": "{{ metadata }}"
 }'
 ;
 ```
@@ -158,8 +158,8 @@ EXEC google.discoveryengine.message.projects_locations_collections_engines_assis
 @@json=
 '{
 "configuration": "{{ configuration }}", 
-"metadata": "{{ metadata }}", 
-"message": "{{ message }}"
+"message": "{{ message }}", 
+"metadata": "{{ metadata }}"
 }'
 ;
 ```

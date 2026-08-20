@@ -205,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists pipelines. Returns a "FORBIDDEN" error if the caller doesn't have permission to access it.</td>
 </tr>
 <tr>
@@ -230,18 +230,18 @@ The following methods are available for this resource:
     <td>Deletes a pipeline. If a scheduler job is attached to the pipeline, it will be deleted.</td>
 </tr>
 <tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pipelinesId"><code>pipelinesId</code></a></td>
-    <td></td>
-    <td>Freezes pipeline execution permanently. If there's a corresponding scheduler entry, it's deleted, and the pipeline state is changed to "ARCHIVED". However, pipeline metadata is retained.</td>
-</tr>
-<tr>
     <td><a href="#run"><CopyableCode code="run" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pipelinesId"><code>pipelinesId</code></a></td>
     <td></td>
     <td>Creates a job for the specified pipeline directly. You can use this method when the internal scheduler is not configured and you want to trigger the job directly or through an external system. Returns a "NOT_FOUND" error if the pipeline doesn't exist. Returns a "FORBIDDEN" error if the user doesn't have permission to access the pipeline or run jobs for the pipeline.</td>
+</tr>
+<tr>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pipelinesId"><code>pipelinesId</code></a></td>
+    <td></td>
+    <td>Freezes pipeline execution permanently. If there's a corresponding scheduler entry, it's deleted, and the pipeline state is changed to "ARCHIVED". However, pipeline metadata is retained.</td>
 </tr>
 </tbody>
 </table>
@@ -350,9 +350,9 @@ workload
 FROM google.datapipelines.pipelines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -374,26 +374,26 @@ Creates a pipeline. For a batch pipeline, you can pass scheduler information. Da
 
 ```sql
 INSERT INTO google.datapipelines.pipelines (
-data__state,
-data__type,
-data__pipelineSources,
-data__name,
-data__workload,
 data__displayName,
+data__name,
+data__pipelineSources,
 data__scheduleInfo,
 data__schedulerServiceAccountEmail,
+data__state,
+data__type,
+data__workload,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ state }}',
-'{{ type }}',
-'{{ pipelineSources }}',
-'{{ name }}',
-'{{ workload }}',
 '{{ displayName }}',
+'{{ name }}',
+'{{ pipelineSources }}',
 '{{ scheduleInfo }}',
 '{{ schedulerServiceAccountEmail }}',
+'{{ state }}',
+'{{ type }}',
+'{{ workload }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -422,6 +422,29 @@ workload
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the pipelines resource.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the pipeline. It can contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), and underscores (_).
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The pipeline name. For example: \`projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID\`. * \`PROJECT_ID\` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), and periods (.). For more information, see [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects). * \`LOCATION_ID\` is the canonical ID for the pipeline's location. The list of available locations can be obtained by calling \`google.cloud.location.Locations.ListLocations\`. Note that the Data Pipelines service is not available in all regions. It depends on Cloud Scheduler, an App Engine application, so it's only available in [App Engine regions](https://cloud.google.com/about/locations#region). * \`PIPELINE_ID\` is the ID of the pipeline. Must be unique for the selected project and location.
+    - name: pipelineSources
+      value: "{{ pipelineSources }}"
+      description: |
+        Immutable. The sources of the pipeline (for example, Knowledge Catalog). The keys and values are set by the corresponding sources during pipeline creation.
+    - name: scheduleInfo
+      description: |
+        Internal scheduling information for a pipeline. If this information is provided, periodic jobs will be created per the schedule. If not, users are responsible for creating jobs externally.
+      value:
+        nextJobTime: "{{ nextJobTime }}"
+        schedule: "{{ schedule }}"
+        timeZone: "{{ timeZone }}"
+    - name: schedulerServiceAccountEmail
+      value: "{{ schedulerServiceAccountEmail }}"
+      description: |
+        Optional. A service account email to be used with the Cloud Scheduler job. If not specified, the default compute engine service account will be used.
     - name: state
       value: "{{ state }}"
       description: |
@@ -432,90 +455,67 @@ workload
       description: |
         Required. The type of the pipeline. This field affects the scheduling of the pipeline and the type of metrics to show for the pipeline.
       valid_values: ['PIPELINE_TYPE_UNSPECIFIED', 'PIPELINE_TYPE_BATCH', 'PIPELINE_TYPE_STREAMING']
-    - name: pipelineSources
-      value: "{{ pipelineSources }}"
-      description: |
-        Immutable. The sources of the pipeline (for example, Knowledge Catalog). The keys and values are set by the corresponding sources during pipeline creation.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The pipeline name. For example: \`projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID\`. * \`PROJECT_ID\` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), and periods (.). For more information, see [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects). * \`LOCATION_ID\` is the canonical ID for the pipeline's location. The list of available locations can be obtained by calling \`google.cloud.location.Locations.ListLocations\`. Note that the Data Pipelines service is not available in all regions. It depends on Cloud Scheduler, an App Engine application, so it's only available in [App Engine regions](https://cloud.google.com/about/locations#region). * \`PIPELINE_ID\` is the ID of the pipeline. Must be unique for the selected project and location.
     - name: workload
       description: |
         Workload information for creating new jobs.
       value:
-        dataflowLaunchTemplateRequest:
-          launchParameters:
-            parameters: "{{ parameters }}"
-            environment:
-              zone: "{{ zone }}"
-              workerZone: "{{ workerZone }}"
-              numWorkers: {{ numWorkers }}
-              tempLocation: "{{ tempLocation }}"
-              workerRegion: "{{ workerRegion }}"
-              enableStreamingEngine: {{ enableStreamingEngine }}
-              bypassTempDirValidation: {{ bypassTempDirValidation }}
-              subnetwork: "{{ subnetwork }}"
-              serviceAccountEmail: "{{ serviceAccountEmail }}"
-              additionalExperiments:
-                - "{{ additionalExperiments }}"
-              maxWorkers: {{ maxWorkers }}
-              additionalUserLabels: "{{ additionalUserLabels }}"
-              kmsKeyName: "{{ kmsKeyName }}"
-              machineType: "{{ machineType }}"
-              ipConfiguration: "{{ ipConfiguration }}"
-              network: "{{ network }}"
-            jobName: "{{ jobName }}"
-            update: {{ update }}
-            transformNameMapping: "{{ transformNameMapping }}"
-          location: "{{ location }}"
-          gcsPath: "{{ gcsPath }}"
-          projectId: "{{ projectId }}"
-          validateOnly: {{ validateOnly }}
         dataflowFlexTemplateRequest:
-          projectId: "{{ projectId }}"
-          validateOnly: {{ validateOnly }}
           launchParameter:
-            jobName: "{{ jobName }}"
             containerSpecGcsPath: "{{ containerSpecGcsPath }}"
-            update: {{ update }}
-            transformNameMappings: "{{ transformNameMappings }}"
-            parameters: "{{ parameters }}"
-            launchOptions: "{{ launchOptions }}"
             environment:
-              flexrsGoal: "{{ flexrsGoal }}"
-              serviceAccountEmail: "{{ serviceAccountEmail }}"
               additionalExperiments:
                 - "{{ additionalExperiments }}"
-              subnetwork: "{{ subnetwork }}"
-              maxWorkers: {{ maxWorkers }}
-              machineType: "{{ machineType }}"
-              ipConfiguration: "{{ ipConfiguration }}"
-              network: "{{ network }}"
               additionalUserLabels: "{{ additionalUserLabels }}"
+              enableStreamingEngine: {{ enableStreamingEngine }}
+              flexrsGoal: "{{ flexrsGoal }}"
+              ipConfiguration: "{{ ipConfiguration }}"
               kmsKeyName: "{{ kmsKeyName }}"
-              zone: "{{ zone }}"
-              workerZone: "{{ workerZone }}"
+              machineType: "{{ machineType }}"
+              maxWorkers: {{ maxWorkers }}
+              network: "{{ network }}"
               numWorkers: {{ numWorkers }}
+              serviceAccountEmail: "{{ serviceAccountEmail }}"
+              subnetwork: "{{ subnetwork }}"
               tempLocation: "{{ tempLocation }}"
               workerRegion: "{{ workerRegion }}"
-              enableStreamingEngine: {{ enableStreamingEngine }}
+              workerZone: "{{ workerZone }}"
+              zone: "{{ zone }}"
+            jobName: "{{ jobName }}"
+            launchOptions: "{{ launchOptions }}"
+            parameters: "{{ parameters }}"
+            transformNameMappings: "{{ transformNameMappings }}"
+            update: {{ update }}
           location: "{{ location }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the pipeline. It can contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), and underscores (_).
-    - name: scheduleInfo
-      description: |
-        Internal scheduling information for a pipeline. If this information is provided, periodic jobs will be created per the schedule. If not, users are responsible for creating jobs externally.
-      value:
-        timeZone: "{{ timeZone }}"
-        schedule: "{{ schedule }}"
-        nextJobTime: "{{ nextJobTime }}"
-    - name: schedulerServiceAccountEmail
-      value: "{{ schedulerServiceAccountEmail }}"
-      description: |
-        Optional. A service account email to be used with the Cloud Scheduler job. If not specified, the default compute engine service account will be used.
+          projectId: "{{ projectId }}"
+          validateOnly: {{ validateOnly }}
+        dataflowLaunchTemplateRequest:
+          gcsPath: "{{ gcsPath }}"
+          launchParameters:
+            environment:
+              additionalExperiments:
+                - "{{ additionalExperiments }}"
+              additionalUserLabels: "{{ additionalUserLabels }}"
+              bypassTempDirValidation: {{ bypassTempDirValidation }}
+              enableStreamingEngine: {{ enableStreamingEngine }}
+              ipConfiguration: "{{ ipConfiguration }}"
+              kmsKeyName: "{{ kmsKeyName }}"
+              machineType: "{{ machineType }}"
+              maxWorkers: {{ maxWorkers }}
+              network: "{{ network }}"
+              numWorkers: {{ numWorkers }}
+              serviceAccountEmail: "{{ serviceAccountEmail }}"
+              subnetwork: "{{ subnetwork }}"
+              tempLocation: "{{ tempLocation }}"
+              workerRegion: "{{ workerRegion }}"
+              workerZone: "{{ workerZone }}"
+              zone: "{{ zone }}"
+            jobName: "{{ jobName }}"
+            parameters: "{{ parameters }}"
+            transformNameMapping: "{{ transformNameMapping }}"
+            update: {{ update }}
+          location: "{{ location }}"
+          projectId: "{{ projectId }}"
+          validateOnly: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -537,14 +537,14 @@ Updates a pipeline. If successful, the updated Pipeline is returned. Returns `NO
 ```sql
 UPDATE google.datapipelines.pipelines
 SET 
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__pipelineSources = '{{ pipelineSources }}',
+data__scheduleInfo = '{{ scheduleInfo }}',
+data__schedulerServiceAccountEmail = '{{ schedulerServiceAccountEmail }}',
 data__state = '{{ state }}',
 data__type = '{{ type }}',
-data__pipelineSources = '{{ pipelineSources }}',
-data__name = '{{ name }}',
-data__workload = '{{ workload }}',
-data__displayName = '{{ displayName }}',
-data__scheduleInfo = '{{ scheduleInfo }}',
-data__schedulerServiceAccountEmail = '{{ schedulerServiceAccountEmail }}'
+data__workload = '{{ workload }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -593,30 +593,30 @@ AND pipelinesId = '{{ pipelinesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="stop"
+    defaultValue="run"
     values={[
-        { label: 'stop', value: 'stop' },
-        { label: 'run', value: 'run' }
+        { label: 'run', value: 'run' },
+        { label: 'stop', value: 'stop' }
     ]}
 >
-<TabItem value="stop">
-
-Freezes pipeline execution permanently. If there's a corresponding scheduler entry, it's deleted, and the pipeline state is changed to "ARCHIVED". However, pipeline metadata is retained.
-
-```sql
-EXEC google.datapipelines.pipelines.stop 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@pipelinesId='{{ pipelinesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="run">
 
 Creates a job for the specified pipeline directly. You can use this method when the internal scheduler is not configured and you want to trigger the job directly or through an external system. Returns a "NOT_FOUND" error if the pipeline doesn't exist. Returns a "FORBIDDEN" error if the user doesn't have permission to access the pipeline or run jobs for the pipeline.
 
 ```sql
 EXEC google.datapipelines.pipelines.run 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@pipelinesId='{{ pipelinesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="stop">
+
+Freezes pipeline execution permanently. If there's a corresponding scheduler entry, it's deleted, and the pipeline state is changed to "ARCHIVED". However, pipeline metadata is retained.
+
+```sql
+EXEC google.datapipelines.pipelines.stop 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @pipelinesId='{{ pipelinesId }}' --required

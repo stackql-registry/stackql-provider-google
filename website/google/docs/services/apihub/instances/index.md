@@ -230,18 +230,18 @@ The following methods are available for this resource:
     <td>Deletes a plugin instance in the API hub.</td>
 </tr>
 <tr>
-    <td><a href="#manage_source_data"><CopyableCode code="manage_source_data" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pluginsId"><code>pluginsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Manages data for a given plugin instance.</td>
-</tr>
-<tr>
     <td><a href="#disable_action"><CopyableCode code="disable_action" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pluginsId"><code>pluginsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Disables a plugin instance in the API hub.</td>
+</tr>
+<tr>
+    <td><a href="#enable_action"><CopyableCode code="enable_action" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pluginsId"><code>pluginsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Enables a plugin instance in the API hub.</td>
 </tr>
 <tr>
     <td><a href="#execute_action"><CopyableCode code="execute_action" /></a></td>
@@ -251,11 +251,11 @@ The following methods are available for this resource:
     <td>Executes a plugin instance in the API hub.</td>
 </tr>
 <tr>
-    <td><a href="#enable_action"><CopyableCode code="enable_action" /></a></td>
+    <td><a href="#manage_source_data"><CopyableCode code="manage_source_data" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pluginsId"><code>pluginsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>Enables a plugin instance in the API hub.</td>
+    <td>Manages data for a given plugin instance.</td>
 </tr>
 </tbody>
 </table>
@@ -400,26 +400,26 @@ Creates a Plugin instance in the API hub.
 
 ```sql
 INSERT INTO google.apihub.instances (
-data__authConfig,
 data__actions,
 data__additionalConfig,
+data__authConfig,
+data__displayName,
+data__name,
 data__sourceEnvironmentsConfig,
 data__sourceProjectId,
-data__name,
-data__displayName,
 projectsId,
 locationsId,
 pluginsId,
 pluginInstanceId
 )
 SELECT 
-'{{ authConfig }}',
 '{{ actions }}',
 '{{ additionalConfig }}',
+'{{ authConfig }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ sourceEnvironmentsConfig }}',
 '{{ sourceProjectId }}',
-'{{ name }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ pluginsId }}',
@@ -447,6 +447,34 @@ response
     - name: pluginsId
       value: "{{ pluginsId }}"
       description: Required parameter for the instances resource.
+    - name: actions
+      description: |
+        Required. The action status for the plugin instance.
+      value:
+        - actionId: "{{ actionId }}"
+          curationConfig:
+            curationType: "{{ curationType }}"
+            customCuration:
+              curation: "{{ curation }}"
+          hubInstanceAction:
+            currentExecutionState: "{{ currentExecutionState }}"
+            lastExecution:
+              endTime: "{{ endTime }}"
+              errorMessage: "{{ errorMessage }}"
+              result: "{{ result }}"
+              resultMetadata: "{{ resultMetadata }}"
+              startTime: "{{ startTime }}"
+          resourceConfig:
+            actionType: "{{ actionType }}"
+            pubsubTopic: "{{ pubsubTopic }}"
+          scheduleCronExpression: "{{ scheduleCronExpression }}"
+          scheduleTimeZone: "{{ scheduleTimeZone }}"
+          serviceAccount: "{{ serviceAccount }}"
+          state: "{{ state }}"
+    - name: additionalConfig
+      value: "{{ additionalConfig }}"
+      description: |
+        Optional. The additional information for this plugin instance corresponding to the additional config template of the plugin. This information will be sent to plugin hosting service on each call to plugin hosted service. The key will be the config_variable_template.display_name to uniquely identify the config variable.
     - name: authConfig
       description: |
         Optional. The authentication information for this plugin instance.
@@ -457,44 +485,24 @@ response
           httpElementLocation: "{{ httpElementLocation }}"
           name: "{{ name }}"
         authType: "{{ authType }}"
-        oauth2ClientCredentialsConfig:
-          clientSecret:
-            secretVersion: "{{ secretVersion }}"
-          clientId: "{{ clientId }}"
         googleServiceAccountConfig:
           serviceAccount: "{{ serviceAccount }}"
+        oauth2ClientCredentialsConfig:
+          clientId: "{{ clientId }}"
+          clientSecret:
+            secretVersion: "{{ secretVersion }}"
         userPasswordConfig:
-          username: "{{ username }}"
           password:
             secretVersion: "{{ secretVersion }}"
-    - name: actions
+          username: "{{ username }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Required. The action status for the plugin instance.
-      value:
-        - scheduleTimeZone: "{{ scheduleTimeZone }}"
-          state: "{{ state }}"
-          hubInstanceAction:
-            currentExecutionState: "{{ currentExecutionState }}"
-            lastExecution:
-              resultMetadata: "{{ resultMetadata }}"
-              result: "{{ result }}"
-              errorMessage: "{{ errorMessage }}"
-              startTime: "{{ startTime }}"
-              endTime: "{{ endTime }}"
-          curationConfig:
-            customCuration:
-              curation: "{{ curation }}"
-            curationType: "{{ curationType }}"
-          resourceConfig:
-            actionType: "{{ actionType }}"
-            pubsubTopic: "{{ pubsubTopic }}"
-          serviceAccount: "{{ serviceAccount }}"
-          actionId: "{{ actionId }}"
-          scheduleCronExpression: "{{ scheduleCronExpression }}"
-    - name: additionalConfig
-      value: "{{ additionalConfig }}"
+        Required. The display name for this plugin instance. Max length is 255 characters.
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. The additional information for this plugin instance corresponding to the additional config template of the plugin. This information will be sent to plugin hosting service on each call to plugin hosted service. The key will be the config_variable_template.display_name to uniquely identify the config variable.
+        Identifier. The unique name of the plugin instance resource. Format: \`projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}\`
     - name: sourceEnvironmentsConfig
       value: "{{ sourceEnvironmentsConfig }}"
       description: |
@@ -503,14 +511,6 @@ response
       value: "{{ sourceProjectId }}"
       description: |
         Optional. The source project id of the plugin instance. This will be the id of runtime project in case of Google Cloud based plugins and org id in case of non-Google Cloud based plugins. This field will be a required field for Google provided on-ramp plugins.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The unique name of the plugin instance resource. Format: \`projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name for this plugin instance. Max length is 255 characters.
     - name: pluginInstanceId
       value: "{{ pluginInstanceId }}"
 `}</CodeBlock>
@@ -534,13 +534,13 @@ Updates a plugin instance in the API hub. The following fields in the plugin_ins
 ```sql
 UPDATE google.apihub.instances
 SET 
-data__authConfig = '{{ authConfig }}',
 data__actions = '{{ actions }}',
 data__additionalConfig = '{{ additionalConfig }}',
-data__sourceEnvironmentsConfig = '{{ sourceEnvironmentsConfig }}',
-data__sourceProjectId = '{{ sourceProjectId }}',
+data__authConfig = '{{ authConfig }}',
+data__displayName = '{{ displayName }}',
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__sourceEnvironmentsConfig = '{{ sourceEnvironmentsConfig }}',
+data__sourceProjectId = '{{ sourceProjectId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -591,40 +591,37 @@ AND instancesId = '{{ instancesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="manage_source_data"
+    defaultValue="disable_action"
     values={[
-        { label: 'manage_source_data', value: 'manage_source_data' },
         { label: 'disable_action', value: 'disable_action' },
+        { label: 'enable_action', value: 'enable_action' },
         { label: 'execute_action', value: 'execute_action' },
-        { label: 'enable_action', value: 'enable_action' }
+        { label: 'manage_source_data', value: 'manage_source_data' }
     ]}
 >
-<TabItem value="manage_source_data">
-
-Manages data for a given plugin instance.
-
-```sql
-EXEC google.apihub.instances.manage_source_data 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@pluginsId='{{ pluginsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"dataType": "{{ dataType }}", 
-"action": "{{ action }}", 
-"relativePath": "{{ relativePath }}", 
-"data": "{{ data }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="disable_action">
 
 Disables a plugin instance in the API hub.
 
 ```sql
 EXEC google.apihub.instances.disable_action 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@pluginsId='{{ pluginsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"actionId": "{{ actionId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="enable_action">
+
+Enables a plugin instance in the API hub.
+
+```sql
+EXEC google.apihub.instances.enable_action 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @pluginsId='{{ pluginsId }}' --required, 
@@ -653,19 +650,22 @@ EXEC google.apihub.instances.execute_action
 ;
 ```
 </TabItem>
-<TabItem value="enable_action">
+<TabItem value="manage_source_data">
 
-Enables a plugin instance in the API hub.
+Manages data for a given plugin instance.
 
 ```sql
-EXEC google.apihub.instances.enable_action 
+EXEC google.apihub.instances.manage_source_data 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @pluginsId='{{ pluginsId }}' --required, 
 @instancesId='{{ instancesId }}' --required 
 @@json=
 '{
-"actionId": "{{ actionId }}"
+"action": "{{ action }}", 
+"data": "{{ data }}", 
+"dataType": "{{ dataType }}", 
+"relativePath": "{{ relativePath }}"
 }'
 ;
 ```

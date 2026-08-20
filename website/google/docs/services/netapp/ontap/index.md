@@ -51,11 +51,11 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#execute_ontap_post"><CopyableCode code="execute_ontap_post" /></a></td>
+    <td><a href="#execute_ontap_delete"><CopyableCode code="execute_ontap_delete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storagePoolsId"><code>storagePoolsId</code></a>, <a href="#parameter-ontapId"><code>ontapId</code></a></td>
     <td></td>
-    <td>`ExecuteOntapPost` sends the ONTAP `POST` request to the `StoragePool` cluster.</td>
+    <td>`ExecuteOntapDelete` sends the ONTAP `DELETE` request to the `StoragePool` cluster.</td>
 </tr>
 <tr>
     <td><a href="#execute_ontap_get"><CopyableCode code="execute_ontap_get" /></a></td>
@@ -65,18 +65,18 @@ The following methods are available for this resource:
     <td>`ExecuteOntapGet` sends the ONTAP `GET` request to the `StoragePool` cluster.</td>
 </tr>
 <tr>
-    <td><a href="#execute_ontap_delete"><CopyableCode code="execute_ontap_delete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storagePoolsId"><code>storagePoolsId</code></a>, <a href="#parameter-ontapId"><code>ontapId</code></a></td>
-    <td></td>
-    <td>`ExecuteOntapDelete` sends the ONTAP `DELETE` request to the `StoragePool` cluster.</td>
-</tr>
-<tr>
     <td><a href="#execute_ontap_patch"><CopyableCode code="execute_ontap_patch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storagePoolsId"><code>storagePoolsId</code></a>, <a href="#parameter-ontapId"><code>ontapId</code></a></td>
     <td></td>
     <td>`ExecuteOntapPatch` sends the ONTAP `PATCH` request to the `StoragePool` cluster.</td>
+</tr>
+<tr>
+    <td><a href="#execute_ontap_post"><CopyableCode code="execute_ontap_post" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storagePoolsId"><code>storagePoolsId</code></a>, <a href="#parameter-ontapId"><code>ontapId</code></a></td>
+    <td></td>
+    <td>`ExecuteOntapPost` sends the ONTAP `POST` request to the `StoragePool` cluster.</td>
 </tr>
 </tbody>
 </table>
@@ -120,28 +120,24 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="execute_ontap_post"
+    defaultValue="execute_ontap_delete"
     values={[
-        { label: 'execute_ontap_post', value: 'execute_ontap_post' },
-        { label: 'execute_ontap_get', value: 'execute_ontap_get' },
         { label: 'execute_ontap_delete', value: 'execute_ontap_delete' },
-        { label: 'execute_ontap_patch', value: 'execute_ontap_patch' }
+        { label: 'execute_ontap_get', value: 'execute_ontap_get' },
+        { label: 'execute_ontap_patch', value: 'execute_ontap_patch' },
+        { label: 'execute_ontap_post', value: 'execute_ontap_post' }
     ]}
 >
-<TabItem value="execute_ontap_post">
+<TabItem value="execute_ontap_delete">
 
-`ExecuteOntapPost` sends the ONTAP `POST` request to the `StoragePool` cluster.
+`ExecuteOntapDelete` sends the ONTAP `DELETE` request to the `StoragePool` cluster.
 
 ```sql
-EXEC google.netapp.ontap.execute_ontap_post 
+EXEC google.netapp.ontap.execute_ontap_delete 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @storagePoolsId='{{ storagePoolsId }}' --required, 
-@ontapId='{{ ontapId }}' --required 
-@@json=
-'{
-"body": "{{ body }}"
-}'
+@ontapId='{{ ontapId }}' --required
 ;
 ```
 </TabItem>
@@ -158,25 +154,29 @@ EXEC google.netapp.ontap.execute_ontap_get
 ;
 ```
 </TabItem>
-<TabItem value="execute_ontap_delete">
-
-`ExecuteOntapDelete` sends the ONTAP `DELETE` request to the `StoragePool` cluster.
-
-```sql
-EXEC google.netapp.ontap.execute_ontap_delete 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@storagePoolsId='{{ storagePoolsId }}' --required, 
-@ontapId='{{ ontapId }}' --required
-;
-```
-</TabItem>
 <TabItem value="execute_ontap_patch">
 
 `ExecuteOntapPatch` sends the ONTAP `PATCH` request to the `StoragePool` cluster.
 
 ```sql
 EXEC google.netapp.ontap.execute_ontap_patch 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@storagePoolsId='{{ storagePoolsId }}' --required, 
+@ontapId='{{ ontapId }}' --required 
+@@json=
+'{
+"body": "{{ body }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="execute_ontap_post">
+
+`ExecuteOntapPost` sends the ONTAP `POST` request to the `StoragePool` cluster.
+
+```sql
+EXEC google.netapp.ontap.execute_ontap_post 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @storagePoolsId='{{ storagePoolsId }}' --required, 

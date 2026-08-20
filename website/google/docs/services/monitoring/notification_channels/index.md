@@ -58,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationRecord" /></td>
     <td><code>object</code></td>
-    <td>Describes a change made to a configuration. (id: MutationRecord)</td>
+    <td>Record of the creation of this channel. (id: MutationRecord)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -122,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationRecord" /></td>
     <td><code>object</code></td>
-    <td>Describes a change made to a configuration. (id: MutationRecord)</td>
+    <td>Record of the creation of this channel. (id: MutationRecord)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#projects_notification_channels_list"><CopyableCode code="projects_notification_channels_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the notification channels that have been created for the project. To list the types of notification channels that are supported, use the ListNotificationChannelDescriptors method.</td>
 </tr>
 <tr>
@@ -341,9 +341,9 @@ userLabels,
 verificationStatus
 FROM google.monitoring.notification_channels
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -366,29 +366,29 @@ Creates a new notification channel, representing a single notification endpoint 
 
 ```sql
 INSERT INTO google.monitoring.notification_channels (
-data__verificationStatus,
-data__userLabels,
-data__description,
-data__labels,
-data__enabled,
-data__name,
-data__mutationRecords,
-data__displayName,
 data__creationRecord,
+data__description,
+data__displayName,
+data__enabled,
+data__labels,
+data__mutationRecords,
+data__name,
 data__type,
+data__userLabels,
+data__verificationStatus,
 projectsId
 )
 SELECT 
-'{{ verificationStatus }}',
-'{{ userLabels }}',
-'{{ description }}',
-'{{ labels }}',
-{{ enabled }},
-'{{ name }}',
-'{{ mutationRecords }}',
-'{{ displayName }}',
 '{{ creationRecord }}',
+'{{ description }}',
+'{{ displayName }}',
+{{ enabled }},
+'{{ labels }}',
+'{{ mutationRecords }}',
+'{{ name }}',
 '{{ type }}',
+'{{ userLabels }}',
+'{{ verificationStatus }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -412,51 +412,51 @@ verificationStatus
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the notification_channels resource.
-    - name: verificationStatus
-      value: "{{ verificationStatus }}"
+    - name: creationRecord
       description: |
-        Indicates whether this channel has been verified or not. On a ListNotificationChannels or GetNotificationChannel operation, this field is expected to be populated.If the value is UNVERIFIED, then it indicates that the channel is non-functioning (it both requires verification and lacks verification); otherwise, it is assumed that the channel works.If the channel is neither VERIFIED nor UNVERIFIED, it implies that the channel is of a type that does not require verification or that this specific channel has been exempted from verification because it was created prior to verification being required for channels of this type.This field cannot be modified using a standard UpdateNotificationChannel operation. To change the value of this field, you must call VerifyNotificationChannel.
-      valid_values: ['VERIFICATION_STATUS_UNSPECIFIED', 'UNVERIFIED', 'VERIFIED']
-    - name: userLabels
-      value: "{{ userLabels }}"
-      description: |
-        User-supplied key/value data that does not need to conform to the corresponding NotificationChannelDescriptor's schema, unlike the labels field. This field is intended to be used for organizing and identifying the NotificationChannel objects.The field can contain up to 64 entries. Each key and value is limited to 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values can contain only lowercase letters, numerals, underscores, and dashes. Keys must begin with a letter.
+        Record of the creation of this channel.
+      value:
+        mutateTime: "{{ mutateTime }}"
+        mutatedBy: "{{ mutatedBy }}"
     - name: description
       value: "{{ description }}"
       description: |
         An optional human-readable description of this notification channel. This description may provide additional details, beyond the display name, for the channel. This may not exceed 1024 Unicode characters.
-    - name: labels
-      value: "{{ labels }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Configuration fields that define the channel and its behavior. The permissible and required labels are specified in the NotificationChannelDescriptor.labels of the NotificationChannelDescriptor corresponding to the type field.
+        An optional human-readable name for this notification channel. It is recommended that you specify a non-empty and unique name in order to make it easier to identify the channels in your project, though this is not enforced. The display name is limited to 512 Unicode characters.
     - name: enabled
       value: {{ enabled }}
       description: |
         Whether notifications are forwarded to the described channel. This makes it possible to disable delivery of notifications to a particular channel without removing the channel from all alerting policies that reference the channel. This is a more convenient approach when the change is temporary and you want to receive notifications from the same set of alerting policies on the channel at some point in the future.
-    - name: name
-      value: "{{ name }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Identifier. The full REST resource name for this channel. The format is: projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID] The [CHANNEL_ID] is automatically assigned by the server on creation.
+        Configuration fields that define the channel and its behavior. The permissible and required labels are specified in the NotificationChannelDescriptor.labels of the NotificationChannelDescriptor corresponding to the type field.
     - name: mutationRecords
       description: |
         Records of the modification of this channel.
       value:
         - mutateTime: "{{ mutateTime }}"
           mutatedBy: "{{ mutatedBy }}"
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        An optional human-readable name for this notification channel. It is recommended that you specify a non-empty and unique name in order to make it easier to identify the channels in your project, though this is not enforced. The display name is limited to 512 Unicode characters.
-    - name: creationRecord
-      description: |
-        Describes a change made to a configuration.
-      value:
-        mutateTime: "{{ mutateTime }}"
-        mutatedBy: "{{ mutatedBy }}"
+        Identifier. The full REST resource name for this channel. The format is: projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID] The [CHANNEL_ID] is automatically assigned by the server on creation.
     - name: type
       value: "{{ type }}"
       description: |
         The type of the notification channel. This field matches the value of the NotificationChannelDescriptor.type field.
+    - name: userLabels
+      value: "{{ userLabels }}"
+      description: |
+        User-supplied key/value data that does not need to conform to the corresponding NotificationChannelDescriptor's schema, unlike the labels field. This field is intended to be used for organizing and identifying the NotificationChannel objects.The field can contain up to 64 entries. Each key and value is limited to 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values can contain only lowercase letters, numerals, underscores, and dashes. Keys must begin with a letter.
+    - name: verificationStatus
+      value: "{{ verificationStatus }}"
+      description: |
+        Indicates whether this channel has been verified or not. On a ListNotificationChannels or GetNotificationChannel operation, this field is expected to be populated.If the value is UNVERIFIED, then it indicates that the channel is non-functioning (it both requires verification and lacks verification); otherwise, it is assumed that the channel works.If the channel is neither VERIFIED nor UNVERIFIED, it implies that the channel is of a type that does not require verification or that this specific channel has been exempted from verification because it was created prior to verification being required for channels of this type.This field cannot be modified using a standard UpdateNotificationChannel operation. To change the value of this field, you must call VerifyNotificationChannel.
+      valid_values: ['VERIFICATION_STATUS_UNSPECIFIED', 'UNVERIFIED', 'VERIFIED']
 `}</CodeBlock>
 
 </TabItem>
@@ -478,16 +478,16 @@ Updates a notification channel. Fields not specified in the field mask remain un
 ```sql
 UPDATE google.monitoring.notification_channels
 SET 
-data__verificationStatus = '{{ verificationStatus }}',
-data__userLabels = '{{ userLabels }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__enabled = {{ enabled }},
-data__name = '{{ name }}',
-data__mutationRecords = '{{ mutationRecords }}',
-data__displayName = '{{ displayName }}',
 data__creationRecord = '{{ creationRecord }}',
-data__type = '{{ type }}'
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__enabled = {{ enabled }},
+data__labels = '{{ labels }}',
+data__mutationRecords = '{{ mutationRecords }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}',
+data__userLabels = '{{ userLabels }}',
+data__verificationStatus = '{{ verificationStatus }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND notificationChannelsId = '{{ notificationChannelsId }}' --required

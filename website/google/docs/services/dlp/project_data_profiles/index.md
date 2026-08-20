@@ -33,68 +33,14 @@ Creates, updates, deletes, gets or lists a <code>project_data_profiles</code> re
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_project_data_profiles_get"
+    defaultValue="organizations_locations_project_data_profiles_get"
     values={[
-        { label: 'projects_locations_project_data_profiles_get', value: 'projects_locations_project_data_profiles_get' },
         { label: 'organizations_locations_project_data_profiles_get', value: 'organizations_locations_project_data_profiles_get' },
-        { label: 'projects_locations_project_data_profiles_list', value: 'projects_locations_project_data_profiles_list' },
-        { label: 'organizations_locations_project_data_profiles_list', value: 'organizations_locations_project_data_profiles_list' }
+        { label: 'projects_locations_project_data_profiles_get', value: 'projects_locations_project_data_profiles_get' },
+        { label: 'organizations_locations_project_data_profiles_list', value: 'organizations_locations_project_data_profiles_list' },
+        { label: 'projects_locations_project_data_profiles_list', value: 'projects_locations_project_data_profiles_list' }
     ]}
 >
-<TabItem value="projects_locations_project_data_profiles_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The resource name of the profile.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dataRiskLevel" /></td>
-    <td><code>object</code></td>
-    <td>The data risk level of this project. (id: GooglePrivacyDlpV2DataRiskLevel)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="fileStoreDataProfileCount" /></td>
-    <td><code>string (int64)</code></td>
-    <td>The number of file store data profiles generated for this project.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="profileLastGenerated" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>The last time the profile was generated.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="profileStatus" /></td>
-    <td><code>object</code></td>
-    <td>Success or error status of the last attempt to profile the project. (id: GooglePrivacyDlpV2ProfileStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="projectId" /></td>
-    <td><code>string</code></td>
-    <td>Project ID or account that was profiled.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sensitivityScore" /></td>
-    <td><code>object</code></td>
-    <td>The sensitivity score of this project. (id: GooglePrivacyDlpV2SensitivityScore)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tableDataProfileCount" /></td>
-    <td><code>string (int64)</code></td>
-    <td>The number of table data profiles generated for this project.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_project_data_profiles_get">
 
 <table>
@@ -149,7 +95,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_project_data_profiles_list">
+<TabItem value="projects_locations_project_data_profiles_get">
 
 <table>
 <thead>
@@ -204,6 +150,60 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_locations_project_data_profiles_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>The resource name of the profile.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataRiskLevel" /></td>
+    <td><code>object</code></td>
+    <td>The data risk level of this project. (id: GooglePrivacyDlpV2DataRiskLevel)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="fileStoreDataProfileCount" /></td>
+    <td><code>string (int64)</code></td>
+    <td>The number of file store data profiles generated for this project.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="profileLastGenerated" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>The last time the profile was generated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="profileStatus" /></td>
+    <td><code>object</code></td>
+    <td>Success or error status of the last attempt to profile the project. (id: GooglePrivacyDlpV2ProfileStatus)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="projectId" /></td>
+    <td><code>string</code></td>
+    <td>Project ID or account that was profiled.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sensitivityScore" /></td>
+    <td><code>object</code></td>
+    <td>The sensitivity score of this project. (id: GooglePrivacyDlpV2SensitivityScore)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tableDataProfileCount" /></td>
+    <td><code>string (int64)</code></td>
+    <td>The number of table data profiles generated for this project.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_project_data_profiles_list">
 
 <table>
 <thead>
@@ -275,13 +275,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_project_data_profiles_get"><CopyableCode code="projects_locations_project_data_profiles_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-projectDataProfilesId"><code>projectDataProfilesId</code></a></td>
-    <td></td>
-    <td>Gets a project data profile.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_project_data_profiles_get"><CopyableCode code="organizations_locations_project_data_profiles_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-projectDataProfilesId"><code>projectDataProfilesId</code></a></td>
@@ -289,17 +282,24 @@ The following methods are available for this resource:
     <td>Gets a project data profile.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_project_data_profiles_list"><CopyableCode code="projects_locations_project_data_profiles_list" /></a></td>
+    <td><a href="#projects_locations_project_data_profiles_get"><CopyableCode code="projects_locations_project_data_profiles_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists project data profiles for an organization.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-projectDataProfilesId"><code>projectDataProfilesId</code></a></td>
+    <td></td>
+    <td>Gets a project data profile.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_project_data_profiles_list"><CopyableCode code="organizations_locations_project_data_profiles_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists project data profiles for an organization.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_project_data_profiles_list"><CopyableCode code="projects_locations_project_data_profiles_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists project data profiles for an organization.</td>
 </tr>
 </tbody>
@@ -364,35 +364,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_project_data_profiles_get"
+    defaultValue="organizations_locations_project_data_profiles_get"
     values={[
-        { label: 'projects_locations_project_data_profiles_get', value: 'projects_locations_project_data_profiles_get' },
         { label: 'organizations_locations_project_data_profiles_get', value: 'organizations_locations_project_data_profiles_get' },
-        { label: 'projects_locations_project_data_profiles_list', value: 'projects_locations_project_data_profiles_list' },
-        { label: 'organizations_locations_project_data_profiles_list', value: 'organizations_locations_project_data_profiles_list' }
+        { label: 'projects_locations_project_data_profiles_get', value: 'projects_locations_project_data_profiles_get' },
+        { label: 'organizations_locations_project_data_profiles_list', value: 'organizations_locations_project_data_profiles_list' },
+        { label: 'projects_locations_project_data_profiles_list', value: 'projects_locations_project_data_profiles_list' }
     ]}
 >
-<TabItem value="projects_locations_project_data_profiles_get">
-
-Gets a project data profile.
-
-```sql
-SELECT
-name,
-dataRiskLevel,
-fileStoreDataProfileCount,
-profileLastGenerated,
-profileStatus,
-projectId,
-sensitivityScore,
-tableDataProfileCount
-FROM google.dlp.project_data_profiles
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND projectDataProfilesId = '{{ projectDataProfilesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_project_data_profiles_get">
 
 Gets a project data profile.
@@ -414,9 +393,9 @@ AND projectDataProfilesId = '{{ projectDataProfilesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_project_data_profiles_list">
+<TabItem value="projects_locations_project_data_profiles_get">
 
-Lists project data profiles for an organization.
+Gets a project data profile.
 
 ```sql
 SELECT
@@ -431,10 +410,7 @@ tableDataProfileCount
 FROM google.dlp.project_data_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
+AND projectDataProfilesId = '{{ projectDataProfilesId }}' -- required
 ;
 ```
 </TabItem>
@@ -455,10 +431,34 @@ tableDataProfileCount
 FROM google.dlp.project_data_profiles
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_project_data_profiles_list">
+
+Lists project data profiles for an organization.
+
+```sql
+SELECT
+name,
+dataRiskLevel,
+fileStoreDataProfileCount,
+profileLastGenerated,
+profileStatus,
+projectId,
+sensitivityScore,
+tableDataProfileCount
+FROM google.dlp.project_data_profiles
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

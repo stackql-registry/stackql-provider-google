@@ -227,11 +227,11 @@ Updates the CompletionConfigs.
 ```sql
 UPDATE google.retail.catalogs_completion_config
 SET 
-data__name = '{{ name }}',
-data__minPrefixLength = {{ minPrefixLength }},
 data__autoLearning = {{ autoLearning }},
+data__matchingOrder = '{{ matchingOrder }}',
 data__maxSuggestions = {{ maxSuggestions }},
-data__matchingOrder = '{{ matchingOrder }}'
+data__minPrefixLength = {{ minPrefixLength }},
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -196,9 +196,24 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Data for points in the `irregular-rhythm-notification` session data type collection. (id: IrregularRhythmNotification)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="menstrualPeriod" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data for points in the `menstrual-period` interval data type collection. (id: MenstrualPeriod)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="moods" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data for points in the `moods` sample data type collection. (id: Moods)</td>
+</tr>
+<tr>
     <td><CopyableCode code="nutritionLog" /></td>
     <td><code>object</code></td>
     <td>Optional. Data for points in the `nutrition-log` session data type collection. (id: NutritionLog)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ovulationTest" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data for points in the `ovulation-test` sample data type collection. (id: OvulationTest)</td>
 </tr>
 <tr>
     <td><CopyableCode code="oxygenSaturation" /></td>
@@ -234,6 +249,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="swimLengthsData" /></td>
     <td><code>object</code></td>
     <td>Optional. Data for points in the `swim-lengths-data` interval data type collection. (id: SwimLengthsData)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="symptoms" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data for points in the `symptoms` sample data type collection. (id: Symptoms)</td>
 </tr>
 <tr>
     <td><CopyableCode code="timeInHeartRateZone" /></td>
@@ -410,9 +430,24 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Data for points in the `irregular-rhythm-notification` session data type collection. (id: IrregularRhythmNotification)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="menstrualPeriod" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data for points in the `menstrual-period` interval data type collection. (id: MenstrualPeriod)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="moods" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data for points in the `moods` sample data type collection. (id: Moods)</td>
+</tr>
+<tr>
     <td><CopyableCode code="nutritionLog" /></td>
     <td><code>object</code></td>
     <td>Optional. Data for points in the `nutrition-log` session data type collection. (id: NutritionLog)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ovulationTest" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data for points in the `ovulation-test` sample data type collection. (id: OvulationTest)</td>
 </tr>
 <tr>
     <td><CopyableCode code="oxygenSaturation" /></td>
@@ -448,6 +483,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="swimLengthsData" /></td>
     <td><code>object</code></td>
     <td>Optional. Data for points in the `swim-lengths-data` interval data type collection. (id: SwimLengthsData)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="symptoms" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data for points in the `symptoms` sample data type collection. (id: Symptoms)</td>
 </tr>
 <tr>
     <td><CopyableCode code="timeInHeartRateZone" /></td>
@@ -495,7 +535,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-dataTypesId"><code>dataTypesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Query user health and fitness data points.</td>
 </tr>
 <tr>
@@ -520,11 +560,11 @@ The following methods are available for this resource:
     <td>Delete a batch of identifyable data points.</td>
 </tr>
 <tr>
-    <td><a href="#reconcile"><CopyableCode code="reconcile" /></a></td>
+    <td><a href="#daily_roll_up"><CopyableCode code="daily_roll_up" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-dataTypesId"><code>dataTypesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-dataSourceFamily"><code>dataSourceFamily</code></a></td>
-    <td>Reconcile data points from multiple data sources into a single data stream.</td>
+    <td></td>
+    <td>Roll up data points over civil time intervals for supported data types.</td>
 </tr>
 <tr>
     <td><a href="#export_exercise_tcx"><CopyableCode code="export_exercise_tcx" /></a></td>
@@ -534,18 +574,18 @@ The following methods are available for this resource:
     <td>Exports exercise data in TCX format. **IMPORTANT:** HTTP clients must append `?alt=media` to the request URL to download the raw TCX file. Example: `https://health.googleapis.com/v4/users/me/dataTypes/exercise/dataPoints/EXERCISE_ID:exportExerciseTcx?alt=media` Without `alt=media`, the server returns a JSON response (`ExportExerciseTcxResponse`) which is intended primarily for gRPC clients. **Note:** While the Authorization section below states that any one of the listed scopes is accepted, this specific method requires the user to provide both one of the `activity_and_fitness` scopes (`normal` or `readonly`) AND one of the `location` scopes (`normal` or `readonly`) in their access token to succeed.</td>
 </tr>
 <tr>
+    <td><a href="#reconcile"><CopyableCode code="reconcile" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-dataTypesId"><code>dataTypesId</code></a></td>
+    <td><a href="#parameter-dataSourceFamily"><code>dataSourceFamily</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Reconcile data points from multiple data sources into a single data stream.</td>
+</tr>
+<tr>
     <td><a href="#roll_up"><CopyableCode code="roll_up" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-dataTypesId"><code>dataTypesId</code></a></td>
     <td></td>
     <td>Roll up data points over physical time intervals for supported data types.</td>
-</tr>
-<tr>
-    <td><a href="#daily_roll_up"><CopyableCode code="daily_roll_up" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-dataTypesId"><code>dataTypesId</code></a></td>
-    <td></td>
-    <td>Roll up data points over civil time intervals for supported data types.</td>
 </tr>
 </tbody>
 </table>
@@ -650,7 +690,10 @@ heartRateVariability,
 height,
 hydrationLog,
 irregularRhythmNotification,
+menstrualPeriod,
+moods,
 nutritionLog,
+ovulationTest,
 oxygenSaturation,
 respiratoryRateSleepSummary,
 runVo2Max,
@@ -658,6 +701,7 @@ sedentaryPeriod,
 sleep,
 steps,
 swimLengthsData,
+symptoms,
 timeInHeartRateZone,
 vo2Max,
 weight
@@ -703,7 +747,10 @@ heartRateVariability,
 height,
 hydrationLog,
 irregularRhythmNotification,
+menstrualPeriod,
+moods,
 nutritionLog,
+ovulationTest,
 oxygenSaturation,
 respiratoryRateSleepSummary,
 runVo2Max,
@@ -711,15 +758,16 @@ sedentaryPeriod,
 sleep,
 steps,
 swimLengthsData,
+symptoms,
 timeInHeartRateZone,
 vo2Max,
 weight
 FROM google.health.data_points
 WHERE usersId = '{{ usersId }}' -- required
 AND dataTypesId = '{{ dataTypesId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -742,89 +790,97 @@ Creates a single identifiable data point.
 ```sql
 INSERT INTO google.health.data_points (
 data__activeEnergyBurned,
-data__heartRate,
-data__dailyVo2Max,
-data__steps,
-data__runVo2Max,
-data__vo2Max,
-data__dailyRestingHeartRate,
-data__bloodGlucose,
 data__activeMinutes,
-data__dailyHeartRateVariability,
-data__oxygenSaturation,
-data__hydrationLog,
-data__nutritionLog,
-data__heartRateVariability,
-data__weight,
-data__sleep,
-data__dailyOxygenSaturation,
-data__food,
+data__activeZoneMinutes,
+data__activityLevel,
 data__altitude,
-data__swimLengthsData,
 data__basalEnergyBurned,
+data__bloodGlucose,
+data__bodyFat,
+data__coreBodyTemperature,
+data__dailyHeartRateVariability,
+data__dailyHeartRateZones,
+data__dailyOxygenSaturation,
 data__dailyRespiratoryRate,
-data__irregularRhythmNotification,
+data__dailyRestingHeartRate,
+data__dailySleepTemperatureDerivations,
+data__dailyVo2Max,
+data__dataSource,
 data__distance,
+data__electrocardiogram,
 data__exercise,
 data__floors,
-data__respiratoryRateSleepSummary,
+data__food,
 data__foodMeasurementUnit,
-data__activityLevel,
-data__timeInHeartRateZone,
-data__dailySleepTemperatureDerivations,
+data__heartRate,
+data__heartRateVariability,
 data__height,
+data__hydrationLog,
+data__irregularRhythmNotification,
+data__menstrualPeriod,
+data__moods,
 data__name,
-data__electrocardiogram,
-data__activeZoneMinutes,
-data__coreBodyTemperature,
+data__nutritionLog,
+data__ovulationTest,
+data__oxygenSaturation,
+data__respiratoryRateSleepSummary,
+data__runVo2Max,
 data__sedentaryPeriod,
-data__dailyHeartRateZones,
-data__dataSource,
-data__bodyFat,
+data__sleep,
+data__steps,
+data__swimLengthsData,
+data__symptoms,
+data__timeInHeartRateZone,
+data__vo2Max,
+data__weight,
 usersId,
 dataTypesId
 )
 SELECT 
 '{{ activeEnergyBurned }}',
-'{{ heartRate }}',
-'{{ dailyVo2Max }}',
-'{{ steps }}',
-'{{ runVo2Max }}',
-'{{ vo2Max }}',
-'{{ dailyRestingHeartRate }}',
-'{{ bloodGlucose }}',
 '{{ activeMinutes }}',
-'{{ dailyHeartRateVariability }}',
-'{{ oxygenSaturation }}',
-'{{ hydrationLog }}',
-'{{ nutritionLog }}',
-'{{ heartRateVariability }}',
-'{{ weight }}',
-'{{ sleep }}',
-'{{ dailyOxygenSaturation }}',
-'{{ food }}',
+'{{ activeZoneMinutes }}',
+'{{ activityLevel }}',
 '{{ altitude }}',
-'{{ swimLengthsData }}',
 '{{ basalEnergyBurned }}',
+'{{ bloodGlucose }}',
+'{{ bodyFat }}',
+'{{ coreBodyTemperature }}',
+'{{ dailyHeartRateVariability }}',
+'{{ dailyHeartRateZones }}',
+'{{ dailyOxygenSaturation }}',
 '{{ dailyRespiratoryRate }}',
-'{{ irregularRhythmNotification }}',
+'{{ dailyRestingHeartRate }}',
+'{{ dailySleepTemperatureDerivations }}',
+'{{ dailyVo2Max }}',
+'{{ dataSource }}',
 '{{ distance }}',
+'{{ electrocardiogram }}',
 '{{ exercise }}',
 '{{ floors }}',
-'{{ respiratoryRateSleepSummary }}',
+'{{ food }}',
 '{{ foodMeasurementUnit }}',
-'{{ activityLevel }}',
-'{{ timeInHeartRateZone }}',
-'{{ dailySleepTemperatureDerivations }}',
+'{{ heartRate }}',
+'{{ heartRateVariability }}',
 '{{ height }}',
+'{{ hydrationLog }}',
+'{{ irregularRhythmNotification }}',
+'{{ menstrualPeriod }}',
+'{{ moods }}',
 '{{ name }}',
-'{{ electrocardiogram }}',
-'{{ activeZoneMinutes }}',
-'{{ coreBodyTemperature }}',
+'{{ nutritionLog }}',
+'{{ ovulationTest }}',
+'{{ oxygenSaturation }}',
+'{{ respiratoryRateSleepSummary }}',
+'{{ runVo2Max }}',
 '{{ sedentaryPeriod }}',
-'{{ dailyHeartRateZones }}',
-'{{ dataSource }}',
-'{{ bodyFat }}',
+'{{ sleep }}',
+'{{ steps }}',
+'{{ swimLengthsData }}',
+'{{ symptoms }}',
+'{{ timeInHeartRateZone }}',
+'{{ vo2Max }}',
+'{{ weight }}',
 '{{ usersId }}',
 '{{ dataTypesId }}'
 RETURNING
@@ -853,1110 +909,1206 @@ response
       value:
         interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
+              seconds: {{ seconds }}
           civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
         kcal: {{ kcal }}
-    - name: heartRate
-      description: |
-        Optional. Data for points in the \`heart-rate\` sample data type collection.
-      value:
-        metadata:
-          motionContext: "{{ motionContext }}"
-          sensorLocation: "{{ sensorLocation }}"
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          utcOffset: "{{ utcOffset }}"
-        beatsPerMinute: "{{ beatsPerMinute }}"
-    - name: dailyVo2Max
-      description: |
-        Optional. Data for points in the \`daily-vo2-max\` daily data type collection.
-      value:
-        estimated: {{ estimated }}
-        vo2Max: {{ vo2Max }}
-        cardioFitnessLevel: "{{ cardioFitnessLevel }}"
-        date:
-          month: {{ month }}
-          day: {{ day }}
-          year: {{ year }}
-        vo2MaxCovariance: {{ vo2MaxCovariance }}
-    - name: steps
-      description: |
-        Optional. Data for points in the \`steps\` interval data type collection.
-      value:
-        interval:
-          civilEndTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          endTime: "{{ endTime }}"
-          endUtcOffset: "{{ endUtcOffset }}"
-        count: "{{ count }}"
-    - name: runVo2Max
-      description: |
-        Optional. Data for points in the \`run-vo2-max\` sample data type collection.
-      value:
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          utcOffset: "{{ utcOffset }}"
-        runVo2Max: {{ runVo2Max }}
-    - name: vo2Max
-      description: |
-        Optional. Data for points in the \`vo2-max\` sample data type collection.
-      value:
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          utcOffset: "{{ utcOffset }}"
-        vo2Max: {{ vo2Max }}
-        measurementMethod: "{{ measurementMethod }}"
-    - name: dailyRestingHeartRate
-      description: |
-        Optional. Data for points in the \`daily-resting-heart-rate\` daily data type collection.
-      value:
-        dailyRestingHeartRateMetadata:
-          calculationMethod: "{{ calculationMethod }}"
-        date:
-          month: {{ month }}
-          day: {{ day }}
-          year: {{ year }}
-        beatsPerMinute: "{{ beatsPerMinute }}"
-    - name: bloodGlucose
-      description: |
-        Optional. Data for points in the \`blood-glucose\` sample data type collection.
-      value:
-        measurementTiming: "{{ measurementTiming }}"
-        specimen: "{{ specimen }}"
-        measurementSource: "{{ measurementSource }}"
-        notes: "{{ notes }}"
-        bloodGlucoseMilligramsPerDeciliter: {{ bloodGlucoseMilligramsPerDeciliter }}
-        mealType: "{{ mealType }}"
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          utcOffset: "{{ utcOffset }}"
     - name: activeMinutes
       description: |
         Optional. Data for points in the \`active-minutes\` interval data type collection.
       value:
-        interval:
-          civilEndTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          endTime: "{{ endTime }}"
-          endUtcOffset: "{{ endUtcOffset }}"
         activeMinutesByActivityLevel:
           - activeMinutes: "{{ activeMinutes }}"
             activityLevel: "{{ activityLevel }}"
-    - name: dailyHeartRateVariability
-      description: |
-        Optional. Data for points in the \`daily-heart-rate-variability\` daily data type collection.
-      value:
-        date:
-          month: {{ month }}
-          day: {{ day }}
-          year: {{ year }}
-        averageHeartRateVariabilityMilliseconds: {{ averageHeartRateVariabilityMilliseconds }}
-        entropy: {{ entropy }}
-        deepSleepRootMeanSquareOfSuccessiveDifferencesMilliseconds: {{ deepSleepRootMeanSquareOfSuccessiveDifferencesMilliseconds }}
-        nonRemHeartRateBeatsPerMinute: "{{ nonRemHeartRateBeatsPerMinute }}"
-    - name: oxygenSaturation
-      description: |
-        Optional. Data for points in the \`oxygen-saturation\` sample data type collection.
-      value:
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          utcOffset: "{{ utcOffset }}"
-        percentage: {{ percentage }}
-    - name: hydrationLog
-      description: |
-        Optional. Data for points in the \`hydration-log\` session data type collection.
-      value:
         interval:
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
+              seconds: {{ seconds }}
+          civilStartTime:
             date:
-              month: {{ month }}
               day: {{ day }}
+              month: {{ month }}
               year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-        amountConsumed:
-          milliliters: {{ milliliters }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-    - name: nutritionLog
-      description: |
-        Optional. Data for points in the \`nutrition-log\` session data type collection.
-      value:
-        nutrients:
-          - quantity:
-              grams: {{ grams }}
-              userProvidedUnit: "{{ userProvidedUnit }}"
-            nutrient: "{{ nutrient }}"
-        interval:
           startTime: "{{ startTime }}"
           startUtcOffset: "{{ startUtcOffset }}"
+    - name: activeZoneMinutes
+      description: |
+        Optional. Data for points in the \`active-zone-minutes\` interval data type collection, measured in minutes.
+      value:
+        activeZoneMinutes: "{{ activeZoneMinutes }}"
+        heartRateZone: "{{ heartRateZone }}"
+        interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
+              seconds: {{ seconds }}
+          civilStartTime:
             date:
-              month: {{ month }}
               day: {{ day }}
+              month: {{ month }}
               year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-        serving:
-          foodMeasurementUnitDisplayName: "{{ foodMeasurementUnitDisplayName }}"
-          amount: {{ amount }}
-          foodMeasurementUnit: "{{ foodMeasurementUnit }}"
-        foodDisplayName: "{{ foodDisplayName }}"
-        food: "{{ food }}"
-        energy:
-          kcal: {{ kcal }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        totalCarbohydrate:
-          grams: {{ grams }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        energyFromFat:
-          kcal: {{ kcal }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        mealType: "{{ mealType }}"
-        totalFat:
-          grams: {{ grams }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-    - name: heartRateVariability
-      description: |
-        Optional. Data for points in the \`heart-rate-variability\` sample data type collection.
-      value:
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          utcOffset: "{{ utcOffset }}"
-        rootMeanSquareOfSuccessiveDifferencesMilliseconds: {{ rootMeanSquareOfSuccessiveDifferencesMilliseconds }}
-        standardDeviationMilliseconds: {{ standardDeviationMilliseconds }}
-    - name: weight
-      description: |
-        Optional. Data for points in the \`weight\` sample data type collection.
-      value:
-        weightGrams: {{ weightGrams }}
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          utcOffset: "{{ utcOffset }}"
-        notes: "{{ notes }}"
-    - name: sleep
-      description: |
-        Optional. Data for points in the \`sleep\` session data type collection.
-      value:
-        interval:
           startTime: "{{ startTime }}"
           startUtcOffset: "{{ startUtcOffset }}"
+    - name: activityLevel
+      description: |
+        Optional. Data for points in the \`activity-level\` daily data type collection.
+      value:
+        activityLevelType: "{{ activityLevelType }}"
+        interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
+              seconds: {{ seconds }}
+          civilStartTime:
             date:
-              month: {{ month }}
               day: {{ day }}
+              month: {{ month }}
               year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-        updateTime: "{{ updateTime }}"
-        type: "{{ type }}"
-        stages:
-          - createTime: "{{ createTime }}"
-            startTime: "{{ startTime }}"
-            startUtcOffset: "{{ startUtcOffset }}"
-            type: "{{ type }}"
-            endTime: "{{ endTime }}"
-            endUtcOffset: "{{ endUtcOffset }}"
-            updateTime: "{{ updateTime }}"
-        metadata:
-          processed: {{ processed }}
-          stagesStatus: "{{ stagesStatus }}"
-          externalId: "{{ externalId }}"
-          nap: {{ nap }}
-          manuallyEdited: {{ manuallyEdited }}
-          mainSleep: {{ mainSleep }}
-        createTime: "{{ createTime }}"
-        outOfBedSegments:
-          - endTime: "{{ endTime }}"
-            endUtcOffset: "{{ endUtcOffset }}"
-            startTime: "{{ startTime }}"
-            startUtcOffset: "{{ startUtcOffset }}"
-        summary:
-          minutesAfterWakeUp: "{{ minutesAfterWakeUp }}"
-          minutesAsleep: "{{ minutesAsleep }}"
-          stagesSummary:
-            - minutes: "{{ minutes }}"
-              count: "{{ count }}"
-              type: "{{ type }}"
-          minutesAwake: "{{ minutesAwake }}"
-          minutesInSleepPeriod: "{{ minutesInSleepPeriod }}"
-          minutesToFallAsleep: "{{ minutesToFallAsleep }}"
-    - name: dailyOxygenSaturation
-      description: |
-        Optional. Data for points in the \`daily-oxygen-saturation\` daily data type collection.
-      value:
-        standardDeviationPercentage: {{ standardDeviationPercentage }}
-        date:
-          month: {{ month }}
-          day: {{ day }}
-          year: {{ year }}
-        lowerBoundPercentage: {{ lowerBoundPercentage }}
-        upperBoundPercentage: {{ upperBoundPercentage }}
-        averagePercentage: {{ averagePercentage }}
-    - name: food
-      description: |
-        Optional. The food details.
-      value:
-        languageCode: "{{ languageCode }}"
-        totalCarbohydrate:
-          grams: {{ grams }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        defaultServing:
-          multiplier: {{ multiplier }}
-          foodMeasurementUnitDisplayNamePlural: "{{ foodMeasurementUnitDisplayNamePlural }}"
-          foodMeasurementUnit: "{{ foodMeasurementUnit }}"
-          foodMeasurementUnitDisplayName: "{{ foodMeasurementUnitDisplayName }}"
-          amount: {{ amount }}
-        brand: "{{ brand }}"
-        energyFromFat:
-          kcal: {{ kcal }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        energyAvg:
-          kcal: {{ kcal }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        displayName: "{{ displayName }}"
-        accessLevel: "{{ accessLevel }}"
-        energyMax:
-          kcal: {{ kcal }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        nutrients:
-          - quantity:
-              grams: {{ grams }}
-              userProvidedUnit: "{{ userProvidedUnit }}"
-            nutrient: "{{ nutrient }}"
-        description: "{{ description }}"
-        servings:
-          - multiplier: {{ multiplier }}
-            foodMeasurementUnitDisplayNamePlural: "{{ foodMeasurementUnitDisplayNamePlural }}"
-            foodMeasurementUnit: "{{ foodMeasurementUnit }}"
-            foodMeasurementUnitDisplayName: "{{ foodMeasurementUnitDisplayName }}"
-            amount: {{ amount }}
-        totalFat:
-          grams: {{ grams }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        energyMin:
-          kcal: {{ kcal }}
-          userProvidedUnit: "{{ userProvidedUnit }}"
-        mealType: "{{ mealType }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
     - name: altitude
       description: |
         Optional. Data for points in the \`altitude\` interval data type collection.
       value:
-        interval:
-          civilEndTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          endTime: "{{ endTime }}"
-          endUtcOffset: "{{ endUtcOffset }}"
         gainMillimeters: "{{ gainMillimeters }}"
-    - name: swimLengthsData
-      description: |
-        Optional. Data for points in the \`swim-lengths-data\` interval data type collection.
-      value:
         interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
+              seconds: {{ seconds }}
           civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
-        strokeCount: "{{ strokeCount }}"
-        swimStrokeType: "{{ swimStrokeType }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
     - name: basalEnergyBurned
       description: |
         Optional. Data for points in the \`basal-energy-burned\` interval data type collection.
       value:
         interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
+              seconds: {{ seconds }}
           civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
         kcal: {{ kcal }}
+    - name: bloodGlucose
+      description: |
+        Optional. Data for points in the \`blood-glucose\` sample data type collection.
+      value:
+        bloodGlucoseMilligramsPerDeciliter: {{ bloodGlucoseMilligramsPerDeciliter }}
+        mealType: "{{ mealType }}"
+        measurementSource: "{{ measurementSource }}"
+        measurementTiming: "{{ measurementTiming }}"
+        notes: "{{ notes }}"
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+        specimen: "{{ specimen }}"
+    - name: bodyFat
+      description: |
+        Optional. Data for points in the \`body-fat\` sample data type collection.
+      value:
+        percentage: {{ percentage }}
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+    - name: coreBodyTemperature
+      description: |
+        Optional. Data for points in the \`core-body-temperature\` sample data type collection.
+      value:
+        id: "{{ id }}"
+        measurementLocation: "{{ measurementLocation }}"
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+        temperatureCelsius: {{ temperatureCelsius }}
+    - name: dailyHeartRateVariability
+      description: |
+        Optional. Data for points in the \`daily-heart-rate-variability\` daily data type collection.
+      value:
+        averageHeartRateVariabilityMilliseconds: {{ averageHeartRateVariabilityMilliseconds }}
+        date:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        deepSleepRootMeanSquareOfSuccessiveDifferencesMilliseconds: {{ deepSleepRootMeanSquareOfSuccessiveDifferencesMilliseconds }}
+        entropy: {{ entropy }}
+        nonRemHeartRateBeatsPerMinute: "{{ nonRemHeartRateBeatsPerMinute }}"
+    - name: dailyHeartRateZones
+      description: |
+        Optional. Data for points in the \`daily-heart-rate-zones\` daily data type collection.
+      value:
+        date:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        heartRateZones:
+          - heartRateZoneType: "{{ heartRateZoneType }}"
+            maxBeatsPerMinute: "{{ maxBeatsPerMinute }}"
+            minBeatsPerMinute: "{{ minBeatsPerMinute }}"
+    - name: dailyOxygenSaturation
+      description: |
+        Optional. Data for points in the \`daily-oxygen-saturation\` daily data type collection.
+      value:
+        averagePercentage: {{ averagePercentage }}
+        date:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        lowerBoundPercentage: {{ lowerBoundPercentage }}
+        standardDeviationPercentage: {{ standardDeviationPercentage }}
+        upperBoundPercentage: {{ upperBoundPercentage }}
     - name: dailyRespiratoryRate
       description: |
         Optional. Data for points in the \`daily-respiratory-rate\` daily data type collection.
       value:
         breathsPerMinute: {{ breathsPerMinute }}
         date:
-          month: {{ month }}
           day: {{ day }}
+          month: {{ month }}
           year: {{ year }}
-    - name: irregularRhythmNotification
+    - name: dailyRestingHeartRate
       description: |
-        Optional. Data for points in the \`irregular-rhythm-notification\` session data type collection.
+        Optional. Data for points in the \`daily-resting-heart-rate\` daily data type collection.
       value:
-        alertWindows:
-          - endTime: "{{ endTime }}"
-            endUtcOffset: "{{ endUtcOffset }}"
-            civilStartTime:
-              time:
-                seconds: {{ seconds }}
-                minutes: {{ minutes }}
-                nanos: {{ nanos }}
-                hours: {{ hours }}
-              date:
-                month: {{ month }}
-                day: {{ day }}
-                year: {{ year }}
-            heartBeats: "{{ heartBeats }}"
-            startTime: "{{ startTime }}"
-            startUtcOffset: "{{ startUtcOffset }}"
-            positive: {{ positive }}
-            civilEndTime:
-              time:
-                seconds: {{ seconds }}
-                minutes: {{ minutes }}
-                nanos: {{ nanos }}
-                hours: {{ hours }}
-              date:
-                month: {{ month }}
-                day: {{ day }}
-                year: {{ year }}
-        interval:
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
-          civilEndTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          endTime: "{{ endTime }}"
-          endUtcOffset: "{{ endUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-        medicalDeviceInfo:
-          algorithmVersion: "{{ algorithmVersion }}"
-          serviceVersion: "{{ serviceVersion }}"
-          firmwareVersion: "{{ firmwareVersion }}"
-          featureVersion: "{{ featureVersion }}"
-          deviceModel: "{{ deviceModel }}"
+        beatsPerMinute: "{{ beatsPerMinute }}"
+        dailyRestingHeartRateMetadata:
+          calculationMethod: "{{ calculationMethod }}"
+        date:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+    - name: dailySleepTemperatureDerivations
+      description: |
+        Optional. Data for points in the \`daily-sleep-temperature-derivations\` daily data type collection.
+      value:
+        baselineTemperatureCelsius: {{ baselineTemperatureCelsius }}
+        date:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        nightlyTemperatureCelsius: {{ nightlyTemperatureCelsius }}
+        relativeNightlyStddev30dCelsius: {{ relativeNightlyStddev30dCelsius }}
+    - name: dailyVo2Max
+      description: |
+        Optional. Data for points in the \`daily-vo2-max\` daily data type collection.
+      value:
+        cardioFitnessLevel: "{{ cardioFitnessLevel }}"
+        date:
+          day: {{ day }}
+          month: {{ month }}
+          year: {{ year }}
+        estimated: {{ estimated }}
+        vo2Max: {{ vo2Max }}
+        vo2MaxCovariance: {{ vo2MaxCovariance }}
+    - name: dataSource
+      description: |
+        Optional. Data source information for the metric
+      value:
+        application:
+          googleWebClientId: "{{ googleWebClientId }}"
+          packageName: "{{ packageName }}"
+          webClientId: "{{ webClientId }}"
+        device:
+          displayName: "{{ displayName }}"
+          formFactor: "{{ formFactor }}"
+          manufacturer: "{{ manufacturer }}"
+        platform: "{{ platform }}"
+        recordingMethod: "{{ recordingMethod }}"
     - name: distance
       description: |
         Optional. Data for points in the \`distance\` interval data type collection.
       value:
         interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
+              seconds: {{ seconds }}
           civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
         millimeters: "{{ millimeters }}"
+    - name: electrocardiogram
+      description: |
+        Optional. Data for points in the \`electrocardiogram\` session data type collection.
+      value:
+        beatsPerMinuteAvg: "{{ beatsPerMinuteAvg }}"
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+        leadNumber: {{ leadNumber }}
+        medicalDeviceInfo:
+          algorithmVersion: "{{ algorithmVersion }}"
+          deviceModel: "{{ deviceModel }}"
+          featureVersion: "{{ featureVersion }}"
+          firmwareVersion: "{{ firmwareVersion }}"
+          serviceVersion: "{{ serviceVersion }}"
+        millivoltsScalingFactor: {{ millivoltsScalingFactor }}
+        resultClassification: "{{ resultClassification }}"
+        samplingFrequencyHertz: {{ samplingFrequencyHertz }}
+        waveformSamples:
+          - {{ waveformSamples }}
     - name: exercise
       description: |
         Optional. Data for points in the \`exercise\` session data type collection.
       value:
-        splits:
-          - endTime: "{{ endTime }}"
-            endUtcOffset: "{{ endUtcOffset }}"
-            activeDuration: "{{ activeDuration }}"
-            metricsSummary:
-              runVo2Max: {{ runVo2Max }}
-              mobilityMetrics:
-                avgStrideLengthMillimeters: "{{ avgStrideLengthMillimeters }}"
-                avgVerticalRatio: {{ avgVerticalRatio }}
-                avgCadenceStepsPerMinute: {{ avgCadenceStepsPerMinute }}
-                avgVerticalOscillationMillimeters: "{{ avgVerticalOscillationMillimeters }}"
-                avgGroundContactTimeDuration: "{{ avgGroundContactTimeDuration }}"
-              activeZoneMinutes: "{{ activeZoneMinutes }}"
-              steps: "{{ steps }}"
-              averageHeartRateBeatsPerMinute: "{{ averageHeartRateBeatsPerMinute }}"
-              distanceMillimeters: {{ distanceMillimeters }}
-              heartRateZoneDurations:
-                lightTime: "{{ lightTime }}"
-                vigorousTime: "{{ vigorousTime }}"
-                moderateTime: "{{ moderateTime }}"
-                peakTime: "{{ peakTime }}"
-              averageSpeedMillimetersPerSecond: {{ averageSpeedMillimetersPerSecond }}
-              caloriesKcal: {{ caloriesKcal }}
-              totalSwimLengths: {{ totalSwimLengths }}
-              averagePaceSecondsPerMeter: {{ averagePaceSecondsPerMeter }}
-              elevationGainMillimeters: {{ elevationGainMillimeters }}
-            splitType: "{{ splitType }}"
-            startTime: "{{ startTime }}"
-            startUtcOffset: "{{ startUtcOffset }}"
+        activeDuration: "{{ activeDuration }}"
         createTime: "{{ createTime }}"
-        notes: "{{ notes }}"
+        displayName: "{{ displayName }}"
+        exerciseEvents:
+          - eventTime: "{{ eventTime }}"
+            eventUtcOffset: "{{ eventUtcOffset }}"
+            exerciseEventType: "{{ exerciseEventType }}"
         exerciseMetadata:
           hasGps: {{ hasGps }}
           poolLengthMillimeters: "{{ poolLengthMillimeters }}"
-        activeDuration: "{{ activeDuration }}"
-        exerciseEvents:
-          - exerciseEventType: "{{ exerciseEventType }}"
-            eventTime: "{{ eventTime }}"
-            eventUtcOffset: "{{ eventUtcOffset }}"
+        exerciseType: "{{ exerciseType }}"
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+        metricsSummary:
+          activeZoneMinutes: "{{ activeZoneMinutes }}"
+          averageHeartRateBeatsPerMinute: "{{ averageHeartRateBeatsPerMinute }}"
+          averagePaceSecondsPerMeter: {{ averagePaceSecondsPerMeter }}
+          averageSpeedMillimetersPerSecond: {{ averageSpeedMillimetersPerSecond }}
+          caloriesKcal: {{ caloriesKcal }}
+          distanceMillimeters: {{ distanceMillimeters }}
+          elevationGainMillimeters: {{ elevationGainMillimeters }}
+          heartRateZoneDurations:
+            lightTime: "{{ lightTime }}"
+            moderateTime: "{{ moderateTime }}"
+            peakTime: "{{ peakTime }}"
+            vigorousTime: "{{ vigorousTime }}"
+          mobilityMetrics:
+            avgCadenceStepsPerMinute: {{ avgCadenceStepsPerMinute }}
+            avgGroundContactTimeDuration: "{{ avgGroundContactTimeDuration }}"
+            avgStrideLengthMillimeters: "{{ avgStrideLengthMillimeters }}"
+            avgVerticalOscillationMillimeters: "{{ avgVerticalOscillationMillimeters }}"
+            avgVerticalRatio: {{ avgVerticalRatio }}
+          runVo2Max: {{ runVo2Max }}
+          steps: "{{ steps }}"
+          totalSwimLengths: {{ totalSwimLengths }}
+        notes: "{{ notes }}"
         splitSummaries:
-          - endTime: "{{ endTime }}"
+          - activeDuration: "{{ activeDuration }}"
+            endTime: "{{ endTime }}"
             endUtcOffset: "{{ endUtcOffset }}"
-            activeDuration: "{{ activeDuration }}"
             metricsSummary:
-              runVo2Max: {{ runVo2Max }}
-              mobilityMetrics:
-                avgStrideLengthMillimeters: "{{ avgStrideLengthMillimeters }}"
-                avgVerticalRatio: {{ avgVerticalRatio }}
-                avgCadenceStepsPerMinute: {{ avgCadenceStepsPerMinute }}
-                avgVerticalOscillationMillimeters: "{{ avgVerticalOscillationMillimeters }}"
-                avgGroundContactTimeDuration: "{{ avgGroundContactTimeDuration }}"
               activeZoneMinutes: "{{ activeZoneMinutes }}"
-              steps: "{{ steps }}"
               averageHeartRateBeatsPerMinute: "{{ averageHeartRateBeatsPerMinute }}"
-              distanceMillimeters: {{ distanceMillimeters }}
-              heartRateZoneDurations:
-                lightTime: "{{ lightTime }}"
-                vigorousTime: "{{ vigorousTime }}"
-                moderateTime: "{{ moderateTime }}"
-                peakTime: "{{ peakTime }}"
+              averagePaceSecondsPerMeter: {{ averagePaceSecondsPerMeter }}
               averageSpeedMillimetersPerSecond: {{ averageSpeedMillimetersPerSecond }}
               caloriesKcal: {{ caloriesKcal }}
-              totalSwimLengths: {{ totalSwimLengths }}
-              averagePaceSecondsPerMeter: {{ averagePaceSecondsPerMeter }}
+              distanceMillimeters: {{ distanceMillimeters }}
               elevationGainMillimeters: {{ elevationGainMillimeters }}
+              heartRateZoneDurations:
+                lightTime: "{{ lightTime }}"
+                moderateTime: "{{ moderateTime }}"
+                peakTime: "{{ peakTime }}"
+                vigorousTime: "{{ vigorousTime }}"
+              mobilityMetrics:
+                avgCadenceStepsPerMinute: {{ avgCadenceStepsPerMinute }}
+                avgGroundContactTimeDuration: "{{ avgGroundContactTimeDuration }}"
+                avgStrideLengthMillimeters: "{{ avgStrideLengthMillimeters }}"
+                avgVerticalOscillationMillimeters: "{{ avgVerticalOscillationMillimeters }}"
+                avgVerticalRatio: {{ avgVerticalRatio }}
+              runVo2Max: {{ runVo2Max }}
+              steps: "{{ steps }}"
+              totalSwimLengths: {{ totalSwimLengths }}
             splitType: "{{ splitType }}"
             startTime: "{{ startTime }}"
             startUtcOffset: "{{ startUtcOffset }}"
-        displayName: "{{ displayName }}"
-        interval:
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
-          civilEndTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          endTime: "{{ endTime }}"
-          endUtcOffset: "{{ endUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-        metricsSummary:
-          runVo2Max: {{ runVo2Max }}
-          mobilityMetrics:
-            avgStrideLengthMillimeters: "{{ avgStrideLengthMillimeters }}"
-            avgVerticalRatio: {{ avgVerticalRatio }}
-            avgCadenceStepsPerMinute: {{ avgCadenceStepsPerMinute }}
-            avgVerticalOscillationMillimeters: "{{ avgVerticalOscillationMillimeters }}"
-            avgGroundContactTimeDuration: "{{ avgGroundContactTimeDuration }}"
-          activeZoneMinutes: "{{ activeZoneMinutes }}"
-          steps: "{{ steps }}"
-          averageHeartRateBeatsPerMinute: "{{ averageHeartRateBeatsPerMinute }}"
-          distanceMillimeters: {{ distanceMillimeters }}
-          heartRateZoneDurations:
-            lightTime: "{{ lightTime }}"
-            vigorousTime: "{{ vigorousTime }}"
-            moderateTime: "{{ moderateTime }}"
-            peakTime: "{{ peakTime }}"
-          averageSpeedMillimetersPerSecond: {{ averageSpeedMillimetersPerSecond }}
-          caloriesKcal: {{ caloriesKcal }}
-          totalSwimLengths: {{ totalSwimLengths }}
-          averagePaceSecondsPerMeter: {{ averagePaceSecondsPerMeter }}
-          elevationGainMillimeters: {{ elevationGainMillimeters }}
+        splits:
+          - activeDuration: "{{ activeDuration }}"
+            endTime: "{{ endTime }}"
+            endUtcOffset: "{{ endUtcOffset }}"
+            metricsSummary:
+              activeZoneMinutes: "{{ activeZoneMinutes }}"
+              averageHeartRateBeatsPerMinute: "{{ averageHeartRateBeatsPerMinute }}"
+              averagePaceSecondsPerMeter: {{ averagePaceSecondsPerMeter }}
+              averageSpeedMillimetersPerSecond: {{ averageSpeedMillimetersPerSecond }}
+              caloriesKcal: {{ caloriesKcal }}
+              distanceMillimeters: {{ distanceMillimeters }}
+              elevationGainMillimeters: {{ elevationGainMillimeters }}
+              heartRateZoneDurations:
+                lightTime: "{{ lightTime }}"
+                moderateTime: "{{ moderateTime }}"
+                peakTime: "{{ peakTime }}"
+                vigorousTime: "{{ vigorousTime }}"
+              mobilityMetrics:
+                avgCadenceStepsPerMinute: {{ avgCadenceStepsPerMinute }}
+                avgGroundContactTimeDuration: "{{ avgGroundContactTimeDuration }}"
+                avgStrideLengthMillimeters: "{{ avgStrideLengthMillimeters }}"
+                avgVerticalOscillationMillimeters: "{{ avgVerticalOscillationMillimeters }}"
+                avgVerticalRatio: {{ avgVerticalRatio }}
+              runVo2Max: {{ runVo2Max }}
+              steps: "{{ steps }}"
+              totalSwimLengths: {{ totalSwimLengths }}
+            splitType: "{{ splitType }}"
+            startTime: "{{ startTime }}"
+            startUtcOffset: "{{ startUtcOffset }}"
         updateTime: "{{ updateTime }}"
-        exerciseType: "{{ exerciseType }}"
     - name: floors
       description: |
         Optional. Data for points in the \`floors\` interval data type collection.
       value:
+        count: "{{ count }}"
         interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
+              seconds: {{ seconds }}
           civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
-        count: "{{ count }}"
-    - name: respiratoryRateSleepSummary
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+    - name: food
       description: |
-        Optional. Data for points in the \`respiratory-rate-sleep-summary\` sample data type collection.
+        Optional. The food details.
       value:
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          utcOffset: "{{ utcOffset }}"
-        lightSleepStats:
-          signalToNoise: {{ signalToNoise }}
-          breathsPerMinute: {{ breathsPerMinute }}
-          standardDeviation: {{ standardDeviation }}
-        deepSleepStats:
-          signalToNoise: {{ signalToNoise }}
-          breathsPerMinute: {{ breathsPerMinute }}
-          standardDeviation: {{ standardDeviation }}
-        remSleepStats:
-          signalToNoise: {{ signalToNoise }}
-          breathsPerMinute: {{ breathsPerMinute }}
-          standardDeviation: {{ standardDeviation }}
-        fullSleepStats:
-          signalToNoise: {{ signalToNoise }}
-          breathsPerMinute: {{ breathsPerMinute }}
-          standardDeviation: {{ standardDeviation }}
+        accessLevel: "{{ accessLevel }}"
+        brand: "{{ brand }}"
+        defaultServing:
+          amount: {{ amount }}
+          foodMeasurementUnit: "{{ foodMeasurementUnit }}"
+          foodMeasurementUnitDisplayName: "{{ foodMeasurementUnitDisplayName }}"
+          foodMeasurementUnitDisplayNamePlural: "{{ foodMeasurementUnitDisplayNamePlural }}"
+          multiplier: {{ multiplier }}
+        description: "{{ description }}"
+        displayName: "{{ displayName }}"
+        energyAvg:
+          kcal: {{ kcal }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        energyFromFat:
+          kcal: {{ kcal }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        energyMax:
+          kcal: {{ kcal }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        energyMin:
+          kcal: {{ kcal }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        languageCode: "{{ languageCode }}"
+        mealType: "{{ mealType }}"
+        nutrients:
+          - nutrient: "{{ nutrient }}"
+            quantity:
+              grams: {{ grams }}
+              userProvidedUnit: "{{ userProvidedUnit }}"
+        servings:
+          - amount: {{ amount }}
+            foodMeasurementUnit: "{{ foodMeasurementUnit }}"
+            foodMeasurementUnitDisplayName: "{{ foodMeasurementUnitDisplayName }}"
+            foodMeasurementUnitDisplayNamePlural: "{{ foodMeasurementUnitDisplayNamePlural }}"
+            multiplier: {{ multiplier }}
+        totalCarbohydrate:
+          grams: {{ grams }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        totalFat:
+          grams: {{ grams }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
     - name: foodMeasurementUnit
       description: |
         Optional. The food measurement unit details.
       value:
         displayName: "{{ displayName }}"
         pluralDisplayName: "{{ pluralDisplayName }}"
-    - name: activityLevel
+    - name: heartRate
       description: |
-        Optional. Data for points in the \`activity-level\` daily data type collection.
+        Optional. Data for points in the \`heart-rate\` sample data type collection.
       value:
-        interval:
-          civilEndTime:
+        beatsPerMinute: "{{ beatsPerMinute }}"
+        metadata:
+          motionContext: "{{ motionContext }}"
+          sensorLocation: "{{ sensorLocation }}"
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
-          civilStartTime:
-            time:
               seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          endTime: "{{ endTime }}"
-          endUtcOffset: "{{ endUtcOffset }}"
-        activityLevelType: "{{ activityLevelType }}"
-    - name: timeInHeartRateZone
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+    - name: heartRateVariability
       description: |
-        Optional. Data for points in the \`time-in-heart-rate-zone\` interval data type collection.
+        Optional. Data for points in the \`heart-rate-variability\` sample data type collection.
       value:
-        interval:
-          civilEndTime:
+        rootMeanSquareOfSuccessiveDifferencesMilliseconds: {{ rootMeanSquareOfSuccessiveDifferencesMilliseconds }}
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
-          civilStartTime:
-            time:
               seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          endTime: "{{ endTime }}"
-          endUtcOffset: "{{ endUtcOffset }}"
-        heartRateZoneType: "{{ heartRateZoneType }}"
-    - name: dailySleepTemperatureDerivations
-      description: |
-        Optional. Data for points in the \`daily-sleep-temperature-derivations\` daily data type collection.
-      value:
-        date:
-          month: {{ month }}
-          day: {{ day }}
-          year: {{ year }}
-        baselineTemperatureCelsius: {{ baselineTemperatureCelsius }}
-        nightlyTemperatureCelsius: {{ nightlyTemperatureCelsius }}
-        relativeNightlyStddev30dCelsius: {{ relativeNightlyStddev30dCelsius }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+        standardDeviationMilliseconds: {{ standardDeviationMilliseconds }}
     - name: height
       description: |
         Optional. Data for points in the \`height\` sample data type collection.
       value:
         heightMillimeters: "{{ heightMillimeters }}"
         sampleTime:
-          physicalTime: "{{ physicalTime }}"
           civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
           utcOffset: "{{ utcOffset }}"
+    - name: hydrationLog
+      description: |
+        Optional. Data for points in the \`hydration-log\` session data type collection.
+      value:
+        amountConsumed:
+          milliliters: {{ milliliters }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+    - name: irregularRhythmNotification
+      description: |
+        Optional. Data for points in the \`irregular-rhythm-notification\` session data type collection.
+      value:
+        alertWindows:
+          - civilEndTime:
+              date:
+                day: {{ day }}
+                month: {{ month }}
+                year: {{ year }}
+              time:
+                hours: {{ hours }}
+                minutes: {{ minutes }}
+                nanos: {{ nanos }}
+                seconds: {{ seconds }}
+            civilStartTime:
+              date:
+                day: {{ day }}
+                month: {{ month }}
+                year: {{ year }}
+              time:
+                hours: {{ hours }}
+                minutes: {{ minutes }}
+                nanos: {{ nanos }}
+                seconds: {{ seconds }}
+            endTime: "{{ endTime }}"
+            endUtcOffset: "{{ endUtcOffset }}"
+            heartBeats: "{{ heartBeats }}"
+            positive: {{ positive }}
+            startTime: "{{ startTime }}"
+            startUtcOffset: "{{ startUtcOffset }}"
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+        medicalDeviceInfo:
+          algorithmVersion: "{{ algorithmVersion }}"
+          deviceModel: "{{ deviceModel }}"
+          featureVersion: "{{ featureVersion }}"
+          firmwareVersion: "{{ firmwareVersion }}"
+          serviceVersion: "{{ serviceVersion }}"
+    - name: menstrualPeriod
+      description: |
+        Optional. Data for points in the \`menstrual-period\` interval data type collection.
+      value:
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+        notes: "{{ notes }}"
+    - name: moods
+      description: |
+        Optional. Data for points in the \`moods\` sample data type collection.
+      value:
+        moods:
+          - "{{ moods }}"
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+        valences:
+          - "{{ valences }}"
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: \`users/{user}/dataTypes/{data_type}/dataPoints/{data_point}\` Example: \`users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef\` The \`{user}\` ID is a system-generated identifier, as described in Identity.health_user_id. The \`{data_type}\` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. \`heart-rate\` for the \`heart_rate\` field. The \`{data_point}\` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.
-    - name: electrocardiogram
+    - name: nutritionLog
       description: |
-        Optional. Data for points in the \`electrocardiogram\` session data type collection.
+        Optional. Data for points in the \`nutrition-log\` session data type collection.
       value:
-        beatsPerMinuteAvg: "{{ beatsPerMinuteAvg }}"
-        millivoltsScalingFactor: {{ millivoltsScalingFactor }}
-        interval:
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
-          civilEndTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          endTime: "{{ endTime }}"
-          endUtcOffset: "{{ endUtcOffset }}"
-          civilStartTime:
-            time:
-              seconds: {{ seconds }}
-              minutes: {{ minutes }}
-              nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-        resultClassification: "{{ resultClassification }}"
-        waveformSamples:
-          - {{ waveformSamples }}
-        samplingFrequencyHertz: {{ samplingFrequencyHertz }}
-        leadNumber: {{ leadNumber }}
-        medicalDeviceInfo:
-          algorithmVersion: "{{ algorithmVersion }}"
-          serviceVersion: "{{ serviceVersion }}"
-          firmwareVersion: "{{ firmwareVersion }}"
-          featureVersion: "{{ featureVersion }}"
-          deviceModel: "{{ deviceModel }}"
-    - name: activeZoneMinutes
-      description: |
-        Optional. Data for points in the \`active-zone-minutes\` interval data type collection, measured in minutes.
-      value:
+        energy:
+          kcal: {{ kcal }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        energyFromFat:
+          kcal: {{ kcal }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        food: "{{ food }}"
+        foodDisplayName: "{{ foodDisplayName }}"
         interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
+              seconds: {{ seconds }}
           civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
-        activeZoneMinutes: "{{ activeZoneMinutes }}"
-        heartRateZone: "{{ heartRateZone }}"
-    - name: coreBodyTemperature
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+        mealType: "{{ mealType }}"
+        nutrients:
+          - nutrient: "{{ nutrient }}"
+            quantity:
+              grams: {{ grams }}
+              userProvidedUnit: "{{ userProvidedUnit }}"
+        serving:
+          amount: {{ amount }}
+          foodMeasurementUnit: "{{ foodMeasurementUnit }}"
+          foodMeasurementUnitDisplayName: "{{ foodMeasurementUnitDisplayName }}"
+        totalCarbohydrate:
+          grams: {{ grams }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+        totalFat:
+          grams: {{ grams }}
+          userProvidedUnit: "{{ userProvidedUnit }}"
+    - name: ovulationTest
       description: |
-        Optional. Data for points in the \`core-body-temperature\` sample data type collection.
+        Optional. Data for points in the \`ovulation-test\` sample data type collection.
       value:
-        temperatureCelsius: {{ temperatureCelsius }}
-        measurementLocation: "{{ measurementLocation }}"
+        result: "{{ result }}"
         sampleTime:
-          physicalTime: "{{ physicalTime }}"
           civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
           utcOffset: "{{ utcOffset }}"
-        id: "{{ id }}"
+    - name: oxygenSaturation
+      description: |
+        Optional. Data for points in the \`oxygen-saturation\` sample data type collection.
+      value:
+        percentage: {{ percentage }}
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+    - name: respiratoryRateSleepSummary
+      description: |
+        Optional. Data for points in the \`respiratory-rate-sleep-summary\` sample data type collection.
+      value:
+        deepSleepStats:
+          breathsPerMinute: {{ breathsPerMinute }}
+          signalToNoise: {{ signalToNoise }}
+          standardDeviation: {{ standardDeviation }}
+        fullSleepStats:
+          breathsPerMinute: {{ breathsPerMinute }}
+          signalToNoise: {{ signalToNoise }}
+          standardDeviation: {{ standardDeviation }}
+        lightSleepStats:
+          breathsPerMinute: {{ breathsPerMinute }}
+          signalToNoise: {{ signalToNoise }}
+          standardDeviation: {{ standardDeviation }}
+        remSleepStats:
+          breathsPerMinute: {{ breathsPerMinute }}
+          signalToNoise: {{ signalToNoise }}
+          standardDeviation: {{ standardDeviation }}
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+    - name: runVo2Max
+      description: |
+        Optional. Data for points in the \`run-vo2-max\` sample data type collection.
+      value:
+        runVo2Max: {{ runVo2Max }}
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
     - name: sedentaryPeriod
       description: |
         Optional. Data for points in the \`sedentary-period\` interval data type collection.
       value:
         interval:
           civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
-          startTime: "{{ startTime }}"
-          startUtcOffset: "{{ startUtcOffset }}"
+              seconds: {{ seconds }}
           civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
-            date:
-              month: {{ month }}
-              day: {{ day }}
-              year: {{ year }}
+              seconds: {{ seconds }}
           endTime: "{{ endTime }}"
           endUtcOffset: "{{ endUtcOffset }}"
-    - name: dailyHeartRateZones
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+    - name: sleep
       description: |
-        Optional. Data for points in the \`daily-heart-rate-zones\` daily data type collection.
+        Optional. Data for points in the \`sleep\` session data type collection.
       value:
-        heartRateZones:
-          - minBeatsPerMinute: "{{ minBeatsPerMinute }}"
-            maxBeatsPerMinute: "{{ maxBeatsPerMinute }}"
-            heartRateZoneType: "{{ heartRateZoneType }}"
-        date:
-          month: {{ month }}
-          day: {{ day }}
-          year: {{ year }}
-    - name: dataSource
-      description: |
-        Optional. Data source information for the metric
-      value:
-        device:
-          manufacturer: "{{ manufacturer }}"
-          formFactor: "{{ formFactor }}"
-          displayName: "{{ displayName }}"
-        application:
-          packageName: "{{ packageName }}"
-          googleWebClientId: "{{ googleWebClientId }}"
-          webClientId: "{{ webClientId }}"
-        recordingMethod: "{{ recordingMethod }}"
-        platform: "{{ platform }}"
-    - name: bodyFat
-      description: |
-        Optional. Data for points in the \`body-fat\` sample data type collection.
-      value:
-        sampleTime:
-          physicalTime: "{{ physicalTime }}"
-          civilTime:
+        createTime: "{{ createTime }}"
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
             time:
-              seconds: {{ seconds }}
+              hours: {{ hours }}
               minutes: {{ minutes }}
               nanos: {{ nanos }}
-              hours: {{ hours }}
+              seconds: {{ seconds }}
+          civilStartTime:
             date:
-              month: {{ month }}
               day: {{ day }}
+              month: {{ month }}
               year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+        metadata:
+          externalId: "{{ externalId }}"
+          mainSleep: {{ mainSleep }}
+          manuallyEdited: {{ manuallyEdited }}
+          nap: {{ nap }}
+          processed: {{ processed }}
+          stagesStatus: "{{ stagesStatus }}"
+        outOfBedSegments:
+          - endTime: "{{ endTime }}"
+            endUtcOffset: "{{ endUtcOffset }}"
+            startTime: "{{ startTime }}"
+            startUtcOffset: "{{ startUtcOffset }}"
+        shortAwakenings:
+          - createTime: "{{ createTime }}"
+            endTime: "{{ endTime }}"
+            endUtcOffset: "{{ endUtcOffset }}"
+            startTime: "{{ startTime }}"
+            startUtcOffset: "{{ startUtcOffset }}"
+            type: "{{ type }}"
+            updateTime: "{{ updateTime }}"
+        stages:
+          - createTime: "{{ createTime }}"
+            endTime: "{{ endTime }}"
+            endUtcOffset: "{{ endUtcOffset }}"
+            startTime: "{{ startTime }}"
+            startUtcOffset: "{{ startUtcOffset }}"
+            type: "{{ type }}"
+            updateTime: "{{ updateTime }}"
+        summary:
+          minutesAfterWakeUp: "{{ minutesAfterWakeUp }}"
+          minutesAsleep: "{{ minutesAsleep }}"
+          minutesAwake: "{{ minutesAwake }}"
+          minutesInSleepPeriod: "{{ minutesInSleepPeriod }}"
+          minutesToFallAsleep: "{{ minutesToFallAsleep }}"
+          stagesSummary:
+            - count: "{{ count }}"
+              minutes: "{{ minutes }}"
+              type: "{{ type }}"
+        type: "{{ type }}"
+        updateTime: "{{ updateTime }}"
+    - name: steps
+      description: |
+        Optional. Data for points in the \`steps\` interval data type collection.
+      value:
+        count: "{{ count }}"
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+    - name: swimLengthsData
+      description: |
+        Optional. Data for points in the \`swim-lengths-data\` interval data type collection.
+      value:
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+        strokeCount: "{{ strokeCount }}"
+        swimStrokeType: "{{ swimStrokeType }}"
+    - name: symptoms
+      description: |
+        Optional. Data for points in the \`symptoms\` sample data type collection.
+      value:
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
           utcOffset: "{{ utcOffset }}"
-        percentage: {{ percentage }}
+        symptoms:
+          - "{{ symptoms }}"
+    - name: timeInHeartRateZone
+      description: |
+        Optional. Data for points in the \`time-in-heart-rate-zone\` interval data type collection.
+      value:
+        heartRateZoneType: "{{ heartRateZoneType }}"
+        interval:
+          civilEndTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          civilStartTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          endTime: "{{ endTime }}"
+          endUtcOffset: "{{ endUtcOffset }}"
+          startTime: "{{ startTime }}"
+          startUtcOffset: "{{ startUtcOffset }}"
+    - name: vo2Max
+      description: |
+        Optional. Data for points in the \`vo2-max\` sample data type collection.
+      value:
+        measurementMethod: "{{ measurementMethod }}"
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+        vo2Max: {{ vo2Max }}
+    - name: weight
+      description: |
+        Optional. Data for points in the \`weight\` sample data type collection.
+      value:
+        notes: "{{ notes }}"
+        sampleTime:
+          civilTime:
+            date:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            time:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+          physicalTime: "{{ physicalTime }}"
+          utcOffset: "{{ utcOffset }}"
+        weightGrams: {{ weightGrams }}
 `}</CodeBlock>
 
 </TabItem>
@@ -1979,45 +2131,49 @@ Updates a single identifiable data point. If a data point with the specified `na
 UPDATE google.health.data_points
 SET 
 data__activeEnergyBurned = '{{ activeEnergyBurned }}',
-data__heartRate = '{{ heartRate }}',
-data__dailyVo2Max = '{{ dailyVo2Max }}',
-data__steps = '{{ steps }}',
-data__runVo2Max = '{{ runVo2Max }}',
-data__vo2Max = '{{ vo2Max }}',
-data__dailyRestingHeartRate = '{{ dailyRestingHeartRate }}',
-data__bloodGlucose = '{{ bloodGlucose }}',
 data__activeMinutes = '{{ activeMinutes }}',
-data__dailyHeartRateVariability = '{{ dailyHeartRateVariability }}',
-data__oxygenSaturation = '{{ oxygenSaturation }}',
-data__hydrationLog = '{{ hydrationLog }}',
-data__nutritionLog = '{{ nutritionLog }}',
-data__heartRateVariability = '{{ heartRateVariability }}',
-data__weight = '{{ weight }}',
-data__sleep = '{{ sleep }}',
-data__dailyOxygenSaturation = '{{ dailyOxygenSaturation }}',
-data__food = '{{ food }}',
+data__activeZoneMinutes = '{{ activeZoneMinutes }}',
+data__activityLevel = '{{ activityLevel }}',
 data__altitude = '{{ altitude }}',
-data__swimLengthsData = '{{ swimLengthsData }}',
 data__basalEnergyBurned = '{{ basalEnergyBurned }}',
+data__bloodGlucose = '{{ bloodGlucose }}',
+data__bodyFat = '{{ bodyFat }}',
+data__coreBodyTemperature = '{{ coreBodyTemperature }}',
+data__dailyHeartRateVariability = '{{ dailyHeartRateVariability }}',
+data__dailyHeartRateZones = '{{ dailyHeartRateZones }}',
+data__dailyOxygenSaturation = '{{ dailyOxygenSaturation }}',
 data__dailyRespiratoryRate = '{{ dailyRespiratoryRate }}',
-data__irregularRhythmNotification = '{{ irregularRhythmNotification }}',
+data__dailyRestingHeartRate = '{{ dailyRestingHeartRate }}',
+data__dailySleepTemperatureDerivations = '{{ dailySleepTemperatureDerivations }}',
+data__dailyVo2Max = '{{ dailyVo2Max }}',
+data__dataSource = '{{ dataSource }}',
 data__distance = '{{ distance }}',
+data__electrocardiogram = '{{ electrocardiogram }}',
 data__exercise = '{{ exercise }}',
 data__floors = '{{ floors }}',
-data__respiratoryRateSleepSummary = '{{ respiratoryRateSleepSummary }}',
+data__food = '{{ food }}',
 data__foodMeasurementUnit = '{{ foodMeasurementUnit }}',
-data__activityLevel = '{{ activityLevel }}',
-data__timeInHeartRateZone = '{{ timeInHeartRateZone }}',
-data__dailySleepTemperatureDerivations = '{{ dailySleepTemperatureDerivations }}',
+data__heartRate = '{{ heartRate }}',
+data__heartRateVariability = '{{ heartRateVariability }}',
 data__height = '{{ height }}',
+data__hydrationLog = '{{ hydrationLog }}',
+data__irregularRhythmNotification = '{{ irregularRhythmNotification }}',
+data__menstrualPeriod = '{{ menstrualPeriod }}',
+data__moods = '{{ moods }}',
 data__name = '{{ name }}',
-data__electrocardiogram = '{{ electrocardiogram }}',
-data__activeZoneMinutes = '{{ activeZoneMinutes }}',
-data__coreBodyTemperature = '{{ coreBodyTemperature }}',
+data__nutritionLog = '{{ nutritionLog }}',
+data__ovulationTest = '{{ ovulationTest }}',
+data__oxygenSaturation = '{{ oxygenSaturation }}',
+data__respiratoryRateSleepSummary = '{{ respiratoryRateSleepSummary }}',
+data__runVo2Max = '{{ runVo2Max }}',
 data__sedentaryPeriod = '{{ sedentaryPeriod }}',
-data__dailyHeartRateZones = '{{ dailyHeartRateZones }}',
-data__dataSource = '{{ dataSource }}',
-data__bodyFat = '{{ bodyFat }}'
+data__sleep = '{{ sleep }}',
+data__steps = '{{ steps }}',
+data__swimLengthsData = '{{ swimLengthsData }}',
+data__symptoms = '{{ symptoms }}',
+data__timeInHeartRateZone = '{{ timeInHeartRateZone }}',
+data__vo2Max = '{{ vo2Max }}',
+data__weight = '{{ weight }}'
 WHERE 
 usersId = '{{ usersId }}' --required
 AND dataTypesId = '{{ dataTypesId }}' --required
@@ -2058,26 +2214,30 @@ AND dataTypesId = '{{ dataTypesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reconcile"
+    defaultValue="daily_roll_up"
     values={[
-        { label: 'reconcile', value: 'reconcile' },
+        { label: 'daily_roll_up', value: 'daily_roll_up' },
         { label: 'export_exercise_tcx', value: 'export_exercise_tcx' },
-        { label: 'roll_up', value: 'roll_up' },
-        { label: 'daily_roll_up', value: 'daily_roll_up' }
+        { label: 'reconcile', value: 'reconcile' },
+        { label: 'roll_up', value: 'roll_up' }
     ]}
 >
-<TabItem value="reconcile">
+<TabItem value="daily_roll_up">
 
-Reconcile data points from multiple data sources into a single data stream.
+Roll up data points over civil time intervals for supported data types.
 
 ```sql
-EXEC google.health.data_points.reconcile 
+EXEC google.health.data_points.daily_roll_up 
 @usersId='{{ usersId }}' --required, 
-@dataTypesId='{{ dataTypesId }}' --required, 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@filter='{{ filter }}', 
-@dataSourceFamily='{{ dataSourceFamily }}'
+@dataTypesId='{{ dataTypesId }}' --required 
+@@json=
+'{
+"dataSourceFamily": "{{ dataSourceFamily }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"range": "{{ range }}", 
+"windowSizeDays": {{ windowSizeDays }}
+}'
 ;
 ```
 </TabItem>
@@ -2094,6 +2254,21 @@ EXEC google.health.data_points.export_exercise_tcx
 ;
 ```
 </TabItem>
+<TabItem value="reconcile">
+
+Reconcile data points from multiple data sources into a single data stream.
+
+```sql
+EXEC google.health.data_points.reconcile 
+@usersId='{{ usersId }}' --required, 
+@dataTypesId='{{ dataTypesId }}' --required, 
+@dataSourceFamily='{{ dataSourceFamily }}', 
+@filter='{{ filter }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="roll_up">
 
 Roll up data points over physical time intervals for supported data types.
@@ -2105,29 +2280,10 @@ EXEC google.health.data_points.roll_up
 @@json=
 '{
 "dataSourceFamily": "{{ dataSourceFamily }}", 
-"range": "{{ range }}", 
-"windowSize": "{{ windowSize }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="daily_roll_up">
-
-Roll up data points over civil time intervals for supported data types.
-
-```sql
-EXEC google.health.data_points.daily_roll_up 
-@usersId='{{ usersId }}' --required, 
-@dataTypesId='{{ dataTypesId }}' --required 
-@@json=
-'{
 "pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
-"windowSizeDays": {{ windowSizeDays }}, 
 "range": "{{ range }}", 
-"dataSourceFamily": "{{ dataSourceFamily }}"
+"windowSize": "{{ windowSize }}"
 }'
 ;
 ```

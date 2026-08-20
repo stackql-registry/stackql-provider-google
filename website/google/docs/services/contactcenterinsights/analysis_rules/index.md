@@ -319,21 +319,21 @@ Creates a analysis rule.
 ```sql
 INSERT INTO google.contactcenterinsights.analysis_rules (
 data__active,
-data__displayName,
 data__analysisPercentage,
 data__annotatorSelector,
-data__name,
 data__conversationFilter,
+data__displayName,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
 {{ active }},
-'{{ displayName }}',
 {{ analysisPercentage }},
 '{{ annotatorSelector }}',
-'{{ name }}',
 '{{ conversationFilter }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -363,10 +363,6 @@ updateTime
       value: {{ active }}
       description: |
         If true, apply this rule to conversations. Otherwise, this rule is inactive and saved as a draft.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Display Name of the analysis rule.
     - name: analysisPercentage
       value: {{ analysisPercentage }}
       description: |
@@ -375,36 +371,40 @@ updateTime
       description: |
         Selector of annotators to run and the phrase matchers to use for conversations that matches the conversation_filter. If not specified, NO annotators will be run.
       value:
-        runPhraseMatcherAnnotator: {{ runPhraseMatcherAnnotator }}
-        summarizationConfig:
-          summarizationModel: "{{ summarizationModel }}"
-          generator: "{{ generator }}"
-          conversationProfile: "{{ conversationProfile }}"
-        runEntityAnnotator: {{ runEntityAnnotator }}
-        runSummarizationAnnotator: {{ runSummarizationAnnotator }}
-        runInterruptionAnnotator: {{ runInterruptionAnnotator }}
+        issueModels:
+          - "{{ issueModels }}"
         phraseMatchers:
           - "{{ phraseMatchers }}"
-        runSentimentAnnotator: {{ runSentimentAnnotator }}
-        runQaAnnotator: {{ runQaAnnotator }}
-        runIssueModelAnnotator: {{ runIssueModelAnnotator }}
-        runSilenceAnnotator: {{ runSilenceAnnotator }}
-        runAutoLabelingAnnotator: {{ runAutoLabelingAnnotator }}
         qaConfig:
           scorecardList:
             qaScorecardRevisions:
               - "{{ qaScorecardRevisions }}"
-        issueModels:
-          - "{{ issueModels }}"
+        runAutoLabelingAnnotator: {{ runAutoLabelingAnnotator }}
+        runEntityAnnotator: {{ runEntityAnnotator }}
         runIntentAnnotator: {{ runIntentAnnotator }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule}
+        runInterruptionAnnotator: {{ runInterruptionAnnotator }}
+        runIssueModelAnnotator: {{ runIssueModelAnnotator }}
+        runPhraseMatcherAnnotator: {{ runPhraseMatcherAnnotator }}
+        runQaAnnotator: {{ runQaAnnotator }}
+        runSentimentAnnotator: {{ runSentimentAnnotator }}
+        runSilenceAnnotator: {{ runSilenceAnnotator }}
+        runSummarizationAnnotator: {{ runSummarizationAnnotator }}
+        summarizationConfig:
+          conversationProfile: "{{ conversationProfile }}"
+          generator: "{{ generator }}"
+          summarizationModel: "{{ summarizationModel }}"
     - name: conversationFilter
       value: "{{ conversationFilter }}"
       description: |
         Filter for the conversations that should apply this analysis rule. An empty filter means this analysis rule applies to all conversations. Refer to https://cloud.google.com/contact-center/insights/docs/filtering for details.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Display Name of the analysis rule.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule}
 `}</CodeBlock>
 
 </TabItem>
@@ -427,11 +427,11 @@ Updates a analysis rule.
 UPDATE google.contactcenterinsights.analysis_rules
 SET 
 data__active = {{ active }},
-data__displayName = '{{ displayName }}',
 data__analysisPercentage = {{ analysisPercentage }},
 data__annotatorSelector = '{{ annotatorSelector }}',
-data__name = '{{ name }}',
-data__conversationFilter = '{{ conversationFilter }}'
+data__conversationFilter = '{{ conversationFilter }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

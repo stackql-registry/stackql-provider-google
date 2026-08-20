@@ -110,10 +110,10 @@ EXEC google.workflowexecutions.workflows.trigger_pubsub_execution
 @workflowsId='{{ workflowsId }}' --required 
 @@json=
 '{
-"subscription": "{{ subscription }}", 
-"message": "{{ message }}", 
 "GCPCloudEventsMode": "{{ GCPCloudEventsMode }}", 
-"deliveryAttempt": {{ deliveryAttempt }}
+"deliveryAttempt": {{ deliveryAttempt }}, 
+"message": "{{ message }}", 
+"subscription": "{{ subscription }}"
 }'
 ;
 ```

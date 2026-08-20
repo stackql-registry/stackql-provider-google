@@ -33,13 +33,37 @@ Creates, updates, deletes, gets or lists an <code>assets</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_assets_list"
+    defaultValue="folders_assets_list"
     values={[
+        { label: 'folders_assets_list', value: 'folders_assets_list' },
         { label: 'organizations_assets_list', value: 'organizations_assets_list' },
-        { label: 'projects_assets_list', value: 'projects_assets_list' },
-        { label: 'folders_assets_list', value: 'folders_assets_list' }
+        { label: 'projects_assets_list', value: 'projects_assets_list' }
     ]}
 >
+<TabItem value="folders_assets_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="asset" /></td>
+    <td><code>object</code></td>
+    <td> (id: Asset)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="stateChange" /></td>
+    <td><code>string</code></td>
+    <td> (UNUSED, ADDED, REMOVED, ACTIVE)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_assets_list">
 
 <table>
@@ -88,30 +112,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_assets_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="asset" /></td>
-    <td><code>object</code></td>
-    <td> (id: Asset)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateChange" /></td>
-    <td><code>string</code></td>
-    <td> (UNUSED, ADDED, REMOVED, ACTIVE)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 </Tabs>
 
 ## Methods
@@ -130,30 +130,30 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_assets_list"><CopyableCode code="folders_assets_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_assets_list"><CopyableCode code="organizations_assets_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#projects_assets_list"><CopyableCode code="projects_assets_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
+    <td><a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_assets_list"><CopyableCode code="folders_assets_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-compareDuration"><code>compareDuration</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#organizations_assets_run_discovery"><CopyableCode code="organizations_assets_run_discovery" /></a></td>
+    <td><a href="#folders_assets_group"><CopyableCode code="folders_assets_group" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -165,16 +165,16 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#projects_assets_group"><CopyableCode code="projects_assets_group" /></a></td>
+    <td><a href="#organizations_assets_run_discovery"><CopyableCode code="organizations_assets_run_discovery" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_assets_group"><CopyableCode code="folders_assets_group" /></a></td>
+    <td><a href="#projects_assets_group"><CopyableCode code="projects_assets_group" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -250,13 +250,33 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_assets_list"
+    defaultValue="folders_assets_list"
     values={[
+        { label: 'folders_assets_list', value: 'folders_assets_list' },
         { label: 'organizations_assets_list', value: 'organizations_assets_list' },
-        { label: 'projects_assets_list', value: 'projects_assets_list' },
-        { label: 'folders_assets_list', value: 'folders_assets_list' }
+        { label: 'projects_assets_list', value: 'projects_assets_list' }
     ]}
 >
+<TabItem value="folders_assets_list">
+
+Successful response
+
+```sql
+SELECT
+asset,
+stateChange
+FROM google.securitycenter.assets
+WHERE foldersId = '{{ foldersId }}' -- required
+AND compareDuration = '{{ compareDuration }}'
+AND fieldMask = '{{ fieldMask }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND readTime = '{{ readTime }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_assets_list">
 
 Successful response
@@ -267,13 +287,13 @@ asset,
 stateChange
 FROM google.securitycenter.assets
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND readTime = '{{ readTime }}'
 AND compareDuration = '{{ compareDuration }}'
 AND fieldMask = '{{ fieldMask }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND readTime = '{{ readTime }}'
 ;
 ```
 </TabItem>
@@ -289,31 +309,11 @@ FROM google.securitycenter.assets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND compareDuration = '{{ compareDuration }}'
 AND fieldMask = '{{ fieldMask }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND readTime = '{{ readTime }}'
-;
-```
-</TabItem>
-<TabItem value="folders_assets_list">
-
-Successful response
-
-```sql
-SELECT
-asset,
-stateChange
-FROM google.securitycenter.assets
-WHERE foldersId = '{{ foldersId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND readTime = '{{ readTime }}'
-AND compareDuration = '{{ compareDuration }}'
-AND fieldMask = '{{ fieldMask }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND readTime = '{{ readTime }}'
 ;
 ```
 </TabItem>
@@ -323,21 +323,30 @@ AND filter = '{{ filter }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_assets_run_discovery"
+    defaultValue="folders_assets_group"
     values={[
-        { label: 'organizations_assets_run_discovery', value: 'organizations_assets_run_discovery' },
+        { label: 'folders_assets_group', value: 'folders_assets_group' },
         { label: 'organizations_assets_group', value: 'organizations_assets_group' },
-        { label: 'projects_assets_group', value: 'projects_assets_group' },
-        { label: 'folders_assets_group', value: 'folders_assets_group' }
+        { label: 'organizations_assets_run_discovery', value: 'organizations_assets_run_discovery' },
+        { label: 'projects_assets_group', value: 'projects_assets_group' }
     ]}
 >
-<TabItem value="organizations_assets_run_discovery">
+<TabItem value="folders_assets_group">
 
 Successful response
 
 ```sql
-EXEC google.securitycenter.assets.organizations_assets_run_discovery 
-@organizationsId='{{ organizationsId }}' --required
+EXEC google.securitycenter.assets.folders_assets_group 
+@foldersId='{{ foldersId }}' --required 
+@@json=
+'{
+"compareDuration": "{{ compareDuration }}", 
+"filter": "{{ filter }}", 
+"groupBy": "{{ groupBy }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"readTime": "{{ readTime }}"
+}'
 ;
 ```
 </TabItem>
@@ -350,13 +359,23 @@ EXEC google.securitycenter.assets.organizations_assets_group
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"readTime": "{{ readTime }}", 
-"pageToken": "{{ pageToken }}", 
-"groupBy": "{{ groupBy }}", 
+"compareDuration": "{{ compareDuration }}", 
 "filter": "{{ filter }}", 
+"groupBy": "{{ groupBy }}", 
 "pageSize": {{ pageSize }}, 
-"compareDuration": "{{ compareDuration }}"
+"pageToken": "{{ pageToken }}", 
+"readTime": "{{ readTime }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="organizations_assets_run_discovery">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.assets.organizations_assets_run_discovery 
+@organizationsId='{{ organizationsId }}' --required
 ;
 ```
 </TabItem>
@@ -369,31 +388,12 @@ EXEC google.securitycenter.assets.projects_assets_group
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"readTime": "{{ readTime }}", 
-"pageToken": "{{ pageToken }}", 
-"groupBy": "{{ groupBy }}", 
+"compareDuration": "{{ compareDuration }}", 
 "filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}, 
-"compareDuration": "{{ compareDuration }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="folders_assets_group">
-
-Successful response
-
-```sql
-EXEC google.securitycenter.assets.folders_assets_group 
-@foldersId='{{ foldersId }}' --required 
-@@json=
-'{
-"readTime": "{{ readTime }}", 
-"pageToken": "{{ pageToken }}", 
 "groupBy": "{{ groupBy }}", 
-"filter": "{{ filter }}", 
 "pageSize": {{ pageSize }}, 
-"compareDuration": "{{ compareDuration }}"
+"pageToken": "{{ pageToken }}", 
+"readTime": "{{ readTime }}"
 }'
 ;
 ```

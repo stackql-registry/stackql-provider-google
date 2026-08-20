@@ -275,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns descriptions of all replications for a volume.</td>
 </tr>
 <tr>
@@ -300,20 +300,6 @@ The following methods are available for this resource:
     <td>Deletes a replication.</td>
 </tr>
 <tr>
-    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
-    <td></td>
-    <td>Resume Cross Region Replication.</td>
-</tr>
-<tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
-    <td></td>
-    <td>Stop Cross Region Replication.</td>
-</tr>
-<tr>
     <td><a href="#establish_peering"><CopyableCode code="establish_peering" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
@@ -321,11 +307,25 @@ The following methods are available for this resource:
     <td>Establish replication peering.</td>
 </tr>
 <tr>
+    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
+    <td></td>
+    <td>Resume Cross Region Replication.</td>
+</tr>
+<tr>
     <td><a href="#reverse_direction"><CopyableCode code="reverse_direction" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
     <td></td>
     <td>Reverses direction of replication. Source becomes destination and destination becomes source.</td>
+</tr>
+<tr>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
+    <td></td>
+    <td>Stop Cross Region Replication.</td>
 </tr>
 <tr>
     <td><a href="#sync"><CopyableCode code="sync" /></a></td>
@@ -473,9 +473,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -497,24 +497,24 @@ Create a new replication for a volume.
 
 ```sql
 INSERT INTO google.netapp.replications (
-data__destinationVolumeParameters,
-data__name,
 data__clusterLocation,
-data__labels,
-data__replicationSchedule,
 data__description,
+data__destinationVolumeParameters,
+data__labels,
+data__name,
+data__replicationSchedule,
 projectsId,
 locationsId,
 volumesId,
 replicationId
 )
 SELECT 
-'{{ destinationVolumeParameters }}',
-'{{ name }}',
 '{{ clusterLocation }}',
-'{{ labels }}',
-'{{ replicationSchedule }}',
 '{{ description }}',
+'{{ destinationVolumeParameters }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ replicationSchedule }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumesId }}',
@@ -542,39 +542,39 @@ response
     - name: volumesId
       value: "{{ volumesId }}"
       description: Required parameter for the replications resource.
-    - name: destinationVolumeParameters
-      description: |
-        Required. Input only. Destination volume parameters
-      value:
-        volumeId: "{{ volumeId }}"
-        shareName: "{{ shareName }}"
-        storagePool: "{{ storagePool }}"
-        description: "{{ description }}"
-        tieringPolicy:
-          tierAction: "{{ tierAction }}"
-          coolingThresholdDays: {{ coolingThresholdDays }}
-          hotTierBypassModeEnabled: {{ hotTierBypassModeEnabled }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the Replication. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}/replications/{replication_id}\`.
     - name: clusterLocation
       value: "{{ clusterLocation }}"
       description: |
         Optional. Location of the user cluster.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description about this replication relationship.
+    - name: destinationVolumeParameters
+      description: |
+        Required. Input only. Destination volume parameters
+      value:
+        description: "{{ description }}"
+        shareName: "{{ shareName }}"
+        storagePool: "{{ storagePool }}"
+        tieringPolicy:
+          coolingThresholdDays: {{ coolingThresholdDays }}
+          hotTierBypassModeEnabled: {{ hotTierBypassModeEnabled }}
+          tierAction: "{{ tierAction }}"
+        volumeId: "{{ volumeId }}"
     - name: labels
       value: "{{ labels }}"
       description: |
         Resource labels to represent user provided metadata.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the Replication. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}/replications/{replication_id}\`.
     - name: replicationSchedule
       value: "{{ replicationSchedule }}"
       description: |
         Required. Indicates the schedule for replication.
       valid_values: ['REPLICATION_SCHEDULE_UNSPECIFIED', 'EVERY_10_MINUTES', 'HOURLY', 'DAILY']
-    - name: description
-      value: "{{ description }}"
-      description: |
-        A description about this replication relationship.
     - name: replicationId
       value: "{{ replicationId }}"
 `}</CodeBlock>
@@ -598,12 +598,12 @@ Updates the settings of a specific replication.
 ```sql
 UPDATE google.netapp.replications
 SET 
-data__destinationVolumeParameters = '{{ destinationVolumeParameters }}',
-data__name = '{{ name }}',
 data__clusterLocation = '{{ clusterLocation }}',
+data__description = '{{ description }}',
+data__destinationVolumeParameters = '{{ destinationVolumeParameters }}',
 data__labels = '{{ labels }}',
-data__replicationSchedule = '{{ replicationSchedule }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}',
+data__replicationSchedule = '{{ replicationSchedule }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -648,21 +648,54 @@ AND replicationsId = '{{ replicationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="resume"
+    defaultValue="establish_peering"
     values={[
-        { label: 'resume', value: 'resume' },
-        { label: 'stop', value: 'stop' },
         { label: 'establish_peering', value: 'establish_peering' },
+        { label: 'resume', value: 'resume' },
         { label: 'reverse_direction', value: 'reverse_direction' },
+        { label: 'stop', value: 'stop' },
         { label: 'sync', value: 'sync' }
     ]}
 >
+<TabItem value="establish_peering">
+
+Establish replication peering.
+
+```sql
+EXEC google.netapp.replications.establish_peering 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@volumesId='{{ volumesId }}' --required, 
+@replicationsId='{{ replicationsId }}' --required 
+@@json=
+'{
+"peerClusterName": "{{ peerClusterName }}", 
+"peerIpAddresses": "{{ peerIpAddresses }}", 
+"peerSvmName": "{{ peerSvmName }}", 
+"peerVolumeName": "{{ peerVolumeName }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="resume">
 
 Resume Cross Region Replication.
 
 ```sql
 EXEC google.netapp.replications.resume 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@volumesId='{{ volumesId }}' --required, 
+@replicationsId='{{ replicationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="reverse_direction">
+
+Reverses direction of replication. Source becomes destination and destination becomes source.
+
+```sql
+EXEC google.netapp.replications.reverse_direction 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @volumesId='{{ volumesId }}' --required, 
@@ -684,39 +717,6 @@ EXEC google.netapp.replications.stop
 '{
 "force": {{ force }}
 }'
-;
-```
-</TabItem>
-<TabItem value="establish_peering">
-
-Establish replication peering.
-
-```sql
-EXEC google.netapp.replications.establish_peering 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@volumesId='{{ volumesId }}' --required, 
-@replicationsId='{{ replicationsId }}' --required 
-@@json=
-'{
-"peerSvmName": "{{ peerSvmName }}", 
-"peerIpAddresses": "{{ peerIpAddresses }}", 
-"peerVolumeName": "{{ peerVolumeName }}", 
-"peerClusterName": "{{ peerClusterName }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="reverse_direction">
-
-Reverses direction of replication. Source becomes destination and destination becomes source.
-
-```sql
-EXEC google.netapp.replications.reverse_direction 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@volumesId='{{ volumesId }}' --required, 
-@replicationsId='{{ replicationsId }}' --required
 ;
 ```
 </TabItem>

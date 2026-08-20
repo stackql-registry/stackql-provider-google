@@ -195,14 +195,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the CompositeHealthChecks for a project in the given region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all CompositeHealthCheck resources (all<br />regional) available to the specified project.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -349,11 +349,11 @@ warning
 FROM google.compute.region_composite_health_checks
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -366,13 +366,13 @@ SELECT
 *
 FROM google.compute.region_composite_health_checks
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -394,21 +394,21 @@ Create a CompositeHealthCheck in the specified project in the given region<br />
 
 ```sql
 INSERT INTO google.compute.region_composite_health_checks (
-data__fingerprint,
-data__name,
-data__healthDestination,
 data__description,
+data__fingerprint,
+data__healthDestination,
 data__healthSources,
+data__name,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ fingerprint }}',
-'{{ name }}',
-'{{ healthDestination }}',
 '{{ description }}',
+'{{ fingerprint }}',
+'{{ healthDestination }}',
 '{{ healthSources }}',
+'{{ name }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -454,6 +454,11 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the region_composite_health_checks resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -464,6 +469,20 @@ zone
         the request will fail with error 412 conditionNotMet. To see
         the latest fingerprint, make a get() request to retrieve the
         CompositeHealthCheck.
+    - name: healthDestination
+      value: "{{ healthDestination }}"
+      description: |
+        URL to the destination resource. Must be set. Must be aForwardingRule. The ForwardingRule must have
+        load balancing scheme INTERNAL orINTERNAL_MANAGED and must be regional and in the same region
+        as the CompositeHealthCheck (cross-region deployment forINTERNAL_MANAGED is not supported). Can be mutated.
+    - name: healthSources
+      value:
+        - "{{ healthSources }}"
+      description: |
+        URLs to the HealthSource resources whose results are AND'ed.
+        I.e. he aggregated result is is HEALTHY only if all sources
+        are HEALTHY. Must have at least 1. Must not have more than 10.
+        Must be regional and in the same region as theCompositeHealthCheck. Can be mutated.
     - name: name
       value: "{{ name }}"
       description: |
@@ -474,25 +493,6 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
-    - name: healthDestination
-      value: "{{ healthDestination }}"
-      description: |
-        URL to the destination resource. Must be set. Must be aForwardingRule. The ForwardingRule must have
-        load balancing scheme INTERNAL orINTERNAL_MANAGED and must be regional and in the same region
-        as the CompositeHealthCheck (cross-region deployment forINTERNAL_MANAGED is not supported). Can be mutated.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: healthSources
-      value:
-        - "{{ healthSources }}"
-      description: |
-        URLs to the HealthSource resources whose results are AND'ed.
-        I.e. he aggregated result is is HEALTHY only if all sources
-        are HEALTHY. Must have at least 1. Must not have more than 10.
-        Must be regional and in the same region as theCompositeHealthCheck. Can be mutated.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -516,11 +516,11 @@ Updates the specified regional CompositeHealthCheck resource<br />with the data 
 ```sql
 UPDATE google.compute.region_composite_health_checks
 SET 
-data__fingerprint = '{{ fingerprint }}',
-data__name = '{{ name }}',
-data__healthDestination = '{{ healthDestination }}',
 data__description = '{{ description }}',
-data__healthSources = '{{ healthSources }}'
+data__fingerprint = '{{ fingerprint }}',
+data__healthDestination = '{{ healthDestination }}',
+data__healthSources = '{{ healthSources }}',
+data__name = '{{ name }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required

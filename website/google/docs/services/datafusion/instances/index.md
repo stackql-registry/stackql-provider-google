@@ -495,7 +495,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Data Fusion instances in the specified project and location.</td>
 </tr>
 <tr>
@@ -706,10 +706,10 @@ zone
 FROM google.datafusion.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -731,53 +731,53 @@ Creates a new Data Fusion instance in the specified project and location.
 
 ```sql
 INSERT INTO google.datafusion.instances (
-data__patchRevision,
-data__monitoringConfig,
-data__privateInstance,
+data__cryptoKeyConfig,
 data__dataplexDataLineageIntegrationEnabled,
-data__maintenancePolicy,
+data__dataprocServiceAccount,
+data__description,
+data__displayName,
+data__enableRbac,
+data__enableStackdriverLogging,
+data__enableStackdriverMonitoring,
 data__eventPublishConfig,
 data__labels,
-data__zone,
-data__options,
+data__loggingConfig,
+data__maintenancePolicy,
+data__monitoringConfig,
 data__networkConfig,
-data__displayName,
-data__dataprocServiceAccount,
-data__cryptoKeyConfig,
-data__enableRbac,
+data__options,
+data__patchRevision,
+data__privateInstance,
+data__tags,
 data__type,
 data__version,
-data__tags,
-data__enableStackdriverLogging,
-data__loggingConfig,
-data__enableStackdriverMonitoring,
-data__description,
+data__zone,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ patchRevision }}',
-'{{ monitoringConfig }}',
-{{ privateInstance }},
+'{{ cryptoKeyConfig }}',
 {{ dataplexDataLineageIntegrationEnabled }},
-'{{ maintenancePolicy }}',
+'{{ dataprocServiceAccount }}',
+'{{ description }}',
+'{{ displayName }}',
+{{ enableRbac }},
+{{ enableStackdriverLogging }},
+{{ enableStackdriverMonitoring }},
 '{{ eventPublishConfig }}',
 '{{ labels }}',
-'{{ zone }}',
-'{{ options }}',
+'{{ loggingConfig }}',
+'{{ maintenancePolicy }}',
+'{{ monitoringConfig }}',
 '{{ networkConfig }}',
-'{{ displayName }}',
-'{{ dataprocServiceAccount }}',
-'{{ cryptoKeyConfig }}',
-{{ enableRbac }},
+'{{ options }}',
+'{{ patchRevision }}',
+{{ privateInstance }},
+'{{ tags }}',
 '{{ type }}',
 '{{ version }}',
-'{{ tags }}',
-{{ enableStackdriverLogging }},
-'{{ loggingConfig }}',
-{{ enableStackdriverMonitoring }},
-'{{ description }}',
+'{{ zone }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -801,82 +801,100 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: patchRevision
-      value: "{{ patchRevision }}"
-      description: |
-        Optional. Current patch revision of the Data Fusion.
-    - name: monitoringConfig
-      description: |
-        Optional. The monitoring configuration for this instance.
-      value:
-        enableInstanceV2Metrics: {{ enableInstanceV2Metrics }}
-    - name: privateInstance
-      value: {{ privateInstance }}
-      description: |
-        Optional. Specifies whether the Data Fusion instance should be private. If set to true, all Data Fusion nodes will have private IP addresses and will not be able to access the public internet.
-    - name: dataplexDataLineageIntegrationEnabled
-      value: {{ dataplexDataLineageIntegrationEnabled }}
-      description: |
-        Optional. Option to enable the Dataplex Lineage Integration feature.
-    - name: maintenancePolicy
-      description: |
-        Optional. Configure the maintenance policy for this instance.
-      value:
-        maintenanceWindow:
-          recurringTimeWindow:
-            window:
-              startTime: "{{ startTime }}"
-              endTime: "{{ endTime }}"
-            recurrence: "{{ recurrence }}"
-        maintenanceExclusionWindow:
-          startTime: "{{ startTime }}"
-          endTime: "{{ endTime }}"
-    - name: eventPublishConfig
-      description: |
-        Optional. Option to enable and pass metadata for event publishing.
-      value:
-        topic: "{{ topic }}"
-        enabled: {{ enabled }}
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The resource labels for instance to use to annotate any related underlying resources such as Compute Engine VMs. The character '=' is not allowed to be used within the labels.
-    - name: zone
-      value: "{{ zone }}"
-      description: |
-        Optional. Name of the zone in which the Data Fusion instance will be created. Only DEVELOPER instances use this field.
-    - name: options
-      value: "{{ options }}"
-      description: |
-        Optional. Map of additional options used to configure the behavior of Data Fusion instance.
-    - name: networkConfig
-      description: |
-        Optional. Network configuration options. These are required when a private Data Fusion instance is to be created.
-      value:
-        ipAllocation: "{{ ipAllocation }}"
-        connectionType: "{{ connectionType }}"
-        network: "{{ network }}"
-        privateServiceConnectConfig:
-          networkAttachment: "{{ networkAttachment }}"
-          effectiveUnreachableCidrBlock: "{{ effectiveUnreachableCidrBlock }}"
-          unreachableCidrBlock: "{{ unreachableCidrBlock }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. Display name for an instance.
-    - name: dataprocServiceAccount
-      value: "{{ dataprocServiceAccount }}"
-      description: |
-        Optional. User-managed service account to set on Dataproc when Cloud Data Fusion creates Dataproc to run data processing pipelines. This allows users to have fine-grained access control on Dataproc's accesses to cloud resources.
     - name: cryptoKeyConfig
       description: |
         Optional. The crypto key configuration. This field is used by the Customer-Managed Encryption Keys (CMEK) feature.
       value:
         keyReference: "{{ keyReference }}"
+    - name: dataplexDataLineageIntegrationEnabled
+      value: {{ dataplexDataLineageIntegrationEnabled }}
+      description: |
+        Optional. Option to enable the Dataplex Lineage Integration feature.
+    - name: dataprocServiceAccount
+      value: "{{ dataprocServiceAccount }}"
+      description: |
+        Optional. User-managed service account to set on Dataproc when Cloud Data Fusion creates Dataproc to run data processing pipelines. This allows users to have fine-grained access control on Dataproc's accesses to cloud resources.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of this instance.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Display name for an instance.
     - name: enableRbac
       value: {{ enableRbac }}
       description: |
         Optional. Option to enable granular role-based access control.
+    - name: enableStackdriverLogging
+      value: {{ enableStackdriverLogging }}
+      description: |
+        Optional. Option to enable Dataproc Stackdriver Logging.
+    - name: enableStackdriverMonitoring
+      value: {{ enableStackdriverMonitoring }}
+      description: |
+        Optional. Option to enable Stackdriver Monitoring.
+    - name: eventPublishConfig
+      description: |
+        Optional. Option to enable and pass metadata for event publishing.
+      value:
+        enabled: {{ enabled }}
+        topic: "{{ topic }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The resource labels for instance to use to annotate any related underlying resources such as Compute Engine VMs. The character '=' is not allowed to be used within the labels.
+    - name: loggingConfig
+      description: |
+        Optional. The logging configuration for this instance. This field is supported only in CDF versions 6.11.0 and above.
+      value:
+        enableInstanceV2Logs: {{ enableInstanceV2Logs }}
+        instanceCloudLoggingDisabled: {{ instanceCloudLoggingDisabled }}
+    - name: maintenancePolicy
+      description: |
+        Optional. Configure the maintenance policy for this instance.
+      value:
+        maintenanceExclusionWindow:
+          endTime: "{{ endTime }}"
+          startTime: "{{ startTime }}"
+        maintenanceWindow:
+          recurringTimeWindow:
+            recurrence: "{{ recurrence }}"
+            window:
+              endTime: "{{ endTime }}"
+              startTime: "{{ startTime }}"
+    - name: monitoringConfig
+      description: |
+        Optional. The monitoring configuration for this instance.
+      value:
+        enableInstanceV2Metrics: {{ enableInstanceV2Metrics }}
+    - name: networkConfig
+      description: |
+        Optional. Network configuration options. These are required when a private Data Fusion instance is to be created.
+      value:
+        connectionType: "{{ connectionType }}"
+        ipAllocation: "{{ ipAllocation }}"
+        network: "{{ network }}"
+        privateServiceConnectConfig:
+          effectiveUnreachableCidrBlock: "{{ effectiveUnreachableCidrBlock }}"
+          networkAttachment: "{{ networkAttachment }}"
+          unreachableCidrBlock: "{{ unreachableCidrBlock }}"
+    - name: options
+      value: "{{ options }}"
+      description: |
+        Optional. Map of additional options used to configure the behavior of Data Fusion instance.
+    - name: patchRevision
+      value: "{{ patchRevision }}"
+      description: |
+        Optional. Current patch revision of the Data Fusion.
+    - name: privateInstance
+      value: {{ privateInstance }}
+      description: |
+        Optional. Specifies whether the Data Fusion instance should be private. If set to true, all Data Fusion nodes will have private IP addresses and will not be able to access the public internet.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
     - name: type
       value: "{{ type }}"
       description: |
@@ -886,28 +904,10 @@ response
       value: "{{ version }}"
       description: |
         Optional. Current version of the Data Fusion. Only specifiable in Update.
-    - name: tags
-      value: "{{ tags }}"
+    - name: zone
+      value: "{{ zone }}"
       description: |
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-    - name: enableStackdriverLogging
-      value: {{ enableStackdriverLogging }}
-      description: |
-        Optional. Option to enable Dataproc Stackdriver Logging.
-    - name: loggingConfig
-      description: |
-        Optional. The logging configuration for this instance. This field is supported only in CDF versions 6.11.0 and above.
-      value:
-        enableInstanceV2Logs: {{ enableInstanceV2Logs }}
-        instanceCloudLoggingDisabled: {{ instanceCloudLoggingDisabled }}
-    - name: enableStackdriverMonitoring
-      value: {{ enableStackdriverMonitoring }}
-      description: |
-        Optional. Option to enable Stackdriver Monitoring.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. A description of this instance.
+        Optional. Name of the zone in which the Data Fusion instance will be created. Only DEVELOPER instances use this field.
     - name: instanceId
       value: "{{ instanceId }}"
 `}</CodeBlock>
@@ -931,27 +931,27 @@ Updates a single Data Fusion instance.
 ```sql
 UPDATE google.datafusion.instances
 SET 
-data__patchRevision = '{{ patchRevision }}',
-data__monitoringConfig = '{{ monitoringConfig }}',
-data__privateInstance = {{ privateInstance }},
+data__cryptoKeyConfig = '{{ cryptoKeyConfig }}',
 data__dataplexDataLineageIntegrationEnabled = {{ dataplexDataLineageIntegrationEnabled }},
-data__maintenancePolicy = '{{ maintenancePolicy }}',
+data__dataprocServiceAccount = '{{ dataprocServiceAccount }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__enableRbac = {{ enableRbac }},
+data__enableStackdriverLogging = {{ enableStackdriverLogging }},
+data__enableStackdriverMonitoring = {{ enableStackdriverMonitoring }},
 data__eventPublishConfig = '{{ eventPublishConfig }}',
 data__labels = '{{ labels }}',
-data__zone = '{{ zone }}',
-data__options = '{{ options }}',
+data__loggingConfig = '{{ loggingConfig }}',
+data__maintenancePolicy = '{{ maintenancePolicy }}',
+data__monitoringConfig = '{{ monitoringConfig }}',
 data__networkConfig = '{{ networkConfig }}',
-data__displayName = '{{ displayName }}',
-data__dataprocServiceAccount = '{{ dataprocServiceAccount }}',
-data__cryptoKeyConfig = '{{ cryptoKeyConfig }}',
-data__enableRbac = {{ enableRbac }},
+data__options = '{{ options }}',
+data__patchRevision = '{{ patchRevision }}',
+data__privateInstance = {{ privateInstance }},
+data__tags = '{{ tags }}',
 data__type = '{{ type }}',
 data__version = '{{ version }}',
-data__tags = '{{ tags }}',
-data__enableStackdriverLogging = {{ enableStackdriverLogging }},
-data__loggingConfig = '{{ loggingConfig }}',
-data__enableStackdriverMonitoring = {{ enableStackdriverMonitoring }},
-data__description = '{{ description }}'
+data__zone = '{{ zone }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

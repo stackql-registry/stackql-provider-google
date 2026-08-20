@@ -342,49 +342,49 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-healthCheck"><code>healthCheck</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-healthCheck"><code>healthCheck</code></a></td>
     <td></td>
     <td>Returns the specified HealthCheck resource.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of HealthCheck resources available to the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all HealthCheck resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a HealthCheck resource in the specified project using the data<br />included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-healthCheck"><code>healthCheck</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-healthCheck"><code>healthCheck</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates a HealthCheck resource in the specified project using the data<br />included in the request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-healthCheck"><code>healthCheck</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-healthCheck"><code>healthCheck</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates a HealthCheck resource in the specified project using the data<br />included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-healthCheck"><code>healthCheck</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-healthCheck"><code>healthCheck</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes the specified HealthCheck resource.</td>
 </tr>
@@ -411,11 +411,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -501,7 +496,6 @@ type,
 unhealthyThreshold
 FROM google.compute.health_checks
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
 AND healthCheck = '{{ healthCheck }}' -- required
 ;
 ```
@@ -520,12 +514,11 @@ selfLink,
 warning
 FROM google.compute.health_checks
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -558,13 +551,13 @@ type,
 unhealthyThreshold
 FROM google.compute.health_checks
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -586,49 +579,47 @@ Creates a HealthCheck resource in the specified project using the data<br />incl
 
 ```sql
 INSERT INTO google.compute.health_checks (
-data__healthyThreshold,
-data__unhealthyThreshold,
 data__checkIntervalSec,
-data__grpcHealthCheck,
-data__http2HealthCheck,
-data__timeoutSec,
-data__sslHealthCheck,
-data__httpHealthCheck,
-data__sourceRegions,
 data__description,
+data__grpcHealthCheck,
 data__grpcTlsHealthCheck,
-data__id,
-data__selfLink,
+data__healthyThreshold,
+data__http2HealthCheck,
+data__httpHealthCheck,
 data__httpsHealthCheck,
-data__name,
-data__tcpHealthCheck,
+data__id,
 data__logConfig,
+data__name,
+data__selfLink,
+data__sourceRegions,
+data__sslHealthCheck,
+data__tcpHealthCheck,
+data__timeoutSec,
 data__type,
+data__unhealthyThreshold,
 project,
-region,
 requestId
 )
 SELECT 
-{{ healthyThreshold }},
-{{ unhealthyThreshold }},
 {{ checkIntervalSec }},
-'{{ grpcHealthCheck }}',
-'{{ http2HealthCheck }}',
-{{ timeoutSec }},
-'{{ sslHealthCheck }}',
-'{{ httpHealthCheck }}',
-'{{ sourceRegions }}',
 '{{ description }}',
+'{{ grpcHealthCheck }}',
 '{{ grpcTlsHealthCheck }}',
-'{{ id }}',
-'{{ selfLink }}',
+{{ healthyThreshold }},
+'{{ http2HealthCheck }}',
+'{{ httpHealthCheck }}',
 '{{ httpsHealthCheck }}',
-'{{ name }}',
-'{{ tcpHealthCheck }}',
+'{{ id }}',
 '{{ logConfig }}',
+'{{ name }}',
+'{{ selfLink }}',
+'{{ sourceRegions }}',
+'{{ sslHealthCheck }}',
+'{{ tcpHealthCheck }}',
+{{ timeoutSec }},
 '{{ type }}',
+{{ unhealthyThreshold }},
 '{{ project }}',
-'{{ region }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -669,62 +660,83 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the health_checks resource.
-    - name: region
-      value: "{{ region }}"
-      description: Required parameter for the health_checks resource.
-    - name: healthyThreshold
-      value: {{ healthyThreshold }}
-      description: |
-        A so-far unhealthy instance will be marked healthy after this
-        many consecutive successes. The default value is 2.
-    - name: unhealthyThreshold
-      value: {{ unhealthyThreshold }}
-      description: |
-        A so-far healthy instance will be marked unhealthy after this many
-        consecutive failures. The default value is 2.
     - name: checkIntervalSec
       value: {{ checkIntervalSec }}
       description: |
         How often (in seconds) to send a health check. The default value is 5
         seconds.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: grpcHealthCheck
       value:
-        portName: "{{ portName }}"
-        port: {{ port }}
         grpcServiceName: "{{ grpcServiceName }}"
+        port: {{ port }}
+        portName: "{{ portName }}"
         portSpecification: "{{ portSpecification }}"
+    - name: grpcTlsHealthCheck
+      value:
+        grpcServiceName: "{{ grpcServiceName }}"
+        port: {{ port }}
+        portSpecification: "{{ portSpecification }}"
+    - name: healthyThreshold
+      value: {{ healthyThreshold }}
+      description: |
+        A so-far unhealthy instance will be marked healthy after this
+        many consecutive successes. The default value is 2.
     - name: http2HealthCheck
       value:
-        response: "{{ response }}"
-        port: {{ port }}
         host: "{{ host }}"
-        portSpecification: "{{ portSpecification }}"
-        requestPath: "{{ requestPath }}"
-        proxyHeader: "{{ proxyHeader }}"
-        portName: "{{ portName }}"
-    - name: timeoutSec
-      value: {{ timeoutSec }}
-      description: |
-        How long (in seconds) to wait before claiming failure. The default value is
-        5 seconds. It is invalid for timeoutSec to have greater
-        value than checkIntervalSec.
-    - name: sslHealthCheck
-      value:
-        response: "{{ response }}"
-        request: "{{ request }}"
         port: {{ port }}
+        portName: "{{ portName }}"
         portSpecification: "{{ portSpecification }}"
         proxyHeader: "{{ proxyHeader }}"
-        portName: "{{ portName }}"
+        requestPath: "{{ requestPath }}"
+        response: "{{ response }}"
     - name: httpHealthCheck
       value:
-        portName: "{{ portName }}"
-        proxyHeader: "{{ proxyHeader }}"
-        portSpecification: "{{ portSpecification }}"
-        requestPath: "{{ requestPath }}"
-        port: {{ port }}
         host: "{{ host }}"
+        port: {{ port }}
+        portName: "{{ portName }}"
+        portSpecification: "{{ portSpecification }}"
+        proxyHeader: "{{ proxyHeader }}"
+        requestPath: "{{ requestPath }}"
         response: "{{ response }}"
+    - name: httpsHealthCheck
+      value:
+        host: "{{ host }}"
+        port: {{ port }}
+        portName: "{{ portName }}"
+        portSpecification: "{{ portSpecification }}"
+        proxyHeader: "{{ proxyHeader }}"
+        requestPath: "{{ requestPath }}"
+        response: "{{ response }}"
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
+    - name: logConfig
+      description: |
+        Configure logging on this health check.
+      value:
+        enable: {{ enable }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        For example, a name that is 1-63 characters long, matches the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`, and otherwise complies with
+        RFC1035. This regular expression describes a name where the first
+        character is a lowercase letter, and all following characters are a dash,
+        lowercase letter, or digit, except the last character, which isn't a dash.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
     - name: sourceRegions
       value:
         - "{{ sourceRegions }}"
@@ -743,57 +755,28 @@ zone
         - The checkIntervalSec field must be at least 30.
         - The health check cannot be used with BackendService nor with managed
         instance group auto-healing.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: grpcTlsHealthCheck
-      value:
-        portSpecification: "{{ portSpecification }}"
-        port: {{ port }}
-        grpcServiceName: "{{ grpcServiceName }}"
-    - name: id
-      value: "{{ id }}"
-      description: |
-        [Output Only] The unique identifier for the resource. This identifier is
-        defined by the server.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
-    - name: httpsHealthCheck
+    - name: sslHealthCheck
       value:
         port: {{ port }}
-        host: "{{ host }}"
-        response: "{{ response }}"
-        proxyHeader: "{{ proxyHeader }}"
         portName: "{{ portName }}"
         portSpecification: "{{ portSpecification }}"
-        requestPath: "{{ requestPath }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Name of the resource. Provided by the client when the resource is created.
-        The name must be 1-63 characters long, and comply withRFC1035.
-        For example, a name that is 1-63 characters long, matches the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\`, and otherwise complies with
-        RFC1035. This regular expression describes a name where the first
-        character is a lowercase letter, and all following characters are a dash,
-        lowercase letter, or digit, except the last character, which isn't a dash.
+        proxyHeader: "{{ proxyHeader }}"
+        request: "{{ request }}"
+        response: "{{ response }}"
     - name: tcpHealthCheck
       value:
         port: {{ port }}
+        portName: "{{ portName }}"
+        portSpecification: "{{ portSpecification }}"
+        proxyHeader: "{{ proxyHeader }}"
         request: "{{ request }}"
         response: "{{ response }}"
-        portName: "{{ portName }}"
-        proxyHeader: "{{ proxyHeader }}"
-        portSpecification: "{{ portSpecification }}"
-    - name: logConfig
+    - name: timeoutSec
+      value: {{ timeoutSec }}
       description: |
-        Configure logging on this health check.
-      value:
-        enable: {{ enable }}
+        How long (in seconds) to wait before claiming failure. The default value is
+        5 seconds. It is invalid for timeoutSec to have greater
+        value than checkIntervalSec.
     - name: type
       value: "{{ type }}"
       description: |
@@ -801,6 +784,11 @@ zone
         Exactly one of the protocol-specific health check fields must be specified,
         which must match type field.
       valid_values: ['GRPC', 'GRPC_WITH_TLS', 'HTTP', 'HTTP2', 'HTTPS', 'INVALID', 'SSL', 'TCP']
+    - name: unhealthyThreshold
+      value: {{ unhealthyThreshold }}
+      description: |
+        A so-far healthy instance will be marked unhealthy after this many
+        consecutive failures. The default value is 2.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -824,27 +812,26 @@ Updates a HealthCheck resource in the specified project using the data<br />incl
 ```sql
 UPDATE google.compute.health_checks
 SET 
-data__healthyThreshold = {{ healthyThreshold }},
-data__unhealthyThreshold = {{ unhealthyThreshold }},
 data__checkIntervalSec = {{ checkIntervalSec }},
-data__grpcHealthCheck = '{{ grpcHealthCheck }}',
-data__http2HealthCheck = '{{ http2HealthCheck }}',
-data__timeoutSec = {{ timeoutSec }},
-data__sslHealthCheck = '{{ sslHealthCheck }}',
-data__httpHealthCheck = '{{ httpHealthCheck }}',
-data__sourceRegions = '{{ sourceRegions }}',
 data__description = '{{ description }}',
+data__grpcHealthCheck = '{{ grpcHealthCheck }}',
 data__grpcTlsHealthCheck = '{{ grpcTlsHealthCheck }}',
-data__id = '{{ id }}',
-data__selfLink = '{{ selfLink }}',
+data__healthyThreshold = {{ healthyThreshold }},
+data__http2HealthCheck = '{{ http2HealthCheck }}',
+data__httpHealthCheck = '{{ httpHealthCheck }}',
 data__httpsHealthCheck = '{{ httpsHealthCheck }}',
-data__name = '{{ name }}',
-data__tcpHealthCheck = '{{ tcpHealthCheck }}',
+data__id = '{{ id }}',
 data__logConfig = '{{ logConfig }}',
-data__type = '{{ type }}'
+data__name = '{{ name }}',
+data__selfLink = '{{ selfLink }}',
+data__sourceRegions = '{{ sourceRegions }}',
+data__sslHealthCheck = '{{ sslHealthCheck }}',
+data__tcpHealthCheck = '{{ tcpHealthCheck }}',
+data__timeoutSec = {{ timeoutSec }},
+data__type = '{{ type }}',
+data__unhealthyThreshold = {{ unhealthyThreshold }}
 WHERE 
 project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND healthCheck = '{{ healthCheck }}' --required
 AND requestId = '{{ requestId}}'
 RETURNING
@@ -895,27 +882,26 @@ Updates a HealthCheck resource in the specified project using the data<br />incl
 ```sql
 REPLACE google.compute.health_checks
 SET 
-data__healthyThreshold = {{ healthyThreshold }},
-data__unhealthyThreshold = {{ unhealthyThreshold }},
 data__checkIntervalSec = {{ checkIntervalSec }},
-data__grpcHealthCheck = '{{ grpcHealthCheck }}',
-data__http2HealthCheck = '{{ http2HealthCheck }}',
-data__timeoutSec = {{ timeoutSec }},
-data__sslHealthCheck = '{{ sslHealthCheck }}',
-data__httpHealthCheck = '{{ httpHealthCheck }}',
-data__sourceRegions = '{{ sourceRegions }}',
 data__description = '{{ description }}',
+data__grpcHealthCheck = '{{ grpcHealthCheck }}',
 data__grpcTlsHealthCheck = '{{ grpcTlsHealthCheck }}',
-data__id = '{{ id }}',
-data__selfLink = '{{ selfLink }}',
+data__healthyThreshold = {{ healthyThreshold }},
+data__http2HealthCheck = '{{ http2HealthCheck }}',
+data__httpHealthCheck = '{{ httpHealthCheck }}',
 data__httpsHealthCheck = '{{ httpsHealthCheck }}',
-data__name = '{{ name }}',
-data__tcpHealthCheck = '{{ tcpHealthCheck }}',
+data__id = '{{ id }}',
 data__logConfig = '{{ logConfig }}',
-data__type = '{{ type }}'
+data__name = '{{ name }}',
+data__selfLink = '{{ selfLink }}',
+data__sourceRegions = '{{ sourceRegions }}',
+data__sslHealthCheck = '{{ sslHealthCheck }}',
+data__tcpHealthCheck = '{{ tcpHealthCheck }}',
+data__timeoutSec = {{ timeoutSec }},
+data__type = '{{ type }}',
+data__unhealthyThreshold = {{ unhealthyThreshold }}
 WHERE 
 project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND healthCheck = '{{ healthCheck }}' --required
 AND requestId = '{{ requestId}}'
 RETURNING
@@ -966,7 +952,6 @@ Deletes the specified HealthCheck resource.
 ```sql
 DELETE FROM google.compute.health_checks
 WHERE project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND healthCheck = '{{ healthCheck }}' --required
 AND requestId = '{{ requestId }}'
 ;

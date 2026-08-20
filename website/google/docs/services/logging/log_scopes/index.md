@@ -36,53 +36,14 @@ The following fields are returned by `SELECT` queries:
     defaultValue="folders_locations_log_scopes_get"
     values={[
         { label: 'folders_locations_log_scopes_get', value: 'folders_locations_log_scopes_get' },
-        { label: 'projects_locations_log_scopes_get', value: 'projects_locations_log_scopes_get' },
         { label: 'organizations_locations_log_scopes_get', value: 'organizations_locations_log_scopes_get' },
+        { label: 'projects_locations_log_scopes_get', value: 'projects_locations_log_scopes_get' },
         { label: 'folders_locations_log_scopes_list', value: 'folders_locations_log_scopes_list' },
-        { label: 'projects_locations_log_scopes_list', value: 'projects_locations_log_scopes_list' },
-        { label: 'organizations_locations_log_scopes_list', value: 'organizations_locations_log_scopes_list' }
+        { label: 'organizations_locations_log_scopes_list', value: 'organizations_locations_log_scopes_list' },
+        { label: 'projects_locations_log_scopes_list', value: 'projects_locations_log_scopes_list' }
     ]}
 >
 <TabItem value="folders_locations_log_scopes_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the log scope.Log scopes are only available in the global location. For example:projects/my-project/locations/global/logScopes/my-log-scope</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of the log scope.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Describes this log scope.The maximum length of the description is 8000 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resourceNames" /></td>
-    <td><code>array</code></td>
-    <td>Required. Names of one or more parent resources (organizations and folders are not supported.): projects/[PROJECT_ID]May alternatively be one or more views: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]A log scope can include a maximum of 5 projects and a maximum of 100 resources in total.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of the log scope.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_log_scopes_get">
 
 <table>
 <thead>
@@ -160,7 +121,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_locations_log_scopes_list">
+<TabItem value="projects_locations_log_scopes_get">
 
 <table>
 <thead>
@@ -199,7 +160,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_log_scopes_list">
+<TabItem value="folders_locations_log_scopes_list">
 
 <table>
 <thead>
@@ -277,6 +238,45 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="projects_locations_log_scopes_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the log scope.Log scopes are only available in the global location. For example:projects/my-project/locations/global/logScopes/my-log-scope</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of the log scope.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Describes this log scope.The maximum length of the description is 8000 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceNames" /></td>
+    <td><code>array</code></td>
+    <td>Required. Names of one or more parent resources (organizations and folders are not supported.): projects/[PROJECT_ID]May alternatively be one or more views: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]A log scope can include a maximum of 5 projects and a maximum of 100 resources in total.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of the log scope.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 </Tabs>
 
 ## Methods
@@ -302,13 +302,6 @@ The following methods are available for this resource:
     <td>Gets a log scope.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_log_scopes_get"><CopyableCode code="projects_locations_log_scopes_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
-    <td></td>
-    <td>Gets a log scope.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_log_scopes_get"><CopyableCode code="organizations_locations_log_scopes_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
@@ -316,37 +309,37 @@ The following methods are available for this resource:
     <td>Gets a log scope.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_log_scopes_get"><CopyableCode code="projects_locations_log_scopes_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
+    <td></td>
+    <td>Gets a log scope.</td>
+</tr>
+<tr>
     <td><a href="#folders_locations_log_scopes_list"><CopyableCode code="folders_locations_log_scopes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists log scopes.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_log_scopes_list"><CopyableCode code="projects_locations_log_scopes_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists log scopes.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_log_scopes_list"><CopyableCode code="organizations_locations_log_scopes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists log scopes.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_log_scopes_list"><CopyableCode code="projects_locations_log_scopes_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists log scopes.</td>
 </tr>
 <tr>
     <td><a href="#folders_locations_log_scopes_create"><CopyableCode code="folders_locations_log_scopes_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-logScopeId"><code>logScopeId</code></a></td>
-    <td>Creates a log scope.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_log_scopes_create"><CopyableCode code="projects_locations_log_scopes_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-logScopeId"><code>logScopeId</code></a></td>
     <td>Creates a log scope.</td>
 </tr>
@@ -358,16 +351,16 @@ The following methods are available for this resource:
     <td>Creates a log scope.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_log_scopes_create"><CopyableCode code="projects_locations_log_scopes_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-logScopeId"><code>logScopeId</code></a></td>
+    <td>Creates a log scope.</td>
+</tr>
+<tr>
     <td><a href="#folders_locations_log_scopes_patch"><CopyableCode code="folders_locations_log_scopes_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a log scope.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_log_scopes_patch"><CopyableCode code="projects_locations_log_scopes_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a log scope.</td>
 </tr>
@@ -379,6 +372,13 @@ The following methods are available for this resource:
     <td>Updates a log scope.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_log_scopes_patch"><CopyableCode code="projects_locations_log_scopes_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates a log scope.</td>
+</tr>
+<tr>
     <td><a href="#folders_locations_log_scopes_delete"><CopyableCode code="folders_locations_log_scopes_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
@@ -386,16 +386,16 @@ The following methods are available for this resource:
     <td>Deletes a log scope.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_log_scopes_delete"><CopyableCode code="projects_locations_log_scopes_delete" /></a></td>
+    <td><a href="#organizations_locations_log_scopes_delete"><CopyableCode code="organizations_locations_log_scopes_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
     <td></td>
     <td>Deletes a log scope.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_log_scopes_delete"><CopyableCode code="organizations_locations_log_scopes_delete" /></a></td>
+    <td><a href="#projects_locations_log_scopes_delete"><CopyableCode code="projects_locations_log_scopes_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-logScopesId"><code>logScopesId</code></a></td>
     <td></td>
     <td>Deletes a log scope.</td>
 </tr>
@@ -469,11 +469,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="folders_locations_log_scopes_get"
     values={[
         { label: 'folders_locations_log_scopes_get', value: 'folders_locations_log_scopes_get' },
-        { label: 'projects_locations_log_scopes_get', value: 'projects_locations_log_scopes_get' },
         { label: 'organizations_locations_log_scopes_get', value: 'organizations_locations_log_scopes_get' },
+        { label: 'projects_locations_log_scopes_get', value: 'projects_locations_log_scopes_get' },
         { label: 'folders_locations_log_scopes_list', value: 'folders_locations_log_scopes_list' },
-        { label: 'projects_locations_log_scopes_list', value: 'projects_locations_log_scopes_list' },
-        { label: 'organizations_locations_log_scopes_list', value: 'organizations_locations_log_scopes_list' }
+        { label: 'organizations_locations_log_scopes_list', value: 'organizations_locations_log_scopes_list' },
+        { label: 'projects_locations_log_scopes_list', value: 'projects_locations_log_scopes_list' }
     ]}
 >
 <TabItem value="folders_locations_log_scopes_get">
@@ -489,24 +489,6 @@ resourceNames,
 updateTime
 FROM google.logging.log_scopes
 WHERE foldersId = '{{ foldersId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND logScopesId = '{{ logScopesId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_log_scopes_get">
-
-Gets a log scope.
-
-```sql
-SELECT
-name,
-createTime,
-description,
-resourceNames,
-updateTime
-FROM google.logging.log_scopes
-WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND logScopesId = '{{ logScopesId }}' -- required
 ;
@@ -530,6 +512,24 @@ AND logScopesId = '{{ logScopesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_log_scopes_get">
+
+Gets a log scope.
+
+```sql
+SELECT
+name,
+createTime,
+description,
+resourceNames,
+updateTime
+FROM google.logging.log_scopes
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND logScopesId = '{{ logScopesId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="folders_locations_log_scopes_list">
 
 Lists log scopes.
@@ -544,27 +544,8 @@ updateTime
 FROM google.logging.log_scopes
 WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_log_scopes_list">
-
-Lists log scopes.
-
-```sql
-SELECT
-name,
-createTime,
-description,
-resourceNames,
-updateTime
-FROM google.logging.log_scopes
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -582,8 +563,27 @@ updateTime
 FROM google.logging.log_scopes
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_log_scopes_list">
+
+Lists log scopes.
+
+```sql
+SELECT
+name,
+createTime,
+description,
+resourceNames,
+updateTime
+FROM google.logging.log_scopes
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -596,8 +596,8 @@ AND pageSize = '{{ pageSize }}'
     defaultValue="folders_locations_log_scopes_create"
     values={[
         { label: 'folders_locations_log_scopes_create', value: 'folders_locations_log_scopes_create' },
-        { label: 'projects_locations_log_scopes_create', value: 'projects_locations_log_scopes_create' },
         { label: 'organizations_locations_log_scopes_create', value: 'organizations_locations_log_scopes_create' },
+        { label: 'projects_locations_log_scopes_create', value: 'projects_locations_log_scopes_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
@@ -607,43 +607,16 @@ Creates a log scope.
 
 ```sql
 INSERT INTO google.logging.log_scopes (
-data__resourceNames,
 data__description,
+data__resourceNames,
 foldersId,
 locationsId,
 logScopeId
 )
 SELECT 
-'{{ resourceNames }}',
 '{{ description }}',
+'{{ resourceNames }}',
 '{{ foldersId }}',
-'{{ locationsId }}',
-'{{ logScopeId }}'
-RETURNING
-name,
-createTime,
-description,
-resourceNames,
-updateTime
-;
-```
-</TabItem>
-<TabItem value="projects_locations_log_scopes_create">
-
-Creates a log scope.
-
-```sql
-INSERT INTO google.logging.log_scopes (
-data__resourceNames,
-data__description,
-projectsId,
-locationsId,
-logScopeId
-)
-SELECT 
-'{{ resourceNames }}',
-'{{ description }}',
-'{{ projectsId }}',
 '{{ locationsId }}',
 '{{ logScopeId }}'
 RETURNING
@@ -661,16 +634,43 @@ Creates a log scope.
 
 ```sql
 INSERT INTO google.logging.log_scopes (
-data__resourceNames,
 data__description,
+data__resourceNames,
 organizationsId,
 locationsId,
 logScopeId
 )
 SELECT 
-'{{ resourceNames }}',
 '{{ description }}',
+'{{ resourceNames }}',
 '{{ organizationsId }}',
+'{{ locationsId }}',
+'{{ logScopeId }}'
+RETURNING
+name,
+createTime,
+description,
+resourceNames,
+updateTime
+;
+```
+</TabItem>
+<TabItem value="projects_locations_log_scopes_create">
+
+Creates a log scope.
+
+```sql
+INSERT INTO google.logging.log_scopes (
+data__description,
+data__resourceNames,
+projectsId,
+locationsId,
+logScopeId
+)
+SELECT 
+'{{ description }}',
+'{{ resourceNames }}',
+'{{ projectsId }}',
 '{{ locationsId }}',
 '{{ logScopeId }}'
 RETURNING
@@ -693,21 +693,21 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the log_scopes resource.
-    - name: projectsId
-      value: "{{ projectsId }}"
-      description: Required parameter for the log_scopes resource.
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the log_scopes resource.
+    - name: projectsId
+      value: "{{ projectsId }}"
+      description: Required parameter for the log_scopes resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Describes this log scope.The maximum length of the description is 8000 characters.
     - name: resourceNames
       value:
         - "{{ resourceNames }}"
       description: |
         Required. Names of one or more parent resources (organizations and folders are not supported.): projects/[PROJECT_ID]May alternatively be one or more views: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]A log scope can include a maximum of 5 projects and a maximum of 100 resources in total.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Describes this log scope.The maximum length of the description is 8000 characters.
     - name: logScopeId
       value: "{{ logScopeId }}"
 `}</CodeBlock>
@@ -722,8 +722,8 @@ updateTime
     defaultValue="folders_locations_log_scopes_patch"
     values={[
         { label: 'folders_locations_log_scopes_patch', value: 'folders_locations_log_scopes_patch' },
-        { label: 'projects_locations_log_scopes_patch', value: 'projects_locations_log_scopes_patch' },
-        { label: 'organizations_locations_log_scopes_patch', value: 'organizations_locations_log_scopes_patch' }
+        { label: 'organizations_locations_log_scopes_patch', value: 'organizations_locations_log_scopes_patch' },
+        { label: 'projects_locations_log_scopes_patch', value: 'projects_locations_log_scopes_patch' }
     ]}
 >
 <TabItem value="folders_locations_log_scopes_patch">
@@ -733,32 +733,10 @@ Updates a log scope.
 ```sql
 UPDATE google.logging.log_scopes
 SET 
-data__resourceNames = '{{ resourceNames }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__resourceNames = '{{ resourceNames }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND logScopesId = '{{ logScopesId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-createTime,
-description,
-resourceNames,
-updateTime;
-```
-</TabItem>
-<TabItem value="projects_locations_log_scopes_patch">
-
-Updates a log scope.
-
-```sql
-UPDATE google.logging.log_scopes
-SET 
-data__resourceNames = '{{ resourceNames }}',
-data__description = '{{ description }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND logScopesId = '{{ logScopesId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -777,10 +755,32 @@ Updates a log scope.
 ```sql
 UPDATE google.logging.log_scopes
 SET 
-data__resourceNames = '{{ resourceNames }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__resourceNames = '{{ resourceNames }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND logScopesId = '{{ logScopesId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+createTime,
+description,
+resourceNames,
+updateTime;
+```
+</TabItem>
+<TabItem value="projects_locations_log_scopes_patch">
+
+Updates a log scope.
+
+```sql
+UPDATE google.logging.log_scopes
+SET 
+data__description = '{{ description }}',
+data__resourceNames = '{{ resourceNames }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND logScopesId = '{{ logScopesId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -801,8 +801,8 @@ updateTime;
     defaultValue="folders_locations_log_scopes_delete"
     values={[
         { label: 'folders_locations_log_scopes_delete', value: 'folders_locations_log_scopes_delete' },
-        { label: 'projects_locations_log_scopes_delete', value: 'projects_locations_log_scopes_delete' },
-        { label: 'organizations_locations_log_scopes_delete', value: 'organizations_locations_log_scopes_delete' }
+        { label: 'organizations_locations_log_scopes_delete', value: 'organizations_locations_log_scopes_delete' },
+        { label: 'projects_locations_log_scopes_delete', value: 'projects_locations_log_scopes_delete' }
     ]}
 >
 <TabItem value="folders_locations_log_scopes_delete">
@@ -817,18 +817,6 @@ AND logScopesId = '{{ logScopesId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_log_scopes_delete">
-
-Deletes a log scope.
-
-```sql
-DELETE FROM google.logging.log_scopes
-WHERE projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND logScopesId = '{{ logScopesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_log_scopes_delete">
 
 Deletes a log scope.
@@ -836,6 +824,18 @@ Deletes a log scope.
 ```sql
 DELETE FROM google.logging.log_scopes
 WHERE organizationsId = '{{ organizationsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND logScopesId = '{{ logScopesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_log_scopes_delete">
+
+Deletes a log scope.
+
+```sql
+DELETE FROM google.logging.log_scopes
+WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND logScopesId = '{{ logScopesId }}' --required
 ;

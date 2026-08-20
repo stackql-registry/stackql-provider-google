@@ -115,7 +115,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_push_notification_configs_list"><CopyableCode code="projects_locations_collections_engines_assistants_agents_a2a_v1_tasks_push_notification_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-assistantsId"><code>assistantsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Get a list of push notifications configured for a task.</td>
 </tr>
 <tr>
@@ -251,8 +251,8 @@ AND enginesId = '{{ enginesId }}' -- required
 AND assistantsId = '{{ assistantsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND tasksId = '{{ tasksId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -336,13 +336,13 @@ pushNotificationConfig
       description: |
         The push notification configuration details.
       value:
-        token: "{{ token }}"
-        url: "{{ url }}"
-        id: "{{ id }}"
         authentication:
           credentials: "{{ credentials }}"
           schemes:
             - "{{ schemes }}"
+        id: "{{ id }}"
+        token: "{{ token }}"
+        url: "{{ url }}"
     - name: configId
       value: "{{ configId }}"
 `}</CodeBlock>

@@ -402,15 +402,8 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes an Execution.</td>
-</tr>
-<tr>
-    <td><a href="#export_status"><CopyableCode code="export_status" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a>, <a href="#parameter-executionsId1"><code>executionsId1</code></a></td>
-    <td></td>
-    <td>Read the status of an image export operation.</td>
 </tr>
 <tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
@@ -418,6 +411,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
     <td></td>
     <td>Cancels an Execution.</td>
+</tr>
+<tr>
+    <td><a href="#export_status"><CopyableCode code="export_status" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a>, <a href="#parameter-executionsId1"><code>executionsId1</code></a></td>
+    <td></td>
+    <td>Read the status of an image export operation.</td>
 </tr>
 </tbody>
 </table>
@@ -608,8 +608,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND jobsId = '{{ jobsId }}' --required
 AND executionsId = '{{ executionsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -619,26 +619,12 @@ AND etag = '{{ etag }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="export_status"
+    defaultValue="cancel"
     values={[
-        { label: 'export_status', value: 'export_status' },
-        { label: 'cancel', value: 'cancel' }
+        { label: 'cancel', value: 'cancel' },
+        { label: 'export_status', value: 'export_status' }
     ]}
 >
-<TabItem value="export_status">
-
-Read the status of an image export operation.
-
-```sql
-EXEC google.run.executions.export_status 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@jobsId='{{ jobsId }}' --required, 
-@executionsId='{{ executionsId }}' --required, 
-@executionsId1='{{ executionsId1 }}' --required
-;
-```
-</TabItem>
 <TabItem value="cancel">
 
 Cancels an Execution.
@@ -651,9 +637,23 @@ EXEC google.run.executions.cancel
 @executionsId='{{ executionsId }}' --required 
 @@json=
 '{
-"validateOnly": {{ validateOnly }}, 
-"etag": "{{ etag }}"
+"etag": "{{ etag }}", 
+"validateOnly": {{ validateOnly }}
 }'
+;
+```
+</TabItem>
+<TabItem value="export_status">
+
+Read the status of an image export operation.
+
+```sql
+EXEC google.run.executions.export_status 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@jobsId='{{ jobsId }}' --required, 
+@executionsId='{{ executionsId }}' --required, 
+@executionsId1='{{ executionsId1 }}' --required
 ;
 ```
 </TabItem>

@@ -93,15 +93,22 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-accountConnectorsId"><code>accountConnectorsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Users in a given project, location, and account_connector.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-accountConnectorsId"><code>accountConnectorsId</code></a>, <a href="#parameter-usersId"><code>usersId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single User.</td>
+</tr>
+<tr>
+    <td><a href="#finish_oauth_flow"><CopyableCode code="finish_oauth_flow" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-accountConnectorsId"><code>accountConnectorsId</code></a></td>
+    <td><a href="#parameter-googleOauthParams.scopes"><code>googleOauthParams.scopes</code></a>, <a href="#parameter-googleOauthParams.ticket"><code>googleOauthParams.ticket</code></a>, <a href="#parameter-googleOauthParams.versionInfo"><code>googleOauthParams.versionInfo</code></a>, <a href="#parameter-oauthParams.code"><code>oauthParams.code</code></a>, <a href="#parameter-oauthParams.ticket"><code>oauthParams.ticket</code></a></td>
+    <td>Finishes OAuth flow for an account connector.</td>
 </tr>
 <tr>
     <td><a href="#start_oauth_flow"><CopyableCode code="start_oauth_flow" /></a></td>
@@ -109,13 +116,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-accountConnectorsId"><code>accountConnectorsId</code></a></td>
     <td></td>
     <td>Starts OAuth flow for an account connector.</td>
-</tr>
-<tr>
-    <td><a href="#finish_oauth_flow"><CopyableCode code="finish_oauth_flow" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-accountConnectorsId"><code>accountConnectorsId</code></a></td>
-    <td><a href="#parameter-oauthParams.code"><code>oauthParams.code</code></a>, <a href="#parameter-oauthParams.ticket"><code>oauthParams.ticket</code></a>, <a href="#parameter-googleOauthParams.scopes"><code>googleOauthParams.scopes</code></a>, <a href="#parameter-googleOauthParams.ticket"><code>googleOauthParams.ticket</code></a>, <a href="#parameter-googleOauthParams.versionInfo"><code>googleOauthParams.versionInfo</code></a></td>
-    <td>Finishes OAuth flow for an account connector.</td>
 </tr>
 </tbody>
 </table>
@@ -239,9 +239,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND accountConnectorsId = '{{ accountConnectorsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -267,8 +267,8 @@ AND locationsId = '{{ locationsId }}' --required
 AND accountConnectorsId = '{{ accountConnectorsId }}' --required
 AND usersId = '{{ usersId }}' --required
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -278,24 +278,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="start_oauth_flow"
+    defaultValue="finish_oauth_flow"
     values={[
-        { label: 'start_oauth_flow', value: 'start_oauth_flow' },
-        { label: 'finish_oauth_flow', value: 'finish_oauth_flow' }
+        { label: 'finish_oauth_flow', value: 'finish_oauth_flow' },
+        { label: 'start_oauth_flow', value: 'start_oauth_flow' }
     ]}
 >
-<TabItem value="start_oauth_flow">
-
-Starts OAuth flow for an account connector.
-
-```sql
-EXEC google.developerconnect.users.start_oauth_flow 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@accountConnectorsId='{{ accountConnectorsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="finish_oauth_flow">
 
 Finishes OAuth flow for an account connector.
@@ -305,11 +293,23 @@ EXEC google.developerconnect.users.finish_oauth_flow
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @accountConnectorsId='{{ accountConnectorsId }}' --required, 
-@oauthParams.code='{{ oauthParams.code }}', 
-@oauthParams.ticket='{{ oauthParams.ticket }}', 
 @googleOauthParams.scopes='{{ googleOauthParams.scopes }}', 
 @googleOauthParams.ticket='{{ googleOauthParams.ticket }}', 
-@googleOauthParams.versionInfo='{{ googleOauthParams.versionInfo }}'
+@googleOauthParams.versionInfo='{{ googleOauthParams.versionInfo }}', 
+@oauthParams.code='{{ oauthParams.code }}', 
+@oauthParams.ticket='{{ oauthParams.ticket }}'
+;
+```
+</TabItem>
+<TabItem value="start_oauth_flow">
+
+Starts OAuth flow for an account connector.
+
+```sql
+EXEC google.developerconnect.users.start_oauth_flow 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@accountConnectorsId='{{ accountConnectorsId }}' --required
 ;
 ```
 </TabItem>

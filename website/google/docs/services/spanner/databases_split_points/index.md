@@ -106,15 +106,15 @@ Adds split points to specified tables and indexes of a database.
 
 ```sql
 INSERT INTO google.spanner.databases_split_points (
-data__splitPoints,
 data__initiator,
+data__splitPoints,
 projectsId,
 instancesId,
 databasesId
 )
 SELECT 
-'{{ splitPoints }}',
 '{{ initiator }}',
+'{{ splitPoints }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ databasesId }}'
@@ -135,18 +135,18 @@ SELECT
     - name: databasesId
       value: "{{ databasesId }}"
       description: Required parameter for the databases_split_points resource.
-    - name: splitPoints
-      description: |
-        Required. The split points to add.
-      value:
-        - table: "{{ table }}"
-          index: "{{ index }}"
-          keys: "{{ keys }}"
-          expireTime: "{{ expireTime }}"
     - name: initiator
       value: "{{ initiator }}"
       description: |
         Optional. A user-supplied tag associated with the split points. For example, "initial_data_load", "special_event_1". Defaults to "CloudAddSplitPointsAPI" if not specified. The length of the tag must not exceed 50 characters, or else it is trimmed. Only valid UTF8 characters are allowed.
+    - name: splitPoints
+      description: |
+        Required. The split points to add.
+      value:
+        - expireTime: "{{ expireTime }}"
+          index: "{{ index }}"
+          keys: "{{ keys }}"
+          table: "{{ table }}"
 `}</CodeBlock>
 
 </TabItem>

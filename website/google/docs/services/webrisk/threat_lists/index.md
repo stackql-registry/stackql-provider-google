@@ -54,7 +54,7 @@ The following methods are available for this resource:
     <td><a href="#compute_diff"><CopyableCode code="compute_diff" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-constraints.supportedCompressions"><code>constraints.supportedCompressions</code></a>, <a href="#parameter-threatType"><code>threatType</code></a>, <a href="#parameter-constraints.maxDatabaseEntries"><code>constraints.maxDatabaseEntries</code></a>, <a href="#parameter-versionToken"><code>versionToken</code></a>, <a href="#parameter-constraints.maxDiffEntries"><code>constraints.maxDiffEntries</code></a></td>
+    <td><a href="#parameter-constraints.maxDatabaseEntries"><code>constraints.maxDatabaseEntries</code></a>, <a href="#parameter-constraints.maxDiffEntries"><code>constraints.maxDiffEntries</code></a>, <a href="#parameter-constraints.supportedCompressions"><code>constraints.supportedCompressions</code></a>, <a href="#parameter-threatType"><code>threatType</code></a>, <a href="#parameter-versionToken"><code>versionToken</code></a></td>
     <td>Gets the most recent threat list diffs. These diffs should be applied to a local database of hashes to keep it up-to-date. If the local database is empty or excessively out-of-date, a complete snapshot of the database will be returned. This Method only updates a single ThreatList at a time. To update multiple ThreatList databases, this method needs to be called once for each list.</td>
 </tr>
 </tbody>
@@ -115,11 +115,11 @@ Gets the most recent threat list diffs. These diffs should be applied to a local
 
 ```sql
 EXEC google.webrisk.threat_lists.compute_diff 
+@constraints.maxDatabaseEntries='{{ constraints.maxDatabaseEntries }}', 
+@constraints.maxDiffEntries='{{ constraints.maxDiffEntries }}', 
 @constraints.supportedCompressions='{{ constraints.supportedCompressions }}', 
 @threatType='{{ threatType }}', 
-@constraints.maxDatabaseEntries='{{ constraints.maxDatabaseEntries }}', 
-@versionToken='{{ versionToken }}', 
-@constraints.maxDiffEntries='{{ constraints.maxDiffEntries }}'
+@versionToken='{{ versionToken }}'
 ;
 ```
 </TabItem>

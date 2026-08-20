@@ -115,7 +115,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-producerProjectId"><code>producerProjectId</code></a>, <a href="#parameter-consumerId"><code>consumerId</code></a></td>
+    <td><a href="#parameter-consumerId"><code>consumerId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-producerProjectId"><code>producerProjectId</code></a></td>
     <td>Lists managed services. Returns all public services. For authenticated users, also returns all services the calling user has "servicemanagement.services.get" permission for.</td>
 </tr>
 <tr>
@@ -133,18 +133,18 @@ The following methods are available for this resource:
     <td>Deletes a managed service. This method will change the service to the `Soft-Delete` state for 30 days. Within this period, service producers may call UndeleteService to restore the service. After 30 days, the service will be permanently deleted. Operation</td>
 </tr>
 <tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-serviceName"><code>serviceName</code></a></td>
-    <td></td>
-    <td>Revives a previously deleted managed service. The method restores the service using the configuration at the time the service was deleted. The target service must exist and must have been deleted within the last 30 days. Operation</td>
-</tr>
-<tr>
     <td><a href="#generate_config_report"><CopyableCode code="generate_config_report" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Generates and returns a report (errors, warnings and changes from existing configurations) associated with GenerateConfigReportRequest.new_value If GenerateConfigReportRequest.old_value is specified, GenerateConfigReportRequest will contain a single ChangeReport based on the comparison between GenerateConfigReportRequest.new_value and GenerateConfigReportRequest.old_value. If GenerateConfigReportRequest.old_value is not specified, this method will compare GenerateConfigReportRequest.new_value with the last pushed service configuration.</td>
+</tr>
+<tr>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-serviceName"><code>serviceName</code></a></td>
+    <td></td>
+    <td>Revives a previously deleted managed service. The method restores the service using the configuration at the time the service was deleted. The target service must exist and must have been deleted within the last 30 days. Operation</td>
 </tr>
 </tbody>
 </table>
@@ -221,10 +221,10 @@ SELECT
 producerProjectId,
 serviceName
 FROM google.servicemanagement.services
-WHERE pageSize = '{{ pageSize }}'
+WHERE consumerId = '{{ consumerId }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND producerProjectId = '{{ producerProjectId }}'
-AND consumerId = '{{ consumerId }}'
 ;
 ```
 </TabItem>
@@ -304,22 +304,12 @@ WHERE serviceName = '{{ serviceName }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="generate_config_report"
     values={[
-        { label: 'undelete', value: 'undelete' },
-        { label: 'generate_config_report', value: 'generate_config_report' }
+        { label: 'generate_config_report', value: 'generate_config_report' },
+        { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="undelete">
-
-Revives a previously deleted managed service. The method restores the service using the configuration at the time the service was deleted. The target service must exist and must have been deleted within the last 30 days. Operation
-
-```sql
-EXEC google.servicemanagement.services.undelete 
-@serviceName='{{ serviceName }}' --required
-;
-```
-</TabItem>
 <TabItem value="generate_config_report">
 
 Generates and returns a report (errors, warnings and changes from existing configurations) associated with GenerateConfigReportRequest.new_value If GenerateConfigReportRequest.old_value is specified, GenerateConfigReportRequest will contain a single ChangeReport based on the comparison between GenerateConfigReportRequest.new_value and GenerateConfigReportRequest.old_value. If GenerateConfigReportRequest.old_value is not specified, this method will compare GenerateConfigReportRequest.new_value with the last pushed service configuration.
@@ -331,6 +321,16 @@ EXEC google.servicemanagement.services.generate_config_report
 "newConfig": "{{ newConfig }}", 
 "oldConfig": "{{ oldConfig }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="undelete">
+
+Revives a previously deleted managed service. The method restores the service using the configuration at the time the service was deleted. The target service must exist and must have been deleted within the last 30 days. Operation
+
+```sql
+EXEC google.servicemanagement.services.undelete 
+@serviceName='{{ serviceName }}' --required
 ;
 ```
 </TabItem>

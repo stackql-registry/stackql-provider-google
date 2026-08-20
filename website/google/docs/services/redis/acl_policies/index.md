@@ -104,6 +104,46 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Full resource path of the ACL policy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clusterAclPolicyAttachments" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The ACL policy attachment status for each attached cluster.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp that the ACL policy was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Etag for the ACL policy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="rules" /></td>
+    <td><code>array</code></td>
+    <td>Required. The ACL rules within the ACL policy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The state of the ACL policy. (STATE_UNSPECIFIED, ACTIVE, UPDATING, DELETING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp that the ACL policy was last updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="version" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Deprecated: Used in drift resolution.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -142,7 +182,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-aclPolicyId"><code>aclPolicyId</code></a></td>
+    <td><a href="#parameter-aclPolicyId"><code>aclPolicyId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates an ACL policy. The creation is executed synchronously and the policy is available for use immediately after the RPC returns.</td>
 </tr>
 <tr>
@@ -156,7 +196,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-aclPoliciesId"><code>aclPoliciesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a specific ACL policy. This action will delete the ACL policy and all the rules associated with it. An ACL policy cannot be deleted if it is attached to a cluster.</td>
 </tr>
 </tbody>
@@ -259,7 +299,14 @@ Lists all ACL policies owned by a project in either the specified location (regi
 
 ```sql
 SELECT
-*
+name,
+clusterAclPolicyAttachments,
+createTime,
+etag,
+rules,
+state,
+updateTime,
+version
 FROM google.redis.acl_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -290,16 +337,16 @@ data__name,
 data__rules,
 projectsId,
 locationsId,
-requestId,
-aclPolicyId
+aclPolicyId,
+requestId
 )
 SELECT 
 '{{ name }}',
 '{{ rules }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ aclPolicyId }}'
+'{{ aclPolicyId }}',
+'{{ requestId }}'
 RETURNING
 name,
 clusterAclPolicyAttachments,
@@ -331,12 +378,12 @@ version
       description: |
         Required. The ACL rules within the ACL policy.
       value:
-        - username: "{{ username }}"
-          rule: "{{ rule }}"
-    - name: requestId
-      value: "{{ requestId }}"
+        - rule: "{{ rule }}"
+          username: "{{ username }}"
     - name: aclPolicyId
       value: "{{ aclPolicyId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -394,8 +441,8 @@ DELETE FROM google.redis.acl_policies
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND aclPoliciesId = '{{ aclPoliciesId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

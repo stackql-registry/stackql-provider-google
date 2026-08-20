@@ -168,9 +168,9 @@ Update the Config for a given resource.
 ```sql
 UPDATE google.datalineage.config
 SET 
-data__name = '{{ name }}',
+data__etag = '{{ etag }}',
 data__ingestion = '{{ ingestion }}',
-data__etag = '{{ etag }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

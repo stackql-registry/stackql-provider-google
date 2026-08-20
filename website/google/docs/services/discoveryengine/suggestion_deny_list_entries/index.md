@@ -51,20 +51,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_data_stores_suggestion_deny_list_entries_import"><CopyableCode code="projects_locations_data_stores_suggestion_deny_list_entries_import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Imports all SuggestionDenyListEntry for a DataStore.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_suggestion_deny_list_entries_purge"><CopyableCode code="projects_locations_data_stores_suggestion_deny_list_entries_purge" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Permanently deletes all SuggestionDenyListEntry for a DataStore.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_collections_data_stores_suggestion_deny_list_entries_import"><CopyableCode code="projects_locations_collections_data_stores_suggestion_deny_list_entries_import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
@@ -75,6 +61,20 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_suggestion_deny_list_entries_purge"><CopyableCode code="projects_locations_collections_data_stores_suggestion_deny_list_entries_purge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Permanently deletes all SuggestionDenyListEntry for a DataStore.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_suggestion_deny_list_entries_import"><CopyableCode code="projects_locations_data_stores_suggestion_deny_list_entries_import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Imports all SuggestionDenyListEntry for a DataStore.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_suggestion_deny_list_entries_purge"><CopyableCode code="projects_locations_data_stores_suggestion_deny_list_entries_purge" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
     <td></td>
     <td>Permanently deletes all SuggestionDenyListEntry for a DataStore.</td>
 </tr>
@@ -120,43 +120,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_data_stores_suggestion_deny_list_entries_import"
+    defaultValue="projects_locations_collections_data_stores_suggestion_deny_list_entries_import"
     values={[
-        { label: 'projects_locations_data_stores_suggestion_deny_list_entries_import', value: 'projects_locations_data_stores_suggestion_deny_list_entries_import' },
-        { label: 'projects_locations_data_stores_suggestion_deny_list_entries_purge', value: 'projects_locations_data_stores_suggestion_deny_list_entries_purge' },
         { label: 'projects_locations_collections_data_stores_suggestion_deny_list_entries_import', value: 'projects_locations_collections_data_stores_suggestion_deny_list_entries_import' },
-        { label: 'projects_locations_collections_data_stores_suggestion_deny_list_entries_purge', value: 'projects_locations_collections_data_stores_suggestion_deny_list_entries_purge' }
+        { label: 'projects_locations_collections_data_stores_suggestion_deny_list_entries_purge', value: 'projects_locations_collections_data_stores_suggestion_deny_list_entries_purge' },
+        { label: 'projects_locations_data_stores_suggestion_deny_list_entries_import', value: 'projects_locations_data_stores_suggestion_deny_list_entries_import' },
+        { label: 'projects_locations_data_stores_suggestion_deny_list_entries_purge', value: 'projects_locations_data_stores_suggestion_deny_list_entries_purge' }
     ]}
 >
-<TabItem value="projects_locations_data_stores_suggestion_deny_list_entries_import">
-
-Imports all SuggestionDenyListEntry for a DataStore.
-
-```sql
-EXEC google.discoveryengine.suggestion_deny_list_entries.projects_locations_data_stores_suggestion_deny_list_entries_import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required 
-@@json=
-'{
-"inlineSource": "{{ inlineSource }}", 
-"gcsSource": "{{ gcsSource }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_suggestion_deny_list_entries_purge">
-
-Permanently deletes all SuggestionDenyListEntry for a DataStore.
-
-```sql
-EXEC google.discoveryengine.suggestion_deny_list_entries.projects_locations_data_stores_suggestion_deny_list_entries_purge 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_suggestion_deny_list_entries_import">
 
 Imports all SuggestionDenyListEntry for a DataStore.
@@ -169,8 +140,8 @@ EXEC google.discoveryengine.suggestion_deny_list_entries.projects_locations_coll
 @dataStoresId='{{ dataStoresId }}' --required 
 @@json=
 '{
-"inlineSource": "{{ inlineSource }}", 
-"gcsSource": "{{ gcsSource }}"
+"gcsSource": "{{ gcsSource }}", 
+"inlineSource": "{{ inlineSource }}"
 }'
 ;
 ```
@@ -184,6 +155,35 @@ EXEC google.discoveryengine.suggestion_deny_list_entries.projects_locations_coll
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @collectionsId='{{ collectionsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_suggestion_deny_list_entries_import">
+
+Imports all SuggestionDenyListEntry for a DataStore.
+
+```sql
+EXEC google.discoveryengine.suggestion_deny_list_entries.projects_locations_data_stores_suggestion_deny_list_entries_import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required 
+@@json=
+'{
+"gcsSource": "{{ gcsSource }}", 
+"inlineSource": "{{ inlineSource }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_suggestion_deny_list_entries_purge">
+
+Permanently deletes all SuggestionDenyListEntry for a DataStore.
+
+```sql
+EXEC google.discoveryengine.suggestion_deny_list_entries.projects_locations_data_stores_suggestion_deny_list_entries_purge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @dataStoresId='{{ dataStoresId }}' --required
 ;
 ```

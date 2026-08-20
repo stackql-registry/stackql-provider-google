@@ -68,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>A DeploymentGroup is a collection of DeploymentUnits that in a DAG-like structure. (id: DeploymentGroup)</td>
+    <td>Output only. The snapshot of the deployment group at this revision. (id: DeploymentGroup)</td>
 </tr>
 </tbody>
 </table>
@@ -102,7 +102,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>A DeploymentGroup is a collection of DeploymentUnits that in a DAG-like structure. (id: DeploymentGroup)</td>
+    <td>Output only. The snapshot of the deployment group at this revision. (id: DeploymentGroup)</td>
 </tr>
 </tbody>
 </table>

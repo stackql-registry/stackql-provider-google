@@ -92,12 +92,12 @@ Searches Data Catalog for multiple resources like entries and tags that match a 
 EXEC google.datacatalog.catalog.catalog_search 
 @@json=
 '{
-"scope": "{{ scope }}", 
-"query": "{{ query }}", 
+"adminSearch": {{ adminSearch }}, 
+"orderBy": "{{ orderBy }}", 
 "pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
-"orderBy": "{{ orderBy }}", 
-"adminSearch": {{ adminSearch }}
+"query": "{{ query }}", 
+"scope": "{{ scope }}"
 }'
 ;
 ```

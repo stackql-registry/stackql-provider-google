@@ -180,8 +180,8 @@ Updates the conversational search customization config for a given catalog.
 UPDATE google.retail.catalogs_conversational_search_customization_config
 SET 
 data__catalog = '{{ catalog }}',
-data__retailerDisplayName = '{{ retailerDisplayName }}',
-data__intentClassificationConfig = '{{ intentClassificationConfig }}'
+data__intentClassificationConfig = '{{ intentClassificationConfig }}',
+data__retailerDisplayName = '{{ retailerDisplayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

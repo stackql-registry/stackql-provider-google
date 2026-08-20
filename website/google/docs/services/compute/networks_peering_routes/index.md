@@ -103,7 +103,7 @@ The following methods are available for this resource:
     <td><a href="#list_peering_routes"><CopyableCode code="list_peering_routes" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-network"><code>network</code></a></td>
-    <td><a href="#parameter-region"><code>region</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-peeringName"><code>peeringName</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-direction"><code>direction</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
+    <td><a href="#parameter-direction"><code>direction</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-peeringName"><code>peeringName</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the peering routes exchanged over peering connection.</td>
 </tr>
 </tbody>
@@ -198,14 +198,14 @@ warning
 FROM google.compute.networks_peering_routes
 WHERE project = '{{ project }}' -- required
 AND network = '{{ network }}' -- required
-AND region = '{{ region }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND direction = '{{ direction }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND peeringName = '{{ peeringName }}'
-AND orderBy = '{{ orderBy }}'
-AND direction = '{{ direction }}'
-AND maxResults = '{{ maxResults }}'
+AND region = '{{ region }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

@@ -98,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="modelToUpload" /></td>
     <td><code>object</code></td>
-    <td>Describes the Model that may be uploaded (via ModelService.UploadModel) by this TrainingPipeline. The TrainingPipeline's training_task_definition should make clear whether this Model description should be populated, and if there are any special requirements regarding how it should be filled. If nothing is mentioned in the training_task_definition, then it should be assumed that this field should not be filled and the training task either uploads the Model without a need of this information, or that training task does not support uploading a Model as part of the pipeline. When the Pipeline's state becomes `PIPELINE_STATE_SUCCEEDED` and the trained Model had been uploaded into Vertex AI, then the model_to_upload's resource name is populated. The Model is always uploaded into the Project and Location in which this pipeline is. (id: GoogleCloudAiplatformV1Model)</td>
+    <td>A trained machine learning Model. (id: GoogleCloudAiplatformV1Model)</td>
 </tr>
 <tr>
     <td><CopyableCode code="parentModel" /></td>
@@ -197,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="modelToUpload" /></td>
     <td><code>object</code></td>
-    <td>Describes the Model that may be uploaded (via ModelService.UploadModel) by this TrainingPipeline. The TrainingPipeline's training_task_definition should make clear whether this Model description should be populated, and if there are any special requirements regarding how it should be filled. If nothing is mentioned in the training_task_definition, then it should be assumed that this field should not be filled and the training task either uploads the Model without a need of this information, or that training task does not support uploading a Model as part of the pipeline. When the Pipeline's state becomes `PIPELINE_STATE_SUCCEEDED` and the trained Model had been uploaded into Vertex AI, then the model_to_upload's resource name is populated. The Model is always uploaded into the Project and Location in which this pipeline is. (id: GoogleCloudAiplatformV1Model)</td>
+    <td>A trained machine learning Model. (id: GoogleCloudAiplatformV1Model)</td>
 </tr>
 <tr>
     <td><CopyableCode code="parentModel" /></td>
@@ -265,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists TrainingPipelines in a Location.</td>
 </tr>
 <tr>
@@ -408,9 +408,9 @@ updateTime
 FROM google.aiplatform.training_pipelines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -434,27 +434,27 @@ Creates a TrainingPipeline. A created TrainingPipeline right away will be attemp
 ```sql
 INSERT INTO google.aiplatform.training_pipelines (
 data__displayName,
-data__modelId,
+data__encryptionSpec,
 data__inputDataConfig,
+data__labels,
+data__modelId,
 data__modelToUpload,
 data__parentModel,
-data__trainingTaskInputs,
-data__labels,
 data__trainingTaskDefinition,
-data__encryptionSpec,
+data__trainingTaskInputs,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ displayName }}',
-'{{ modelId }}',
+'{{ encryptionSpec }}',
 '{{ inputDataConfig }}',
+'{{ labels }}',
+'{{ modelId }}',
 '{{ modelToUpload }}',
 '{{ parentModel }}',
-'{{ trainingTaskInputs }}',
-'{{ labels }}',
 '{{ trainingTaskDefinition }}',
-'{{ encryptionSpec }}',
+'{{ trainingTaskInputs }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -493,146 +493,57 @@ updateTime
       value: "{{ displayName }}"
       description: |
         Required. The user-defined name of this TrainingPipeline.
-    - name: modelId
-      value: "{{ modelId }}"
+    - name: encryptionSpec
       description: |
-        Optional. The ID to use for the uploaded Model, which will become the final component of the model resource name. This value may be up to 63 characters, and valid characters are \`[a-z0-9_-]\`. The first character cannot be a number or hyphen.
+        Customer-managed encryption key spec for a TrainingPipeline. If set, this TrainingPipeline will be secured by this key. Note: Model trained by this TrainingPipeline is also secured by this key if model_to_upload is not set separately.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: inputDataConfig
       description: |
         Specifies Vertex AI owned input data that may be used for training the Model. The TrainingPipeline's training_task_definition should make clear whether this config is used and if there are any special requirements on how it should be filled. If nothing about this config is mentioned in the training_task_definition, then it should be assumed that the TrainingPipeline does not depend on this configuration.
       value:
-        savedQueryId: "{{ savedQueryId }}"
-        datasetId: "{{ datasetId }}"
-        timestampSplit:
-          validationFraction: {{ validationFraction }}
-          key: "{{ key }}"
-          trainingFraction: {{ trainingFraction }}
-          testFraction: {{ testFraction }}
-        fractionSplit:
-          validationFraction: {{ validationFraction }}
-          trainingFraction: {{ trainingFraction }}
-          testFraction: {{ testFraction }}
+        annotationSchemaUri: "{{ annotationSchemaUri }}"
+        annotationsFilter: "{{ annotationsFilter }}"
         bigqueryDestination:
           outputUri: "{{ outputUri }}"
+        datasetId: "{{ datasetId }}"
+        filterSplit:
+          testFilter: "{{ testFilter }}"
+          trainingFilter: "{{ trainingFilter }}"
+          validationFilter: "{{ validationFilter }}"
+        fractionSplit:
+          testFraction: {{ testFraction }}
+          trainingFraction: {{ trainingFraction }}
+          validationFraction: {{ validationFraction }}
         gcsDestination:
           outputUriPrefix: "{{ outputUriPrefix }}"
-        annotationsFilter: "{{ annotationsFilter }}"
-        stratifiedSplit:
-          trainingFraction: {{ trainingFraction }}
-          testFraction: {{ testFraction }}
-          validationFraction: {{ validationFraction }}
-          key: "{{ key }}"
+        persistMlUseAssignment: {{ persistMlUseAssignment }}
         predefinedSplit:
           key: "{{ key }}"
-        annotationSchemaUri: "{{ annotationSchemaUri }}"
-        persistMlUseAssignment: {{ persistMlUseAssignment }}
-        filterSplit:
-          trainingFilter: "{{ trainingFilter }}"
-          testFilter: "{{ testFilter }}"
-          validationFilter: "{{ validationFilter }}"
+        savedQueryId: "{{ savedQueryId }}"
+        stratifiedSplit:
+          key: "{{ key }}"
+          testFraction: {{ testFraction }}
+          trainingFraction: {{ trainingFraction }}
+          validationFraction: {{ validationFraction }}
+        timestampSplit:
+          key: "{{ key }}"
+          testFraction: {{ testFraction }}
+          trainingFraction: {{ trainingFraction }}
+          validationFraction: {{ validationFraction }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize TrainingPipelines. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+    - name: modelId
+      value: "{{ modelId }}"
+      description: |
+        Optional. The ID to use for the uploaded Model, which will become the final component of the model resource name. This value may be up to 63 characters, and valid characters are \`[a-z0-9_-]\`. The first character cannot be a number or hyphen.
     - name: modelToUpload
       description: |
-        Describes the Model that may be uploaded (via ModelService.UploadModel) by this TrainingPipeline. The TrainingPipeline's training_task_definition should make clear whether this Model description should be populated, and if there are any special requirements regarding how it should be filled. If nothing is mentioned in the training_task_definition, then it should be assumed that this field should not be filled and the training task either uploads the Model without a need of this information, or that training task does not support uploading a Model as part of the pipeline. When the Pipeline's state becomes \`PIPELINE_STATE_SUCCEEDED\` and the trained Model had been uploaded into Vertex AI, then the model_to_upload's resource name is populated. The Model is always uploaded into the Project and Location in which this pipeline is.
+        A trained machine learning Model.
       value:
-        name: "{{ name }}"
-        encryptionSpec:
-          kmsKeyName: "{{ kmsKeyName }}"
-        predictSchemata:
-          parametersSchemaUri: "{{ parametersSchemaUri }}"
-          predictionSchemaUri: "{{ predictionSchemaUri }}"
-          instanceSchemaUri: "{{ instanceSchemaUri }}"
-        containerSpec:
-          grpcPorts:
-            - containerPort: {{ containerPort }}
-          predictRoute: "{{ predictRoute }}"
-          livenessProbe:
-            failureThreshold: {{ failureThreshold }}
-            periodSeconds: {{ periodSeconds }}
-            successThreshold: {{ successThreshold }}
-            grpc:
-              service: "{{ service }}"
-              port: {{ port }}
-            tcpSocket:
-              port: {{ port }}
-              host: "{{ host }}"
-            exec:
-              command:
-                - "{{ command }}"
-            initialDelaySeconds: {{ initialDelaySeconds }}
-            httpGet:
-              host: "{{ host }}"
-              scheme: "{{ scheme }}"
-              path: "{{ path }}"
-              httpHeaders:
-                - name: "{{ name }}"
-                  value: "{{ value }}"
-              port: {{ port }}
-            timeoutSeconds: {{ timeoutSeconds }}
-          deploymentTimeout: "{{ deploymentTimeout }}"
-          imageUri: "{{ imageUri }}"
-          sharedMemorySizeMb: "{{ sharedMemorySizeMb }}"
-          ports:
-            - containerPort: {{ containerPort }}
-          invokeRoutePrefix: "{{ invokeRoutePrefix }}"
-          startupProbe:
-            failureThreshold: {{ failureThreshold }}
-            periodSeconds: {{ periodSeconds }}
-            successThreshold: {{ successThreshold }}
-            grpc:
-              service: "{{ service }}"
-              port: {{ port }}
-            tcpSocket:
-              port: {{ port }}
-              host: "{{ host }}"
-            exec:
-              command:
-                - "{{ command }}"
-            initialDelaySeconds: {{ initialDelaySeconds }}
-            httpGet:
-              host: "{{ host }}"
-              scheme: "{{ scheme }}"
-              path: "{{ path }}"
-              httpHeaders:
-                - name: "{{ name }}"
-                  value: "{{ value }}"
-              port: {{ port }}
-            timeoutSeconds: {{ timeoutSeconds }}
-          healthProbe:
-            failureThreshold: {{ failureThreshold }}
-            periodSeconds: {{ periodSeconds }}
-            successThreshold: {{ successThreshold }}
-            grpc:
-              service: "{{ service }}"
-              port: {{ port }}
-            tcpSocket:
-              port: {{ port }}
-              host: "{{ host }}"
-            exec:
-              command:
-                - "{{ command }}"
-            initialDelaySeconds: {{ initialDelaySeconds }}
-            httpGet:
-              host: "{{ host }}"
-              scheme: "{{ scheme }}"
-              path: "{{ path }}"
-              httpHeaders:
-                - name: "{{ name }}"
-                  value: "{{ value }}"
-              port: {{ port }}
-            timeoutSeconds: {{ timeoutSeconds }}
-          command:
-            - "{{ command }}"
-          healthRoute: "{{ healthRoute }}"
-          args:
-            - "{{ args }}"
-          env:
-            - name: "{{ name }}"
-              value: "{{ value }}"
-        supportedExportFormats:
-          - id: "{{ id }}"
-            exportableContents: "{{ exportableContents }}"
-        versionId: "{{ versionId }}"
-        labels: "{{ labels }}"
+        artifactUri: "{{ artifactUri }}"
         baseModelSource:
           genieSource:
             baseModelUri: "{{ baseModelUri }}"
@@ -640,109 +551,198 @@ updateTime
             publicModelName: "{{ publicModelName }}"
             skipHfModelCache: {{ skipHfModelCache }}
             versionId: "{{ versionId }}"
-        supportedDeploymentResourcesTypes:
-          - "{{ supportedDeploymentResourcesTypes }}"
-        createTime: "{{ createTime }}"
-        satisfiesPzi: {{ satisfiesPzi }}
-        supportedInputStorageFormats:
-          - "{{ supportedInputStorageFormats }}"
-        versionUpdateTime: "{{ versionUpdateTime }}"
-        defaultCheckpointId: "{{ defaultCheckpointId }}"
-        metadataSchemaUri: "{{ metadataSchemaUri }}"
-        description: "{{ description }}"
-        versionAliases:
-          - "{{ versionAliases }}"
-        trainingPipeline: "{{ trainingPipeline }}"
-        metadataArtifact: "{{ metadataArtifact }}"
-        etag: "{{ etag }}"
-        versionCreateTime: "{{ versionCreateTime }}"
-        versionDescription: "{{ versionDescription }}"
-        metadata: "{{ metadata }}"
-        explanationSpec:
-          metadata:
-            featureAttributionsSchemaUri: "{{ featureAttributionsSchemaUri }}"
-            outputs: "{{ outputs }}"
-            inputs: "{{ inputs }}"
-            latentSpaceSource: "{{ latentSpaceSource }}"
-          parameters:
-            integratedGradientsAttribution:
-              smoothGradConfig:
-                noiseSigma: {{ noiseSigma }}
-                noisySampleCount: {{ noisySampleCount }}
-                featureNoiseSigma: "{{ featureNoiseSigma }}"
-              stepCount: {{ stepCount }}
-              blurBaselineConfig:
-                maxBlurSigma: {{ maxBlurSigma }}
-            topK: {{ topK }}
-            examples:
-              neighborCount: {{ neighborCount }}
-              exampleGcsSource:
-                dataFormat: "{{ dataFormat }}"
-                gcsSource: "{{ gcsSource }}"
-              nearestNeighborSearchConfig: "{{ nearestNeighborSearchConfig }}"
-              presets:
-                query: "{{ query }}"
-                modality: "{{ modality }}"
-            outputIndices:
-              - "{{ outputIndices }}"
-            sampledShapleyAttribution:
-              pathCount: {{ pathCount }}
-            xraiAttribution:
-              stepCount: {{ stepCount }}
-              blurBaselineConfig:
-                maxBlurSigma: {{ maxBlurSigma }}
-              smoothGradConfig:
-                noiseSigma: {{ noiseSigma }}
-                noisySampleCount: {{ noisySampleCount }}
-                featureNoiseSigma: "{{ featureNoiseSigma }}"
-        pipelineJob: "{{ pipelineJob }}"
-        modelSourceInfo:
-          copy: {{ copy }}
-          sourceType: "{{ sourceType }}"
-        artifactUri: "{{ artifactUri }}"
-        dataStats:
-          validationDataItemsCount: "{{ validationDataItemsCount }}"
-          trainingDataItemsCount: "{{ trainingDataItemsCount }}"
-          trainingAnnotationsCount: "{{ trainingAnnotationsCount }}"
-          testAnnotationsCount: "{{ testAnnotationsCount }}"
-          validationAnnotationsCount: "{{ validationAnnotationsCount }}"
-          testDataItemsCount: "{{ testDataItemsCount }}"
-        originalModelInfo:
-          model: "{{ model }}"
-        deployedModels:
-          - deployedModelId: "{{ deployedModelId }}"
-            checkpointId: "{{ checkpointId }}"
-            endpoint: "{{ endpoint }}"
-        satisfiesPzs: {{ satisfiesPzs }}
-        updateTime: "{{ updateTime }}"
         checkpoints:
           - checkpointId: "{{ checkpointId }}"
             epoch: "{{ epoch }}"
             step: "{{ step }}"
+        containerSpec:
+          args:
+            - "{{ args }}"
+          command:
+            - "{{ command }}"
+          deploymentTimeout: "{{ deploymentTimeout }}"
+          env:
+            - name: "{{ name }}"
+              value: "{{ value }}"
+          grpcPorts:
+            - containerPort: {{ containerPort }}
+          healthProbe:
+            exec:
+              command:
+                - "{{ command }}"
+            failureThreshold: {{ failureThreshold }}
+            grpc:
+              port: {{ port }}
+              service: "{{ service }}"
+            httpGet:
+              host: "{{ host }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              path: "{{ path }}"
+              port: {{ port }}
+              scheme: "{{ scheme }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            tcpSocket:
+              host: "{{ host }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+          healthRoute: "{{ healthRoute }}"
+          imageUri: "{{ imageUri }}"
+          invokeRoutePrefix: "{{ invokeRoutePrefix }}"
+          livenessProbe:
+            exec:
+              command:
+                - "{{ command }}"
+            failureThreshold: {{ failureThreshold }}
+            grpc:
+              port: {{ port }}
+              service: "{{ service }}"
+            httpGet:
+              host: "{{ host }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              path: "{{ path }}"
+              port: {{ port }}
+              scheme: "{{ scheme }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            tcpSocket:
+              host: "{{ host }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+          ports:
+            - containerPort: {{ containerPort }}
+          predictRoute: "{{ predictRoute }}"
+          sharedMemorySizeMb: "{{ sharedMemorySizeMb }}"
+          startupProbe:
+            exec:
+              command:
+                - "{{ command }}"
+            failureThreshold: {{ failureThreshold }}
+            grpc:
+              port: {{ port }}
+              service: "{{ service }}"
+            httpGet:
+              host: "{{ host }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              path: "{{ path }}"
+              port: {{ port }}
+              scheme: "{{ scheme }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            tcpSocket:
+              host: "{{ host }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+        createTime: "{{ createTime }}"
+        dataStats:
+          testAnnotationsCount: "{{ testAnnotationsCount }}"
+          testDataItemsCount: "{{ testDataItemsCount }}"
+          trainingAnnotationsCount: "{{ trainingAnnotationsCount }}"
+          trainingDataItemsCount: "{{ trainingDataItemsCount }}"
+          validationAnnotationsCount: "{{ validationAnnotationsCount }}"
+          validationDataItemsCount: "{{ validationDataItemsCount }}"
+        defaultCheckpointId: "{{ defaultCheckpointId }}"
+        deployedModels:
+          - checkpointId: "{{ checkpointId }}"
+            deployedModelId: "{{ deployedModelId }}"
+            endpoint: "{{ endpoint }}"
+        description: "{{ description }}"
         displayName: "{{ displayName }}"
+        encryptionSpec:
+          kmsKeyName: "{{ kmsKeyName }}"
+        etag: "{{ etag }}"
+        explanationSpec:
+          metadata:
+            featureAttributionsSchemaUri: "{{ featureAttributionsSchemaUri }}"
+            inputs: "{{ inputs }}"
+            latentSpaceSource: "{{ latentSpaceSource }}"
+            outputs: "{{ outputs }}"
+          parameters:
+            examples:
+              exampleGcsSource:
+                dataFormat: "{{ dataFormat }}"
+                gcsSource: "{{ gcsSource }}"
+              nearestNeighborSearchConfig: "{{ nearestNeighborSearchConfig }}"
+              neighborCount: {{ neighborCount }}
+              presets:
+                modality: "{{ modality }}"
+                query: "{{ query }}"
+            integratedGradientsAttribution:
+              blurBaselineConfig:
+                maxBlurSigma: {{ maxBlurSigma }}
+              smoothGradConfig:
+                featureNoiseSigma: "{{ featureNoiseSigma }}"
+                noiseSigma: {{ noiseSigma }}
+                noisySampleCount: {{ noisySampleCount }}
+              stepCount: {{ stepCount }}
+            outputIndices:
+              - "{{ outputIndices }}"
+            sampledShapleyAttribution:
+              pathCount: {{ pathCount }}
+            topK: {{ topK }}
+            xraiAttribution:
+              blurBaselineConfig:
+                maxBlurSigma: {{ maxBlurSigma }}
+              smoothGradConfig:
+                featureNoiseSigma: "{{ featureNoiseSigma }}"
+                noiseSigma: {{ noiseSigma }}
+                noisySampleCount: {{ noisySampleCount }}
+              stepCount: {{ stepCount }}
+        labels: "{{ labels }}"
+        metadata: "{{ metadata }}"
+        metadataArtifact: "{{ metadataArtifact }}"
+        metadataSchemaUri: "{{ metadataSchemaUri }}"
+        modelSourceInfo:
+          copy: {{ copy }}
+          sourceType: "{{ sourceType }}"
+        name: "{{ name }}"
+        originalModelInfo:
+          model: "{{ model }}"
+        pipelineJob: "{{ pipelineJob }}"
+        predictSchemata:
+          instanceSchemaUri: "{{ instanceSchemaUri }}"
+          parametersSchemaUri: "{{ parametersSchemaUri }}"
+          predictionSchemaUri: "{{ predictionSchemaUri }}"
+        satisfiesPzi: {{ satisfiesPzi }}
+        satisfiesPzs: {{ satisfiesPzs }}
+        supportedDeploymentResourcesTypes:
+          - "{{ supportedDeploymentResourcesTypes }}"
+        supportedExportFormats:
+          - exportableContents: "{{ exportableContents }}"
+            id: "{{ id }}"
+        supportedInputStorageFormats:
+          - "{{ supportedInputStorageFormats }}"
         supportedOutputStorageFormats:
           - "{{ supportedOutputStorageFormats }}"
+        trainingPipeline: "{{ trainingPipeline }}"
+        updateTime: "{{ updateTime }}"
+        versionAliases:
+          - "{{ versionAliases }}"
+        versionCreateTime: "{{ versionCreateTime }}"
+        versionDescription: "{{ versionDescription }}"
+        versionId: "{{ versionId }}"
+        versionUpdateTime: "{{ versionUpdateTime }}"
     - name: parentModel
       value: "{{ parentModel }}"
       description: |
         Optional. When specify this field, the \`model_to_upload\` will not be uploaded as a new model, instead, it will become a new version of this \`parent_model\`.
-    - name: trainingTaskInputs
-      value: "{{ trainingTaskInputs }}"
-      description: |
-        Required. The training task's parameter(s), as specified in the training_task_definition's \`inputs\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        The labels with user-defined metadata to organize TrainingPipelines. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
     - name: trainingTaskDefinition
       value: "{{ trainingTaskDefinition }}"
       description: |
         Required. A Google Cloud Storage path to the YAML file that defines the training task which is responsible for producing the model artifact, and may also include additional auxiliary work. The definition files that can be used here are found in gs://google-cloud-aiplatform/schema/trainingjob/definition/. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-    - name: encryptionSpec
+    - name: trainingTaskInputs
+      value: "{{ trainingTaskInputs }}"
       description: |
-        Customer-managed encryption key spec for a TrainingPipeline. If set, this TrainingPipeline will be secured by this key. Note: Model trained by this TrainingPipeline is also secured by this key if model_to_upload is not set separately.
-      value:
-        kmsKeyName: "{{ kmsKeyName }}"
+        Required. The training task's parameter(s), as specified in the training_task_definition's \`inputs\`.
 `}</CodeBlock>
 
 </TabItem>

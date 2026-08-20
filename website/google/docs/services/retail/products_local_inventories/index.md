@@ -123,10 +123,10 @@ Updates local inventory information for a Product at a list of places, while res
 
 ```sql
 INSERT INTO google.retail.products_local_inventories (
-data__localInventories,
 data__addMask,
 data__addTime,
 data__allowMissing,
+data__localInventories,
 projectsId,
 locationsId,
 catalogsId,
@@ -134,10 +134,10 @@ branchesId,
 productsId
 )
 SELECT 
-'{{ localInventories }}',
 '{{ addMask }}',
 '{{ addTime }}',
 {{ allowMissing }},
+'{{ localInventories }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -172,31 +172,6 @@ response
     - name: productsId
       value: "{{ productsId }}"
       description: Required parameter for the products_local_inventories resource.
-    - name: localInventories
-      description: |
-        Required. A list of inventory information at difference places. Each place is identified by its place ID. At most 3000 inventories are allowed per request.
-      value:
-        - priceInfo:
-            price: {{ price }}
-            originalPrice: {{ originalPrice }}
-            priceEffectiveTime: "{{ priceEffectiveTime }}"
-            cost: {{ cost }}
-            priceRange:
-              price:
-                minimum: {{ minimum }}
-                maximum: {{ maximum }}
-                exclusiveMaximum: {{ exclusiveMaximum }}
-                exclusiveMinimum: {{ exclusiveMinimum }}
-              originalPrice:
-                minimum: {{ minimum }}
-                maximum: {{ maximum }}
-                exclusiveMaximum: {{ exclusiveMaximum }}
-                exclusiveMinimum: {{ exclusiveMinimum }}
-            currencyCode: "{{ currencyCode }}"
-            priceExpireTime: "{{ priceExpireTime }}"
-          attributes: "{{ attributes }}"
-          placeId: "{{ placeId }}"
-          fulfillmentTypes: "{{ fulfillmentTypes }}"
     - name: addMask
       value: "{{ addMask }}"
       description: |
@@ -209,6 +184,31 @@ response
       value: {{ allowMissing }}
       description: |
         If set to true, and the Product is not found, the local inventory will still be processed and retained for at most 1 day and processed once the Product is created. If set to false, a NOT_FOUND error is returned if the Product is not found.
+    - name: localInventories
+      description: |
+        Required. A list of inventory information at difference places. Each place is identified by its place ID. At most 3000 inventories are allowed per request.
+      value:
+        - attributes: "{{ attributes }}"
+          fulfillmentTypes: "{{ fulfillmentTypes }}"
+          placeId: "{{ placeId }}"
+          priceInfo:
+            cost: {{ cost }}
+            currencyCode: "{{ currencyCode }}"
+            originalPrice: {{ originalPrice }}
+            price: {{ price }}
+            priceEffectiveTime: "{{ priceEffectiveTime }}"
+            priceExpireTime: "{{ priceExpireTime }}"
+            priceRange:
+              originalPrice:
+                exclusiveMaximum: {{ exclusiveMaximum }}
+                exclusiveMinimum: {{ exclusiveMinimum }}
+                maximum: {{ maximum }}
+                minimum: {{ minimum }}
+              price:
+                exclusiveMaximum: {{ exclusiveMaximum }}
+                exclusiveMinimum: {{ exclusiveMinimum }}
+                maximum: {{ maximum }}
+                minimum: {{ minimum }}
 `}</CodeBlock>
 
 </TabItem>

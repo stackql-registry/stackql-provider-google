@@ -215,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_instance_partitions_list"><CopyableCode code="projects_instances_instance_partitions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-instancePartitionDeadline"><code>instancePartitionDeadline</code></a></td>
+    <td><a href="#parameter-instancePartitionDeadline"><code>instancePartitionDeadline</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all instance partitions for the given instance.</td>
 </tr>
 <tr>
@@ -348,9 +348,9 @@ updateTime
 FROM google.spanner.instance_partitions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
+AND instancePartitionDeadline = '{{ instancePartitionDeadline }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND instancePartitionDeadline = '{{ instancePartitionDeadline }}'
 ;
 ```
 </TabItem>
@@ -372,14 +372,14 @@ Creates an instance partition and begins preparing it to be used. The returned l
 
 ```sql
 INSERT INTO google.spanner.instance_partitions (
-data__instancePartitionId,
 data__instancePartition,
+data__instancePartitionId,
 projectsId,
 instancesId
 )
 SELECT 
-'{{ instancePartitionId }}',
 '{{ instancePartition }}',
+'{{ instancePartitionId }}',
 '{{ projectsId }}',
 '{{ instancesId }}'
 RETURNING
@@ -402,50 +402,50 @@ response
     - name: instancesId
       value: "{{ instancesId }}"
       description: Required parameter for the instance_partitions resource.
-    - name: instancePartitionId
-      value: "{{ instancePartitionId }}"
-      description: |
-        Required. The ID of the instance partition to create. Valid identifiers are of the form \`a-z*[a-z0-9]\` and must be between 2 and 64 characters in length.
     - name: instancePartition
       description: |
-        An isolated set of Cloud Spanner resources that databases can define placements on.
+        Required. The instance partition to create. The instance_partition.name may be omitted, but if specified must be \`/instancePartitions/\`.
       value:
-        name: "{{ name }}"
-        config: "{{ config }}"
-        displayName: "{{ displayName }}"
-        nodeCount: {{ nodeCount }}
-        processingUnits: {{ processingUnits }}
         autoscalingConfig:
-          autoscalingLimits:
-            minNodes: {{ minNodes }}
-            minProcessingUnits: {{ minProcessingUnits }}
-            maxNodes: {{ maxNodes }}
-            maxProcessingUnits: {{ maxProcessingUnits }}
-          autoscalingTargets:
-            highPriorityCpuUtilizationPercent: {{ highPriorityCpuUtilizationPercent }}
-            totalCpuUtilizationPercent: {{ totalCpuUtilizationPercent }}
-            storageUtilizationPercent: {{ storageUtilizationPercent }}
           asymmetricAutoscalingOptions:
-            - replicaSelection:
-                location: "{{ location }}"
-              overrides:
+            - overrides:
                 autoscalingLimits:
-                  minNodes: {{ minNodes }}
-                  minProcessingUnits: {{ minProcessingUnits }}
                   maxNodes: {{ maxNodes }}
                   maxProcessingUnits: {{ maxProcessingUnits }}
+                  minNodes: {{ minNodes }}
+                  minProcessingUnits: {{ minProcessingUnits }}
                 autoscalingTargetHighPriorityCpuUtilizationPercent: {{ autoscalingTargetHighPriorityCpuUtilizationPercent }}
                 autoscalingTargetTotalCpuUtilizationPercent: {{ autoscalingTargetTotalCpuUtilizationPercent }}
                 disableHighPriorityCpuAutoscaling: {{ disableHighPriorityCpuAutoscaling }}
                 disableTotalCpuAutoscaling: {{ disableTotalCpuAutoscaling }}
-        state: "{{ state }}"
+              replicaSelection:
+                location: "{{ location }}"
+          autoscalingLimits:
+            maxNodes: {{ maxNodes }}
+            maxProcessingUnits: {{ maxProcessingUnits }}
+            minNodes: {{ minNodes }}
+            minProcessingUnits: {{ minProcessingUnits }}
+          autoscalingTargets:
+            highPriorityCpuUtilizationPercent: {{ highPriorityCpuUtilizationPercent }}
+            storageUtilizationPercent: {{ storageUtilizationPercent }}
+            totalCpuUtilizationPercent: {{ totalCpuUtilizationPercent }}
+        config: "{{ config }}"
         createTime: "{{ createTime }}"
-        updateTime: "{{ updateTime }}"
-        referencingDatabases:
-          - "{{ referencingDatabases }}"
+        displayName: "{{ displayName }}"
+        etag: "{{ etag }}"
+        name: "{{ name }}"
+        nodeCount: {{ nodeCount }}
+        processingUnits: {{ processingUnits }}
         referencingBackups:
           - "{{ referencingBackups }}"
-        etag: "{{ etag }}"
+        referencingDatabases:
+          - "{{ referencingDatabases }}"
+        state: "{{ state }}"
+        updateTime: "{{ updateTime }}"
+    - name: instancePartitionId
+      value: "{{ instancePartitionId }}"
+      description: |
+        Required. The ID of the instance partition to create. Valid identifiers are of the form \`a-z*[a-z0-9]\` and must be between 2 and 64 characters in length.
 `}</CodeBlock>
 
 </TabItem>
@@ -467,8 +467,8 @@ Updates an instance partition, and begins allocating or releasing resources as r
 ```sql
 UPDATE google.spanner.instance_partitions
 SET 
-data__instancePartition = '{{ instancePartition }}',
-data__fieldMask = '{{ fieldMask }}'
+data__fieldMask = '{{ fieldMask }}',
+data__instancePartition = '{{ instancePartition }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

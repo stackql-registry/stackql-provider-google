@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the health datasets in the current project.</td>
 </tr>
 <tr>
@@ -271,8 +271,8 @@ timeZone
 FROM google.healthcare.datasets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -294,16 +294,16 @@ Creates a new health dataset. Results are returned through the Operation interfa
 
 ```sql
 INSERT INTO google.healthcare.datasets (
-data__name,
 data__encryptionSpec,
+data__name,
 data__timeZone,
 projectsId,
 locationsId,
 datasetId
 )
 SELECT 
-'{{ name }}',
 '{{ encryptionSpec }}',
+'{{ name }}',
 '{{ timeZone }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -328,15 +328,15 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the datasets resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name of the dataset, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}\`.
     - name: encryptionSpec
       description: |
         Optional. Customer-managed encryption key spec for a Dataset. If set, this Dataset and all of its sub-resources will be secured by this key. If empty, the Dataset is secured by the default Google encryption key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the dataset, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}\`.
     - name: timeZone
       value: "{{ timeZone }}"
       description: |
@@ -364,8 +364,8 @@ Updates dataset metadata.
 ```sql
 UPDATE google.healthcare.datasets
 SET 
-data__name = '{{ name }}',
 data__encryptionSpec = '{{ encryptionSpec }}',
+data__name = '{{ name }}',
 data__timeZone = '{{ timeZone }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -426,8 +426,8 @@ EXEC google.healthcare.datasets.deidentify
 @@json=
 '{
 "config": "{{ config }}", 
-"gcsConfigUri": "{{ gcsConfigUri }}", 
-"destinationDataset": "{{ destinationDataset }}"
+"destinationDataset": "{{ destinationDataset }}", 
+"gcsConfigUri": "{{ gcsConfigUri }}"
 }'
 ;
 ```

@@ -104,6 +104,46 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the metadata feed, in the format projects/&#123;project_id_or_number&#125;/locations/&#123;location_id&#125;/metadataFeeds/&#123;metadata_feed_id&#125;.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the feed was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filters" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The filters of the metadata feed. Only the changes that match the filters are published. (id: GoogleCloudDataplexV1MetadataFeedFilters)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. User-defined labels.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="pubsubTopic" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The pubsub topic that you want the metadata feed messages to publish to. Please grant Dataplex service account the permission to publish messages to the topic. The service account is: service-&#123;PROJECT_NUMBER&#125;@gcp-sa-dataplex.iam.gserviceaccount.com.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scope" /></td>
+    <td><code>object</code></td>
+    <td>Required. The scope of the metadata feed. Only the in scope changes are published. (id: GoogleCloudDataplexV1MetadataFeedScope)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. A system-generated, globally unique ID for the metadata job. If the metadata job is deleted and then re-created with the same name, this ID is different.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the feed was updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -135,14 +175,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_metadata_feeds_list"><CopyableCode code="projects_locations_metadata_feeds_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve a list of MetadataFeeds.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_metadata_feeds_create"><CopyableCode code="projects_locations_metadata_feeds_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-metadataFeedId"><code>metadataFeedId</code></a></td>
+    <td><a href="#parameter-metadataFeedId"><code>metadataFeedId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a MetadataFeed.</td>
 </tr>
 <tr>
@@ -264,14 +304,21 @@ Retrieve a list of MetadataFeeds.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+filters,
+labels,
+pubsubTopic,
+scope,
+uid,
+updateTime
 FROM google.dataplex.metadata_feeds
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -293,26 +340,26 @@ Creates a MetadataFeed.
 
 ```sql
 INSERT INTO google.dataplex.metadata_feeds (
-data__scope,
 data__filters,
 data__labels,
 data__name,
 data__pubsubTopic,
+data__scope,
 projectsId,
 locationsId,
-validateOnly,
-metadataFeedId
+metadataFeedId,
+validateOnly
 )
 SELECT 
-'{{ scope }}',
 '{{ filters }}',
 '{{ labels }}',
 '{{ name }}',
 '{{ pubsubTopic }}',
+'{{ scope }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ metadataFeedId }}'
+'{{ metadataFeedId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -333,25 +380,16 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the metadata_feeds resource.
-    - name: scope
-      description: |
-        Required. The scope of the metadata feed. Only the in scope changes are published.
-      value:
-        organizationLevel: {{ organizationLevel }}
-        projects:
-          - "{{ projects }}"
-        entryGroups:
-          - "{{ entryGroups }}"
     - name: filters
       description: |
         Optional. The filters of the metadata feed. Only the changes that match the filters are published.
       value:
+        aspectTypes:
+          - "{{ aspectTypes }}"
         changeTypes:
           - "{{ changeTypes }}"
         entryTypes:
           - "{{ entryTypes }}"
-        aspectTypes:
-          - "{{ aspectTypes }}"
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -364,10 +402,19 @@ response
       value: "{{ pubsubTopic }}"
       description: |
         Optional. The pubsub topic that you want the metadata feed messages to publish to. Please grant Dataplex service account the permission to publish messages to the topic. The service account is: service-{PROJECT_NUMBER}@gcp-sa-dataplex.iam.gserviceaccount.com.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: scope
+      description: |
+        Required. The scope of the metadata feed. Only the in scope changes are published.
+      value:
+        entryGroups:
+          - "{{ entryGroups }}"
+        organizationLevel: {{ organizationLevel }}
+        projects:
+          - "{{ projects }}"
     - name: metadataFeedId
       value: "{{ metadataFeedId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -389,11 +436,11 @@ Updates a MetadataFeed.
 ```sql
 UPDATE google.dataplex.metadata_feeds
 SET 
-data__scope = '{{ scope }}',
 data__filters = '{{ filters }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__pubsubTopic = '{{ pubsubTopic }}'
+data__pubsubTopic = '{{ pubsubTopic }}',
+data__scope = '{{ scope }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

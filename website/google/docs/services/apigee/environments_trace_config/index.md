@@ -60,6 +60,16 @@ The following fields are returned by `SELECT` queries:
     <td>Required. Exporter that is used to view the distributed trace captured using the chosen trace protocol. An exporter sends traces to any backend that is capable of consuming them. Recorded spans can be exported by registered exporters. (EXPORTER_UNSPECIFIED, JAEGER, CLOUD_TRACE, OPEN_TELEMETRY_COLLECTOR, OPEN_TELEMETRY_CLOUD_TRACE)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="mtlsConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. mTLS configuration for the OTel Collector endpoint. Required when `otel_collector_security_scheme` == MTLS; must not be set otherwise. (id: GoogleCloudApigeeV1TraceConfigOtelMtlsConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="otelCollectorSecurityScheme" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The security scheme for the OTel Collector endpoint. Defaults to NONE (unauthenticated OTLP/HTTP), preserving today's behavior for existing configurations. Only applicable when `exporter` == OPEN_TELEMETRY_COLLECTOR. (OTEL_COLLECTOR_SECURITY_SCHEME_UNSPECIFIED, NONE, MTLS)</td>
+</tr>
+<tr>
     <td><CopyableCode code="samplingConfig" /></td>
     <td><code>object</code></td>
     <td>Distributed trace configuration for all API proxies in an environment. You can also override the configuration for a specific API proxy using the distributed trace configuration overrides API. (id: GoogleCloudApigeeV1TraceSamplingConfig)</td>
@@ -158,6 +168,8 @@ Get distributed trace configuration in an environment.
 SELECT
 endpoint,
 exporter,
+mtlsConfig,
+otelCollectorSecurityScheme,
 samplingConfig,
 spanSemantics,
 traceProtocol
@@ -185,11 +197,13 @@ Updates the trace configurations in an environment. Note that the repeated field
 ```sql
 UPDATE google.apigee.environments_trace_config
 SET 
-data__traceProtocol = '{{ traceProtocol }}',
 data__endpoint = '{{ endpoint }}',
+data__exporter = '{{ exporter }}',
+data__mtlsConfig = '{{ mtlsConfig }}',
+data__otelCollectorSecurityScheme = '{{ otelCollectorSecurityScheme }}',
 data__samplingConfig = '{{ samplingConfig }}',
 data__spanSemantics = '{{ spanSemantics }}',
-data__exporter = '{{ exporter }}'
+data__traceProtocol = '{{ traceProtocol }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -197,6 +211,8 @@ AND updateMask = '{{ updateMask}}'
 RETURNING
 endpoint,
 exporter,
+mtlsConfig,
+otelCollectorSecurityScheme,
 samplingConfig,
 spanSemantics,
 traceProtocol;

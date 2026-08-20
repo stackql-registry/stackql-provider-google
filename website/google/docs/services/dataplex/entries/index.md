@@ -168,7 +168,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_entry_groups_entries_get"><CopyableCode code="projects_locations_entry_groups_entries_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-entryGroupsId"><code>entryGroupsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
-    <td><a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-paths"><code>paths</code></a></td>
+    <td><a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-paths"><code>paths</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Gets an Entry.</td>
 </tr>
 <tr>
@@ -189,7 +189,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_entry_groups_entries_patch"><CopyableCode code="projects_locations_entry_groups_entries_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-entryGroupsId"><code>entryGroupsId</code></a>, <a href="#parameter-entriesId"><code>entriesId</code></a></td>
-    <td><a href="#parameter-deleteMissingAspects"><code>deleteMissingAspects</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-aspectKeys"><code>aspectKeys</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-aspectKeys"><code>aspectKeys</code></a>, <a href="#parameter-deleteMissingAspects"><code>deleteMissingAspects</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an Entry.</td>
 </tr>
 <tr>
@@ -322,8 +322,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND entryGroupsId = '{{ entryGroupsId }}' -- required
 AND entriesId = '{{ entriesId }}' -- required
 AND aspectTypes = '{{ aspectTypes }}'
-AND view = '{{ view }}'
 AND paths = '{{ paths }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -369,24 +369,24 @@ Creates an Entry.
 
 ```sql
 INSERT INTO google.dataplex.entries (
+data__aspects,
+data__entrySource,
+data__entryType,
 data__fullyQualifiedName,
 data__name,
 data__parentEntry,
-data__entryType,
-data__aspects,
-data__entrySource,
 projectsId,
 locationsId,
 entryGroupsId,
 entryId
 )
 SELECT 
+'{{ aspects }}',
+'{{ entrySource }}',
+'{{ entryType }}',
 '{{ fullyQualifiedName }}',
 '{{ name }}',
 '{{ parentEntry }}',
-'{{ entryType }}',
-'{{ aspects }}',
-'{{ entrySource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ entryGroupsId }}',
@@ -417,6 +417,30 @@ updateTime
     - name: entryGroupsId
       value: "{{ entryGroupsId }}"
       description: Required parameter for the entries resource.
+    - name: aspects
+      value: "{{ aspects }}"
+      description: |
+        Optional. The aspects that are attached to the entry. Depending on how the aspect is attached to the entry, the format of the aspect key can be one of the following: If the aspect is attached directly to the entry: {project_id_or_number}.{location_id}.{aspect_type_id} If the aspect is attached to an entry's path: {project_id_or_number}.{location_id}.{aspect_type_id}@{path}
+    - name: entrySource
+      description: |
+        Optional. Information related to the source system of the data resource that is represented by the entry.
+      value:
+        ancestors:
+          - name: "{{ name }}"
+            type: "{{ type }}"
+        createTime: "{{ createTime }}"
+        description: "{{ description }}"
+        displayName: "{{ displayName }}"
+        labels: "{{ labels }}"
+        location: "{{ location }}"
+        platform: "{{ platform }}"
+        resource: "{{ resource }}"
+        system: "{{ system }}"
+        updateTime: "{{ updateTime }}"
+    - name: entryType
+      value: "{{ entryType }}"
+      description: |
+        Required. Immutable. The relative resource name of the entry type that was used to create this entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryTypes/{entry_type_id}.
     - name: fullyQualifiedName
       value: "{{ fullyQualifiedName }}"
       description: |
@@ -429,30 +453,6 @@ updateTime
       value: "{{ parentEntry }}"
       description: |
         Optional. Immutable. The resource name of the parent entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}.
-    - name: entryType
-      value: "{{ entryType }}"
-      description: |
-        Required. Immutable. The relative resource name of the entry type that was used to create this entry, in the format projects/{project_id_or_number}/locations/{location_id}/entryTypes/{entry_type_id}.
-    - name: aspects
-      value: "{{ aspects }}"
-      description: |
-        Optional. The aspects that are attached to the entry. Depending on how the aspect is attached to the entry, the format of the aspect key can be one of the following: If the aspect is attached directly to the entry: {project_id_or_number}.{location_id}.{aspect_type_id} If the aspect is attached to an entry's path: {project_id_or_number}.{location_id}.{aspect_type_id}@{path}
-    - name: entrySource
-      description: |
-        Optional. Information related to the source system of the data resource that is represented by the entry.
-      value:
-        displayName: "{{ displayName }}"
-        system: "{{ system }}"
-        createTime: "{{ createTime }}"
-        labels: "{{ labels }}"
-        ancestors:
-          - name: "{{ name }}"
-            type: "{{ type }}"
-        description: "{{ description }}"
-        updateTime: "{{ updateTime }}"
-        resource: "{{ resource }}"
-        platform: "{{ platform }}"
-        location: "{{ location }}"
     - name: entryId
       value: "{{ entryId }}"
 `}</CodeBlock>
@@ -476,21 +476,21 @@ Updates an Entry.
 ```sql
 UPDATE google.dataplex.entries
 SET 
+data__aspects = '{{ aspects }}',
+data__entrySource = '{{ entrySource }}',
+data__entryType = '{{ entryType }}',
 data__fullyQualifiedName = '{{ fullyQualifiedName }}',
 data__name = '{{ name }}',
-data__parentEntry = '{{ parentEntry }}',
-data__entryType = '{{ entryType }}',
-data__aspects = '{{ aspects }}',
-data__entrySource = '{{ entrySource }}'
+data__parentEntry = '{{ parentEntry }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND entryGroupsId = '{{ entryGroupsId }}' --required
 AND entriesId = '{{ entriesId }}' --required
-AND deleteMissingAspects = {{ deleteMissingAspects}}
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
 AND aspectKeys = '{{ aspectKeys}}'
+AND deleteMissingAspects = {{ deleteMissingAspects}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 aspects,

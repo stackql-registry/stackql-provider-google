@@ -104,6 +104,46 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of this binding. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/managementDnsZoneBindings/my-management-dns-zone-binding`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Creation time of this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>User-provided description for this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The state of the resource. (STATE_UNSPECIFIED, ACTIVE, CREATING, UPDATING, DELETING, FAILED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. System-generated unique identifier for the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Last update time of this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="vmwareEngineNetwork" /></td>
+    <td><code>string</code></td>
+    <td>Network to bind is a VMware Engine network. Specify the name in the following form for VMware engine network: `projects/&#123;project&#125;/locations/global/vmwareEngineNetworks/&#123;vmware_engine_network_id&#125;`. `&#123;project&#125;` can either be a project number or a project ID.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="vpcNetwork" /></td>
+    <td><code>string</code></td>
+    <td>Network to bind is a standard consumer VPC. Specify the name in the following form for consumer VPC network: `projects/&#123;project&#125;/global/networks/&#123;network_id&#125;`. `&#123;project&#125;` can either be a project number or a project ID.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -135,21 +175,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Consumer VPCs bound to Management DNS Zone of a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-managementDnsZoneBindingId"><code>managementDnsZoneBindingId</code></a></td>
+    <td><a href="#parameter-managementDnsZoneBindingId"><code>managementDnsZoneBindingId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new `ManagementDnsZoneBinding` resource in a private cloud. This RPC creates the DNS binding and the resource that represents the DNS binding of the consumer VPC network to the management DNS zone. A management DNS zone is the Cloud DNS cross-project binding zone that VMware Engine creates for each private cloud. It contains FQDNs and corresponding IP addresses for the private cloud's ESXi hosts and management VM appliances like vCenter and NSX Manager.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a>, <a href="#parameter-managementDnsZoneBindingsId"><code>managementDnsZoneBindingsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a `ManagementDnsZoneBinding` resource. Only fields specified in `update_mask` are applied.</td>
 </tr>
 <tr>
@@ -277,15 +317,22 @@ Lists Consumer VPCs bound to Management DNS Zone of a given private cloud.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+state,
+uid,
+updateTime,
+vmwareEngineNetwork,
+vpcNetwork
 FROM google.vmwareengine.management_dns_zone_bindings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -307,24 +354,24 @@ Creates a new `ManagementDnsZoneBinding` resource in a private cloud. This RPC c
 
 ```sql
 INSERT INTO google.vmwareengine.management_dns_zone_bindings (
-data__vpcNetwork,
 data__description,
 data__vmwareEngineNetwork,
+data__vpcNetwork,
 projectsId,
 locationsId,
 privateCloudsId,
-requestId,
-managementDnsZoneBindingId
+managementDnsZoneBindingId,
+requestId
 )
 SELECT 
-'{{ vpcNetwork }}',
 '{{ description }}',
 '{{ vmwareEngineNetwork }}',
+'{{ vpcNetwork }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
-'{{ requestId }}',
-'{{ managementDnsZoneBindingId }}'
+'{{ managementDnsZoneBindingId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -348,10 +395,6 @@ response
     - name: privateCloudsId
       value: "{{ privateCloudsId }}"
       description: Required parameter for the management_dns_zone_bindings resource.
-    - name: vpcNetwork
-      value: "{{ vpcNetwork }}"
-      description: |
-        Network to bind is a standard consumer VPC. Specify the name in the following form for consumer VPC network: \`projects/{project}/global/networks/{network_id}\`. \`{project}\` can either be a project number or a project ID.
     - name: description
       value: "{{ description }}"
       description: |
@@ -360,10 +403,14 @@ response
       value: "{{ vmwareEngineNetwork }}"
       description: |
         Network to bind is a VMware Engine network. Specify the name in the following form for VMware engine network: \`projects/{project}/locations/global/vmwareEngineNetworks/{vmware_engine_network_id}\`. \`{project}\` can either be a project number or a project ID.
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: vpcNetwork
+      value: "{{ vpcNetwork }}"
+      description: |
+        Network to bind is a standard consumer VPC. Specify the name in the following form for consumer VPC network: \`projects/{project}/global/networks/{network_id}\`. \`{project}\` can either be a project number or a project ID.
     - name: managementDnsZoneBindingId
       value: "{{ managementDnsZoneBindingId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -385,16 +432,16 @@ Updates a `ManagementDnsZoneBinding` resource. Only fields specified in `update_
 ```sql
 UPDATE google.vmwareengine.management_dns_zone_bindings
 SET 
-data__vpcNetwork = '{{ vpcNetwork }}',
 data__description = '{{ description }}',
-data__vmwareEngineNetwork = '{{ vmwareEngineNetwork }}'
+data__vmwareEngineNetwork = '{{ vmwareEngineNetwork }}',
+data__vpcNetwork = '{{ vpcNetwork }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
 AND managementDnsZoneBindingsId = '{{ managementDnsZoneBindingsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

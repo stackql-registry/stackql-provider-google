@@ -99,6 +99,41 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource path of the ImageImport.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudStorageUri" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The path to the Cloud Storage file from which the image should be imported.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time the image import was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="diskImageTargetDefaults" /></td>
+    <td><code>object</code></td>
+    <td>Immutable. Target details for importing a disk image, will be used by ImageImportJob. (id: DiskImageTargetDetails)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryption" /></td>
+    <td><code>object</code></td>
+    <td>Immutable. The encryption details used by the image import process during the image adaptation for Compute Engine. (id: Encryption)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="machineImageTargetDefaults" /></td>
+    <td><code>object</code></td>
+    <td>Immutable. Target details for importing a machine image, will be used by ImageImportJob. (id: MachineImageTargetDetails)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="recentImageImportJobs" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The result of the most recent runs for this ImageImport. All jobs for this ImageImport can be listed via ListImageImportJobs.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -130,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ImageImports in a given project.</td>
 </tr>
 <tr>
@@ -246,12 +281,18 @@ Lists ImageImports in a given project.
 
 ```sql
 SELECT
-*
+name,
+cloudStorageUri,
+createTime,
+diskImageTargetDefaults,
+encryption,
+machineImageTargetDefaults,
+recentImageImportJobs
 FROM google.vmmigration.image_imports
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -275,20 +316,20 @@ Creates a new ImageImport in a given project.
 
 ```sql
 INSERT INTO google.vmmigration.image_imports (
-data__encryption,
 data__cloudStorageUri,
-data__machineImageTargetDefaults,
 data__diskImageTargetDefaults,
+data__encryption,
+data__machineImageTargetDefaults,
 projectsId,
 locationsId,
 imageImportId,
 requestId
 )
 SELECT 
-'{{ encryption }}',
 '{{ cloudStorageUri }}',
-'{{ machineImageTargetDefaults }}',
 '{{ diskImageTargetDefaults }}',
+'{{ encryption }}',
+'{{ machineImageTargetDefaults }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ imageImportId }}',
@@ -313,78 +354,78 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the image_imports resource.
+    - name: cloudStorageUri
+      value: "{{ cloudStorageUri }}"
+      description: |
+        Immutable. The path to the Cloud Storage file from which the image should be imported.
+    - name: diskImageTargetDefaults
+      description: |
+        Immutable. Target details for importing a disk image, will be used by ImageImportJob.
+      value:
+        additionalLicenses:
+          - "{{ additionalLicenses }}"
+        dataDiskImageImport:
+          guestOsFeatures:
+            - "{{ guestOsFeatures }}"
+        description: "{{ description }}"
+        encryption:
+          kmsKey: "{{ kmsKey }}"
+        familyName: "{{ familyName }}"
+        imageName: "{{ imageName }}"
+        labels: "{{ labels }}"
+        osAdaptationParameters:
+          adaptationModifiers:
+            - modifier: "{{ modifier }}"
+              value: "{{ value }}"
+          bootConversion: "{{ bootConversion }}"
+          generalize: {{ generalize }}
+          licenseType: "{{ licenseType }}"
+        singleRegionStorage: {{ singleRegionStorage }}
+        targetProject: "{{ targetProject }}"
     - name: encryption
       description: |
         Immutable. The encryption details used by the image import process during the image adaptation for Compute Engine.
       value:
         kmsKey: "{{ kmsKey }}"
-    - name: cloudStorageUri
-      value: "{{ cloudStorageUri }}"
-      description: |
-        Immutable. The path to the Cloud Storage file from which the image should be imported.
     - name: machineImageTargetDefaults
       description: |
         Immutable. Target details for importing a machine image, will be used by ImageImportJob.
       value:
+        additionalLicenses:
+          - "{{ additionalLicenses }}"
+        description: "{{ description }}"
+        encryption:
+          kmsKey: "{{ kmsKey }}"
+        labels: "{{ labels }}"
         machineImageName: "{{ machineImageName }}"
-        shieldedInstanceConfig:
-          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-          secureBoot: "{{ secureBoot }}"
-          enableVtpm: {{ enableVtpm }}
+        machineImageParametersOverrides:
+          machineType: "{{ machineType }}"
+        networkInterfaces:
+          - externalIp: "{{ externalIp }}"
+            internalIp: "{{ internalIp }}"
+            network: "{{ network }}"
+            networkTier: "{{ networkTier }}"
+            subnetwork: "{{ subnetwork }}"
         osAdaptationParameters:
-          generalize: {{ generalize }}
-          bootConversion: "{{ bootConversion }}"
-          licenseType: "{{ licenseType }}"
           adaptationModifiers:
             - modifier: "{{ modifier }}"
               value: "{{ value }}"
-        singleRegionStorage: {{ singleRegionStorage }}
-        networkInterfaces:
-          - network: "{{ network }}"
-            subnetwork: "{{ subnetwork }}"
-            networkTier: "{{ networkTier }}"
-            internalIp: "{{ internalIp }}"
-            externalIp: "{{ externalIp }}"
-        description: "{{ description }}"
-        targetProject: "{{ targetProject }}"
-        additionalLicenses:
-          - "{{ additionalLicenses }}"
-        tags:
-          - "{{ tags }}"
-        labels: "{{ labels }}"
-        encryption:
-          kmsKey: "{{ kmsKey }}"
+          bootConversion: "{{ bootConversion }}"
+          generalize: {{ generalize }}
+          licenseType: "{{ licenseType }}"
         serviceAccount:
           email: "{{ email }}"
           scopes:
             - "{{ scopes }}"
-        skipOsAdaptation: "{{ skipOsAdaptation }}"
-        machineImageParametersOverrides:
-          machineType: "{{ machineType }}"
-    - name: diskImageTargetDefaults
-      description: |
-        Immutable. Target details for importing a disk image, will be used by ImageImportJob.
-      value:
-        encryption:
-          kmsKey: "{{ kmsKey }}"
-        osAdaptationParameters:
-          generalize: {{ generalize }}
-          bootConversion: "{{ bootConversion }}"
-          licenseType: "{{ licenseType }}"
-          adaptationModifiers:
-            - modifier: "{{ modifier }}"
-              value: "{{ value }}"
+        shieldedInstanceConfig:
+          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+          enableVtpm: {{ enableVtpm }}
+          secureBoot: "{{ secureBoot }}"
         singleRegionStorage: {{ singleRegionStorage }}
+        skipOsAdaptation: "{{ skipOsAdaptation }}"
+        tags:
+          - "{{ tags }}"
         targetProject: "{{ targetProject }}"
-        familyName: "{{ familyName }}"
-        dataDiskImageImport:
-          guestOsFeatures:
-            - "{{ guestOsFeatures }}"
-        description: "{{ description }}"
-        imageName: "{{ imageName }}"
-        labels: "{{ labels }}"
-        additionalLicenses:
-          - "{{ additionalLicenses }}"
     - name: imageImportId
       value: "{{ imageImportId }}"
     - name: requestId

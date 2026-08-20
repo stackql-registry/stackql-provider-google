@@ -58,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="allEntitiesMetrics" /></td>
     <td><code>object</code></td>
-    <td>Metrics across multiple confidence levels. (id: GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics)</td>
+    <td>Metrics for all the entities in aggregate. (id: GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -112,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="allEntitiesMetrics" /></td>
     <td><code>object</code></td>
-    <td>Metrics across multiple confidence levels. (id: GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics)</td>
+    <td>Metrics for all the entities in aggregate. (id: GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>

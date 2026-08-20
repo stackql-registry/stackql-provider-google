@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a></td>
-    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Gemini Enterprise only. Lists all non-deleted WorkforcePoolProviderScimTenants in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted SCIM tenants are also listed.</td>
 </tr>
 <tr>
@@ -324,9 +324,9 @@ FROM google.iam.scim_tenants
 WHERE locationsId = '{{ locationsId }}' -- required
 AND workforcePoolsId = '{{ workforcePoolsId }}' -- required
 AND providersId = '{{ providersId }}' -- required
-AND showDeleted = '{{ showDeleted }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -348,20 +348,20 @@ Gemini Enterprise only. Creates a new WorkforcePoolProviderScimTenant in a Workf
 
 ```sql
 INSERT INTO google.iam.scim_tenants (
-data__name,
-data__displayName,
-data__description,
 data__claimMapping,
+data__description,
+data__displayName,
+data__name,
 locationsId,
 workforcePoolsId,
 providersId,
 workforcePoolProviderScimTenantId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ claimMapping }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ locationsId }}',
 '{{ workforcePoolsId }}',
 '{{ providersId }}',
@@ -392,22 +392,22 @@ state
     - name: providersId
       value: "{{ providersId }}"
       description: Required parameter for the scim_tenants resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Gemini Enterprise only. The resource name of the SCIM Tenant. Format: \`locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}\`
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. Gemini Enterprise only. The display name of the SCIM tenant. Cannot exceed 32 characters.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Gemini Enterprise only. The description of the SCIM tenant. Cannot exceed 256 characters.
     - name: claimMapping
       value: "{{ claimMapping }}"
       description: |
         Required. Immutable. Gemini Enterprise only. Maps SCIM attributes to Google attributes. This mapping is used to associate the attributes synced via SCIM with the Google Cloud attributes used in IAM policies for Workforce Identity Federation. SCIM-managed user and group attributes are mapped to \`google.subject\` and \`google.group\` respectively. Each key must be a string specifying the Google Cloud IAM attribute to map to. The supported keys are as follows: * \`google.subject\`: The principal IAM is authenticating. You can reference this value in IAM bindings. This is also the subject that appears in Cloud Logging logs. This is a required field and the mapped subject cannot exceed 127 bytes. * \`google.group\`: Group the authenticating user belongs to. You can grant group access to resources using an IAM \`principalSet\` binding; access applies to all members of the group. Each value must be a [Common Expression Language] (https://opensource.google/projects/cel) expression that maps SCIM user or group attribute to the normalized attribute specified by the corresponding map key. Example: To map the SCIM user's \`externalId\` to \`google.subject\` and the SCIM group's \`externalId\` to \`google.group\`: \`\`\` { "google.subject": "user.externalId", "google.group": "group.externalId" } \`\`\`
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Gemini Enterprise only. The description of the SCIM tenant. Cannot exceed 256 characters.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Gemini Enterprise only. The display name of the SCIM tenant. Cannot exceed 32 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Gemini Enterprise only. The resource name of the SCIM Tenant. Format: \`locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}\`
     - name: workforcePoolProviderScimTenantId
       value: "{{ workforcePoolProviderScimTenantId }}"
 `}</CodeBlock>
@@ -431,10 +431,10 @@ Gemini Enterprise only. Updates an existing WorkforcePoolProviderScimTenant.
 ```sql
 UPDATE google.iam.scim_tenants
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
+data__claimMapping = '{{ claimMapping }}',
 data__description = '{{ description }}',
-data__claimMapping = '{{ claimMapping }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND workforcePoolsId = '{{ workforcePoolsId }}' --required

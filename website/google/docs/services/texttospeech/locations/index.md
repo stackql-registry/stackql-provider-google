@@ -104,10 +104,10 @@ EXEC google.texttospeech.locations.synthesize_long_audio
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"outputGcsUri": "{{ outputGcsUri }}", 
-"voice": "{{ voice }}", 
+"audioConfig": "{{ audioConfig }}", 
 "input": "{{ input }}", 
-"audioConfig": "{{ audioConfig }}"
+"outputGcsUri": "{{ outputGcsUri }}", 
+"voice": "{{ voice }}"
 }'
 ;
 ```

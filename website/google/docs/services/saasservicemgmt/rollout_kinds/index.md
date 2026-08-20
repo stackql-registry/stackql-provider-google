@@ -225,28 +225,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve a collection of rollout kinds.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-rolloutKindId"><code>rolloutKindId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-rolloutKindId"><code>rolloutKindId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new rollout kind.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-rolloutKindsId"><code>rolloutKindsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update a single rollout kind.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-rolloutKindsId"><code>rolloutKindsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single rollout kind.</td>
 </tr>
 </tbody>
@@ -385,10 +385,10 @@ updateUnitKindStrategy
 FROM google.saasservicemgmt.rollout_kinds
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -410,36 +410,36 @@ Create a new rollout kind.
 
 ```sql
 INSERT INTO google.saasservicemgmt.rollout_kinds (
-data__updateUnitKindStrategy,
-data__unitUpdatePacing,
-data__rolloutOrchestrationStrategy,
 data__annotations,
-data__name,
-data__unitKind,
-data__labels,
 data__errorBudget,
+data__labels,
+data__name,
+data__rolloutOrchestrationStrategy,
 data__unitFilter,
+data__unitKind,
+data__unitUpdatePacing,
+data__updateUnitKindStrategy,
 projectsId,
 locationsId,
+requestId,
 rolloutKindId,
-validateOnly,
-requestId
+validateOnly
 )
 SELECT 
-'{{ updateUnitKindStrategy }}',
-'{{ unitUpdatePacing }}',
-'{{ rolloutOrchestrationStrategy }}',
 '{{ annotations }}',
-'{{ name }}',
-'{{ unitKind }}',
-'{{ labels }}',
 '{{ errorBudget }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ rolloutOrchestrationStrategy }}',
 '{{ unitFilter }}',
+'{{ unitKind }}',
+'{{ unitUpdatePacing }}',
+'{{ updateUnitKindStrategy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ requestId }}',
 '{{ rolloutKindId }}',
-'{{ validateOnly }}',
-'{{ requestId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 annotations,
@@ -468,54 +468,54 @@ updateUnitKindStrategy
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the rollout_kinds resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
+    - name: errorBudget
+      description: |
+        Optional. The configuration for error budget. If the number of failed units exceeds max(allowed_count, allowed_ratio * total_units), the rollout will be paused. If not set, all units will be attempted to be updated regardless of the number of failures encountered.
+      value:
+        allowedCount: {{ allowedCount }}
+        allowedPercentage: {{ allowedPercentage }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/rolloutKinds/{rollout_kind_id}"
+    - name: rolloutOrchestrationStrategy
+      value: "{{ rolloutOrchestrationStrategy }}"
+      description: |
+        Optional. The strategy used for executing a Rollout. This is a required field. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the associated UnitKind's Saas Locations.
+    - name: unitFilter
+      value: "{{ unitFilter }}"
+      description: |
+        Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout.
+    - name: unitKind
+      value: "{{ unitKind }}"
+      description: |
+        Required. Immutable. UnitKind that this rollout kind corresponds to. Rollouts stemming from this rollout kind will target the units of this unit kind. In other words, this defines the population of target units to be upgraded by rollouts.
+    - name: unitUpdatePacing
+      description: |
+        Optional. Settings for controlling the pacing of rollouts i.e. the number of units to be rolled out in parallel in a region.
+      value:
+        maxConcurrentOperationsCount: {{ maxConcurrentOperationsCount }}
+        maxConcurrentOperationsPercent:
+          value: "{{ value }}"
     - name: updateUnitKindStrategy
       value: "{{ updateUnitKindStrategy }}"
       description: |
         Optional. The config for updating the unit kind. By default, the unit kind will be updated on the rollout start.
       valid_values: ['UPDATE_UNIT_KIND_STRATEGY_UNSPECIFIED', 'UPDATE_UNIT_KIND_STRATEGY_ON_START', 'UPDATE_UNIT_KIND_STRATEGY_NEVER']
-    - name: unitUpdatePacing
-      description: |
-        Optional. Settings for controlling the pacing of rollouts i.e. the number of units to be rolled out in parallel in a region.
-      value:
-        maxConcurrentOperationsPercent:
-          value: "{{ value }}"
-        maxConcurrentOperationsCount: {{ maxConcurrentOperationsCount }}
-    - name: rolloutOrchestrationStrategy
-      value: "{{ rolloutOrchestrationStrategy }}"
-      description: |
-        Optional. The strategy used for executing a Rollout. This is a required field. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the associated UnitKind's Saas Locations.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/rolloutKinds/{rollout_kind_id}"
-    - name: unitKind
-      value: "{{ unitKind }}"
-      description: |
-        Required. Immutable. UnitKind that this rollout kind corresponds to. Rollouts stemming from this rollout kind will target the units of this unit kind. In other words, this defines the population of target units to be upgraded by rollouts.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-    - name: errorBudget
-      description: |
-        Optional. The configuration for error budget. If the number of failed units exceeds max(allowed_count, allowed_ratio * total_units), the rollout will be paused. If not set, all units will be attempted to be updated regardless of the number of failures encountered.
-      value:
-        allowedPercentage: {{ allowedPercentage }}
-        allowedCount: {{ allowedCount }}
-    - name: unitFilter
-      value: "{{ unitFilter }}"
-      description: |
-        Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout.
+    - name: requestId
+      value: "{{ requestId }}"
     - name: rolloutKindId
       value: "{{ rolloutKindId }}"
     - name: validateOnly
       value: {{ validateOnly }}
-    - name: requestId
-      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -537,22 +537,22 @@ Update a single rollout kind.
 ```sql
 UPDATE google.saasservicemgmt.rollout_kinds
 SET 
-data__updateUnitKindStrategy = '{{ updateUnitKindStrategy }}',
-data__unitUpdatePacing = '{{ unitUpdatePacing }}',
-data__rolloutOrchestrationStrategy = '{{ rolloutOrchestrationStrategy }}',
 data__annotations = '{{ annotations }}',
-data__name = '{{ name }}',
-data__unitKind = '{{ unitKind }}',
-data__labels = '{{ labels }}',
 data__errorBudget = '{{ errorBudget }}',
-data__unitFilter = '{{ unitFilter }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__rolloutOrchestrationStrategy = '{{ rolloutOrchestrationStrategy }}',
+data__unitFilter = '{{ unitFilter }}',
+data__unitKind = '{{ unitKind }}',
+data__unitUpdatePacing = '{{ unitUpdatePacing }}',
+data__updateUnitKindStrategy = '{{ updateUnitKindStrategy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND rolloutKindsId = '{{ rolloutKindsId }}' --required
+AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
-AND requestId = '{{ requestId}}'
 RETURNING
 name,
 annotations,
@@ -590,8 +590,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND rolloutKindsId = '{{ rolloutKindsId }}' --required
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

@@ -185,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Sources in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-sourceId"><code>sourceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceId"><code>sourceId</code></a></td>
     <td>Creates a new Source in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Source.</td>
 </tr>
 <tr>
@@ -327,10 +327,10 @@ vmware
 FROM google.vmmigration.sources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -352,28 +352,28 @@ Creates a new Source in a given project and location.
 
 ```sql
 INSERT INTO google.vmmigration.sources (
-data__azure,
-data__encryption,
 data__aws,
+data__azure,
+data__description,
+data__encryption,
 data__labels,
 data__vmware,
-data__description,
 projectsId,
 locationsId,
-sourceId,
-requestId
+requestId,
+sourceId
 )
 SELECT 
-'{{ azure }}',
-'{{ encryption }}',
 '{{ aws }}',
+'{{ azure }}',
+'{{ description }}',
+'{{ encryption }}',
 '{{ labels }}',
 '{{ vmware }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ sourceId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ sourceId }}'
 RETURNING
 name,
 done,
@@ -394,49 +394,53 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the sources resource.
-    - name: azure
-      description: |
-        Azure type source details.
-      value:
-        error:
-          code: {{ code }}
-          details: "{{ details }}"
-          message: "{{ message }}"
-        resourceGroupId: "{{ resourceGroupId }}"
-        subscriptionId: "{{ subscriptionId }}"
-        migrationResourcesUserTags: "{{ migrationResourcesUserTags }}"
-        clientSecretCreds:
-          tenantId: "{{ tenantId }}"
-          clientSecret: "{{ clientSecret }}"
-          clientId: "{{ clientId }}"
-        azureLocation: "{{ azureLocation }}"
-        state: "{{ state }}"
-    - name: encryption
-      description: |
-        Optional. Immutable. The encryption details of the source data stored by the service.
-      value:
-        kmsKey: "{{ kmsKey }}"
     - name: aws
       description: |
         AWS type source details.
       value:
         accessKeyCreds:
-          secretAccessKey: "{{ secretAccessKey }}"
           accessKeyId: "{{ accessKeyId }}"
+          secretAccessKey: "{{ secretAccessKey }}"
           sessionToken: "{{ sessionToken }}"
-        state: "{{ state }}"
-        publicIp: "{{ publicIp }}"
+        awsRegion: "{{ awsRegion }}"
         error:
           code: {{ code }}
           details: "{{ details }}"
           message: "{{ message }}"
+        inventorySecurityGroupNames:
+          - "{{ inventorySecurityGroupNames }}"
         inventoryTagList:
           - key: "{{ key }}"
             value: "{{ value }}"
-        inventorySecurityGroupNames:
-          - "{{ inventorySecurityGroupNames }}"
-        awsRegion: "{{ awsRegion }}"
         migrationResourcesUserTags: "{{ migrationResourcesUserTags }}"
+        publicIp: "{{ publicIp }}"
+        state: "{{ state }}"
+    - name: azure
+      description: |
+        Azure type source details.
+      value:
+        azureLocation: "{{ azureLocation }}"
+        clientSecretCreds:
+          clientId: "{{ clientId }}"
+          clientSecret: "{{ clientSecret }}"
+          tenantId: "{{ tenantId }}"
+        error:
+          code: {{ code }}
+          details: "{{ details }}"
+          message: "{{ message }}"
+        migrationResourcesUserTags: "{{ migrationResourcesUserTags }}"
+        resourceGroupId: "{{ resourceGroupId }}"
+        state: "{{ state }}"
+        subscriptionId: "{{ subscriptionId }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided description of the source.
+    - name: encryption
+      description: |
+        Optional. Immutable. The encryption details of the source data stored by the service.
+      value:
+        kmsKey: "{{ kmsKey }}"
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -445,19 +449,15 @@ response
       description: |
         Vmware type source details.
       value:
-        username: "{{ username }}"
         password: "{{ password }}"
-        vcenterIp: "{{ vcenterIp }}"
-        thumbprint: "{{ thumbprint }}"
         resolvedVcenterHost: "{{ resolvedVcenterHost }}"
-    - name: description
-      value: "{{ description }}"
-      description: |
-        User-provided description of the source.
-    - name: sourceId
-      value: "{{ sourceId }}"
+        thumbprint: "{{ thumbprint }}"
+        username: "{{ username }}"
+        vcenterIp: "{{ vcenterIp }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: sourceId
+      value: "{{ sourceId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -479,18 +479,18 @@ Updates the parameters of a single Source.
 ```sql
 UPDATE google.vmmigration.sources
 SET 
-data__azure = '{{ azure }}',
-data__encryption = '{{ encryption }}',
 data__aws = '{{ aws }}',
+data__azure = '{{ azure }}',
+data__description = '{{ description }}',
+data__encryption = '{{ encryption }}',
 data__labels = '{{ labels }}',
-data__vmware = '{{ vmware }}',
-data__description = '{{ description }}'
+data__vmware = '{{ vmware }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

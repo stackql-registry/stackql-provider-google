@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_security_gateways_applications_list"><CopyableCode code="projects_locations_security_gateways_applications_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityGatewaysId"><code>securityGatewaysId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Applications in a given project and location.</td>
 </tr>
 <tr>
@@ -179,7 +179,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_security_gateways_applications_patch"><CopyableCode code="projects_locations_security_gateways_applications_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityGatewaysId"><code>securityGatewaysId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Application.</td>
 </tr>
 <tr>
@@ -315,10 +315,10 @@ FROM google.beyondcorp.applications
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND securityGatewaysId = '{{ securityGatewaysId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -340,11 +340,11 @@ Creates a new Application in a given project and location.
 
 ```sql
 INSERT INTO google.beyondcorp.applications (
-data__upstreams,
-data__schema,
-data__name,
-data__endpointMatchers,
 data__displayName,
+data__endpointMatchers,
+data__name,
+data__schema,
+data__upstreams,
 projectsId,
 locationsId,
 securityGatewaysId,
@@ -352,11 +352,11 @@ applicationId,
 requestId
 )
 SELECT 
-'{{ upstreams }}',
-'{{ schema }}',
-'{{ name }}',
-'{{ endpointMatchers }}',
 '{{ displayName }}',
+'{{ endpointMatchers }}',
+'{{ name }}',
+'{{ schema }}',
+'{{ upstreams }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ securityGatewaysId }}',
@@ -385,52 +385,54 @@ response
     - name: securityGatewaysId
       value: "{{ securityGatewaysId }}"
       description: Required parameter for the applications resource.
-    - name: upstreams
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
-        Optional. Which upstream resources to forward traffic to.
-      value:
-        - network:
-            name: "{{ name }}"
-          external:
-            endpoints:
-              - port: {{ port }}
-                hostname: "{{ hostname }}"
-          proxyProtocol:
-            gatewayIdentity: "{{ gatewayIdentity }}"
-            contextualHeaders:
-              userInfo:
-                outputType: "{{ outputType }}"
-              deviceInfo:
-                outputType: "{{ outputType }}"
-              outputType: "{{ outputType }}"
-              groupInfo:
-                outputType: "{{ outputType }}"
-            clientIp: {{ clientIp }}
-            allowedClientHeaders:
-              - "{{ allowedClientHeaders }}"
-            metadataHeaders: "{{ metadataHeaders }}"
-          egressPolicy:
-            regions:
-              - "{{ regions }}"
-    - name: schema
-      value: "{{ schema }}"
-      description: |
-        Optional. Type of the external application.
-      valid_values: ['SCHEMA_UNSPECIFIED', 'PROXY_GATEWAY', 'API_GATEWAY']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the resource.
+        Optional. An arbitrary user-provided name for the application resource. Cannot exceed 64 characters.
     - name: endpointMatchers
       description: |
         Optional. An array of conditions to match the application's network endpoint. Each element in the array is an EndpointMatcher object, which defines a specific combination of a hostname pattern and one or more ports. The application is considered matched if at least one of the EndpointMatcher conditions in this array is met (the conditions are combined using OR logic). Each EndpointMatcher must contain a hostname pattern, such as "example.com", and one or more port numbers specified as a string, such as "443". Hostname and port number examples: "*.example.com", "443" "example.com" and "22" "example.com" and "22,33"
       value:
         - hostname: "{{ hostname }}"
           ports: "{{ ports }}"
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: name
+      value: "{{ name }}"
       description: |
-        Optional. An arbitrary user-provided name for the application resource. Cannot exceed 64 characters.
+        Identifier. Name of the resource.
+    - name: schema
+      value: "{{ schema }}"
+      description: |
+        Optional. Type of the external application.
+      valid_values: ['SCHEMA_UNSPECIFIED', 'PROXY_GATEWAY', 'API_GATEWAY']
+    - name: upstreams
+      description: |
+        Optional. Which upstream resources to forward traffic to.
+      value:
+        - egressPolicy:
+            regions:
+              - "{{ regions }}"
+          external:
+            endpoints:
+              - hostname: "{{ hostname }}"
+                port: {{ port }}
+          network:
+            name: "{{ name }}"
+          proxyProtocol:
+            allowedClientHeaders:
+              - "{{ allowedClientHeaders }}"
+            clientIp: {{ clientIp }}
+            contextualHeaders:
+              deviceInfo:
+                outputType: "{{ outputType }}"
+              dispatchInfo:
+                outputType: "{{ outputType }}"
+              groupInfo:
+                outputType: "{{ outputType }}"
+              outputType: "{{ outputType }}"
+              userInfo:
+                outputType: "{{ outputType }}"
+            gatewayIdentity: "{{ gatewayIdentity }}"
+            metadataHeaders: "{{ metadataHeaders }}"
     - name: applicationId
       value: "{{ applicationId }}"
     - name: requestId
@@ -456,18 +458,18 @@ Updates the parameters of a single Application.
 ```sql
 UPDATE google.beyondcorp.applications
 SET 
-data__upstreams = '{{ upstreams }}',
-data__schema = '{{ schema }}',
-data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__endpointMatchers = '{{ endpointMatchers }}',
-data__displayName = '{{ displayName }}'
+data__name = '{{ name }}',
+data__schema = '{{ schema }}',
+data__upstreams = '{{ upstreams }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND securityGatewaysId = '{{ securityGatewaysId }}' --required
 AND applicationsId = '{{ applicationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

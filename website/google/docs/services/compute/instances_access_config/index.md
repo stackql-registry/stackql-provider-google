@@ -135,14 +135,14 @@ Adds an access config to an instance's network interface.
 
 ```sql
 INSERT INTO google.compute.instances_access_config (
-data__publicPtrDomainName,
-data__natIP,
-data__setPublicPtr,
-data__networkTier,
-data__externalIpv6PrefixLength,
-data__securityPolicy,
-data__name,
 data__externalIpv6,
+data__externalIpv6PrefixLength,
+data__name,
+data__natIP,
+data__networkTier,
+data__publicPtrDomainName,
+data__securityPolicy,
+data__setPublicPtr,
 data__type,
 project,
 zone,
@@ -151,14 +151,14 @@ networkInterface,
 requestId
 )
 SELECT 
-'{{ publicPtrDomainName }}',
-'{{ natIP }}',
-{{ setPublicPtr }},
-'{{ networkTier }}',
-{{ externalIpv6PrefixLength }},
-'{{ securityPolicy }}',
-'{{ name }}',
 '{{ externalIpv6 }}',
+{{ externalIpv6PrefixLength }},
+'{{ name }}',
+'{{ natIP }}',
+'{{ networkTier }}',
+'{{ publicPtrDomainName }}',
+'{{ securityPolicy }}',
+{{ setPublicPtr }},
 '{{ type }}',
 '{{ project }}',
 '{{ zone }}',
@@ -213,12 +213,27 @@ zone
     - name: networkInterface
       value: "{{ networkInterface }}"
       description: Required parameter for the instances_access_config resource.
-    - name: publicPtrDomainName
-      value: "{{ publicPtrDomainName }}"
+    - name: externalIpv6
+      value: "{{ externalIpv6 }}"
       description: |
-        The DNS domain name for the public PTR record.
-        You can set this field only if the \`setPublicPtr\` field is enabled inaccessConfig. If this field is unspecified inipv6AccessConfig, a default PTR record will be created for
-        first IP in associated external IPv6 range.
+        Applies to ipv6AccessConfigs only.
+        The first IPv6 address of the external IPv6 range associated
+        with this instance, prefix length is stored inexternalIpv6PrefixLength in ipv6AccessConfig. To
+        use a static external IP address, it must be unused and in the same region
+        as the instance's zone. If not specified, Google Cloud will automatically
+        assign an external IPv6 address from the instance's subnetwork.
+    - name: externalIpv6PrefixLength
+      value: {{ externalIpv6PrefixLength }}
+      description: |
+        Applies to ipv6AccessConfigs only. The prefix length of the
+        external IPv6 range.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of this access configuration. In accessConfigs
+        (IPv4), the default and recommended name is External NAT, but
+        you can use any arbitrary string, such as My external IP orNetwork Access. In ipv6AccessConfigs, the
+        recommend name is External IPv6.
     - name: natIP
       value: "{{ natIP }}"
       description: |
@@ -228,13 +243,6 @@ zone
         to use an IP from a shared ephemeral IP address pool. If you specify a
         static external IP address, it must live in the same region as the zone of
         the instance.
-    - name: setPublicPtr
-      value: {{ setPublicPtr }}
-      description: |
-        Specifies whether a public DNS 'PTR' record should be created to map the
-        external IP address of the instance to a DNS domain name.
-        This field is not used in ipv6AccessConfig. A default PTR
-        record will be created if the VM has external IPv6 range associated.
     - name: networkTier
       value: "{{ networkTier }}"
       description: |
@@ -246,32 +254,24 @@ zone
         match that of the networkTier associated with the Address resource owning
         that IP.
       valid_values: ['FIXED_STANDARD', 'PREMIUM', 'STANDARD', 'STANDARD_OVERRIDES_FIXED_STANDARD']
-    - name: externalIpv6PrefixLength
-      value: {{ externalIpv6PrefixLength }}
+    - name: publicPtrDomainName
+      value: "{{ publicPtrDomainName }}"
       description: |
-        Applies to ipv6AccessConfigs only. The prefix length of the
-        external IPv6 range.
+        The DNS domain name for the public PTR record.
+        You can set this field only if the \`setPublicPtr\` field is enabled inaccessConfig. If this field is unspecified inipv6AccessConfig, a default PTR record will be created for
+        first IP in associated external IPv6 range.
     - name: securityPolicy
       value: "{{ securityPolicy }}"
       description: |
         The resource URL for the security policy associated with this access
         config.
-    - name: name
-      value: "{{ name }}"
+    - name: setPublicPtr
+      value: {{ setPublicPtr }}
       description: |
-        The name of this access configuration. In accessConfigs
-        (IPv4), the default and recommended name is External NAT, but
-        you can use any arbitrary string, such as My external IP orNetwork Access. In ipv6AccessConfigs, the
-        recommend name is External IPv6.
-    - name: externalIpv6
-      value: "{{ externalIpv6 }}"
-      description: |
-        Applies to ipv6AccessConfigs only.
-        The first IPv6 address of the external IPv6 range associated
-        with this instance, prefix length is stored inexternalIpv6PrefixLength in ipv6AccessConfig. To
-        use a static external IP address, it must be unused and in the same region
-        as the instance's zone. If not specified, Google Cloud will automatically
-        assign an external IPv6 address from the instance's subnetwork.
+        Specifies whether a public DNS 'PTR' record should be created to map the
+        external IP address of the instance to a DNS domain name.
+        This field is not used in ipv6AccessConfig. A default PTR
+        record will be created if the VM has external IPv6 range associated.
     - name: type
       value: "{{ type }}"
       description: |
@@ -301,14 +301,14 @@ Updates the specified access config from an instance's network interface<br />wi
 ```sql
 UPDATE google.compute.instances_access_config
 SET 
-data__publicPtrDomainName = '{{ publicPtrDomainName }}',
-data__natIP = '{{ natIP }}',
-data__setPublicPtr = {{ setPublicPtr }},
-data__networkTier = '{{ networkTier }}',
-data__externalIpv6PrefixLength = {{ externalIpv6PrefixLength }},
-data__securityPolicy = '{{ securityPolicy }}',
-data__name = '{{ name }}',
 data__externalIpv6 = '{{ externalIpv6 }}',
+data__externalIpv6PrefixLength = {{ externalIpv6PrefixLength }},
+data__name = '{{ name }}',
+data__natIP = '{{ natIP }}',
+data__networkTier = '{{ networkTier }}',
+data__publicPtrDomainName = '{{ publicPtrDomainName }}',
+data__securityPolicy = '{{ securityPolicy }}',
+data__setPublicPtr = {{ setPublicPtr }},
 data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required

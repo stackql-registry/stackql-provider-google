@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists IpamAdminScopes in a given project and location.</td>
 </tr>
 <tr>
@@ -179,22 +179,15 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ipamAdminScopesId"><code>ipamAdminScopesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single IpamAdminScope.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ipamAdminScopesId"><code>ipamAdminScopesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single IpamAdminScope.</td>
-</tr>
-<tr>
-    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ipamAdminScopesId"><code>ipamAdminScopesId</code></a></td>
-    <td></td>
-    <td>Disables a single IpamAdminScope.</td>
 </tr>
 <tr>
     <td><a href="#check_availability"><CopyableCode code="check_availability" /></a></td>
@@ -209,6 +202,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ipamAdminScopesId"><code>ipamAdminScopesId</code></a></td>
     <td></td>
     <td>Cleans up a single IpamAdminScope.</td>
+</tr>
+<tr>
+    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ipamAdminScopesId"><code>ipamAdminScopesId</code></a></td>
+    <td></td>
+    <td>Disables a single IpamAdminScope.</td>
 </tr>
 </tbody>
 </table>
@@ -334,10 +334,10 @@ updateTime
 FROM google.cloudnumberregistry.ipam_admin_scopes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -360,9 +360,9 @@ Creates a new IpamAdminScope in a given project and location.
 ```sql
 INSERT INTO google.cloudnumberregistry.ipam_admin_scopes (
 data__enabledAddonPlatforms,
-data__scopes,
 data__labels,
 data__name,
+data__scopes,
 projectsId,
 locationsId,
 ipamAdminScopeId,
@@ -370,9 +370,9 @@ requestId
 )
 SELECT 
 '{{ enabledAddonPlatforms }}',
-'{{ scopes }}',
 '{{ labels }}',
 '{{ name }}',
+'{{ scopes }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ ipamAdminScopeId }}',
@@ -402,11 +402,6 @@ response
         - "{{ enabledAddonPlatforms }}"
       description: |
         Required. Add-on platforms that are enabled for this IpamAdminScope. Cloud Number Registry only discovers the IP addresses from the enabled platforms.
-    - name: scopes
-      value:
-        - "{{ scopes }}"
-      description: |
-        Required. Administrative scopes enabled for IP address discovery and management. For example, "organizations/1234567890". Minimum of 1 scope is required. In preview, only one organization scope is allowed.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -415,6 +410,11 @@ response
       value: "{{ name }}"
       description: |
         Required. Identifier. The resource name of the IpamAdminScope.
+    - name: scopes
+      value:
+        - "{{ scopes }}"
+      description: |
+        Required. Administrative scopes enabled for IP address discovery and management. For example, "organizations/1234567890". Minimum of 1 scope is required. In preview, only one organization scope is allowed.
     - name: ipamAdminScopeId
       value: "{{ ipamAdminScopeId }}"
     - name: requestId
@@ -441,15 +441,15 @@ Updates the parameters of a single IpamAdminScope.
 UPDATE google.cloudnumberregistry.ipam_admin_scopes
 SET 
 data__enabledAddonPlatforms = '{{ enabledAddonPlatforms }}',
-data__scopes = '{{ scopes }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__scopes = '{{ scopes }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND ipamAdminScopesId = '{{ ipamAdminScopesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -478,8 +478,8 @@ DELETE FROM google.cloudnumberregistry.ipam_admin_scopes
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND ipamAdminScopesId = '{{ ipamAdminScopesId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -489,29 +489,13 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="disable"
+    defaultValue="check_availability"
     values={[
-        { label: 'disable', value: 'disable' },
         { label: 'check_availability', value: 'check_availability' },
-        { label: 'cleanup', value: 'cleanup' }
+        { label: 'cleanup', value: 'cleanup' },
+        { label: 'disable', value: 'disable' }
     ]}
 >
-<TabItem value="disable">
-
-Disables a single IpamAdminScope.
-
-```sql
-EXEC google.cloudnumberregistry.ipam_admin_scopes.disable 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@ipamAdminScopesId='{{ ipamAdminScopesId }}' --required 
-@@json=
-'{
-"requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="check_availability">
 
 Checks the availability of IpamAdminScopes in a given project and location.
@@ -530,6 +514,22 @@ Cleans up a single IpamAdminScope.
 
 ```sql
 EXEC google.cloudnumberregistry.ipam_admin_scopes.cleanup 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@ipamAdminScopesId='{{ ipamAdminScopesId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="disable">
+
+Disables a single IpamAdminScope.
+
+```sql
+EXEC google.cloudnumberregistry.ipam_admin_scopes.disable 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @ipamAdminScopesId='{{ ipamAdminScopesId }}' --required 

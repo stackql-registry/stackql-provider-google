@@ -185,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists blockchain nodes in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-blockchainNodeId"><code>blockchainNodeId</code></a></td>
+    <td><a href="#parameter-blockchainNodeId"><code>blockchainNodeId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new blockchain node in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-blockchainNodesId"><code>blockchainNodesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single blockchain node.</td>
 </tr>
 <tr>
@@ -327,10 +327,10 @@ updateTime
 FROM google.blockchainnodeengine.blockchain_nodes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -352,24 +352,24 @@ Creates a new blockchain node in a given project and location.
 
 ```sql
 INSERT INTO google.blockchainnodeengine.blockchain_nodes (
-data__labels,
-data__ethereumDetails,
-data__privateServiceConnectEnabled,
 data__blockchainType,
+data__ethereumDetails,
+data__labels,
+data__privateServiceConnectEnabled,
 projectsId,
 locationsId,
-requestId,
-blockchainNodeId
+blockchainNodeId,
+requestId
 )
 SELECT 
-'{{ labels }}',
-'{{ ethereumDetails }}',
-{{ privateServiceConnectEnabled }},
 '{{ blockchainType }}',
+'{{ ethereumDetails }}',
+'{{ labels }}',
+{{ privateServiceConnectEnabled }},
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ blockchainNodeId }}'
+'{{ blockchainNodeId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -390,44 +390,44 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the blockchain_nodes resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        User-provided key-value pairs.
-    - name: ethereumDetails
-      description: |
-        Ethereum-specific blockchain node details.
-      value:
-        consensusClient: "{{ consensusClient }}"
-        network: "{{ network }}"
-        apiEnableDebug: {{ apiEnableDebug }}
-        executionClient: "{{ executionClient }}"
-        apiEnableAdmin: {{ apiEnableAdmin }}
-        additionalEndpoints:
-          executionClientPrometheusMetricsApiEndpoint: "{{ executionClientPrometheusMetricsApiEndpoint }}"
-          beaconPrometheusMetricsApiEndpoint: "{{ beaconPrometheusMetricsApiEndpoint }}"
-          beaconApiEndpoint: "{{ beaconApiEndpoint }}"
-        validatorConfig:
-          mevRelayUrls:
-            - "{{ mevRelayUrls }}"
-          managedValidatorClient: {{ managedValidatorClient }}
-          beaconFeeRecipient: "{{ beaconFeeRecipient }}"
-        gethDetails:
-          garbageCollectionMode: "{{ garbageCollectionMode }}"
-        nodeType: "{{ nodeType }}"
-    - name: privateServiceConnectEnabled
-      value: {{ privateServiceConnectEnabled }}
-      description: |
-        Optional. When true, the node is only accessible via Private Service Connect; no public endpoints are exposed. Otherwise, the node is only accessible via public endpoints. Warning: These nodes are deprecated, please use public endpoints instead.
     - name: blockchainType
       value: "{{ blockchainType }}"
       description: |
         Immutable. The blockchain type of the node.
       valid_values: ['BLOCKCHAIN_TYPE_UNSPECIFIED', 'ETHEREUM']
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: ethereumDetails
+      description: |
+        Ethereum-specific blockchain node details.
+      value:
+        additionalEndpoints:
+          beaconApiEndpoint: "{{ beaconApiEndpoint }}"
+          beaconPrometheusMetricsApiEndpoint: "{{ beaconPrometheusMetricsApiEndpoint }}"
+          executionClientPrometheusMetricsApiEndpoint: "{{ executionClientPrometheusMetricsApiEndpoint }}"
+        apiEnableAdmin: {{ apiEnableAdmin }}
+        apiEnableDebug: {{ apiEnableDebug }}
+        consensusClient: "{{ consensusClient }}"
+        executionClient: "{{ executionClient }}"
+        gethDetails:
+          garbageCollectionMode: "{{ garbageCollectionMode }}"
+        network: "{{ network }}"
+        nodeType: "{{ nodeType }}"
+        validatorConfig:
+          beaconFeeRecipient: "{{ beaconFeeRecipient }}"
+          managedValidatorClient: {{ managedValidatorClient }}
+          mevRelayUrls:
+            - "{{ mevRelayUrls }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-provided key-value pairs.
+    - name: privateServiceConnectEnabled
+      value: {{ privateServiceConnectEnabled }}
+      description: |
+        Optional. When true, the node is only accessible via Private Service Connect; no public endpoints are exposed. Otherwise, the node is only accessible via public endpoints. Warning: These nodes are deprecated, please use public endpoints instead.
     - name: blockchainNodeId
       value: "{{ blockchainNodeId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -449,16 +449,16 @@ Updates the parameters of a single blockchain node.
 ```sql
 UPDATE google.blockchainnodeengine.blockchain_nodes
 SET 
-data__labels = '{{ labels }}',
+data__blockchainType = '{{ blockchainType }}',
 data__ethereumDetails = '{{ ethereumDetails }}',
-data__privateServiceConnectEnabled = {{ privateServiceConnectEnabled }},
-data__blockchainType = '{{ blockchainType }}'
+data__labels = '{{ labels }}',
+data__privateServiceConnectEnabled = {{ privateServiceConnectEnabled }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND blockchainNodesId = '{{ blockchainNodesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

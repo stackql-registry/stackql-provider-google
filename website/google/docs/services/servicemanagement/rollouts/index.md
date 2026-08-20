@@ -165,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-serviceName"><code>serviceName</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the history of the service configuration rollouts for a managed service, from the newest to the oldest.</td>
 </tr>
 <tr>
@@ -262,9 +262,9 @@ status,
 trafficPercentStrategy
 FROM google.servicemanagement.rollouts
 WHERE serviceName = '{{ serviceName }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -286,23 +286,23 @@ Creates a new service configuration rollout. Based on rollout, the Google Servic
 
 ```sql
 INSERT INTO google.servicemanagement.rollouts (
-data__deleteServiceStrategy,
-data__status,
-data__serviceName,
-data__trafficPercentStrategy,
-data__rolloutId,
 data__createTime,
 data__createdBy,
+data__deleteServiceStrategy,
+data__rolloutId,
+data__serviceName,
+data__status,
+data__trafficPercentStrategy,
 serviceName
 )
 SELECT 
-'{{ deleteServiceStrategy }}',
-'{{ status }}',
-'{{ serviceName }}',
-'{{ trafficPercentStrategy }}',
-'{{ rolloutId }}',
 '{{ createTime }}',
 '{{ createdBy }}',
+'{{ deleteServiceStrategy }}',
+'{{ rolloutId }}',
+'{{ serviceName }}',
+'{{ status }}',
+'{{ trafficPercentStrategy }}',
 '{{ serviceName }}'
 RETURNING
 name,
@@ -321,28 +321,6 @@ response
     - name: serviceName
       value: "{{ serviceName }}"
       description: Required parameter for the rollouts resource.
-    - name: deleteServiceStrategy
-      value: "{{ deleteServiceStrategy }}"
-      description: |
-        The strategy associated with a rollout to delete a \`ManagedService\`. Readonly.
-    - name: status
-      value: "{{ status }}"
-      description: |
-        The status of this rollout. Readonly. In case of a failed rollout, the system will automatically rollback to the current Rollout version. Readonly.
-      valid_values: ['ROLLOUT_STATUS_UNSPECIFIED', 'IN_PROGRESS', 'SUCCESS', 'CANCELLED', 'FAILED', 'PENDING', 'FAILED_ROLLED_BACK']
-    - name: serviceName
-      value: "{{ serviceName }}"
-      description: |
-        The name of the service associated with this Rollout.
-    - name: trafficPercentStrategy
-      description: |
-        Google Service Control selects service configurations based on traffic percentage.
-      value:
-        percentages: "{{ percentages }}"
-    - name: rolloutId
-      value: "{{ rolloutId }}"
-      description: |
-        Optional. Unique identifier of this Rollout. Must be no longer than 63 characters and only lower case letters, digits, '.', '_' and '-' are allowed. If not specified by client, the server will generate one. The generated id will have the form of , where "date" is the create date in ISO 8601 format. "revision number" is a monotonically increasing positive number that is reset every day for each service. An example of the generated rollout_id is '2016-02-16r1'
     - name: createTime
       value: "{{ createTime }}"
       description: |
@@ -351,6 +329,28 @@ response
       value: "{{ createdBy }}"
       description: |
         The user who created the Rollout. Readonly.
+    - name: deleteServiceStrategy
+      value: "{{ deleteServiceStrategy }}"
+      description: |
+        The strategy associated with a rollout to delete a \`ManagedService\`. Readonly.
+    - name: rolloutId
+      value: "{{ rolloutId }}"
+      description: |
+        Optional. Unique identifier of this Rollout. Must be no longer than 63 characters and only lower case letters, digits, '.', '_' and '-' are allowed. If not specified by client, the server will generate one. The generated id will have the form of , where "date" is the create date in ISO 8601 format. "revision number" is a monotonically increasing positive number that is reset every day for each service. An example of the generated rollout_id is '2016-02-16r1'
+    - name: serviceName
+      value: "{{ serviceName }}"
+      description: |
+        The name of the service associated with this Rollout.
+    - name: status
+      value: "{{ status }}"
+      description: |
+        The status of this rollout. Readonly. In case of a failed rollout, the system will automatically rollback to the current Rollout version. Readonly.
+      valid_values: ['ROLLOUT_STATUS_UNSPECIFIED', 'IN_PROGRESS', 'SUCCESS', 'CANCELLED', 'FAILED', 'PENDING', 'FAILED_ROLLED_BACK']
+    - name: trafficPercentStrategy
+      description: |
+        Google Service Control selects service configurations based on traffic percentage.
+      value:
+        percentages: "{{ percentages }}"
 `}</CodeBlock>
 
 </TabItem>

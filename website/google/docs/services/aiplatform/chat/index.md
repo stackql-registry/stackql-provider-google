@@ -110,8 +110,8 @@ EXEC google.aiplatform.chat.completions
 @endpointsId='{{ endpointsId }}' --required 
 @@json=
 '{
-"data": "{{ data }}", 
 "contentType": "{{ contentType }}", 
+"data": "{{ data }}", 
 "extensions": "{{ extensions }}"
 }'
 ;

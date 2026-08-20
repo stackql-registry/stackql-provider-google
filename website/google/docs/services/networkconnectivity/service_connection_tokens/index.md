@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ServiceConnectionTokens in a given project and location.</td>
 </tr>
 <tr>
@@ -199,7 +199,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-serviceConnectionTokensId"><code>serviceConnectionTokensId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single ServiceConnectionToken.</td>
 </tr>
 </tbody>
@@ -320,10 +320,10 @@ updateTime
 FROM google.networkconnectivity.service_connection_tokens
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -345,9 +345,9 @@ Creates a new ServiceConnectionToken in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.service_connection_tokens (
+data__description,
 data__etag,
 data__labels,
-data__description,
 data__name,
 data__network,
 projectsId,
@@ -356,9 +356,9 @@ requestId,
 serviceConnectionTokenId
 )
 SELECT 
+'{{ description }}',
 '{{ etag }}',
 '{{ labels }}',
-'{{ description }}',
 '{{ name }}',
 '{{ network }}',
 '{{ projectsId }}',
@@ -385,6 +385,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the service_connection_tokens resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of this resource.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -393,10 +397,6 @@ response
       value: "{{ labels }}"
       description: |
         User-defined labels.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        A description of this resource.
     - name: name
       value: "{{ name }}"
       description: |
@@ -432,8 +432,8 @@ DELETE FROM google.networkconnectivity.service_connection_tokens
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND serviceConnectionTokensId = '{{ serviceConnectionTokensId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

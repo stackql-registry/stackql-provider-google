@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#query_folder_contents"><CopyableCode code="query_folder_contents" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns the contents of a given Folder.</td>
 </tr>
 <tr>
@@ -277,10 +277,10 @@ FROM google.dataform.folders
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND foldersId = '{{ foldersId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -302,15 +302,15 @@ Creates a new Folder in a given project and location.
 
 ```sql
 INSERT INTO google.dataform.folders (
-data__displayName,
 data__containingFolder,
+data__displayName,
 data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
 '{{ containingFolder }}',
+'{{ displayName }}',
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -337,14 +337,14 @@ updateTime
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the folders resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The Folder's user-friendly name.
     - name: containingFolder
       value: "{{ containingFolder }}"
       description: |
         Optional. The containing Folder resource name. This should take the format: projects/{project}/locations/{location}/folders/{folder}, projects/{project}/locations/{location}/teamFolders/{teamFolder}, or just "" if this is a root Folder. This field can only be updated through MoveFolder.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The Folder's user-friendly name.
     - name: name
       value: "{{ name }}"
       description: |
@@ -370,8 +370,8 @@ Updates a single Folder.
 ```sql
 UPDATE google.dataform.folders
 SET 
-data__displayName = '{{ displayName }}',
 data__containingFolder = '{{ containingFolder }}',
+data__displayName = '{{ displayName }}',
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists TrustConfigs in a given project and location.</td>
 </tr>
 <tr>
@@ -340,9 +340,9 @@ FROM google.certificatemanager.trust_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -364,27 +364,27 @@ Creates a new TrustConfig in a given project and location.
 
 ```sql
 INSERT INTO google.certificatemanager.trust_configs (
-data__labels,
-data__spiffeTrustStores,
 data__allowlistedCertificates,
 data__description,
 data__etag,
-data__trustStores,
+data__labels,
 data__name,
+data__spiffeTrustStores,
 data__tags,
+data__trustStores,
 projectsId,
 locationsId,
 trustConfigId
 )
 SELECT 
-'{{ labels }}',
-'{{ spiffeTrustStores }}',
 '{{ allowlistedCertificates }}',
 '{{ description }}',
 '{{ etag }}',
-'{{ trustStores }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ spiffeTrustStores }}',
 '{{ tags }}',
+'{{ trustStores }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ trustConfigId }}'
@@ -408,14 +408,6 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the trust_configs resource.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of labels associated with a TrustConfig.
-    - name: spiffeTrustStores
-      value: "{{ spiffeTrustStores }}"
-      description: |
-        Optional. Defines a mapping from a trust domain to a TrustStore. This is used for SPIFFE certificate validation.
     - name: allowlistedCertificates
       description: |
         Optional. A certificate matching an allowlisted certificate is always considered valid as long as the certificate is parseable, proof of private key possession is established, and constraints on the certificate's SAN field are met.
@@ -429,20 +421,28 @@ response
       value: "{{ etag }}"
       description: |
         This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: trustStores
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Optional. Set of trust stores to perform validation against. This field is supported when TrustConfig is configured with Load Balancers, currently not supported for SPIFFE certificate validation. Only one TrustStore specified is currently allowed.
-      value:
-        - trustAnchors: "{{ trustAnchors }}"
-          intermediateCas: "{{ intermediateCas }}"
+        Optional. Set of labels associated with a TrustConfig.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. A user-defined name of the trust config. TrustConfig names must be unique globally and match pattern \`projects/*/locations/*/trustConfigs/*\`.
+    - name: spiffeTrustStores
+      value: "{{ spiffeTrustStores }}"
+      description: |
+        Optional. Defines a mapping from a trust domain to a TrustStore. This is used for SPIFFE certificate validation.
     - name: tags
       value: "{{ tags }}"
       description: |
         Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
+    - name: trustStores
+      description: |
+        Optional. Set of trust stores to perform validation against. This field is supported when TrustConfig is configured with Load Balancers, currently not supported for SPIFFE certificate validation. Only one TrustStore specified is currently allowed.
+      value:
+        - intermediateCas: "{{ intermediateCas }}"
+          trustAnchors: "{{ trustAnchors }}"
     - name: trustConfigId
       value: "{{ trustConfigId }}"
 `}</CodeBlock>
@@ -466,14 +466,14 @@ Updates a TrustConfig.
 ```sql
 UPDATE google.certificatemanager.trust_configs
 SET 
-data__labels = '{{ labels }}',
-data__spiffeTrustStores = '{{ spiffeTrustStores }}',
 data__allowlistedCertificates = '{{ allowlistedCertificates }}',
 data__description = '{{ description }}',
 data__etag = '{{ etag }}',
-data__trustStores = '{{ trustStores }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__tags = '{{ tags }}'
+data__spiffeTrustStores = '{{ spiffeTrustStores }}',
+data__tags = '{{ tags }}',
+data__trustStores = '{{ trustStores }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

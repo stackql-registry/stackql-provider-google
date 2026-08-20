@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#billing_accounts_billing_account_license_configs_retract_license_config"><CopyableCode code="billing_accounts_billing_account_license_configs_retract_license_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-billingAccountLicenseConfigsId"><code>billingAccountLicenseConfigsId</code></a></td>
-    <td></td>
-    <td>This method is called from the billing account side to retract the LicenseConfig from the given project back to the billing account.</td>
-</tr>
-<tr>
     <td><a href="#billing_accounts_billing_account_license_configs_distribute_license_config"><CopyableCode code="billing_accounts_billing_account_license_configs_distribute_license_config" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-billingAccountLicenseConfigsId"><code>billingAccountLicenseConfigsId</code></a></td>
     <td></td>
     <td>Distributes a LicenseConfig from billing account level to project level.</td>
+</tr>
+<tr>
+    <td><a href="#billing_accounts_billing_account_license_configs_retract_license_config"><CopyableCode code="billing_accounts_billing_account_license_configs_retract_license_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-billingAccountLicenseConfigsId"><code>billingAccountLicenseConfigsId</code></a></td>
+    <td></td>
+    <td>This method is called from the billing account side to retract the LicenseConfig from the given project back to the billing account.</td>
 </tr>
 </tbody>
 </table>
@@ -96,29 +96,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="billing_accounts_billing_account_license_configs_retract_license_config"
+    defaultValue="billing_accounts_billing_account_license_configs_distribute_license_config"
     values={[
-        { label: 'billing_accounts_billing_account_license_configs_retract_license_config', value: 'billing_accounts_billing_account_license_configs_retract_license_config' },
-        { label: 'billing_accounts_billing_account_license_configs_distribute_license_config', value: 'billing_accounts_billing_account_license_configs_distribute_license_config' }
+        { label: 'billing_accounts_billing_account_license_configs_distribute_license_config', value: 'billing_accounts_billing_account_license_configs_distribute_license_config' },
+        { label: 'billing_accounts_billing_account_license_configs_retract_license_config', value: 'billing_accounts_billing_account_license_configs_retract_license_config' }
     ]}
 >
-<TabItem value="billing_accounts_billing_account_license_configs_retract_license_config">
-
-This method is called from the billing account side to retract the LicenseConfig from the given project back to the billing account.
-
-```sql
-EXEC google.discoveryengine.billing_account_license_configs.billing_accounts_billing_account_license_configs_retract_license_config 
-@billingAccountsId='{{ billingAccountsId }}' --required, 
-@billingAccountLicenseConfigsId='{{ billingAccountLicenseConfigsId }}' --required 
-@@json=
-'{
-"licenseConfig": "{{ licenseConfig }}", 
-"fullRetract": {{ fullRetract }}, 
-"licenseCount": "{{ licenseCount }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="billing_accounts_billing_account_license_configs_distribute_license_config">
 
 Distributes a LicenseConfig from billing account level to project level.
@@ -129,10 +112,27 @@ EXEC google.discoveryengine.billing_account_license_configs.billing_accounts_bil
 @billingAccountLicenseConfigsId='{{ billingAccountLicenseConfigsId }}' --required 
 @@json=
 '{
-"projectNumber": "{{ projectNumber }}", 
-"location": "{{ location }}", 
+"licenseConfigId": "{{ licenseConfigId }}", 
 "licenseCount": "{{ licenseCount }}", 
-"licenseConfigId": "{{ licenseConfigId }}"
+"location": "{{ location }}", 
+"projectNumber": "{{ projectNumber }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="billing_accounts_billing_account_license_configs_retract_license_config">
+
+This method is called from the billing account side to retract the LicenseConfig from the given project back to the billing account.
+
+```sql
+EXEC google.discoveryengine.billing_account_license_configs.billing_accounts_billing_account_license_configs_retract_license_config 
+@billingAccountsId='{{ billingAccountsId }}' --required, 
+@billingAccountLicenseConfigsId='{{ billingAccountLicenseConfigsId }}' --required 
+@@json=
+'{
+"fullRetract": {{ fullRetract }}, 
+"licenseConfig": "{{ licenseConfig }}", 
+"licenseCount": "{{ licenseCount }}"
 }'
 ;
 ```

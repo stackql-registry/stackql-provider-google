@@ -190,7 +190,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the InterconnectGroups for a project in the given scope.</td>
 </tr>
 <tr>
@@ -333,11 +333,11 @@ unreachables,
 warning
 FROM google.compute.interconnect_groups
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -405,19 +405,19 @@ Creates a InterconnectGroup in the specified project in the given scope<br />usi
 
 ```sql
 INSERT INTO google.compute.interconnect_groups (
-data__intent,
 data__description,
-data__interconnects,
 data__etag,
+data__intent,
+data__interconnects,
 data__name,
 project,
 requestId
 )
 SELECT 
-'{{ intent }}',
 '{{ description }}',
-'{{ interconnects }}',
 '{{ etag }}',
+'{{ intent }}',
+'{{ interconnects }}',
 '{{ name }}',
 '{{ project }}',
 '{{ requestId }}'
@@ -467,49 +467,35 @@ zone
       value:
         intentMismatchBehavior: "{{ intentMismatchBehavior }}"
         interconnects:
-          - interconnectType: "{{ interconnectType }}"
-            adminEnabled: {{ adminEnabled }}
-            requestedFeatures: "{{ requestedFeatures }}"
-            nocContactEmail: "{{ nocContactEmail }}"
-            name: "{{ name }}"
+          - adminEnabled: {{ adminEnabled }}
             customerName: "{{ customerName }}"
-            remoteLocation: "{{ remoteLocation }}"
-            linkType: "{{ linkType }}"
-            requestedLinkCount: {{ requestedLinkCount }}
             description: "{{ description }}"
             facility: "{{ facility }}"
+            interconnectType: "{{ interconnectType }}"
+            linkType: "{{ linkType }}"
+            name: "{{ name }}"
+            nocContactEmail: "{{ nocContactEmail }}"
+            remoteLocation: "{{ remoteLocation }}"
+            requestedFeatures: "{{ requestedFeatures }}"
+            requestedLinkCount: {{ requestedLinkCount }}
         templateInterconnect:
-          interconnectType: "{{ interconnectType }}"
           adminEnabled: {{ adminEnabled }}
-          requestedFeatures:
-            - "{{ requestedFeatures }}"
-          nocContactEmail: "{{ nocContactEmail }}"
-          name: "{{ name }}"
           customerName: "{{ customerName }}"
-          remoteLocation: "{{ remoteLocation }}"
-          linkType: "{{ linkType }}"
-          requestedLinkCount: {{ requestedLinkCount }}
           description: "{{ description }}"
           facility: "{{ facility }}"
-    - name: intent
-      description: |
-        The user's intent for this group. This is the only required field besides
-        the name that must be specified on group creation.
-      value:
-        topologyCapability: "{{ topologyCapability }}"
+          interconnectType: "{{ interconnectType }}"
+          linkType: "{{ linkType }}"
+          name: "{{ name }}"
+          nocContactEmail: "{{ nocContactEmail }}"
+          remoteLocation: "{{ remoteLocation }}"
+          requestedFeatures:
+            - "{{ requestedFeatures }}"
+          requestedLinkCount: {{ requestedLinkCount }}
     - name: description
       value: "{{ description }}"
       description: |
         An optional description of this resource. Provide this property when you
         create the resource.
-    - name: interconnects
-      value: "{{ interconnects }}"
-      description: |
-        Interconnects in the InterconnectGroup. Keys are arbitrary user-specified
-        strings. Users are encouraged, but not required, to use their preferred
-        format for resource links as keys.
-        Note that there are add-members and remove-members methods in gcloud.
-        The size of this map is limited by an "Interconnects per group" quota.
     - name: etag
       value: "{{ etag }}"
       description: |
@@ -518,6 +504,20 @@ zone
         token must match the current token or the update is rejected. This provides
         a reliable means of doing read-modify-write (optimistic locking) as
         described by AIP 154.
+    - name: intent
+      description: |
+        The user's intent for this group. This is the only required field besides
+        the name that must be specified on group creation.
+      value:
+        topologyCapability: "{{ topologyCapability }}"
+    - name: interconnects
+      value: "{{ interconnects }}"
+      description: |
+        Interconnects in the InterconnectGroup. Keys are arbitrary user-specified
+        strings. Users are encouraged, but not required, to use their preferred
+        format for resource links as keys.
+        Note that there are add-members and remove-members methods in gcloud.
+        The size of this map is limited by an "Interconnects per group" quota.
     - name: name
       value: "{{ name }}"
       description: |
@@ -551,10 +551,10 @@ Patches the specified InterconnectGroup resource with the data included in<br />
 ```sql
 UPDATE google.compute.interconnect_groups
 SET 
-data__intent = '{{ intent }}',
 data__description = '{{ description }}',
-data__interconnects = '{{ interconnects }}',
 data__etag = '{{ etag }}',
+data__intent = '{{ intent }}',
+data__interconnects = '{{ interconnects }}',
 data__name = '{{ name }}'
 WHERE 
 project = '{{ project }}' --required

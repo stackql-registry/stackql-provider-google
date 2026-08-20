@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists support event subscriptions. EXAMPLES: cURL: ```shell parent="organizations/123456789" curl \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$parent/supportEventSubscriptions" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.supportEventSubscriptions().list( parent="organizations/123456789" ) print(request.execute()) ```</td>
 </tr>
 <tr>
@@ -200,18 +200,18 @@ The following methods are available for this resource:
     <td>Soft deletes a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription="organizations/123456789/supportEventSubscriptions/abcdef123456" curl \ --request DELETE \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$support_event_subscription" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService).supportEventSubscriptions().delete( name="organizations/123456789/supportEventSubscriptions/abcdef123456" ) print(request.execute()) ```</td>
 </tr>
 <tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-supportEventSubscriptionsId"><code>supportEventSubscriptionsId</code></a></td>
-    <td></td>
-    <td>Undeletes a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription="organizations/123456789/supportEventSubscriptions/abcdef123456" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$support_event_subscription:undelete" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.supportEventSubscriptions().undelete( name="organizations/123456789/supportEventSubscriptions/abcdef123456" ) print(request.execute()) ```</td>
-</tr>
-<tr>
     <td><a href="#expunge"><CopyableCode code="expunge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-supportEventSubscriptionsId"><code>supportEventSubscriptionsId</code></a></td>
     <td></td>
     <td>Expunges a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription="organizations/123456789/supportEventSubscriptions/abcdef123456" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$support_event_subscription:expunge" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.supportEventSubscriptions().expunge( name="organizations/123456789/supportEventSubscriptions/abcdef123456" ) print(request.execute()) ```</td>
+</tr>
+<tr>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-supportEventSubscriptionsId"><code>supportEventSubscriptionsId</code></a></td>
+    <td></td>
+    <td>Undeletes a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription="organizations/123456789/supportEventSubscriptions/abcdef123456" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$support_event_subscription:undelete" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.supportEventSubscriptions().undelete( name="organizations/123456789/supportEventSubscriptions/abcdef123456" ) print(request.execute()) ```</td>
 </tr>
 </tbody>
 </table>
@@ -314,8 +314,8 @@ FROM google.cloudsupport.support_event_subscriptions
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND showDeleted = '{{ showDeleted }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -439,29 +439,29 @@ AND supportEventSubscriptionsId = '{{ supportEventSubscriptionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="expunge"
     values={[
-        { label: 'undelete', value: 'undelete' },
-        { label: 'expunge', value: 'expunge' }
+        { label: 'expunge', value: 'expunge' },
+        { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="undelete">
-
-Undeletes a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription="organizations/123456789/supportEventSubscriptions/abcdef123456" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$support_event_subscription:undelete" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.supportEventSubscriptions().undelete( name="organizations/123456789/supportEventSubscriptions/abcdef123456" ) print(request.execute()) ```
-
-```sql
-EXEC google.cloudsupport.support_event_subscriptions.undelete 
-@organizationsId='{{ organizationsId }}' --required, 
-@supportEventSubscriptionsId='{{ supportEventSubscriptionsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="expunge">
 
 Expunges a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription="organizations/123456789/supportEventSubscriptions/abcdef123456" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$support_event_subscription:expunge" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.supportEventSubscriptions().expunge( name="organizations/123456789/supportEventSubscriptions/abcdef123456" ) print(request.execute()) ```
 
 ```sql
 EXEC google.cloudsupport.support_event_subscriptions.expunge 
+@organizationsId='{{ organizationsId }}' --required, 
+@supportEventSubscriptionsId='{{ supportEventSubscriptionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="undelete">
+
+Undeletes a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription="organizations/123456789/supportEventSubscriptions/abcdef123456" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$support_event_subscription:undelete" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.supportEventSubscriptions().undelete( name="organizations/123456789/supportEventSubscriptions/abcdef123456" ) print(request.execute()) ```
+
+```sql
+EXEC google.cloudsupport.support_event_subscriptions.undelete 
 @organizationsId='{{ organizationsId }}' --required, 
 @supportEventSubscriptionsId='{{ supportEventSubscriptionsId }}' --required
 ;

@@ -388,14 +388,14 @@ Creates an instance configuration and begins preparing it to be used. The return
 
 ```sql
 INSERT INTO google.spanner.instance_configs (
-data__instanceConfigId,
 data__instanceConfig,
+data__instanceConfigId,
 data__validateOnly,
 projectsId
 )
 SELECT 
-'{{ instanceConfigId }}',
 '{{ instanceConfig }}',
+'{{ instanceConfigId }}',
 {{ validateOnly }},
 '{{ projectsId }}'
 RETURNING
@@ -415,35 +415,35 @@ response
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the instance_configs resource.
+    - name: instanceConfig
+      description: |
+        Required. The \`InstanceConfig\` proto of the configuration to create. \`instance_config.name\` must be \`/instanceConfigs/\`. \`instance_config.base_config\` must be a Google-managed configuration name, e.g. /instanceConfigs/us-east1, /instanceConfigs/nam3.
+      value:
+        baseConfig: "{{ baseConfig }}"
+        configType: "{{ configType }}"
+        displayName: "{{ displayName }}"
+        etag: "{{ etag }}"
+        freeInstanceAvailability: "{{ freeInstanceAvailability }}"
+        labels: "{{ labels }}"
+        leaderOptions:
+          - "{{ leaderOptions }}"
+        name: "{{ name }}"
+        optionalReplicas:
+          - defaultLeaderLocation: {{ defaultLeaderLocation }}
+            location: "{{ location }}"
+            type: "{{ type }}"
+        quorumType: "{{ quorumType }}"
+        reconciling: {{ reconciling }}
+        replicas:
+          - defaultLeaderLocation: {{ defaultLeaderLocation }}
+            location: "{{ location }}"
+            type: "{{ type }}"
+        state: "{{ state }}"
+        storageLimitPerProcessingUnit: "{{ storageLimitPerProcessingUnit }}"
     - name: instanceConfigId
       value: "{{ instanceConfigId }}"
       description: |
         Required. The ID of the instance configuration to create. Valid identifiers are of the form \`custom-[-a-z0-9]*[a-z0-9]\` and must be between 2 and 64 characters in length. The \`custom-\` prefix is required to avoid name conflicts with Google-managed configurations.
-    - name: instanceConfig
-      description: |
-        A possible configuration for a Cloud Spanner instance. Configurations define the geographic placement of nodes and their replication.
-      value:
-        name: "{{ name }}"
-        displayName: "{{ displayName }}"
-        configType: "{{ configType }}"
-        replicas:
-          - location: "{{ location }}"
-            type: "{{ type }}"
-            defaultLeaderLocation: {{ defaultLeaderLocation }}
-        optionalReplicas:
-          - location: "{{ location }}"
-            type: "{{ type }}"
-            defaultLeaderLocation: {{ defaultLeaderLocation }}
-        baseConfig: "{{ baseConfig }}"
-        labels: "{{ labels }}"
-        etag: "{{ etag }}"
-        leaderOptions:
-          - "{{ leaderOptions }}"
-        reconciling: {{ reconciling }}
-        state: "{{ state }}"
-        freeInstanceAvailability: "{{ freeInstanceAvailability }}"
-        quorumType: "{{ quorumType }}"
-        storageLimitPerProcessingUnit: "{{ storageLimitPerProcessingUnit }}"
     - name: validateOnly
       value: {{ validateOnly }}
       description: |

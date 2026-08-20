@@ -33,52 +33,13 @@ Creates, updates, deletes, gets or lists a <code>deployment_resource_pools</code
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="query_deployed_models"
+    defaultValue="get"
     values={[
-        { label: 'query_deployed_models', value: 'query_deployed_models' },
         { label: 'get', value: 'get' },
+        { label: 'query_deployed_models', value: 'query_deployed_models' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_deployed_models">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="deployedModelRefs" /></td>
-    <td><code>array</code></td>
-    <td>References to the DeployedModels that share the specified deploymentResourcePool.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deployedModels" /></td>
-    <td><code>array</code></td>
-    <td>DEPRECATED Use deployed_model_refs instead.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalDeployedModelCount" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>The total number of DeployedModels on this DeploymentResourcePool.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalEndpointCount" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>The total number of Endpoints that have DeployedModels on this DeploymentResourcePool.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="get">
 
 <table>
@@ -129,6 +90,45 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
     <td>The service account that the DeploymentResourcePool's container(s) run as. Specify the email address of the service account. If this service account is not specified, the container(s) run as a service account that doesn't have access to the resource project. Users deploying the Models to this DeploymentResourcePool must have the `iam.serviceAccounts.actAs` permission on this service account.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="query_deployed_models">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="deployedModelRefs" /></td>
+    <td><code>array</code></td>
+    <td>References to the DeployedModels that share the specified deploymentResourcePool.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deployedModels" /></td>
+    <td><code>array</code></td>
+    <td>DEPRECATED Use deployed_model_refs instead.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="totalDeployedModelCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>The total number of DeployedModels on this DeploymentResourcePool.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="totalEndpointCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>The total number of Endpoints that have DeployedModels on this DeploymentResourcePool.</td>
 </tr>
 </tbody>
 </table>
@@ -205,13 +205,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#query_deployed_models"><CopyableCode code="query_deployed_models" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentResourcePoolsId"><code>deploymentResourcePoolsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>List DeployedModels that have been deployed on this DeploymentResourcePool.</td>
-</tr>
-<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentResourcePoolsId"><code>deploymentResourcePoolsId</code></a></td>
@@ -219,10 +212,17 @@ The following methods are available for this resource:
     <td>Get a DeploymentResourcePool.</td>
 </tr>
 <tr>
+    <td><a href="#query_deployed_models"><CopyableCode code="query_deployed_models" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentResourcePoolsId"><code>deploymentResourcePoolsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>List DeployedModels that have been deployed on this DeploymentResourcePool.</td>
+</tr>
+<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List DeploymentResourcePools in a location.</td>
 </tr>
 <tr>
@@ -298,33 +298,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="query_deployed_models"
+    defaultValue="get"
     values={[
-        { label: 'query_deployed_models', value: 'query_deployed_models' },
         { label: 'get', value: 'get' },
+        { label: 'query_deployed_models', value: 'query_deployed_models' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query_deployed_models">
-
-List DeployedModels that have been deployed on this DeploymentResourcePool.
-
-```sql
-SELECT
-deployedModelRefs,
-deployedModels,
-nextPageToken,
-totalDeployedModelCount,
-totalEndpointCount
-FROM google.aiplatform.deployment_resource_pools
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND deploymentResourcePoolsId = '{{ deploymentResourcePoolsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="get">
 
 Get a DeploymentResourcePool.
@@ -346,6 +326,26 @@ AND deploymentResourcePoolsId = '{{ deploymentResourcePoolsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="query_deployed_models">
+
+List DeployedModels that have been deployed on this DeploymentResourcePool.
+
+```sql
+SELECT
+deployedModelRefs,
+deployedModels,
+nextPageToken,
+totalDeployedModelCount,
+totalEndpointCount
+FROM google.aiplatform.deployment_resource_pools
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND deploymentResourcePoolsId = '{{ deploymentResourcePoolsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="list">
 
 List DeploymentResourcePools in a location.
@@ -363,8 +363,8 @@ serviceAccount
 FROM google.aiplatform.deployment_resource_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -420,32 +420,32 @@ response
       description: |
         Required. The DeploymentResourcePool to create.
       value:
-        satisfiesPzs: {{ satisfiesPzs }}
-        name: "{{ name }}"
+        createTime: "{{ createTime }}"
         dedicatedResources:
-          maxReplicaCount: {{ maxReplicaCount }}
-          spot: {{ spot }}
+          autoscalingMetricSpecs:
+            - metricName: "{{ metricName }}"
+              target: {{ target }}
           machineSpec:
-            machineType: "{{ machineType }}"
-            tpuTopology: "{{ tpuTopology }}"
-            reservationAffinity:
-              reservationAffinityType: "{{ reservationAffinityType }}"
-              key: "{{ key }}"
-              values:
-                - "{{ values }}"
             acceleratorCount: {{ acceleratorCount }}
             acceleratorType: "{{ acceleratorType }}"
             gpuPartitionSize: "{{ gpuPartitionSize }}"
+            machineType: "{{ machineType }}"
+            reservationAffinity:
+              key: "{{ key }}"
+              reservationAffinityType: "{{ reservationAffinityType }}"
+              values:
+                - "{{ values }}"
+            tpuTopology: "{{ tpuTopology }}"
+          maxReplicaCount: {{ maxReplicaCount }}
           minReplicaCount: {{ minReplicaCount }}
-          autoscalingMetricSpecs:
-            - target: {{ target }}
-              metricName: "{{ metricName }}"
           requiredReplicaCount: {{ requiredReplicaCount }}
+          spot: {{ spot }}
         disableContainerLogging: {{ disableContainerLogging }}
-        createTime: "{{ createTime }}"
-        satisfiesPzi: {{ satisfiesPzi }}
         encryptionSpec:
           kmsKeyName: "{{ kmsKeyName }}"
+        name: "{{ name }}"
+        satisfiesPzi: {{ satisfiesPzi }}
+        satisfiesPzs: {{ satisfiesPzs }}
         serviceAccount: "{{ serviceAccount }}"
     - name: deploymentResourcePoolId
       value: "{{ deploymentResourcePoolId }}"
@@ -472,10 +472,10 @@ Update a DeploymentResourcePool.
 ```sql
 UPDATE google.aiplatform.deployment_resource_pools
 SET 
-data__name = '{{ name }}',
 data__dedicatedResources = '{{ dedicatedResources }}',
 data__disableContainerLogging = {{ disableContainerLogging }},
 data__encryptionSpec = '{{ encryptionSpec }}',
+data__name = '{{ name }}',
 data__serviceAccount = '{{ serviceAccount }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

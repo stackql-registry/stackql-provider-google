@@ -332,27 +332,27 @@ Creates a new policy.
 ```sql
 INSERT INTO google.dns.policies (
 data__alternativeNameServerConfig,
-data__name,
 data__description,
-data__kind,
-data__id,
+data__dns64Config,
 data__enableInboundForwarding,
 data__enableLogging,
+data__id,
+data__kind,
+data__name,
 data__networks,
-data__dns64Config,
 project,
 clientOperationId
 )
 SELECT 
 '{{ alternativeNameServerConfig }}',
-'{{ name }}',
 '{{ description }}',
-'{{ kind }}',
-'{{ id }}',
+'{{ dns64Config }}',
 {{ enableInboundForwarding }},
 {{ enableLogging }},
+'{{ id }}',
+'{{ kind }}',
+'{{ name }}',
 '{{ networks }}',
-'{{ dns64Config }}',
 '{{ project }}',
 '{{ clientOperationId }}'
 RETURNING
@@ -380,27 +380,24 @@ networks
       description: |
         Sets an alternative name server for the associated networks. When specified, all DNS queries are forwarded to a name server that you choose. Names such as .internal are not available when an alternative name server is specified.
       value:
-        targetNameServers:
-          - ipv4Address: "{{ ipv4Address }}"
-            kind: "{{ kind }}"
-            forwardingPath: "{{ forwardingPath }}"
-            ipv6Address: "{{ ipv6Address }}"
         kind: "{{ kind }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        User-assigned name for this policy.
+        targetNameServers:
+          - forwardingPath: "{{ forwardingPath }}"
+            ipv4Address: "{{ ipv4Address }}"
+            ipv6Address: "{{ ipv6Address }}"
+            kind: "{{ kind }}"
     - name: description
       value: "{{ description }}"
       description: |
         A mutable string of at most 1024 characters associated with this resource for the user's convenience. Has no effect on the policy's function.
-    - name: kind
-      value: "{{ kind }}"
-      default: dns#policy
-    - name: id
-      value: "{{ id }}"
+    - name: dns64Config
       description: |
-        Unique identifier for the resource; defined by the server (output only).
+        Configurations related to DNS64 for this policy.
+      value:
+        kind: "{{ kind }}"
+        scope:
+          allQueries: {{ allQueries }}
+          kind: "{{ kind }}"
     - name: enableInboundForwarding
       value: {{ enableInboundForwarding }}
       description: |
@@ -409,20 +406,23 @@ networks
       value: {{ enableLogging }}
       description: |
         Controls whether logging is enabled for the networks bound to this policy. Defaults to no logging if not set.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Unique identifier for the resource; defined by the server (output only).
+    - name: kind
+      value: "{{ kind }}"
+      default: dns#policy
+    - name: name
+      value: "{{ name }}"
+      description: |
+        User-assigned name for this policy.
     - name: networks
       description: |
         List of network names specifying networks to which this policy is applied.
       value:
         - kind: "{{ kind }}"
           networkUrl: "{{ networkUrl }}"
-    - name: dns64Config
-      description: |
-        Configurations related to DNS64 for this policy.
-      value:
-        scope:
-          allQueries: {{ allQueries }}
-          kind: "{{ kind }}"
-        kind: "{{ kind }}"
     - name: clientOperationId
       value: "{{ clientOperationId }}"
 `}</CodeBlock>
@@ -447,14 +447,14 @@ Applies a partial update to an existing policy.
 UPDATE google.dns.policies
 SET 
 data__alternativeNameServerConfig = '{{ alternativeNameServerConfig }}',
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
+data__dns64Config = '{{ dns64Config }}',
 data__enableInboundForwarding = {{ enableInboundForwarding }},
 data__enableLogging = {{ enableLogging }},
-data__networks = '{{ networks }}',
-data__dns64Config = '{{ dns64Config }}'
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
+data__name = '{{ name }}',
+data__networks = '{{ networks }}'
 WHERE 
 project = '{{ project }}' --required
 AND policy = '{{ policy }}' --required
@@ -482,14 +482,14 @@ Updates an existing policy.
 REPLACE google.dns.policies
 SET 
 data__alternativeNameServerConfig = '{{ alternativeNameServerConfig }}',
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
+data__dns64Config = '{{ dns64Config }}',
 data__enableInboundForwarding = {{ enableInboundForwarding }},
 data__enableLogging = {{ enableLogging }},
-data__networks = '{{ networks }}',
-data__dns64Config = '{{ dns64Config }}'
+data__id = '{{ id }}',
+data__kind = '{{ kind }}',
+data__name = '{{ name }}',
+data__networks = '{{ networks }}'
 WHERE 
 project = '{{ project }}' --required
 AND policy = '{{ policy }}' --required

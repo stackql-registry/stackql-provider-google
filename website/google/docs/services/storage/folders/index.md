@@ -380,27 +380,27 @@ Creates a new folder. Only applicable to buckets with hierarchical namespace ena
 ```sql
 INSERT INTO google.storage.folders (
 data__bucket,
+data__createTime,
 data__id,
 data__kind,
 data__metageneration,
 data__name,
-data__selfLink,
-data__createTime,
-data__updateTime,
 data__pendingRenameInfo,
+data__selfLink,
+data__updateTime,
 bucket,
 recursive
 )
 SELECT 
 '{{ bucket }}',
+'{{ createTime }}',
 '{{ id }}',
 '{{ kind }}',
 '{{ metageneration }}',
 '{{ name }}',
-'{{ selfLink }}',
-'{{ createTime }}',
-'{{ updateTime }}',
 '{{ pendingRenameInfo }}',
+'{{ selfLink }}',
+'{{ updateTime }}',
 '{{ bucket }}',
 '{{ recursive }}'
 RETURNING
@@ -428,6 +428,10 @@ updateTime
       value: "{{ bucket }}"
       description: |
         The name of the bucket containing this folder.
+    - name: createTime
+      value: "{{ createTime }}"
+      description: |
+        The creation time of the folder in RFC 3339 format.
     - name: id
       value: "{{ id }}"
       description: |
@@ -445,23 +449,19 @@ updateTime
       value: "{{ name }}"
       description: |
         The name of the folder. Required if not specified by URL parameter.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        The link to this folder.
-    - name: createTime
-      value: "{{ createTime }}"
-      description: |
-        The creation time of the folder in RFC 3339 format.
-    - name: updateTime
-      value: "{{ updateTime }}"
-      description: |
-        The modification time of the folder metadata in RFC 3339 format.
     - name: pendingRenameInfo
       description: |
         Only present if the folder is part of an ongoing rename folder operation. Contains information which can be used to query the operation status.
       value:
         operationId: "{{ operationId }}"
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        The link to this folder.
+    - name: updateTime
+      value: "{{ updateTime }}"
+      description: |
+        The modification time of the folder metadata in RFC 3339 format.
     - name: recursive
       value: {{ recursive }}
 `}</CodeBlock>

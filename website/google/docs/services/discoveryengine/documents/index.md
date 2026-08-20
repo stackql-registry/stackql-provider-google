@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_collections_data_stores_branches_documents_get"
     values={[
         { label: 'projects_locations_collections_data_stores_branches_documents_get', value: 'projects_locations_collections_data_stores_branches_documents_get' },
-        { label: 'projects_locations_data_stores_branches_documents_get', value: 'projects_locations_data_stores_branches_documents_get' },
         { label: 'projects_locations_collections_data_stores_branches_documents_list', value: 'projects_locations_collections_data_stores_branches_documents_list' },
+        { label: 'projects_locations_data_stores_branches_documents_get', value: 'projects_locations_data_stores_branches_documents_get' },
         { label: 'projects_locations_data_stores_branches_documents_list', value: 'projects_locations_data_stores_branches_documents_list' }
     ]}
 >
@@ -110,7 +110,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_data_stores_branches_documents_get">
+<TabItem value="projects_locations_collections_data_stores_branches_documents_list">
 
 <table>
 <thead>
@@ -179,7 +179,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_collections_data_stores_branches_documents_list">
+<TabItem value="projects_locations_data_stores_branches_documents_get">
 
 <table>
 <thead>
@@ -342,18 +342,18 @@ The following methods are available for this resource:
     <td>Gets a Document.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_branches_documents_get"><CopyableCode code="projects_locations_data_stores_branches_documents_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
-    <td></td>
-    <td>Gets a Document.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_collections_data_stores_branches_documents_list"><CopyableCode code="projects_locations_collections_data_stores_branches_documents_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Gets a list of Documents.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_branches_documents_get"><CopyableCode code="projects_locations_data_stores_branches_documents_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
+    <td></td>
+    <td>Gets a Document.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_stores_branches_documents_list"><CopyableCode code="projects_locations_data_stores_branches_documents_list" /></a></td>
@@ -387,7 +387,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_stores_branches_documents_patch"><CopyableCode code="projects_locations_data_stores_branches_documents_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a Document.</td>
 </tr>
 <tr>
@@ -405,20 +405,6 @@ The following methods are available for this resource:
     <td>Deletes a Document.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_branches_documents_import"><CopyableCode code="projects_locations_data_stores_branches_documents_import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td></td>
-    <td>Bulk import of multiple Documents. Request processing may be synchronous. Non-existing items are created. Note: It is possible for a subset of the Documents to be successfully updated.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_branches_documents_purge"><CopyableCode code="projects_locations_data_stores_branches_documents_purge" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td></td>
-    <td>Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_collections_data_stores_branches_documents_import"><CopyableCode code="projects_locations_collections_data_stores_branches_documents_import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
@@ -429,6 +415,20 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_branches_documents_purge"><CopyableCode code="projects_locations_collections_data_stores_branches_documents_purge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
+    <td></td>
+    <td>Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_branches_documents_import"><CopyableCode code="projects_locations_data_stores_branches_documents_import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
+    <td></td>
+    <td>Bulk import of multiple Documents. Request processing may be synchronous. Non-existing items are created. Note: It is possible for a subset of the Documents to be successfully updated.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_branches_documents_purge"><CopyableCode code="projects_locations_data_stores_branches_documents_purge" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
     <td></td>
     <td>Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.</td>
 </tr>
@@ -512,8 +512,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_collections_data_stores_branches_documents_get"
     values={[
         { label: 'projects_locations_collections_data_stores_branches_documents_get', value: 'projects_locations_collections_data_stores_branches_documents_get' },
-        { label: 'projects_locations_data_stores_branches_documents_get', value: 'projects_locations_data_stores_branches_documents_get' },
         { label: 'projects_locations_collections_data_stores_branches_documents_list', value: 'projects_locations_collections_data_stores_branches_documents_list' },
+        { label: 'projects_locations_data_stores_branches_documents_get', value: 'projects_locations_data_stores_branches_documents_get' },
         { label: 'projects_locations_data_stores_branches_documents_list', value: 'projects_locations_data_stores_branches_documents_list' }
     ]}
 >
@@ -538,32 +538,6 @@ FROM google.discoveryengine.documents
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND branchesId = '{{ branchesId }}' -- required
-AND documentsId = '{{ documentsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_branches_documents_get">
-
-Gets a Document.
-
-```sql
-SELECT
-id,
-name,
-aclInfo,
-content,
-derivedStructData,
-indexStatus,
-indexTime,
-jsonData,
-parentDocumentId,
-schemaId,
-structData
-FROM google.discoveryengine.documents
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND branchesId = '{{ branchesId }}' -- required
 AND documentsId = '{{ documentsId }}' -- required
@@ -595,6 +569,32 @@ AND dataStoresId = '{{ dataStoresId }}' -- required
 AND branchesId = '{{ branchesId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_branches_documents_get">
+
+Gets a Document.
+
+```sql
+SELECT
+id,
+name,
+aclInfo,
+content,
+derivedStructData,
+indexStatus,
+indexTime,
+jsonData,
+parentDocumentId,
+schemaId,
+structData
+FROM google.discoveryengine.documents
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND branchesId = '{{ branchesId }}' -- required
+AND documentsId = '{{ documentsId }}' -- required
 ;
 ```
 </TabItem>
@@ -644,14 +644,14 @@ Creates a Document.
 
 ```sql
 INSERT INTO google.discoveryengine.documents (
-data__jsonData,
-data__parentDocumentId,
-data__content,
-data__schemaId,
 data__aclInfo,
-data__structData,
-data__name,
+data__content,
 data__id,
+data__jsonData,
+data__name,
+data__parentDocumentId,
+data__schemaId,
+data__structData,
 projectsId,
 locationsId,
 collectionsId,
@@ -660,14 +660,14 @@ branchesId,
 documentId
 )
 SELECT 
-'{{ jsonData }}',
-'{{ parentDocumentId }}',
-'{{ content }}',
-'{{ schemaId }}',
 '{{ aclInfo }}',
-'{{ structData }}',
-'{{ name }}',
+'{{ content }}',
 '{{ id }}',
+'{{ jsonData }}',
+'{{ name }}',
+'{{ parentDocumentId }}',
+'{{ schemaId }}',
+'{{ structData }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -695,14 +695,14 @@ Creates a Document.
 
 ```sql
 INSERT INTO google.discoveryengine.documents (
-data__jsonData,
-data__parentDocumentId,
-data__content,
-data__schemaId,
 data__aclInfo,
-data__structData,
-data__name,
+data__content,
 data__id,
+data__jsonData,
+data__name,
+data__parentDocumentId,
+data__schemaId,
+data__structData,
 projectsId,
 locationsId,
 dataStoresId,
@@ -710,14 +710,14 @@ branchesId,
 documentId
 )
 SELECT 
-'{{ jsonData }}',
-'{{ parentDocumentId }}',
-'{{ content }}',
-'{{ schemaId }}',
 '{{ aclInfo }}',
-'{{ structData }}',
-'{{ name }}',
+'{{ content }}',
 '{{ id }}',
+'{{ jsonData }}',
+'{{ name }}',
+'{{ parentDocumentId }}',
+'{{ schemaId }}',
+'{{ structData }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataStoresId }}',
@@ -758,44 +758,44 @@ structData
     - name: branchesId
       value: "{{ branchesId }}"
       description: Required parameter for the documents resource.
-    - name: jsonData
-      value: "{{ jsonData }}"
-      description: |
-        The JSON string representation of the document. It should conform to the registered Schema or an \`INVALID_ARGUMENT\` error is thrown.
-    - name: parentDocumentId
-      value: "{{ parentDocumentId }}"
-      description: |
-        The identifier of the parent document. Currently supports at most two level document hierarchy. Id should conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters.
-    - name: content
-      description: |
-        The unstructured data linked to this document. Content can only be set and must be set if this document is under a \`CONTENT_REQUIRED\` data store.
-      value:
-        rawBytes: "{{ rawBytes }}"
-        mimeType: "{{ mimeType }}"
-        uri: "{{ uri }}"
-    - name: schemaId
-      value: "{{ schemaId }}"
-      description: |
-        The identifier of the schema located in the same data store.
     - name: aclInfo
       description: |
         Access control information for the document.
       value:
         readers:
-          - principals: "{{ principals }}"
-            idpWide: {{ idpWide }}
-    - name: structData
-      value: "{{ structData }}"
+          - idpWide: {{ idpWide }}
+            principals: "{{ principals }}"
+    - name: content
       description: |
-        The structured JSON data for the document. It should conform to the registered Schema or an \`INVALID_ARGUMENT\` error is thrown.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. The full resource name of the document. Format: \`projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document_id}\`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
+        The unstructured data linked to this document. Content can only be set and must be set if this document is under a \`CONTENT_REQUIRED\` data store.
+      value:
+        mimeType: "{{ mimeType }}"
+        rawBytes: "{{ rawBytes }}"
+        uri: "{{ uri }}"
     - name: id
       value: "{{ id }}"
       description: |
         Immutable. The identifier of the document. Id should conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 128 characters.
+    - name: jsonData
+      value: "{{ jsonData }}"
+      description: |
+        The JSON string representation of the document. It should conform to the registered Schema or an \`INVALID_ARGUMENT\` error is thrown.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The full resource name of the document. Format: \`projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document_id}\`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
+    - name: parentDocumentId
+      value: "{{ parentDocumentId }}"
+      description: |
+        The identifier of the parent document. Currently supports at most two level document hierarchy. Id should conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters.
+    - name: schemaId
+      value: "{{ schemaId }}"
+      description: |
+        The identifier of the schema located in the same data store.
+    - name: structData
+      value: "{{ structData }}"
+      description: |
+        The structured JSON data for the document. It should conform to the registered Schema or an \`INVALID_ARGUMENT\` error is thrown.
     - name: documentId
       value: "{{ documentId }}"
 `}</CodeBlock>
@@ -820,14 +820,14 @@ Updates a Document.
 ```sql
 UPDATE google.discoveryengine.documents
 SET 
-data__jsonData = '{{ jsonData }}',
-data__parentDocumentId = '{{ parentDocumentId }}',
-data__content = '{{ content }}',
-data__schemaId = '{{ schemaId }}',
 data__aclInfo = '{{ aclInfo }}',
-data__structData = '{{ structData }}',
+data__content = '{{ content }}',
+data__id = '{{ id }}',
+data__jsonData = '{{ jsonData }}',
 data__name = '{{ name }}',
-data__id = '{{ id }}'
+data__parentDocumentId = '{{ parentDocumentId }}',
+data__schemaId = '{{ schemaId }}',
+data__structData = '{{ structData }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -858,22 +858,22 @@ Updates a Document.
 ```sql
 UPDATE google.discoveryengine.documents
 SET 
-data__jsonData = '{{ jsonData }}',
-data__parentDocumentId = '{{ parentDocumentId }}',
-data__content = '{{ content }}',
-data__schemaId = '{{ schemaId }}',
 data__aclInfo = '{{ aclInfo }}',
-data__structData = '{{ structData }}',
+data__content = '{{ content }}',
+data__id = '{{ id }}',
+data__jsonData = '{{ jsonData }}',
 data__name = '{{ name }}',
-data__id = '{{ id }}'
+data__parentDocumentId = '{{ parentDocumentId }}',
+data__schemaId = '{{ schemaId }}',
+data__structData = '{{ structData }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND dataStoresId = '{{ dataStoresId }}' --required
 AND branchesId = '{{ branchesId }}' --required
 AND documentsId = '{{ documentsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 id,
 name,
@@ -935,66 +935,14 @@ AND documentsId = '{{ documentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_data_stores_branches_documents_import"
+    defaultValue="projects_locations_collections_data_stores_branches_documents_import"
     values={[
-        { label: 'projects_locations_data_stores_branches_documents_import', value: 'projects_locations_data_stores_branches_documents_import' },
-        { label: 'projects_locations_data_stores_branches_documents_purge', value: 'projects_locations_data_stores_branches_documents_purge' },
         { label: 'projects_locations_collections_data_stores_branches_documents_import', value: 'projects_locations_collections_data_stores_branches_documents_import' },
-        { label: 'projects_locations_collections_data_stores_branches_documents_purge', value: 'projects_locations_collections_data_stores_branches_documents_purge' }
+        { label: 'projects_locations_collections_data_stores_branches_documents_purge', value: 'projects_locations_collections_data_stores_branches_documents_purge' },
+        { label: 'projects_locations_data_stores_branches_documents_import', value: 'projects_locations_data_stores_branches_documents_import' },
+        { label: 'projects_locations_data_stores_branches_documents_purge', value: 'projects_locations_data_stores_branches_documents_purge' }
     ]}
 >
-<TabItem value="projects_locations_data_stores_branches_documents_import">
-
-Bulk import of multiple Documents. Request processing may be synchronous. Non-existing items are created. Note: It is possible for a subset of the Documents to be successfully updated.
-
-```sql
-EXEC google.discoveryengine.documents.projects_locations_data_stores_branches_documents_import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@branchesId='{{ branchesId }}' --required 
-@@json=
-'{
-"idField": "{{ idField }}", 
-"inlineSource": "{{ inlineSource }}", 
-"fhirStoreSource": "{{ fhirStoreSource }}", 
-"firestoreSource": "{{ firestoreSource }}", 
-"bigquerySource": "{{ bigquerySource }}", 
-"cloudSqlSource": "{{ cloudSqlSource }}", 
-"bigtableSource": "{{ bigtableSource }}", 
-"autoGenerateIds": {{ autoGenerateIds }}, 
-"spannerSource": "{{ spannerSource }}", 
-"updateMask": "{{ updateMask }}", 
-"forceRefreshContent": {{ forceRefreshContent }}, 
-"errorConfig": "{{ errorConfig }}", 
-"gcsSource": "{{ gcsSource }}", 
-"reconciliationMode": "{{ reconciliationMode }}", 
-"alloyDbSource": "{{ alloyDbSource }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_branches_documents_purge">
-
-Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.
-
-```sql
-EXEC google.discoveryengine.documents.projects_locations_data_stores_branches_documents_purge 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@branchesId='{{ branchesId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"errorConfig": "{{ errorConfig }}", 
-"inlineSource": "{{ inlineSource }}", 
-"force": {{ force }}, 
-"gcsSource": "{{ gcsSource }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_branches_documents_import">
 
 Bulk import of multiple Documents. Request processing may be synchronous. Non-existing items are created. Note: It is possible for a subset of the Documents to be successfully updated.
@@ -1008,21 +956,21 @@ EXEC google.discoveryengine.documents.projects_locations_collections_data_stores
 @branchesId='{{ branchesId }}' --required 
 @@json=
 '{
-"idField": "{{ idField }}", 
-"inlineSource": "{{ inlineSource }}", 
+"alloyDbSource": "{{ alloyDbSource }}", 
+"autoGenerateIds": {{ autoGenerateIds }}, 
+"bigquerySource": "{{ bigquerySource }}", 
+"bigtableSource": "{{ bigtableSource }}", 
+"cloudSqlSource": "{{ cloudSqlSource }}", 
+"errorConfig": "{{ errorConfig }}", 
 "fhirStoreSource": "{{ fhirStoreSource }}", 
 "firestoreSource": "{{ firestoreSource }}", 
-"bigquerySource": "{{ bigquerySource }}", 
-"cloudSqlSource": "{{ cloudSqlSource }}", 
-"bigtableSource": "{{ bigtableSource }}", 
-"autoGenerateIds": {{ autoGenerateIds }}, 
-"spannerSource": "{{ spannerSource }}", 
-"updateMask": "{{ updateMask }}", 
 "forceRefreshContent": {{ forceRefreshContent }}, 
-"errorConfig": "{{ errorConfig }}", 
 "gcsSource": "{{ gcsSource }}", 
+"idField": "{{ idField }}", 
+"inlineSource": "{{ inlineSource }}", 
 "reconciliationMode": "{{ reconciliationMode }}", 
-"alloyDbSource": "{{ alloyDbSource }}"
+"spannerSource": "{{ spannerSource }}", 
+"updateMask": "{{ updateMask }}"
 }'
 ;
 ```
@@ -1040,11 +988,63 @@ EXEC google.discoveryengine.documents.projects_locations_collections_data_stores
 @branchesId='{{ branchesId }}' --required 
 @@json=
 '{
-"filter": "{{ filter }}", 
 "errorConfig": "{{ errorConfig }}", 
-"inlineSource": "{{ inlineSource }}", 
+"filter": "{{ filter }}", 
 "force": {{ force }}, 
-"gcsSource": "{{ gcsSource }}"
+"gcsSource": "{{ gcsSource }}", 
+"inlineSource": "{{ inlineSource }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_branches_documents_import">
+
+Bulk import of multiple Documents. Request processing may be synchronous. Non-existing items are created. Note: It is possible for a subset of the Documents to be successfully updated.
+
+```sql
+EXEC google.discoveryengine.documents.projects_locations_data_stores_branches_documents_import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@branchesId='{{ branchesId }}' --required 
+@@json=
+'{
+"alloyDbSource": "{{ alloyDbSource }}", 
+"autoGenerateIds": {{ autoGenerateIds }}, 
+"bigquerySource": "{{ bigquerySource }}", 
+"bigtableSource": "{{ bigtableSource }}", 
+"cloudSqlSource": "{{ cloudSqlSource }}", 
+"errorConfig": "{{ errorConfig }}", 
+"fhirStoreSource": "{{ fhirStoreSource }}", 
+"firestoreSource": "{{ firestoreSource }}", 
+"forceRefreshContent": {{ forceRefreshContent }}, 
+"gcsSource": "{{ gcsSource }}", 
+"idField": "{{ idField }}", 
+"inlineSource": "{{ inlineSource }}", 
+"reconciliationMode": "{{ reconciliationMode }}", 
+"spannerSource": "{{ spannerSource }}", 
+"updateMask": "{{ updateMask }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_branches_documents_purge">
+
+Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.
+
+```sql
+EXEC google.discoveryengine.documents.projects_locations_data_stores_branches_documents_purge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@branchesId='{{ branchesId }}' --required 
+@@json=
+'{
+"errorConfig": "{{ errorConfig }}", 
+"filter": "{{ filter }}", 
+"force": {{ force }}, 
+"gcsSource": "{{ gcsSource }}", 
+"inlineSource": "{{ inlineSource }}"
 }'
 ;
 ```

@@ -470,14 +470,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-views"><code>views</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-views"><code>views</code></a></td>
     <td>Retrieves a list of subnetworks available to the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-views"><code>views</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-views"><code>views</code></a></td>
     <td>Retrieves an aggregated list of subnetworks.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -502,18 +502,18 @@ The following methods are available for this resource:
     <td>Deletes the specified subnetwork.</td>
 </tr>
 <tr>
-    <td><a href="#set_private_ip_google_access"><CopyableCode code="set_private_ip_google_access" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-subnetwork"><code>subnetwork</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Set whether VMs in this subnet can access Google services without assigning<br />external IP addresses through Private Google Access.</td>
-</tr>
-<tr>
     <td><a href="#expand_ip_cidr_range"><CopyableCode code="expand_ip_cidr_range" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-subnetwork"><code>subnetwork</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Expands the IP CIDR range of the subnetwork to a specified value.</td>
+</tr>
+<tr>
+    <td><a href="#set_private_ip_google_access"><CopyableCode code="set_private_ip_google_access" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-subnetwork"><code>subnetwork</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Set whether VMs in this subnet can access Google services without assigning<br />external IP addresses through Private Google Access.</td>
 </tr>
 </tbody>
 </table>
@@ -671,11 +671,11 @@ warning
 FROM google.compute.subnetworks
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND views = '{{ views }}'
 ;
 ```
@@ -721,13 +721,13 @@ systemReservedInternalIpv6Ranges,
 utilizationDetails
 FROM google.compute.subnetworks
 WHERE project = '{{ project }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND views = '{{ views }}'
 ;
 ```
@@ -750,57 +750,57 @@ Creates a subnetwork in the specified project using the data<br />included in th
 
 ```sql
 INSERT INTO google.compute.subnetworks (
-data__description,
-data__externalIpv6Prefix,
-data__ipCollection,
-data__name,
-data__logConfig,
-data__ipv6AccessType,
-data__reservedInternalRange,
-data__secondaryIpRanges,
-data__enableFlowLogs,
-data__internalIpv6Prefix,
-data__role,
-data__privateIpGoogleAccess,
-data__selfLink,
-data__purpose,
-data__params,
 data__allowSubnetCidrRoutesOverlap,
-data__resolveSubnetMask,
-data__network,
-data__stackType,
-data__ipCidrRange,
-data__privateIpv6GoogleAccess,
-data__region,
+data__description,
+data__enableFlowLogs,
+data__externalIpv6Prefix,
 data__fingerprint,
+data__internalIpv6Prefix,
+data__ipCidrRange,
+data__ipCollection,
+data__ipv6AccessType,
+data__logConfig,
+data__name,
+data__network,
+data__params,
+data__privateIpGoogleAccess,
+data__privateIpv6GoogleAccess,
+data__purpose,
+data__region,
+data__reservedInternalRange,
+data__resolveSubnetMask,
+data__role,
+data__secondaryIpRanges,
+data__selfLink,
+data__stackType,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ description }}',
-'{{ externalIpv6Prefix }}',
-'{{ ipCollection }}',
-'{{ name }}',
-'{{ logConfig }}',
-'{{ ipv6AccessType }}',
-'{{ reservedInternalRange }}',
-'{{ secondaryIpRanges }}',
-{{ enableFlowLogs }},
-'{{ internalIpv6Prefix }}',
-'{{ role }}',
-{{ privateIpGoogleAccess }},
-'{{ selfLink }}',
-'{{ purpose }}',
-'{{ params }}',
 {{ allowSubnetCidrRoutesOverlap }},
-'{{ resolveSubnetMask }}',
-'{{ network }}',
-'{{ stackType }}',
-'{{ ipCidrRange }}',
-'{{ privateIpv6GoogleAccess }}',
-'{{ region }}',
+'{{ description }}',
+{{ enableFlowLogs }},
+'{{ externalIpv6Prefix }}',
 '{{ fingerprint }}',
+'{{ internalIpv6Prefix }}',
+'{{ ipCidrRange }}',
+'{{ ipCollection }}',
+'{{ ipv6AccessType }}',
+'{{ logConfig }}',
+'{{ name }}',
+'{{ network }}',
+'{{ params }}',
+{{ privateIpGoogleAccess }},
+'{{ privateIpv6GoogleAccess }}',
+'{{ purpose }}',
+'{{ region }}',
+'{{ reservedInternalRange }}',
+'{{ resolveSubnetMask }}',
+'{{ role }}',
+'{{ secondaryIpRanges }}',
+'{{ selfLink }}',
+'{{ stackType }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -846,118 +846,6 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the subnetworks resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource. This field can be set only at resource creation time.
-    - name: externalIpv6Prefix
-      value: "{{ externalIpv6Prefix }}"
-      description: |
-        The external IPv6 address range that is owned by this
-        subnetwork.
-    - name: ipCollection
-      value: "{{ ipCollection }}"
-      description: |
-        Reference to the source of IP, like a PublicDelegatedPrefix
-        (PDP) for BYOIP. The PDP must be a sub-PDP in
-        EXTERNAL_IPV6_SUBNETWORK_CREATION or INTERNAL_IPV6_SUBNETWORK_CREATION
-        mode.
-        Use one of the following formats to specify a sub-PDP when creating a dual
-        stack or IPv6-only subnetwork with external access using BYOIP:
-        -
-        Full resource URL, as inhttps://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/sub-pdp-name
-        -
-        Partial URL, as in
-        - projects/projectId/regions/region/publicDelegatedPrefixes/sub-pdp-name
-        - regions/region/publicDelegatedPrefixes/sub-pdp-name
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of the resource, provided by the client when initially creating
-        the resource. The name must be 1-63 characters long, and comply withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must
-        be a dash, lowercase letter, or digit, except the last character, which
-        cannot be a dash.
-    - name: logConfig
-      description: |
-        This field denotes the VPC flow logging options for this subnetwork.
-        If logging is enabled, logs are exported to Cloud Logging.
-      value:
-        enable: {{ enable }}
-        metadata: "{{ metadata }}"
-        metadataFields:
-          - "{{ metadataFields }}"
-        flowSampling: {{ flowSampling }}
-        aggregationInterval: "{{ aggregationInterval }}"
-        filterExpr: "{{ filterExpr }}"
-    - name: ipv6AccessType
-      value: "{{ ipv6AccessType }}"
-      description: |
-        The access type of IPv6 address this subnet holds. It's immutable and can
-        only be specified during creation or the first time the subnet is updated
-        into IPV4_IPV6 dual stack.
-      valid_values: ['EXTERNAL', 'INTERNAL']
-    - name: reservedInternalRange
-      value: "{{ reservedInternalRange }}"
-      description: |
-        The URL of the reserved internal range.
-    - name: secondaryIpRanges
-      description: |
-        An array of configurations for secondary IP ranges for VM instances
-        contained in this subnetwork. The primary IP of such VM must belong to the
-        primary ipCidrRange of the subnetwork. The alias IPs may belong to either
-        primary or secondary ranges. This field can be updated with apatch request. Supports both IPv4 and IPv6 ranges.
-      value:
-        - reservedInternalRange: "{{ reservedInternalRange }}"
-          ipCollection: "{{ ipCollection }}"
-          ipCidrRange: "{{ ipCidrRange }}"
-          ipVersion: "{{ ipVersion }}"
-          rangeName: "{{ rangeName }}"
-    - name: enableFlowLogs
-      value: {{ enableFlowLogs }}
-      description: |
-        Whether to enable flow logging for this subnetwork. If this field is not
-        explicitly set, it will not appear in get listings. If not set
-        the default behavior is determined by the org policy, if there is no org
-        policy specified, then it will default to disabled. This field isn't
-        supported if the subnet purpose field is set toREGIONAL_MANAGED_PROXY. It is recommended to uselogConfig.enable field instead.
-    - name: internalIpv6Prefix
-      value: "{{ internalIpv6Prefix }}"
-      description: |
-        The internal IPv6 address range that is owned by this
-        subnetwork.
-    - name: role
-      value: "{{ role }}"
-      description: |
-        The role of subnetwork. Currently, this field is only used when
-        purpose is set to GLOBAL_MANAGED_PROXY orREGIONAL_MANAGED_PROXY. The value can be set toACTIVE or BACKUP. An ACTIVE
-        subnetwork is one that is currently being used for Envoy-based load
-        balancers in a region. A BACKUP subnetwork is one that is
-        ready to be promoted to ACTIVE or is currently draining.
-        This field can be updated with a patch request.
-      valid_values: ['ACTIVE', 'BACKUP']
-    - name: privateIpGoogleAccess
-      value: {{ privateIpGoogleAccess }}
-      description: |
-        Whether the VMs in this subnet can access Google services without assigned
-        external IP addresses. This field can be both set at resource creation
-        time and updated using setPrivateIpGoogleAccess.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
-    - name: purpose
-      value: "{{ purpose }}"
-      valid_values: ['GLOBAL_MANAGED_PROXY', 'INTERNAL_HTTPS_LOAD_BALANCER', 'PEER_MIGRATION', 'PRIVATE', 'PRIVATE_NAT', 'PRIVATE_RFC_1918', 'PRIVATE_SERVICE_CONNECT', 'REGIONAL_MANAGED_PROXY']
-    - name: params
-      description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: allowSubnetCidrRoutesOverlap
       value: {{ allowSubnetCidrRoutesOverlap }}
       description: |
@@ -975,45 +863,24 @@ zone
         Setting this field to true will disable this feature.
         The default value is false and applies to all existing subnetworks and
         automatically created subnetworks.
-    - name: resolveSubnetMask
-      value: "{{ resolveSubnetMask }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Configures subnet mask resolution for this subnetwork.
-      valid_values: ['ARP_ALL_RANGES', 'ARP_PRIMARY_RANGE']
-    - name: network
-      value: "{{ network }}"
+        An optional description of this resource. Provide this property when you
+        create the resource. This field can be set only at resource creation time.
+    - name: enableFlowLogs
+      value: {{ enableFlowLogs }}
       description: |
-        The URL of the network to which this subnetwork belongs, provided by the
-        client when initially creating the subnetwork. This field can be set only
-        at resource creation time.
-    - name: stackType
-      value: "{{ stackType }}"
+        Whether to enable flow logging for this subnetwork. If this field is not
+        explicitly set, it will not appear in get listings. If not set
+        the default behavior is determined by the org policy, if there is no org
+        policy specified, then it will default to disabled. This field isn't
+        supported if the subnet purpose field is set toREGIONAL_MANAGED_PROXY. It is recommended to uselogConfig.enable field instead.
+    - name: externalIpv6Prefix
+      value: "{{ externalIpv6Prefix }}"
       description: |
-        The stack type for the subnet. If set to IPV4_ONLY, new VMs
-        in the subnet are assigned IPv4 addresses only. If set toIPV4_IPV6, new VMs in the subnet can be assigned both IPv4 and
-        IPv6 addresses. If not specified, IPV4_ONLY is used.
-        This field can be both set at resource creation time and updated usingpatch.
-      valid_values: ['IPV4_IPV6', 'IPV4_ONLY', 'IPV6_ONLY']
-    - name: ipCidrRange
-      value: "{{ ipCidrRange }}"
-      description: |
-        The range of internal addresses that are owned by this subnetwork.
-        Provide this property when you create the subnetwork. For example,10.0.0.0/8 or 100.64.0.0/10. Ranges must
-        be unique and non-overlapping within a network. Only IPv4 is supported.
-        This field is set at resource creation time. The range can be any range
-        listed in theValid
-        ranges list. The range can be expanded after creation usingexpandIpCidrRange.
-    - name: privateIpv6GoogleAccess
-      value: "{{ privateIpv6GoogleAccess }}"
-      description: |
-        This field is for internal use.
-        This field can be both set at resource creation time and updated usingpatch.
-      valid_values: ['DISABLE_GOOGLE_ACCESS', 'ENABLE_BIDIRECTIONAL_ACCESS_TO_GOOGLE', 'ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE']
-    - name: region
-      value: "{{ region }}"
-      description: |
-        URL of the region where the Subnetwork resides. This
-        field can be set only at resource creation time.
+        The external IPv6 address range that is owned by this
+        subnetwork.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
@@ -1024,6 +891,139 @@ zone
         request will fail with error 412 conditionNotMet.
         To see the latest fingerprint, make a get() request to
         retrieve a Subnetwork.
+    - name: internalIpv6Prefix
+      value: "{{ internalIpv6Prefix }}"
+      description: |
+        The internal IPv6 address range that is owned by this
+        subnetwork.
+    - name: ipCidrRange
+      value: "{{ ipCidrRange }}"
+      description: |
+        The range of internal addresses that are owned by this subnetwork.
+        Provide this property when you create the subnetwork. For example,10.0.0.0/8 or 100.64.0.0/10. Ranges must
+        be unique and non-overlapping within a network. Only IPv4 is supported.
+        This field is set at resource creation time. The range can be any range
+        listed in theValid
+        ranges list. The range can be expanded after creation usingexpandIpCidrRange.
+    - name: ipCollection
+      value: "{{ ipCollection }}"
+      description: |
+        Reference to the source of IP, like a PublicDelegatedPrefix
+        (PDP) for BYOIP. The PDP must be a sub-PDP in
+        EXTERNAL_IPV6_SUBNETWORK_CREATION or INTERNAL_IPV6_SUBNETWORK_CREATION
+        mode.
+        Use one of the following formats to specify a sub-PDP when creating a dual
+        stack or IPv6-only subnetwork with external access using BYOIP:
+        -
+        Full resource URL, as inhttps://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/sub-pdp-name
+        -
+        Partial URL, as in
+        - projects/projectId/regions/region/publicDelegatedPrefixes/sub-pdp-name
+        - regions/region/publicDelegatedPrefixes/sub-pdp-name
+    - name: ipv6AccessType
+      value: "{{ ipv6AccessType }}"
+      description: |
+        The access type of IPv6 address this subnet holds. It's immutable and can
+        only be specified during creation or the first time the subnet is updated
+        into IPV4_IPV6 dual stack.
+      valid_values: ['EXTERNAL', 'INTERNAL']
+    - name: logConfig
+      description: |
+        This field denotes the VPC flow logging options for this subnetwork.
+        If logging is enabled, logs are exported to Cloud Logging.
+      value:
+        aggregationInterval: "{{ aggregationInterval }}"
+        enable: {{ enable }}
+        filterExpr: "{{ filterExpr }}"
+        flowSampling: {{ flowSampling }}
+        metadata: "{{ metadata }}"
+        metadataFields:
+          - "{{ metadataFields }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the resource, provided by the client when initially creating
+        the resource. The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: network
+      value: "{{ network }}"
+      description: |
+        The URL of the network to which this subnetwork belongs, provided by the
+        client when initially creating the subnetwork. This field can be set only
+        at resource creation time.
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: privateIpGoogleAccess
+      value: {{ privateIpGoogleAccess }}
+      description: |
+        Whether the VMs in this subnet can access Google services without assigned
+        external IP addresses. This field can be both set at resource creation
+        time and updated using setPrivateIpGoogleAccess.
+    - name: privateIpv6GoogleAccess
+      value: "{{ privateIpv6GoogleAccess }}"
+      description: |
+        This field is for internal use.
+        This field can be both set at resource creation time and updated usingpatch.
+      valid_values: ['DISABLE_GOOGLE_ACCESS', 'ENABLE_BIDIRECTIONAL_ACCESS_TO_GOOGLE', 'ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE']
+    - name: purpose
+      value: "{{ purpose }}"
+      valid_values: ['GLOBAL_MANAGED_PROXY', 'INTERNAL_HTTPS_LOAD_BALANCER', 'PEER_MIGRATION', 'PRIVATE', 'PRIVATE_NAT', 'PRIVATE_RFC_1918', 'PRIVATE_SERVICE_CONNECT', 'REGIONAL_MANAGED_PROXY']
+    - name: region
+      value: "{{ region }}"
+      description: |
+        URL of the region where the Subnetwork resides. This
+        field can be set only at resource creation time.
+    - name: reservedInternalRange
+      value: "{{ reservedInternalRange }}"
+      description: |
+        The URL of the reserved internal range.
+    - name: resolveSubnetMask
+      value: "{{ resolveSubnetMask }}"
+      description: |
+        Configures subnet mask resolution for this subnetwork.
+      valid_values: ['ARP_ALL_RANGES', 'ARP_PRIMARY_RANGE']
+    - name: role
+      value: "{{ role }}"
+      description: |
+        The role of subnetwork. Currently, this field is only used when
+        purpose is set to GLOBAL_MANAGED_PROXY orREGIONAL_MANAGED_PROXY. The value can be set toACTIVE or BACKUP. An ACTIVE
+        subnetwork is one that is currently being used for Envoy-based load
+        balancers in a region. A BACKUP subnetwork is one that is
+        ready to be promoted to ACTIVE or is currently draining.
+        This field can be updated with a patch request.
+      valid_values: ['ACTIVE', 'BACKUP']
+    - name: secondaryIpRanges
+      description: |
+        An array of configurations for secondary IP ranges for VM instances
+        contained in this subnetwork. The primary IP of such VM must belong to the
+        primary ipCidrRange of the subnetwork. The alias IPs may belong to either
+        primary or secondary ranges. This field can be updated with apatch request. Supports both IPv4 and IPv6 ranges.
+      value:
+        - ipCidrRange: "{{ ipCidrRange }}"
+          ipCollection: "{{ ipCollection }}"
+          ipVersion: "{{ ipVersion }}"
+          rangeName: "{{ rangeName }}"
+          reservedInternalRange: "{{ reservedInternalRange }}"
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: stackType
+      value: "{{ stackType }}"
+      description: |
+        The stack type for the subnet. If set to IPV4_ONLY, new VMs
+        in the subnet are assigned IPv4 addresses only. If set toIPV4_IPV6, new VMs in the subnet can be assigned both IPv4 and
+        IPv6 addresses. If not specified, IPV4_ONLY is used.
+        This field can be both set at resource creation time and updated usingpatch.
+      valid_values: ['IPV4_IPV6', 'IPV4_ONLY', 'IPV6_ONLY']
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -1047,29 +1047,29 @@ Patches the specified subnetwork with the data included in the request.<br />Onl
 ```sql
 UPDATE google.compute.subnetworks
 SET 
-data__description = '{{ description }}',
-data__externalIpv6Prefix = '{{ externalIpv6Prefix }}',
-data__ipCollection = '{{ ipCollection }}',
-data__name = '{{ name }}',
-data__logConfig = '{{ logConfig }}',
-data__ipv6AccessType = '{{ ipv6AccessType }}',
-data__reservedInternalRange = '{{ reservedInternalRange }}',
-data__secondaryIpRanges = '{{ secondaryIpRanges }}',
-data__enableFlowLogs = {{ enableFlowLogs }},
-data__internalIpv6Prefix = '{{ internalIpv6Prefix }}',
-data__role = '{{ role }}',
-data__privateIpGoogleAccess = {{ privateIpGoogleAccess }},
-data__selfLink = '{{ selfLink }}',
-data__purpose = '{{ purpose }}',
-data__params = '{{ params }}',
 data__allowSubnetCidrRoutesOverlap = {{ allowSubnetCidrRoutesOverlap }},
-data__resolveSubnetMask = '{{ resolveSubnetMask }}',
-data__network = '{{ network }}',
-data__stackType = '{{ stackType }}',
+data__description = '{{ description }}',
+data__enableFlowLogs = {{ enableFlowLogs }},
+data__externalIpv6Prefix = '{{ externalIpv6Prefix }}',
+data__fingerprint = '{{ fingerprint }}',
+data__internalIpv6Prefix = '{{ internalIpv6Prefix }}',
 data__ipCidrRange = '{{ ipCidrRange }}',
+data__ipCollection = '{{ ipCollection }}',
+data__ipv6AccessType = '{{ ipv6AccessType }}',
+data__logConfig = '{{ logConfig }}',
+data__name = '{{ name }}',
+data__network = '{{ network }}',
+data__params = '{{ params }}',
+data__privateIpGoogleAccess = {{ privateIpGoogleAccess }},
 data__privateIpv6GoogleAccess = '{{ privateIpv6GoogleAccess }}',
+data__purpose = '{{ purpose }}',
 data__region = '{{ region }}',
-data__fingerprint = '{{ fingerprint }}'
+data__reservedInternalRange = '{{ reservedInternalRange }}',
+data__resolveSubnetMask = '{{ resolveSubnetMask }}',
+data__role = '{{ role }}',
+data__secondaryIpRanges = '{{ secondaryIpRanges }}',
+data__selfLink = '{{ selfLink }}',
+data__stackType = '{{ stackType }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -1136,29 +1136,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_private_ip_google_access"
+    defaultValue="expand_ip_cidr_range"
     values={[
-        { label: 'set_private_ip_google_access', value: 'set_private_ip_google_access' },
-        { label: 'expand_ip_cidr_range', value: 'expand_ip_cidr_range' }
+        { label: 'expand_ip_cidr_range', value: 'expand_ip_cidr_range' },
+        { label: 'set_private_ip_google_access', value: 'set_private_ip_google_access' }
     ]}
 >
-<TabItem value="set_private_ip_google_access">
-
-Set whether VMs in this subnet can access Google services without assigning<br />external IP addresses through Private Google Access.
-
-```sql
-EXEC google.compute.subnetworks.set_private_ip_google_access 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@subnetwork='{{ subnetwork }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"privateIpGoogleAccess": {{ privateIpGoogleAccess }}
-}'
-;
-```
-</TabItem>
 <TabItem value="expand_ip_cidr_range">
 
 Expands the IP CIDR range of the subnetwork to a specified value.
@@ -1172,6 +1155,23 @@ EXEC google.compute.subnetworks.expand_ip_cidr_range
 @@json=
 '{
 "ipCidrRange": "{{ ipCidrRange }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_private_ip_google_access">
+
+Set whether VMs in this subnet can access Google services without assigning<br />external IP addresses through Private Google Access.
+
+```sql
+EXEC google.compute.subnetworks.set_private_ip_google_access 
+@project='{{ project }}' --required, 
+@region='{{ region }}' --required, 
+@subnetwork='{{ subnetwork }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"privateIpGoogleAccess": {{ privateIpGoogleAccess }}
 }'
 ;
 ```

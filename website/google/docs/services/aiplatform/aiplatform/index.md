@@ -51,6 +51,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#evaluate_dataset"><CopyableCode code="evaluate_dataset" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Evaluates a dataset based on a set of given metrics.</td>
+</tr>
+<tr>
     <td><a href="#evaluate_instances"><CopyableCode code="evaluate_instances" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
@@ -63,13 +70,6 @@ The following methods are available for this resource:
     <td></td>
     <td></td>
     <td>Generates rubrics for a given prompt. A rubric represents a single testable criterion for evaluation. One input prompt could have multiple rubrics This RPC allows users to get suggested rubrics based on provided prompt, which can then be reviewed and used for subsequent evaluations.</td>
-</tr>
-<tr>
-    <td><a href="#evaluate_dataset"><CopyableCode code="evaluate_dataset" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Evaluates a dataset based on a set of given metrics.</td>
 </tr>
 </tbody>
 </table>
@@ -93,13 +93,30 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="evaluate_instances"
+    defaultValue="evaluate_dataset"
     values={[
+        { label: 'evaluate_dataset', value: 'evaluate_dataset' },
         { label: 'evaluate_instances', value: 'evaluate_instances' },
-        { label: 'generate_instance_rubrics', value: 'generate_instance_rubrics' },
-        { label: 'evaluate_dataset', value: 'evaluate_dataset' }
+        { label: 'generate_instance_rubrics', value: 'generate_instance_rubrics' }
     ]}
 >
+<TabItem value="evaluate_dataset">
+
+Evaluates a dataset based on a set of given metrics.
+
+```sql
+EXEC google.aiplatform.aiplatform.evaluate_dataset 
+@@json=
+'{
+"autoraterConfig": "{{ autoraterConfig }}", 
+"dataset": "{{ dataset }}", 
+"location": "{{ location }}", 
+"metrics": "{{ metrics }}", 
+"outputConfig": "{{ outputConfig }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="evaluate_instances">
 
 Evaluates instances based on a given metric.
@@ -108,43 +125,43 @@ Evaluates instances based on a given metric.
 EXEC google.aiplatform.aiplatform.evaluate_instances 
 @@json=
 '{
-"fulfillmentInput": "{{ fulfillmentInput }}", 
-"toolNameMatchInput": "{{ toolNameMatchInput }}", 
-"summarizationQualityInput": "{{ summarizationQualityInput }}", 
-"summarizationHelpfulnessInput": "{{ summarizationHelpfulnessInput }}", 
-"rougeInput": "{{ rougeInput }}", 
-"trajectorySingleToolUseInput": "{{ trajectorySingleToolUseInput }}", 
-"exactMatchInput": "{{ exactMatchInput }}", 
-"metrics": "{{ metrics }}", 
-"summarizationVerbosityInput": "{{ summarizationVerbosityInput }}", 
-"questionAnsweringCorrectnessInput": "{{ questionAnsweringCorrectnessInput }}", 
 "autoraterConfig": "{{ autoraterConfig }}", 
-"trajectoryRecallInput": "{{ trajectoryRecallInput }}", 
-"rubricBasedInstructionFollowingInput": "{{ rubricBasedInstructionFollowingInput }}", 
+"bleuInput": "{{ bleuInput }}", 
+"coherenceInput": "{{ coherenceInput }}", 
+"cometInput": "{{ cometInput }}", 
+"exactMatchInput": "{{ exactMatchInput }}", 
+"fluencyInput": "{{ fluencyInput }}", 
+"fulfillmentInput": "{{ fulfillmentInput }}", 
+"groundednessInput": "{{ groundednessInput }}", 
+"instance": "{{ instance }}", 
 "location": "{{ location }}", 
 "metricSources": "{{ metricSources }}", 
-"cometInput": "{{ cometInput }}", 
-"toolCallValidInput": "{{ toolCallValidInput }}", 
-"trajectoryExactMatchInput": "{{ trajectoryExactMatchInput }}", 
-"trajectoryAnyOrderMatchInput": "{{ trajectoryAnyOrderMatchInput }}", 
-"instance": "{{ instance }}", 
-"pairwiseQuestionAnsweringQualityInput": "{{ pairwiseQuestionAnsweringQualityInput }}", 
-"pairwiseMetricInput": "{{ pairwiseMetricInput }}", 
-"pointwiseMetricInput": "{{ pointwiseMetricInput }}", 
+"metrics": "{{ metrics }}", 
 "metricxInput": "{{ metricxInput }}", 
-"bleuInput": "{{ bleuInput }}", 
-"groundednessInput": "{{ groundednessInput }}", 
-"coherenceInput": "{{ coherenceInput }}", 
+"pairwiseMetricInput": "{{ pairwiseMetricInput }}", 
+"pairwiseQuestionAnsweringQualityInput": "{{ pairwiseQuestionAnsweringQualityInput }}", 
+"pairwiseSummarizationQualityInput": "{{ pairwiseSummarizationQualityInput }}", 
+"pointwiseMetricInput": "{{ pointwiseMetricInput }}", 
+"questionAnsweringCorrectnessInput": "{{ questionAnsweringCorrectnessInput }}", 
+"questionAnsweringHelpfulnessInput": "{{ questionAnsweringHelpfulnessInput }}", 
 "questionAnsweringQualityInput": "{{ questionAnsweringQualityInput }}", 
 "questionAnsweringRelevanceInput": "{{ questionAnsweringRelevanceInput }}", 
-"pairwiseSummarizationQualityInput": "{{ pairwiseSummarizationQualityInput }}", 
-"fluencyInput": "{{ fluencyInput }}", 
-"trajectoryPrecisionInput": "{{ trajectoryPrecisionInput }}", 
+"rougeInput": "{{ rougeInput }}", 
+"rubricBasedInstructionFollowingInput": "{{ rubricBasedInstructionFollowingInput }}", 
 "safetyInput": "{{ safetyInput }}", 
+"summarizationHelpfulnessInput": "{{ summarizationHelpfulnessInput }}", 
+"summarizationQualityInput": "{{ summarizationQualityInput }}", 
+"summarizationVerbosityInput": "{{ summarizationVerbosityInput }}", 
+"toolCallValidInput": "{{ toolCallValidInput }}", 
+"toolNameMatchInput": "{{ toolNameMatchInput }}", 
+"toolParameterKeyMatchInput": "{{ toolParameterKeyMatchInput }}", 
 "toolParameterKvMatchInput": "{{ toolParameterKvMatchInput }}", 
-"questionAnsweringHelpfulnessInput": "{{ questionAnsweringHelpfulnessInput }}", 
+"trajectoryAnyOrderMatchInput": "{{ trajectoryAnyOrderMatchInput }}", 
+"trajectoryExactMatchInput": "{{ trajectoryExactMatchInput }}", 
 "trajectoryInOrderMatchInput": "{{ trajectoryInOrderMatchInput }}", 
-"toolParameterKeyMatchInput": "{{ toolParameterKeyMatchInput }}"
+"trajectoryPrecisionInput": "{{ trajectoryPrecisionInput }}", 
+"trajectoryRecallInput": "{{ trajectoryRecallInput }}", 
+"trajectorySingleToolUseInput": "{{ trajectorySingleToolUseInput }}"
 }'
 ;
 ```
@@ -157,29 +174,12 @@ Generates rubrics for a given prompt. A rubric represents a single testable crit
 EXEC google.aiplatform.aiplatform.generate_instance_rubrics 
 @@json=
 '{
-"location": "{{ location }}", 
-"contents": "{{ contents }}", 
-"rubricGenerationSpec": "{{ rubricGenerationSpec }}", 
 "agentConfig": "{{ agentConfig }}", 
-"predefinedRubricGenerationSpec": "{{ predefinedRubricGenerationSpec }}", 
-"metricResourceName": "{{ metricResourceName }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="evaluate_dataset">
-
-Evaluates a dataset based on a set of given metrics.
-
-```sql
-EXEC google.aiplatform.aiplatform.evaluate_dataset 
-@@json=
-'{
-"autoraterConfig": "{{ autoraterConfig }}", 
-"dataset": "{{ dataset }}", 
-"metrics": "{{ metrics }}", 
+"contents": "{{ contents }}", 
 "location": "{{ location }}", 
-"outputConfig": "{{ outputConfig }}"
+"metricResourceName": "{{ metricResourceName }}", 
+"predefinedRubricGenerationSpec": "{{ predefinedRubricGenerationSpec }}", 
+"rubricGenerationSpec": "{{ rubricGenerationSpec }}"
 }'
 ;
 ```

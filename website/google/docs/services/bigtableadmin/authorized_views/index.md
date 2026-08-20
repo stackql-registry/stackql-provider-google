@@ -135,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists all AuthorizedViews from a specific table.</td>
 </tr>
 <tr>
@@ -149,7 +149,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a></td>
+    <td><a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an AuthorizedView in a table.</td>
 </tr>
 <tr>
@@ -275,9 +275,9 @@ FROM google.bigtableadmin.authorized_views
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND tablesId = '{{ tablesId }}' -- required
-AND view = '{{ view }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -299,20 +299,20 @@ Creates a new AuthorizedView in a table.
 
 ```sql
 INSERT INTO google.bigtableadmin.authorized_views (
-data__etag,
-data__subsetView,
-data__name,
 data__deletionProtection,
+data__etag,
+data__name,
+data__subsetView,
 projectsId,
 instancesId,
 tablesId,
 authorizedViewId
 )
 SELECT 
-'{{ etag }}',
-'{{ subsetView }}',
-'{{ name }}',
 {{ deletionProtection }},
+'{{ etag }}',
+'{{ name }}',
+'{{ subsetView }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ tablesId }}',
@@ -340,10 +340,18 @@ response
     - name: tablesId
       value: "{{ tablesId }}"
       description: Required parameter for the authorized_views resource.
+    - name: deletionProtection
+      value: {{ deletionProtection }}
+      description: |
+        Set to true to make the AuthorizedView protected against deletion. The parent Table and containing Instance cannot be deleted if an AuthorizedView has this bit set.
     - name: etag
       value: "{{ etag }}"
       description: |
         The etag for this AuthorizedView. If this is provided on update, it must match the server's etag. The server returns ABORTED error on a mismatched etag.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of this AuthorizedView. Values are of the form \`projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}\`
     - name: subsetView
       description: |
         An AuthorizedView permitting access to an explicit subset of a Table.
@@ -351,14 +359,6 @@ response
         familySubsets: "{{ familySubsets }}"
         rowPrefixes:
           - "{{ rowPrefixes }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The name of this AuthorizedView. Values are of the form \`projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}\`
-    - name: deletionProtection
-      value: {{ deletionProtection }}
-      description: |
-        Set to true to make the AuthorizedView protected against deletion. The parent Table and containing Instance cannot be deleted if an AuthorizedView has this bit set.
     - name: authorizedViewId
       value: "{{ authorizedViewId }}"
 `}</CodeBlock>
@@ -382,17 +382,17 @@ Updates an AuthorizedView in a table.
 ```sql
 UPDATE google.bigtableadmin.authorized_views
 SET 
+data__deletionProtection = {{ deletionProtection }},
 data__etag = '{{ etag }}',
-data__subsetView = '{{ subsetView }}',
 data__name = '{{ name }}',
-data__deletionProtection = {{ deletionProtection }}
+data__subsetView = '{{ subsetView }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
 AND tablesId = '{{ tablesId }}' --required
 AND authorizedViewsId = '{{ authorizedViewsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND ignoreWarnings = {{ ignoreWarnings}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

@@ -99,11 +99,11 @@ The following methods are available for this resource:
     <td>Updates the Catalogs.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_set_default_branch"><CopyableCode code="projects_locations_catalogs_set_default_branch" /></a></td>
+    <td><a href="#projects_locations_catalogs_complete_query"><CopyableCode code="projects_locations_catalogs_complete_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td></td>
-    <td>Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using "default_branch" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch &#123;newBranch&#125;. * SearchService will only return product IDs from branch &#123;newBranch&#125; (if branch is not explicitly set). * UserEventService will only join events with products from branch &#123;newBranch&#125;.</td>
+    <td><a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-deviceType"><code>deviceType</code></a>, <a href="#parameter-enableAttributeSuggestions"><code>enableAttributeSuggestions</code></a>, <a href="#parameter-entity"><code>entity</code></a>, <a href="#parameter-languageCodes"><code>languageCodes</code></a>, <a href="#parameter-maxSuggestions"><code>maxSuggestions</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-visitorId"><code>visitorId</code></a></td>
+    <td>Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_catalogs_export_analytics_metrics"><CopyableCode code="projects_locations_catalogs_export_analytics_metrics" /></a></td>
@@ -113,11 +113,11 @@ The following methods are available for this resource:
     <td>Exports analytics metrics. `Operation.response` is of type `ExportAnalyticsMetricsResponse`. `Operation.metadata` is of type `ExportMetadata`.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_complete_query"><CopyableCode code="projects_locations_catalogs_complete_query" /></a></td>
+    <td><a href="#projects_locations_catalogs_set_default_branch"><CopyableCode code="projects_locations_catalogs_set_default_branch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-entity"><code>entity</code></a>, <a href="#parameter-visitorId"><code>visitorId</code></a>, <a href="#parameter-deviceType"><code>deviceType</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-languageCodes"><code>languageCodes</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-enableAttributeSuggestions"><code>enableAttributeSuggestions</code></a>, <a href="#parameter-maxSuggestions"><code>maxSuggestions</code></a></td>
-    <td>Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.</td>
+    <td></td>
+    <td>Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using "default_branch" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch &#123;newBranch&#125;. * SearchService will only return product IDs from branch &#123;newBranch&#125; (if branch is not explicitly set). * UserEventService will only join events with products from branch &#123;newBranch&#125;.</td>
 </tr>
 </tbody>
 </table>
@@ -251,8 +251,8 @@ Updates the Catalogs.
 ```sql
 UPDATE google.retail.catalogs
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
 data__productLevelConfig = '{{ productLevelConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -271,28 +271,30 @@ productLevelConfig;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_catalogs_set_default_branch"
+    defaultValue="projects_locations_catalogs_complete_query"
     values={[
-        { label: 'projects_locations_catalogs_set_default_branch', value: 'projects_locations_catalogs_set_default_branch' },
+        { label: 'projects_locations_catalogs_complete_query', value: 'projects_locations_catalogs_complete_query' },
         { label: 'projects_locations_catalogs_export_analytics_metrics', value: 'projects_locations_catalogs_export_analytics_metrics' },
-        { label: 'projects_locations_catalogs_complete_query', value: 'projects_locations_catalogs_complete_query' }
+        { label: 'projects_locations_catalogs_set_default_branch', value: 'projects_locations_catalogs_set_default_branch' }
     ]}
 >
-<TabItem value="projects_locations_catalogs_set_default_branch">
+<TabItem value="projects_locations_catalogs_complete_query">
 
-Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using "default_branch" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch &#123;newBranch&#125;. * SearchService will only return product IDs from branch &#123;newBranch&#125; (if branch is not explicitly set). * UserEventService will only join events with products from branch &#123;newBranch&#125;.
+Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.
 
 ```sql
-EXEC google.retail.catalogs.projects_locations_catalogs_set_default_branch 
+EXEC google.retail.catalogs.projects_locations_catalogs_complete_query 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required 
-@@json=
-'{
-"note": "{{ note }}", 
-"force": {{ force }}, 
-"branchId": "{{ branchId }}"
-}'
+@catalogsId='{{ catalogsId }}' --required, 
+@dataset='{{ dataset }}', 
+@deviceType='{{ deviceType }}', 
+@enableAttributeSuggestions={{ enableAttributeSuggestions }}, 
+@entity='{{ entity }}', 
+@languageCodes='{{ languageCodes }}', 
+@maxSuggestions='{{ maxSuggestions }}', 
+@query='{{ query }}', 
+@visitorId='{{ visitorId }}'
 ;
 ```
 </TabItem>
@@ -307,29 +309,27 @@ EXEC google.retail.catalogs.projects_locations_catalogs_export_analytics_metrics
 @catalogsId='{{ catalogsId }}' --required 
 @@json=
 '{
-"outputConfig": "{{ outputConfig }}", 
-"filter": "{{ filter }}"
+"filter": "{{ filter }}", 
+"outputConfig": "{{ outputConfig }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_catalogs_complete_query">
+<TabItem value="projects_locations_catalogs_set_default_branch">
 
-Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.
+Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using "default_branch" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch &#123;newBranch&#125;. * SearchService will only return product IDs from branch &#123;newBranch&#125; (if branch is not explicitly set). * UserEventService will only join events with products from branch &#123;newBranch&#125;.
 
 ```sql
-EXEC google.retail.catalogs.projects_locations_catalogs_complete_query 
+EXEC google.retail.catalogs.projects_locations_catalogs_set_default_branch 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required, 
-@entity='{{ entity }}', 
-@visitorId='{{ visitorId }}', 
-@deviceType='{{ deviceType }}', 
-@dataset='{{ dataset }}', 
-@languageCodes='{{ languageCodes }}', 
-@query='{{ query }}', 
-@enableAttributeSuggestions={{ enableAttributeSuggestions }}, 
-@maxSuggestions='{{ maxSuggestions }}'
+@catalogsId='{{ catalogsId }}' --required 
+@@json=
+'{
+"branchId": "{{ branchId }}", 
+"force": {{ force }}, 
+"note": "{{ note }}"
+}'
 ;
 ```
 </TabItem>

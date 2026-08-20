@@ -500,20 +500,6 @@ The following methods are available for this resource:
     <td>Deletes a specific Redis instance. Instance stops serving and data is deleted.</td>
 </tr>
 <tr>
-    <td><a href="#reschedule_maintenance"><CopyableCode code="reschedule_maintenance" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Reschedule maintenance for a given instance in a given project and location.</td>
-</tr>
-<tr>
-    <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Upgrades Redis instance to the newer Redis version specified in the request.</td>
-</tr>
-<tr>
     <td><a href="#export"><CopyableCode code="export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
@@ -533,6 +519,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Import a Redis RDB snapshot file from Cloud Storage into a Redis instance. Redis may stop serving during this operation. Instance state will be IMPORTING for entire operation. When complete, the instance will contain only data from the imported file. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.</td>
+</tr>
+<tr>
+    <td><a href="#reschedule_maintenance"><CopyableCode code="reschedule_maintenance" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Reschedule maintenance for a given instance in a given project and location.</td>
+</tr>
+<tr>
+    <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Upgrades Redis instance to the newer Redis version specified in the request.</td>
 </tr>
 </tbody>
 </table>
@@ -718,59 +718,59 @@ Creates a Redis instance based on the specified tier and memory size. By default
 
 ```sql
 INSERT INTO google.redis.instances (
-data__replicaCount,
-data__maintenancePolicy,
-data__persistenceConfig,
-data__redisConfigs,
-data__customerManagedKey,
-data__labels,
-data__tier,
-data__name,
-data__transitEncryptionMode,
-data__connectMode,
-data__secondaryIpRange,
-data__readReplicasMode,
 data__alternativeLocationId,
+data__authEnabled,
+data__authorizedNetwork,
+data__availableMaintenanceVersions,
+data__connectMode,
+data__customerManagedKey,
+data__displayName,
+data__labels,
+data__locationId,
+data__maintenancePolicy,
+data__maintenanceVersion,
+data__memorySizeGb,
+data__name,
+data__persistenceConfig,
+data__readReplicasMode,
+data__redisConfigs,
+data__redisVersion,
+data__replicaCount,
+data__reservedIpRange,
+data__secondaryIpRange,
 data__suspensionReasons,
 data__tags,
-data__authorizedNetwork,
-data__memorySizeGb,
-data__maintenanceVersion,
-data__availableMaintenanceVersions,
-data__reservedIpRange,
-data__redisVersion,
-data__displayName,
-data__locationId,
-data__authEnabled,
+data__tier,
+data__transitEncryptionMode,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-{{ replicaCount }},
-'{{ maintenancePolicy }}',
-'{{ persistenceConfig }}',
-'{{ redisConfigs }}',
-'{{ customerManagedKey }}',
-'{{ labels }}',
-'{{ tier }}',
-'{{ name }}',
-'{{ transitEncryptionMode }}',
-'{{ connectMode }}',
-'{{ secondaryIpRange }}',
-'{{ readReplicasMode }}',
 '{{ alternativeLocationId }}',
+{{ authEnabled }},
+'{{ authorizedNetwork }}',
+'{{ availableMaintenanceVersions }}',
+'{{ connectMode }}',
+'{{ customerManagedKey }}',
+'{{ displayName }}',
+'{{ labels }}',
+'{{ locationId }}',
+'{{ maintenancePolicy }}',
+'{{ maintenanceVersion }}',
+{{ memorySizeGb }},
+'{{ name }}',
+'{{ persistenceConfig }}',
+'{{ readReplicasMode }}',
+'{{ redisConfigs }}',
+'{{ redisVersion }}',
+{{ replicaCount }},
+'{{ reservedIpRange }}',
+'{{ secondaryIpRange }}',
 '{{ suspensionReasons }}',
 '{{ tags }}',
-'{{ authorizedNetwork }}',
-{{ memorySizeGb }},
-'{{ maintenanceVersion }}',
-'{{ availableMaintenanceVersions }}',
-'{{ reservedIpRange }}',
-'{{ redisVersion }}',
-'{{ displayName }}',
-'{{ locationId }}',
-{{ authEnabled }},
+'{{ tier }}',
+'{{ transitEncryptionMode }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -794,77 +794,104 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: replicaCount
-      value: {{ replicaCount }}
+    - name: alternativeLocationId
+      value: "{{ alternativeLocationId }}"
       description: |
-        Optional. The number of replica nodes. The valid range for the Standard Tier with read replicas enabled is [1-5] and defaults to 2. If read replicas are not enabled for a Standard Tier instance, the only valid value is 1 and the default is 1. The valid value for basic tier is 0 and the default is also 0.
-    - name: maintenancePolicy
+        Optional. If specified, at least one node will be provisioned in this zone in addition to the zone specified in location_id. Only applicable to standard tier. If provided, it must be a different zone from the one provided in [location_id]. Additional nodes beyond the first 2 will be placed in zones selected by the service.
+    - name: authEnabled
+      value: {{ authEnabled }}
       description: |
-        Optional. The maintenance policy for the instance. If not provided, maintenance events can be performed at any time.
+        Optional. Indicates whether OSS Redis AUTH is enabled for the instance. If set to "true" AUTH is enabled on the instance. Default value is "false" meaning AUTH is disabled.
+    - name: authorizedNetwork
+      value: "{{ authorizedNetwork }}"
+      description: |
+        Optional. The full name of the Google Compute Engine [network](https://cloud.google.com/vpc/docs/vpc) to which the instance is connected. If left unspecified, the \`default\` network will be used.
+    - name: availableMaintenanceVersions
       value:
-        updateTime: "{{ updateTime }}"
-        description: "{{ description }}"
-        createTime: "{{ createTime }}"
-        weeklyMaintenanceWindow:
-          - day: "{{ day }}"
-            duration: "{{ duration }}"
-            startTime:
-              seconds: {{ seconds }}
-              nanos: {{ nanos }}
-              minutes: {{ minutes }}
-              hours: {{ hours }}
-    - name: persistenceConfig
+        - "{{ availableMaintenanceVersions }}"
       description: |
-        Optional. Persistence configuration parameters
-      value:
-        rdbSnapshotPeriod: "{{ rdbSnapshotPeriod }}"
-        persistenceMode: "{{ persistenceMode }}"
-        rdbNextSnapshotTime: "{{ rdbNextSnapshotTime }}"
-        rdbSnapshotStartTime: "{{ rdbSnapshotStartTime }}"
-    - name: redisConfigs
-      value: "{{ redisConfigs }}"
-      description: |
-        Optional. Redis configuration parameters, according to [Redis configuration](https://redis.io/docs/latest/operate/oss_and_stack/management/config/). Currently, the only supported parameters are: Redis version 3.2 and newer: * maxmemory-policy * notify-keyspace-events Redis version 4.0 and newer: * activedefrag * lfu-decay-time * lfu-log-factor * maxmemory-gb Redis version 5.0 and newer: * stream-node-max-bytes * stream-node-max-entries
-    - name: customerManagedKey
-      value: "{{ customerManagedKey }}"
-      description: |
-        Optional. The KMS key reference that the customer provides when trying to create the instance.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Resource labels to represent user provided metadata
-    - name: tier
-      value: "{{ tier }}"
-      description: |
-        Required. The service tier of the instance.
-      valid_values: ['TIER_UNSPECIFIED', 'BASIC', 'STANDARD_HA']
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Unique name of the resource in this scope including project and location using the form: \`projects/{project_id}/locations/{location_id}/instances/{instance_id}\` Note: Redis instances are managed and addressed at regional level so location_id here refers to a GCP region; however, users may choose which specific zone (or collection of zones for cross-zone instances) an instance should be provisioned in. Refer to location_id and alternative_location_id fields for more details.
-    - name: transitEncryptionMode
-      value: "{{ transitEncryptionMode }}"
-      description: |
-        Optional. The TLS mode of the Redis instance. If not provided, TLS is disabled for the instance.
-      valid_values: ['TRANSIT_ENCRYPTION_MODE_UNSPECIFIED', 'SERVER_AUTHENTICATION', 'DISABLED']
+        Optional. The available maintenance versions that an instance could update to.
     - name: connectMode
       value: "{{ connectMode }}"
       description: |
         Optional. The network connect mode of the Redis instance. If not provided, the connect mode defaults to DIRECT_PEERING.
       valid_values: ['CONNECT_MODE_UNSPECIFIED', 'DIRECT_PEERING', 'PRIVATE_SERVICE_ACCESS']
-    - name: secondaryIpRange
-      value: "{{ secondaryIpRange }}"
+    - name: customerManagedKey
+      value: "{{ customerManagedKey }}"
       description: |
-        Optional. Additional IP range for node placement. Required when enabling read replicas on an existing instance. For DIRECT_PEERING mode value must be a CIDR range of size /28, or "auto". For PRIVATE_SERVICE_ACCESS mode value must be the name of an allocated address range associated with the private service access connection, or "auto".
+        Optional. The KMS key reference that the customer provides when trying to create the instance.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        An arbitrary and optional user-provided name for the instance.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user provided metadata
+    - name: locationId
+      value: "{{ locationId }}"
+      description: |
+        Optional. The zone where the instance will be provisioned. If not provided, the service will choose a zone from the specified region for the instance. For standard tier, additional nodes will be added across multiple zones for protection against zonal failures. If specified, at least one node will be provisioned in this zone.
+    - name: maintenancePolicy
+      description: |
+        Optional. The maintenance policy for the instance. If not provided, maintenance events can be performed at any time.
+      value:
+        createTime: "{{ createTime }}"
+        description: "{{ description }}"
+        updateTime: "{{ updateTime }}"
+        weeklyMaintenanceWindow:
+          - day: "{{ day }}"
+            duration: "{{ duration }}"
+            startTime:
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              nanos: {{ nanos }}
+              seconds: {{ seconds }}
+    - name: maintenanceVersion
+      value: "{{ maintenanceVersion }}"
+      description: |
+        Optional. The self service update maintenance version. The version is date based such as "20210712_00_00".
+    - name: memorySizeGb
+      value: {{ memorySizeGb }}
+      description: |
+        Required. Redis memory size in GiB.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Unique name of the resource in this scope including project and location using the form: \`projects/{project_id}/locations/{location_id}/instances/{instance_id}\` Note: Redis instances are managed and addressed at regional level so location_id here refers to a GCP region; however, users may choose which specific zone (or collection of zones for cross-zone instances) an instance should be provisioned in. Refer to location_id and alternative_location_id fields for more details.
+    - name: persistenceConfig
+      description: |
+        Optional. Persistence configuration parameters
+      value:
+        persistenceMode: "{{ persistenceMode }}"
+        rdbNextSnapshotTime: "{{ rdbNextSnapshotTime }}"
+        rdbSnapshotPeriod: "{{ rdbSnapshotPeriod }}"
+        rdbSnapshotStartTime: "{{ rdbSnapshotStartTime }}"
     - name: readReplicasMode
       value: "{{ readReplicasMode }}"
       description: |
         Optional. Read replicas mode for the instance. Defaults to READ_REPLICAS_DISABLED.
       valid_values: ['READ_REPLICAS_MODE_UNSPECIFIED', 'READ_REPLICAS_DISABLED', 'READ_REPLICAS_ENABLED']
-    - name: alternativeLocationId
-      value: "{{ alternativeLocationId }}"
+    - name: redisConfigs
+      value: "{{ redisConfigs }}"
       description: |
-        Optional. If specified, at least one node will be provisioned in this zone in addition to the zone specified in location_id. Only applicable to standard tier. If provided, it must be a different zone from the one provided in [location_id]. Additional nodes beyond the first 2 will be placed in zones selected by the service.
+        Optional. Redis configuration parameters, according to [Redis configuration](https://redis.io/docs/latest/operate/oss_and_stack/management/config/). Currently, the only supported parameters are: Redis version 3.2 and newer: * maxmemory-policy * notify-keyspace-events Redis version 4.0 and newer: * activedefrag * lfu-decay-time * lfu-log-factor * maxmemory-gb Redis version 5.0 and newer: * stream-node-max-bytes * stream-node-max-entries
+    - name: redisVersion
+      value: "{{ redisVersion }}"
+      description: |
+        Optional. The version of Redis software. If not provided, the default version will be used. Currently, the supported values are: * \`REDIS_3_2\` for Redis 3.2 compatibility * \`REDIS_4_0\` for Redis 4.0 compatibility * \`REDIS_5_0\` for Redis 5.0 compatibility * \`REDIS_6_X\` for Redis 6.x compatibility * \`REDIS_7_0\` for Redis 7.0 compatibility (default) * \`REDIS_7_2\` for Redis 7.2 compatibility
+    - name: replicaCount
+      value: {{ replicaCount }}
+      description: |
+        Optional. The number of replica nodes. The valid range for the Standard Tier with read replicas enabled is [1-5] and defaults to 2. If read replicas are not enabled for a Standard Tier instance, the only valid value is 1 and the default is 1. The valid value for basic tier is 0 and the default is also 0.
+    - name: reservedIpRange
+      value: "{{ reservedIpRange }}"
+      description: |
+        Optional. For DIRECT_PEERING mode, the CIDR range of internal addresses that are reserved for this instance. Range must be unique and non-overlapping with existing subnets in an authorized network. For PRIVATE_SERVICE_ACCESS mode, the name of one allocated IP address ranges associated with this private service access connection. If not provided, the service will choose an unused /29 block, for example, 10.0.0.0/29 or 192.168.0.0/29. For READ_REPLICAS_ENABLED the default block size is /28.
+    - name: secondaryIpRange
+      value: "{{ secondaryIpRange }}"
+      description: |
+        Optional. Additional IP range for node placement. Required when enabling read replicas on an existing instance. For DIRECT_PEERING mode value must be a CIDR range of size /28, or "auto". For PRIVATE_SERVICE_ACCESS mode value must be the name of an allocated address range associated with the private service access connection, or "auto".
     - name: suspensionReasons
       value:
         - "{{ suspensionReasons }}"
@@ -874,43 +901,16 @@ response
       value: "{{ tags }}"
       description: |
         Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
-    - name: authorizedNetwork
-      value: "{{ authorizedNetwork }}"
+    - name: tier
+      value: "{{ tier }}"
       description: |
-        Optional. The full name of the Google Compute Engine [network](https://cloud.google.com/vpc/docs/vpc) to which the instance is connected. If left unspecified, the \`default\` network will be used.
-    - name: memorySizeGb
-      value: {{ memorySizeGb }}
+        Required. The service tier of the instance.
+      valid_values: ['TIER_UNSPECIFIED', 'BASIC', 'STANDARD_HA']
+    - name: transitEncryptionMode
+      value: "{{ transitEncryptionMode }}"
       description: |
-        Required. Redis memory size in GiB.
-    - name: maintenanceVersion
-      value: "{{ maintenanceVersion }}"
-      description: |
-        Optional. The self service update maintenance version. The version is date based such as "20210712_00_00".
-    - name: availableMaintenanceVersions
-      value:
-        - "{{ availableMaintenanceVersions }}"
-      description: |
-        Optional. The available maintenance versions that an instance could update to.
-    - name: reservedIpRange
-      value: "{{ reservedIpRange }}"
-      description: |
-        Optional. For DIRECT_PEERING mode, the CIDR range of internal addresses that are reserved for this instance. Range must be unique and non-overlapping with existing subnets in an authorized network. For PRIVATE_SERVICE_ACCESS mode, the name of one allocated IP address ranges associated with this private service access connection. If not provided, the service will choose an unused /29 block, for example, 10.0.0.0/29 or 192.168.0.0/29. For READ_REPLICAS_ENABLED the default block size is /28.
-    - name: redisVersion
-      value: "{{ redisVersion }}"
-      description: |
-        Optional. The version of Redis software. If not provided, the default version will be used. Currently, the supported values are: * \`REDIS_3_2\` for Redis 3.2 compatibility * \`REDIS_4_0\` for Redis 4.0 compatibility * \`REDIS_5_0\` for Redis 5.0 compatibility * \`REDIS_6_X\` for Redis 6.x compatibility * \`REDIS_7_0\` for Redis 7.0 compatibility (default) * \`REDIS_7_2\` for Redis 7.2 compatibility
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        An arbitrary and optional user-provided name for the instance.
-    - name: locationId
-      value: "{{ locationId }}"
-      description: |
-        Optional. The zone where the instance will be provisioned. If not provided, the service will choose a zone from the specified region for the instance. For standard tier, additional nodes will be added across multiple zones for protection against zonal failures. If specified, at least one node will be provisioned in this zone.
-    - name: authEnabled
-      value: {{ authEnabled }}
-      description: |
-        Optional. Indicates whether OSS Redis AUTH is enabled for the instance. If set to "true" AUTH is enabled on the instance. Default value is "false" meaning AUTH is disabled.
+        Optional. The TLS mode of the Redis instance. If not provided, TLS is disabled for the instance.
+      valid_values: ['TRANSIT_ENCRYPTION_MODE_UNSPECIFIED', 'SERVER_AUTHENTICATION', 'DISABLED']
     - name: instanceId
       value: "{{ instanceId }}"
 `}</CodeBlock>
@@ -934,30 +934,30 @@ Updates the metadata and configuration of a specific Redis instance. Completed l
 ```sql
 UPDATE google.redis.instances
 SET 
-data__replicaCount = {{ replicaCount }},
-data__maintenancePolicy = '{{ maintenancePolicy }}',
-data__persistenceConfig = '{{ persistenceConfig }}',
-data__redisConfigs = '{{ redisConfigs }}',
-data__customerManagedKey = '{{ customerManagedKey }}',
-data__labels = '{{ labels }}',
-data__tier = '{{ tier }}',
-data__name = '{{ name }}',
-data__transitEncryptionMode = '{{ transitEncryptionMode }}',
-data__connectMode = '{{ connectMode }}',
-data__secondaryIpRange = '{{ secondaryIpRange }}',
-data__readReplicasMode = '{{ readReplicasMode }}',
 data__alternativeLocationId = '{{ alternativeLocationId }}',
+data__authEnabled = {{ authEnabled }},
+data__authorizedNetwork = '{{ authorizedNetwork }}',
+data__availableMaintenanceVersions = '{{ availableMaintenanceVersions }}',
+data__connectMode = '{{ connectMode }}',
+data__customerManagedKey = '{{ customerManagedKey }}',
+data__displayName = '{{ displayName }}',
+data__labels = '{{ labels }}',
+data__locationId = '{{ locationId }}',
+data__maintenancePolicy = '{{ maintenancePolicy }}',
+data__maintenanceVersion = '{{ maintenanceVersion }}',
+data__memorySizeGb = {{ memorySizeGb }},
+data__name = '{{ name }}',
+data__persistenceConfig = '{{ persistenceConfig }}',
+data__readReplicasMode = '{{ readReplicasMode }}',
+data__redisConfigs = '{{ redisConfigs }}',
+data__redisVersion = '{{ redisVersion }}',
+data__replicaCount = {{ replicaCount }},
+data__reservedIpRange = '{{ reservedIpRange }}',
+data__secondaryIpRange = '{{ secondaryIpRange }}',
 data__suspensionReasons = '{{ suspensionReasons }}',
 data__tags = '{{ tags }}',
-data__authorizedNetwork = '{{ authorizedNetwork }}',
-data__memorySizeGb = {{ memorySizeGb }},
-data__maintenanceVersion = '{{ maintenanceVersion }}',
-data__availableMaintenanceVersions = '{{ availableMaintenanceVersions }}',
-data__reservedIpRange = '{{ reservedIpRange }}',
-data__redisVersion = '{{ redisVersion }}',
-data__displayName = '{{ displayName }}',
-data__locationId = '{{ locationId }}',
-data__authEnabled = {{ authEnabled }}
+data__tier = '{{ tier }}',
+data__transitEncryptionMode = '{{ transitEncryptionMode }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1000,48 +1000,15 @@ AND instancesId = '{{ instancesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reschedule_maintenance"
+    defaultValue="export"
     values={[
-        { label: 'reschedule_maintenance', value: 'reschedule_maintenance' },
-        { label: 'upgrade', value: 'upgrade' },
         { label: 'export', value: 'export' },
         { label: 'failover', value: 'failover' },
-        { label: 'import', value: 'import' }
+        { label: 'import', value: 'import' },
+        { label: 'reschedule_maintenance', value: 'reschedule_maintenance' },
+        { label: 'upgrade', value: 'upgrade' }
     ]}
 >
-<TabItem value="reschedule_maintenance">
-
-Reschedule maintenance for a given instance in a given project and location.
-
-```sql
-EXEC google.redis.instances.reschedule_maintenance 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"rescheduleType": "{{ rescheduleType }}", 
-"scheduleTime": "{{ scheduleTime }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="upgrade">
-
-Upgrades Redis instance to the newer Redis version specified in the request.
-
-```sql
-EXEC google.redis.instances.upgrade 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"redisVersion": "{{ redisVersion }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="export">
 
 Export Redis instance data into a Redis RDB format file in Cloud Storage. Redis will continue serving during this operation. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.
@@ -1086,6 +1053,39 @@ EXEC google.redis.instances.import
 @@json=
 '{
 "inputConfig": "{{ inputConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reschedule_maintenance">
+
+Reschedule maintenance for a given instance in a given project and location.
+
+```sql
+EXEC google.redis.instances.reschedule_maintenance 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"rescheduleType": "{{ rescheduleType }}", 
+"scheduleTime": "{{ scheduleTime }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="upgrade">
+
+Upgrades Redis instance to the newer Redis version specified in the request.
+
+```sql
+EXEC google.redis.instances.upgrade 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"redisVersion": "{{ redisVersion }}"
 }'
 ;
 ```

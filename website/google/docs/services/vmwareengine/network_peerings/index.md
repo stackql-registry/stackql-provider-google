@@ -255,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists `NetworkPeering` resources in a given project. NetworkPeering is a global resource and location can only be global.</td>
 </tr>
 <tr>
@@ -269,7 +269,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkPeeringsId"><code>networkPeeringsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Modifies a `NetworkPeering` resource. Only the `description` field can be updated. Only fields specified in `updateMask` are applied. NetworkPeering is a global resource and location can only be global.</td>
 </tr>
 <tr>
@@ -416,9 +416,9 @@ vmwareEngineNetwork
 FROM google.vmwareengine.network_peerings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -441,16 +441,16 @@ Creates a new network peering between the peer network and VMware Engine network
 
 ```sql
 INSERT INTO google.vmwareengine.network_peerings (
-data__importCustomRoutesWithPublicIp,
+data__description,
+data__exchangeSubnetRoutes,
 data__exportCustomRoutes,
 data__exportCustomRoutesWithPublicIp,
-data__vmwareEngineNetwork,
-data__description,
+data__importCustomRoutes,
+data__importCustomRoutesWithPublicIp,
+data__peerMtu,
 data__peerNetwork,
 data__peerNetworkType,
-data__exchangeSubnetRoutes,
-data__importCustomRoutes,
-data__peerMtu,
+data__vmwareEngineNetwork,
 projectsId,
 locationsId,
 networkPeeringId,
@@ -458,16 +458,16 @@ requestId,
 validateOnly
 )
 SELECT 
-{{ importCustomRoutesWithPublicIp }},
+'{{ description }}',
+{{ exchangeSubnetRoutes }},
 {{ exportCustomRoutes }},
 {{ exportCustomRoutesWithPublicIp }},
-'{{ vmwareEngineNetwork }}',
-'{{ description }}',
+{{ importCustomRoutes }},
+{{ importCustomRoutesWithPublicIp }},
+{{ peerMtu }},
 '{{ peerNetwork }}',
 '{{ peerNetworkType }}',
-{{ exchangeSubnetRoutes }},
-{{ importCustomRoutes }},
-{{ peerMtu }},
+'{{ vmwareEngineNetwork }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ networkPeeringId }}',
@@ -493,10 +493,14 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the network_peerings resource.
-    - name: importCustomRoutesWithPublicIp
-      value: {{ importCustomRoutesWithPublicIp }}
+    - name: description
+      value: "{{ description }}"
       description: |
-        Optional. True if all subnet routes with public IP address range are imported; false otherwise. The default value is true. IPv4 special-use ranges (https://en.wikipedia.org/wiki/IPv4#Special_addresses) are always imported to peers and are not controlled by this field.
+        Optional. User-provided description for this network peering.
+    - name: exchangeSubnetRoutes
+      value: {{ exchangeSubnetRoutes }}
+      description: |
+        Optional. True if full mesh connectivity is created and managed automatically between peered networks; false otherwise. Currently this field is always true because Google Compute Engine automatically creates and manages subnetwork routes between two VPC networks when peering state is 'ACTIVE'.
     - name: exportCustomRoutes
       value: {{ exportCustomRoutes }}
       description: |
@@ -505,14 +509,18 @@ response
       value: {{ exportCustomRoutesWithPublicIp }}
       description: |
         Optional. True if all subnet routes with a public IP address range are exported; false otherwise. The default value is true. IPv4 special-use ranges (https://en.wikipedia.org/wiki/IPv4#Special_addresses) are always exported to peers and are not controlled by this field.
-    - name: vmwareEngineNetwork
-      value: "{{ vmwareEngineNetwork }}"
+    - name: importCustomRoutes
+      value: {{ importCustomRoutes }}
       description: |
-        Required. The relative resource name of the VMware Engine network. Specify the name in the following form: \`projects/{project}/locations/{location}/vmwareEngineNetworks/{vmware_engine_network_id}\` where \`{project}\` can either be a project number or a project ID.
-    - name: description
-      value: "{{ description }}"
+        Optional. True if custom routes are imported from the peered network; false otherwise. The default value is true.
+    - name: importCustomRoutesWithPublicIp
+      value: {{ importCustomRoutesWithPublicIp }}
       description: |
-        Optional. User-provided description for this network peering.
+        Optional. True if all subnet routes with public IP address range are imported; false otherwise. The default value is true. IPv4 special-use ranges (https://en.wikipedia.org/wiki/IPv4#Special_addresses) are always imported to peers and are not controlled by this field.
+    - name: peerMtu
+      value: {{ peerMtu }}
+      description: |
+        Optional. Maximum transmission unit (MTU) in bytes. The default value is \`1500\`. If a value of \`0\` is provided for this field, VMware Engine uses the default value instead.
     - name: peerNetwork
       value: "{{ peerNetwork }}"
       description: |
@@ -522,18 +530,10 @@ response
       description: |
         Required. The type of the network to peer with the VMware Engine network.
       valid_values: ['PEER_NETWORK_TYPE_UNSPECIFIED', 'STANDARD', 'VMWARE_ENGINE_NETWORK', 'PRIVATE_SERVICES_ACCESS', 'NETAPP_CLOUD_VOLUMES', 'THIRD_PARTY_SERVICE', 'DELL_POWERSCALE', 'GOOGLE_CLOUD_NETAPP_VOLUMES', 'GOOGLE_CLOUD_FILESTORE_INSTANCES']
-    - name: exchangeSubnetRoutes
-      value: {{ exchangeSubnetRoutes }}
+    - name: vmwareEngineNetwork
+      value: "{{ vmwareEngineNetwork }}"
       description: |
-        Optional. True if full mesh connectivity is created and managed automatically between peered networks; false otherwise. Currently this field is always true because Google Compute Engine automatically creates and manages subnetwork routes between two VPC networks when peering state is 'ACTIVE'.
-    - name: importCustomRoutes
-      value: {{ importCustomRoutes }}
-      description: |
-        Optional. True if custom routes are imported from the peered network; false otherwise. The default value is true.
-    - name: peerMtu
-      value: {{ peerMtu }}
-      description: |
-        Optional. Maximum transmission unit (MTU) in bytes. The default value is \`1500\`. If a value of \`0\` is provided for this field, VMware Engine uses the default value instead.
+        Required. The relative resource name of the VMware Engine network. Specify the name in the following form: \`projects/{project}/locations/{location}/vmwareEngineNetworks/{vmware_engine_network_id}\` where \`{project}\` can either be a project number or a project ID.
     - name: networkPeeringId
       value: "{{ networkPeeringId }}"
     - name: requestId
@@ -561,23 +561,23 @@ Modifies a `NetworkPeering` resource. Only the `description` field can be update
 ```sql
 UPDATE google.vmwareengine.network_peerings
 SET 
-data__importCustomRoutesWithPublicIp = {{ importCustomRoutesWithPublicIp }},
+data__description = '{{ description }}',
+data__exchangeSubnetRoutes = {{ exchangeSubnetRoutes }},
 data__exportCustomRoutes = {{ exportCustomRoutes }},
 data__exportCustomRoutesWithPublicIp = {{ exportCustomRoutesWithPublicIp }},
-data__vmwareEngineNetwork = '{{ vmwareEngineNetwork }}',
-data__description = '{{ description }}',
+data__importCustomRoutes = {{ importCustomRoutes }},
+data__importCustomRoutesWithPublicIp = {{ importCustomRoutesWithPublicIp }},
+data__peerMtu = {{ peerMtu }},
 data__peerNetwork = '{{ peerNetwork }}',
 data__peerNetworkType = '{{ peerNetworkType }}',
-data__exchangeSubnetRoutes = {{ exchangeSubnetRoutes }},
-data__importCustomRoutes = {{ importCustomRoutes }},
-data__peerMtu = {{ peerMtu }}
+data__vmwareEngineNetwork = '{{ vmwareEngineNetwork }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND networkPeeringsId = '{{ networkPeeringsId }}' --required
-AND validateOnly = {{ validateOnly}}
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,

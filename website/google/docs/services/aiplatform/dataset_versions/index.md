@@ -187,42 +187,42 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-datasetVersionsId"><code>datasetVersionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-datasetVersionsId"><code>datasetVersionsId</code></a></td>
     <td><a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Gets a Dataset version.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists DatasetVersions in a Dataset.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
     <td></td>
     <td>Create a version from a Dataset.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-datasetVersionsId"><code>datasetVersionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-datasetVersionsId"><code>datasetVersionsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a DatasetVersion.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-datasetVersionsId"><code>datasetVersionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-datasetVersionsId"><code>datasetVersionsId</code></a></td>
     <td></td>
     <td>Deletes a Dataset version.</td>
 </tr>
 <tr>
     <td><a href="#restore"><CopyableCode code="restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-datasetVersionsId"><code>datasetVersionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-datasetVersionsId"><code>datasetVersionsId</code></a></td>
     <td></td>
     <td>Restores a dataset version.</td>
 </tr>
@@ -249,6 +249,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-datasetsId">
     <td><CopyableCode code="datasetsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -311,7 +321,9 @@ satisfiesPzi,
 satisfiesPzs,
 updateTime
 FROM google.aiplatform.dataset_versions
-WHERE datasetsId = '{{ datasetsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND datasetsId = '{{ datasetsId }}' -- required
 AND datasetVersionsId = '{{ datasetVersionsId }}' -- required
 AND readMask = '{{ readMask }}'
 ;
@@ -334,11 +346,13 @@ satisfiesPzi,
 satisfiesPzs,
 updateTime
 FROM google.aiplatform.dataset_versions
-WHERE datasetsId = '{{ datasetsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND datasetsId = '{{ datasetsId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -361,13 +375,17 @@ Create a version from a Dataset.
 
 ```sql
 INSERT INTO google.aiplatform.dataset_versions (
-data__etag,
 data__displayName,
+data__etag,
+projectsId,
+locationsId,
 datasetsId
 )
 SELECT 
-'{{ etag }}',
 '{{ displayName }}',
+'{{ etag }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
 '{{ datasetsId }}'
 RETURNING
 name,
@@ -383,17 +401,23 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dataset_versions
   props:
+    - name: projectsId
+      value: "{{ projectsId }}"
+      description: Required parameter for the dataset_versions resource.
+    - name: locationsId
+      value: "{{ locationsId }}"
+      description: Required parameter for the dataset_versions resource.
     - name: datasetsId
       value: "{{ datasetsId }}"
       description: Required parameter for the dataset_versions resource.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         The user-defined name of the DatasetVersion. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
 `}</CodeBlock>
 
 </TabItem>
@@ -415,10 +439,12 @@ Updates a DatasetVersion.
 ```sql
 UPDATE google.aiplatform.dataset_versions
 SET 
-data__etag = '{{ etag }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}'
 WHERE 
-datasetsId = '{{ datasetsId }}' --required
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND datasetsId = '{{ datasetsId }}' --required
 AND datasetVersionsId = '{{ datasetVersionsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -451,7 +477,9 @@ Deletes a Dataset version.
 
 ```sql
 DELETE FROM google.aiplatform.dataset_versions
-WHERE datasetsId = '{{ datasetsId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND datasetsId = '{{ datasetsId }}' --required
 AND datasetVersionsId = '{{ datasetVersionsId }}' --required
 ;
 ```
@@ -473,6 +501,8 @@ Restores a dataset version.
 
 ```sql
 EXEC google.aiplatform.dataset_versions.restore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @datasetsId='{{ datasetsId }}' --required, 
 @datasetVersionsId='{{ datasetVersionsId }}' --required
 ;

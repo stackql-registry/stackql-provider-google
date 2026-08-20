@@ -37,9 +37,9 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_collections_data_stores_serving_configs_get', value: 'projects_locations_collections_data_stores_serving_configs_get' },
         { label: 'projects_locations_collections_engines_serving_configs_get', value: 'projects_locations_collections_engines_serving_configs_get' },
-        { label: 'projects_locations_data_stores_serving_configs_get', value: 'projects_locations_data_stores_serving_configs_get' },
         { label: 'projects_locations_collections_data_stores_serving_configs_list', value: 'projects_locations_collections_data_stores_serving_configs_list' },
         { label: 'projects_locations_collections_engines_serving_configs_list', value: 'projects_locations_collections_engines_serving_configs_list' },
+        { label: 'projects_locations_data_stores_serving_configs_get', value: 'projects_locations_data_stores_serving_configs_get' },
         { label: 'projects_locations_data_stores_serving_configs_list', value: 'projects_locations_data_stores_serving_configs_list' }
     ]}
 >
@@ -271,120 +271,6 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_data_stores_serving_configs_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Fully qualified name `projects/&#123;project&#125;/locations/&#123;location&#125;/collections/&#123;collection_id&#125;/engines/&#123;engine_id&#125;/servingConfigs/&#123;serving_config_id&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="answerGenerationSpec" /></td>
-    <td><code>object</code></td>
-    <td>Optional. The specification for answer generation. (id: GoogleCloudDiscoveryengineV1AnswerGenerationSpec)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="boostControlIds" /></td>
-    <td><code>array</code></td>
-    <td>Boost controls to use in serving path. All triggered boost controls will be applied. Boost controls must be in the same data store as the serving config. Maximum of 20 boost controls.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. ServingConfig created timestamp.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Required. The human readable serving config display name. Used in Discovery UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dissociateControlIds" /></td>
-    <td><code>array</code></td>
-    <td>Condition do not associate specifications. If multiple do not associate conditions match, all matching do not associate controls in the list will execute. Order does not matter. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="diversityLevel" /></td>
-    <td><code>string</code></td>
-    <td>How much diversity to use in recommendation model results e.g. `medium-diversity` or `high-diversity`. Currently supported values: * `no-diversity` * `low-diversity` * `medium-diversity` * `high-diversity` * `auto-diversity` If not specified, we choose default based on recommendation model type. Default value: `no-diversity`. Can only be set if SolutionType is SOLUTION_TYPE_RECOMMENDATION.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filterControlIds" /></td>
-    <td><code>array</code></td>
-    <td>Filter controls to use in serving path. All triggered filter controls will be applied. Filter controls must be in the same data store as the serving config. Maximum of 20 filter controls.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="genericConfig" /></td>
-    <td><code>object</code></td>
-    <td>The GenericConfig of the serving configuration. (id: GoogleCloudDiscoveryengineV1ServingConfigGenericConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ignoreControlIds" /></td>
-    <td><code>array</code></td>
-    <td>Condition ignore specifications. If multiple ignore conditions match, all matching ignore controls in the list will execute. Order does not matter. Maximum number of specifications is 100.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="mediaConfig" /></td>
-    <td><code>object</code></td>
-    <td>The MediaConfig of the serving configuration. (id: GoogleCloudDiscoveryengineV1ServingConfigMediaConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="modelId" /></td>
-    <td><code>string</code></td>
-    <td>The id of the model to use at serving time. Currently only RecommendationModels are supported. Can be changed but only to a compatible model (e.g. others-you-may-like CTR to others-you-may-like CVR). Required when SolutionType is SOLUTION_TYPE_RECOMMENDATION.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="onewaySynonymsControlIds" /></td>
-    <td><code>array</code></td>
-    <td>Condition oneway synonyms specifications. If multiple oneway synonyms conditions match, all matching oneway synonyms controls in the list will execute. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="promoteControlIds" /></td>
-    <td><code>array</code></td>
-    <td>Condition promote specifications. Maximum number of specifications is 100.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="rankingExpression" /></td>
-    <td><code>string</code></td>
-    <td>The ranking expression controls the customized ranking on retrieval documents. To leverage this, document embedding is required. The ranking expression setting in ServingConfig applies to all search requests served by the serving config. However, if `SearchRequest.ranking_expression` is specified, it overrides the ServingConfig ranking expression. The ranking expression is a single function or multiple functions that are joined by "+". * ranking_expression = function, &#123; " + ", function &#125;; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: * `relevance_score`: pre-defined keywords, used for measure relevance between query and document. * `embedding_field_path`: the document embedding field used with query embedding vector. * `dotProduct`: embedding function between embedding_field_path and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="redirectControlIds" /></td>
-    <td><code>array</code></td>
-    <td>IDs of the redirect controls. Only the first triggered redirect action is applied, even if multiple apply. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="replacementControlIds" /></td>
-    <td><code>array</code></td>
-    <td>Condition replacement specifications. Applied according to the order in the list. A previously replaced term can not be re-replaced. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="solutionType" /></td>
-    <td><code>string</code></td>
-    <td>Required. Immutable. Specifies the solution type that a serving config can be associated with. (SOLUTION_TYPE_UNSPECIFIED, SOLUTION_TYPE_RECOMMENDATION, SOLUTION_TYPE_SEARCH, SOLUTION_TYPE_CHAT, SOLUTION_TYPE_GENERATIVE_CHAT, SOLUTION_TYPE_AI_MODE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="synonymsControlIds" /></td>
-    <td><code>array</code></td>
-    <td>Condition synonyms specifications. If multiple synonyms conditions match, all matching synonyms controls in the list will execute. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. ServingConfig updated timestamp.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_serving_configs_list">
 
 <table>
@@ -500,6 +386,120 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_locations_collections_engines_serving_configs_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Fully qualified name `projects/&#123;project&#125;/locations/&#123;location&#125;/collections/&#123;collection_id&#125;/engines/&#123;engine_id&#125;/servingConfigs/&#123;serving_config_id&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="answerGenerationSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The specification for answer generation. (id: GoogleCloudDiscoveryengineV1AnswerGenerationSpec)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="boostControlIds" /></td>
+    <td><code>array</code></td>
+    <td>Boost controls to use in serving path. All triggered boost controls will be applied. Boost controls must be in the same data store as the serving config. Maximum of 20 boost controls.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. ServingConfig created timestamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Required. The human readable serving config display name. Used in Discovery UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dissociateControlIds" /></td>
+    <td><code>array</code></td>
+    <td>Condition do not associate specifications. If multiple do not associate conditions match, all matching do not associate controls in the list will execute. Order does not matter. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="diversityLevel" /></td>
+    <td><code>string</code></td>
+    <td>How much diversity to use in recommendation model results e.g. `medium-diversity` or `high-diversity`. Currently supported values: * `no-diversity` * `low-diversity` * `medium-diversity` * `high-diversity` * `auto-diversity` If not specified, we choose default based on recommendation model type. Default value: `no-diversity`. Can only be set if SolutionType is SOLUTION_TYPE_RECOMMENDATION.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filterControlIds" /></td>
+    <td><code>array</code></td>
+    <td>Filter controls to use in serving path. All triggered filter controls will be applied. Filter controls must be in the same data store as the serving config. Maximum of 20 filter controls.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="genericConfig" /></td>
+    <td><code>object</code></td>
+    <td>The GenericConfig of the serving configuration. (id: GoogleCloudDiscoveryengineV1ServingConfigGenericConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ignoreControlIds" /></td>
+    <td><code>array</code></td>
+    <td>Condition ignore specifications. If multiple ignore conditions match, all matching ignore controls in the list will execute. Order does not matter. Maximum number of specifications is 100.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mediaConfig" /></td>
+    <td><code>object</code></td>
+    <td>The MediaConfig of the serving configuration. (id: GoogleCloudDiscoveryengineV1ServingConfigMediaConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="modelId" /></td>
+    <td><code>string</code></td>
+    <td>The id of the model to use at serving time. Currently only RecommendationModels are supported. Can be changed but only to a compatible model (e.g. others-you-may-like CTR to others-you-may-like CVR). Required when SolutionType is SOLUTION_TYPE_RECOMMENDATION.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="onewaySynonymsControlIds" /></td>
+    <td><code>array</code></td>
+    <td>Condition oneway synonyms specifications. If multiple oneway synonyms conditions match, all matching oneway synonyms controls in the list will execute. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="promoteControlIds" /></td>
+    <td><code>array</code></td>
+    <td>Condition promote specifications. Maximum number of specifications is 100.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="rankingExpression" /></td>
+    <td><code>string</code></td>
+    <td>The ranking expression controls the customized ranking on retrieval documents. To leverage this, document embedding is required. The ranking expression setting in ServingConfig applies to all search requests served by the serving config. However, if `SearchRequest.ranking_expression` is specified, it overrides the ServingConfig ranking expression. The ranking expression is a single function or multiple functions that are joined by "+". * ranking_expression = function, &#123; " + ", function &#125;; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: * `relevance_score`: pre-defined keywords, used for measure relevance between query and document. * `embedding_field_path`: the document embedding field used with query embedding vector. * `dotProduct`: embedding function between embedding_field_path and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="redirectControlIds" /></td>
+    <td><code>array</code></td>
+    <td>IDs of the redirect controls. Only the first triggered redirect action is applied, even if multiple apply. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="replacementControlIds" /></td>
+    <td><code>array</code></td>
+    <td>Condition replacement specifications. Applied according to the order in the list. A previously replaced term can not be re-replaced. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="solutionType" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. Specifies the solution type that a serving config can be associated with. (SOLUTION_TYPE_UNSPECIFIED, SOLUTION_TYPE_RECOMMENDATION, SOLUTION_TYPE_SEARCH, SOLUTION_TYPE_CHAT, SOLUTION_TYPE_GENERATIVE_CHAT, SOLUTION_TYPE_AI_MODE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="synonymsControlIds" /></td>
+    <td><code>array</code></td>
+    <td>Condition synonyms specifications. If multiple synonyms conditions match, all matching synonyms controls in the list will execute. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. ServingConfig updated timestamp.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_data_stores_serving_configs_get">
 
 <table>
 <thead>
@@ -759,17 +759,10 @@ The following methods are available for this resource:
     <td>Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_serving_configs_get"><CopyableCode code="projects_locations_data_stores_serving_configs_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
-    <td></td>
-    <td>Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_collections_data_stores_serving_configs_list"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all ServingConfigs linked to this dataStore.</td>
 </tr>
 <tr>
@@ -778,6 +771,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all ServingConfigs linked to this dataStore.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_serving_configs_get"><CopyableCode code="projects_locations_data_stores_serving_configs_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td></td>
+    <td>Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_stores_serving_configs_list"><CopyableCode code="projects_locations_data_stores_serving_configs_list" /></a></td>
@@ -850,46 +850,18 @@ The following methods are available for this resource:
     <td>Deletes a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does not exist.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_serving_configs_stream_answer"><CopyableCode code="projects_locations_data_stores_serving_configs_stream_answer" /></a></td>
+    <td><a href="#projects_locations_collections_data_stores_serving_configs_answer"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_answer" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
-    <td></td>
-    <td>Answer query method (streaming). It takes one AnswerQueryRequest and returns multiple AnswerQueryResponse messages in a stream.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_serving_configs_recommend"><CopyableCode code="projects_locations_data_stores_serving_configs_recommend" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
-    <td></td>
-    <td>Makes a recommendation, which requires a contextual user event.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_serving_configs_answer"><CopyableCode code="projects_locations_data_stores_serving_configs_answer" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
     <td></td>
     <td>Answer query method.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_serving_configs_search"><CopyableCode code="projects_locations_data_stores_serving_configs_search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
-    <td></td>
-    <td>Performs a search.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_data_stores_serving_configs_search_lite"><CopyableCode code="projects_locations_data_stores_serving_configs_search_lite" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
-    <td></td>
-    <td>Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_data_stores_serving_configs_search_lite"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_search_lite" /></a></td>
+    <td><a href="#projects_locations_collections_data_stores_serving_configs_recommend"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_recommend" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
     <td></td>
-    <td>Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.</td>
+    <td>Makes a recommendation, which requires a contextual user event.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_collections_data_stores_serving_configs_search"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_search" /></a></td>
@@ -899,11 +871,11 @@ The following methods are available for this resource:
     <td>Performs a search.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_serving_configs_answer"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_answer" /></a></td>
+    <td><a href="#projects_locations_collections_data_stores_serving_configs_search_lite"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_search_lite" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
     <td></td>
-    <td>Answer query method.</td>
+    <td>Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_collections_data_stores_serving_configs_stream_answer"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_stream_answer" /></a></td>
@@ -913,9 +885,16 @@ The following methods are available for this resource:
     <td>Answer query method (streaming). It takes one AnswerQueryRequest and returns multiple AnswerQueryResponse messages in a stream.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_serving_configs_recommend"><CopyableCode code="projects_locations_collections_data_stores_serving_configs_recommend" /></a></td>
+    <td><a href="#projects_locations_collections_engines_serving_configs_answer"><CopyableCode code="projects_locations_collections_engines_serving_configs_answer" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td></td>
+    <td>Answer query method.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_engines_serving_configs_recommend"><CopyableCode code="projects_locations_collections_engines_serving_configs_recommend" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
     <td></td>
     <td>Makes a recommendation, which requires a contextual user event.</td>
 </tr>
@@ -934,13 +913,6 @@ The following methods are available for this resource:
     <td>Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_engines_serving_configs_recommend"><CopyableCode code="projects_locations_collections_engines_serving_configs_recommend" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
-    <td></td>
-    <td>Makes a recommendation, which requires a contextual user event.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_collections_engines_serving_configs_stream_answer"><CopyableCode code="projects_locations_collections_engines_serving_configs_stream_answer" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
@@ -948,11 +920,39 @@ The following methods are available for this resource:
     <td>Answer query method (streaming). It takes one AnswerQueryRequest and returns multiple AnswerQueryResponse messages in a stream.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_engines_serving_configs_answer"><CopyableCode code="projects_locations_collections_engines_serving_configs_answer" /></a></td>
+    <td><a href="#projects_locations_data_stores_serving_configs_answer"><CopyableCode code="projects_locations_data_stores_serving_configs_answer" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
     <td></td>
     <td>Answer query method.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_serving_configs_recommend"><CopyableCode code="projects_locations_data_stores_serving_configs_recommend" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td></td>
+    <td>Makes a recommendation, which requires a contextual user event.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_serving_configs_search"><CopyableCode code="projects_locations_data_stores_serving_configs_search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td></td>
+    <td>Performs a search.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_serving_configs_search_lite"><CopyableCode code="projects_locations_data_stores_serving_configs_search_lite" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td></td>
+    <td>Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_serving_configs_stream_answer"><CopyableCode code="projects_locations_data_stores_serving_configs_stream_answer" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td></td>
+    <td>Answer query method (streaming). It takes one AnswerQueryRequest and returns multiple AnswerQueryResponse messages in a stream.</td>
 </tr>
 </tbody>
 </table>
@@ -1030,9 +1030,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_collections_data_stores_serving_configs_get', value: 'projects_locations_collections_data_stores_serving_configs_get' },
         { label: 'projects_locations_collections_engines_serving_configs_get', value: 'projects_locations_collections_engines_serving_configs_get' },
-        { label: 'projects_locations_data_stores_serving_configs_get', value: 'projects_locations_data_stores_serving_configs_get' },
         { label: 'projects_locations_collections_data_stores_serving_configs_list', value: 'projects_locations_collections_data_stores_serving_configs_list' },
         { label: 'projects_locations_collections_engines_serving_configs_list', value: 'projects_locations_collections_engines_serving_configs_list' },
+        { label: 'projects_locations_data_stores_serving_configs_get', value: 'projects_locations_data_stores_serving_configs_get' },
         { label: 'projects_locations_data_stores_serving_configs_list', value: 'projects_locations_data_stores_serving_configs_list' }
     ]}
 >
@@ -1106,40 +1106,6 @@ AND servingConfigsId = '{{ servingConfigsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_stores_serving_configs_get">
-
-Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.
-
-```sql
-SELECT
-name,
-answerGenerationSpec,
-boostControlIds,
-createTime,
-displayName,
-dissociateControlIds,
-diversityLevel,
-filterControlIds,
-genericConfig,
-ignoreControlIds,
-mediaConfig,
-modelId,
-onewaySynonymsControlIds,
-promoteControlIds,
-rankingExpression,
-redirectControlIds,
-replacementControlIds,
-solutionType,
-synonymsControlIds,
-updateTime
-FROM google.discoveryengine.serving_configs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND servingConfigsId = '{{ servingConfigsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_serving_configs_list">
 
 Lists all ServingConfigs linked to this dataStore.
@@ -1171,8 +1137,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -1209,6 +1175,40 @@ AND collectionsId = '{{ collectionsId }}' -- required
 AND enginesId = '{{ enginesId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_serving_configs_get">
+
+Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.
+
+```sql
+SELECT
+name,
+answerGenerationSpec,
+boostControlIds,
+createTime,
+displayName,
+dissociateControlIds,
+diversityLevel,
+filterControlIds,
+genericConfig,
+ignoreControlIds,
+mediaConfig,
+modelId,
+onewaySynonymsControlIds,
+promoteControlIds,
+rankingExpression,
+redirectControlIds,
+replacementControlIds,
+solutionType,
+synonymsControlIds,
+updateTime
+FROM google.discoveryengine.serving_configs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND servingConfigsId = '{{ servingConfigsId }}' -- required
 ;
 ```
 </TabItem>
@@ -1267,23 +1267,23 @@ Creates a ServingConfig. Note: The Google Cloud console works only with the defa
 
 ```sql
 INSERT INTO google.discoveryengine.serving_configs (
-data__rankingExpression,
-data__onewaySynonymsControlIds,
-data__dissociateControlIds,
-data__boostControlIds,
-data__genericConfig,
-data__mediaConfig,
-data__name,
-data__filterControlIds,
-data__ignoreControlIds,
-data__redirectControlIds,
-data__modelId,
-data__promoteControlIds,
-data__solutionType,
-data__diversityLevel,
-data__replacementControlIds,
 data__answerGenerationSpec,
+data__boostControlIds,
 data__displayName,
+data__dissociateControlIds,
+data__diversityLevel,
+data__filterControlIds,
+data__genericConfig,
+data__ignoreControlIds,
+data__mediaConfig,
+data__modelId,
+data__name,
+data__onewaySynonymsControlIds,
+data__promoteControlIds,
+data__rankingExpression,
+data__redirectControlIds,
+data__replacementControlIds,
+data__solutionType,
 data__synonymsControlIds,
 projectsId,
 locationsId,
@@ -1292,23 +1292,23 @@ dataStoresId,
 servingConfigId
 )
 SELECT 
-'{{ rankingExpression }}',
-'{{ onewaySynonymsControlIds }}',
-'{{ dissociateControlIds }}',
-'{{ boostControlIds }}',
-'{{ genericConfig }}',
-'{{ mediaConfig }}',
-'{{ name }}',
-'{{ filterControlIds }}',
-'{{ ignoreControlIds }}',
-'{{ redirectControlIds }}',
-'{{ modelId }}',
-'{{ promoteControlIds }}',
-'{{ solutionType }}',
-'{{ diversityLevel }}',
-'{{ replacementControlIds }}',
 '{{ answerGenerationSpec }}',
+'{{ boostControlIds }}',
 '{{ displayName }}',
+'{{ dissociateControlIds }}',
+'{{ diversityLevel }}',
+'{{ filterControlIds }}',
+'{{ genericConfig }}',
+'{{ ignoreControlIds }}',
+'{{ mediaConfig }}',
+'{{ modelId }}',
+'{{ name }}',
+'{{ onewaySynonymsControlIds }}',
+'{{ promoteControlIds }}',
+'{{ rankingExpression }}',
+'{{ redirectControlIds }}',
+'{{ replacementControlIds }}',
+'{{ solutionType }}',
 '{{ synonymsControlIds }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -1345,23 +1345,23 @@ Creates a ServingConfig. Note: The Google Cloud console works only with the defa
 
 ```sql
 INSERT INTO google.discoveryengine.serving_configs (
-data__rankingExpression,
-data__onewaySynonymsControlIds,
-data__dissociateControlIds,
-data__boostControlIds,
-data__genericConfig,
-data__mediaConfig,
-data__name,
-data__filterControlIds,
-data__ignoreControlIds,
-data__redirectControlIds,
-data__modelId,
-data__promoteControlIds,
-data__solutionType,
-data__diversityLevel,
-data__replacementControlIds,
 data__answerGenerationSpec,
+data__boostControlIds,
 data__displayName,
+data__dissociateControlIds,
+data__diversityLevel,
+data__filterControlIds,
+data__genericConfig,
+data__ignoreControlIds,
+data__mediaConfig,
+data__modelId,
+data__name,
+data__onewaySynonymsControlIds,
+data__promoteControlIds,
+data__rankingExpression,
+data__redirectControlIds,
+data__replacementControlIds,
+data__solutionType,
 data__synonymsControlIds,
 projectsId,
 locationsId,
@@ -1370,23 +1370,23 @@ enginesId,
 servingConfigId
 )
 SELECT 
-'{{ rankingExpression }}',
-'{{ onewaySynonymsControlIds }}',
-'{{ dissociateControlIds }}',
-'{{ boostControlIds }}',
-'{{ genericConfig }}',
-'{{ mediaConfig }}',
-'{{ name }}',
-'{{ filterControlIds }}',
-'{{ ignoreControlIds }}',
-'{{ redirectControlIds }}',
-'{{ modelId }}',
-'{{ promoteControlIds }}',
-'{{ solutionType }}',
-'{{ diversityLevel }}',
-'{{ replacementControlIds }}',
 '{{ answerGenerationSpec }}',
+'{{ boostControlIds }}',
 '{{ displayName }}',
+'{{ dissociateControlIds }}',
+'{{ diversityLevel }}',
+'{{ filterControlIds }}',
+'{{ genericConfig }}',
+'{{ ignoreControlIds }}',
+'{{ mediaConfig }}',
+'{{ modelId }}',
+'{{ name }}',
+'{{ onewaySynonymsControlIds }}',
+'{{ promoteControlIds }}',
+'{{ rankingExpression }}',
+'{{ redirectControlIds }}',
+'{{ replacementControlIds }}',
+'{{ solutionType }}',
 '{{ synonymsControlIds }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -1423,23 +1423,23 @@ Creates a ServingConfig. Note: The Google Cloud console works only with the defa
 
 ```sql
 INSERT INTO google.discoveryengine.serving_configs (
-data__rankingExpression,
-data__onewaySynonymsControlIds,
-data__dissociateControlIds,
-data__boostControlIds,
-data__genericConfig,
-data__mediaConfig,
-data__name,
-data__filterControlIds,
-data__ignoreControlIds,
-data__redirectControlIds,
-data__modelId,
-data__promoteControlIds,
-data__solutionType,
-data__diversityLevel,
-data__replacementControlIds,
 data__answerGenerationSpec,
+data__boostControlIds,
 data__displayName,
+data__dissociateControlIds,
+data__diversityLevel,
+data__filterControlIds,
+data__genericConfig,
+data__ignoreControlIds,
+data__mediaConfig,
+data__modelId,
+data__name,
+data__onewaySynonymsControlIds,
+data__promoteControlIds,
+data__rankingExpression,
+data__redirectControlIds,
+data__replacementControlIds,
+data__solutionType,
 data__synonymsControlIds,
 projectsId,
 locationsId,
@@ -1447,23 +1447,23 @@ dataStoresId,
 servingConfigId
 )
 SELECT 
-'{{ rankingExpression }}',
-'{{ onewaySynonymsControlIds }}',
-'{{ dissociateControlIds }}',
-'{{ boostControlIds }}',
-'{{ genericConfig }}',
-'{{ mediaConfig }}',
-'{{ name }}',
-'{{ filterControlIds }}',
-'{{ ignoreControlIds }}',
-'{{ redirectControlIds }}',
-'{{ modelId }}',
-'{{ promoteControlIds }}',
-'{{ solutionType }}',
-'{{ diversityLevel }}',
-'{{ replacementControlIds }}',
 '{{ answerGenerationSpec }}',
+'{{ boostControlIds }}',
 '{{ displayName }}',
+'{{ dissociateControlIds }}',
+'{{ diversityLevel }}',
+'{{ filterControlIds }}',
+'{{ genericConfig }}',
+'{{ ignoreControlIds }}',
+'{{ mediaConfig }}',
+'{{ modelId }}',
+'{{ name }}',
+'{{ onewaySynonymsControlIds }}',
+'{{ promoteControlIds }}',
+'{{ rankingExpression }}',
+'{{ redirectControlIds }}',
+'{{ replacementControlIds }}',
+'{{ solutionType }}',
 '{{ synonymsControlIds }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -1513,125 +1513,125 @@ updateTime
     - name: enginesId
       value: "{{ enginesId }}"
       description: Required parameter for the serving_configs resource.
-    - name: rankingExpression
-      value: "{{ rankingExpression }}"
+    - name: answerGenerationSpec
       description: |
-        The ranking expression controls the customized ranking on retrieval documents. To leverage this, document embedding is required. The ranking expression setting in ServingConfig applies to all search requests served by the serving config. However, if \`SearchRequest.ranking_expression\` is specified, it overrides the ServingConfig ranking expression. The ranking expression is a single function or multiple functions that are joined by "+". * ranking_expression = function, { " + ", function }; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: * \`relevance_score\`: pre-defined keywords, used for measure relevance between query and document. * \`embedding_field_path\`: the document embedding field used with query embedding vector. * \`dotProduct\`: embedding function between embedding_field_path and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be \`0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)\`.
-    - name: onewaySynonymsControlIds
+        Optional. The specification for answer generation.
       value:
-        - "{{ onewaySynonymsControlIds }}"
-      description: |
-        Condition oneway synonyms specifications. If multiple oneway synonyms conditions match, all matching oneway synonyms controls in the list will execute. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.
-    - name: dissociateControlIds
-      value:
-        - "{{ dissociateControlIds }}"
-      description: |
-        Condition do not associate specifications. If multiple do not associate conditions match, all matching do not associate controls in the list will execute. Order does not matter. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.
+        userDefinedClassifierSpec:
+          enableUserDefinedClassifier: {{ enableUserDefinedClassifier }}
+          modelId: "{{ modelId }}"
+          preamble: "{{ preamble }}"
+          seed: {{ seed }}
+          taskMarker: "{{ taskMarker }}"
+          temperature: {{ temperature }}
+          topK: "{{ topK }}"
+          topP: {{ topP }}
     - name: boostControlIds
       value:
         - "{{ boostControlIds }}"
       description: |
         Boost controls to use in serving path. All triggered boost controls will be applied. Boost controls must be in the same data store as the serving config. Maximum of 20 boost controls.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The human readable serving config display name. Used in Discovery UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
+    - name: dissociateControlIds
+      value:
+        - "{{ dissociateControlIds }}"
+      description: |
+        Condition do not associate specifications. If multiple do not associate conditions match, all matching do not associate controls in the list will execute. Order does not matter. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.
+    - name: diversityLevel
+      value: "{{ diversityLevel }}"
+      description: |
+        How much diversity to use in recommendation model results e.g. \`medium-diversity\` or \`high-diversity\`. Currently supported values: * \`no-diversity\` * \`low-diversity\` * \`medium-diversity\` * \`high-diversity\` * \`auto-diversity\` If not specified, we choose default based on recommendation model type. Default value: \`no-diversity\`. Can only be set if SolutionType is SOLUTION_TYPE_RECOMMENDATION.
+    - name: filterControlIds
+      value:
+        - "{{ filterControlIds }}"
+      description: |
+        Filter controls to use in serving path. All triggered filter controls will be applied. Filter controls must be in the same data store as the serving config. Maximum of 20 filter controls.
     - name: genericConfig
       description: |
         The GenericConfig of the serving configuration.
       value:
         contentSearchSpec:
           chunkSpec:
-            numPreviousChunks: {{ numPreviousChunks }}
             numNextChunks: {{ numNextChunks }}
-          searchResultMode: "{{ searchResultMode }}"
+            numPreviousChunks: {{ numPreviousChunks }}
           extractiveContentSpec:
-            returnExtractiveSegmentScore: {{ returnExtractiveSegmentScore }}
-            numPreviousSegments: {{ numPreviousSegments }}
-            numNextSegments: {{ numNextSegments }}
             maxExtractiveAnswerCount: {{ maxExtractiveAnswerCount }}
             maxExtractiveSegmentCount: {{ maxExtractiveSegmentCount }}
+            numNextSegments: {{ numNextSegments }}
+            numPreviousSegments: {{ numPreviousSegments }}
+            returnExtractiveSegmentScore: {{ returnExtractiveSegmentScore }}
+          searchResultMode: "{{ searchResultMode }}"
           snippetSpec:
-            referenceOnly: {{ referenceOnly }}
             maxSnippetCount: {{ maxSnippetCount }}
+            referenceOnly: {{ referenceOnly }}
             returnSnippet: {{ returnSnippet }}
           summarySpec:
+            ignoreAdversarialQuery: {{ ignoreAdversarialQuery }}
+            ignoreJailBreakingQuery: {{ ignoreJailBreakingQuery }}
             ignoreLowRelevantContent: {{ ignoreLowRelevantContent }}
-            useSemanticChunks: {{ useSemanticChunks }}
             ignoreNonSummarySeekingQuery: {{ ignoreNonSummarySeekingQuery }}
-            modelSpec:
-              version: "{{ version }}"
+            includeCitations: {{ includeCitations }}
+            languageCode: "{{ languageCode }}"
             modelPromptSpec:
               preamble: "{{ preamble }}"
-            languageCode: "{{ languageCode }}"
+            modelSpec:
+              version: "{{ version }}"
             summaryResultCount: {{ summaryResultCount }}
-            ignoreJailBreakingQuery: {{ ignoreJailBreakingQuery }}
-            includeCitations: {{ includeCitations }}
-            ignoreAdversarialQuery: {{ ignoreAdversarialQuery }}
-    - name: mediaConfig
-      description: |
-        The MediaConfig of the serving configuration.
-      value:
-        demotionEventType: "{{ demotionEventType }}"
-        contentFreshnessCutoffDays: {{ contentFreshnessCutoffDays }}
-        contentWatchedSecondsThreshold: {{ contentWatchedSecondsThreshold }}
-        demoteContentWatchedPastDays: {{ demoteContentWatchedPastDays }}
-        contentWatchedPercentageThreshold: {{ contentWatchedPercentageThreshold }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Fully qualified name \`projects/{project}/locations/{location}/collections/{collection_id}/engines/{engine_id}/servingConfigs/{serving_config_id}\`
-    - name: filterControlIds
-      value:
-        - "{{ filterControlIds }}"
-      description: |
-        Filter controls to use in serving path. All triggered filter controls will be applied. Filter controls must be in the same data store as the serving config. Maximum of 20 filter controls.
+            useSemanticChunks: {{ useSemanticChunks }}
     - name: ignoreControlIds
       value:
         - "{{ ignoreControlIds }}"
       description: |
         Condition ignore specifications. If multiple ignore conditions match, all matching ignore controls in the list will execute. Order does not matter. Maximum number of specifications is 100.
-    - name: redirectControlIds
-      value:
-        - "{{ redirectControlIds }}"
+    - name: mediaConfig
       description: |
-        IDs of the redirect controls. Only the first triggered redirect action is applied, even if multiple apply. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.
+        The MediaConfig of the serving configuration.
+      value:
+        contentFreshnessCutoffDays: {{ contentFreshnessCutoffDays }}
+        contentWatchedPercentageThreshold: {{ contentWatchedPercentageThreshold }}
+        contentWatchedSecondsThreshold: {{ contentWatchedSecondsThreshold }}
+        demoteContentWatchedPastDays: {{ demoteContentWatchedPastDays }}
+        demotionEventType: "{{ demotionEventType }}"
     - name: modelId
       value: "{{ modelId }}"
       description: |
         The id of the model to use at serving time. Currently only RecommendationModels are supported. Can be changed but only to a compatible model (e.g. others-you-may-like CTR to others-you-may-like CVR). Required when SolutionType is SOLUTION_TYPE_RECOMMENDATION.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Fully qualified name \`projects/{project}/locations/{location}/collections/{collection_id}/engines/{engine_id}/servingConfigs/{serving_config_id}\`
+    - name: onewaySynonymsControlIds
+      value:
+        - "{{ onewaySynonymsControlIds }}"
+      description: |
+        Condition oneway synonyms specifications. If multiple oneway synonyms conditions match, all matching oneway synonyms controls in the list will execute. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.
     - name: promoteControlIds
       value:
         - "{{ promoteControlIds }}"
       description: |
         Condition promote specifications. Maximum number of specifications is 100.
-    - name: solutionType
-      value: "{{ solutionType }}"
+    - name: rankingExpression
+      value: "{{ rankingExpression }}"
       description: |
-        Required. Immutable. Specifies the solution type that a serving config can be associated with.
-      valid_values: ['SOLUTION_TYPE_UNSPECIFIED', 'SOLUTION_TYPE_RECOMMENDATION', 'SOLUTION_TYPE_SEARCH', 'SOLUTION_TYPE_CHAT', 'SOLUTION_TYPE_GENERATIVE_CHAT', 'SOLUTION_TYPE_AI_MODE']
-    - name: diversityLevel
-      value: "{{ diversityLevel }}"
+        The ranking expression controls the customized ranking on retrieval documents. To leverage this, document embedding is required. The ranking expression setting in ServingConfig applies to all search requests served by the serving config. However, if \`SearchRequest.ranking_expression\` is specified, it overrides the ServingConfig ranking expression. The ranking expression is a single function or multiple functions that are joined by "+". * ranking_expression = function, { " + ", function }; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: * \`relevance_score\`: pre-defined keywords, used for measure relevance between query and document. * \`embedding_field_path\`: the document embedding field used with query embedding vector. * \`dotProduct\`: embedding function between embedding_field_path and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be \`0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)\`.
+    - name: redirectControlIds
+      value:
+        - "{{ redirectControlIds }}"
       description: |
-        How much diversity to use in recommendation model results e.g. \`medium-diversity\` or \`high-diversity\`. Currently supported values: * \`no-diversity\` * \`low-diversity\` * \`medium-diversity\` * \`high-diversity\` * \`auto-diversity\` If not specified, we choose default based on recommendation model type. Default value: \`no-diversity\`. Can only be set if SolutionType is SOLUTION_TYPE_RECOMMENDATION.
+        IDs of the redirect controls. Only the first triggered redirect action is applied, even if multiple apply. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.
     - name: replacementControlIds
       value:
         - "{{ replacementControlIds }}"
       description: |
         Condition replacement specifications. Applied according to the order in the list. A previously replaced term can not be re-replaced. Maximum number of specifications is 100. Can only be set if SolutionType is SOLUTION_TYPE_SEARCH.
-    - name: answerGenerationSpec
+    - name: solutionType
+      value: "{{ solutionType }}"
       description: |
-        Optional. The specification for answer generation.
-      value:
-        userDefinedClassifierSpec:
-          modelId: "{{ modelId }}"
-          temperature: {{ temperature }}
-          preamble: "{{ preamble }}"
-          taskMarker: "{{ taskMarker }}"
-          seed: {{ seed }}
-          enableUserDefinedClassifier: {{ enableUserDefinedClassifier }}
-          topK: "{{ topK }}"
-          topP: {{ topP }}
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The human readable serving config display name. Used in Discovery UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
+        Required. Immutable. Specifies the solution type that a serving config can be associated with.
+      valid_values: ['SOLUTION_TYPE_UNSPECIFIED', 'SOLUTION_TYPE_RECOMMENDATION', 'SOLUTION_TYPE_SEARCH', 'SOLUTION_TYPE_CHAT', 'SOLUTION_TYPE_GENERATIVE_CHAT', 'SOLUTION_TYPE_AI_MODE']
     - name: synonymsControlIds
       value:
         - "{{ synonymsControlIds }}"
@@ -1662,23 +1662,23 @@ Updates a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does not
 ```sql
 UPDATE google.discoveryengine.serving_configs
 SET 
-data__rankingExpression = '{{ rankingExpression }}',
-data__onewaySynonymsControlIds = '{{ onewaySynonymsControlIds }}',
-data__dissociateControlIds = '{{ dissociateControlIds }}',
-data__boostControlIds = '{{ boostControlIds }}',
-data__genericConfig = '{{ genericConfig }}',
-data__mediaConfig = '{{ mediaConfig }}',
-data__name = '{{ name }}',
-data__filterControlIds = '{{ filterControlIds }}',
-data__ignoreControlIds = '{{ ignoreControlIds }}',
-data__redirectControlIds = '{{ redirectControlIds }}',
-data__modelId = '{{ modelId }}',
-data__promoteControlIds = '{{ promoteControlIds }}',
-data__solutionType = '{{ solutionType }}',
-data__diversityLevel = '{{ diversityLevel }}',
-data__replacementControlIds = '{{ replacementControlIds }}',
 data__answerGenerationSpec = '{{ answerGenerationSpec }}',
+data__boostControlIds = '{{ boostControlIds }}',
 data__displayName = '{{ displayName }}',
+data__dissociateControlIds = '{{ dissociateControlIds }}',
+data__diversityLevel = '{{ diversityLevel }}',
+data__filterControlIds = '{{ filterControlIds }}',
+data__genericConfig = '{{ genericConfig }}',
+data__ignoreControlIds = '{{ ignoreControlIds }}',
+data__mediaConfig = '{{ mediaConfig }}',
+data__modelId = '{{ modelId }}',
+data__name = '{{ name }}',
+data__onewaySynonymsControlIds = '{{ onewaySynonymsControlIds }}',
+data__promoteControlIds = '{{ promoteControlIds }}',
+data__rankingExpression = '{{ rankingExpression }}',
+data__redirectControlIds = '{{ redirectControlIds }}',
+data__replacementControlIds = '{{ replacementControlIds }}',
+data__solutionType = '{{ solutionType }}',
 data__synonymsControlIds = '{{ synonymsControlIds }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -1717,23 +1717,23 @@ Updates a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does not
 ```sql
 UPDATE google.discoveryengine.serving_configs
 SET 
-data__rankingExpression = '{{ rankingExpression }}',
-data__onewaySynonymsControlIds = '{{ onewaySynonymsControlIds }}',
-data__dissociateControlIds = '{{ dissociateControlIds }}',
-data__boostControlIds = '{{ boostControlIds }}',
-data__genericConfig = '{{ genericConfig }}',
-data__mediaConfig = '{{ mediaConfig }}',
-data__name = '{{ name }}',
-data__filterControlIds = '{{ filterControlIds }}',
-data__ignoreControlIds = '{{ ignoreControlIds }}',
-data__redirectControlIds = '{{ redirectControlIds }}',
-data__modelId = '{{ modelId }}',
-data__promoteControlIds = '{{ promoteControlIds }}',
-data__solutionType = '{{ solutionType }}',
-data__diversityLevel = '{{ diversityLevel }}',
-data__replacementControlIds = '{{ replacementControlIds }}',
 data__answerGenerationSpec = '{{ answerGenerationSpec }}',
+data__boostControlIds = '{{ boostControlIds }}',
 data__displayName = '{{ displayName }}',
+data__dissociateControlIds = '{{ dissociateControlIds }}',
+data__diversityLevel = '{{ diversityLevel }}',
+data__filterControlIds = '{{ filterControlIds }}',
+data__genericConfig = '{{ genericConfig }}',
+data__ignoreControlIds = '{{ ignoreControlIds }}',
+data__mediaConfig = '{{ mediaConfig }}',
+data__modelId = '{{ modelId }}',
+data__name = '{{ name }}',
+data__onewaySynonymsControlIds = '{{ onewaySynonymsControlIds }}',
+data__promoteControlIds = '{{ promoteControlIds }}',
+data__rankingExpression = '{{ rankingExpression }}',
+data__redirectControlIds = '{{ redirectControlIds }}',
+data__replacementControlIds = '{{ replacementControlIds }}',
+data__solutionType = '{{ solutionType }}',
 data__synonymsControlIds = '{{ synonymsControlIds }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -1772,23 +1772,23 @@ Updates a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does not
 ```sql
 UPDATE google.discoveryengine.serving_configs
 SET 
-data__rankingExpression = '{{ rankingExpression }}',
-data__onewaySynonymsControlIds = '{{ onewaySynonymsControlIds }}',
-data__dissociateControlIds = '{{ dissociateControlIds }}',
-data__boostControlIds = '{{ boostControlIds }}',
-data__genericConfig = '{{ genericConfig }}',
-data__mediaConfig = '{{ mediaConfig }}',
-data__name = '{{ name }}',
-data__filterControlIds = '{{ filterControlIds }}',
-data__ignoreControlIds = '{{ ignoreControlIds }}',
-data__redirectControlIds = '{{ redirectControlIds }}',
-data__modelId = '{{ modelId }}',
-data__promoteControlIds = '{{ promoteControlIds }}',
-data__solutionType = '{{ solutionType }}',
-data__diversityLevel = '{{ diversityLevel }}',
-data__replacementControlIds = '{{ replacementControlIds }}',
 data__answerGenerationSpec = '{{ answerGenerationSpec }}',
+data__boostControlIds = '{{ boostControlIds }}',
 data__displayName = '{{ displayName }}',
+data__dissociateControlIds = '{{ dissociateControlIds }}',
+data__diversityLevel = '{{ diversityLevel }}',
+data__filterControlIds = '{{ filterControlIds }}',
+data__genericConfig = '{{ genericConfig }}',
+data__ignoreControlIds = '{{ ignoreControlIds }}',
+data__mediaConfig = '{{ mediaConfig }}',
+data__modelId = '{{ modelId }}',
+data__name = '{{ name }}',
+data__onewaySynonymsControlIds = '{{ onewaySynonymsControlIds }}',
+data__promoteControlIds = '{{ promoteControlIds }}',
+data__rankingExpression = '{{ rankingExpression }}',
+data__redirectControlIds = '{{ redirectControlIds }}',
+data__replacementControlIds = '{{ replacementControlIds }}',
+data__solutionType = '{{ solutionType }}',
 data__synonymsControlIds = '{{ synonymsControlIds }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -1879,313 +1879,25 @@ AND servingConfigsId = '{{ servingConfigsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_data_stores_serving_configs_stream_answer"
+    defaultValue="projects_locations_collections_data_stores_serving_configs_answer"
     values={[
-        { label: 'projects_locations_data_stores_serving_configs_stream_answer', value: 'projects_locations_data_stores_serving_configs_stream_answer' },
-        { label: 'projects_locations_data_stores_serving_configs_recommend', value: 'projects_locations_data_stores_serving_configs_recommend' },
-        { label: 'projects_locations_data_stores_serving_configs_answer', value: 'projects_locations_data_stores_serving_configs_answer' },
-        { label: 'projects_locations_data_stores_serving_configs_search', value: 'projects_locations_data_stores_serving_configs_search' },
-        { label: 'projects_locations_data_stores_serving_configs_search_lite', value: 'projects_locations_data_stores_serving_configs_search_lite' },
-        { label: 'projects_locations_collections_data_stores_serving_configs_search_lite', value: 'projects_locations_collections_data_stores_serving_configs_search_lite' },
-        { label: 'projects_locations_collections_data_stores_serving_configs_search', value: 'projects_locations_collections_data_stores_serving_configs_search' },
         { label: 'projects_locations_collections_data_stores_serving_configs_answer', value: 'projects_locations_collections_data_stores_serving_configs_answer' },
-        { label: 'projects_locations_collections_data_stores_serving_configs_stream_answer', value: 'projects_locations_collections_data_stores_serving_configs_stream_answer' },
         { label: 'projects_locations_collections_data_stores_serving_configs_recommend', value: 'projects_locations_collections_data_stores_serving_configs_recommend' },
+        { label: 'projects_locations_collections_data_stores_serving_configs_search', value: 'projects_locations_collections_data_stores_serving_configs_search' },
+        { label: 'projects_locations_collections_data_stores_serving_configs_search_lite', value: 'projects_locations_collections_data_stores_serving_configs_search_lite' },
+        { label: 'projects_locations_collections_data_stores_serving_configs_stream_answer', value: 'projects_locations_collections_data_stores_serving_configs_stream_answer' },
+        { label: 'projects_locations_collections_engines_serving_configs_answer', value: 'projects_locations_collections_engines_serving_configs_answer' },
+        { label: 'projects_locations_collections_engines_serving_configs_recommend', value: 'projects_locations_collections_engines_serving_configs_recommend' },
         { label: 'projects_locations_collections_engines_serving_configs_search', value: 'projects_locations_collections_engines_serving_configs_search' },
         { label: 'projects_locations_collections_engines_serving_configs_search_lite', value: 'projects_locations_collections_engines_serving_configs_search_lite' },
-        { label: 'projects_locations_collections_engines_serving_configs_recommend', value: 'projects_locations_collections_engines_serving_configs_recommend' },
         { label: 'projects_locations_collections_engines_serving_configs_stream_answer', value: 'projects_locations_collections_engines_serving_configs_stream_answer' },
-        { label: 'projects_locations_collections_engines_serving_configs_answer', value: 'projects_locations_collections_engines_serving_configs_answer' }
+        { label: 'projects_locations_data_stores_serving_configs_answer', value: 'projects_locations_data_stores_serving_configs_answer' },
+        { label: 'projects_locations_data_stores_serving_configs_recommend', value: 'projects_locations_data_stores_serving_configs_recommend' },
+        { label: 'projects_locations_data_stores_serving_configs_search', value: 'projects_locations_data_stores_serving_configs_search' },
+        { label: 'projects_locations_data_stores_serving_configs_search_lite', value: 'projects_locations_data_stores_serving_configs_search_lite' },
+        { label: 'projects_locations_data_stores_serving_configs_stream_answer', value: 'projects_locations_data_stores_serving_configs_stream_answer' }
     ]}
 >
-<TabItem value="projects_locations_data_stores_serving_configs_stream_answer">
-
-Answer query method (streaming). It takes one AnswerQueryRequest and returns multiple AnswerQueryResponse messages in a stream.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_stream_answer 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"query": "{{ query }}", 
-"userLabels": "{{ userLabels }}", 
-"endUserSpec": "{{ endUserSpec }}", 
-"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
-"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
-"asynchronousMode": {{ asynchronousMode }}, 
-"searchSpec": "{{ searchSpec }}", 
-"answerGenerationSpec": "{{ answerGenerationSpec }}", 
-"session": "{{ session }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"groundingSpec": "{{ groundingSpec }}", 
-"safetySpec": "{{ safetySpec }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_serving_configs_recommend">
-
-Makes a recommendation, which requires a contextual user event.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_recommend 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"params": "{{ params }}", 
-"userEvent": "{{ userEvent }}", 
-"pageSize": {{ pageSize }}, 
-"userLabels": "{{ userLabels }}", 
-"filter": "{{ filter }}", 
-"validateOnly": {{ validateOnly }}
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_serving_configs_answer">
-
-Answer query method.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_answer 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"query": "{{ query }}", 
-"userLabels": "{{ userLabels }}", 
-"endUserSpec": "{{ endUserSpec }}", 
-"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
-"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
-"asynchronousMode": {{ asynchronousMode }}, 
-"searchSpec": "{{ searchSpec }}", 
-"answerGenerationSpec": "{{ answerGenerationSpec }}", 
-"session": "{{ session }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"groundingSpec": "{{ groundingSpec }}", 
-"safetySpec": "{{ safetySpec }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_serving_configs_search">
-
-Performs a search.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"imageQuery": "{{ imageQuery }}", 
-"contentSearchSpec": "{{ contentSearchSpec }}", 
-"safeSearch": {{ safeSearch }}, 
-"session": "{{ session }}", 
-"entity": "{{ entity }}", 
-"query": "{{ query }}", 
-"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
-"displaySpec": "{{ displaySpec }}", 
-"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
-"dataStoreSpecs": "{{ dataStoreSpecs }}", 
-"pageSize": {{ pageSize }}, 
-"branch": "{{ branch }}", 
-"oneBoxPageSize": {{ oneBoxPageSize }}, 
-"facetSpecs": "{{ facetSpecs }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"customRankingParams": "{{ customRankingParams }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
-"relevanceThreshold": "{{ relevanceThreshold }}", 
-"params": "{{ params }}", 
-"boostSpec": "{{ boostSpec }}", 
-"offset": {{ offset }}, 
-"filter": "{{ filter }}", 
-"userInfo": "{{ userInfo }}", 
-"orderBy": "{{ orderBy }}", 
-"languageCode": "{{ languageCode }}", 
-"crowdingSpecs": "{{ crowdingSpecs }}", 
-"pageCategories": "{{ pageCategories }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
-"pageToken": "{{ pageToken }}", 
-"userLabels": "{{ userLabels }}", 
-"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
-"rankingExpression": "{{ rankingExpression }}", 
-"sessionSpec": "{{ sessionSpec }}", 
-"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"relevanceScoreSpec": "{{ relevanceScoreSpec }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_serving_configs_search_lite">
-
-Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_search_lite 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"imageQuery": "{{ imageQuery }}", 
-"contentSearchSpec": "{{ contentSearchSpec }}", 
-"safeSearch": {{ safeSearch }}, 
-"session": "{{ session }}", 
-"entity": "{{ entity }}", 
-"query": "{{ query }}", 
-"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
-"displaySpec": "{{ displaySpec }}", 
-"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
-"dataStoreSpecs": "{{ dataStoreSpecs }}", 
-"pageSize": {{ pageSize }}, 
-"branch": "{{ branch }}", 
-"oneBoxPageSize": {{ oneBoxPageSize }}, 
-"facetSpecs": "{{ facetSpecs }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"customRankingParams": "{{ customRankingParams }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
-"relevanceThreshold": "{{ relevanceThreshold }}", 
-"params": "{{ params }}", 
-"boostSpec": "{{ boostSpec }}", 
-"offset": {{ offset }}, 
-"filter": "{{ filter }}", 
-"userInfo": "{{ userInfo }}", 
-"orderBy": "{{ orderBy }}", 
-"languageCode": "{{ languageCode }}", 
-"crowdingSpecs": "{{ crowdingSpecs }}", 
-"pageCategories": "{{ pageCategories }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
-"pageToken": "{{ pageToken }}", 
-"userLabels": "{{ userLabels }}", 
-"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
-"rankingExpression": "{{ rankingExpression }}", 
-"sessionSpec": "{{ sessionSpec }}", 
-"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"relevanceScoreSpec": "{{ relevanceScoreSpec }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_serving_configs_search_lite">
-
-Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_collections_data_stores_serving_configs_search_lite 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"imageQuery": "{{ imageQuery }}", 
-"contentSearchSpec": "{{ contentSearchSpec }}", 
-"safeSearch": {{ safeSearch }}, 
-"session": "{{ session }}", 
-"entity": "{{ entity }}", 
-"query": "{{ query }}", 
-"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
-"displaySpec": "{{ displaySpec }}", 
-"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
-"dataStoreSpecs": "{{ dataStoreSpecs }}", 
-"pageSize": {{ pageSize }}, 
-"branch": "{{ branch }}", 
-"oneBoxPageSize": {{ oneBoxPageSize }}, 
-"facetSpecs": "{{ facetSpecs }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"customRankingParams": "{{ customRankingParams }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
-"relevanceThreshold": "{{ relevanceThreshold }}", 
-"params": "{{ params }}", 
-"boostSpec": "{{ boostSpec }}", 
-"offset": {{ offset }}, 
-"filter": "{{ filter }}", 
-"userInfo": "{{ userInfo }}", 
-"orderBy": "{{ orderBy }}", 
-"languageCode": "{{ languageCode }}", 
-"crowdingSpecs": "{{ crowdingSpecs }}", 
-"pageCategories": "{{ pageCategories }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
-"pageToken": "{{ pageToken }}", 
-"userLabels": "{{ userLabels }}", 
-"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
-"rankingExpression": "{{ rankingExpression }}", 
-"sessionSpec": "{{ sessionSpec }}", 
-"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"relevanceScoreSpec": "{{ relevanceScoreSpec }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_serving_configs_search">
-
-Performs a search.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_collections_data_stores_serving_configs_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"imageQuery": "{{ imageQuery }}", 
-"contentSearchSpec": "{{ contentSearchSpec }}", 
-"safeSearch": {{ safeSearch }}, 
-"session": "{{ session }}", 
-"entity": "{{ entity }}", 
-"query": "{{ query }}", 
-"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
-"displaySpec": "{{ displaySpec }}", 
-"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
-"dataStoreSpecs": "{{ dataStoreSpecs }}", 
-"pageSize": {{ pageSize }}, 
-"branch": "{{ branch }}", 
-"oneBoxPageSize": {{ oneBoxPageSize }}, 
-"facetSpecs": "{{ facetSpecs }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"customRankingParams": "{{ customRankingParams }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
-"relevanceThreshold": "{{ relevanceThreshold }}", 
-"params": "{{ params }}", 
-"boostSpec": "{{ boostSpec }}", 
-"offset": {{ offset }}, 
-"filter": "{{ filter }}", 
-"userInfo": "{{ userInfo }}", 
-"orderBy": "{{ orderBy }}", 
-"languageCode": "{{ languageCode }}", 
-"crowdingSpecs": "{{ crowdingSpecs }}", 
-"pageCategories": "{{ pageCategories }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
-"pageToken": "{{ pageToken }}", 
-"userLabels": "{{ userLabels }}", 
-"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
-"rankingExpression": "{{ rankingExpression }}", 
-"sessionSpec": "{{ sessionSpec }}", 
-"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"relevanceScoreSpec": "{{ relevanceScoreSpec }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_data_stores_serving_configs_answer">
 
 Answer query method.
@@ -2199,47 +1911,18 @@ EXEC google.discoveryengine.serving_configs.projects_locations_collections_data_
 @servingConfigsId='{{ servingConfigsId }}' --required 
 @@json=
 '{
-"query": "{{ query }}", 
-"userLabels": "{{ userLabels }}", 
-"endUserSpec": "{{ endUserSpec }}", 
-"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
-"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
-"asynchronousMode": {{ asynchronousMode }}, 
-"searchSpec": "{{ searchSpec }}", 
 "answerGenerationSpec": "{{ answerGenerationSpec }}", 
-"session": "{{ session }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"groundingSpec": "{{ groundingSpec }}", 
-"safetySpec": "{{ safetySpec }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_serving_configs_stream_answer">
-
-Answer query method (streaming). It takes one AnswerQueryRequest and returns multiple AnswerQueryResponse messages in a stream.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_collections_data_stores_serving_configs_stream_answer 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"query": "{{ query }}", 
-"userLabels": "{{ userLabels }}", 
-"endUserSpec": "{{ endUserSpec }}", 
-"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
-"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
 "asynchronousMode": {{ asynchronousMode }}, 
-"searchSpec": "{{ searchSpec }}", 
-"answerGenerationSpec": "{{ answerGenerationSpec }}", 
-"session": "{{ session }}", 
-"userPseudoId": "{{ userPseudoId }}", 
+"endUserSpec": "{{ endUserSpec }}", 
 "groundingSpec": "{{ groundingSpec }}", 
-"safetySpec": "{{ safetySpec }}"
+"query": "{{ query }}", 
+"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
+"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
+"safetySpec": "{{ safetySpec }}", 
+"searchSpec": "{{ searchSpec }}", 
+"session": "{{ session }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
 }'
 ;
 ```
@@ -2257,11 +1940,200 @@ EXEC google.discoveryengine.serving_configs.projects_locations_collections_data_
 @servingConfigsId='{{ servingConfigsId }}' --required 
 @@json=
 '{
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
 "params": "{{ params }}", 
 "userEvent": "{{ userEvent }}", 
-"pageSize": {{ pageSize }}, 
 "userLabels": "{{ userLabels }}", 
+"validateOnly": {{ validateOnly }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_serving_configs_search">
+
+Performs a search.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_collections_data_stores_serving_configs_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"boostSpec": "{{ boostSpec }}", 
+"branch": "{{ branch }}", 
+"canonicalFilter": "{{ canonicalFilter }}", 
+"contentSearchSpec": "{{ contentSearchSpec }}", 
+"crowdingSpecs": "{{ crowdingSpecs }}", 
+"customRankingParams": "{{ customRankingParams }}", 
+"dataStoreSpecs": "{{ dataStoreSpecs }}", 
+"displaySpec": "{{ displaySpec }}", 
+"entity": "{{ entity }}", 
+"facetSpecs": "{{ facetSpecs }}", 
 "filter": "{{ filter }}", 
+"imageQuery": "{{ imageQuery }}", 
+"languageCode": "{{ languageCode }}", 
+"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
+"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
+"offset": {{ offset }}, 
+"oneBoxPageSize": {{ oneBoxPageSize }}, 
+"orderBy": "{{ orderBy }}", 
+"pageCategories": "{{ pageCategories }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"params": "{{ params }}", 
+"query": "{{ query }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"rankingExpression": "{{ rankingExpression }}", 
+"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
+"relevanceFilterSpec": "{{ relevanceFilterSpec }}", 
+"relevanceScoreSpec": "{{ relevanceScoreSpec }}", 
+"relevanceThreshold": "{{ relevanceThreshold }}", 
+"safeSearch": {{ safeSearch }}, 
+"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
+"session": "{{ session }}", 
+"sessionSpec": "{{ sessionSpec }}", 
+"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
+"userInfo": "{{ userInfo }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_serving_configs_search_lite">
+
+Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_collections_data_stores_serving_configs_search_lite 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"boostSpec": "{{ boostSpec }}", 
+"branch": "{{ branch }}", 
+"canonicalFilter": "{{ canonicalFilter }}", 
+"contentSearchSpec": "{{ contentSearchSpec }}", 
+"crowdingSpecs": "{{ crowdingSpecs }}", 
+"customRankingParams": "{{ customRankingParams }}", 
+"dataStoreSpecs": "{{ dataStoreSpecs }}", 
+"displaySpec": "{{ displaySpec }}", 
+"entity": "{{ entity }}", 
+"facetSpecs": "{{ facetSpecs }}", 
+"filter": "{{ filter }}", 
+"imageQuery": "{{ imageQuery }}", 
+"languageCode": "{{ languageCode }}", 
+"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
+"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
+"offset": {{ offset }}, 
+"oneBoxPageSize": {{ oneBoxPageSize }}, 
+"orderBy": "{{ orderBy }}", 
+"pageCategories": "{{ pageCategories }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"params": "{{ params }}", 
+"query": "{{ query }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"rankingExpression": "{{ rankingExpression }}", 
+"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
+"relevanceFilterSpec": "{{ relevanceFilterSpec }}", 
+"relevanceScoreSpec": "{{ relevanceScoreSpec }}", 
+"relevanceThreshold": "{{ relevanceThreshold }}", 
+"safeSearch": {{ safeSearch }}, 
+"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
+"session": "{{ session }}", 
+"sessionSpec": "{{ sessionSpec }}", 
+"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
+"userInfo": "{{ userInfo }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_serving_configs_stream_answer">
+
+Answer query method (streaming). It takes one AnswerQueryRequest and returns multiple AnswerQueryResponse messages in a stream.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_collections_data_stores_serving_configs_stream_answer 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"answerGenerationSpec": "{{ answerGenerationSpec }}", 
+"asynchronousMode": {{ asynchronousMode }}, 
+"endUserSpec": "{{ endUserSpec }}", 
+"groundingSpec": "{{ groundingSpec }}", 
+"query": "{{ query }}", 
+"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
+"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
+"safetySpec": "{{ safetySpec }}", 
+"searchSpec": "{{ searchSpec }}", 
+"session": "{{ session }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_engines_serving_configs_answer">
+
+Answer query method.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_collections_engines_serving_configs_answer 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@enginesId='{{ enginesId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"answerGenerationSpec": "{{ answerGenerationSpec }}", 
+"asynchronousMode": {{ asynchronousMode }}, 
+"endUserSpec": "{{ endUserSpec }}", 
+"groundingSpec": "{{ groundingSpec }}", 
+"query": "{{ query }}", 
+"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
+"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
+"safetySpec": "{{ safetySpec }}", 
+"searchSpec": "{{ searchSpec }}", 
+"session": "{{ session }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_engines_serving_configs_recommend">
+
+Makes a recommendation, which requires a contextual user event.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_collections_engines_serving_configs_recommend 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@enginesId='{{ enginesId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
+"params": "{{ params }}", 
+"userEvent": "{{ userEvent }}", 
+"userLabels": "{{ userLabels }}", 
 "validateOnly": {{ validateOnly }}
 }'
 ;
@@ -2280,42 +2152,43 @@ EXEC google.discoveryengine.serving_configs.projects_locations_collections_engin
 @servingConfigsId='{{ servingConfigsId }}' --required 
 @@json=
 '{
-"imageQuery": "{{ imageQuery }}", 
-"contentSearchSpec": "{{ contentSearchSpec }}", 
-"safeSearch": {{ safeSearch }}, 
-"session": "{{ session }}", 
-"entity": "{{ entity }}", 
-"query": "{{ query }}", 
-"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
-"displaySpec": "{{ displaySpec }}", 
-"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
-"dataStoreSpecs": "{{ dataStoreSpecs }}", 
-"pageSize": {{ pageSize }}, 
-"branch": "{{ branch }}", 
-"oneBoxPageSize": {{ oneBoxPageSize }}, 
-"facetSpecs": "{{ facetSpecs }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"customRankingParams": "{{ customRankingParams }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
-"relevanceThreshold": "{{ relevanceThreshold }}", 
-"params": "{{ params }}", 
 "boostSpec": "{{ boostSpec }}", 
-"offset": {{ offset }}, 
-"filter": "{{ filter }}", 
-"userInfo": "{{ userInfo }}", 
-"orderBy": "{{ orderBy }}", 
-"languageCode": "{{ languageCode }}", 
+"branch": "{{ branch }}", 
+"canonicalFilter": "{{ canonicalFilter }}", 
+"contentSearchSpec": "{{ contentSearchSpec }}", 
 "crowdingSpecs": "{{ crowdingSpecs }}", 
+"customRankingParams": "{{ customRankingParams }}", 
+"dataStoreSpecs": "{{ dataStoreSpecs }}", 
+"displaySpec": "{{ displaySpec }}", 
+"entity": "{{ entity }}", 
+"facetSpecs": "{{ facetSpecs }}", 
+"filter": "{{ filter }}", 
+"imageQuery": "{{ imageQuery }}", 
+"languageCode": "{{ languageCode }}", 
+"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
+"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
+"offset": {{ offset }}, 
+"oneBoxPageSize": {{ oneBoxPageSize }}, 
+"orderBy": "{{ orderBy }}", 
 "pageCategories": "{{ pageCategories }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
-"userLabels": "{{ userLabels }}", 
-"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
+"params": "{{ params }}", 
+"query": "{{ query }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
 "rankingExpression": "{{ rankingExpression }}", 
+"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
+"relevanceFilterSpec": "{{ relevanceFilterSpec }}", 
+"relevanceScoreSpec": "{{ relevanceScoreSpec }}", 
+"relevanceThreshold": "{{ relevanceThreshold }}", 
+"safeSearch": {{ safeSearch }}, 
+"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
+"session": "{{ session }}", 
 "sessionSpec": "{{ sessionSpec }}", 
 "spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"relevanceScoreSpec": "{{ relevanceScoreSpec }}"
+"userInfo": "{{ userInfo }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
 }'
 ;
 ```
@@ -2333,65 +2206,43 @@ EXEC google.discoveryengine.serving_configs.projects_locations_collections_engin
 @servingConfigsId='{{ servingConfigsId }}' --required 
 @@json=
 '{
-"imageQuery": "{{ imageQuery }}", 
-"contentSearchSpec": "{{ contentSearchSpec }}", 
-"safeSearch": {{ safeSearch }}, 
-"session": "{{ session }}", 
-"entity": "{{ entity }}", 
-"query": "{{ query }}", 
-"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
-"displaySpec": "{{ displaySpec }}", 
-"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
-"dataStoreSpecs": "{{ dataStoreSpecs }}", 
-"pageSize": {{ pageSize }}, 
-"branch": "{{ branch }}", 
-"oneBoxPageSize": {{ oneBoxPageSize }}, 
-"facetSpecs": "{{ facetSpecs }}", 
-"userPseudoId": "{{ userPseudoId }}", 
-"customRankingParams": "{{ customRankingParams }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
-"relevanceThreshold": "{{ relevanceThreshold }}", 
-"params": "{{ params }}", 
 "boostSpec": "{{ boostSpec }}", 
-"offset": {{ offset }}, 
-"filter": "{{ filter }}", 
-"userInfo": "{{ userInfo }}", 
-"orderBy": "{{ orderBy }}", 
-"languageCode": "{{ languageCode }}", 
+"branch": "{{ branch }}", 
+"canonicalFilter": "{{ canonicalFilter }}", 
+"contentSearchSpec": "{{ contentSearchSpec }}", 
 "crowdingSpecs": "{{ crowdingSpecs }}", 
+"customRankingParams": "{{ customRankingParams }}", 
+"dataStoreSpecs": "{{ dataStoreSpecs }}", 
+"displaySpec": "{{ displaySpec }}", 
+"entity": "{{ entity }}", 
+"facetSpecs": "{{ facetSpecs }}", 
+"filter": "{{ filter }}", 
+"imageQuery": "{{ imageQuery }}", 
+"languageCode": "{{ languageCode }}", 
+"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
+"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
+"offset": {{ offset }}, 
+"oneBoxPageSize": {{ oneBoxPageSize }}, 
+"orderBy": "{{ orderBy }}", 
 "pageCategories": "{{ pageCategories }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
-"userLabels": "{{ userLabels }}", 
-"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
+"params": "{{ params }}", 
+"query": "{{ query }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
 "rankingExpression": "{{ rankingExpression }}", 
+"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
+"relevanceFilterSpec": "{{ relevanceFilterSpec }}", 
+"relevanceScoreSpec": "{{ relevanceScoreSpec }}", 
+"relevanceThreshold": "{{ relevanceThreshold }}", 
+"safeSearch": {{ safeSearch }}, 
+"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
+"session": "{{ session }}", 
 "sessionSpec": "{{ sessionSpec }}", 
 "spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"relevanceScoreSpec": "{{ relevanceScoreSpec }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_engines_serving_configs_recommend">
-
-Makes a recommendation, which requires a contextual user event.
-
-```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_collections_engines_serving_configs_recommend 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@enginesId='{{ enginesId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"params": "{{ params }}", 
-"userEvent": "{{ userEvent }}", 
-"pageSize": {{ pageSize }}, 
+"userInfo": "{{ userInfo }}", 
 "userLabels": "{{ userLabels }}", 
-"filter": "{{ filter }}", 
-"validateOnly": {{ validateOnly }}
+"userPseudoId": "{{ userPseudoId }}"
 }'
 ;
 ```
@@ -2409,47 +2260,202 @@ EXEC google.discoveryengine.serving_configs.projects_locations_collections_engin
 @servingConfigsId='{{ servingConfigsId }}' --required 
 @@json=
 '{
-"query": "{{ query }}", 
-"userLabels": "{{ userLabels }}", 
-"endUserSpec": "{{ endUserSpec }}", 
-"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
-"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
-"asynchronousMode": {{ asynchronousMode }}, 
-"searchSpec": "{{ searchSpec }}", 
 "answerGenerationSpec": "{{ answerGenerationSpec }}", 
-"session": "{{ session }}", 
-"userPseudoId": "{{ userPseudoId }}", 
+"asynchronousMode": {{ asynchronousMode }}, 
+"endUserSpec": "{{ endUserSpec }}", 
 "groundingSpec": "{{ groundingSpec }}", 
-"safetySpec": "{{ safetySpec }}"
+"query": "{{ query }}", 
+"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
+"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
+"safetySpec": "{{ safetySpec }}", 
+"searchSpec": "{{ searchSpec }}", 
+"session": "{{ session }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_engines_serving_configs_answer">
+<TabItem value="projects_locations_data_stores_serving_configs_answer">
 
 Answer query method.
 
 ```sql
-EXEC google.discoveryengine.serving_configs.projects_locations_collections_engines_serving_configs_answer 
+EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_answer 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@enginesId='{{ enginesId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
 @servingConfigsId='{{ servingConfigsId }}' --required 
 @@json=
 '{
-"query": "{{ query }}", 
-"userLabels": "{{ userLabels }}", 
-"endUserSpec": "{{ endUserSpec }}", 
-"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
-"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
-"asynchronousMode": {{ asynchronousMode }}, 
-"searchSpec": "{{ searchSpec }}", 
 "answerGenerationSpec": "{{ answerGenerationSpec }}", 
-"session": "{{ session }}", 
-"userPseudoId": "{{ userPseudoId }}", 
+"asynchronousMode": {{ asynchronousMode }}, 
+"endUserSpec": "{{ endUserSpec }}", 
 "groundingSpec": "{{ groundingSpec }}", 
-"safetySpec": "{{ safetySpec }}"
+"query": "{{ query }}", 
+"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
+"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
+"safetySpec": "{{ safetySpec }}", 
+"searchSpec": "{{ searchSpec }}", 
+"session": "{{ session }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_serving_configs_recommend">
+
+Makes a recommendation, which requires a contextual user event.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_recommend 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
+"params": "{{ params }}", 
+"userEvent": "{{ userEvent }}", 
+"userLabels": "{{ userLabels }}", 
+"validateOnly": {{ validateOnly }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_serving_configs_search">
+
+Performs a search.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"boostSpec": "{{ boostSpec }}", 
+"branch": "{{ branch }}", 
+"canonicalFilter": "{{ canonicalFilter }}", 
+"contentSearchSpec": "{{ contentSearchSpec }}", 
+"crowdingSpecs": "{{ crowdingSpecs }}", 
+"customRankingParams": "{{ customRankingParams }}", 
+"dataStoreSpecs": "{{ dataStoreSpecs }}", 
+"displaySpec": "{{ displaySpec }}", 
+"entity": "{{ entity }}", 
+"facetSpecs": "{{ facetSpecs }}", 
+"filter": "{{ filter }}", 
+"imageQuery": "{{ imageQuery }}", 
+"languageCode": "{{ languageCode }}", 
+"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
+"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
+"offset": {{ offset }}, 
+"oneBoxPageSize": {{ oneBoxPageSize }}, 
+"orderBy": "{{ orderBy }}", 
+"pageCategories": "{{ pageCategories }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"params": "{{ params }}", 
+"query": "{{ query }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"rankingExpression": "{{ rankingExpression }}", 
+"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
+"relevanceFilterSpec": "{{ relevanceFilterSpec }}", 
+"relevanceScoreSpec": "{{ relevanceScoreSpec }}", 
+"relevanceThreshold": "{{ relevanceThreshold }}", 
+"safeSearch": {{ safeSearch }}, 
+"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
+"session": "{{ session }}", 
+"sessionSpec": "{{ sessionSpec }}", 
+"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
+"userInfo": "{{ userInfo }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_serving_configs_search_lite">
+
+Performs a search. Similar to the SearchService.Search method, but a lite version that allows API key for authentication, where OAuth and IAM checks are not required. Only public website search is supported by this method. If data stores and engines not associated with public website search are specified, a `FAILED_PRECONDITION` error is returned. This method can be used for easy onboarding without having to implement an authentication backend. However, it is strongly recommended to use SearchService.Search instead with required OAuth and IAM checks to provide better data security.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_search_lite 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"boostSpec": "{{ boostSpec }}", 
+"branch": "{{ branch }}", 
+"canonicalFilter": "{{ canonicalFilter }}", 
+"contentSearchSpec": "{{ contentSearchSpec }}", 
+"crowdingSpecs": "{{ crowdingSpecs }}", 
+"customRankingParams": "{{ customRankingParams }}", 
+"dataStoreSpecs": "{{ dataStoreSpecs }}", 
+"displaySpec": "{{ displaySpec }}", 
+"entity": "{{ entity }}", 
+"facetSpecs": "{{ facetSpecs }}", 
+"filter": "{{ filter }}", 
+"imageQuery": "{{ imageQuery }}", 
+"languageCode": "{{ languageCode }}", 
+"naturalLanguageQueryUnderstandingSpec": "{{ naturalLanguageQueryUnderstandingSpec }}", 
+"numResultsPerDataStore": {{ numResultsPerDataStore }}, 
+"offset": {{ offset }}, 
+"oneBoxPageSize": {{ oneBoxPageSize }}, 
+"orderBy": "{{ orderBy }}", 
+"pageCategories": "{{ pageCategories }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"params": "{{ params }}", 
+"query": "{{ query }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"rankingExpression": "{{ rankingExpression }}", 
+"rankingExpressionBackend": "{{ rankingExpressionBackend }}", 
+"relevanceFilterSpec": "{{ relevanceFilterSpec }}", 
+"relevanceScoreSpec": "{{ relevanceScoreSpec }}", 
+"relevanceThreshold": "{{ relevanceThreshold }}", 
+"safeSearch": {{ safeSearch }}, 
+"searchAsYouTypeSpec": "{{ searchAsYouTypeSpec }}", 
+"session": "{{ session }}", 
+"sessionSpec": "{{ sessionSpec }}", 
+"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
+"userInfo": "{{ userInfo }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_serving_configs_stream_answer">
+
+Answer query method (streaming). It takes one AnswerQueryRequest and returns multiple AnswerQueryResponse messages in a stream.
+
+```sql
+EXEC google.discoveryengine.serving_configs.projects_locations_data_stores_serving_configs_stream_answer 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataStoresId='{{ dataStoresId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"answerGenerationSpec": "{{ answerGenerationSpec }}", 
+"asynchronousMode": {{ asynchronousMode }}, 
+"endUserSpec": "{{ endUserSpec }}", 
+"groundingSpec": "{{ groundingSpec }}", 
+"query": "{{ query }}", 
+"queryUnderstandingSpec": "{{ queryUnderstandingSpec }}", 
+"relatedQuestionsSpec": "{{ relatedQuestionsSpec }}", 
+"safetySpec": "{{ safetySpec }}", 
+"searchSpec": "{{ searchSpec }}", 
+"session": "{{ session }}", 
+"userLabels": "{{ userLabels }}", 
+"userPseudoId": "{{ userPseudoId }}"
 }'
 ;
 ```

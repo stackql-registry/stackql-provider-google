@@ -145,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_envgroups_list"><CopyableCode code="organizations_envgroups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all environment groups.</td>
 </tr>
 <tr>
@@ -257,8 +257,8 @@ lastModifiedAt,
 state
 FROM google.apigee.envgroups
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -280,14 +280,14 @@ Creates a new environment group.
 
 ```sql
 INSERT INTO google.apigee.envgroups (
-data__name,
 data__hostnames,
+data__name,
 organizationsId,
 name
 )
 SELECT 
-'{{ name }}',
 '{{ hostnames }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ name }}'
 RETURNING
@@ -307,15 +307,15 @@ response
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the envgroups resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        ID of the environment group.
     - name: hostnames
       value:
         - "{{ hostnames }}"
       description: |
         Required. Host names for this environment group.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        ID of the environment group.
     - name: name
       value: "{{ name }}"
 `}</CodeBlock>
@@ -339,8 +339,8 @@ Updates an environment group.
 ```sql
 UPDATE google.apigee.envgroups
 SET 
-data__name = '{{ name }}',
-data__hostnames = '{{ hostnames }}'
+data__hostnames = '{{ hostnames }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND envgroupsId = '{{ envgroupsId }}' --required

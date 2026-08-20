@@ -33,47 +33,13 @@ Creates, updates, deletes, gets or lists a <code>replays</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_replays_get"
+    defaultValue="folders_locations_replays_get"
     values={[
-        { label: 'projects_locations_replays_get', value: 'projects_locations_replays_get' },
         { label: 'folders_locations_replays_get', value: 'folders_locations_replays_get' },
-        { label: 'organizations_locations_replays_get', value: 'organizations_locations_replays_get' }
+        { label: 'organizations_locations_replays_get', value: 'organizations_locations_replays_get' },
+        { label: 'projects_locations_replays_get', value: 'projects_locations_replays_get' }
     ]}
 >
-<TabItem value="projects_locations_replays_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the `Replay`, which has the following format: `&#123;projects|folders|organizations&#125;/&#123;resource-id&#125;/locations/global/replays/&#123;replay-id&#125;`, where `&#123;resource-id&#125;` is the ID of the project, folder, or organization that owns the Replay. Example: `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="config" /></td>
-    <td><code>object</code></td>
-    <td>Required. The configuration used for the `Replay`. (id: GoogleCloudPolicysimulatorV1ReplayConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resultsSummary" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Summary statistics about the replayed log entries. (id: GoogleCloudPolicysimulatorV1ReplayResultsSummary)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The current state of the `Replay`. (STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="folders_locations_replays_get">
 
 <table>
@@ -109,6 +75,40 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="organizations_locations_replays_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the `Replay`, which has the following format: `&#123;projects|folders|organizations&#125;/&#123;resource-id&#125;/locations/global/replays/&#123;replay-id&#125;`, where `&#123;resource-id&#125;` is the ID of the project, folder, or organization that owns the Replay. Example: `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="config" /></td>
+    <td><code>object</code></td>
+    <td>Required. The configuration used for the `Replay`. (id: GoogleCloudPolicysimulatorV1ReplayConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resultsSummary" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Summary statistics about the replayed log entries. (id: GoogleCloudPolicysimulatorV1ReplayResultsSummary)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The current state of the `Replay`. (STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_replays_get">
 
 <table>
 <thead>
@@ -160,13 +160,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_replays_get"><CopyableCode code="projects_locations_replays_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-replaysId"><code>replaysId</code></a></td>
-    <td></td>
-    <td>Gets the specified Replay. Each `Replay` is available for at least 7 days.</td>
-</tr>
-<tr>
     <td><a href="#folders_locations_replays_get"><CopyableCode code="folders_locations_replays_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-replaysId"><code>replaysId</code></a></td>
@@ -181,11 +174,11 @@ The following methods are available for this resource:
     <td>Gets the specified Replay. Each `Replay` is available for at least 7 days.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_replays_create"><CopyableCode code="projects_locations_replays_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#projects_locations_replays_get"><CopyableCode code="projects_locations_replays_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-replaysId"><code>replaysId</code></a></td>
     <td></td>
-    <td>Creates and starts a Replay using the given ReplayConfig.</td>
+    <td>Gets the specified Replay. Each `Replay` is available for at least 7 days.</td>
 </tr>
 <tr>
     <td><a href="#folders_locations_replays_create"><CopyableCode code="folders_locations_replays_create" /></a></td>
@@ -198,6 +191,13 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_replays_create"><CopyableCode code="organizations_locations_replays_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Creates and starts a Replay using the given ReplayConfig.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_replays_create"><CopyableCode code="projects_locations_replays_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Creates and starts a Replay using the given ReplayConfig.</td>
 </tr>
@@ -248,30 +248,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_replays_get"
+    defaultValue="folders_locations_replays_get"
     values={[
-        { label: 'projects_locations_replays_get', value: 'projects_locations_replays_get' },
         { label: 'folders_locations_replays_get', value: 'folders_locations_replays_get' },
-        { label: 'organizations_locations_replays_get', value: 'organizations_locations_replays_get' }
+        { label: 'organizations_locations_replays_get', value: 'organizations_locations_replays_get' },
+        { label: 'projects_locations_replays_get', value: 'projects_locations_replays_get' }
     ]}
 >
-<TabItem value="projects_locations_replays_get">
-
-Gets the specified Replay. Each `Replay` is available for at least 7 days.
-
-```sql
-SELECT
-name,
-config,
-resultsSummary,
-state
-FROM google.policysimulator.replays
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND replaysId = '{{ replaysId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="folders_locations_replays_get">
 
 Gets the specified Replay. Each `Replay` is available for at least 7 days.
@@ -306,43 +289,37 @@ AND replaysId = '{{ replaysId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_replays_get">
+
+Gets the specified Replay. Each `Replay` is available for at least 7 days.
+
+```sql
+SELECT
+name,
+config,
+resultsSummary,
+state
+FROM google.policysimulator.replays
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND replaysId = '{{ replaysId }}' -- required
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_replays_create"
+    defaultValue="folders_locations_replays_create"
     values={[
-        { label: 'projects_locations_replays_create', value: 'projects_locations_replays_create' },
         { label: 'folders_locations_replays_create', value: 'folders_locations_replays_create' },
         { label: 'organizations_locations_replays_create', value: 'organizations_locations_replays_create' },
+        { label: 'projects_locations_replays_create', value: 'projects_locations_replays_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_replays_create">
-
-Creates and starts a Replay using the given ReplayConfig.
-
-```sql
-INSERT INTO google.policysimulator.replays (
-data__config,
-projectsId,
-locationsId
-)
-SELECT 
-'{{ config }}',
-'{{ projectsId }}',
-'{{ locationsId }}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response
-;
-```
-</TabItem>
 <TabItem value="folders_locations_replays_create">
 
 Creates and starts a Replay using the given ReplayConfig.
@@ -389,29 +366,52 @@ response
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_replays_create">
+
+Creates and starts a Replay using the given ReplayConfig.
+
+```sql
+INSERT INTO google.policysimulator.replays (
+data__config,
+projectsId,
+locationsId
+)
+SELECT 
+'{{ config }}',
+'{{ projectsId }}',
+'{{ locationsId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: replays
   props:
-    - name: projectsId
-      value: "{{ projectsId }}"
+    - name: foldersId
+      value: "{{ foldersId }}"
       description: Required parameter for the replays resource.
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the replays resource.
-    - name: foldersId
-      value: "{{ foldersId }}"
-      description: Required parameter for the replays resource.
     - name: organizationsId
       value: "{{ organizationsId }}"
+      description: Required parameter for the replays resource.
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the replays resource.
     - name: config
       description: |
         Required. The configuration used for the \`Replay\`.
       value:
-        policyOverlay: "{{ policyOverlay }}"
         logSource: "{{ logSource }}"
+        policyOverlay: "{{ policyOverlay }}"
 `}</CodeBlock>
 
 </TabItem>

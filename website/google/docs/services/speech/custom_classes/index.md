@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List custom classes.</td>
 </tr>
 <tr>
@@ -355,8 +355,8 @@ uid
 FROM google.speech.custom_classes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -418,22 +418,22 @@ uid
       description: Required parameter for the custom_classes resource.
     - name: customClass
       description: |
-        A set of words or phrases that represents a common concept likely to appear in your audio, for example a list of passenger ship names. CustomClass items can be substituted into placeholders that you set in PhraseSet phrases.
+        Required. The custom class to create.
       value:
-        uid: "{{ uid }}"
-        expireTime: "{{ expireTime }}"
-        reconciling: {{ reconciling }}
-        items:
-          - value: "{{ value }}"
-        displayName: "{{ displayName }}"
-        state: "{{ state }}"
-        etag: "{{ etag }}"
-        kmsKeyVersionName: "{{ kmsKeyVersionName }}"
-        kmsKeyName: "{{ kmsKeyName }}"
         annotations: "{{ annotations }}"
         customClassId: "{{ customClassId }}"
         deleteTime: "{{ deleteTime }}"
+        displayName: "{{ displayName }}"
+        etag: "{{ etag }}"
+        expireTime: "{{ expireTime }}"
+        items:
+          - value: "{{ value }}"
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyVersionName: "{{ kmsKeyVersionName }}"
         name: "{{ name }}"
+        reconciling: {{ reconciling }}
+        state: "{{ state }}"
+        uid: "{{ uid }}"
     - name: customClassId
       value: "{{ customClassId }}"
       description: |
@@ -459,8 +459,8 @@ Update a custom class.
 ```sql
 UPDATE google.speech.custom_classes
 SET 
-data__items = '{{ items }}',
 data__customClassId = '{{ customClassId }}',
+data__items = '{{ items }}',
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

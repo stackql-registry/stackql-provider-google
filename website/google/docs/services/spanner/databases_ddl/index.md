@@ -168,9 +168,9 @@ Updates the schema of a Cloud Spanner database by creating/altering/dropping tab
 ```sql
 UPDATE google.spanner.databases_ddl
 SET 
-data__statements = '{{ statements }}',
 data__operationId = '{{ operationId }}',
-data__protoDescriptors = '{{ protoDescriptors }}'
+data__protoDescriptors = '{{ protoDescriptors }}',
+data__statements = '{{ statements }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

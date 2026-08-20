@@ -125,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists job templates in the specified region.</td>
 </tr>
 <tr>
@@ -243,8 +243,8 @@ labels
 FROM google.transcoder.job_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -268,17 +268,17 @@ Creates a job template in the specified region.
 
 ```sql
 INSERT INTO google.transcoder.job_templates (
-data__name,
 data__config,
 data__labels,
+data__name,
 projectsId,
 locationsId,
 jobTemplateId
 )
 SELECT 
-'{{ name }}',
 '{{ config }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ jobTemplateId }}'
@@ -300,212 +300,212 @@ labels
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the job_templates resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The resource name of the job template. Format: \`projects/{project_number}/locations/{location}/jobTemplates/{job_template}\`
     - name: config
       description: |
         The configuration for this template.
       value:
-        muxStreams:
-          - fileName: "{{ fileName }}"
-            container: "{{ container }}"
-            fmp4:
-              codecTag: "{{ codecTag }}"
-            segmentSettings:
-              segmentDuration: "{{ segmentDuration }}"
-              individualSegments: {{ individualSegments }}
-            key: "{{ key }}"
-            encryptionId: "{{ encryptionId }}"
-            elementaryStreams: "{{ elementaryStreams }}"
-        overlays:
-          - image:
-              uri: "{{ uri }}"
-              resolution:
-                x: {{ x }}
-                y: {{ y }}
-              alpha: {{ alpha }}
-            animations: "{{ animations }}"
-        manifests:
-          - fileName: "{{ fileName }}"
-            muxStreams: "{{ muxStreams }}"
-            type: "{{ type }}"
-            dash:
-              segmentReferenceScheme: "{{ segmentReferenceScheme }}"
-        spriteSheets:
-          - columnCount: {{ columnCount }}
-            startTimeOffset: "{{ startTimeOffset }}"
-            spriteWidthPixels: {{ spriteWidthPixels }}
-            rowCount: {{ rowCount }}
-            endTimeOffset: "{{ endTimeOffset }}"
-            totalCount: {{ totalCount }}
-            format: "{{ format }}"
-            interval: "{{ interval }}"
-            filePrefix: "{{ filePrefix }}"
-            spriteHeightPixels: {{ spriteHeightPixels }}
-            quality: {{ quality }}
-        output:
-          uri: "{{ uri }}"
-        encryptions:
-          - drmSystems:
-              fairplay: "{{ fairplay }}"
-              widevine: "{{ widevine }}"
-              playready: "{{ playready }}"
-              clearkey: "{{ clearkey }}"
-            aes128: "{{ aes128 }}"
-            secretManagerKeySource:
-              secretVersion: "{{ secretVersion }}"
-            id: "{{ id }}"
-            sampleAes: "{{ sampleAes }}"
-            mpegCenc:
-              scheme: "{{ scheme }}"
         adBreaks:
           - startTimeOffset: "{{ startTimeOffset }}"
-        inputs:
-          - uri: "{{ uri }}"
-            preprocessingConfig:
-              audio:
-                highBoost: {{ highBoost }}
-                lufs: {{ lufs }}
-                lowBoost: {{ lowBoost }}
-              deinterlace:
-                yadif:
-                  mode: "{{ mode }}"
-                  disableSpatialInterlacing: {{ disableSpatialInterlacing }}
-                  parity: "{{ parity }}"
-                  deinterlaceAllFrames: {{ deinterlaceAllFrames }}
-                bwdif:
-                  mode: "{{ mode }}"
-                  parity: "{{ parity }}"
-                  deinterlaceAllFrames: {{ deinterlaceAllFrames }}
-              color:
-                contrast: {{ contrast }}
-                brightness: {{ brightness }}
-                saturation: {{ saturation }}
-              denoise:
-                strength: {{ strength }}
-                tune: "{{ tune }}"
-              deblock:
-                enabled: {{ enabled }}
-                strength: {{ strength }}
-              crop:
-                topPixels: {{ topPixels }}
-                bottomPixels: {{ bottomPixels }}
-                leftPixels: {{ leftPixels }}
-                rightPixels: {{ rightPixels }}
-              pad:
-                leftPixels: {{ leftPixels }}
-                rightPixels: {{ rightPixels }}
-                topPixels: {{ topPixels }}
-                bottomPixels: {{ bottomPixels }}
+        editList:
+          - endTimeOffset: "{{ endTimeOffset }}"
+            inputs: "{{ inputs }}"
             key: "{{ key }}"
-            attributes:
-              trackDefinitions:
-                - languages: "{{ languages }}"
-                  detectedLanguages: "{{ detectedLanguages }}"
-                  inputTrack: {{ inputTrack }}
-                  detectLanguages: {{ detectLanguages }}
+            startTimeOffset: "{{ startTimeOffset }}"
         elementaryStreams:
-          - key: "{{ key }}"
+          - audioStream:
+              bitrateBps: {{ bitrateBps }}
+              channelCount: {{ channelCount }}
+              channelLayout:
+                - "{{ channelLayout }}"
+              codec: "{{ codec }}"
+              displayName: "{{ displayName }}"
+              languageCode: "{{ languageCode }}"
+              mapping:
+                - atomKey: "{{ atomKey }}"
+                  gainDb: {{ gainDb }}
+                  inputChannel: {{ inputChannel }}
+                  inputKey: "{{ inputKey }}"
+                  inputTrack: {{ inputTrack }}
+                  outputChannel: {{ outputChannel }}
+              sampleRateHertz: {{ sampleRateHertz }}
+            key: "{{ key }}"
             textStream:
               codec: "{{ codec }}"
+              displayName: "{{ displayName }}"
+              languageCode: "{{ languageCode }}"
               mapping:
                 - atomKey: "{{ atomKey }}"
                   inputKey: "{{ inputKey }}"
                   inputTrack: {{ inputTrack }}
-              displayName: "{{ displayName }}"
-              languageCode: "{{ languageCode }}"
             videoStream:
               h264:
-                bitrateBps: {{ bitrateBps }}
-                vbvFullnessBits: {{ vbvFullnessBits }}
+                allowOpenGop: {{ allowOpenGop }}
                 aqStrength: {{ aqStrength }}
+                bFrameCount: {{ bFrameCount }}
+                bPyramid: {{ bPyramid }}
+                bitrateBps: {{ bitrateBps }}
+                crfLevel: {{ crfLevel }}
+                enableTwoPass: {{ enableTwoPass }}
                 entropyCoder: "{{ entropyCoder }}"
-                widthPixels: {{ widthPixels }}
-                pixelFormat: "{{ pixelFormat }}"
-                bPyramid: {{ bPyramid }}
-                bFrameCount: {{ bFrameCount }}
-                rateControlMode: "{{ rateControlMode }}"
-                hlg: "{{ hlg }}"
-                heightPixels: {{ heightPixels }}
+                frameRate: {{ frameRate }}
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                gopDuration: "{{ gopDuration }}"
                 gopFrameCount: {{ gopFrameCount }}
+                heightPixels: {{ heightPixels }}
+                hlg: "{{ hlg }}"
+                pixelFormat: "{{ pixelFormat }}"
+                preset: "{{ preset }}"
                 profile: "{{ profile }}"
+                rateControlMode: "{{ rateControlMode }}"
                 sdr: "{{ sdr }}"
-                vbvSizeBits: {{ vbvSizeBits }}
-                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
                 tune: "{{ tune }}"
-                allowOpenGop: {{ allowOpenGop }}
-                frameRate: {{ frameRate }}
-                gopDuration: "{{ gopDuration }}"
-                enableTwoPass: {{ enableTwoPass }}
-                crfLevel: {{ crfLevel }}
-                preset: "{{ preset }}"
-              h265:
-                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
-                hdr10: "{{ hdr10 }}"
-                tune: "{{ tune }}"
-                allowOpenGop: {{ allowOpenGop }}
-                frameRate: {{ frameRate }}
-                gopDuration: "{{ gopDuration }}"
-                enableTwoPass: {{ enableTwoPass }}
-                crfLevel: {{ crfLevel }}
-                preset: "{{ preset }}"
-                bitrateBps: {{ bitrateBps }}
                 vbvFullnessBits: {{ vbvFullnessBits }}
-                aqStrength: {{ aqStrength }}
-                widthPixels: {{ widthPixels }}
-                pixelFormat: "{{ pixelFormat }}"
-                bPyramid: {{ bPyramid }}
-                bFrameCount: {{ bFrameCount }}
-                heightPixels: {{ heightPixels }}
-                rateControlMode: "{{ rateControlMode }}"
-                hlg: "{{ hlg }}"
-                profile: "{{ profile }}"
-                gopFrameCount: {{ gopFrameCount }}
                 vbvSizeBits: {{ vbvSizeBits }}
-                sdr: "{{ sdr }}"
-              vp9:
-                frameRate: {{ frameRate }}
-                gopDuration: "{{ gopDuration }}"
-                crfLevel: {{ crfLevel }}
-                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
-                rateControlMode: "{{ rateControlMode }}"
-                hlg: "{{ hlg }}"
-                heightPixels: {{ heightPixels }}
-                gopFrameCount: {{ gopFrameCount }}
-                profile: "{{ profile }}"
-                sdr: "{{ sdr }}"
-                bitrateBps: {{ bitrateBps }}
                 widthPixels: {{ widthPixels }}
+              h265:
+                allowOpenGop: {{ allowOpenGop }}
+                aqStrength: {{ aqStrength }}
+                bFrameCount: {{ bFrameCount }}
+                bPyramid: {{ bPyramid }}
+                bitrateBps: {{ bitrateBps }}
+                crfLevel: {{ crfLevel }}
+                enableTwoPass: {{ enableTwoPass }}
+                frameRate: {{ frameRate }}
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                gopDuration: "{{ gopDuration }}"
+                gopFrameCount: {{ gopFrameCount }}
+                hdr10: "{{ hdr10 }}"
+                heightPixels: {{ heightPixels }}
+                hlg: "{{ hlg }}"
                 pixelFormat: "{{ pixelFormat }}"
-            audioStream:
-              codec: "{{ codec }}"
-              mapping:
-                - inputTrack: {{ inputTrack }}
-                  inputChannel: {{ inputChannel }}
-                  gainDb: {{ gainDb }}
-                  inputKey: "{{ inputKey }}"
-                  atomKey: "{{ atomKey }}"
-                  outputChannel: {{ outputChannel }}
-              displayName: "{{ displayName }}"
-              channelCount: {{ channelCount }}
-              channelLayout:
-                - "{{ channelLayout }}"
-              languageCode: "{{ languageCode }}"
-              bitrateBps: {{ bitrateBps }}
-              sampleRateHertz: {{ sampleRateHertz }}
+                preset: "{{ preset }}"
+                profile: "{{ profile }}"
+                rateControlMode: "{{ rateControlMode }}"
+                sdr: "{{ sdr }}"
+                tune: "{{ tune }}"
+                vbvFullnessBits: {{ vbvFullnessBits }}
+                vbvSizeBits: {{ vbvSizeBits }}
+                widthPixels: {{ widthPixels }}
+              vp9:
+                bitrateBps: {{ bitrateBps }}
+                crfLevel: {{ crfLevel }}
+                frameRate: {{ frameRate }}
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                gopDuration: "{{ gopDuration }}"
+                gopFrameCount: {{ gopFrameCount }}
+                heightPixels: {{ heightPixels }}
+                hlg: "{{ hlg }}"
+                pixelFormat: "{{ pixelFormat }}"
+                profile: "{{ profile }}"
+                rateControlMode: "{{ rateControlMode }}"
+                sdr: "{{ sdr }}"
+                widthPixels: {{ widthPixels }}
+        encryptions:
+          - aes128: "{{ aes128 }}"
+            drmSystems:
+              clearkey: "{{ clearkey }}"
+              fairplay: "{{ fairplay }}"
+              playready: "{{ playready }}"
+              widevine: "{{ widevine }}"
+            id: "{{ id }}"
+            mpegCenc:
+              scheme: "{{ scheme }}"
+            sampleAes: "{{ sampleAes }}"
+            secretManagerKeySource:
+              secretVersion: "{{ secretVersion }}"
+        inputs:
+          - attributes:
+              trackDefinitions:
+                - detectLanguages: {{ detectLanguages }}
+                  detectedLanguages: "{{ detectedLanguages }}"
+                  inputTrack: {{ inputTrack }}
+                  languages: "{{ languages }}"
+            key: "{{ key }}"
+            preprocessingConfig:
+              audio:
+                highBoost: {{ highBoost }}
+                lowBoost: {{ lowBoost }}
+                lufs: {{ lufs }}
+              color:
+                brightness: {{ brightness }}
+                contrast: {{ contrast }}
+                saturation: {{ saturation }}
+              crop:
+                bottomPixels: {{ bottomPixels }}
+                leftPixels: {{ leftPixels }}
+                rightPixels: {{ rightPixels }}
+                topPixels: {{ topPixels }}
+              deblock:
+                enabled: {{ enabled }}
+                strength: {{ strength }}
+              deinterlace:
+                bwdif:
+                  deinterlaceAllFrames: {{ deinterlaceAllFrames }}
+                  mode: "{{ mode }}"
+                  parity: "{{ parity }}"
+                yadif:
+                  deinterlaceAllFrames: {{ deinterlaceAllFrames }}
+                  disableSpatialInterlacing: {{ disableSpatialInterlacing }}
+                  mode: "{{ mode }}"
+                  parity: "{{ parity }}"
+              denoise:
+                strength: {{ strength }}
+                tune: "{{ tune }}"
+              pad:
+                bottomPixels: {{ bottomPixels }}
+                leftPixels: {{ leftPixels }}
+                rightPixels: {{ rightPixels }}
+                topPixels: {{ topPixels }}
+            uri: "{{ uri }}"
+        manifests:
+          - dash:
+              segmentReferenceScheme: "{{ segmentReferenceScheme }}"
+            fileName: "{{ fileName }}"
+            muxStreams: "{{ muxStreams }}"
+            type: "{{ type }}"
+        muxStreams:
+          - container: "{{ container }}"
+            elementaryStreams: "{{ elementaryStreams }}"
+            encryptionId: "{{ encryptionId }}"
+            fileName: "{{ fileName }}"
+            fmp4:
+              codecTag: "{{ codecTag }}"
+            key: "{{ key }}"
+            segmentSettings:
+              individualSegments: {{ individualSegments }}
+              segmentDuration: "{{ segmentDuration }}"
+        output:
+          uri: "{{ uri }}"
+        overlays:
+          - animations: "{{ animations }}"
+            image:
+              alpha: {{ alpha }}
+              resolution:
+                x: {{ x }}
+                y: {{ y }}
+              uri: "{{ uri }}"
         pubsubDestination:
           topic: "{{ topic }}"
-        editList:
-          - startTimeOffset: "{{ startTimeOffset }}"
+        spriteSheets:
+          - columnCount: {{ columnCount }}
             endTimeOffset: "{{ endTimeOffset }}"
-            key: "{{ key }}"
-            inputs: "{{ inputs }}"
+            filePrefix: "{{ filePrefix }}"
+            format: "{{ format }}"
+            interval: "{{ interval }}"
+            quality: {{ quality }}
+            rowCount: {{ rowCount }}
+            spriteHeightPixels: {{ spriteHeightPixels }}
+            spriteWidthPixels: {{ spriteWidthPixels }}
+            startTimeOffset: "{{ startTimeOffset }}"
+            totalCount: {{ totalCount }}
     - name: labels
       value: "{{ labels }}"
       description: |
         The labels associated with this job template. You can use these to organize and group your job templates.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the job template. Format: \`projects/{project_number}/locations/{location}/jobTemplates/{job_template}\`
     - name: jobTemplateId
       value: "{{ jobTemplateId }}"
 `}</CodeBlock>

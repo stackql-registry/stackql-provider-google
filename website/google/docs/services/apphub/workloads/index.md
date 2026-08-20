@@ -119,6 +119,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the Workload. Format: `"projects/&#123;host-project-id&#125;/locations/&#123;location&#125;/applications/&#123;application-id&#125;/workloads/&#123;workload-id&#125;"`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="attributes" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Consumer provided attributes. (id: Attributes)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create time.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. User-defined description of a Workload. Can have a maximum length of 2048 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="discoveredWorkload" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. The resource name of the original discovered workload.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. User-defined name for the Workload. Can have a maximum length of 63 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Workload state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, DETACHED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. A universally unique identifier (UUID) for the `Workload` in the UUID4 format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Update time.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workloadProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Properties of an underlying compute resource represented by the Workload. These are immutable. (id: WorkloadProperties)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workloadReference" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Reference of an underlying compute resource represented by the Workload. These are immutable. (id: WorkloadReference)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -150,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Workloads in an Application.</td>
 </tr>
 <tr>
@@ -288,15 +343,25 @@ Lists Workloads in an Application.
 
 ```sql
 SELECT
-*
+name,
+attributes,
+createTime,
+description,
+discoveredWorkload,
+displayName,
+state,
+uid,
+updateTime,
+workloadProperties,
+workloadReference
 FROM google.apphub.workloads
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND applicationsId = '{{ applicationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -318,11 +383,11 @@ Creates a Workload in an Application.
 
 ```sql
 INSERT INTO google.apphub.workloads (
-data__displayName,
 data__attributes,
-data__name,
-data__discoveredWorkload,
 data__description,
+data__discoveredWorkload,
+data__displayName,
+data__name,
 projectsId,
 locationsId,
 applicationsId,
@@ -330,11 +395,11 @@ requestId,
 workloadId
 )
 SELECT 
-'{{ displayName }}',
 '{{ attributes }}',
-'{{ name }}',
-'{{ discoveredWorkload }}',
 '{{ description }}',
+'{{ discoveredWorkload }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ applicationsId }}',
@@ -363,39 +428,39 @@ response
     - name: applicationsId
       value: "{{ applicationsId }}"
       description: Required parameter for the workloads resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User-defined name for the Workload. Can have a maximum length of 63 characters.
     - name: attributes
       description: |
         Optional. Consumer provided attributes.
       value:
-        environment:
-          type: "{{ type }}"
-        developerOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
+        businessOwners:
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
         criticality:
           type: "{{ type }}"
-        businessOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
+        developerOwners:
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
+        environment:
+          type: "{{ type }}"
         operatorOwners:
-          - email: "{{ email }}"
-            displayName: "{{ displayName }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the Workload. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}/workloads/{workload-id}"\`
-    - name: discoveredWorkload
-      value: "{{ discoveredWorkload }}"
-      description: |
-        Required. Immutable. The resource name of the original discovered workload.
+          - displayName: "{{ displayName }}"
+            email: "{{ email }}"
     - name: description
       value: "{{ description }}"
       description: |
         Optional. User-defined description of a Workload. Can have a maximum length of 2048 characters.
+    - name: discoveredWorkload
+      value: "{{ discoveredWorkload }}"
+      description: |
+        Required. Immutable. The resource name of the original discovered workload.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User-defined name for the Workload. Can have a maximum length of 63 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the Workload. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}/workloads/{workload-id}"\`
     - name: requestId
       value: "{{ requestId }}"
     - name: workloadId
@@ -421,11 +486,11 @@ Updates a Workload in an Application.
 ```sql
 UPDATE google.apphub.workloads
 SET 
-data__displayName = '{{ displayName }}',
 data__attributes = '{{ attributes }}',
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__discoveredWorkload = '{{ discoveredWorkload }}',
-data__description = '{{ description }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

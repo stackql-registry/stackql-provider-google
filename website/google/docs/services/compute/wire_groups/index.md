@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-crossSiteNetwork"><code>crossSiteNetwork</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the wire groups for a project in the given scope.</td>
 </tr>
 <tr>
@@ -344,11 +344,11 @@ warning
 FROM google.compute.wire_groups
 WHERE project = '{{ project }}' -- required
 AND crossSiteNetwork = '{{ crossSiteNetwork }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -371,10 +371,10 @@ Creates a wire group in the specified project in the given scope<br />using the 
 ```sql
 INSERT INTO google.compute.wire_groups (
 data__adminEnabled,
-data__wireProperties,
-data__name,
-data__endpoints,
 data__description,
+data__endpoints,
+data__name,
+data__wireProperties,
 project,
 crossSiteNetwork,
 requestId,
@@ -382,10 +382,10 @@ validateOnly
 )
 SELECT 
 {{ adminEnabled }},
-'{{ wireProperties }}',
-'{{ name }}',
-'{{ endpoints }}',
 '{{ description }}',
+'{{ endpoints }}',
+'{{ name }}',
+'{{ wireProperties }}',
 '{{ project }}',
 '{{ crossSiteNetwork }}',
 '{{ requestId }}',
@@ -439,13 +439,17 @@ zone
         wires in the wire group are disabled. When true and when
         there is simultaneously no wire-specific override of \`adminEnabled\` to
         false, a given wire is enabled. Defaults to true.
-    - name: wireProperties
+    - name: description
+      value: "{{ description }}"
       description: |
-        Properties for all wires in the wire group.
-      value:
-        bandwidthUnmetered: "{{ bandwidthUnmetered }}"
-        bandwidthAllocation: "{{ bandwidthAllocation }}"
-        faultResponse: "{{ faultResponse }}"
+        An optional description of the wire group.
+    - name: endpoints
+      value: "{{ endpoints }}"
+      description: |
+        A map that contains the logical endpoints of the wire group. Specify
+        key-value pairs for the map as follows:
+        - Key: an RFC1035 user-specified label.
+        - Value: an Endpoint object.
     - name: name
       value: "{{ name }}"
       description: |
@@ -456,17 +460,13 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
-    - name: endpoints
-      value: "{{ endpoints }}"
+    - name: wireProperties
       description: |
-        A map that contains the logical endpoints of the wire group. Specify
-        key-value pairs for the map as follows:
-        - Key: an RFC1035 user-specified label.
-        - Value: an Endpoint object.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of the wire group.
+        Properties for all wires in the wire group.
+      value:
+        bandwidthAllocation: "{{ bandwidthAllocation }}"
+        bandwidthUnmetered: "{{ bandwidthUnmetered }}"
+        faultResponse: "{{ faultResponse }}"
     - name: requestId
       value: "{{ requestId }}"
     - name: validateOnly
@@ -493,10 +493,10 @@ Updates the specified wire group resource with the data included in the<br />req
 UPDATE google.compute.wire_groups
 SET 
 data__adminEnabled = {{ adminEnabled }},
-data__wireProperties = '{{ wireProperties }}',
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__endpoints = '{{ endpoints }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}',
+data__wireProperties = '{{ wireProperties }}'
 WHERE 
 project = '{{ project }}' --required
 AND crossSiteNetwork = '{{ crossSiteNetwork }}' --required

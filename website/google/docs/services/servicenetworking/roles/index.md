@@ -96,13 +96,13 @@ Service producers can use this method to add roles in the shared VPC host projec
 
 ```sql
 INSERT INTO google.servicenetworking.roles (
-data__policyBinding,
 data__consumerNetwork,
+data__policyBinding,
 servicesId
 )
 SELECT 
-'{{ policyBinding }}',
 '{{ consumerNetwork }}',
+'{{ policyBinding }}',
 '{{ servicesId }}'
 RETURNING
 name,
@@ -121,16 +121,16 @@ response
     - name: servicesId
       value: "{{ servicesId }}"
       description: Required parameter for the roles resource.
-    - name: policyBinding
-      description: |
-        Required. List of policy bindings to add to shared VPC host project.
-      value:
-        - role: "{{ role }}"
-          member: "{{ member }}"
     - name: consumerNetwork
       value: "{{ consumerNetwork }}"
       description: |
         Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is a project number, as in '12345' {network} is a network name.
+    - name: policyBinding
+      description: |
+        Required. List of policy bindings to add to shared VPC host project.
+      value:
+        - member: "{{ member }}"
+          role: "{{ role }}"
 `}</CodeBlock>
 
 </TabItem>

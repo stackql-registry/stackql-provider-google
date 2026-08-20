@@ -33,13 +33,13 @@ Creates, updates, deletes, gets or lists an <code>effective_config</code> resour
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_retrieve_effective_config"
+    defaultValue="organizations_locations_retrieve_effective_config"
     values={[
-        { label: 'projects_locations_retrieve_effective_config', value: 'projects_locations_retrieve_effective_config' },
-        { label: 'organizations_locations_retrieve_effective_config', value: 'organizations_locations_retrieve_effective_config' }
+        { label: 'organizations_locations_retrieve_effective_config', value: 'organizations_locations_retrieve_effective_config' },
+        { label: 'projects_locations_retrieve_effective_config', value: 'projects_locations_retrieve_effective_config' }
     ]}
 >
-<TabItem value="projects_locations_retrieve_effective_config">
+<TabItem value="organizations_locations_retrieve_effective_config">
 
 <table>
 <thead>
@@ -68,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_locations_retrieve_effective_config">
+<TabItem value="projects_locations_retrieve_effective_config">
 
 <table>
 <thead>
@@ -115,16 +115,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_retrieve_effective_config"><CopyableCode code="projects_locations_retrieve_effective_config" /></a></td>
+    <td><a href="#organizations_locations_retrieve_effective_config"><CopyableCode code="organizations_locations_retrieve_effective_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Retrieves the effective configuration related to the migration from Data Catalog to Dataplex Universal Catalog for a specific organization or project. If there is no specific configuration set for the resource, the setting is checked hierarchicahlly through the ancestors of the resource, starting from the resource itself.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_retrieve_effective_config"><CopyableCode code="organizations_locations_retrieve_effective_config" /></a></td>
+    <td><a href="#projects_locations_retrieve_effective_config"><CopyableCode code="projects_locations_retrieve_effective_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Retrieves the effective configuration related to the migration from Data Catalog to Dataplex Universal Catalog for a specific organization or project. If there is no specific configuration set for the resource, the setting is checked hierarchicahlly through the ancestors of the resource, starting from the resource itself.</td>
 </tr>
@@ -165,27 +165,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_retrieve_effective_config"
+    defaultValue="organizations_locations_retrieve_effective_config"
     values={[
-        { label: 'projects_locations_retrieve_effective_config', value: 'projects_locations_retrieve_effective_config' },
-        { label: 'organizations_locations_retrieve_effective_config', value: 'organizations_locations_retrieve_effective_config' }
+        { label: 'organizations_locations_retrieve_effective_config', value: 'organizations_locations_retrieve_effective_config' },
+        { label: 'projects_locations_retrieve_effective_config', value: 'projects_locations_retrieve_effective_config' }
     ]}
 >
-<TabItem value="projects_locations_retrieve_effective_config">
-
-Retrieves the effective configuration related to the migration from Data Catalog to Dataplex Universal Catalog for a specific organization or project. If there is no specific configuration set for the resource, the setting is checked hierarchicahlly through the ancestors of the resource, starting from the resource itself.
-
-```sql
-SELECT
-catalogUiExperience,
-tagTemplateMigration,
-templateMigrationEnabledTime
-FROM google.datacatalog.effective_config
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_retrieve_effective_config">
 
 Retrieves the effective configuration related to the migration from Data Catalog to Dataplex Universal Catalog for a specific organization or project. If there is no specific configuration set for the resource, the setting is checked hierarchicahlly through the ancestors of the resource, starting from the resource itself.
@@ -197,6 +182,21 @@ tagTemplateMigration,
 templateMigrationEnabledTime
 FROM google.datacatalog.effective_config
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_retrieve_effective_config">
+
+Retrieves the effective configuration related to the migration from Data Catalog to Dataplex Universal Catalog for a specific organization or project. If there is no specific configuration set for the resource, the setting is checked hierarchicahlly through the ancestors of the resource, starting from the resource itself.
+
+```sql
+SELECT
+catalogUiExperience,
+tagTemplateMigration,
+templateMigrationEnabledTime
+FROM google.datacatalog.effective_config
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 ;
 ```

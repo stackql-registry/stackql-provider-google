@@ -58,13 +58,6 @@ The following methods are available for this resource:
     <td>DeleteStudy deletes all instances within the given study. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a study that is being deleted by an operation until the operation completes. For samples that show how to call DeleteStudy, see [Delete a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).</td>
 </tr>
 <tr>
-    <td><a href="#store_instances"><CopyableCode code="store_instances" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
-    <td></td>
-    <td>StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).</td>
-</tr>
-<tr>
     <td><a href="#search_for_instances"><CopyableCode code="search_for_instances" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
@@ -84,6 +77,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
     <td></td>
     <td>SetBlobStorageSettings sets the blob storage settings of the specified resources.</td>
+</tr>
+<tr>
+    <td><a href="#store_instances"><CopyableCode code="store_instances" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
+    <td></td>
+    <td>StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).</td>
 </tr>
 </tbody>
 </table>
@@ -157,34 +157,14 @@ AND studiesId = '{{ studiesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="store_instances"
+    defaultValue="search_for_instances"
     values={[
-        { label: 'store_instances', value: 'store_instances' },
         { label: 'search_for_instances', value: 'search_for_instances' },
         { label: 'search_for_series', value: 'search_for_series' },
-        { label: 'set_blob_storage_settings', value: 'set_blob_storage_settings' }
+        { label: 'set_blob_storage_settings', value: 'set_blob_storage_settings' },
+        { label: 'store_instances', value: 'store_instances' }
     ]}
 >
-<TabItem value="store_instances">
-
-StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).
-
-```sql
-EXEC google.healthcare.studies.store_instances 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required, 
-@dicomStoresId='{{ dicomStoresId }}' --required, 
-@studiesId='{{ studiesId }}' --required 
-@@json=
-'{
-"contentType": "{{ contentType }}", 
-"data": "{{ data }}", 
-"extensions": "{{ extensions }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="search_for_instances">
 
 SearchForInstances returns a list of matching instances. See [Search Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
@@ -226,8 +206,28 @@ EXEC google.healthcare.studies.set_blob_storage_settings
 @studiesId='{{ studiesId }}' --required 
 @@json=
 '{
-"filterConfig": "{{ filterConfig }}", 
-"blobStorageSettings": "{{ blobStorageSettings }}"
+"blobStorageSettings": "{{ blobStorageSettings }}", 
+"filterConfig": "{{ filterConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="store_instances">
+
+StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).
+
+```sql
+EXEC google.healthcare.studies.store_instances 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required, 
+@dicomStoresId='{{ dicomStoresId }}' --required, 
+@studiesId='{{ studiesId }}' --required 
+@@json=
+'{
+"contentType": "{{ contentType }}", 
+"data": "{{ data }}", 
+"extensions": "{{ extensions }}"
 }'
 ;
 ```

@@ -290,14 +290,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the NetworkAttachments for a project in the given scope.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all NetworkAttachment resources,<br />regional and global, available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -450,8 +450,8 @@ WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -479,13 +479,13 @@ selfLinkWithId,
 subnetworks
 FROM google.compute.network_attachments
 WHERE project = '{{ project }}' -- required
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -507,25 +507,25 @@ Creates a NetworkAttachment in the specified project in the given scope<br />usi
 
 ```sql
 INSERT INTO google.compute.network_attachments (
-data__subnetworks,
-data__fingerprint,
-data__producerRejectLists,
-data__description,
 data__connectionPreference,
-data__producerAcceptLists,
+data__description,
+data__fingerprint,
 data__name,
+data__producerAcceptLists,
+data__producerRejectLists,
+data__subnetworks,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ subnetworks }}',
-'{{ fingerprint }}',
-'{{ producerRejectLists }}',
-'{{ description }}',
 '{{ connectionPreference }}',
-'{{ producerAcceptLists }}',
+'{{ description }}',
+'{{ fingerprint }}',
 '{{ name }}',
+'{{ producerAcceptLists }}',
+'{{ producerRejectLists }}',
+'{{ subnetworks }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -571,41 +571,20 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the network_attachments resource.
-    - name: subnetworks
-      value:
-        - "{{ subnetworks }}"
+    - name: connectionPreference
+      value: "{{ connectionPreference }}"
+      valid_values: ['ACCEPT_AUTOMATIC', 'ACCEPT_MANUAL', 'INVALID']
+    - name: description
+      value: "{{ description }}"
       description: |
-        An array of URLs where each entry is the URL of a subnet
-        provided by the service consumer to use for
-        endpoints in the producers that connect to this network attachment.
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: fingerprint
       value: "{{ fingerprint }}"
       description: |
         Fingerprint of this resource. A hash of the contents stored
         in this object. This field is used in optimistic locking. An up-to-date
         fingerprint must be provided in order to patch.
-    - name: producerRejectLists
-      value:
-        - "{{ producerRejectLists }}"
-      description: |
-        Projects or service class ids that are not allowed to connect to this
-        network attachment. The project can be specified using its id or number.
-        Service class id can be specified as "serviceclasses/{service_class_id}".
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: connectionPreference
-      value: "{{ connectionPreference }}"
-      valid_values: ['ACCEPT_AUTOMATIC', 'ACCEPT_MANUAL', 'INVALID']
-    - name: producerAcceptLists
-      value:
-        - "{{ producerAcceptLists }}"
-      description: |
-        Projects or service class ids that are allowed to connect to this network
-        attachment. The project can be specified using its id or number. Service
-        class id can be specified as "serviceclasses/{service_class_id}".
     - name: name
       value: "{{ name }}"
       description: |
@@ -616,6 +595,27 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
+    - name: producerAcceptLists
+      value:
+        - "{{ producerAcceptLists }}"
+      description: |
+        Projects or service class ids that are allowed to connect to this network
+        attachment. The project can be specified using its id or number. Service
+        class id can be specified as "serviceclasses/{service_class_id}".
+    - name: producerRejectLists
+      value:
+        - "{{ producerRejectLists }}"
+      description: |
+        Projects or service class ids that are not allowed to connect to this
+        network attachment. The project can be specified using its id or number.
+        Service class id can be specified as "serviceclasses/{service_class_id}".
+    - name: subnetworks
+      value:
+        - "{{ subnetworks }}"
+      description: |
+        An array of URLs where each entry is the URL of a subnet
+        provided by the service consumer to use for
+        endpoints in the producers that connect to this network attachment.
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -639,13 +639,13 @@ Patches the specified NetworkAttachment resource with the data included in<br />
 ```sql
 UPDATE google.compute.network_attachments
 SET 
-data__subnetworks = '{{ subnetworks }}',
-data__fingerprint = '{{ fingerprint }}',
-data__producerRejectLists = '{{ producerRejectLists }}',
-data__description = '{{ description }}',
 data__connectionPreference = '{{ connectionPreference }}',
+data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__name = '{{ name }}',
 data__producerAcceptLists = '{{ producerAcceptLists }}',
-data__name = '{{ name }}'
+data__producerRejectLists = '{{ producerRejectLists }}',
+data__subnetworks = '{{ subnetworks }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required

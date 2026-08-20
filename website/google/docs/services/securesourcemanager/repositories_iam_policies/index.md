@@ -187,8 +187,8 @@ Set IAM policy on a repository.
 ```sql
 REPLACE google.securesourcemanager.repositories_iam_policies
 SET 
-data__updateMask = '{{ updateMask }}',
-data__policy = '{{ policy }}'
+data__policy = '{{ policy }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

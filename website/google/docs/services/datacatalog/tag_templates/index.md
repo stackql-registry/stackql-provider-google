@@ -215,21 +215,21 @@ Creates a tag template. You must enable the Data Catalog API in the project iden
 
 ```sql
 INSERT INTO google.datacatalog.tag_templates (
-data__name,
-data__displayName,
-data__isPubliclyReadable,
-data__fields,
 data__dataplexTransferStatus,
+data__displayName,
+data__fields,
+data__isPubliclyReadable,
+data__name,
 projectsId,
 locationsId,
 tagTemplateId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-{{ isPubliclyReadable }},
-'{{ fields }}',
 '{{ dataplexTransferStatus }}',
+'{{ displayName }}',
+'{{ fields }}',
+{{ isPubliclyReadable }},
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tagTemplateId }}'
@@ -253,27 +253,27 @@ isPubliclyReadable
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the tag_templates resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Display name for this template. Defaults to an empty string. The name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), and can't start or end with spaces. The maximum length is 200 characters.
-    - name: isPubliclyReadable
-      value: {{ isPubliclyReadable }}
-      description: |
-        Indicates whether tags created with this template are public. Public tags do not require tag template access to appear in ListTags API response. Additionally, you can search for a public tag by value with a simple search query in addition to using a \`\`tag:\`\` predicate.
-    - name: fields
-      value: "{{ fields }}"
-      description: |
-        Required. Map of tag template field IDs to the settings for the field. This map is an exhaustive list of the allowed fields. The map must contain at least one field and at most 500 fields. The keys to this map are tag template field IDs. The IDs have the following limitations: * Can contain uppercase and lowercase letters, numbers (0-9) and underscores (_). * Must be at least 1 character and at most 64 characters long. * Must start with a letter or underscore.
     - name: dataplexTransferStatus
       value: "{{ dataplexTransferStatus }}"
       description: |
         Optional. Transfer status of the TagTemplate
       valid_values: ['DATAPLEX_TRANSFER_STATUS_UNSPECIFIED', 'MIGRATED', 'TRANSFERRED']
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Display name for this template. Defaults to an empty string. The name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), and can't start or end with spaces. The maximum length is 200 characters.
+    - name: fields
+      value: "{{ fields }}"
+      description: |
+        Required. Map of tag template field IDs to the settings for the field. This map is an exhaustive list of the allowed fields. The map must contain at least one field and at most 500 fields. The keys to this map are tag template field IDs. The IDs have the following limitations: * Can contain uppercase and lowercase letters, numbers (0-9) and underscores (_). * Must be at least 1 character and at most 64 characters long. * Must start with a letter or underscore.
+    - name: isPubliclyReadable
+      value: {{ isPubliclyReadable }}
+      description: |
+        Indicates whether tags created with this template are public. Public tags do not require tag template access to appear in ListTags API response. Additionally, you can search for a public tag by value with a simple search query in addition to using a \`\`tag:\`\` predicate.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name.
     - name: tagTemplateId
       value: "{{ tagTemplateId }}"
 `}</CodeBlock>
@@ -297,11 +297,11 @@ Updates a tag template. You can't update template fields with this method. These
 ```sql
 UPDATE google.datacatalog.tag_templates
 SET 
-data__name = '{{ name }}',
+data__dataplexTransferStatus = '{{ dataplexTransferStatus }}',
 data__displayName = '{{ displayName }}',
-data__isPubliclyReadable = {{ isPubliclyReadable }},
 data__fields = '{{ fields }}',
-data__dataplexTransferStatus = '{{ dataplexTransferStatus }}'
+data__isPubliclyReadable = {{ isPubliclyReadable }},
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

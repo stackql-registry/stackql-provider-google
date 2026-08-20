@@ -347,23 +347,23 @@ Creates a policy.
 
 ```sql
 INSERT INTO google.iamv2beta.policies (
-data__name,
-data__rules,
-data__etag,
-data__uid,
 data__annotations,
 data__displayName,
+data__etag,
+data__name,
+data__rules,
+data__uid,
 policiesId,
 policiesId1,
 policyId
 )
 SELECT 
-'{{ name }}',
-'{{ rules }}',
-'{{ etag }}',
-'{{ uid }}',
 '{{ annotations }}',
 '{{ displayName }}',
+'{{ etag }}',
+'{{ name }}',
+'{{ rules }}',
+'{{ uid }}',
 '{{ policiesId }}',
 '{{ policiesId1 }}',
 '{{ policyId }}'
@@ -387,6 +387,18 @@ response
     - name: policiesId1
       value: "{{ policiesId1 }}"
       description: Required parameter for the policies resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        A key-value map to store arbitrary metadata for the \`Policy\`. Keys can be up to 63 characters. Values can be up to 255 characters.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        A user-specified description of the \`Policy\`. This value can be up to 63 characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        An opaque tag that identifies the current version of the \`Policy\`. IAM uses this value to help manage concurrent updates, so they do not cause one update to be overwritten by another. If this field is present in a CreatePolicyRequest, the value is ignored.
     - name: name
       value: "{{ name }}"
       description: |
@@ -396,36 +408,24 @@ response
         A list of rules that specify the behavior of the \`Policy\`. All of the rules should be of the \`kind\` specified in the \`Policy\`.
       value:
         - denyRule:
+            denialCondition:
+              description: "{{ description }}"
+              expression: "{{ expression }}"
+              location: "{{ location }}"
+              title: "{{ title }}"
             deniedPermissions:
               - "{{ deniedPermissions }}"
-            exceptionPrincipals:
-              - "{{ exceptionPrincipals }}"
-            exceptionPermissions:
-              - "{{ exceptionPermissions }}"
-            denialCondition:
-              expression: "{{ expression }}"
-              title: "{{ title }}"
-              description: "{{ description }}"
-              location: "{{ location }}"
             deniedPrincipals:
               - "{{ deniedPrincipals }}"
+            exceptionPermissions:
+              - "{{ exceptionPermissions }}"
+            exceptionPrincipals:
+              - "{{ exceptionPrincipals }}"
           description: "{{ description }}"
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        An opaque tag that identifies the current version of the \`Policy\`. IAM uses this value to help manage concurrent updates, so they do not cause one update to be overwritten by another. If this field is present in a CreatePolicyRequest, the value is ignored.
     - name: uid
       value: "{{ uid }}"
       description: |
         Immutable. The globally unique ID of the \`Policy\`. Assigned automatically when the \`Policy\` is created.
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        A key-value map to store arbitrary metadata for the \`Policy\`. Keys can be up to 63 characters. Values can be up to 255 characters.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        A user-specified description of the \`Policy\`. This value can be up to 63 characters.
     - name: policyId
       value: "{{ policyId }}"
 `}</CodeBlock>
@@ -449,12 +449,12 @@ Updates the specified policy. You can update only the rules and the display name
 ```sql
 REPLACE google.iamv2beta.policies
 SET 
+data__annotations = '{{ annotations }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
 data__name = '{{ name }}',
 data__rules = '{{ rules }}',
-data__etag = '{{ etag }}',
-data__uid = '{{ uid }}',
-data__annotations = '{{ annotations }}',
-data__displayName = '{{ displayName }}'
+data__uid = '{{ uid }}'
 WHERE 
 policiesId = '{{ policiesId }}' --required
 AND policiesId1 = '{{ policiesId1 }}' --required

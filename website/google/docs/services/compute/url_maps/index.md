@@ -292,58 +292,51 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
     <td></td>
     <td>Returns the specified UrlMap resource.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves the list of UrlMap resources available to the specified<br />project in the specified region.</td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of UrlMap resources available to the specified<br />project.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves the list of all UrlMap resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a UrlMap resource in the specified project using<br />the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Patches the specified UrlMap resource with the data included in the<br />request. This method supportsPATCH<br />semantics and usesJSON merge<br />patch format and processing rules.</td>
+    <td>Patches the specified UrlMap resource with the data included in the<br />request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the specified UrlMap resource with the data included in the<br />request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes the specified UrlMap resource.</td>
-</tr>
-<tr>
-    <td><a href="#validate"><CopyableCode code="validate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
-    <td></td>
-    <td>Runs static validation for the UrlMap. In particular, the tests of the<br />provided UrlMap will be run. Calling this method does NOT create the<br />UrlMap.</td>
 </tr>
 <tr>
     <td><a href="#invalidate_cache"><CopyableCode code="invalidate_cache" /></a></td>
@@ -351,6 +344,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Initiates a cache invalidation operation, invalidating the specified path,<br />scoped to the specified UrlMap.<br /><br />For more information, see [Invalidating cached<br />content](https://cloud.google.com/cdn/docs/invalidating-cached-content).</td>
+</tr>
+<tr>
+    <td><a href="#validate"><CopyableCode code="validate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-urlMap"><code>urlMap</code></a></td>
+    <td></td>
+    <td>Runs static validation for the UrlMap. In particular, the tests of the<br />provided UrlMap will be run. Calling this method does NOT create the<br />UrlMap.</td>
 </tr>
 </tbody>
 </table>
@@ -370,11 +370,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -460,14 +455,13 @@ selfLink,
 tests
 FROM google.compute.url_maps
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
 AND urlMap = '{{ urlMap }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of UrlMap resources available to the specified<br />project in the specified region.
+Retrieves the list of UrlMap resources available to the specified<br />project.
 
 ```sql
 SELECT
@@ -479,10 +473,9 @@ selfLink,
 warning
 FROM google.compute.url_maps
 WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -513,12 +506,12 @@ tests
 FROM google.compute.url_maps
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -540,39 +533,37 @@ Creates a UrlMap resource in the specified project using<br />the data included 
 
 ```sql
 INSERT INTO google.compute.url_maps (
-data__tests,
 data__defaultCustomErrorResponsePolicy,
-data__defaultService,
 data__defaultRouteAction,
-data__pathMatchers,
-data__headerAction,
-data__fingerprint,
-data__description,
-data__selfLink,
+data__defaultService,
 data__defaultUrlRedirect,
-data__id,
+data__description,
+data__fingerprint,
+data__headerAction,
 data__hostRules,
+data__id,
 data__name,
+data__pathMatchers,
+data__selfLink,
+data__tests,
 project,
-region,
 requestId
 )
 SELECT 
-'{{ tests }}',
 '{{ defaultCustomErrorResponsePolicy }}',
-'{{ defaultService }}',
 '{{ defaultRouteAction }}',
-'{{ pathMatchers }}',
-'{{ headerAction }}',
-'{{ fingerprint }}',
-'{{ description }}',
-'{{ selfLink }}',
+'{{ defaultService }}',
 '{{ defaultUrlRedirect }}',
-'{{ id }}',
+'{{ description }}',
+'{{ fingerprint }}',
+'{{ headerAction }}',
 '{{ hostRules }}',
+'{{ id }}',
 '{{ name }}',
+'{{ pathMatchers }}',
+'{{ selfLink }}',
+'{{ tests }}',
 '{{ project }}',
-'{{ region }}',
 '{{ requestId }}'
 RETURNING
 id,
@@ -613,23 +604,6 @@ zone
     - name: project
       value: "{{ project }}"
       description: Required parameter for the url_maps resource.
-    - name: region
-      value: "{{ region }}"
-      description: Required parameter for the url_maps resource.
-    - name: tests
-      description: |
-        The list of expected URL mapping tests. Request to update theUrlMap succeeds only if all test cases pass. You can specify a
-        maximum of 100 tests per UrlMap.
-        Not supported when the URL map is bound to a target gRPC proxy that
-        has validateForProxyless field set to true.
-      value:
-        - expectedOutputUrl: "{{ expectedOutputUrl }}"
-          expectedRedirectResponseCode: {{ expectedRedirectResponseCode }}
-          path: "{{ path }}"
-          description: "{{ description }}"
-          host: "{{ host }}"
-          headers: "{{ headers }}"
-          service: "{{ service }}"
     - name: defaultCustomErrorResponsePolicy
       description: |
         defaultCustomErrorResponsePolicy specifies how the Load
@@ -659,22 +633,9 @@ zone
       value:
         errorResponseRules:
           - matchResponseCodes: "{{ matchResponseCodes }}"
-            path: "{{ path }}"
             overrideResponseCode: {{ overrideResponseCode }}
+            path: "{{ path }}"
         errorService: "{{ errorService }}"
-    - name: defaultService
-      value: "{{ defaultService }}"
-      description: |
-        The full or partial URL of the defaultService resource to
-        which traffic is directed if none of the hostRules match.
-        If defaultRouteAction is also specified, advanced
-        routing actions, such as URL rewrites, take effect before sending the
-        request to the backend.
-        Only one of defaultUrlRedirect, defaultService
-        or defaultRouteAction.weightedBackendService can be set.
-        defaultService has no effect when the URL map is bound
-        to a target gRPC proxy that has the validateForProxyless field
-        set to true.
     - name: defaultRouteAction
       description: |
         defaultRouteAction takes effect when none of the
@@ -689,230 +650,145 @@ zone
         to a target gRPC proxy that has the validateForProxyless field
         set to true.
       value:
-        urlRewrite:
-          hostRewrite: "{{ hostRewrite }}"
-          pathTemplateRewrite: "{{ pathTemplateRewrite }}"
-          pathPrefixRewrite: "{{ pathPrefixRewrite }}"
-        retryPolicy:
-          retryConditions:
-            - "{{ retryConditions }}"
-          numRetries: {{ numRetries }}
-          perTryTimeout:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-        faultInjectionPolicy:
-          delay:
-            fixedDelay:
-              nanos: {{ nanos }}
-              seconds: "{{ seconds }}"
-            percentage: {{ percentage }}
-          abort:
-            percentage: {{ percentage }}
-            httpStatus: {{ httpStatus }}
-        weightedBackendServices:
-          - backendService: "{{ backendService }}"
-            headerAction:
-              responseHeadersToAdd:
-                - replace: {{ replace }}
-                  headerName: "{{ headerName }}"
-                  headerValue: "{{ headerValue }}"
-              requestHeadersToRemove:
-                - "{{ requestHeadersToRemove }}"
-              responseHeadersToRemove:
-                - "{{ responseHeadersToRemove }}"
-              requestHeadersToAdd:
-                - replace: {{ replace }}
-                  headerName: "{{ headerName }}"
-                  headerValue: "{{ headerValue }}"
-            weight: {{ weight }}
         cachePolicy:
-          maxTtl:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
+          cacheBypassRequestHeaderNames:
+            - "{{ cacheBypassRequestHeaderNames }}"
+          cacheKeyPolicy:
+            excludedQueryParameters:
+              - "{{ excludedQueryParameters }}"
+            includeHost: {{ includeHost }}
+            includeProtocol: {{ includeProtocol }}
+            includeQueryString: {{ includeQueryString }}
+            includedCookieNames:
+              - "{{ includedCookieNames }}"
+            includedHeaderNames:
+              - "{{ includedHeaderNames }}"
+            includedQueryParameters:
+              - "{{ includedQueryParameters }}"
+          cacheMode: "{{ cacheMode }}"
           clientTtl:
             nanos: {{ nanos }}
             seconds: "{{ seconds }}"
-          serveWhileStale:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-          cacheBypassRequestHeaderNames:
-            - "{{ cacheBypassRequestHeaderNames }}"
-          cacheMode: "{{ cacheMode }}"
-          negativeCaching: {{ negativeCaching }}
           defaultTtl:
             nanos: {{ nanos }}
             seconds: "{{ seconds }}"
-          requestCoalescing: {{ requestCoalescing }}
-          cacheKeyPolicy:
-            includedHeaderNames:
-              - "{{ includedHeaderNames }}"
-            includeHost: {{ includeHost }}
-            excludedQueryParameters:
-              - "{{ excludedQueryParameters }}"
-            includedCookieNames:
-              - "{{ includedCookieNames }}"
-            includeProtocol: {{ includeProtocol }}
-            includeQueryString: {{ includeQueryString }}
-            includedQueryParameters:
-              - "{{ includedQueryParameters }}"
+          maxTtl:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+          negativeCaching: {{ negativeCaching }}
           negativeCachingPolicy:
             - code: {{ code }}
               ttl:
                 nanos: {{ nanos }}
                 seconds: "{{ seconds }}"
-        requestMirrorPolicy:
-          backendService: "{{ backendService }}"
-          mirrorPercent: {{ mirrorPercent }}
+          requestCoalescing: {{ requestCoalescing }}
+          serveWhileStale:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
         corsPolicy:
-          maxAge: {{ maxAge }}
+          allowCredentials: {{ allowCredentials }}
           allowHeaders:
             - "{{ allowHeaders }}"
-          allowOrigins:
-            - "{{ allowOrigins }}"
-          exposeHeaders:
-            - "{{ exposeHeaders }}"
           allowMethods:
             - "{{ allowMethods }}"
-          allowCredentials: {{ allowCredentials }}
-          disabled: {{ disabled }}
           allowOriginRegexes:
             - "{{ allowOriginRegexes }}"
-        timeout:
-          nanos: {{ nanos }}
-          seconds: "{{ seconds }}"
+          allowOrigins:
+            - "{{ allowOrigins }}"
+          disabled: {{ disabled }}
+          exposeHeaders:
+            - "{{ exposeHeaders }}"
+          maxAge: {{ maxAge }}
+        faultInjectionPolicy:
+          abort:
+            httpStatus: {{ httpStatus }}
+            percentage: {{ percentage }}
+          delay:
+            fixedDelay:
+              nanos: {{ nanos }}
+              seconds: "{{ seconds }}"
+            percentage: {{ percentage }}
         maxStreamDuration:
           nanos: {{ nanos }}
           seconds: "{{ seconds }}"
-    - name: pathMatchers
+        requestMirrorPolicy:
+          backendService: "{{ backendService }}"
+          mirrorPercent: {{ mirrorPercent }}
+        retryPolicy:
+          numRetries: {{ numRetries }}
+          perTryTimeout:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+          retryConditions:
+            - "{{ retryConditions }}"
+        timeout:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+        urlRewrite:
+          hostRewrite: "{{ hostRewrite }}"
+          pathPrefixRewrite: "{{ pathPrefixRewrite }}"
+          pathTemplateRewrite: "{{ pathTemplateRewrite }}"
+          regexRewrite:
+            pathPattern: "{{ pathPattern }}"
+            pathSubstitution: "{{ pathSubstitution }}"
+        weightedBackendServices:
+          - backendService: "{{ backendService }}"
+            headerAction:
+              requestHeadersToAdd:
+                - headerName: "{{ headerName }}"
+                  headerValue: "{{ headerValue }}"
+                  replace: {{ replace }}
+              requestHeadersToRemove:
+                - "{{ requestHeadersToRemove }}"
+              responseHeadersToAdd:
+                - headerName: "{{ headerName }}"
+                  headerValue: "{{ headerValue }}"
+                  replace: {{ replace }}
+              responseHeadersToRemove:
+                - "{{ responseHeadersToRemove }}"
+            weight: {{ weight }}
+    - name: defaultService
+      value: "{{ defaultService }}"
       description: |
-        The list of named PathMatchers to use against the URL.
+        The full or partial URL of the defaultService resource to
+        which traffic is directed if none of the hostRules match.
+        If defaultRouteAction is also specified, advanced
+        routing actions, such as URL rewrites, take effect before sending the
+        request to the backend.
+        Only one of defaultUrlRedirect, defaultService
+        or defaultRouteAction.weightedBackendService can be set.
+        defaultService has no effect when the URL map is bound
+        to a target gRPC proxy that has the validateForProxyless field
+        set to true.
+    - name: defaultUrlRedirect
+      description: |
+        When none of the specified hostRules match, the request
+        is redirected to a URL specified by defaultUrlRedirect.
+        Only one of defaultUrlRedirect, defaultService
+        or defaultRouteAction.weightedBackendService can be set.
+        Not supported when the URL map is bound to a target gRPC proxy.
       value:
-        - defaultCustomErrorResponsePolicy:
-            errorResponseRules:
-              - matchResponseCodes: "{{ matchResponseCodes }}"
-                path: "{{ path }}"
-                overrideResponseCode: {{ overrideResponseCode }}
-            errorService: "{{ errorService }}"
-          defaultService: "{{ defaultService }}"
-          defaultRouteAction:
-            urlRewrite:
-              hostRewrite: "{{ hostRewrite }}"
-              pathTemplateRewrite: "{{ pathTemplateRewrite }}"
-              pathPrefixRewrite: "{{ pathPrefixRewrite }}"
-            retryPolicy:
-              retryConditions:
-                - "{{ retryConditions }}"
-              numRetries: {{ numRetries }}
-              perTryTimeout:
-                nanos: {{ nanos }}
-                seconds: "{{ seconds }}"
-            faultInjectionPolicy:
-              delay:
-                fixedDelay:
-                  nanos: {{ nanos }}
-                  seconds: "{{ seconds }}"
-                percentage: {{ percentage }}
-              abort:
-                percentage: {{ percentage }}
-                httpStatus: {{ httpStatus }}
-            weightedBackendServices:
-              - backendService: "{{ backendService }}"
-                headerAction:
-                  responseHeadersToAdd:
-                    - replace: {{ replace }}
-                      headerName: "{{ headerName }}"
-                      headerValue: "{{ headerValue }}"
-                  requestHeadersToRemove:
-                    - "{{ requestHeadersToRemove }}"
-                  responseHeadersToRemove:
-                    - "{{ responseHeadersToRemove }}"
-                  requestHeadersToAdd:
-                    - replace: {{ replace }}
-                      headerName: "{{ headerName }}"
-                      headerValue: "{{ headerValue }}"
-                weight: {{ weight }}
-            cachePolicy:
-              maxTtl:
-                nanos: {{ nanos }}
-                seconds: "{{ seconds }}"
-              clientTtl:
-                nanos: {{ nanos }}
-                seconds: "{{ seconds }}"
-              serveWhileStale:
-                nanos: {{ nanos }}
-                seconds: "{{ seconds }}"
-              cacheBypassRequestHeaderNames:
-                - "{{ cacheBypassRequestHeaderNames }}"
-              cacheMode: "{{ cacheMode }}"
-              negativeCaching: {{ negativeCaching }}
-              defaultTtl:
-                nanos: {{ nanos }}
-                seconds: "{{ seconds }}"
-              requestCoalescing: {{ requestCoalescing }}
-              cacheKeyPolicy:
-                includedHeaderNames:
-                  - "{{ includedHeaderNames }}"
-                includeHost: {{ includeHost }}
-                excludedQueryParameters:
-                  - "{{ excludedQueryParameters }}"
-                includedCookieNames:
-                  - "{{ includedCookieNames }}"
-                includeProtocol: {{ includeProtocol }}
-                includeQueryString: {{ includeQueryString }}
-                includedQueryParameters:
-                  - "{{ includedQueryParameters }}"
-              negativeCachingPolicy:
-                - code: {{ code }}
-                  ttl:
-                    nanos: {{ nanos }}
-                    seconds: "{{ seconds }}"
-            requestMirrorPolicy:
-              backendService: "{{ backendService }}"
-              mirrorPercent: {{ mirrorPercent }}
-            corsPolicy:
-              maxAge: {{ maxAge }}
-              allowHeaders:
-                - "{{ allowHeaders }}"
-              allowOrigins:
-                - "{{ allowOrigins }}"
-              exposeHeaders:
-                - "{{ exposeHeaders }}"
-              allowMethods:
-                - "{{ allowMethods }}"
-              allowCredentials: {{ allowCredentials }}
-              disabled: {{ disabled }}
-              allowOriginRegexes:
-                - "{{ allowOriginRegexes }}"
-            timeout:
-              nanos: {{ nanos }}
-              seconds: "{{ seconds }}"
-            maxStreamDuration:
-              nanos: {{ nanos }}
-              seconds: "{{ seconds }}"
-          defaultUrlRedirect:
-            pathRedirect: "{{ pathRedirect }}"
-            redirectResponseCode: "{{ redirectResponseCode }}"
-            httpsRedirect: {{ httpsRedirect }}
-            stripQuery: {{ stripQuery }}
-            prefixRedirect: "{{ prefixRedirect }}"
-            hostRedirect: "{{ hostRedirect }}"
-          description: "{{ description }}"
-          pathRules: "{{ pathRules }}"
-          routeRules: "{{ routeRules }}"
-          headerAction:
-            responseHeadersToAdd:
-              - replace: {{ replace }}
-                headerName: "{{ headerName }}"
-                headerValue: "{{ headerValue }}"
-            requestHeadersToRemove:
-              - "{{ requestHeadersToRemove }}"
-            responseHeadersToRemove:
-              - "{{ responseHeadersToRemove }}"
-            requestHeadersToAdd:
-              - replace: {{ replace }}
-                headerName: "{{ headerName }}"
-                headerValue: "{{ headerValue }}"
-          name: "{{ name }}"
+        hostRedirect: "{{ hostRedirect }}"
+        httpsRedirect: {{ httpsRedirect }}
+        pathRedirect: "{{ pathRedirect }}"
+        prefixRedirect: "{{ prefixRedirect }}"
+        redirectResponseCode: "{{ redirectResponseCode }}"
+        stripQuery: {{ stripQuery }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: fingerprint
+      value: "{{ fingerprint }}"
+      description: |
+        Fingerprint of this resource. A hash of the contents stored in this object.
+        This field is used in optimistic locking. This field is ignored when
+        inserting a UrlMap. An up-to-date fingerprint must be provided
+        in order to update the UrlMap, otherwise the request will
+        fail with error 412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve a UrlMap.
     - name: headerAction
       description: |
         Specifies changes to request and response headers that need to take effect
@@ -924,63 +800,30 @@ zone
         Not supported when the URL map is bound to a target gRPC proxy that
         has validateForProxyless field set to true.
       value:
-        responseHeadersToAdd:
-          - replace: {{ replace }}
-            headerName: "{{ headerName }}"
+        requestHeadersToAdd:
+          - headerName: "{{ headerName }}"
             headerValue: "{{ headerValue }}"
+            replace: {{ replace }}
         requestHeadersToRemove:
           - "{{ requestHeadersToRemove }}"
+        responseHeadersToAdd:
+          - headerName: "{{ headerName }}"
+            headerValue: "{{ headerValue }}"
+            replace: {{ replace }}
         responseHeadersToRemove:
           - "{{ responseHeadersToRemove }}"
-        requestHeadersToAdd:
-          - replace: {{ replace }}
-            headerName: "{{ headerName }}"
-            headerValue: "{{ headerValue }}"
-    - name: fingerprint
-      value: "{{ fingerprint }}"
+    - name: hostRules
       description: |
-        Fingerprint of this resource. A hash of the contents stored in this object.
-        This field is used in optimistic locking. This field is ignored when
-        inserting a UrlMap. An up-to-date fingerprint must be provided
-        in order to update the UrlMap, otherwise the request will
-        fail with error 412 conditionNotMet.
-        To see the latest fingerprint, make a get() request to
-        retrieve a UrlMap.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional description of this resource. Provide this property when you
-        create the resource.
-    - name: selfLink
-      value: "{{ selfLink }}"
-      description: |
-        [Output Only] Server-defined URL for the resource.
-    - name: defaultUrlRedirect
-      description: |
-        When none of the specified hostRules match, the request
-        is redirected to a URL specified by defaultUrlRedirect.
-        Only one of defaultUrlRedirect, defaultService
-        or defaultRouteAction.weightedBackendService can be set.
-        Not supported when the URL map is bound to a target gRPC proxy.
+        The list of host rules to use against the URL.
       value:
-        pathRedirect: "{{ pathRedirect }}"
-        redirectResponseCode: "{{ redirectResponseCode }}"
-        httpsRedirect: {{ httpsRedirect }}
-        stripQuery: {{ stripQuery }}
-        prefixRedirect: "{{ prefixRedirect }}"
-        hostRedirect: "{{ hostRedirect }}"
+        - description: "{{ description }}"
+          hosts: "{{ hosts }}"
+          pathMatcher: "{{ pathMatcher }}"
     - name: id
       value: "{{ id }}"
       description: |
         [Output Only] The unique identifier for the resource. This identifier is
         defined by the server.
-    - name: hostRules
-      description: |
-        The list of host rules to use against the URL.
-      value:
-        - hosts: "{{ hosts }}"
-          description: "{{ description }}"
-          pathMatcher: "{{ pathMatcher }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -991,6 +834,157 @@ zone
         character must be a lowercase letter, and all following characters must
         be a dash, lowercase letter, or digit, except the last character, which
         cannot be a dash.
+    - name: pathMatchers
+      description: |
+        The list of named PathMatchers to use against the URL.
+      value:
+        - defaultCustomErrorResponsePolicy:
+            errorResponseRules:
+              - matchResponseCodes: "{{ matchResponseCodes }}"
+                overrideResponseCode: {{ overrideResponseCode }}
+                path: "{{ path }}"
+            errorService: "{{ errorService }}"
+          defaultRouteAction:
+            cachePolicy:
+              cacheBypassRequestHeaderNames:
+                - "{{ cacheBypassRequestHeaderNames }}"
+              cacheKeyPolicy:
+                excludedQueryParameters:
+                  - "{{ excludedQueryParameters }}"
+                includeHost: {{ includeHost }}
+                includeProtocol: {{ includeProtocol }}
+                includeQueryString: {{ includeQueryString }}
+                includedCookieNames:
+                  - "{{ includedCookieNames }}"
+                includedHeaderNames:
+                  - "{{ includedHeaderNames }}"
+                includedQueryParameters:
+                  - "{{ includedQueryParameters }}"
+              cacheMode: "{{ cacheMode }}"
+              clientTtl:
+                nanos: {{ nanos }}
+                seconds: "{{ seconds }}"
+              defaultTtl:
+                nanos: {{ nanos }}
+                seconds: "{{ seconds }}"
+              maxTtl:
+                nanos: {{ nanos }}
+                seconds: "{{ seconds }}"
+              negativeCaching: {{ negativeCaching }}
+              negativeCachingPolicy:
+                - code: {{ code }}
+                  ttl:
+                    nanos: {{ nanos }}
+                    seconds: "{{ seconds }}"
+              requestCoalescing: {{ requestCoalescing }}
+              serveWhileStale:
+                nanos: {{ nanos }}
+                seconds: "{{ seconds }}"
+            corsPolicy:
+              allowCredentials: {{ allowCredentials }}
+              allowHeaders:
+                - "{{ allowHeaders }}"
+              allowMethods:
+                - "{{ allowMethods }}"
+              allowOriginRegexes:
+                - "{{ allowOriginRegexes }}"
+              allowOrigins:
+                - "{{ allowOrigins }}"
+              disabled: {{ disabled }}
+              exposeHeaders:
+                - "{{ exposeHeaders }}"
+              maxAge: {{ maxAge }}
+            faultInjectionPolicy:
+              abort:
+                httpStatus: {{ httpStatus }}
+                percentage: {{ percentage }}
+              delay:
+                fixedDelay:
+                  nanos: {{ nanos }}
+                  seconds: "{{ seconds }}"
+                percentage: {{ percentage }}
+            maxStreamDuration:
+              nanos: {{ nanos }}
+              seconds: "{{ seconds }}"
+            requestMirrorPolicy:
+              backendService: "{{ backendService }}"
+              mirrorPercent: {{ mirrorPercent }}
+            retryPolicy:
+              numRetries: {{ numRetries }}
+              perTryTimeout:
+                nanos: {{ nanos }}
+                seconds: "{{ seconds }}"
+              retryConditions:
+                - "{{ retryConditions }}"
+            timeout:
+              nanos: {{ nanos }}
+              seconds: "{{ seconds }}"
+            urlRewrite:
+              hostRewrite: "{{ hostRewrite }}"
+              pathPrefixRewrite: "{{ pathPrefixRewrite }}"
+              pathTemplateRewrite: "{{ pathTemplateRewrite }}"
+              regexRewrite:
+                pathPattern: "{{ pathPattern }}"
+                pathSubstitution: "{{ pathSubstitution }}"
+            weightedBackendServices:
+              - backendService: "{{ backendService }}"
+                headerAction:
+                  requestHeadersToAdd:
+                    - headerName: "{{ headerName }}"
+                      headerValue: "{{ headerValue }}"
+                      replace: {{ replace }}
+                  requestHeadersToRemove:
+                    - "{{ requestHeadersToRemove }}"
+                  responseHeadersToAdd:
+                    - headerName: "{{ headerName }}"
+                      headerValue: "{{ headerValue }}"
+                      replace: {{ replace }}
+                  responseHeadersToRemove:
+                    - "{{ responseHeadersToRemove }}"
+                weight: {{ weight }}
+          defaultService: "{{ defaultService }}"
+          defaultUrlRedirect:
+            hostRedirect: "{{ hostRedirect }}"
+            httpsRedirect: {{ httpsRedirect }}
+            pathRedirect: "{{ pathRedirect }}"
+            prefixRedirect: "{{ prefixRedirect }}"
+            redirectResponseCode: "{{ redirectResponseCode }}"
+            stripQuery: {{ stripQuery }}
+          description: "{{ description }}"
+          headerAction:
+            requestHeadersToAdd:
+              - headerName: "{{ headerName }}"
+                headerValue: "{{ headerValue }}"
+                replace: {{ replace }}
+            requestHeadersToRemove:
+              - "{{ requestHeadersToRemove }}"
+            responseHeadersToAdd:
+              - headerName: "{{ headerName }}"
+                headerValue: "{{ headerValue }}"
+                replace: {{ replace }}
+            responseHeadersToRemove:
+              - "{{ responseHeadersToRemove }}"
+          name: "{{ name }}"
+          pathRules: "{{ pathRules }}"
+          routeRules: "{{ routeRules }}"
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: tests
+      description: |
+        The list of expected URL mapping tests. Request to update theUrlMap succeeds only if all test cases pass. You can specify a
+        maximum of 100 tests per UrlMap.
+        Not supported when the URL map is bound to a target gRPC proxy that
+        has validateForProxyless field set to true.
+      value:
+        - description: "{{ description }}"
+          expectedOutputUrl: "{{ expectedOutputUrl }}"
+          expectedRedirectResponseCode: {{ expectedRedirectResponseCode }}
+          headers: "{{ headers }}"
+          host: "{{ host }}"
+          path: "{{ path }}"
+          service: "{{ service }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -1009,27 +1003,26 @@ zone
 >
 <TabItem value="patch">
 
-Patches the specified UrlMap resource with the data included in the<br />request. This method supportsPATCH<br />semantics and usesJSON merge<br />patch format and processing rules.
+Patches the specified UrlMap resource with the data included in the<br />request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.
 
 ```sql
 UPDATE google.compute.url_maps
 SET 
-data__tests = '{{ tests }}',
 data__defaultCustomErrorResponsePolicy = '{{ defaultCustomErrorResponsePolicy }}',
-data__defaultService = '{{ defaultService }}',
 data__defaultRouteAction = '{{ defaultRouteAction }}',
-data__pathMatchers = '{{ pathMatchers }}',
-data__headerAction = '{{ headerAction }}',
-data__fingerprint = '{{ fingerprint }}',
-data__description = '{{ description }}',
-data__selfLink = '{{ selfLink }}',
+data__defaultService = '{{ defaultService }}',
 data__defaultUrlRedirect = '{{ defaultUrlRedirect }}',
-data__id = '{{ id }}',
+data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__headerAction = '{{ headerAction }}',
 data__hostRules = '{{ hostRules }}',
-data__name = '{{ name }}'
+data__id = '{{ id }}',
+data__name = '{{ name }}',
+data__pathMatchers = '{{ pathMatchers }}',
+data__selfLink = '{{ selfLink }}',
+data__tests = '{{ tests }}'
 WHERE 
 project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND urlMap = '{{ urlMap }}' --required
 AND requestId = '{{ requestId}}'
 RETURNING
@@ -1080,22 +1073,21 @@ Updates the specified UrlMap resource with the data included in the<br />request
 ```sql
 REPLACE google.compute.url_maps
 SET 
-data__tests = '{{ tests }}',
 data__defaultCustomErrorResponsePolicy = '{{ defaultCustomErrorResponsePolicy }}',
-data__defaultService = '{{ defaultService }}',
 data__defaultRouteAction = '{{ defaultRouteAction }}',
-data__pathMatchers = '{{ pathMatchers }}',
-data__headerAction = '{{ headerAction }}',
-data__fingerprint = '{{ fingerprint }}',
-data__description = '{{ description }}',
-data__selfLink = '{{ selfLink }}',
+data__defaultService = '{{ defaultService }}',
 data__defaultUrlRedirect = '{{ defaultUrlRedirect }}',
-data__id = '{{ id }}',
+data__description = '{{ description }}',
+data__fingerprint = '{{ fingerprint }}',
+data__headerAction = '{{ headerAction }}',
 data__hostRules = '{{ hostRules }}',
-data__name = '{{ name }}'
+data__id = '{{ id }}',
+data__name = '{{ name }}',
+data__pathMatchers = '{{ pathMatchers }}',
+data__selfLink = '{{ selfLink }}',
+data__tests = '{{ tests }}'
 WHERE 
 project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND urlMap = '{{ urlMap }}' --required
 AND requestId = '{{ requestId}}'
 RETURNING
@@ -1146,7 +1138,6 @@ Deletes the specified UrlMap resource.
 ```sql
 DELETE FROM google.compute.url_maps
 WHERE project = '{{ project }}' --required
-AND region = '{{ region }}' --required
 AND urlMap = '{{ urlMap }}' --required
 AND requestId = '{{ requestId }}'
 ;
@@ -1158,28 +1149,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="validate"
+    defaultValue="invalidate_cache"
     values={[
-        { label: 'validate', value: 'validate' },
-        { label: 'invalidate_cache', value: 'invalidate_cache' }
+        { label: 'invalidate_cache', value: 'invalidate_cache' },
+        { label: 'validate', value: 'validate' }
     ]}
 >
-<TabItem value="validate">
-
-Runs static validation for the UrlMap. In particular, the tests of the<br />provided UrlMap will be run. Calling this method does NOT create the<br />UrlMap.
-
-```sql
-EXEC google.compute.url_maps.validate 
-@project='{{ project }}' --required, 
-@region='{{ region }}' --required, 
-@urlMap='{{ urlMap }}' --required 
-@@json=
-'{
-"resource": "{{ resource }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="invalidate_cache">
 
 Initiates a cache invalidation operation, invalidating the specified path,<br />scoped to the specified UrlMap.<br /><br />For more information, see [Invalidating cached<br />content](https://cloud.google.com/cdn/docs/invalidating-cached-content).
@@ -1191,9 +1166,25 @@ EXEC google.compute.url_maps.invalidate_cache
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"path": "{{ path }}", 
 "cacheTags": "{{ cacheTags }}", 
-"host": "{{ host }}"
+"host": "{{ host }}", 
+"path": "{{ path }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="validate">
+
+Runs static validation for the UrlMap. In particular, the tests of the<br />provided UrlMap will be run. Calling this method does NOT create the<br />UrlMap.
+
+```sql
+EXEC google.compute.url_maps.validate 
+@project='{{ project }}' --required, 
+@urlMap='{{ urlMap }}' --required 
+@@json=
+'{
+"loadBalancingSchemes": "{{ loadBalancingSchemes }}", 
+"resource": "{{ resource }}"
 }'
 ;
 ```

@@ -125,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_reference_images_list"><CopyableCode code="projects_locations_products_reference_images_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists reference images. Possible errors: * Returns NOT_FOUND if the parent product does not exist. * Returns INVALID_ARGUMENT if the page_size is greater than 100, or less than 1.</td>
 </tr>
 <tr>
@@ -235,8 +235,8 @@ FROM google.vision.reference_images
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND productsId = '{{ productsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -258,18 +258,18 @@ Creates and returns a new ReferenceImage resource. The `bounding_poly` field is 
 
 ```sql
 INSERT INTO google.vision.reference_images (
+data__boundingPolys,
 data__name,
 data__uri,
-data__boundingPolys,
 projectsId,
 locationsId,
 productsId,
 referenceImageId
 )
 SELECT 
+'{{ boundingPolys }}',
 '{{ name }}',
 '{{ uri }}',
-'{{ boundingPolys }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productsId }}',
@@ -295,6 +295,12 @@ uri
     - name: productsId
       value: "{{ productsId }}"
       description: Required parameter for the reference_images resource.
+    - name: boundingPolys
+      description: |
+        Optional. Bounding polygons around the areas of interest in the reference image. If this field is empty, the system will try to detect regions of interest. At most 10 bounding polygons will be used. The provided shape is converted into a non-rotated rectangle. Once converted, the small edge of the rectangle must be greater than or equal to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok; 1:5 is not).
+      value:
+        - normalizedVertices: "{{ normalizedVertices }}"
+          vertices: "{{ vertices }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -303,12 +309,6 @@ uri
       value: "{{ uri }}"
       description: |
         Required. The Google Cloud Storage URI of the reference image. The URI must start with \`gs://\`.
-    - name: boundingPolys
-      description: |
-        Optional. Bounding polygons around the areas of interest in the reference image. If this field is empty, the system will try to detect regions of interest. At most 10 bounding polygons will be used. The provided shape is converted into a non-rotated rectangle. Once converted, the small edge of the rectangle must be greater than or equal to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok; 1:5 is not).
-      value:
-        - vertices: "{{ vertices }}"
-          normalizedVertices: "{{ normalizedVertices }}"
     - name: referenceImageId
       value: "{{ referenceImageId }}"
 `}</CodeBlock>

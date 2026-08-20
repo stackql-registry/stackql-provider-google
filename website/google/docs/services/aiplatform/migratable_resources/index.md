@@ -51,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#search"><CopyableCode code="search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Searches all of the resources in automl.googleapis.com, datalabeling.googleapis.com and ml.googleapis.com that can be migrated to Vertex AI's given location.</td>
-</tr>
-<tr>
     <td><a href="#batch_migrate"><CopyableCode code="batch_migrate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Batch migrates resources from ml.googleapis.com, automl.googleapis.com, and datalabeling.googleapis.com to Vertex AI.</td>
+</tr>
+<tr>
+    <td><a href="#search"><CopyableCode code="search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Searches all of the resources in automl.googleapis.com, datalabeling.googleapis.com and ml.googleapis.com that can be migrated to Vertex AI's given location.</td>
 </tr>
 </tbody>
 </table>
@@ -96,29 +96,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search"
+    defaultValue="batch_migrate"
     values={[
-        { label: 'search', value: 'search' },
-        { label: 'batch_migrate', value: 'batch_migrate' }
+        { label: 'batch_migrate', value: 'batch_migrate' },
+        { label: 'search', value: 'search' }
     ]}
 >
-<TabItem value="search">
-
-Searches all of the resources in automl.googleapis.com, datalabeling.googleapis.com and ml.googleapis.com that can be migrated to Vertex AI's given location.
-
-```sql
-EXEC google.aiplatform.migratable_resources.search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}
-}'
-;
-```
-</TabItem>
 <TabItem value="batch_migrate">
 
 Batch migrates resources from ml.googleapis.com, automl.googleapis.com, and datalabeling.googleapis.com to Vertex AI.
@@ -130,6 +113,23 @@ EXEC google.aiplatform.migratable_resources.batch_migrate
 @@json=
 '{
 "migrateResourceRequests": "{{ migrateResourceRequests }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="search">
+
+Searches all of the resources in automl.googleapis.com, datalabeling.googleapis.com and ml.googleapis.com that can be migrated to Vertex AI's given location.
+
+```sql
+EXEC google.aiplatform.migratable_resources.search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}"
 }'
 ;
 ```

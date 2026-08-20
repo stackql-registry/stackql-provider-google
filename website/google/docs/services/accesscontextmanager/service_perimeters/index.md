@@ -325,25 +325,25 @@ Creates a service perimeter. The long-running operation from this RPC has a succ
 
 ```sql
 INSERT INTO google.accesscontextmanager.service_perimeters (
-data__title,
-data__perimeterType,
-data__useExplicitDryRunSpec,
-data__name,
-data__status,
-data__etag,
 data__description,
+data__etag,
+data__name,
+data__perimeterType,
 data__spec,
+data__status,
+data__title,
+data__useExplicitDryRunSpec,
 accessPoliciesId
 )
 SELECT 
-'{{ title }}',
-'{{ perimeterType }}',
-{{ useExplicitDryRunSpec }},
-'{{ name }}',
-'{{ status }}',
-'{{ etag }}',
 '{{ description }}',
+'{{ etag }}',
+'{{ name }}',
+'{{ perimeterType }}',
 '{{ spec }}',
+'{{ status }}',
+'{{ title }}',
+{{ useExplicitDryRunSpec }},
 '{{ accessPoliciesId }}'
 RETURNING
 name,
@@ -362,113 +362,61 @@ response
     - name: accessPoliciesId
       value: "{{ accessPoliciesId }}"
       description: Required parameter for the service_perimeters resource.
-    - name: title
-      value: "{{ title }}"
+    - name: description
+      value: "{{ description }}"
       description: |
-        Human readable title. Must be unique within the Policy.
+        Description of the \`ServicePerimeter\` and its use. Does not affect behavior.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. An opaque identifier for the current version of the \`ServicePerimeter\`. This identifier does not follow any specific format. If an etag is not provided, the operation will be performed as if a valid etag is provided.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name for the \`ServicePerimeter\`. Format: \`accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}\`. The \`service_perimeter\` component must begin with a letter, followed by alphanumeric characters or \`_\`. After you create a \`ServicePerimeter\`, you cannot change its \`name\`.
     - name: perimeterType
       value: "{{ perimeterType }}"
       description: |
         Perimeter type indicator. A single project or VPC network is allowed to be a member of single regular perimeter, but multiple service perimeter bridges. A project cannot be a included in a perimeter bridge without being included in regular perimeter. For perimeter bridges, the restricted service list as well as access level lists must be empty.
       valid_values: ['PERIMETER_TYPE_REGULAR', 'PERIMETER_TYPE_BRIDGE']
-    - name: useExplicitDryRunSpec
-      value: {{ useExplicitDryRunSpec }}
-      description: |
-        Use explicit dry run spec flag. Ordinarily, a dry-run spec implicitly exists for all Service Perimeters, and that spec is identical to the status for those Service Perimeters. When this flag is set, it inhibits the generation of the implicit spec, thereby allowing the user to explicitly provide a configuration ("spec") to use in a dry-run version of the Service Perimeter. This allows the user to test changes to the enforced config ("status") without actually enforcing them. This testing is done through analyzing the differences between currently enforced and suggested restrictions. use_explicit_dry_run_spec must bet set to True if any of the fields in the spec are set to non-default values.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name for the \`ServicePerimeter\`. Format: \`accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}\`. The \`service_perimeter\` component must begin with a letter, followed by alphanumeric characters or \`_\`. After you create a \`ServicePerimeter\`, you cannot change its \`name\`.
-    - name: status
-      description: |
-        Current ServicePerimeter configuration. Specifies sets of resources, restricted services and access levels that determine perimeter content and boundaries.
-      value:
-        restrictedServices:
-          - "{{ restrictedServices }}"
-        resources:
-          - "{{ resources }}"
-        accessLevels:
-          - "{{ accessLevels }}"
-        ingressPolicies:
-          - ingressFrom:
-              identityType: "{{ identityType }}"
-              sources:
-                - pscEndpoint:
-                    forwardingRule: "{{ forwardingRule }}"
-                  resource: "{{ resource }}"
-                  accessLevel: "{{ accessLevel }}"
-              identities:
-                - "{{ identities }}"
-            title: "{{ title }}"
-            ingressTo:
-              operations:
-                - methodSelectors: "{{ methodSelectors }}"
-                  serviceName: "{{ serviceName }}"
-              resources:
-                - "{{ resources }}"
-              roles:
-                - "{{ roles }}"
-        vpcAccessibleServices:
-          enableRestriction: {{ enableRestriction }}
-          allowedServicePatterns:
-            - pattern: "{{ pattern }}"
-              modifiers: "{{ modifiers }}"
-              service: "{{ service }}"
-          allowedServices:
-            - "{{ allowedServices }}"
-          servicePatternsEnforcementScopes:
-            - "{{ servicePatternsEnforcementScopes }}"
-        egressPolicies:
-          - egressTo:
-              resources:
-                - "{{ resources }}"
-              operations:
-                - methodSelectors: "{{ methodSelectors }}"
-                  serviceName: "{{ serviceName }}"
-              externalResources:
-                - "{{ externalResources }}"
-              roles:
-                - "{{ roles }}"
-            egressFrom:
-              sources:
-                - accessLevel: "{{ accessLevel }}"
-                  resource: "{{ resource }}"
-                  pscEndpoint:
-                    forwardingRule: "{{ forwardingRule }}"
-              identityType: "{{ identityType }}"
-              identities:
-                - "{{ identities }}"
-              sourceRestriction: "{{ sourceRestriction }}"
-            title: "{{ title }}"
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. An opaque identifier for the current version of the \`ServicePerimeter\`. This identifier does not follow any specific format. If an etag is not provided, the operation will be performed as if a valid etag is provided.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Description of the \`ServicePerimeter\` and its use. Does not affect behavior.
     - name: spec
       description: |
         Proposed (or dry run) ServicePerimeter configuration. This configuration allows to specify and test ServicePerimeter configuration without enforcing actual access restrictions. Only allowed to be set when the "use_explicit_dry_run_spec" flag is set.
       value:
-        restrictedServices:
-          - "{{ restrictedServices }}"
-        resources:
-          - "{{ resources }}"
         accessLevels:
           - "{{ accessLevels }}"
-        ingressPolicies:
-          - ingressFrom:
-              identityType: "{{ identityType }}"
-              sources:
-                - pscEndpoint:
-                    forwardingRule: "{{ forwardingRule }}"
-                  resource: "{{ resource }}"
-                  accessLevel: "{{ accessLevel }}"
+        egressPolicies:
+          - egressFrom:
               identities:
                 - "{{ identities }}"
+              identityType: "{{ identityType }}"
+              sourceRestriction: "{{ sourceRestriction }}"
+              sources:
+                - accessLevel: "{{ accessLevel }}"
+                  pscEndpoint:
+                    forwardingRule: "{{ forwardingRule }}"
+                  resource: "{{ resource }}"
+            egressTo:
+              externalResources:
+                - "{{ externalResources }}"
+              operations:
+                - methodSelectors: "{{ methodSelectors }}"
+                  serviceName: "{{ serviceName }}"
+              resources:
+                - "{{ resources }}"
+              roles:
+                - "{{ roles }}"
             title: "{{ title }}"
+        ingressPolicies:
+          - ingressFrom:
+              identities:
+                - "{{ identities }}"
+              identityType: "{{ identityType }}"
+              sources:
+                - accessLevel: "{{ accessLevel }}"
+                  pscEndpoint:
+                    forwardingRule: "{{ forwardingRule }}"
+                  resource: "{{ resource }}"
             ingressTo:
               operations:
                 - methodSelectors: "{{ methodSelectors }}"
@@ -477,38 +425,90 @@ response
                 - "{{ resources }}"
               roles:
                 - "{{ roles }}"
+            title: "{{ title }}"
+        resources:
+          - "{{ resources }}"
+        restrictedServices:
+          - "{{ restrictedServices }}"
         vpcAccessibleServices:
-          enableRestriction: {{ enableRestriction }}
           allowedServicePatterns:
-            - pattern: "{{ pattern }}"
-              modifiers: "{{ modifiers }}"
+            - modifiers: "{{ modifiers }}"
+              pattern: "{{ pattern }}"
               service: "{{ service }}"
           allowedServices:
             - "{{ allowedServices }}"
+          enableRestriction: {{ enableRestriction }}
           servicePatternsEnforcementScopes:
             - "{{ servicePatternsEnforcementScopes }}"
+    - name: status
+      description: |
+        Current ServicePerimeter configuration. Specifies sets of resources, restricted services and access levels that determine perimeter content and boundaries.
+      value:
+        accessLevels:
+          - "{{ accessLevels }}"
         egressPolicies:
-          - egressTo:
-              resources:
-                - "{{ resources }}"
+          - egressFrom:
+              identities:
+                - "{{ identities }}"
+              identityType: "{{ identityType }}"
+              sourceRestriction: "{{ sourceRestriction }}"
+              sources:
+                - accessLevel: "{{ accessLevel }}"
+                  pscEndpoint:
+                    forwardingRule: "{{ forwardingRule }}"
+                  resource: "{{ resource }}"
+            egressTo:
+              externalResources:
+                - "{{ externalResources }}"
               operations:
                 - methodSelectors: "{{ methodSelectors }}"
                   serviceName: "{{ serviceName }}"
-              externalResources:
-                - "{{ externalResources }}"
+              resources:
+                - "{{ resources }}"
               roles:
                 - "{{ roles }}"
-            egressFrom:
-              sources:
-                - accessLevel: "{{ accessLevel }}"
-                  resource: "{{ resource }}"
-                  pscEndpoint:
-                    forwardingRule: "{{ forwardingRule }}"
-              identityType: "{{ identityType }}"
+            title: "{{ title }}"
+        ingressPolicies:
+          - ingressFrom:
               identities:
                 - "{{ identities }}"
-              sourceRestriction: "{{ sourceRestriction }}"
+              identityType: "{{ identityType }}"
+              sources:
+                - accessLevel: "{{ accessLevel }}"
+                  pscEndpoint:
+                    forwardingRule: "{{ forwardingRule }}"
+                  resource: "{{ resource }}"
+            ingressTo:
+              operations:
+                - methodSelectors: "{{ methodSelectors }}"
+                  serviceName: "{{ serviceName }}"
+              resources:
+                - "{{ resources }}"
+              roles:
+                - "{{ roles }}"
             title: "{{ title }}"
+        resources:
+          - "{{ resources }}"
+        restrictedServices:
+          - "{{ restrictedServices }}"
+        vpcAccessibleServices:
+          allowedServicePatterns:
+            - modifiers: "{{ modifiers }}"
+              pattern: "{{ pattern }}"
+              service: "{{ service }}"
+          allowedServices:
+            - "{{ allowedServices }}"
+          enableRestriction: {{ enableRestriction }}
+          servicePatternsEnforcementScopes:
+            - "{{ servicePatternsEnforcementScopes }}"
+    - name: title
+      value: "{{ title }}"
+      description: |
+        Human readable title. Must be unique within the Policy.
+    - name: useExplicitDryRunSpec
+      value: {{ useExplicitDryRunSpec }}
+      description: |
+        Use explicit dry run spec flag. Ordinarily, a dry-run spec implicitly exists for all Service Perimeters, and that spec is identical to the status for those Service Perimeters. When this flag is set, it inhibits the generation of the implicit spec, thereby allowing the user to explicitly provide a configuration ("spec") to use in a dry-run version of the Service Perimeter. This allows the user to test changes to the enforced config ("status") without actually enforcing them. This testing is done through analyzing the differences between currently enforced and suggested restrictions. use_explicit_dry_run_spec must bet set to True if any of the fields in the spec are set to non-default values.
 `}</CodeBlock>
 
 </TabItem>
@@ -530,14 +530,14 @@ Updates a service perimeter. The long-running operation from this RPC has a succ
 ```sql
 UPDATE google.accesscontextmanager.service_perimeters
 SET 
-data__title = '{{ title }}',
-data__perimeterType = '{{ perimeterType }}',
-data__useExplicitDryRunSpec = {{ useExplicitDryRunSpec }},
-data__name = '{{ name }}',
-data__status = '{{ status }}',
-data__etag = '{{ etag }}',
 data__description = '{{ description }}',
-data__spec = '{{ spec }}'
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
+data__perimeterType = '{{ perimeterType }}',
+data__spec = '{{ spec }}',
+data__status = '{{ status }}',
+data__title = '{{ title }}',
+data__useExplicitDryRunSpec = {{ useExplicitDryRunSpec }}
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 AND servicePerimetersId = '{{ servicePerimetersId }}' --required
@@ -568,8 +568,8 @@ Replace all existing service perimeters in an access policy with the service per
 ```sql
 REPLACE google.accesscontextmanager.service_perimeters
 SET 
-data__servicePerimeters = '{{ servicePerimeters }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__servicePerimeters = '{{ servicePerimeters }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 RETURNING

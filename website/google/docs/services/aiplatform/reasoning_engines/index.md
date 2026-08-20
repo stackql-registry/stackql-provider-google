@@ -187,70 +187,70 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td></td>
     <td>Gets a reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists reasoning engines in a location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a></td>
     <td>Creates a reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes a reasoning engine.</td>
 </tr>
 <tr>
-    <td><a href="#cancel_async_query"><CopyableCode code="cancel_async_query" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
-    <td></td>
-    <td>Cancels an AsyncQueryReasoningEngine operation.</td>
-</tr>
-<tr>
     <td><a href="#async_query"><CopyableCode code="async_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td></td>
     <td>Async query using a reasoning engine.</td>
 </tr>
 <tr>
+    <td><a href="#cancel_async_query"><CopyableCode code="cancel_async_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td></td>
+    <td>Cancels an AsyncQueryReasoningEngine operation.</td>
+</tr>
+<tr>
     <td><a href="#execute_code"><CopyableCode code="execute_code" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td></td>
     <td>Executes code statelessly.</td>
 </tr>
 <tr>
     <td><a href="#query"><CopyableCode code="query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td></td>
     <td>Queries using a reasoning engine.</td>
 </tr>
 <tr>
     <td><a href="#stream_query"><CopyableCode code="stream_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reasoningEnginesId"><code>reasoningEnginesId</code></a></td>
     <td></td>
     <td>Streams queries using a reasoning engine.</td>
 </tr>
@@ -270,6 +270,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-reasoningEnginesId">
     <td><CopyableCode code="reasoningEnginesId" /></td>
     <td><code>string</code></td>
@@ -292,11 +302,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-pageToken">
     <td><CopyableCode code="pageToken" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-parent">
-    <td><CopyableCode code="parent" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -334,7 +339,9 @@ labels,
 spec,
 updateTime
 FROM google.aiplatform.reasoning_engines
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' -- required
 ;
 ```
 </TabItem>
@@ -355,9 +362,10 @@ labels,
 spec,
 updateTime
 FROM google.aiplatform.reasoning_engines
-WHERE pageSize = '{{ pageSize }}'
-AND parent = '{{ parent }}'
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -380,26 +388,28 @@ Creates a reasoning engine.
 
 ```sql
 INSERT INTO google.aiplatform.reasoning_engines (
+data__contextSpec,
+data__description,
+data__displayName,
+data__encryptionSpec,
+data__etag,
 data__labels,
 data__name,
-data__description,
 data__spec,
-data__contextSpec,
-data__encryptionSpec,
-data__displayName,
-data__etag,
-parent
+projectsId,
+locationsId
 )
 SELECT 
+'{{ contextSpec }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ encryptionSpec }}',
+'{{ etag }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ description }}',
 '{{ spec }}',
-'{{ contextSpec }}',
-'{{ encryptionSpec }}',
-'{{ displayName }}',
-'{{ etag }}',
-'{{ parent }}'
+'{{ projectsId }}',
+'{{ locationsId }}'
 RETURNING
 name,
 done,
@@ -414,6 +424,60 @@ response
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reasoning_engines
   props:
+    - name: projectsId
+      value: "{{ projectsId }}"
+      description: Required parameter for the reasoning_engines resource.
+    - name: locationsId
+      value: "{{ locationsId }}"
+      description: Required parameter for the reasoning_engines resource.
+    - name: contextSpec
+      description: |
+        Optional. Configuration for how Agent Engine sub-resources should manage context.
+      value:
+        memoryBankConfig:
+          customizationConfigs:
+            - consolidationConfig:
+                revisionsPerCandidateCount: {{ revisionsPerCandidateCount }}
+              disableNaturalLanguageMemories: {{ disableNaturalLanguageMemories }}
+              enableThirdPersonMemories: {{ enableThirdPersonMemories }}
+              generateMemoriesExamples: "{{ generateMemoriesExamples }}"
+              memoryTopics: "{{ memoryTopics }}"
+              scopeKeys: "{{ scopeKeys }}"
+          disableMemoryRevisions: {{ disableMemoryRevisions }}
+          generationConfig:
+            generationTriggerConfig:
+              generationRule:
+                eventCount: {{ eventCount }}
+                fixedInterval: "{{ fixedInterval }}"
+                idleDuration: "{{ idleDuration }}"
+                overlapEventCount: {{ overlapEventCount }}
+            model: "{{ model }}"
+          similaritySearchConfig:
+            embeddingModel: "{{ embeddingModel }}"
+          ttlConfig:
+            defaultTtl: "{{ defaultTtl }}"
+            granularTtlConfig:
+              createTtl: "{{ createTtl }}"
+              generateCreatedTtl: "{{ generateCreatedTtl }}"
+              generateUpdatedTtl: "{{ generateUpdatedTtl }}"
+            memoryRevisionDefaultTtl: "{{ memoryRevisionDefaultTtl }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the ReasoningEngine.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the ReasoningEngine.
+    - name: encryptionSpec
+      description: |
+        Customer-managed encryption key spec for a ReasoningEngine. If set, this ReasoningEngine and all sub-resources of this ReasoningEngine will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -422,63 +486,61 @@ response
       value: "{{ name }}"
       description: |
         Identifier. The resource name of the ReasoningEngine. Format: \`projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}\`
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. The description of the ReasoningEngine.
     - name: spec
       description: |
         Optional. Configurations of the ReasoningEngine
       value:
+        agentFramework: "{{ agentFramework }}"
+        buildSpec:
+          serviceAccount: "{{ serviceAccount }}"
+          workerPool: "{{ workerPool }}"
+        classMethods: "{{ classMethods }}"
         containerSpec:
           imageUri: "{{ imageUri }}"
           port: {{ port }}
-        agentFramework: "{{ agentFramework }}"
-        buildSpec:
-          workerPool: "{{ workerPool }}"
-          serviceAccount: "{{ serviceAccount }}"
-        packageSpec:
-          requirementsGcsUri: "{{ requirementsGcsUri }}"
-          dependencyFilesGcsUri: "{{ dependencyFilesGcsUri }}"
-          pickleObjectGcsUri: "{{ pickleObjectGcsUri }}"
-          pythonVersion: "{{ pythonVersion }}"
         deploymentSpec:
-          pscInterfaceConfig:
-            networkAttachment: "{{ networkAttachment }}"
-            dnsPeeringConfigs:
-              - targetNetwork: "{{ targetNetwork }}"
-                domain: "{{ domain }}"
-                targetProject: "{{ targetProject }}"
-          resourceLimits: "{{ resourceLimits }}"
           agentGatewayConfig:
-            clientToAgentConfig:
-              agentGateway: "{{ agentGateway }}"
             agentToAnywhereConfig:
+              agentGateway: "{{ agentGateway }}"
+            clientToAgentConfig:
               agentGateway: "{{ agentGateway }}"
           containerConcurrency: {{ containerConcurrency }}
           env:
             - name: "{{ name }}"
               value: "{{ value }}"
-          maxInstances: {{ maxInstances }}
-          secretEnv:
-            - name: "{{ name }}"
-              secretRef:
-                secret: "{{ secret }}"
-                version: "{{ version }}"
-          minInstances: {{ minInstances }}
           keepAliveProbe:
             httpGet:
               path: "{{ path }}"
               port: {{ port }}
             maxSeconds: {{ maxSeconds }}
-        classMethods: "{{ classMethods }}"
+          maxInstances: {{ maxInstances }}
+          minInstances: {{ minInstances }}
+          pscInterfaceConfig:
+            dnsPeeringConfigs:
+              - domain: "{{ domain }}"
+                targetNetwork: "{{ targetNetwork }}"
+                targetProject: "{{ targetProject }}"
+            networkAttachment: "{{ networkAttachment }}"
+          resourceLimits: "{{ resourceLimits }}"
+          secretEnv:
+            - name: "{{ name }}"
+              secretRef:
+                secret: "{{ secret }}"
+                version: "{{ version }}"
+        effectiveIdentity: "{{ effectiveIdentity }}"
+        identityType: "{{ identityType }}"
+        packageSpec:
+          dependencyFilesGcsUri: "{{ dependencyFilesGcsUri }}"
+          pickleObjectGcsUri: "{{ pickleObjectGcsUri }}"
+          pythonVersion: "{{ pythonVersion }}"
+          requirementsGcsUri: "{{ requirementsGcsUri }}"
         serviceAccount: "{{ serviceAccount }}"
         sourceCodeSpec:
-          pythonSpec:
-            version: "{{ version }}"
-            entrypointObject: "{{ entrypointObject }}"
-            requirementsFile: "{{ requirementsFile }}"
-            entrypointModule: "{{ entrypointModule }}"
+          agentConfigSource:
+            adkConfig:
+              jsonConfig: "{{ jsonConfig }}"
+            inlineSource:
+              sourceArchive: "{{ sourceArchive }}"
           developerConnectSource:
             config:
               dir: "{{ dir }}"
@@ -486,61 +548,13 @@ response
               revision: "{{ revision }}"
           imageSpec:
             buildArgs: "{{ buildArgs }}"
-          agentConfigSource:
-            inlineSource:
-              sourceArchive: "{{ sourceArchive }}"
-            adkConfig:
-              jsonConfig: "{{ jsonConfig }}"
           inlineSource:
             sourceArchive: "{{ sourceArchive }}"
-        identityType: "{{ identityType }}"
-        effectiveIdentity: "{{ effectiveIdentity }}"
-    - name: contextSpec
-      description: |
-        Optional. Configuration for how Agent Engine sub-resources should manage context.
-      value:
-        memoryBankConfig:
-          disableMemoryRevisions: {{ disableMemoryRevisions }}
-          similaritySearchConfig:
-            embeddingModel: "{{ embeddingModel }}"
-          ttlConfig:
-            granularTtlConfig:
-              generateUpdatedTtl: "{{ generateUpdatedTtl }}"
-              createTtl: "{{ createTtl }}"
-              generateCreatedTtl: "{{ generateCreatedTtl }}"
-            defaultTtl: "{{ defaultTtl }}"
-            memoryRevisionDefaultTtl: "{{ memoryRevisionDefaultTtl }}"
-          customizationConfigs:
-            - consolidationConfig:
-                revisionsPerCandidateCount: {{ revisionsPerCandidateCount }}
-              generateMemoriesExamples: "{{ generateMemoriesExamples }}"
-              scopeKeys: "{{ scopeKeys }}"
-              enableThirdPersonMemories: {{ enableThirdPersonMemories }}
-              disableNaturalLanguageMemories: {{ disableNaturalLanguageMemories }}
-              memoryTopics: "{{ memoryTopics }}"
-          generationConfig:
-            model: "{{ model }}"
-            generationTriggerConfig:
-              generationRule:
-                idleDuration: "{{ idleDuration }}"
-                eventCount: {{ eventCount }}
-                fixedInterval: "{{ fixedInterval }}"
-                overlapEventCount: {{ overlapEventCount }}
-    - name: encryptionSpec
-      description: |
-        Customer-managed encryption key spec for a ReasoningEngine. If set, this ReasoningEngine and all sub-resources of this ReasoningEngine will be secured by this key.
-      value:
-        kmsKeyName: "{{ kmsKeyName }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. The display name of the ReasoningEngine.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-    - name: parent
-      value: "{{ parent }}"
+          pythonSpec:
+            entrypointModule: "{{ entrypointModule }}"
+            entrypointObject: "{{ entrypointObject }}"
+            requirementsFile: "{{ requirementsFile }}"
+            version: "{{ version }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -562,16 +576,18 @@ Updates a reasoning engine.
 ```sql
 UPDATE google.aiplatform.reasoning_engines
 SET 
+data__contextSpec = '{{ contextSpec }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
+data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__spec = '{{ spec }}',
-data__contextSpec = '{{ contextSpec }}',
-data__encryptionSpec = '{{ encryptionSpec }}',
-data__displayName = '{{ displayName }}',
-data__etag = '{{ etag }}'
+data__spec = '{{ spec }}'
 WHERE 
-reasoningEnginesId = '{{ reasoningEnginesId }}' --required
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
@@ -598,7 +614,9 @@ Deletes a reasoning engine.
 
 ```sql
 DELETE FROM google.aiplatform.reasoning_engines
-WHERE reasoningEnginesId = '{{ reasoningEnginesId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND reasoningEnginesId = '{{ reasoningEnginesId }}' --required
 AND force = '{{ force }}'
 ;
 ```
@@ -609,40 +627,44 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="cancel_async_query"
+    defaultValue="async_query"
     values={[
-        { label: 'cancel_async_query', value: 'cancel_async_query' },
         { label: 'async_query', value: 'async_query' },
+        { label: 'cancel_async_query', value: 'cancel_async_query' },
         { label: 'execute_code', value: 'execute_code' },
         { label: 'query', value: 'query' },
         { label: 'stream_query', value: 'stream_query' }
     ]}
 >
-<TabItem value="cancel_async_query">
-
-Cancels an AsyncQueryReasoningEngine operation.
-
-```sql
-EXEC google.aiplatform.reasoning_engines.cancel_async_query 
-@reasoningEnginesId='{{ reasoningEnginesId }}' --required 
-@@json=
-'{
-"operationName": "{{ operationName }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="async_query">
 
 Async query using a reasoning engine.
 
 ```sql
 EXEC google.aiplatform.reasoning_engines.async_query 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required 
 @@json=
 '{
 "inputGcsUri": "{{ inputGcsUri }}", 
 "outputGcsUri": "{{ outputGcsUri }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="cancel_async_query">
+
+Cancels an AsyncQueryReasoningEngine operation.
+
+```sql
+EXEC google.aiplatform.reasoning_engines.cancel_async_query 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@reasoningEnginesId='{{ reasoningEnginesId }}' --required 
+@@json=
+'{
+"operationName": "{{ operationName }}"
 }'
 ;
 ```
@@ -653,6 +675,8 @@ Executes code statelessly.
 
 ```sql
 EXEC google.aiplatform.reasoning_engines.execute_code 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required 
 @@json=
 '{
@@ -667,11 +691,13 @@ Queries using a reasoning engine.
 
 ```sql
 EXEC google.aiplatform.reasoning_engines.query 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required 
 @@json=
 '{
-"input": "{{ input }}", 
-"classMethod": "{{ classMethod }}"
+"classMethod": "{{ classMethod }}", 
+"input": "{{ input }}"
 }'
 ;
 ```
@@ -682,6 +708,8 @@ Streams queries using a reasoning engine.
 
 ```sql
 EXEC google.aiplatform.reasoning_engines.stream_query 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required 
 @@json=
 '{

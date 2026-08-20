@@ -114,6 +114,56 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The name of the GoldengateDeployment resource in the following format: projects/&#123;project&#125;/locations/&#123;region&#125;/goldengateDeployments/&#123;goldengate_deployment&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The date and time that the GoldengateDeployment was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Required. The display name for the GoldengateDeployment.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="entitlementId" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The ID of the subscription entitlement associated with the GoldengateDeployment</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gcpOracleZone" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The GCP Oracle zone where Oracle GoldengateDeployment is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The labels or tags associated with the GoldengateDeployment.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ociUrl" /></td>
+    <td><code>string</code></td>
+    <td>Output only. HTTPS link to OCI resources exposed to Customer via UI Interface.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="odbNetwork" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The name of the OdbNetwork associated with the GoldengateDeployment.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="odbSubnet" /></td>
+    <td><code>string</code></td>
+    <td>Required. The name of the OdbSubnet associated with the GoldengateDeployment for IP allocation.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="properties" /></td>
+    <td><code>object</code></td>
+    <td>Required. The properties of the GoldengateDeployment. (id: GoldengateDeploymentProperties)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -145,14 +195,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the GoldengateDeployments for the given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-goldengateDeploymentId"><code>goldengateDeploymentId</code></a></td>
+    <td><a href="#parameter-goldengateDeploymentId"><code>goldengateDeploymentId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new GoldengateDeployment in a given project and location.</td>
 </tr>
 <tr>
@@ -163,18 +213,18 @@ The following methods are available for this resource:
     <td>Deletes a single GoldengateDeployment.</td>
 </tr>
 <tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-goldengateDeploymentsId"><code>goldengateDeploymentsId</code></a></td>
-    <td></td>
-    <td>Stops a single GoldengateDeployment.</td>
-</tr>
-<tr>
     <td><a href="#start"><CopyableCode code="start" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-goldengateDeploymentsId"><code>goldengateDeploymentsId</code></a></td>
     <td></td>
     <td>Starts a single GoldengateDeployment.</td>
+</tr>
+<tr>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-goldengateDeploymentsId"><code>goldengateDeploymentsId</code></a></td>
+    <td></td>
+    <td>Stops a single GoldengateDeployment.</td>
 </tr>
 </tbody>
 </table>
@@ -278,14 +328,23 @@ Lists all the GoldengateDeployments for the given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+displayName,
+entitlementId,
+gcpOracleZone,
+labels,
+ociUrl,
+odbNetwork,
+odbSubnet,
+properties
 FROM google.oracledatabase.goldengate_deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -308,29 +367,29 @@ Creates a new GoldengateDeployment in a given project and location.
 ```sql
 INSERT INTO google.oracledatabase.goldengate_deployments (
 data__displayName,
-data__odbNetwork,
-data__odbSubnet,
+data__gcpOracleZone,
 data__labels,
 data__name,
-data__gcpOracleZone,
+data__odbNetwork,
+data__odbSubnet,
 data__properties,
 projectsId,
 locationsId,
-requestId,
-goldengateDeploymentId
+goldengateDeploymentId,
+requestId
 )
 SELECT 
 '{{ displayName }}',
-'{{ odbNetwork }}',
-'{{ odbSubnet }}',
+'{{ gcpOracleZone }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ gcpOracleZone }}',
+'{{ odbNetwork }}',
+'{{ odbSubnet }}',
 '{{ properties }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ goldengateDeploymentId }}'
+'{{ goldengateDeploymentId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -355,14 +414,10 @@ response
       value: "{{ displayName }}"
       description: |
         Required. The display name for the GoldengateDeployment.
-    - name: odbNetwork
-      value: "{{ odbNetwork }}"
+    - name: gcpOracleZone
+      value: "{{ gcpOracleZone }}"
       description: |
-        Optional. The name of the OdbNetwork associated with the GoldengateDeployment.
-    - name: odbSubnet
-      value: "{{ odbSubnet }}"
-      description: |
-        Required. The name of the OdbSubnet associated with the GoldengateDeployment for IP allocation.
+        Optional. The GCP Oracle zone where Oracle GoldengateDeployment is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -371,102 +426,106 @@ response
       value: "{{ name }}"
       description: |
         Identifier. The name of the GoldengateDeployment resource in the following format: projects/{project}/locations/{region}/goldengateDeployments/{goldengate_deployment}
-    - name: gcpOracleZone
-      value: "{{ gcpOracleZone }}"
+    - name: odbNetwork
+      value: "{{ odbNetwork }}"
       description: |
-        Optional. The GCP Oracle zone where Oracle GoldengateDeployment is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
+        Optional. The name of the OdbNetwork associated with the GoldengateDeployment.
+    - name: odbSubnet
+      value: "{{ odbSubnet }}"
+      description: |
+        Required. The name of the OdbSubnet associated with the GoldengateDeployment for IP allocation.
     - name: properties
       description: |
         Required. The properties of the GoldengateDeployment.
       value:
-        lifecycleDetails: "{{ lifecycleDetails }}"
-        ingressIps:
-          - ingressIpAddress: "{{ ingressIpAddress }}"
-        deploymentType: "{{ deploymentType }}"
-        isPublic: {{ isPublic }}
-        storageUtilizationBytes: "{{ storageUtilizationBytes }}"
-        nextBackupScheduleTime: "{{ nextBackupScheduleTime }}"
-        nextMaintenanceDescription: "{{ nextMaintenanceDescription }}"
+        backupSchedule:
+          backupScheduledTime: "{{ backupScheduledTime }}"
+          bucket: "{{ bucket }}"
+          compartmentId: "{{ compartmentId }}"
+          frequencyBackupScheduled: "{{ frequencyBackupScheduled }}"
+          metadataOnly: {{ metadataOnly }}
+          namespace: "{{ namespace }}"
+        category: "{{ category }}"
+        cpuCoreCount: {{ cpuCoreCount }}
+        deploymentBackupId: "{{ deploymentBackupId }}"
         deploymentDiagnosticData:
-          diagnosticState: "{{ diagnosticState }}"
+          bucket: "{{ bucket }}"
           diagnosticEndTime: "{{ diagnosticEndTime }}"
+          diagnosticStartTime: "{{ diagnosticStartTime }}"
+          diagnosticState: "{{ diagnosticState }}"
           namespace: "{{ namespace }}"
           object: "{{ object }}"
-          bucket: "{{ bucket }}"
-          diagnosticStartTime: "{{ diagnosticStartTime }}"
-        fqdn: "{{ fqdn }}"
-        deploymentBackupId: "{{ deploymentBackupId }}"
-        loadBalancerSubnetId: "{{ loadBalancerSubnetId }}"
-        backupSchedule:
-          compartmentId: "{{ compartmentId }}"
-          metadataOnly: {{ metadataOnly }}
-          backupScheduledTime: "{{ backupScheduledTime }}"
-          frequencyBackupScheduled: "{{ frequencyBackupScheduled }}"
-          bucket: "{{ bucket }}"
-          namespace: "{{ namespace }}"
-        locks:
-          - relatedResourceId: "{{ relatedResourceId }}"
-            compartmentId: "{{ compartmentId }}"
-            message: "{{ message }}"
-            type: "{{ type }}"
-            createTime: "{{ createTime }}"
-        isStorageUtilizationLimitExceeded: {{ isStorageUtilizationLimitExceeded }}
-        roleChangeTime: "{{ roleChangeTime }}"
-        maintenanceConfig:
-          majorReleaseUpgradePeriodDays: {{ majorReleaseUpgradePeriodDays }}
-          isInterimReleaseAutoUpgradeEnabled: {{ isInterimReleaseAutoUpgradeEnabled }}
-          interimReleaseUpgradePeriodDays: {{ interimReleaseUpgradePeriodDays }}
-          bundleReleaseUpgradePeriodDays: {{ bundleReleaseUpgradePeriodDays }}
-          securityPatchUpgradePeriodDays: {{ securityPatchUpgradePeriodDays }}
-        category: "{{ category }}"
         deploymentRole: "{{ deploymentRole }}"
-        cpuCoreCount: {{ cpuCoreCount }}
+        deploymentType: "{{ deploymentType }}"
+        deploymentUrl: "{{ deploymentUrl }}"
+        description: "{{ description }}"
+        environmentType: "{{ environmentType }}"
+        fqdn: "{{ fqdn }}"
+        healthy: {{ healthy }}
+        ingressIps:
+          - ingressIpAddress: "{{ ingressIpAddress }}"
+        isAutoScalingEnabled: {{ isAutoScalingEnabled }}
+        isLatestVersion: {{ isLatestVersion }}
+        isPublic: {{ isPublic }}
+        isStorageUtilizationLimitExceeded: {{ isStorageUtilizationLimitExceeded }}
+        lastBackupScheduleTime: "{{ lastBackupScheduleTime }}"
+        licenseModel: "{{ licenseModel }}"
+        lifecycleDetails: "{{ lifecycleDetails }}"
+        lifecycleState: "{{ lifecycleState }}"
+        lifecycleSubState: "{{ lifecycleSubState }}"
         loadBalancerId: "{{ loadBalancerId }}"
-        publicIpAddress: "{{ publicIpAddress }}"
-        upgradeRequiredTime: "{{ upgradeRequiredTime }}"
+        loadBalancerSubnetId: "{{ loadBalancerSubnetId }}"
+        locks:
+          - compartmentId: "{{ compartmentId }}"
+            createTime: "{{ createTime }}"
+            message: "{{ message }}"
+            relatedResourceId: "{{ relatedResourceId }}"
+            type: "{{ type }}"
+        maintenanceConfig:
+          bundleReleaseUpgradePeriodDays: {{ bundleReleaseUpgradePeriodDays }}
+          interimReleaseUpgradePeriodDays: {{ interimReleaseUpgradePeriodDays }}
+          isInterimReleaseAutoUpgradeEnabled: {{ isInterimReleaseAutoUpgradeEnabled }}
+          majorReleaseUpgradePeriodDays: {{ majorReleaseUpgradePeriodDays }}
+          securityPatchUpgradePeriodDays: {{ securityPatchUpgradePeriodDays }}
         maintenanceWindow:
           day: "{{ day }}"
           startHour: {{ startHour }}
-        isLatestVersion: {{ isLatestVersion }}
-        description: "{{ description }}"
-        licenseModel: "{{ licenseModel }}"
-        lifecycleSubState: "{{ lifecycleSubState }}"
-        ocid: "{{ ocid }}"
-        nextMaintenanceTime: "{{ nextMaintenanceTime }}"
-        oggVersionSupportEndTime: "{{ oggVersionSupportEndTime }}"
-        isAutoScalingEnabled: {{ isAutoScalingEnabled }}
-        privateIpAddress: "{{ privateIpAddress }}"
+        nextBackupScheduleTime: "{{ nextBackupScheduleTime }}"
         nextMaintenanceActionType: "{{ nextMaintenanceActionType }}"
-        deploymentUrl: "{{ deploymentUrl }}"
-        environmentType: "{{ environmentType }}"
-        lifecycleState: "{{ lifecycleState }}"
+        nextMaintenanceDescription: "{{ nextMaintenanceDescription }}"
+        nextMaintenanceTime: "{{ nextMaintenanceTime }}"
         nsgIds:
           - "{{ nsgIds }}"
-        healthy: {{ healthy }}
-        lastBackupScheduleTime: "{{ lastBackupScheduleTime }}"
+        ocid: "{{ ocid }}"
+        oggData:
+          adminPassword: "{{ adminPassword }}"
+          adminPasswordSecretVersion: "{{ adminPasswordSecretVersion }}"
+          adminUsername: "{{ adminUsername }}"
+          certificate: "{{ certificate }}"
+          credentialStore: "{{ credentialStore }}"
+          deployment: "{{ deployment }}"
+          groupRolesMapping:
+            administratorGroupId: "{{ administratorGroupId }}"
+            operatorGroupId: "{{ operatorGroupId }}"
+            securityGroupId: "{{ securityGroupId }}"
+            userGroupId: "{{ userGroupId }}"
+          identityDomainId: "{{ identityDomainId }}"
+          oggVersion: "{{ oggVersion }}"
+          passwordSecretId: "{{ passwordSecretId }}"
+        oggVersionSupportEndTime: "{{ oggVersionSupportEndTime }}"
         placements:
           - availabilityDomain: "{{ availabilityDomain }}"
             faultDomain: "{{ faultDomain }}"
-        oggData:
-          certificate: "{{ certificate }}"
-          deployment: "{{ deployment }}"
-          credentialStore: "{{ credentialStore }}"
-          adminPasswordSecretVersion: "{{ adminPasswordSecretVersion }}"
-          oggVersion: "{{ oggVersion }}"
-          passwordSecretId: "{{ passwordSecretId }}"
-          adminPassword: "{{ adminPassword }}"
-          identityDomainId: "{{ identityDomainId }}"
-          groupRolesMapping:
-            operatorGroupId: "{{ operatorGroupId }}"
-            administratorGroupId: "{{ administratorGroupId }}"
-            securityGroupId: "{{ securityGroupId }}"
-            userGroupId: "{{ userGroupId }}"
-          adminUsername: "{{ adminUsername }}"
+        privateIpAddress: "{{ privateIpAddress }}"
+        publicIpAddress: "{{ publicIpAddress }}"
+        roleChangeTime: "{{ roleChangeTime }}"
+        storageUtilizationBytes: "{{ storageUtilizationBytes }}"
         updateTime: "{{ updateTime }}"
-    - name: requestId
-      value: "{{ requestId }}"
+        upgradeRequiredTime: "{{ upgradeRequiredTime }}"
     - name: goldengateDeploymentId
       value: "{{ goldengateDeploymentId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -500,30 +559,30 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="stop"
+    defaultValue="start"
     values={[
-        { label: 'stop', value: 'stop' },
-        { label: 'start', value: 'start' }
+        { label: 'start', value: 'start' },
+        { label: 'stop', value: 'stop' }
     ]}
 >
-<TabItem value="stop">
-
-Stops a single GoldengateDeployment.
-
-```sql
-EXEC google.oracledatabase.goldengate_deployments.stop 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@goldengateDeploymentsId='{{ goldengateDeploymentsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="start">
 
 Starts a single GoldengateDeployment.
 
 ```sql
 EXEC google.oracledatabase.goldengate_deployments.start 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@goldengateDeploymentsId='{{ goldengateDeploymentsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="stop">
+
+Stops a single GoldengateDeployment.
+
+```sql
+EXEC google.oracledatabase.goldengate_deployments.stop 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @goldengateDeploymentsId='{{ goldengateDeploymentsId }}' --required

@@ -336,24 +336,24 @@ Creates an attachment. The returned Operation will finish once the attachment ha
 
 ```sql
 INSERT INTO google.artifactregistry.attachments (
-data__files,
-data__attachmentNamespace,
-data__target,
-data__name,
-data__type,
 data__annotations,
+data__attachmentNamespace,
+data__files,
+data__name,
+data__target,
+data__type,
 projectsId,
 locationsId,
 repositoriesId,
 attachmentId
 )
 SELECT 
-'{{ files }}',
-'{{ attachmentNamespace }}',
-'{{ target }}',
-'{{ name }}',
-'{{ type }}',
 '{{ annotations }}',
+'{{ attachmentNamespace }}',
+'{{ files }}',
+'{{ name }}',
+'{{ target }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -381,31 +381,31 @@ response
     - name: repositoriesId
       value: "{{ repositoriesId }}"
       description: Required parameter for the attachments resource.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. User annotations. These attributes can only be set and used by the user, and not by Artifact Registry. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
+    - name: attachmentNamespace
+      value: "{{ attachmentNamespace }}"
+      description: |
+        The namespace this attachment belongs to. E.g. If an attachment is created by artifact analysis, namespace is set to \`artifactanalysis.googleapis.com\`.
     - name: files
       value:
         - "{{ files }}"
       description: |
         Required. The files that belong to this attachment. If the file ID part contains slashes, they are escaped. E.g. \`projects/p1/locations/us-central1/repositories/repo1/files/sha:\`.
-    - name: attachmentNamespace
-      value: "{{ attachmentNamespace }}"
-      description: |
-        The namespace this attachment belongs to. E.g. If an attachment is created by artifact analysis, namespace is set to \`artifactanalysis.googleapis.com\`.
-    - name: target
-      value: "{{ target }}"
-      description: |
-        Required. The target the attachment is for, can be a Version, Package or Repository. E.g. \`projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1\`.
     - name: name
       value: "{{ name }}"
       description: |
         The name of the attachment. E.g. \`projects/p1/locations/us/repositories/repo/attachments/sbom\`.
+    - name: target
+      value: "{{ target }}"
+      description: |
+        Required. The target the attachment is for, can be a Version, Package or Repository. E.g. \`projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1\`.
     - name: type
       value: "{{ type }}"
       description: |
         Type of attachment. E.g. \`application/vnd.spdx+json\`
-    - name: annotations
-      value: "{{ annotations }}"
-      description: |
-        Optional. User annotations. These attributes can only be set and used by the user, and not by Artifact Registry. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
     - name: attachmentId
       value: "{{ attachmentId }}"
 `}</CodeBlock>

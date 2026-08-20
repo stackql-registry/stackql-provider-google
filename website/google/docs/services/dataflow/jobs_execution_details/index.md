@@ -109,7 +109,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Request detailed information about the execution status of the job. EXPERIMENTAL. This API is subject to change or removal without notice.</td>
+    <td>Request detailed information about the execution status of the job. EXPERIMENTAL. This API is subject to change or removal without notice. # IAM Permissions Requires the `dataflow.metrics.get` permission on the job.</td>
 </tr>
 </tbody>
 </table>
@@ -165,7 +165,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_jobs_get_execution_details">
 
-Request detailed information about the execution status of the job. EXPERIMENTAL. This API is subject to change or removal without notice.
+Request detailed information about the execution status of the job. EXPERIMENTAL. This API is subject to change or removal without notice. # IAM Permissions Requires the `dataflow.metrics.get` permission on the job.
 
 ```sql
 SELECT

@@ -352,8 +352,8 @@ Creates a pull request.
 ```sql
 INSERT INTO google.securesourcemanager.pull_requests (
 data__base,
-data__head,
 data__body,
+data__head,
 data__title,
 projectsId,
 locationsId,
@@ -361,8 +361,8 @@ repositoriesId
 )
 SELECT 
 '{{ base }}',
-'{{ head }}',
 '{{ body }}',
+'{{ head }}',
 '{{ title }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -396,16 +396,16 @@ response
       value:
         ref: "{{ ref }}"
         sha: "{{ sha }}"
+    - name: body
+      value: "{{ body }}"
+      description: |
+        Optional. The pull request body. Provides a detailed description of the changes.
     - name: head
       description: |
         Immutable. The branch containing the changes to be merged.
       value:
         ref: "{{ ref }}"
         sha: "{{ sha }}"
-    - name: body
-      value: "{{ body }}"
-      description: |
-        Optional. The pull request body. Provides a detailed description of the changes.
     - name: title
       value: "{{ title }}"
       description: |
@@ -432,8 +432,8 @@ Updates a pull request.
 UPDATE google.securesourcemanager.pull_requests
 SET 
 data__base = '{{ base }}',
-data__head = '{{ head }}',
 data__body = '{{ body }}',
+data__head = '{{ head }}',
 data__title = '{{ title }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

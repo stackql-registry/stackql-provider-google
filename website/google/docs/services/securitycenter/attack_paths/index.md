@@ -33,15 +33,15 @@ Creates, updates, deletes, gets or lists an <code>attack_paths</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_simulations_valued_resources_attack_paths_list"
+    defaultValue="organizations_simulations_attack_exposure_results_attack_paths_list"
     values={[
-        { label: 'organizations_simulations_valued_resources_attack_paths_list', value: 'organizations_simulations_valued_resources_attack_paths_list' },
         { label: 'organizations_simulations_attack_exposure_results_attack_paths_list', value: 'organizations_simulations_attack_exposure_results_attack_paths_list' },
+        { label: 'organizations_simulations_valued_resources_attack_paths_list', value: 'organizations_simulations_valued_resources_attack_paths_list' },
         { label: 'organizations_simulations_attack_paths_list', value: 'organizations_simulations_attack_paths_list' },
         { label: 'organizations_attack_paths_list', value: 'organizations_attack_paths_list' }
     ]}
 >
-<TabItem value="organizations_simulations_valued_resources_attack_paths_list">
+<TabItem value="organizations_simulations_attack_exposure_results_attack_paths_list">
 
 <table>
 <thead>
@@ -70,7 +70,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_simulations_attack_exposure_results_attack_paths_list">
+<TabItem value="organizations_simulations_valued_resources_attack_paths_list">
 
 <table>
 <thead>
@@ -175,6 +175,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#organizations_simulations_attack_exposure_results_attack_paths_list"><CopyableCode code="organizations_simulations_attack_exposure_results_attack_paths_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-attackExposureResultsId"><code>attackExposureResultsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_simulations_valued_resources_attack_paths_list"><CopyableCode code="organizations_simulations_valued_resources_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-valuedResourcesId"><code>valuedResourcesId</code></a></td>
@@ -182,17 +189,10 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#organizations_simulations_attack_exposure_results_attack_paths_list"><CopyableCode code="organizations_simulations_attack_exposure_results_attack_paths_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-attackExposureResultsId"><code>attackExposureResultsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td></td>
-</tr>
-<tr>
     <td><a href="#organizations_simulations_attack_paths_list"><CopyableCode code="organizations_simulations_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -259,14 +259,33 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_simulations_valued_resources_attack_paths_list"
+    defaultValue="organizations_simulations_attack_exposure_results_attack_paths_list"
     values={[
-        { label: 'organizations_simulations_valued_resources_attack_paths_list', value: 'organizations_simulations_valued_resources_attack_paths_list' },
         { label: 'organizations_simulations_attack_exposure_results_attack_paths_list', value: 'organizations_simulations_attack_exposure_results_attack_paths_list' },
+        { label: 'organizations_simulations_valued_resources_attack_paths_list', value: 'organizations_simulations_valued_resources_attack_paths_list' },
         { label: 'organizations_simulations_attack_paths_list', value: 'organizations_simulations_attack_paths_list' },
         { label: 'organizations_attack_paths_list', value: 'organizations_attack_paths_list' }
     ]}
 >
+<TabItem value="organizations_simulations_attack_exposure_results_attack_paths_list">
+
+Successful response
+
+```sql
+SELECT
+name,
+edges,
+pathNodes
+FROM google.securitycenter.attack_paths
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND simulationsId = '{{ simulationsId }}' -- required
+AND attackExposureResultsId = '{{ attackExposureResultsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_simulations_valued_resources_attack_paths_list">
 
 Successful response
@@ -286,25 +305,6 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="organizations_simulations_attack_exposure_results_attack_paths_list">
-
-Successful response
-
-```sql
-SELECT
-name,
-edges,
-pathNodes
-FROM google.securitycenter.attack_paths
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND simulationsId = '{{ simulationsId }}' -- required
-AND attackExposureResultsId = '{{ attackExposureResultsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_simulations_attack_paths_list">
 
 Successful response
@@ -317,9 +317,9 @@ pathNodes
 FROM google.securitycenter.attack_paths
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

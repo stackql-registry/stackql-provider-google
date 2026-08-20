@@ -110,17 +110,17 @@ EXEC google.aiplatform.memory_banks.ingest_events
 @memoryBanksId='{{ memoryBanksId }}' --required 
 @@json=
 '{
-"streamId": "{{ streamId }}", 
-"generationTriggerConfig": "{{ generationTriggerConfig }}", 
-"disableMemoryRevisions": {{ disableMemoryRevisions }}, 
-"metadata": "{{ metadata }}", 
-"revisionLabels": "{{ revisionLabels }}", 
-"forceFlush": {{ forceFlush }}, 
 "directContentsSource": "{{ directContentsSource }}", 
+"disableMemoryRevisions": {{ disableMemoryRevisions }}, 
+"forceFlush": {{ forceFlush }}, 
+"generationTriggerConfig": "{{ generationTriggerConfig }}", 
+"metadata": "{{ metadata }}", 
 "metadataMergeStrategy": "{{ metadataMergeStrategy }}", 
 "revisionExpireTime": "{{ revisionExpireTime }}", 
+"revisionLabels": "{{ revisionLabels }}", 
 "revisionTtl": "{{ revisionTtl }}", 
-"scope": "{{ scope }}"
+"scope": "{{ scope }}", 
+"streamId": "{{ streamId }}"
 }'
 ;
 ```

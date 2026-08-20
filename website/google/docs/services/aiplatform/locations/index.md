@@ -145,15 +145,15 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 <tr>
-    <td><a href="#evaluate_dataset"><CopyableCode code="evaluate_dataset" /></a></td>
+    <td><a href="#ask_contexts"><CopyableCode code="ask_contexts" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Evaluates a dataset based on a set of given metrics.</td>
+    <td>Agentic Retrieval Ask API for RAG.</td>
 </tr>
 <tr>
     <td><a href="#async_retrieve_contexts"><CopyableCode code="async_retrieve_contexts" /></a></td>
@@ -161,6 +161,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Asynchronous API to retrieves relevant contexts for a query.</td>
+</tr>
+<tr>
+    <td><a href="#augment_prompt"><CopyableCode code="augment_prompt" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Given an input prompt, it returns augmented prompt from vertex rag store to guide LLM towards generating grounded responses.</td>
 </tr>
 <tr>
     <td><a href="#corroborate_content"><CopyableCode code="corroborate_content" /></a></td>
@@ -177,25 +184,11 @@ The following methods are available for this resource:
     <td>Deploys a model to a new endpoint.</td>
 </tr>
 <tr>
-    <td><a href="#ask_contexts"><CopyableCode code="ask_contexts" /></a></td>
+    <td><a href="#evaluate_dataset"><CopyableCode code="evaluate_dataset" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Agentic Retrieval Ask API for RAG.</td>
-</tr>
-<tr>
-    <td><a href="#generate_user_scenarios"><CopyableCode code="generate_user_scenarios" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Generates user scenarios for agent evaluation.</td>
-</tr>
-<tr>
-    <td><a href="#augment_prompt"><CopyableCode code="augment_prompt" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Given an input prompt, it returns augmented prompt from vertex rag store to guide LLM towards generating grounded responses.</td>
+    <td>Evaluates a dataset based on a set of given metrics.</td>
 </tr>
 <tr>
     <td><a href="#evaluate_instances"><CopyableCode code="evaluate_instances" /></a></td>
@@ -203,6 +196,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Evaluates instances based on a given metric.</td>
+</tr>
+<tr>
+    <td><a href="#generate_instance_rubrics"><CopyableCode code="generate_instance_rubrics" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Generates rubrics for a given prompt. A rubric represents a single testable criterion for evaluation. One input prompt could have multiple rubrics This RPC allows users to get suggested rubrics based on provided prompt, which can then be reviewed and used for subsequent evaluations.</td>
 </tr>
 <tr>
     <td><a href="#generate_loss_clusters"><CopyableCode code="generate_loss_clusters" /></a></td>
@@ -219,11 +219,11 @@ The following methods are available for this resource:
     <td>Generates synthetic (artificial) data based on a description</td>
 </tr>
 <tr>
-    <td><a href="#generate_instance_rubrics"><CopyableCode code="generate_instance_rubrics" /></a></td>
+    <td><a href="#generate_user_scenarios"><CopyableCode code="generate_user_scenarios" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Generates rubrics for a given prompt. A rubric represents a single testable criterion for evaluation. One input prompt could have multiple rubrics This RPC allows users to get suggested rubrics based on provided prompt, which can then be reviewed and used for subsequent evaluations.</td>
+    <td>Generates user scenarios for agent evaluation.</td>
 </tr>
 </tbody>
 </table>
@@ -314,9 +314,9 @@ metadata
 FROM google.aiplatform.locations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND extraLocationTypes = '{{ extraLocationTypes }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -326,36 +326,33 @@ AND pageSize = '{{ pageSize }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="evaluate_dataset"
+    defaultValue="ask_contexts"
     values={[
-        { label: 'evaluate_dataset', value: 'evaluate_dataset' },
+        { label: 'ask_contexts', value: 'ask_contexts' },
         { label: 'async_retrieve_contexts', value: 'async_retrieve_contexts' },
+        { label: 'augment_prompt', value: 'augment_prompt' },
         { label: 'corroborate_content', value: 'corroborate_content' },
         { label: 'deploy', value: 'deploy' },
-        { label: 'ask_contexts', value: 'ask_contexts' },
-        { label: 'generate_user_scenarios', value: 'generate_user_scenarios' },
-        { label: 'augment_prompt', value: 'augment_prompt' },
+        { label: 'evaluate_dataset', value: 'evaluate_dataset' },
         { label: 'evaluate_instances', value: 'evaluate_instances' },
+        { label: 'generate_instance_rubrics', value: 'generate_instance_rubrics' },
         { label: 'generate_loss_clusters', value: 'generate_loss_clusters' },
         { label: 'generate_synthetic_data', value: 'generate_synthetic_data' },
-        { label: 'generate_instance_rubrics', value: 'generate_instance_rubrics' }
+        { label: 'generate_user_scenarios', value: 'generate_user_scenarios' }
     ]}
 >
-<TabItem value="evaluate_dataset">
+<TabItem value="ask_contexts">
 
-Evaluates a dataset based on a set of given metrics.
+Agentic Retrieval Ask API for RAG.
 
 ```sql
-EXEC google.aiplatform.locations.evaluate_dataset 
+EXEC google.aiplatform.locations.ask_contexts 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"autoraterConfig": "{{ autoraterConfig }}", 
-"dataset": "{{ dataset }}", 
-"metrics": "{{ metrics }}", 
-"location": "{{ location }}", 
-"outputConfig": "{{ outputConfig }}"
+"query": "{{ query }}", 
+"tools": "{{ tools }}"
 }'
 ;
 ```
@@ -376,6 +373,23 @@ EXEC google.aiplatform.locations.async_retrieve_contexts
 ;
 ```
 </TabItem>
+<TabItem value="augment_prompt">
+
+Given an input prompt, it returns augmented prompt from vertex rag store to guide LLM towards generating grounded responses.
+
+```sql
+EXEC google.aiplatform.locations.augment_prompt 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"contents": "{{ contents }}", 
+"model": "{{ model }}", 
+"vertexRagStore": "{{ vertexRagStore }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="corroborate_content">
 
 Given an input text, it returns a score that evaluates the factuality of the text. It also extracts and returns claims from the text and provides supporting facts.
@@ -386,8 +400,8 @@ EXEC google.aiplatform.locations.corroborate_content
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"facts": "{{ facts }}", 
 "content": "{{ content }}", 
+"facts": "{{ facts }}", 
 "parameters": "{{ parameters }}"
 }'
 ;
@@ -403,62 +417,30 @@ EXEC google.aiplatform.locations.deploy
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"modelConfig": "{{ modelConfig }}", 
+"deployConfig": "{{ deployConfig }}", 
 "endpointConfig": "{{ endpointConfig }}", 
-"publisherModelName": "{{ publisherModelName }}", 
 "huggingFaceModelId": "{{ huggingFaceModelId }}", 
-"deployConfig": "{{ deployConfig }}"
+"modelConfig": "{{ modelConfig }}", 
+"publisherModelName": "{{ publisherModelName }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="ask_contexts">
+<TabItem value="evaluate_dataset">
 
-Agentic Retrieval Ask API for RAG.
+Evaluates a dataset based on a set of given metrics.
 
 ```sql
-EXEC google.aiplatform.locations.ask_contexts 
+EXEC google.aiplatform.locations.evaluate_dataset 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"query": "{{ query }}", 
-"tools": "{{ tools }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="generate_user_scenarios">
-
-Generates user scenarios for agent evaluation.
-
-```sql
-EXEC google.aiplatform.locations.generate_user_scenarios 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"userScenarioGenerationConfig": "{{ userScenarioGenerationConfig }}", 
-"rootAgentId": "{{ rootAgentId }}", 
-"allowCrossRegionModel": {{ allowCrossRegionModel }}, 
-"agents": "{{ agents }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="augment_prompt">
-
-Given an input prompt, it returns augmented prompt from vertex rag store to guide LLM towards generating grounded responses.
-
-```sql
-EXEC google.aiplatform.locations.augment_prompt 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"vertexRagStore": "{{ vertexRagStore }}", 
-"contents": "{{ contents }}", 
-"model": "{{ model }}"
+"autoraterConfig": "{{ autoraterConfig }}", 
+"dataset": "{{ dataset }}", 
+"location": "{{ location }}", 
+"metrics": "{{ metrics }}", 
+"outputConfig": "{{ outputConfig }}"
 }'
 ;
 ```
@@ -473,78 +455,43 @@ EXEC google.aiplatform.locations.evaluate_instances
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"fulfillmentInput": "{{ fulfillmentInput }}", 
-"toolNameMatchInput": "{{ toolNameMatchInput }}", 
-"summarizationQualityInput": "{{ summarizationQualityInput }}", 
-"summarizationHelpfulnessInput": "{{ summarizationHelpfulnessInput }}", 
-"rougeInput": "{{ rougeInput }}", 
-"trajectorySingleToolUseInput": "{{ trajectorySingleToolUseInput }}", 
-"exactMatchInput": "{{ exactMatchInput }}", 
-"metrics": "{{ metrics }}", 
-"summarizationVerbosityInput": "{{ summarizationVerbosityInput }}", 
-"questionAnsweringCorrectnessInput": "{{ questionAnsweringCorrectnessInput }}", 
 "autoraterConfig": "{{ autoraterConfig }}", 
-"trajectoryRecallInput": "{{ trajectoryRecallInput }}", 
-"rubricBasedInstructionFollowingInput": "{{ rubricBasedInstructionFollowingInput }}", 
+"bleuInput": "{{ bleuInput }}", 
+"coherenceInput": "{{ coherenceInput }}", 
+"cometInput": "{{ cometInput }}", 
+"exactMatchInput": "{{ exactMatchInput }}", 
+"fluencyInput": "{{ fluencyInput }}", 
+"fulfillmentInput": "{{ fulfillmentInput }}", 
+"groundednessInput": "{{ groundednessInput }}", 
+"instance": "{{ instance }}", 
 "location": "{{ location }}", 
 "metricSources": "{{ metricSources }}", 
-"cometInput": "{{ cometInput }}", 
-"toolCallValidInput": "{{ toolCallValidInput }}", 
-"trajectoryExactMatchInput": "{{ trajectoryExactMatchInput }}", 
-"trajectoryAnyOrderMatchInput": "{{ trajectoryAnyOrderMatchInput }}", 
-"instance": "{{ instance }}", 
-"pairwiseQuestionAnsweringQualityInput": "{{ pairwiseQuestionAnsweringQualityInput }}", 
-"pairwiseMetricInput": "{{ pairwiseMetricInput }}", 
-"pointwiseMetricInput": "{{ pointwiseMetricInput }}", 
+"metrics": "{{ metrics }}", 
 "metricxInput": "{{ metricxInput }}", 
-"bleuInput": "{{ bleuInput }}", 
-"groundednessInput": "{{ groundednessInput }}", 
-"coherenceInput": "{{ coherenceInput }}", 
+"pairwiseMetricInput": "{{ pairwiseMetricInput }}", 
+"pairwiseQuestionAnsweringQualityInput": "{{ pairwiseQuestionAnsweringQualityInput }}", 
+"pairwiseSummarizationQualityInput": "{{ pairwiseSummarizationQualityInput }}", 
+"pointwiseMetricInput": "{{ pointwiseMetricInput }}", 
+"questionAnsweringCorrectnessInput": "{{ questionAnsweringCorrectnessInput }}", 
+"questionAnsweringHelpfulnessInput": "{{ questionAnsweringHelpfulnessInput }}", 
 "questionAnsweringQualityInput": "{{ questionAnsweringQualityInput }}", 
 "questionAnsweringRelevanceInput": "{{ questionAnsweringRelevanceInput }}", 
-"pairwiseSummarizationQualityInput": "{{ pairwiseSummarizationQualityInput }}", 
-"fluencyInput": "{{ fluencyInput }}", 
-"trajectoryPrecisionInput": "{{ trajectoryPrecisionInput }}", 
+"rougeInput": "{{ rougeInput }}", 
+"rubricBasedInstructionFollowingInput": "{{ rubricBasedInstructionFollowingInput }}", 
 "safetyInput": "{{ safetyInput }}", 
+"summarizationHelpfulnessInput": "{{ summarizationHelpfulnessInput }}", 
+"summarizationQualityInput": "{{ summarizationQualityInput }}", 
+"summarizationVerbosityInput": "{{ summarizationVerbosityInput }}", 
+"toolCallValidInput": "{{ toolCallValidInput }}", 
+"toolNameMatchInput": "{{ toolNameMatchInput }}", 
+"toolParameterKeyMatchInput": "{{ toolParameterKeyMatchInput }}", 
 "toolParameterKvMatchInput": "{{ toolParameterKvMatchInput }}", 
-"questionAnsweringHelpfulnessInput": "{{ questionAnsweringHelpfulnessInput }}", 
+"trajectoryAnyOrderMatchInput": "{{ trajectoryAnyOrderMatchInput }}", 
+"trajectoryExactMatchInput": "{{ trajectoryExactMatchInput }}", 
 "trajectoryInOrderMatchInput": "{{ trajectoryInOrderMatchInput }}", 
-"toolParameterKeyMatchInput": "{{ toolParameterKeyMatchInput }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="generate_loss_clusters">
-
-Generates loss clusters from evaluation results. This is a statelss API method that would not modify the EvaluationSet resource.
-
-```sql
-EXEC google.aiplatform.locations.generate_loss_clusters 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"evaluationSet": "{{ evaluationSet }}", 
-"inlineResults": "{{ inlineResults }}", 
-"configs": "{{ configs }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="generate_synthetic_data">
-
-Generates synthetic (artificial) data based on a description
-
-```sql
-EXEC google.aiplatform.locations.generate_synthetic_data 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"taskDescription": "{{ taskDescription }}", 
-"count": {{ count }}, 
-"examples": "{{ examples }}", 
-"outputFieldSpecs": "{{ outputFieldSpecs }}"
+"trajectoryPrecisionInput": "{{ trajectoryPrecisionInput }}", 
+"trajectoryRecallInput": "{{ trajectoryRecallInput }}", 
+"trajectorySingleToolUseInput": "{{ trajectorySingleToolUseInput }}"
 }'
 ;
 ```
@@ -559,12 +506,66 @@ EXEC google.aiplatform.locations.generate_instance_rubrics
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"location": "{{ location }}", 
-"contents": "{{ contents }}", 
-"rubricGenerationSpec": "{{ rubricGenerationSpec }}", 
 "agentConfig": "{{ agentConfig }}", 
+"contents": "{{ contents }}", 
+"location": "{{ location }}", 
+"metricResourceName": "{{ metricResourceName }}", 
 "predefinedRubricGenerationSpec": "{{ predefinedRubricGenerationSpec }}", 
-"metricResourceName": "{{ metricResourceName }}"
+"rubricGenerationSpec": "{{ rubricGenerationSpec }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generate_loss_clusters">
+
+Generates loss clusters from evaluation results. This is a statelss API method that would not modify the EvaluationSet resource.
+
+```sql
+EXEC google.aiplatform.locations.generate_loss_clusters 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"configs": "{{ configs }}", 
+"evaluationSet": "{{ evaluationSet }}", 
+"inlineResults": "{{ inlineResults }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generate_synthetic_data">
+
+Generates synthetic (artificial) data based on a description
+
+```sql
+EXEC google.aiplatform.locations.generate_synthetic_data 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"count": {{ count }}, 
+"examples": "{{ examples }}", 
+"outputFieldSpecs": "{{ outputFieldSpecs }}", 
+"taskDescription": "{{ taskDescription }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generate_user_scenarios">
+
+Generates user scenarios for agent evaluation.
+
+```sql
+EXEC google.aiplatform.locations.generate_user_scenarios 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"agents": "{{ agents }}", 
+"allowCrossRegionModel": {{ allowCrossRegionModel }}, 
+"geminiAgentConfig": "{{ geminiAgentConfig }}", 
+"rootAgentId": "{{ rootAgentId }}", 
+"userScenarioGenerationConfig": "{{ userScenarioGenerationConfig }}"
 }'
 ;
 ```

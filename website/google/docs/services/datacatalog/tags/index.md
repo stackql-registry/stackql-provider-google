@@ -337,20 +337,20 @@ Creates a tag and assigns it to: * An Entry if the method name is `projects.loca
 
 ```sql
 INSERT INTO google.datacatalog.tags (
-data__name,
-data__template,
 data__column,
 data__fields,
+data__name,
+data__template,
 projectsId,
 locationsId,
 entryGroupsId,
 entriesId
 )
 SELECT 
-'{{ name }}',
-'{{ template }}',
 '{{ column }}',
 '{{ fields }}',
+'{{ name }}',
+'{{ template }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ entryGroupsId }}',
@@ -371,19 +371,19 @@ Creates a tag and assigns it to: * An Entry if the method name is `projects.loca
 
 ```sql
 INSERT INTO google.datacatalog.tags (
-data__name,
-data__template,
 data__column,
 data__fields,
+data__name,
+data__template,
 projectsId,
 locationsId,
 entryGroupsId
 )
 SELECT 
-'{{ name }}',
-'{{ template }}',
 '{{ column }}',
 '{{ fields }}',
+'{{ name }}',
+'{{ template }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ entryGroupsId }}'
@@ -414,14 +414,6 @@ templateDisplayName
     - name: entriesId
       value: "{{ entriesId }}"
       description: Required parameter for the tags resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.
-    - name: template
-      value: "{{ template }}"
-      description: |
-        Required. The resource name of the tag template this tag uses. Example: \`projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE_ID}\` This field cannot be modified after creation.
     - name: column
       value: "{{ column }}"
       description: |
@@ -430,6 +422,14 @@ templateDisplayName
       value: "{{ fields }}"
       description: |
         Required. Maps the ID of a tag field to its value and additional information about that field. Tag template defines valid field IDs. A tag must have at least 1 field and at most 500 fields.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.
+    - name: template
+      value: "{{ template }}"
+      description: |
+        Required. The resource name of the tag template this tag uses. Example: \`projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE_ID}\` This field cannot be modified after creation.
 `}</CodeBlock>
 
 </TabItem>
@@ -452,10 +452,10 @@ Updates an existing tag.
 ```sql
 UPDATE google.datacatalog.tags
 SET 
-data__name = '{{ name }}',
-data__template = '{{ template }}',
 data__column = '{{ column }}',
-data__fields = '{{ fields }}'
+data__fields = '{{ fields }}',
+data__name = '{{ name }}',
+data__template = '{{ template }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -479,10 +479,10 @@ Updates an existing tag.
 ```sql
 UPDATE google.datacatalog.tags
 SET 
-data__name = '{{ name }}',
-data__template = '{{ template }}',
 data__column = '{{ column }}',
-data__fields = '{{ fields }}'
+data__fields = '{{ fields }}',
+data__name = '{{ name }}',
+data__template = '{{ template }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -560,8 +560,8 @@ EXEC google.datacatalog.tags.projects_locations_entry_groups_entries_tags_reconc
 @entriesId='{{ entriesId }}' --required 
 @@json=
 '{
-"tagTemplate": "{{ tagTemplate }}", 
 "forceDeleteMissing": {{ forceDeleteMissing }}, 
+"tagTemplate": "{{ tagTemplate }}", 
 "tags": "{{ tags }}"
 }'
 ;

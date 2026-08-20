@@ -259,15 +259,15 @@ Create a Datastore for an org
 
 ```sql
 INSERT INTO google.apigee.datastores (
-data__targetType,
-data__displayName,
 data__datastoreConfig,
+data__displayName,
+data__targetType,
 organizationsId
 )
 SELECT 
-'{{ targetType }}',
-'{{ displayName }}',
 '{{ datastoreConfig }}',
+'{{ displayName }}',
+'{{ targetType }}',
 '{{ organizationsId }}'
 RETURNING
 createTime,
@@ -288,23 +288,23 @@ targetType
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the datastores resource.
-    - name: targetType
-      value: "{{ targetType }}"
-      description: |
-        Destination storage type. Supported types \`gcs\` or \`bigquery\`.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Display name in UI
     - name: datastoreConfig
       description: |
         Datastore Configurations.
       value:
-        path: "{{ path }}"
-        projectId: "{{ projectId }}"
         bucketName: "{{ bucketName }}"
         datasetName: "{{ datasetName }}"
+        path: "{{ path }}"
+        projectId: "{{ projectId }}"
         tablePrefix: "{{ tablePrefix }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name in UI
+    - name: targetType
+      value: "{{ targetType }}"
+      description: |
+        Destination storage type. Supported types \`gcs\` or \`bigquery\`.
 `}</CodeBlock>
 
 </TabItem>
@@ -326,9 +326,9 @@ Update a Datastore
 ```sql
 REPLACE google.apigee.datastores
 SET 
-data__targetType = '{{ targetType }}',
+data__datastoreConfig = '{{ datastoreConfig }}',
 data__displayName = '{{ displayName }}',
-data__datastoreConfig = '{{ datastoreConfig }}'
+data__targetType = '{{ targetType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND datastoresId = '{{ datastoresId }}' --required
@@ -384,9 +384,9 @@ EXEC google.apigee.datastores.organizations_analytics_datastores_test
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"targetType": "{{ targetType }}", 
+"datastoreConfig": "{{ datastoreConfig }}", 
 "displayName": "{{ displayName }}", 
-"datastoreConfig": "{{ datastoreConfig }}"
+"targetType": "{{ targetType }}"
 }'
 ;
 ```

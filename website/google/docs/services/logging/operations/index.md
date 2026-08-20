@@ -37,12 +37,12 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'billing_accounts_locations_operations_get', value: 'billing_accounts_locations_operations_get' },
         { label: 'folders_locations_operations_get', value: 'folders_locations_operations_get' },
-        { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
         { label: 'organizations_locations_operations_get', value: 'organizations_locations_operations_get' },
+        { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
         { label: 'billing_accounts_locations_operations_list', value: 'billing_accounts_locations_operations_list' },
         { label: 'folders_locations_operations_list', value: 'folders_locations_operations_list' },
-        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
         { label: 'organizations_locations_operations_list', value: 'organizations_locations_operations_list' },
+        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
         { label: 'locations_operations_list', value: 'locations_operations_list' }
     ]}
 >
@@ -124,7 +124,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_operations_get">
+<TabItem value="organizations_locations_operations_get">
 
 <table>
 <thead>
@@ -163,7 +163,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_locations_operations_get">
+<TabItem value="projects_locations_operations_get">
 
 <table>
 <thead>
@@ -280,7 +280,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_operations_list">
+<TabItem value="organizations_locations_operations_list">
 
 <table>
 <thead>
@@ -319,7 +319,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_locations_operations_list">
+<TabItem value="projects_locations_operations_list">
 
 <table>
 <thead>
@@ -429,13 +429,6 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_operations_get"><CopyableCode code="projects_locations_operations_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
-    <td></td>
-    <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_operations_get"><CopyableCode code="organizations_locations_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
@@ -443,38 +436,45 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_operations_get"><CopyableCode code="projects_locations_operations_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td></td>
+    <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
+</tr>
+<tr>
     <td><a href="#billing_accounts_locations_operations_list"><CopyableCode code="billing_accounts_locations_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.</td>
 </tr>
 <tr>
     <td><a href="#folders_locations_operations_list"><CopyableCode code="folders_locations_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_operations_list"><CopyableCode code="organizations_locations_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.</td>
 </tr>
 <tr>
     <td><a href="#locations_operations_list"><CopyableCode code="locations_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-name"><code>name</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.</td>
 </tr>
 <tr>
@@ -492,9 +492,9 @@ The following methods are available for this resource:
     <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_operations_cancel"><CopyableCode code="projects_locations_operations_cancel" /></a></td>
+    <td><a href="#locations_operations_cancel"><CopyableCode code="locations_operations_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-name"><code>name</code></a></td>
     <td></td>
     <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.</td>
 </tr>
@@ -502,6 +502,13 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_operations_cancel"><CopyableCode code="organizations_locations_operations_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td></td>
+    <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_operations_cancel"><CopyableCode code="projects_locations_operations_cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.</td>
 </tr>
@@ -586,12 +593,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'billing_accounts_locations_operations_get', value: 'billing_accounts_locations_operations_get' },
         { label: 'folders_locations_operations_get', value: 'folders_locations_operations_get' },
-        { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
         { label: 'organizations_locations_operations_get', value: 'organizations_locations_operations_get' },
+        { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
         { label: 'billing_accounts_locations_operations_list', value: 'billing_accounts_locations_operations_list' },
         { label: 'folders_locations_operations_list', value: 'folders_locations_operations_list' },
-        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
         { label: 'organizations_locations_operations_list', value: 'organizations_locations_operations_list' },
+        { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
         { label: 'locations_operations_list', value: 'locations_operations_list' }
     ]}
 >
@@ -631,24 +638,6 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_operations_get">
-
-Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.logging.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND operationsId = '{{ operationsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_operations_get">
 
 Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
@@ -662,6 +651,24 @@ metadata,
 response
 FROM google.logging.operations
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND operationsId = '{{ operationsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_operations_get">
+
+Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
+
+```sql
+SELECT
+name,
+done,
+error,
+metadata,
+response
+FROM google.logging.operations
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND operationsId = '{{ operationsId }}' -- required
 ;
@@ -681,9 +688,9 @@ response
 FROM google.logging.operations
 WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -702,31 +709,10 @@ response
 FROM google.logging.operations
 WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.logging.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -745,9 +731,30 @@ FROM google.logging.operations
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.
+
+```sql
+SELECT
+name,
+done,
+error,
+metadata,
+response
+FROM google.logging.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -765,9 +772,9 @@ response
 FROM google.logging.operations
 WHERE name = '{{ name }}' -- required
 AND filter = '{{ filter }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -781,8 +788,9 @@ AND pageToken = '{{ pageToken }}'
     values={[
         { label: 'billing_accounts_locations_operations_cancel', value: 'billing_accounts_locations_operations_cancel' },
         { label: 'folders_locations_operations_cancel', value: 'folders_locations_operations_cancel' },
-        { label: 'projects_locations_operations_cancel', value: 'projects_locations_operations_cancel' },
-        { label: 'organizations_locations_operations_cancel', value: 'organizations_locations_operations_cancel' }
+        { label: 'locations_operations_cancel', value: 'locations_operations_cancel' },
+        { label: 'organizations_locations_operations_cancel', value: 'organizations_locations_operations_cancel' },
+        { label: 'projects_locations_operations_cancel', value: 'projects_locations_operations_cancel' }
     ]}
 >
 <TabItem value="billing_accounts_locations_operations_cancel">
@@ -809,15 +817,13 @@ EXEC google.logging.operations.folders_locations_operations_cancel
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_operations_cancel">
+<TabItem value="locations_operations_cancel">
 
 Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.
 
 ```sql
-EXEC google.logging.operations.projects_locations_operations_cancel 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@operationsId='{{ operationsId }}' --required
+EXEC google.logging.operations.locations_operations_cancel 
+@name='{{ name }}' --required
 ;
 ```
 </TabItem>
@@ -828,6 +834,18 @@ Starts asynchronous cancellation on a long-running operation. The server makes a
 ```sql
 EXEC google.logging.operations.organizations_locations_operations_cancel 
 @organizationsId='{{ organizationsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@operationsId='{{ operationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_operations_cancel">
+
+Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.
+
+```sql
+EXEC google.logging.operations.projects_locations_operations_cancel 
+@projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @operationsId='{{ operationsId }}' --required
 ;

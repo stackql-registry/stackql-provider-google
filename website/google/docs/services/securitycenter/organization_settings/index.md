@@ -167,9 +167,9 @@ No description available.
 ```sql
 UPDATE google.securitycenter.organization_settings
 SET 
+data__assetDiscoveryConfig = '{{ assetDiscoveryConfig }}',
 data__enableAssetDiscovery = {{ enableAssetDiscovery }},
-data__name = '{{ name }}',
-data__assetDiscoveryConfig = '{{ assetDiscoveryConfig }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND updateMask = '{{ updateMask}}'

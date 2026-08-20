@@ -33,16 +33,70 @@ Creates, updates, deletes, gets or lists a <code>security_health_analytics_modul
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_security_health_analytics_settings_custom_modules_get"
+    defaultValue="folders_security_health_analytics_settings_custom_modules_get"
     values={[
+        { label: 'folders_security_health_analytics_settings_custom_modules_get', value: 'folders_security_health_analytics_settings_custom_modules_get' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_get', value: 'organizations_security_health_analytics_settings_custom_modules_get' },
         { label: 'projects_security_health_analytics_settings_custom_modules_get', value: 'projects_security_health_analytics_settings_custom_modules_get' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_get', value: 'folders_security_health_analytics_settings_custom_modules_get' },
+        { label: 'folders_security_health_analytics_settings_custom_modules_list', value: 'folders_security_health_analytics_settings_custom_modules_list' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_list', value: 'organizations_security_health_analytics_settings_custom_modules_list' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_list', value: 'projects_security_health_analytics_settings_custom_modules_list' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_list', value: 'folders_security_health_analytics_settings_custom_modules_list' }
+        { label: 'projects_security_health_analytics_settings_custom_modules_list', value: 'projects_security_health_analytics_settings_custom_modules_list' }
     ]}
 >
+<TabItem value="folders_security_health_analytics_settings_custom_modules_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="ancestorModule" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudProvider" /></td>
+    <td><code>string</code></td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customConfig" /></td>
+    <td><code>object</code></td>
+    <td> (id: GoogleCloudSecuritycenterV1CustomConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="enablementState" /></td>
+    <td><code>string</code></td>
+    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastEditor" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_security_health_analytics_settings_custom_modules_get">
 
 <table>
@@ -151,7 +205,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_get">
+<TabItem value="folders_security_health_analytics_settings_custom_modules_list">
 
 <table>
 <thead>
@@ -260,60 +314,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_security_health_analytics_settings_custom_modules_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="ancestorModule" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="cloudProvider" /></td>
-    <td><code>string</code></td>
-    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="customConfig" /></td>
-    <td><code>object</code></td>
-    <td> (id: GoogleCloudSecuritycenterV1CustomConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="enablementState" /></td>
-    <td><code>string</code></td>
-    <td> (ENABLEMENT_STATE_UNSPECIFIED, ENABLED, DISABLED, INHERITED)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastEditor" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td></td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_list">
 
 <table>
 <thead>
@@ -385,6 +385,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#folders_security_health_analytics_settings_custom_modules_get"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
     <td><a href="#organizations_security_health_analytics_settings_custom_modules_get"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
@@ -399,17 +406,17 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_security_health_analytics_settings_custom_modules_get"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_get" /></a></td>
+    <td><a href="#folders_security_health_analytics_settings_custom_modules_list"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_security_health_analytics_settings_custom_modules_list"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -420,10 +427,10 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_security_health_analytics_settings_custom_modules_list"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
+    <td><a href="#folders_security_health_analytics_settings_custom_modules_create"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
     <td></td>
 </tr>
 <tr>
@@ -441,9 +448,9 @@ The following methods are available for this resource:
     <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_security_health_analytics_settings_custom_modules_create"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#folders_security_health_analytics_settings_custom_modules_delete"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -458,13 +465,6 @@ The following methods are available for this resource:
     <td><a href="#projects_security_health_analytics_settings_custom_modules_delete"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#folders_security_health_analytics_settings_custom_modules_delete"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td></td>
 </tr>
@@ -520,16 +520,36 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_security_health_analytics_settings_custom_modules_get"
+    defaultValue="folders_security_health_analytics_settings_custom_modules_get"
     values={[
+        { label: 'folders_security_health_analytics_settings_custom_modules_get', value: 'folders_security_health_analytics_settings_custom_modules_get' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_get', value: 'organizations_security_health_analytics_settings_custom_modules_get' },
         { label: 'projects_security_health_analytics_settings_custom_modules_get', value: 'projects_security_health_analytics_settings_custom_modules_get' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_get', value: 'folders_security_health_analytics_settings_custom_modules_get' },
+        { label: 'folders_security_health_analytics_settings_custom_modules_list', value: 'folders_security_health_analytics_settings_custom_modules_list' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_list', value: 'organizations_security_health_analytics_settings_custom_modules_list' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_list', value: 'projects_security_health_analytics_settings_custom_modules_list' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_list', value: 'folders_security_health_analytics_settings_custom_modules_list' }
+        { label: 'projects_security_health_analytics_settings_custom_modules_list', value: 'projects_security_health_analytics_settings_custom_modules_list' }
     ]}
 >
+<TabItem value="folders_security_health_analytics_settings_custom_modules_get">
+
+Successful response
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+customConfig,
+displayName,
+enablementState,
+lastEditor,
+updateTime
+FROM google.securitycenter.security_health_analytics_modules
+WHERE foldersId = '{{ foldersId }}' -- required
+AND customModulesId = '{{ customModulesId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="organizations_security_health_analytics_settings_custom_modules_get">
 
 Successful response
@@ -570,7 +590,7 @@ AND customModulesId = '{{ customModulesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_get">
+<TabItem value="folders_security_health_analytics_settings_custom_modules_list">
 
 Successful response
 
@@ -586,7 +606,8 @@ lastEditor,
 updateTime
 FROM google.securitycenter.security_health_analytics_modules
 WHERE foldersId = '{{ foldersId }}' -- required
-AND customModulesId = '{{ customModulesId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -606,8 +627,8 @@ lastEditor,
 updateTime
 FROM google.securitycenter.security_health_analytics_modules
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -632,12 +653,41 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_list">
+</Tabs>
 
-Successful response
+
+## `INSERT` examples
+
+<Tabs
+    defaultValue="folders_security_health_analytics_settings_custom_modules_create"
+    values={[
+        { label: 'folders_security_health_analytics_settings_custom_modules_create', value: 'folders_security_health_analytics_settings_custom_modules_create' },
+        { label: 'organizations_security_health_analytics_settings_custom_modules_create', value: 'organizations_security_health_analytics_settings_custom_modules_create' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_create', value: 'projects_security_health_analytics_settings_custom_modules_create' },
+        { label: 'Manifest', value: 'manifest' }
+    ]}
+>
+<TabItem value="folders_security_health_analytics_settings_custom_modules_create">
+
+No description available.
 
 ```sql
-SELECT
+INSERT INTO google.securitycenter.security_health_analytics_modules (
+data__cloudProvider,
+data__customConfig,
+data__displayName,
+data__enablementState,
+data__name,
+foldersId
+)
+SELECT 
+'{{ cloudProvider }}',
+'{{ customConfig }}',
+'{{ displayName }}',
+'{{ enablementState }}',
+'{{ name }}',
+'{{ foldersId }}'
+RETURNING
 name,
 ancestorModule,
 cloudProvider,
@@ -646,46 +696,28 @@ displayName,
 enablementState,
 lastEditor,
 updateTime
-FROM google.securitycenter.security_health_analytics_modules
-WHERE foldersId = '{{ foldersId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
-</Tabs>
-
-
-## `INSERT` examples
-
-<Tabs
-    defaultValue="organizations_security_health_analytics_settings_custom_modules_create"
-    values={[
-        { label: 'organizations_security_health_analytics_settings_custom_modules_create', value: 'organizations_security_health_analytics_settings_custom_modules_create' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_create', value: 'projects_security_health_analytics_settings_custom_modules_create' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_create', value: 'folders_security_health_analytics_settings_custom_modules_create' },
-        { label: 'Manifest', value: 'manifest' }
-    ]}
->
 <TabItem value="organizations_security_health_analytics_settings_custom_modules_create">
 
 No description available.
 
 ```sql
 INSERT INTO google.securitycenter.security_health_analytics_modules (
+data__cloudProvider,
+data__customConfig,
 data__displayName,
 data__enablementState,
 data__name,
-data__customConfig,
-data__cloudProvider,
 organizationsId
 )
 SELECT 
+'{{ cloudProvider }}',
+'{{ customConfig }}',
 '{{ displayName }}',
 '{{ enablementState }}',
 '{{ name }}',
-'{{ customConfig }}',
-'{{ cloudProvider }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -705,52 +737,20 @@ No description available.
 
 ```sql
 INSERT INTO google.securitycenter.security_health_analytics_modules (
+data__cloudProvider,
+data__customConfig,
 data__displayName,
 data__enablementState,
 data__name,
-data__customConfig,
-data__cloudProvider,
 projectsId
 )
 SELECT 
+'{{ cloudProvider }}',
+'{{ customConfig }}',
 '{{ displayName }}',
 '{{ enablementState }}',
 '{{ name }}',
-'{{ customConfig }}',
-'{{ cloudProvider }}',
 '{{ projectsId }}'
-RETURNING
-name,
-ancestorModule,
-cloudProvider,
-customConfig,
-displayName,
-enablementState,
-lastEditor,
-updateTime
-;
-```
-</TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_create">
-
-No description available.
-
-```sql
-INSERT INTO google.securitycenter.security_health_analytics_modules (
-data__displayName,
-data__enablementState,
-data__name,
-data__customConfig,
-data__cloudProvider,
-foldersId
-)
-SELECT 
-'{{ displayName }}',
-'{{ enablementState }}',
-'{{ name }}',
-'{{ customConfig }}',
-'{{ cloudProvider }}',
-'{{ foldersId }}'
 RETURNING
 name,
 ancestorModule,
@@ -768,15 +768,39 @@ updateTime
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: security_health_analytics_modules
   props:
+    - name: foldersId
+      value: "{{ foldersId }}"
+      description: Required parameter for the security_health_analytics_modules resource.
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the security_health_analytics_modules resource.
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the security_health_analytics_modules resource.
-    - name: foldersId
-      value: "{{ foldersId }}"
-      description: Required parameter for the security_health_analytics_modules resource.
+    - name: cloudProvider
+      value: "{{ cloudProvider }}"
+      valid_values: ['CLOUD_PROVIDER_UNSPECIFIED', 'GOOGLE_CLOUD_PLATFORM', 'AMAZON_WEB_SERVICES', 'MICROSOFT_AZURE']
+    - name: customConfig
+      value:
+        customOutput:
+          properties:
+            - name: "{{ name }}"
+              valueExpression:
+                description: "{{ description }}"
+                expression: "{{ expression }}"
+                location: "{{ location }}"
+                title: "{{ title }}"
+        description: "{{ description }}"
+        predicate:
+          description: "{{ description }}"
+          expression: "{{ expression }}"
+          location: "{{ location }}"
+          title: "{{ title }}"
+        recommendation: "{{ recommendation }}"
+        resourceSelector:
+          resourceTypes:
+            - "{{ resourceTypes }}"
+        severity: "{{ severity }}"
     - name: displayName
       value: "{{ displayName }}"
     - name: enablementState
@@ -784,30 +808,6 @@ updateTime
       valid_values: ['ENABLEMENT_STATE_UNSPECIFIED', 'ENABLED', 'DISABLED', 'INHERITED']
     - name: name
       value: "{{ name }}"
-    - name: customConfig
-      value:
-        severity: "{{ severity }}"
-        description: "{{ description }}"
-        recommendation: "{{ recommendation }}"
-        predicate:
-          expression: "{{ expression }}"
-          description: "{{ description }}"
-          title: "{{ title }}"
-          location: "{{ location }}"
-        customOutput:
-          properties:
-            - name: "{{ name }}"
-              valueExpression:
-                expression: "{{ expression }}"
-                description: "{{ description }}"
-                title: "{{ title }}"
-                location: "{{ location }}"
-        resourceSelector:
-          resourceTypes:
-            - "{{ resourceTypes }}"
-    - name: cloudProvider
-      value: "{{ cloudProvider }}"
-      valid_values: ['CLOUD_PROVIDER_UNSPECIFIED', 'GOOGLE_CLOUD_PLATFORM', 'AMAZON_WEB_SERVICES', 'MICROSOFT_AZURE']
 `}</CodeBlock>
 
 </TabItem>
@@ -817,13 +817,24 @@ updateTime
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="organizations_security_health_analytics_settings_custom_modules_delete"
+    defaultValue="folders_security_health_analytics_settings_custom_modules_delete"
     values={[
+        { label: 'folders_security_health_analytics_settings_custom_modules_delete', value: 'folders_security_health_analytics_settings_custom_modules_delete' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_delete', value: 'organizations_security_health_analytics_settings_custom_modules_delete' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_delete', value: 'projects_security_health_analytics_settings_custom_modules_delete' },
-        { label: 'folders_security_health_analytics_settings_custom_modules_delete', value: 'folders_security_health_analytics_settings_custom_modules_delete' }
+        { label: 'projects_security_health_analytics_settings_custom_modules_delete', value: 'projects_security_health_analytics_settings_custom_modules_delete' }
     ]}
 >
+<TabItem value="folders_security_health_analytics_settings_custom_modules_delete">
+
+No description available.
+
+```sql
+DELETE FROM google.securitycenter.security_health_analytics_modules
+WHERE foldersId = '{{ foldersId }}' --required
+AND customModulesId = '{{ customModulesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="organizations_security_health_analytics_settings_custom_modules_delete">
 
 No description available.
@@ -842,17 +853,6 @@ No description available.
 ```sql
 DELETE FROM google.securitycenter.security_health_analytics_modules
 WHERE projectsId = '{{ projectsId }}' --required
-AND customModulesId = '{{ customModulesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="folders_security_health_analytics_settings_custom_modules_delete">
-
-No description available.
-
-```sql
-DELETE FROM google.securitycenter.security_health_analytics_modules
-WHERE foldersId = '{{ foldersId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
 ;
 ```

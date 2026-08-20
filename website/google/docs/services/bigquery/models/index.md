@@ -297,28 +297,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+modelId"><code>+modelId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-modelId"><code>modelId</code></a></td>
     <td></td>
     <td>Gets the specified model resource by model ID. # IAM Permissions Requires the `bigquery.models.getMetadata` permission on the model.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all models in the specified dataset. Requires the READER dataset role. After retrieving the list of models, you can get information about a particular model by calling the models.get method. # IAM Permissions Requires the `bigquery.models.list` permission on the dataset.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+modelId"><code>+modelId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-modelId"><code>modelId</code></a></td>
     <td></td>
     <td>Patch specific fields in the specified model. # IAM Permissions Requires the `bigquery.models.updateMetadata` permission on the model.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+modelId"><code>+modelId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-datasetId"><code>datasetId</code></a>, <a href="#parameter-modelId"><code>modelId</code></a></td>
     <td></td>
     <td>Deletes the model specified by modelId from the dataset. # IAM Permissions Requires the `bigquery.models.delete` permission on the model.</td>
 </tr>
@@ -338,13 +338,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-+datasetId">
-    <td><CopyableCode code="+datasetId" /></td>
+<tr id="parameter-datasetId">
+    <td><CopyableCode code="datasetId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-+modelId">
-    <td><CopyableCode code="+modelId" /></td>
+<tr id="parameter-modelId">
+    <td><CopyableCode code="modelId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -404,8 +404,8 @@ trainingRuns,
 transformColumns
 FROM google.bigquery.models
 WHERE projectId = '{{ projectId }}' -- required
-AND +datasetId = '{{ +datasetId }}' -- required
-AND +modelId = '{{ +modelId }}' -- required
+AND datasetId = '{{ datasetId }}' -- required
+AND modelId = '{{ modelId }}' -- required
 ;
 ```
 </TabItem>
@@ -438,9 +438,9 @@ trainingRuns,
 transformColumns
 FROM google.bigquery.models
 WHERE projectId = '{{ projectId }}' -- required
-AND +datasetId = '{{ +datasetId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND datasetId = '{{ datasetId }}' -- required
 AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -463,17 +463,17 @@ Patch specific fields in the specified model. # IAM Permissions Requires the `bi
 UPDATE google.bigquery.models
 SET 
 data__bestTrialId = '{{ bestTrialId }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__trainingRuns = '{{ trainingRuns }}',
 data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__friendlyName = '{{ friendlyName }}',
 data__expirationTime = '{{ expirationTime }}',
-data__modelReference = '{{ modelReference }}'
+data__friendlyName = '{{ friendlyName }}',
+data__labels = '{{ labels }}',
+data__modelReference = '{{ modelReference }}',
+data__trainingRuns = '{{ trainingRuns }}'
 WHERE 
 projectId = '{{ projectId }}' --required
-AND +datasetId = '{{ +datasetId }}' --required
-AND +modelId = '{{ +modelId }}' --required
+AND datasetId = '{{ datasetId }}' --required
+AND modelId = '{{ modelId }}' --required
 RETURNING
 bestTrialId,
 creationTime,
@@ -516,8 +516,8 @@ Deletes the model specified by modelId from the dataset. # IAM Permissions Requi
 ```sql
 DELETE FROM google.bigquery.models
 WHERE projectId = '{{ projectId }}' --required
-AND +datasetId = '{{ +datasetId }}' --required
-AND +modelId = '{{ +modelId }}' --required
+AND datasetId = '{{ datasetId }}' --required
+AND modelId = '{{ modelId }}' --required
 ;
 ```
 </TabItem>

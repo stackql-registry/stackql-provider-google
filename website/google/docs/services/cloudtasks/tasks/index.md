@@ -425,50 +425,50 @@ view
       description: |
         Required. The task to add. Task names have the following format: \`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID\`. The user can optionally specify a task name. If a name is not specified then the system will generate a random unique task id, which will be set in the task returned in the response. If schedule_time is not set or is in the past then Cloud Tasks will set it to the current time. Task De-duplication: Explicitly specifying a task ID enables task de-duplication. If a task's ID is identical to that of an existing task or a task that was deleted or executed recently then the call will fail with ALREADY_EXISTS. The IDs of deleted tasks are not immediately available for reuse. It can take up to 24 hours (or 9 days if the task's queue was created using a queue.yaml or queue.xml) for the task ID to be released and made available again. Because there is an extra lookup cost to identify duplicate task names, these CreateTask calls have significantly increased latency. Using hashed strings for the task id or for the prefix of the task id is recommended. Choosing task ids that are sequential or have sequential prefixes, for example using a timestamp, causes an increase in latency and error rates in all task commands. The infrastructure relies on an approximately uniform distribution of task ids to store and serve tasks efficiently.
       value:
-        lastAttempt:
-          scheduleTime: "{{ scheduleTime }}"
-          dispatchTime: "{{ dispatchTime }}"
-          responseTime: "{{ responseTime }}"
-          responseStatus:
-            code: {{ code }}
-            message: "{{ message }}"
-            details: "{{ details }}"
         appEngineHttpRequest:
-          relativeUri: "{{ relativeUri }}"
-          body: "{{ body }}"
           appEngineRouting:
-            version: "{{ version }}"
             host: "{{ host }}"
-            service: "{{ service }}"
             instance: "{{ instance }}"
-          httpMethod: "{{ httpMethod }}"
+            service: "{{ service }}"
+            version: "{{ version }}"
+          body: "{{ body }}"
           headers: "{{ headers }}"
+          httpMethod: "{{ httpMethod }}"
+          relativeUri: "{{ relativeUri }}"
+        createTime: "{{ createTime }}"
+        dispatchCount: {{ dispatchCount }}
+        dispatchDeadline: "{{ dispatchDeadline }}"
         firstAttempt:
-          scheduleTime: "{{ scheduleTime }}"
           dispatchTime: "{{ dispatchTime }}"
-          responseTime: "{{ responseTime }}"
           responseStatus:
             code: {{ code }}
-            message: "{{ message }}"
             details: "{{ details }}"
-        responseCount: {{ responseCount }}
-        view: "{{ view }}"
+            message: "{{ message }}"
+          responseTime: "{{ responseTime }}"
+          scheduleTime: "{{ scheduleTime }}"
         httpRequest:
+          body: "{{ body }}"
           headers: "{{ headers }}"
           httpMethod: "{{ httpMethod }}"
           oauthToken:
-            serviceAccountEmail: "{{ serviceAccountEmail }}"
             scope: "{{ scope }}"
-          body: "{{ body }}"
-          url: "{{ url }}"
-          oidcToken:
             serviceAccountEmail: "{{ serviceAccountEmail }}"
+          oidcToken:
             audience: "{{ audience }}"
+            serviceAccountEmail: "{{ serviceAccountEmail }}"
+          url: "{{ url }}"
+        lastAttempt:
+          dispatchTime: "{{ dispatchTime }}"
+          responseStatus:
+            code: {{ code }}
+            details: "{{ details }}"
+            message: "{{ message }}"
+          responseTime: "{{ responseTime }}"
+          scheduleTime: "{{ scheduleTime }}"
         name: "{{ name }}"
+        responseCount: {{ responseCount }}
         scheduleTime: "{{ scheduleTime }}"
-        dispatchCount: {{ dispatchCount }}
-        createTime: "{{ createTime }}"
-        dispatchDeadline: "{{ dispatchDeadline }}"
+        view: "{{ view }}"
 `}</CodeBlock>
 
 </TabItem>

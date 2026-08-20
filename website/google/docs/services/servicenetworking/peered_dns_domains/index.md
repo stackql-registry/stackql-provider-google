@@ -174,15 +174,15 @@ Creates a peered DNS domain which sends requests for records in given namespace 
 
 ```sql
 INSERT INTO google.servicenetworking.peered_dns_domains (
-data__name,
 data__dnsSuffix,
+data__name,
 servicesId,
 projectsId,
 networksId
 )
 SELECT 
-'{{ name }}',
 '{{ dnsSuffix }}',
+'{{ name }}',
 '{{ servicesId }}',
 '{{ projectsId }}',
 '{{ networksId }}'
@@ -209,14 +209,14 @@ response
     - name: networksId
       value: "{{ networksId }}"
       description: Required parameter for the peered_dns_domains resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. User assigned name for this resource. Must be unique within the consumer network. The name must be 1-63 characters long, must begin with a letter, end with a letter or digit, and only contain lowercase letters, digits or dashes.
     - name: dnsSuffix
       value: "{{ dnsSuffix }}"
       description: |
         The DNS domain name suffix e.g. \`example.com.\`. Cloud DNS requires that a DNS suffix ends with a trailing dot.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. User assigned name for this resource. Must be unique within the consumer network. The name must be 1-63 characters long, must begin with a letter, end with a letter or digit, and only contain lowercase letters, digits or dashes.
 `}</CodeBlock>
 
 </TabItem>

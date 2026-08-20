@@ -325,21 +325,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Use this method to list connection profiles created in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-connectionProfileId"><code>connectionProfileId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-connectionProfileId"><code>connectionProfileId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Use this method to create a connection profile in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionProfilesId"><code>connectionProfilesId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Use this method to update the parameters of a connection profile.</td>
 </tr>
 <tr>
@@ -512,10 +512,10 @@ workdayProfile
 FROM google.datastream.connection_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -538,53 +538,53 @@ Use this method to create a connection profile in a project and location.
 ```sql
 INSERT INTO google.datastream.connection_profiles (
 data__bigqueryProfile,
-data__staticServiceIpConnectivity,
-data__workdayProfile,
-data__privateConnectivity,
-data__sqlServerProfile,
-data__mongodbProfile,
-data__salesforceProfile,
-data__oracleProfile,
-data__forwardSshConnectivity,
-data__spannerProfile,
-data__mysqlProfile,
+data__dataverseProfile,
 data__displayName,
-data__postgresqlProfile,
-data__serviceNowProfile,
+data__forwardSshConnectivity,
 data__gcsProfile,
 data__labels,
+data__mongodbProfile,
+data__mysqlProfile,
+data__oracleProfile,
+data__postgresqlProfile,
+data__privateConnectivity,
 data__salesforceMarketingCloudProfile,
-data__dataverseProfile,
+data__salesforceProfile,
+data__serviceNowProfile,
+data__spannerProfile,
+data__sqlServerProfile,
+data__staticServiceIpConnectivity,
+data__workdayProfile,
 projectsId,
 locationsId,
-force,
 connectionProfileId,
+force,
 requestId,
 validateOnly
 )
 SELECT 
 '{{ bigqueryProfile }}',
-'{{ staticServiceIpConnectivity }}',
-'{{ workdayProfile }}',
-'{{ privateConnectivity }}',
-'{{ sqlServerProfile }}',
-'{{ mongodbProfile }}',
-'{{ salesforceProfile }}',
-'{{ oracleProfile }}',
-'{{ forwardSshConnectivity }}',
-'{{ spannerProfile }}',
-'{{ mysqlProfile }}',
+'{{ dataverseProfile }}',
 '{{ displayName }}',
-'{{ postgresqlProfile }}',
-'{{ serviceNowProfile }}',
+'{{ forwardSshConnectivity }}',
 '{{ gcsProfile }}',
 '{{ labels }}',
+'{{ mongodbProfile }}',
+'{{ mysqlProfile }}',
+'{{ oracleProfile }}',
+'{{ postgresqlProfile }}',
+'{{ privateConnectivity }}',
 '{{ salesforceMarketingCloudProfile }}',
-'{{ dataverseProfile }}',
+'{{ salesforceProfile }}',
+'{{ serviceNowProfile }}',
+'{{ spannerProfile }}',
+'{{ sqlServerProfile }}',
+'{{ staticServiceIpConnectivity }}',
+'{{ workdayProfile }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ force }}',
 '{{ connectionProfileId }}',
+'{{ force }}',
 '{{ requestId }}',
 '{{ validateOnly }}'
 RETURNING
@@ -611,6 +611,192 @@ response
       value: "{{ bigqueryProfile }}"
       description: |
         Profile for connecting to a BigQuery destination.
+    - name: dataverseProfile
+      description: |
+        Profile for connecting to a Dataverse source.
+      value:
+        environmentUrl: "{{ environmentUrl }}"
+        oauthClientCredentials:
+          clientId: "{{ clientId }}"
+          clientSecret:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
+        tenantId: "{{ tenantId }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name.
+    - name: forwardSshConnectivity
+      description: |
+        Forward SSH tunnel connectivity.
+      value:
+        hostname: "{{ hostname }}"
+        password: "{{ password }}"
+        port: {{ port }}
+        privateKey: "{{ privateKey }}"
+        username: "{{ username }}"
+    - name: gcsProfile
+      description: |
+        Profile for connecting to a Cloud Storage destination.
+      value:
+        bucket: "{{ bucket }}"
+        rootPath: "{{ rootPath }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels.
+    - name: mongodbProfile
+      description: |
+        Profile for connecting to a MongoDB source.
+      value:
+        additionalOptions: "{{ additionalOptions }}"
+        hostAddresses:
+          - hostname: "{{ hostname }}"
+            port: {{ port }}
+        password: "{{ password }}"
+        replicaSet: "{{ replicaSet }}"
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        srvConnectionFormat: "{{ srvConnectionFormat }}"
+        sslConfig:
+          caCertificate: "{{ caCertificate }}"
+          caCertificateSet: {{ caCertificateSet }}
+          clientCertificate: "{{ clientCertificate }}"
+          clientCertificateSet: {{ clientCertificateSet }}
+          clientKey: "{{ clientKey }}"
+          clientKeySet: {{ clientKeySet }}
+          secretManagerStoredClientKey: "{{ secretManagerStoredClientKey }}"
+        standardConnectionFormat:
+          directConnection: {{ directConnection }}
+        username: "{{ username }}"
+    - name: mysqlProfile
+      description: |
+        Profile for connecting to a MySQL source.
+      value:
+        hostname: "{{ hostname }}"
+        password: "{{ password }}"
+        port: {{ port }}
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        sslConfig:
+          caCertificate: "{{ caCertificate }}"
+          caCertificateSet: {{ caCertificateSet }}
+          clientCertificate: "{{ clientCertificate }}"
+          clientCertificateSet: {{ clientCertificateSet }}
+          clientKey: "{{ clientKey }}"
+          clientKeySet: {{ clientKeySet }}
+        username: "{{ username }}"
+    - name: oracleProfile
+      description: |
+        Profile for connecting to an Oracle source.
+      value:
+        connectionAttributes: "{{ connectionAttributes }}"
+        databaseService: "{{ databaseService }}"
+        hostname: "{{ hostname }}"
+        oracleAsmConfig:
+          asmService: "{{ asmService }}"
+          connectionAttributes: "{{ connectionAttributes }}"
+          hostname: "{{ hostname }}"
+          oracleSslConfig:
+            caCertificate: "{{ caCertificate }}"
+            caCertificateSet: {{ caCertificateSet }}
+            serverCertificateDistinguishedName: "{{ serverCertificateDistinguishedName }}"
+          password: "{{ password }}"
+          port: {{ port }}
+          secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+          username: "{{ username }}"
+        oracleSslConfig:
+          caCertificate: "{{ caCertificate }}"
+          caCertificateSet: {{ caCertificateSet }}
+          serverCertificateDistinguishedName: "{{ serverCertificateDistinguishedName }}"
+        password: "{{ password }}"
+        port: {{ port }}
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        username: "{{ username }}"
+    - name: postgresqlProfile
+      description: |
+        Profile for connecting to a PostgreSQL source.
+      value:
+        database: "{{ database }}"
+        hostname: "{{ hostname }}"
+        password: "{{ password }}"
+        port: {{ port }}
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        sslConfig:
+          serverAndClientVerification:
+            caCertificate: "{{ caCertificate }}"
+            clientCertificate: "{{ clientCertificate }}"
+            clientKey: "{{ clientKey }}"
+            serverCertificateHostname: "{{ serverCertificateHostname }}"
+          serverVerification:
+            caCertificate: "{{ caCertificate }}"
+            serverCertificateHostname: "{{ serverCertificateHostname }}"
+        username: "{{ username }}"
+    - name: privateConnectivity
+      description: |
+        Private connectivity.
+      value:
+        privateConnection: "{{ privateConnection }}"
+    - name: salesforceMarketingCloudProfile
+      description: |
+        Profile for connecting to a Salesforce Marketing Cloud source.
+      value:
+        oauthClientCredentials:
+          clientId: "{{ clientId }}"
+          clientSecret:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
+        subdomain: "{{ subdomain }}"
+    - name: salesforceProfile
+      description: |
+        Profile for connecting to a Salesforce source.
+      value:
+        domain: "{{ domain }}"
+        oauth2ClientCredentials:
+          clientId: "{{ clientId }}"
+          clientSecret: "{{ clientSecret }}"
+          secretManagerStoredClientSecret: "{{ secretManagerStoredClientSecret }}"
+        userCredentials:
+          password: "{{ password }}"
+          secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+          secretManagerStoredSecurityToken: "{{ secretManagerStoredSecurityToken }}"
+          securityToken: "{{ securityToken }}"
+          username: "{{ username }}"
+    - name: serviceNowProfile
+      description: |
+        Profile for connecting to a ServiceNow source.
+      value:
+        instance: "{{ instance }}"
+        oauthClientCredentials:
+          clientId: "{{ clientId }}"
+          clientSecret:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
+        userPasswordCredentials:
+          password:
+            rawValue: "{{ rawValue }}"
+            secretVersion: "{{ secretVersion }}"
+          username: "{{ username }}"
+    - name: spannerProfile
+      description: |
+        Profile for connecting to a Spanner source.
+      value:
+        database: "{{ database }}"
+        host: "{{ host }}"
+    - name: sqlServerProfile
+      description: |
+        Profile for connecting to a SQLServer source.
+      value:
+        database: "{{ database }}"
+        hostname: "{{ hostname }}"
+        password: "{{ password }}"
+        port: {{ port }}
+        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
+        sslConfig:
+          basicEncryption: "{{ basicEncryption }}"
+          encryptionAndServerValidation:
+            caCertificate: "{{ caCertificate }}"
+            serverCertificateHostname: "{{ serverCertificateHostname }}"
+          encryptionNotEnforced: "{{ encryptionNotEnforced }}"
+        username: "{{ username }}"
     - name: staticServiceIpConnectivity
       value: "{{ staticServiceIpConnectivity }}"
       description: |
@@ -630,196 +816,10 @@ response
             rawValue: "{{ rawValue }}"
             secretVersion: "{{ secretVersion }}"
         tenant: "{{ tenant }}"
-    - name: privateConnectivity
-      description: |
-        Private connectivity.
-      value:
-        privateConnection: "{{ privateConnection }}"
-    - name: sqlServerProfile
-      description: |
-        Profile for connecting to a SQLServer source.
-      value:
-        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
-        username: "{{ username }}"
-        port: {{ port }}
-        password: "{{ password }}"
-        database: "{{ database }}"
-        hostname: "{{ hostname }}"
-        sslConfig:
-          encryptionNotEnforced: "{{ encryptionNotEnforced }}"
-          basicEncryption: "{{ basicEncryption }}"
-          encryptionAndServerValidation:
-            caCertificate: "{{ caCertificate }}"
-            serverCertificateHostname: "{{ serverCertificateHostname }}"
-    - name: mongodbProfile
-      description: |
-        Profile for connecting to a MongoDB source.
-      value:
-        srvConnectionFormat: "{{ srvConnectionFormat }}"
-        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-        replicaSet: "{{ replicaSet }}"
-        sslConfig:
-          clientKeySet: {{ clientKeySet }}
-          caCertificateSet: {{ caCertificateSet }}
-          caCertificate: "{{ caCertificate }}"
-          clientCertificateSet: {{ clientCertificateSet }}
-          clientKey: "{{ clientKey }}"
-          secretManagerStoredClientKey: "{{ secretManagerStoredClientKey }}"
-          clientCertificate: "{{ clientCertificate }}"
-        additionalOptions: "{{ additionalOptions }}"
-        standardConnectionFormat:
-          directConnection: {{ directConnection }}
-        hostAddresses:
-          - port: {{ port }}
-            hostname: "{{ hostname }}"
-    - name: salesforceProfile
-      description: |
-        Profile for connecting to a Salesforce source.
-      value:
-        userCredentials:
-          username: "{{ username }}"
-          secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
-          secretManagerStoredSecurityToken: "{{ secretManagerStoredSecurityToken }}"
-          securityToken: "{{ securityToken }}"
-          password: "{{ password }}"
-        oauth2ClientCredentials:
-          clientSecret: "{{ clientSecret }}"
-          clientId: "{{ clientId }}"
-          secretManagerStoredClientSecret: "{{ secretManagerStoredClientSecret }}"
-        domain: "{{ domain }}"
-    - name: oracleProfile
-      description: |
-        Profile for connecting to an Oracle source.
-      value:
-        connectionAttributes: "{{ connectionAttributes }}"
-        oracleAsmConfig:
-          port: {{ port }}
-          connectionAttributes: "{{ connectionAttributes }}"
-          password: "{{ password }}"
-          hostname: "{{ hostname }}"
-          asmService: "{{ asmService }}"
-          oracleSslConfig:
-            caCertificate: "{{ caCertificate }}"
-            serverCertificateDistinguishedName: "{{ serverCertificateDistinguishedName }}"
-            caCertificateSet: {{ caCertificateSet }}
-          secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
-          username: "{{ username }}"
-        hostname: "{{ hostname }}"
-        databaseService: "{{ databaseService }}"
-        port: {{ port }}
-        password: "{{ password }}"
-        oracleSslConfig:
-          caCertificate: "{{ caCertificate }}"
-          serverCertificateDistinguishedName: "{{ serverCertificateDistinguishedName }}"
-          caCertificateSet: {{ caCertificateSet }}
-        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
-        username: "{{ username }}"
-    - name: forwardSshConnectivity
-      description: |
-        Forward SSH tunnel connectivity.
-      value:
-        hostname: "{{ hostname }}"
-        privateKey: "{{ privateKey }}"
-        password: "{{ password }}"
-        port: {{ port }}
-        username: "{{ username }}"
-    - name: spannerProfile
-      description: |
-        Profile for connecting to a Spanner source.
-      value:
-        host: "{{ host }}"
-        database: "{{ database }}"
-    - name: mysqlProfile
-      description: |
-        Profile for connecting to a MySQL source.
-      value:
-        port: {{ port }}
-        password: "{{ password }}"
-        hostname: "{{ hostname }}"
-        sslConfig:
-          caCertificate: "{{ caCertificate }}"
-          clientCertificateSet: {{ clientCertificateSet }}
-          clientKey: "{{ clientKey }}"
-          clientCertificate: "{{ clientCertificate }}"
-          clientKeySet: {{ clientKeySet }}
-          caCertificateSet: {{ caCertificateSet }}
-        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
-        username: "{{ username }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Required. Display name.
-    - name: postgresqlProfile
-      description: |
-        Profile for connecting to a PostgreSQL source.
-      value:
-        secretManagerStoredPassword: "{{ secretManagerStoredPassword }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-        database: "{{ database }}"
-        hostname: "{{ hostname }}"
-        sslConfig:
-          serverAndClientVerification:
-            caCertificate: "{{ caCertificate }}"
-            serverCertificateHostname: "{{ serverCertificateHostname }}"
-            clientCertificate: "{{ clientCertificate }}"
-            clientKey: "{{ clientKey }}"
-          serverVerification:
-            caCertificate: "{{ caCertificate }}"
-            serverCertificateHostname: "{{ serverCertificateHostname }}"
-        port: {{ port }}
-    - name: serviceNowProfile
-      description: |
-        Profile for connecting to a ServiceNow source.
-      value:
-        instance: "{{ instance }}"
-        oauthClientCredentials:
-          clientId: "{{ clientId }}"
-          clientSecret:
-            rawValue: "{{ rawValue }}"
-            secretVersion: "{{ secretVersion }}"
-        userPasswordCredentials:
-          password:
-            rawValue: "{{ rawValue }}"
-            secretVersion: "{{ secretVersion }}"
-          username: "{{ username }}"
-    - name: gcsProfile
-      description: |
-        Profile for connecting to a Cloud Storage destination.
-      value:
-        bucket: "{{ bucket }}"
-        rootPath: "{{ rootPath }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels.
-    - name: salesforceMarketingCloudProfile
-      description: |
-        Profile for connecting to a Salesforce Marketing Cloud source.
-      value:
-        subdomain: "{{ subdomain }}"
-        oauthClientCredentials:
-          clientId: "{{ clientId }}"
-          clientSecret:
-            rawValue: "{{ rawValue }}"
-            secretVersion: "{{ secretVersion }}"
-    - name: dataverseProfile
-      description: |
-        Profile for connecting to a Dataverse source.
-      value:
-        tenantId: "{{ tenantId }}"
-        environmentUrl: "{{ environmentUrl }}"
-        oauthClientCredentials:
-          clientId: "{{ clientId }}"
-          clientSecret:
-            rawValue: "{{ rawValue }}"
-            secretVersion: "{{ secretVersion }}"
-    - name: force
-      value: {{ force }}
     - name: connectionProfileId
       value: "{{ connectionProfileId }}"
+    - name: force
+      value: {{ force }}
     - name: requestId
       value: "{{ requestId }}"
     - name: validateOnly
@@ -846,31 +846,31 @@ Use this method to update the parameters of a connection profile.
 UPDATE google.datastream.connection_profiles
 SET 
 data__bigqueryProfile = '{{ bigqueryProfile }}',
-data__staticServiceIpConnectivity = '{{ staticServiceIpConnectivity }}',
-data__workdayProfile = '{{ workdayProfile }}',
-data__privateConnectivity = '{{ privateConnectivity }}',
-data__sqlServerProfile = '{{ sqlServerProfile }}',
-data__mongodbProfile = '{{ mongodbProfile }}',
-data__salesforceProfile = '{{ salesforceProfile }}',
-data__oracleProfile = '{{ oracleProfile }}',
-data__forwardSshConnectivity = '{{ forwardSshConnectivity }}',
-data__spannerProfile = '{{ spannerProfile }}',
-data__mysqlProfile = '{{ mysqlProfile }}',
+data__dataverseProfile = '{{ dataverseProfile }}',
 data__displayName = '{{ displayName }}',
-data__postgresqlProfile = '{{ postgresqlProfile }}',
-data__serviceNowProfile = '{{ serviceNowProfile }}',
+data__forwardSshConnectivity = '{{ forwardSshConnectivity }}',
 data__gcsProfile = '{{ gcsProfile }}',
 data__labels = '{{ labels }}',
+data__mongodbProfile = '{{ mongodbProfile }}',
+data__mysqlProfile = '{{ mysqlProfile }}',
+data__oracleProfile = '{{ oracleProfile }}',
+data__postgresqlProfile = '{{ postgresqlProfile }}',
+data__privateConnectivity = '{{ privateConnectivity }}',
 data__salesforceMarketingCloudProfile = '{{ salesforceMarketingCloudProfile }}',
-data__dataverseProfile = '{{ dataverseProfile }}'
+data__salesforceProfile = '{{ salesforceProfile }}',
+data__serviceNowProfile = '{{ serviceNowProfile }}',
+data__spannerProfile = '{{ spannerProfile }}',
+data__sqlServerProfile = '{{ sqlServerProfile }}',
+data__staticServiceIpConnectivity = '{{ staticServiceIpConnectivity }}',
+data__workdayProfile = '{{ workdayProfile }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionProfilesId = '{{ connectionProfilesId }}' --required
 AND force = {{ force}}
-AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -924,18 +924,18 @@ EXEC google.datastream.connection_profiles.discover
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"postgresqlRdbms": "{{ postgresqlRdbms }}", 
-"spannerDatabase": "{{ spannerDatabase }}", 
-"mysqlRdbms": "{{ mysqlRdbms }}", 
-"salesforceOrg": "{{ salesforceOrg }}", 
-"oracleRdbms": "{{ oracleRdbms }}", 
-"sourceCatalog": "{{ sourceCatalog }}", 
-"sqlServerRdbms": "{{ sqlServerRdbms }}", 
-"connectionProfileName": "{{ connectionProfileName }}", 
-"mongodbCluster": "{{ mongodbCluster }}", 
 "connectionProfile": "{{ connectionProfile }}", 
+"connectionProfileName": "{{ connectionProfileName }}", 
 "fullHierarchy": {{ fullHierarchy }}, 
-"hierarchyDepth": {{ hierarchyDepth }}
+"hierarchyDepth": {{ hierarchyDepth }}, 
+"mongodbCluster": "{{ mongodbCluster }}", 
+"mysqlRdbms": "{{ mysqlRdbms }}", 
+"oracleRdbms": "{{ oracleRdbms }}", 
+"postgresqlRdbms": "{{ postgresqlRdbms }}", 
+"salesforceOrg": "{{ salesforceOrg }}", 
+"sourceCatalog": "{{ sourceCatalog }}", 
+"spannerDatabase": "{{ spannerDatabase }}", 
+"sqlServerRdbms": "{{ sqlServerRdbms }}"
 }'
 ;
 ```

@@ -110,10 +110,10 @@ EXEC google.documentai.human_review_config.projects_locations_processors_human_r
 @processorsId='{{ processorsId }}' --required 
 @@json=
 '{
+"documentSchema": "{{ documentSchema }}", 
 "enableSchemaValidation": {{ enableSchemaValidation }}, 
-"priority": "{{ priority }}", 
 "inlineDocument": "{{ inlineDocument }}", 
-"documentSchema": "{{ documentSchema }}"
+"priority": "{{ priority }}"
 }'
 ;
 ```

@@ -195,14 +195,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists Utilization Reports of the given Source.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-utilizationReportId"><code>utilizationReportId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-utilizationReportId"><code>utilizationReportId</code></a></td>
     <td>Creates a new UtilizationReport.</td>
 </tr>
 <tr>
@@ -340,11 +340,11 @@ FROM google.vmmigration.utilization_reports
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND sourcesId = '{{ sourcesId }}' -- required
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -366,24 +366,24 @@ Creates a new UtilizationReport.
 
 ```sql
 INSERT INTO google.vmmigration.utilization_reports (
-data__vms,
 data__displayName,
 data__timeFrame,
+data__vms,
 projectsId,
 locationsId,
 sourcesId,
-utilizationReportId,
-requestId
+requestId,
+utilizationReportId
 )
 SELECT 
-'{{ vms }}',
 '{{ displayName }}',
 '{{ timeFrame }}',
+'{{ vms }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourcesId }}',
-'{{ utilizationReportId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ utilizationReportId }}'
 RETURNING
 name,
 done,
@@ -407,34 +407,6 @@ response
     - name: sourcesId
       value: "{{ sourcesId }}"
       description: Required parameter for the utilization_reports resource.
-    - name: vms
-      description: |
-        List of utilization information per VM. When sent as part of the request, the "vm_id" field is used in order to specify which VMs to include in the report. In that case all other fields are ignored.
-      value:
-        - vmwareVmDetails:
-            memoryMb: {{ memoryMb }}
-            vmId: "{{ vmId }}"
-            powerState: "{{ powerState }}"
-            committedStorageMb: "{{ committedStorageMb }}"
-            datacenterDescription: "{{ datacenterDescription }}"
-            displayName: "{{ displayName }}"
-            bootOption: "{{ bootOption }}"
-            datacenterId: "{{ datacenterId }}"
-            cpuCount: {{ cpuCount }}
-            guestDescription: "{{ guestDescription }}"
-            uuid: "{{ uuid }}"
-            architecture: "{{ architecture }}"
-            diskCount: {{ diskCount }}
-          utilization:
-            cpuMaxPercent: {{ cpuMaxPercent }}
-            memoryMaxPercent: {{ memoryMaxPercent }}
-            memoryAveragePercent: {{ memoryAveragePercent }}
-            diskIoRateAverageKbps: "{{ diskIoRateAverageKbps }}"
-            networkThroughputAverageKbps: "{{ networkThroughputAverageKbps }}"
-            cpuAveragePercent: {{ cpuAveragePercent }}
-            diskIoRateMaxKbps: "{{ diskIoRateMaxKbps }}"
-            networkThroughputMaxKbps: "{{ networkThroughputMaxKbps }}"
-          vmId: "{{ vmId }}"
     - name: displayName
       value: "{{ displayName }}"
       description: |
@@ -444,10 +416,38 @@ response
       description: |
         Time frame of the report.
       valid_values: ['TIME_FRAME_UNSPECIFIED', 'WEEK', 'MONTH', 'YEAR']
-    - name: utilizationReportId
-      value: "{{ utilizationReportId }}"
+    - name: vms
+      description: |
+        List of utilization information per VM. When sent as part of the request, the "vm_id" field is used in order to specify which VMs to include in the report. In that case all other fields are ignored.
+      value:
+        - utilization:
+            cpuAveragePercent: {{ cpuAveragePercent }}
+            cpuMaxPercent: {{ cpuMaxPercent }}
+            diskIoRateAverageKbps: "{{ diskIoRateAverageKbps }}"
+            diskIoRateMaxKbps: "{{ diskIoRateMaxKbps }}"
+            memoryAveragePercent: {{ memoryAveragePercent }}
+            memoryMaxPercent: {{ memoryMaxPercent }}
+            networkThroughputAverageKbps: "{{ networkThroughputAverageKbps }}"
+            networkThroughputMaxKbps: "{{ networkThroughputMaxKbps }}"
+          vmId: "{{ vmId }}"
+          vmwareVmDetails:
+            architecture: "{{ architecture }}"
+            bootOption: "{{ bootOption }}"
+            committedStorageMb: "{{ committedStorageMb }}"
+            cpuCount: {{ cpuCount }}
+            datacenterDescription: "{{ datacenterDescription }}"
+            datacenterId: "{{ datacenterId }}"
+            diskCount: {{ diskCount }}
+            displayName: "{{ displayName }}"
+            guestDescription: "{{ guestDescription }}"
+            memoryMb: {{ memoryMb }}
+            powerState: "{{ powerState }}"
+            uuid: "{{ uuid }}"
+            vmId: "{{ vmId }}"
     - name: requestId
       value: "{{ requestId }}"
+    - name: utilizationReportId
+      value: "{{ utilizationReportId }}"
 `}</CodeBlock>
 
 </TabItem>

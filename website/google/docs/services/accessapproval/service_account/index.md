@@ -33,14 +33,14 @@ Creates, updates, deletes, gets or lists a <code>service_account</code> resource
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_get_service_account"
+    defaultValue="folders_get_service_account"
     values={[
-        { label: 'projects_get_service_account', value: 'projects_get_service_account' },
+        { label: 'folders_get_service_account', value: 'folders_get_service_account' },
         { label: 'organizations_get_service_account', value: 'organizations_get_service_account' },
-        { label: 'folders_get_service_account', value: 'folders_get_service_account' }
+        { label: 'projects_get_service_account', value: 'projects_get_service_account' }
     ]}
 >
-<TabItem value="projects_get_service_account">
+<TabItem value="folders_get_service_account">
 
 <table>
 <thead>
@@ -88,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_get_service_account">
+<TabItem value="projects_get_service_account">
 
 <table>
 <thead>
@@ -130,9 +130,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_get_service_account"><CopyableCode code="projects_get_service_account" /></a></td>
+    <td><a href="#folders_get_service_account"><CopyableCode code="folders_get_service_account" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td>Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.</td>
 </tr>
@@ -144,9 +144,9 @@ The following methods are available for this resource:
     <td>Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.</td>
 </tr>
 <tr>
-    <td><a href="#folders_get_service_account"><CopyableCode code="folders_get_service_account" /></a></td>
+    <td><a href="#projects_get_service_account"><CopyableCode code="projects_get_service_account" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.</td>
 </tr>
@@ -187,14 +187,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_get_service_account"
+    defaultValue="folders_get_service_account"
     values={[
-        { label: 'projects_get_service_account', value: 'projects_get_service_account' },
+        { label: 'folders_get_service_account', value: 'folders_get_service_account' },
         { label: 'organizations_get_service_account', value: 'organizations_get_service_account' },
-        { label: 'folders_get_service_account', value: 'folders_get_service_account' }
+        { label: 'projects_get_service_account', value: 'projects_get_service_account' }
     ]}
 >
-<TabItem value="projects_get_service_account">
+<TabItem value="folders_get_service_account">
 
 Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.
 
@@ -203,7 +203,7 @@ SELECT
 name,
 accountEmail
 FROM google.accessapproval.service_account
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE foldersId = '{{ foldersId }}' -- required
 ;
 ```
 </TabItem>
@@ -220,7 +220,7 @@ WHERE organizationsId = '{{ organizationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="folders_get_service_account">
+<TabItem value="projects_get_service_account">
 
 Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.
 
@@ -229,7 +229,7 @@ SELECT
 name,
 accountEmail
 FROM google.accessapproval.service_account
-WHERE foldersId = '{{ foldersId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
 ;
 ```
 </TabItem>

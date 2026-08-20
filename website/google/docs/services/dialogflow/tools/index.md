@@ -318,23 +318,23 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.tools (
+data__dataStoreSpec,
+data__description,
 data__displayName,
 data__functionSpec,
-data__openApiSpec,
 data__name,
-data__description,
-data__dataStoreSpec,
+data__openApiSpec,
 projectsId,
 locationsId,
 agentsId
 )
 SELECT 
+'{{ dataStoreSpec }}',
+'{{ description }}',
 '{{ displayName }}',
 '{{ functionSpec }}',
-'{{ openApiSpec }}',
 '{{ name }}',
-'{{ description }}',
-'{{ dataStoreSpec }}',
+'{{ openApiSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}'
@@ -363,53 +363,53 @@ toolType
     - name: agentsId
       value: "{{ agentsId }}"
       description: Required parameter for the tools resource.
+    - name: dataStoreSpec
+      value:
+        dataStoreConnections:
+          - dataStore: "{{ dataStore }}"
+            dataStoreType: "{{ dataStoreType }}"
+            documentProcessingMode: "{{ documentProcessingMode }}"
+        fallbackPrompt: "{{ fallbackPrompt }}"
+    - name: description
+      value: "{{ description }}"
     - name: displayName
       value: "{{ displayName }}"
     - name: functionSpec
       value:
         inputSchema: "{{ inputSchema }}"
         outputSchema: "{{ outputSchema }}"
+    - name: name
+      value: "{{ name }}"
     - name: openApiSpec
       value:
         authentication:
+          apiKeyConfig:
+            apiKey: "{{ apiKey }}"
+            keyName: "{{ keyName }}"
+            requestLocation: "{{ requestLocation }}"
+            secretVersionForApiKey: "{{ secretVersionForApiKey }}"
           bearerTokenConfig:
             secretVersionForToken: "{{ secretVersionForToken }}"
             token: "{{ token }}"
-          serviceAccountAuthConfig:
-            serviceAccount: "{{ serviceAccount }}"
-          apiKeyConfig:
-            keyName: "{{ keyName }}"
-            apiKey: "{{ apiKey }}"
-            secretVersionForApiKey: "{{ secretVersionForApiKey }}"
-            requestLocation: "{{ requestLocation }}"
-          serviceAgentAuthConfig:
-            serviceAgentAuth: "{{ serviceAgentAuth }}"
           oauthConfig:
-            secretVersionForClientSecret: "{{ secretVersionForClientSecret }}"
+            clientId: "{{ clientId }}"
+            clientSecret: "{{ clientSecret }}"
             oauthGrantType: "{{ oauthGrantType }}"
             scopes:
               - "{{ scopes }}"
-            clientSecret: "{{ clientSecret }}"
-            clientId: "{{ clientId }}"
+            secretVersionForClientSecret: "{{ secretVersionForClientSecret }}"
             tokenEndpoint: "{{ tokenEndpoint }}"
+          serviceAccountAuthConfig:
+            serviceAccount: "{{ serviceAccount }}"
+          serviceAgentAuthConfig:
+            serviceAgentAuth: "{{ serviceAgentAuth }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
         textSchema: "{{ textSchema }}"
         tlsConfig:
           caCerts:
-            - displayName: "{{ displayName }}"
-              cert: "{{ cert }}"
-        serviceDirectoryConfig:
-          service: "{{ service }}"
-    - name: name
-      value: "{{ name }}"
-    - name: description
-      value: "{{ description }}"
-    - name: dataStoreSpec
-      value:
-        dataStoreConnections:
-          - dataStore: "{{ dataStore }}"
-            documentProcessingMode: "{{ documentProcessingMode }}"
-            dataStoreType: "{{ dataStoreType }}"
-        fallbackPrompt: "{{ fallbackPrompt }}"
+            - cert: "{{ cert }}"
+              displayName: "{{ displayName }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -431,12 +431,12 @@ No description available.
 ```sql
 UPDATE google.dialogflow.tools
 SET 
+data__dataStoreSpec = '{{ dataStoreSpec }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
 data__functionSpec = '{{ functionSpec }}',
-data__openApiSpec = '{{ openApiSpec }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__dataStoreSpec = '{{ dataStoreSpec }}'
+data__openApiSpec = '{{ openApiSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -33,62 +33,18 @@ Creates, updates, deletes, gets or lists a <code>deidentify_templates</code> res
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_deidentify_templates_get"
+    defaultValue="organizations_locations_deidentify_templates_get"
     values={[
-        { label: 'projects_locations_deidentify_templates_get', value: 'projects_locations_deidentify_templates_get' },
         { label: 'organizations_locations_deidentify_templates_get', value: 'organizations_locations_deidentify_templates_get' },
-        { label: 'projects_locations_deidentify_templates_list', value: 'projects_locations_deidentify_templates_list' },
-        { label: 'projects_deidentify_templates_get', value: 'projects_deidentify_templates_get' },
-        { label: 'organizations_locations_deidentify_templates_list', value: 'organizations_locations_deidentify_templates_list' },
+        { label: 'projects_locations_deidentify_templates_get', value: 'projects_locations_deidentify_templates_get' },
         { label: 'organizations_deidentify_templates_get', value: 'organizations_deidentify_templates_get' },
-        { label: 'projects_deidentify_templates_list', value: 'projects_deidentify_templates_list' },
-        { label: 'organizations_deidentify_templates_list', value: 'organizations_deidentify_templates_list' }
+        { label: 'organizations_locations_deidentify_templates_list', value: 'organizations_locations_deidentify_templates_list' },
+        { label: 'projects_deidentify_templates_get', value: 'projects_deidentify_templates_get' },
+        { label: 'projects_locations_deidentify_templates_list', value: 'projects_locations_deidentify_templates_list' },
+        { label: 'organizations_deidentify_templates_list', value: 'organizations_deidentify_templates_list' },
+        { label: 'projects_deidentify_templates_list', value: 'projects_deidentify_templates_list' }
     ]}
 >
-<TabItem value="projects_locations_deidentify_templates_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of an inspectTemplate.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deidentifyConfig" /></td>
-    <td><code>object</code></td>
-    <td>The core content of the template. (id: GooglePrivacyDlpV2DeidentifyConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Short description (max 256 chars).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Display name (max 256 chars).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of an inspectTemplate.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_deidentify_templates_get">
 
 <table>
@@ -133,95 +89,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_deidentify_templates_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of an inspectTemplate.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deidentifyConfig" /></td>
-    <td><code>object</code></td>
-    <td>The core content of the template. (id: GooglePrivacyDlpV2DeidentifyConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Short description (max 256 chars).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Display name (max 256 chars).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of an inspectTemplate.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_deidentify_templates_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of an inspectTemplate.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deidentifyConfig" /></td>
-    <td><code>object</code></td>
-    <td>The core content of the template. (id: GooglePrivacyDlpV2DeidentifyConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Short description (max 256 chars).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Display name (max 256 chars).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of an inspectTemplate.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="organizations_locations_deidentify_templates_list">
+<TabItem value="projects_locations_deidentify_templates_get">
 
 <table>
 <thead>
@@ -309,7 +177,95 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_deidentify_templates_list">
+<TabItem value="organizations_locations_deidentify_templates_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of an inspectTemplate.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deidentifyConfig" /></td>
+    <td><code>object</code></td>
+    <td>The core content of the template. (id: GooglePrivacyDlpV2DeidentifyConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Short description (max 256 chars).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Display name (max 256 chars).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of an inspectTemplate.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_deidentify_templates_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of an inspectTemplate.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deidentifyConfig" /></td>
+    <td><code>object</code></td>
+    <td>The core content of the template. (id: GooglePrivacyDlpV2DeidentifyConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Short description (max 256 chars).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Display name (max 256 chars).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of an inspectTemplate.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_deidentify_templates_list">
 
 <table>
 <thead>
@@ -397,6 +353,50 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="projects_deidentify_templates_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of an inspectTemplate.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deidentifyConfig" /></td>
+    <td><code>object</code></td>
+    <td>The core content of the template. (id: GooglePrivacyDlpV2DeidentifyConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Short description (max 256 chars).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Display name (max 256 chars).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of an inspectTemplate.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 </Tabs>
 
 ## Methods
@@ -415,13 +415,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_deidentify_templates_get"><CopyableCode code="projects_locations_deidentify_templates_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
-    <td></td>
-    <td>Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_deidentify_templates_get"><CopyableCode code="organizations_locations_deidentify_templates_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
@@ -429,10 +422,24 @@ The following methods are available for this resource:
     <td>Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_deidentify_templates_list"><CopyableCode code="projects_locations_deidentify_templates_list" /></a></td>
+    <td><a href="#projects_locations_deidentify_templates_get"><CopyableCode code="projects_locations_deidentify_templates_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
+    <td></td>
+    <td>Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_deidentify_templates_get"><CopyableCode code="organizations_deidentify_templates_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
+    <td></td>
+    <td>Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_locations_deidentify_templates_list"><CopyableCode code="organizations_locations_deidentify_templates_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
@@ -443,39 +450,25 @@ The following methods are available for this resource:
     <td>Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_deidentify_templates_list"><CopyableCode code="organizations_locations_deidentify_templates_list" /></a></td>
+    <td><a href="#projects_locations_deidentify_templates_list"><CopyableCode code="projects_locations_deidentify_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_deidentify_templates_get"><CopyableCode code="organizations_deidentify_templates_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
-    <td></td>
-    <td>Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
-</tr>
-<tr>
-    <td><a href="#projects_deidentify_templates_list"><CopyableCode code="projects_deidentify_templates_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_deidentify_templates_list"><CopyableCode code="organizations_deidentify_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_deidentify_templates_create"><CopyableCode code="projects_locations_deidentify_templates_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
+    <td><a href="#projects_deidentify_templates_list"><CopyableCode code="projects_deidentify_templates_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_deidentify_templates_create"><CopyableCode code="organizations_locations_deidentify_templates_create" /></a></td>
@@ -485,9 +478,9 @@ The following methods are available for this resource:
     <td>Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_deidentify_templates_create"><CopyableCode code="projects_deidentify_templates_create" /></a></td>
+    <td><a href="#projects_locations_deidentify_templates_create"><CopyableCode code="projects_locations_deidentify_templates_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
@@ -499,11 +492,11 @@ The following methods are available for this resource:
     <td>Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_deidentify_templates_patch"><CopyableCode code="projects_locations_deidentify_templates_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
+    <td><a href="#projects_deidentify_templates_create"><CopyableCode code="projects_deidentify_templates_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
+    <td>Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_deidentify_templates_patch"><CopyableCode code="organizations_locations_deidentify_templates_patch" /></a></td>
@@ -513,9 +506,9 @@ The following methods are available for this resource:
     <td>Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_deidentify_templates_patch"><CopyableCode code="projects_deidentify_templates_patch" /></a></td>
+    <td><a href="#projects_locations_deidentify_templates_patch"><CopyableCode code="projects_locations_deidentify_templates_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
     <td></td>
     <td>Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
@@ -527,11 +520,11 @@ The following methods are available for this resource:
     <td>Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_deidentify_templates_delete"><CopyableCode code="projects_locations_deidentify_templates_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
+    <td><a href="#projects_deidentify_templates_patch"><CopyableCode code="projects_deidentify_templates_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
     <td></td>
-    <td>Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
+    <td>Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_deidentify_templates_delete"><CopyableCode code="organizations_locations_deidentify_templates_delete" /></a></td>
@@ -541,9 +534,9 @@ The following methods are available for this resource:
     <td>Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_deidentify_templates_delete"><CopyableCode code="projects_deidentify_templates_delete" /></a></td>
+    <td><a href="#projects_locations_deidentify_templates_delete"><CopyableCode code="projects_locations_deidentify_templates_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
     <td></td>
     <td>Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
@@ -551,6 +544,13 @@ The following methods are available for this resource:
     <td><a href="#organizations_deidentify_templates_delete"><CopyableCode code="organizations_deidentify_templates_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
+    <td></td>
+    <td>Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_deidentify_templates_delete"><CopyableCode code="projects_deidentify_templates_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-deidentifyTemplatesId"><code>deidentifyTemplatesId</code></a></td>
     <td></td>
     <td>Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
@@ -616,37 +616,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_deidentify_templates_get"
+    defaultValue="organizations_locations_deidentify_templates_get"
     values={[
-        { label: 'projects_locations_deidentify_templates_get', value: 'projects_locations_deidentify_templates_get' },
         { label: 'organizations_locations_deidentify_templates_get', value: 'organizations_locations_deidentify_templates_get' },
-        { label: 'projects_locations_deidentify_templates_list', value: 'projects_locations_deidentify_templates_list' },
-        { label: 'projects_deidentify_templates_get', value: 'projects_deidentify_templates_get' },
-        { label: 'organizations_locations_deidentify_templates_list', value: 'organizations_locations_deidentify_templates_list' },
+        { label: 'projects_locations_deidentify_templates_get', value: 'projects_locations_deidentify_templates_get' },
         { label: 'organizations_deidentify_templates_get', value: 'organizations_deidentify_templates_get' },
-        { label: 'projects_deidentify_templates_list', value: 'projects_deidentify_templates_list' },
-        { label: 'organizations_deidentify_templates_list', value: 'organizations_deidentify_templates_list' }
+        { label: 'organizations_locations_deidentify_templates_list', value: 'organizations_locations_deidentify_templates_list' },
+        { label: 'projects_deidentify_templates_get', value: 'projects_deidentify_templates_get' },
+        { label: 'projects_locations_deidentify_templates_list', value: 'projects_locations_deidentify_templates_list' },
+        { label: 'organizations_deidentify_templates_list', value: 'organizations_deidentify_templates_list' },
+        { label: 'projects_deidentify_templates_list', value: 'projects_deidentify_templates_list' }
     ]}
 >
-<TabItem value="projects_locations_deidentify_templates_get">
-
-Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
-
-```sql
-SELECT
-name,
-createTime,
-deidentifyConfig,
-description,
-displayName,
-updateTime
-FROM google.dlp.deidentify_templates
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_deidentify_templates_get">
 
 Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
@@ -666,29 +647,7 @@ AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_deidentify_templates_list">
-
-Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
-
-```sql
-SELECT
-name,
-createTime,
-deidentifyConfig,
-description,
-displayName,
-updateTime
-FROM google.dlp.deidentify_templates
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
-AND locationId = '{{ locationId }}'
-;
-```
-</TabItem>
-<TabItem value="projects_deidentify_templates_get">
+<TabItem value="projects_locations_deidentify_templates_get">
 
 Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
 
@@ -702,29 +661,8 @@ displayName,
 updateTime
 FROM google.dlp.deidentify_templates
 WHERE projectsId = '{{ projectsId }}' -- required
-AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="organizations_locations_deidentify_templates_list">
-
-Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
-
-```sql
-SELECT
-name,
-createTime,
-deidentifyConfig,
-description,
-displayName,
-updateTime
-FROM google.dlp.deidentify_templates
-WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND locationId = '{{ locationId }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
+AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' -- required
 ;
 ```
 </TabItem>
@@ -746,7 +684,47 @@ AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_deidentify_templates_list">
+<TabItem value="organizations_locations_deidentify_templates_list">
+
+Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
+
+```sql
+SELECT
+name,
+createTime,
+deidentifyConfig,
+description,
+displayName,
+updateTime
+FROM google.dlp.deidentify_templates
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND locationId = '{{ locationId }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_deidentify_templates_get">
+
+Gets a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
+
+```sql
+SELECT
+name,
+createTime,
+deidentifyConfig,
+description,
+displayName,
+updateTime
+FROM google.dlp.deidentify_templates
+WHERE projectsId = '{{ projectsId }}' -- required
+AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_deidentify_templates_list">
 
 Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
 
@@ -760,9 +738,10 @@ displayName,
 updateTime
 FROM google.dlp.deidentify_templates
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND locationsId = '{{ locationsId }}' -- required
 AND locationId = '{{ locationId }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -781,10 +760,31 @@ displayName,
 updateTime
 FROM google.dlp.deidentify_templates
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND locationId = '{{ locationId }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_deidentify_templates_list">
+
+Lists DeidentifyTemplates. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
+
+```sql
+SELECT
+name,
+createTime,
+deidentifyConfig,
+description,
+displayName,
+updateTime
+FROM google.dlp.deidentify_templates
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationId = '{{ locationId }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -794,43 +794,15 @@ AND orderBy = '{{ orderBy }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_deidentify_templates_create"
+    defaultValue="organizations_locations_deidentify_templates_create"
     values={[
-        { label: 'projects_locations_deidentify_templates_create', value: 'projects_locations_deidentify_templates_create' },
         { label: 'organizations_locations_deidentify_templates_create', value: 'organizations_locations_deidentify_templates_create' },
-        { label: 'projects_deidentify_templates_create', value: 'projects_deidentify_templates_create' },
+        { label: 'projects_locations_deidentify_templates_create', value: 'projects_locations_deidentify_templates_create' },
         { label: 'organizations_deidentify_templates_create', value: 'organizations_deidentify_templates_create' },
+        { label: 'projects_deidentify_templates_create', value: 'projects_deidentify_templates_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_deidentify_templates_create">
-
-Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
-
-```sql
-INSERT INTO google.dlp.deidentify_templates (
-data__deidentifyTemplate,
-data__templateId,
-data__locationId,
-projectsId,
-locationsId
-)
-SELECT 
-'{{ deidentifyTemplate }}',
-'{{ templateId }}',
-'{{ locationId }}',
-'{{ projectsId }}',
-'{{ locationsId }}'
-RETURNING
-name,
-createTime,
-deidentifyConfig,
-description,
-displayName,
-updateTime
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_deidentify_templates_create">
 
 Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
@@ -838,15 +810,15 @@ Creates a DeidentifyTemplate for reusing frequently used configuration for de-id
 ```sql
 INSERT INTO google.dlp.deidentify_templates (
 data__deidentifyTemplate,
-data__templateId,
 data__locationId,
+data__templateId,
 organizationsId,
 locationsId
 )
 SELECT 
 '{{ deidentifyTemplate }}',
-'{{ templateId }}',
 '{{ locationId }}',
+'{{ templateId }}',
 '{{ organizationsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -859,22 +831,24 @@ updateTime
 ;
 ```
 </TabItem>
-<TabItem value="projects_deidentify_templates_create">
+<TabItem value="projects_locations_deidentify_templates_create">
 
 Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
 
 ```sql
 INSERT INTO google.dlp.deidentify_templates (
 data__deidentifyTemplate,
-data__templateId,
 data__locationId,
-projectsId
+data__templateId,
+projectsId,
+locationsId
 )
 SELECT 
 '{{ deidentifyTemplate }}',
-'{{ templateId }}',
 '{{ locationId }}',
-'{{ projectsId }}'
+'{{ templateId }}',
+'{{ projectsId }}',
+'{{ locationsId }}'
 RETURNING
 name,
 createTime,
@@ -892,15 +866,41 @@ Creates a DeidentifyTemplate for reusing frequently used configuration for de-id
 ```sql
 INSERT INTO google.dlp.deidentify_templates (
 data__deidentifyTemplate,
-data__templateId,
 data__locationId,
+data__templateId,
 organizationsId
 )
 SELECT 
 '{{ deidentifyTemplate }}',
-'{{ templateId }}',
 '{{ locationId }}',
+'{{ templateId }}',
 '{{ organizationsId }}'
+RETURNING
+name,
+createTime,
+deidentifyConfig,
+description,
+displayName,
+updateTime
+;
+```
+</TabItem>
+<TabItem value="projects_deidentify_templates_create">
+
+Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
+
+```sql
+INSERT INTO google.dlp.deidentify_templates (
+data__deidentifyTemplate,
+data__locationId,
+data__templateId,
+projectsId
+)
+SELECT 
+'{{ deidentifyTemplate }}',
+'{{ locationId }}',
+'{{ templateId }}',
+'{{ projectsId }}'
 RETURNING
 name,
 createTime,
@@ -916,85 +916,85 @@ updateTime
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: deidentify_templates
   props:
-    - name: projectsId
-      value: "{{ projectsId }}"
+    - name: organizationsId
+      value: "{{ organizationsId }}"
       description: Required parameter for the deidentify_templates resource.
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the deidentify_templates resource.
-    - name: organizationsId
-      value: "{{ organizationsId }}"
+    - name: projectsId
+      value: "{{ projectsId }}"
       description: Required parameter for the deidentify_templates resource.
     - name: deidentifyTemplate
       description: |
-        DeidentifyTemplates contains instructions on how to de-identify content. See https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates to learn more.
+        Required. The DeidentifyTemplate to create.
       value:
         createTime: "{{ createTime }}"
-        description: "{{ description }}"
-        name: "{{ name }}"
-        displayName: "{{ displayName }}"
-        updateTime: "{{ updateTime }}"
         deidentifyConfig:
-          recordTransformations:
-            recordSuppressions:
-              - condition:
-                  expressions: "{{ expressions }}"
-            fieldTransformations:
-              - condition:
-                  expressions: "{{ expressions }}"
-                primitiveTransformation:
-                  bucketingConfig: "{{ bucketingConfig }}"
-                  timePartConfig: "{{ timePartConfig }}"
-                  replaceWithInfoTypeConfig: "{{ replaceWithInfoTypeConfig }}"
-                  cryptoHashConfig: "{{ cryptoHashConfig }}"
-                  replaceConfig: "{{ replaceConfig }}"
-                  dateShiftConfig: "{{ dateShiftConfig }}"
-                  fixedSizeBucketingConfig: "{{ fixedSizeBucketingConfig }}"
-                  cryptoDeterministicConfig: "{{ cryptoDeterministicConfig }}"
-                  cryptoReplaceFfxFpeConfig: "{{ cryptoReplaceFfxFpeConfig }}"
-                  replaceDictionaryConfig: "{{ replaceDictionaryConfig }}"
-                  redactConfig: "{{ redactConfig }}"
-                  characterMaskConfig: "{{ characterMaskConfig }}"
-                infoTypeTransformations:
-                  transformations: "{{ transformations }}"
-                fields: "{{ fields }}"
-          transformationErrorHandling:
-            leaveUntransformed: "{{ leaveUntransformed }}"
-            throwError: "{{ throwError }}"
+          imageTransformations:
+            transforms:
+              - allInfoTypes: "{{ allInfoTypes }}"
+                allText: "{{ allText }}"
+                redactionColor:
+                  blue: {{ blue }}
+                  green: {{ green }}
+                  red: {{ red }}
+                selectedInfoTypes:
+                  infoTypes: "{{ infoTypes }}"
           infoTypeTransformations:
             transformations:
               - infoTypes: "{{ infoTypes }}"
                 primitiveTransformation:
                   bucketingConfig: "{{ bucketingConfig }}"
-                  timePartConfig: "{{ timePartConfig }}"
-                  replaceWithInfoTypeConfig: "{{ replaceWithInfoTypeConfig }}"
+                  characterMaskConfig: "{{ characterMaskConfig }}"
+                  cryptoDeterministicConfig: "{{ cryptoDeterministicConfig }}"
                   cryptoHashConfig: "{{ cryptoHashConfig }}"
-                  replaceConfig: "{{ replaceConfig }}"
+                  cryptoReplaceFfxFpeConfig: "{{ cryptoReplaceFfxFpeConfig }}"
                   dateShiftConfig: "{{ dateShiftConfig }}"
                   fixedSizeBucketingConfig: "{{ fixedSizeBucketingConfig }}"
-                  cryptoDeterministicConfig: "{{ cryptoDeterministicConfig }}"
-                  cryptoReplaceFfxFpeConfig: "{{ cryptoReplaceFfxFpeConfig }}"
-                  replaceDictionaryConfig: "{{ replaceDictionaryConfig }}"
                   redactConfig: "{{ redactConfig }}"
+                  replaceConfig: "{{ replaceConfig }}"
+                  replaceDictionaryConfig: "{{ replaceDictionaryConfig }}"
+                  replaceWithInfoTypeConfig: "{{ replaceWithInfoTypeConfig }}"
+                  timePartConfig: "{{ timePartConfig }}"
+          recordTransformations:
+            fieldTransformations:
+              - condition:
+                  expressions: "{{ expressions }}"
+                fields: "{{ fields }}"
+                infoTypeTransformations:
+                  transformations: "{{ transformations }}"
+                primitiveTransformation:
+                  bucketingConfig: "{{ bucketingConfig }}"
                   characterMaskConfig: "{{ characterMaskConfig }}"
-          imageTransformations:
-            transforms:
-              - selectedInfoTypes:
-                  infoTypes: "{{ infoTypes }}"
-                allInfoTypes: "{{ allInfoTypes }}"
-                redactionColor:
-                  green: {{ green }}
-                  red: {{ red }}
-                  blue: {{ blue }}
-                allText: "{{ allText }}"
-    - name: templateId
-      value: "{{ templateId }}"
-      description: |
-        The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: \`[a-zA-Zd-_]+\`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
+                  cryptoDeterministicConfig: "{{ cryptoDeterministicConfig }}"
+                  cryptoHashConfig: "{{ cryptoHashConfig }}"
+                  cryptoReplaceFfxFpeConfig: "{{ cryptoReplaceFfxFpeConfig }}"
+                  dateShiftConfig: "{{ dateShiftConfig }}"
+                  fixedSizeBucketingConfig: "{{ fixedSizeBucketingConfig }}"
+                  redactConfig: "{{ redactConfig }}"
+                  replaceConfig: "{{ replaceConfig }}"
+                  replaceDictionaryConfig: "{{ replaceDictionaryConfig }}"
+                  replaceWithInfoTypeConfig: "{{ replaceWithInfoTypeConfig }}"
+                  timePartConfig: "{{ timePartConfig }}"
+            recordSuppressions:
+              - condition:
+                  expressions: "{{ expressions }}"
+          transformationErrorHandling:
+            leaveUntransformed: "{{ leaveUntransformed }}"
+            throwError: "{{ throwError }}"
+        description: "{{ description }}"
+        displayName: "{{ displayName }}"
+        name: "{{ name }}"
+        updateTime: "{{ updateTime }}"
     - name: locationId
       value: "{{ locationId }}"
       description: |
         Deprecated. This field has no effect.
+    - name: templateId
+      value: "{{ templateId }}"
+      description: |
+        The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: \`[a-zA-Zd-_]+\`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
 `}</CodeBlock>
 
 </TabItem>
@@ -1004,36 +1004,14 @@ updateTime
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_deidentify_templates_patch"
+    defaultValue="organizations_locations_deidentify_templates_patch"
     values={[
-        { label: 'projects_locations_deidentify_templates_patch', value: 'projects_locations_deidentify_templates_patch' },
         { label: 'organizations_locations_deidentify_templates_patch', value: 'organizations_locations_deidentify_templates_patch' },
-        { label: 'projects_deidentify_templates_patch', value: 'projects_deidentify_templates_patch' },
-        { label: 'organizations_deidentify_templates_patch', value: 'organizations_deidentify_templates_patch' }
+        { label: 'projects_locations_deidentify_templates_patch', value: 'projects_locations_deidentify_templates_patch' },
+        { label: 'organizations_deidentify_templates_patch', value: 'organizations_deidentify_templates_patch' },
+        { label: 'projects_deidentify_templates_patch', value: 'projects_deidentify_templates_patch' }
     ]}
 >
-<TabItem value="projects_locations_deidentify_templates_patch">
-
-Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
-
-```sql
-UPDATE google.dlp.deidentify_templates
-SET 
-data__updateMask = '{{ updateMask }}',
-data__deidentifyTemplate = '{{ deidentifyTemplate }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
-RETURNING
-name,
-createTime,
-deidentifyConfig,
-description,
-displayName,
-updateTime;
-```
-</TabItem>
 <TabItem value="organizations_locations_deidentify_templates_patch">
 
 Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
@@ -1041,8 +1019,8 @@ Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data
 ```sql
 UPDATE google.dlp.deidentify_templates
 SET 
-data__updateMask = '{{ updateMask }}',
-data__deidentifyTemplate = '{{ deidentifyTemplate }}'
+data__deidentifyTemplate = '{{ deidentifyTemplate }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1056,17 +1034,18 @@ displayName,
 updateTime;
 ```
 </TabItem>
-<TabItem value="projects_deidentify_templates_patch">
+<TabItem value="projects_locations_deidentify_templates_patch">
 
 Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
 
 ```sql
 UPDATE google.dlp.deidentify_templates
 SET 
-data__updateMask = '{{ updateMask }}',
-data__deidentifyTemplate = '{{ deidentifyTemplate }}'
+data__deidentifyTemplate = '{{ deidentifyTemplate }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
 AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
 RETURNING
 name,
@@ -1084,10 +1063,31 @@ Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data
 ```sql
 UPDATE google.dlp.deidentify_templates
 SET 
-data__updateMask = '{{ updateMask }}',
-data__deidentifyTemplate = '{{ deidentifyTemplate }}'
+data__deidentifyTemplate = '{{ deidentifyTemplate }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
+AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
+RETURNING
+name,
+createTime,
+deidentifyConfig,
+description,
+displayName,
+updateTime;
+```
+</TabItem>
+<TabItem value="projects_deidentify_templates_patch">
+
+Updates the DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
+
+```sql
+UPDATE google.dlp.deidentify_templates
+SET 
+data__deidentifyTemplate = '{{ deidentifyTemplate }}',
+data__updateMask = '{{ updateMask }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
 AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
 RETURNING
 name,
@@ -1104,26 +1104,14 @@ updateTime;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_locations_deidentify_templates_delete"
+    defaultValue="organizations_locations_deidentify_templates_delete"
     values={[
-        { label: 'projects_locations_deidentify_templates_delete', value: 'projects_locations_deidentify_templates_delete' },
         { label: 'organizations_locations_deidentify_templates_delete', value: 'organizations_locations_deidentify_templates_delete' },
-        { label: 'projects_deidentify_templates_delete', value: 'projects_deidentify_templates_delete' },
-        { label: 'organizations_deidentify_templates_delete', value: 'organizations_deidentify_templates_delete' }
+        { label: 'projects_locations_deidentify_templates_delete', value: 'projects_locations_deidentify_templates_delete' },
+        { label: 'organizations_deidentify_templates_delete', value: 'organizations_deidentify_templates_delete' },
+        { label: 'projects_deidentify_templates_delete', value: 'projects_deidentify_templates_delete' }
     ]}
 >
-<TabItem value="projects_locations_deidentify_templates_delete">
-
-Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
-
-```sql
-DELETE FROM google.dlp.deidentify_templates
-WHERE projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_deidentify_templates_delete">
 
 Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
@@ -1136,13 +1124,14 @@ AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="projects_deidentify_templates_delete">
+<TabItem value="projects_locations_deidentify_templates_delete">
 
 Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
 
 ```sql
 DELETE FROM google.dlp.deidentify_templates
 WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
 AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
 ;
 ```
@@ -1154,6 +1143,17 @@ Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-p
 ```sql
 DELETE FROM google.dlp.deidentify_templates
 WHERE organizationsId = '{{ organizationsId }}' --required
+AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_deidentify_templates_delete">
+
+Deletes a DeidentifyTemplate. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.
+
+```sql
+DELETE FROM google.dlp.deidentify_templates
+WHERE projectsId = '{{ projectsId }}' --required
 AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
 ;
 ```

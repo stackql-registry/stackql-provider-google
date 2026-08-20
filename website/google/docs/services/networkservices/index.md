@@ -18,19 +18,21 @@ networkservices service documentation.
 
 :::info[Service Summary]
 
-total resources: __24__  
+total resources: __27__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/networkservices/agent_connectivity_templates/">agent_connectivity_templates</a><br />
 <a href="/services/networkservices/agent_gateways/">agent_gateways</a><br />
 <a href="/services/networkservices/authz_extensions/">authz_extensions</a><br />
 <a href="/services/networkservices/edge_cache_keysets_iam_policies/">edge_cache_keysets_iam_policies</a><br />
 <a href="/services/networkservices/edge_cache_origins_iam_policies/">edge_cache_origins_iam_policies</a><br />
 <a href="/services/networkservices/edge_cache_services_iam_policies/">edge_cache_services_iam_policies</a><br />
 <a href="/services/networkservices/endpoint_policies/">endpoint_policies</a><br />
+<a href="/services/networkservices/extension_bindings/">extension_bindings</a><br />
 <a href="/services/networkservices/gateways/">gateways</a><br />
 <a href="/services/networkservices/grpc_routes/">grpc_routes</a><br />
 <a href="/services/networkservices/http_routes/">http_routes</a><br />
@@ -44,6 +46,7 @@ total resources: __24__
 <a href="/services/networkservices/multicast_consumer_associations/">multicast_consumer_associations</a><br />
 <a href="/services/networkservices/multicast_group_consumer_activations/">multicast_group_consumer_activations</a><br />
 <a href="/services/networkservices/operations/">operations</a><br />
+<a href="/services/networkservices/producer_extensions/">producer_extensions</a><br />
 <a href="/services/networkservices/route_views/">route_views</a><br />
 <a href="/services/networkservices/service_bindings/">service_bindings</a><br />
 <a href="/services/networkservices/service_lb_policies/">service_lb_policies</a><br />

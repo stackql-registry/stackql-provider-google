@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists TensorboardExperiments in a Location.</td>
 </tr>
 <tr>
@@ -336,11 +336,11 @@ FROM google.aiplatform.experiments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND tensorboardsId = '{{ tensorboardsId }}' -- required
-AND readMask = '{{ readMask }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -440,21 +440,21 @@ updateTime
         Required. The request message specifying the TensorboardTimeSeries to create. A maximum of 1000 TensorboardTimeSeries can be created in a batch.
       value:
         - parent: "{{ parent }}"
-          tensorboardTimeSeriesId: "{{ tensorboardTimeSeriesId }}"
           tensorboardTimeSeries:
-            description: "{{ description }}"
-            name: "{{ name }}"
-            valueType: "{{ valueType }}"
-            pluginName: "{{ pluginName }}"
-            metadata:
-              maxWallTime: "{{ maxWallTime }}"
-              maxStep: "{{ maxStep }}"
-              maxBlobSequenceLength: "{{ maxBlobSequenceLength }}"
-            pluginData: "{{ pluginData }}"
             createTime: "{{ createTime }}"
+            description: "{{ description }}"
             displayName: "{{ displayName }}"
             etag: "{{ etag }}"
+            metadata:
+              maxBlobSequenceLength: "{{ maxBlobSequenceLength }}"
+              maxStep: "{{ maxStep }}"
+              maxWallTime: "{{ maxWallTime }}"
+            name: "{{ name }}"
+            pluginData: "{{ pluginData }}"
+            pluginName: "{{ pluginName }}"
             updateTime: "{{ updateTime }}"
+            valueType: "{{ valueType }}"
+          tensorboardTimeSeriesId: "{{ tensorboardTimeSeriesId }}"
     - name: description
       value: "{{ description }}"
       description: |

@@ -246,27 +246,6 @@ The following methods are available for this resource:
     <td>Deletes the processor version, all artifacts under the processor version will be deleted.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_processors_processor_versions_evaluate_processor_version"><CopyableCode code="projects_locations_processors_processor_versions_evaluate_processor_version" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a>, <a href="#parameter-processorVersionsId"><code>processorVersionsId</code></a></td>
-    <td></td>
-    <td>Evaluates a ProcessorVersion against annotated documents, producing an Evaluation.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_processors_processor_versions_undeploy"><CopyableCode code="projects_locations_processors_processor_versions_undeploy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a>, <a href="#parameter-processorVersionsId"><code>processorVersionsId</code></a></td>
-    <td></td>
-    <td>Undeploys the processor version.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_processors_processor_versions_train"><CopyableCode code="projects_locations_processors_processor_versions_train" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
-    <td></td>
-    <td>Trains a new processor version. Operation metadata is returned as TrainProcessorVersionMetadata.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_processors_processor_versions_batch_process"><CopyableCode code="projects_locations_processors_processor_versions_batch_process" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a>, <a href="#parameter-processorVersionsId"><code>processorVersionsId</code></a></td>
@@ -281,11 +260,32 @@ The following methods are available for this resource:
     <td>Deploys the processor version.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_processors_processor_versions_evaluate_processor_version"><CopyableCode code="projects_locations_processors_processor_versions_evaluate_processor_version" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a>, <a href="#parameter-processorVersionsId"><code>processorVersionsId</code></a></td>
+    <td></td>
+    <td>Evaluates a ProcessorVersion against annotated documents, producing an Evaluation.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_processors_processor_versions_process"><CopyableCode code="projects_locations_processors_processor_versions_process" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a>, <a href="#parameter-processorVersionsId"><code>processorVersionsId</code></a></td>
     <td></td>
     <td>Processes a single document.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_processors_processor_versions_train"><CopyableCode code="projects_locations_processors_processor_versions_train" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
+    <td></td>
+    <td>Trains a new processor version. Operation metadata is returned as TrainProcessorVersionMetadata.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_processors_processor_versions_undeploy"><CopyableCode code="projects_locations_processors_processor_versions_undeploy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a>, <a href="#parameter-processorVersionsId"><code>processorVersionsId</code></a></td>
+    <td></td>
+    <td>Undeploys the processor version.</td>
 </tr>
 </tbody>
 </table>
@@ -432,67 +432,16 @@ AND processorVersionsId = '{{ processorVersionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_processors_processor_versions_evaluate_processor_version"
+    defaultValue="projects_locations_processors_processor_versions_batch_process"
     values={[
-        { label: 'projects_locations_processors_processor_versions_evaluate_processor_version', value: 'projects_locations_processors_processor_versions_evaluate_processor_version' },
-        { label: 'projects_locations_processors_processor_versions_undeploy', value: 'projects_locations_processors_processor_versions_undeploy' },
-        { label: 'projects_locations_processors_processor_versions_train', value: 'projects_locations_processors_processor_versions_train' },
         { label: 'projects_locations_processors_processor_versions_batch_process', value: 'projects_locations_processors_processor_versions_batch_process' },
         { label: 'projects_locations_processors_processor_versions_deploy', value: 'projects_locations_processors_processor_versions_deploy' },
-        { label: 'projects_locations_processors_processor_versions_process', value: 'projects_locations_processors_processor_versions_process' }
+        { label: 'projects_locations_processors_processor_versions_evaluate_processor_version', value: 'projects_locations_processors_processor_versions_evaluate_processor_version' },
+        { label: 'projects_locations_processors_processor_versions_process', value: 'projects_locations_processors_processor_versions_process' },
+        { label: 'projects_locations_processors_processor_versions_train', value: 'projects_locations_processors_processor_versions_train' },
+        { label: 'projects_locations_processors_processor_versions_undeploy', value: 'projects_locations_processors_processor_versions_undeploy' }
     ]}
 >
-<TabItem value="projects_locations_processors_processor_versions_evaluate_processor_version">
-
-Evaluates a ProcessorVersion against annotated documents, producing an Evaluation.
-
-```sql
-EXEC google.documentai.processor_versions.projects_locations_processors_processor_versions_evaluate_processor_version 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@processorsId='{{ processorsId }}' --required, 
-@processorVersionsId='{{ processorVersionsId }}' --required 
-@@json=
-'{
-"evaluationDocuments": "{{ evaluationDocuments }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_processors_processor_versions_undeploy">
-
-Undeploys the processor version.
-
-```sql
-EXEC google.documentai.processor_versions.projects_locations_processors_processor_versions_undeploy 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@processorsId='{{ processorsId }}' --required, 
-@processorVersionsId='{{ processorVersionsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_processors_processor_versions_train">
-
-Trains a new processor version. Operation metadata is returned as TrainProcessorVersionMetadata.
-
-```sql
-EXEC google.documentai.processor_versions.projects_locations_processors_processor_versions_train 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@processorsId='{{ processorsId }}' --required 
-@@json=
-'{
-"inputData": "{{ inputData }}", 
-"foundationModelTuningOptions": "{{ foundationModelTuningOptions }}", 
-"customDocumentExtractionOptions": "{{ customDocumentExtractionOptions }}", 
-"processorVersion": "{{ processorVersion }}", 
-"documentSchema": "{{ documentSchema }}", 
-"baseProcessorVersion": "{{ baseProcessorVersion }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_processors_processor_versions_batch_process">
 
 LRO endpoint to batch process many documents. The output is written to Cloud Storage as JSON in the [Document] format.
@@ -505,11 +454,11 @@ EXEC google.documentai.processor_versions.projects_locations_processors_processo
 @processorVersionsId='{{ processorVersionsId }}' --required 
 @@json=
 '{
+"documentOutputConfig": "{{ documentOutputConfig }}", 
 "inputDocuments": "{{ inputDocuments }}", 
-"skipHumanReview": {{ skipHumanReview }}, 
-"processOptions": "{{ processOptions }}", 
 "labels": "{{ labels }}", 
-"documentOutputConfig": "{{ documentOutputConfig }}"
+"processOptions": "{{ processOptions }}", 
+"skipHumanReview": {{ skipHumanReview }}
 }'
 ;
 ```
@@ -527,6 +476,23 @@ EXEC google.documentai.processor_versions.projects_locations_processors_processo
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_processors_processor_versions_evaluate_processor_version">
+
+Evaluates a ProcessorVersion against annotated documents, producing an Evaluation.
+
+```sql
+EXEC google.documentai.processor_versions.projects_locations_processors_processor_versions_evaluate_processor_version 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@processorsId='{{ processorsId }}' --required, 
+@processorVersionsId='{{ processorVersionsId }}' --required 
+@@json=
+'{
+"evaluationDocuments": "{{ evaluationDocuments }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_processors_processor_versions_process">
 
 Processes a single document.
@@ -539,15 +505,49 @@ EXEC google.documentai.processor_versions.projects_locations_processors_processo
 @processorVersionsId='{{ processorVersionsId }}' --required 
 @@json=
 '{
+"fieldMask": "{{ fieldMask }}", 
+"gcsDocument": "{{ gcsDocument }}", 
+"imagelessMode": {{ imagelessMode }}, 
 "inlineDocument": "{{ inlineDocument }}", 
 "labels": "{{ labels }}", 
-"fieldMask": "{{ fieldMask }}", 
-"skipHumanReview": {{ skipHumanReview }}, 
 "processOptions": "{{ processOptions }}", 
-"imagelessMode": {{ imagelessMode }}, 
 "rawDocument": "{{ rawDocument }}", 
-"gcsDocument": "{{ gcsDocument }}"
+"skipHumanReview": {{ skipHumanReview }}
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_processors_processor_versions_train">
+
+Trains a new processor version. Operation metadata is returned as TrainProcessorVersionMetadata.
+
+```sql
+EXEC google.documentai.processor_versions.projects_locations_processors_processor_versions_train 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@processorsId='{{ processorsId }}' --required 
+@@json=
+'{
+"baseProcessorVersion": "{{ baseProcessorVersion }}", 
+"customDocumentExtractionOptions": "{{ customDocumentExtractionOptions }}", 
+"documentSchema": "{{ documentSchema }}", 
+"foundationModelTuningOptions": "{{ foundationModelTuningOptions }}", 
+"inputData": "{{ inputData }}", 
+"processorVersion": "{{ processorVersion }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_processors_processor_versions_undeploy">
+
+Undeploys the processor version.
+
+```sql
+EXEC google.documentai.processor_versions.projects_locations_processors_processor_versions_undeploy 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@processorsId='{{ processorsId }}' --required, 
+@processorVersionsId='{{ processorVersionsId }}' --required
 ;
 ```
 </TabItem>

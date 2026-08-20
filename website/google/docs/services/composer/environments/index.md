@@ -220,34 +220,6 @@ The following methods are available for this resource:
     <td>Delete an environment.</td>
 </tr>
 <tr>
-    <td><a href="#save_snapshot"><CopyableCode code="save_snapshot" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Creates a snapshots of a Cloud Composer environment. As a result of this operation, snapshot of environment's state is stored in a location specified in the SaveSnapshotRequest.</td>
-</tr>
-<tr>
-    <td><a href="#restart_web_server"><CopyableCode code="restart_web_server" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Restart Airflow web server.</td>
-</tr>
-<tr>
-    <td><a href="#execute_airflow_command"><CopyableCode code="execute_airflow_command" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Executes Airflow CLI command.</td>
-</tr>
-<tr>
-    <td><a href="#poll_airflow_command"><CopyableCode code="poll_airflow_command" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Polls Airflow CLI command execution and fetches logs.</td>
-</tr>
-<tr>
     <td><a href="#check_upgrade"><CopyableCode code="check_upgrade" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
@@ -262,11 +234,11 @@ The following methods are available for this resource:
     <td>Triggers database failover (only for highly resilient environments).</td>
 </tr>
 <tr>
-    <td><a href="#stop_airflow_command"><CopyableCode code="stop_airflow_command" /></a></td>
+    <td><a href="#execute_airflow_command"><CopyableCode code="execute_airflow_command" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td></td>
-    <td>Stops Airflow CLI command execution.</td>
+    <td>Executes Airflow CLI command.</td>
 </tr>
 <tr>
     <td><a href="#load_snapshot"><CopyableCode code="load_snapshot" /></a></td>
@@ -274,6 +246,34 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td></td>
     <td>Loads a snapshot of a Cloud Composer environment. As a result of this operation, a snapshot of environment's specified in LoadSnapshotRequest is loaded into the environment.</td>
+</tr>
+<tr>
+    <td><a href="#poll_airflow_command"><CopyableCode code="poll_airflow_command" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Polls Airflow CLI command execution and fetches logs.</td>
+</tr>
+<tr>
+    <td><a href="#restart_web_server"><CopyableCode code="restart_web_server" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Restart Airflow web server.</td>
+</tr>
+<tr>
+    <td><a href="#save_snapshot"><CopyableCode code="save_snapshot" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Creates a snapshots of a Cloud Composer environment. As a result of this operation, snapshot of environment's state is stored in a location specified in the SaveSnapshotRequest.</td>
+</tr>
+<tr>
+    <td><a href="#stop_airflow_command"><CopyableCode code="stop_airflow_command" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Stops Airflow CLI command execution.</td>
 </tr>
 </tbody>
 </table>
@@ -401,9 +401,9 @@ INSERT INTO google.composer.environments (
 data__config,
 data__createTime,
 data__labels,
+data__name,
 data__state,
 data__storageConfig,
-data__name,
 data__updateTime,
 data__uuid,
 projectsId,
@@ -413,9 +413,9 @@ SELECT
 '{{ config }}',
 '{{ createTime }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ state }}',
 '{{ storageConfig }}',
-'{{ name }}',
 '{{ updateTime }}',
 '{{ uuid }}',
 '{{ projectsId }}',
@@ -444,118 +444,118 @@ response
       description: |
         Optional. Configuration parameters for this environment.
       value:
-        nodeConfig:
-          ipAllocationPolicy:
-            servicesIpv4CidrBlock: "{{ servicesIpv4CidrBlock }}"
-            clusterSecondaryRangeName: "{{ clusterSecondaryRangeName }}"
-            useIpAliases: {{ useIpAliases }}
-            clusterIpv4CidrBlock: "{{ clusterIpv4CidrBlock }}"
-            servicesSecondaryRangeName: "{{ servicesSecondaryRangeName }}"
-          diskSizeGb: {{ diskSizeGb }}
-          enableIpMasqAgent: {{ enableIpMasqAgent }}
-          composerNetworkAttachment: "{{ composerNetworkAttachment }}"
-          composerInternalIpv4CidrBlock: "{{ composerInternalIpv4CidrBlock }}"
-          subnetwork: "{{ subnetwork }}"
-          serviceAccount: "{{ serviceAccount }}"
-          tags:
-            - "{{ tags }}"
-          network: "{{ network }}"
-          oauthScopes:
-            - "{{ oauthScopes }}"
-          location: "{{ location }}"
-          machineType: "{{ machineType }}"
-        masterAuthorizedNetworksConfig:
-          enabled: {{ enabled }}
-          cidrBlocks:
-            - displayName: "{{ displayName }}"
-              cidrBlock: "{{ cidrBlock }}"
+        airflowByoidUri: "{{ airflowByoidUri }}"
         airflowUri: "{{ airflowUri }}"
-        gkeCluster: "{{ gkeCluster }}"
-        nodeCount: {{ nodeCount }}
-        encryptionConfig:
-          kmsKeyName: "{{ kmsKeyName }}"
+        dagGcsPrefix: "{{ dagGcsPrefix }}"
         dataRetentionConfig:
-          taskLogsRetentionConfig:
-            storageMode: "{{ storageMode }}"
           airflowMetadataRetentionConfig:
             retentionDays: {{ retentionDays }}
             retentionMode: "{{ retentionMode }}"
-        resilienceMode: "{{ resilienceMode }}"
+          taskLogsRetentionConfig:
+            storageMode: "{{ storageMode }}"
+        databaseConfig:
+          machineType: "{{ machineType }}"
+          zone: "{{ zone }}"
+        encryptionConfig:
+          kmsKeyName: "{{ kmsKeyName }}"
+        environmentSize: "{{ environmentSize }}"
+        gkeCluster: "{{ gkeCluster }}"
+        maintenanceWindow:
+          endTime: "{{ endTime }}"
+          recurrence: "{{ recurrence }}"
+          startTime: "{{ startTime }}"
+        masterAuthorizedNetworksConfig:
+          cidrBlocks:
+            - cidrBlock: "{{ cidrBlock }}"
+              displayName: "{{ displayName }}"
+          enabled: {{ enabled }}
+        nodeConfig:
+          composerInternalIpv4CidrBlock: "{{ composerInternalIpv4CidrBlock }}"
+          composerNetworkAttachment: "{{ composerNetworkAttachment }}"
+          diskSizeGb: {{ diskSizeGb }}
+          enableIpMasqAgent: {{ enableIpMasqAgent }}
+          ipAllocationPolicy:
+            clusterIpv4CidrBlock: "{{ clusterIpv4CidrBlock }}"
+            clusterSecondaryRangeName: "{{ clusterSecondaryRangeName }}"
+            servicesIpv4CidrBlock: "{{ servicesIpv4CidrBlock }}"
+            servicesSecondaryRangeName: "{{ servicesSecondaryRangeName }}"
+            useIpAliases: {{ useIpAliases }}
+          location: "{{ location }}"
+          machineType: "{{ machineType }}"
+          network: "{{ network }}"
+          oauthScopes:
+            - "{{ oauthScopes }}"
+          serviceAccount: "{{ serviceAccount }}"
+          subnetwork: "{{ subnetwork }}"
+          tags:
+            - "{{ tags }}"
+        nodeCount: {{ nodeCount }}
         privateEnvironmentConfig:
-          webServerIpv4CidrBlock: "{{ webServerIpv4CidrBlock }}"
-          cloudSqlIpv4CidrBlock: "{{ cloudSqlIpv4CidrBlock }}"
-          enablePrivatelyUsedPublicIps: {{ enablePrivatelyUsedPublicIps }}
-          enablePrivateBuildsOnly: {{ enablePrivateBuildsOnly }}
+          cloudComposerConnectionSubnetwork: "{{ cloudComposerConnectionSubnetwork }}"
           cloudComposerNetworkIpv4CidrBlock: "{{ cloudComposerNetworkIpv4CidrBlock }}"
+          cloudComposerNetworkIpv4ReservedRange: "{{ cloudComposerNetworkIpv4ReservedRange }}"
+          cloudSqlIpv4CidrBlock: "{{ cloudSqlIpv4CidrBlock }}"
+          enablePrivateBuildsOnly: {{ enablePrivateBuildsOnly }}
+          enablePrivateEnvironment: {{ enablePrivateEnvironment }}
+          enablePrivatelyUsedPublicIps: {{ enablePrivatelyUsedPublicIps }}
+          networkingConfig:
+            connectionType: "{{ connectionType }}"
+          networkingType: "{{ networkingType }}"
           privateClusterConfig:
             enablePrivateEndpoint: {{ enablePrivateEndpoint }}
             masterIpv4CidrBlock: "{{ masterIpv4CidrBlock }}"
             masterIpv4ReservedRange: "{{ masterIpv4ReservedRange }}"
-          cloudComposerNetworkIpv4ReservedRange: "{{ cloudComposerNetworkIpv4ReservedRange }}"
-          networkingConfig:
-            connectionType: "{{ connectionType }}"
-          networkingType: "{{ networkingType }}"
+          webServerIpv4CidrBlock: "{{ webServerIpv4CidrBlock }}"
           webServerIpv4ReservedRange: "{{ webServerIpv4ReservedRange }}"
-          enablePrivateEnvironment: {{ enablePrivateEnvironment }}
-          cloudComposerConnectionSubnetwork: "{{ cloudComposerConnectionSubnetwork }}"
-        softwareConfig:
-          cloudDataLineageIntegration:
-            enabled: {{ enabled }}
-          auditLogsReplicationMode: "{{ auditLogsReplicationMode }}"
-          pythonVersion: "{{ pythonVersion }}"
-          schedulerCount: {{ schedulerCount }}
-          imageVersion: "{{ imageVersion }}"
-          pypiPackages: "{{ pypiPackages }}"
-          webServerPluginsMode: "{{ webServerPluginsMode }}"
-          airflowConfigOverrides: "{{ airflowConfigOverrides }}"
-          envVariables: "{{ envVariables }}"
         recoveryConfig:
           scheduledSnapshotsConfig:
-            snapshotLocation: "{{ snapshotLocation }}"
             enabled: {{ enabled }}
             snapshotCreationSchedule: "{{ snapshotCreationSchedule }}"
+            snapshotLocation: "{{ snapshotLocation }}"
             timeZone: "{{ timeZone }}"
-        databaseConfig:
+        resilienceMode: "{{ resilienceMode }}"
+        softwareConfig:
+          airflowConfigOverrides: "{{ airflowConfigOverrides }}"
+          auditLogsReplicationMode: "{{ auditLogsReplicationMode }}"
+          cloudDataLineageIntegration:
+            enabled: {{ enabled }}
+          envVariables: "{{ envVariables }}"
+          imageVersion: "{{ imageVersion }}"
+          pypiPackages: "{{ pypiPackages }}"
+          pythonVersion: "{{ pythonVersion }}"
+          schedulerCount: {{ schedulerCount }}
+          webServerPluginsMode: "{{ webServerPluginsMode }}"
+        webServerConfig:
           machineType: "{{ machineType }}"
-          zone: "{{ zone }}"
+        webServerNetworkAccessControl:
+          allowedIpRanges:
+            - description: "{{ description }}"
+              value: "{{ value }}"
         workloadsConfig:
-          webServer:
+          dagProcessor:
+            count: {{ count }}
             cpu: {{ cpu }}
             memoryGb: {{ memoryGb }}
             storageGb: {{ storageGb }}
           scheduler:
-            memoryGb: {{ memoryGb }}
-            cpu: {{ cpu }}
             count: {{ count }}
-            storageGb: {{ storageGb }}
-          dagProcessor:
-            storageGb: {{ storageGb }}
             cpu: {{ cpu }}
-            count: {{ count }}
             memoryGb: {{ memoryGb }}
-          worker:
-            memoryGb: {{ memoryGb }}
-            maxCount: {{ maxCount }}
             storageGb: {{ storageGb }}
-            minCount: {{ minCount }}
-            cpu: {{ cpu }}
           triggerer:
-            memoryGb: {{ memoryGb }}
             count: {{ count }}
             cpu: {{ cpu }}
-        environmentSize: "{{ environmentSize }}"
-        webServerNetworkAccessControl:
-          allowedIpRanges:
-            - value: "{{ value }}"
-              description: "{{ description }}"
-        maintenanceWindow:
-          endTime: "{{ endTime }}"
-          startTime: "{{ startTime }}"
-          recurrence: "{{ recurrence }}"
-        webServerConfig:
-          machineType: "{{ machineType }}"
-        airflowByoidUri: "{{ airflowByoidUri }}"
-        dagGcsPrefix: "{{ dagGcsPrefix }}"
+            memoryGb: {{ memoryGb }}
+          webServer:
+            cpu: {{ cpu }}
+            memoryGb: {{ memoryGb }}
+            storageGb: {{ storageGb }}
+          worker:
+            cpu: {{ cpu }}
+            maxCount: {{ maxCount }}
+            memoryGb: {{ memoryGb }}
+            minCount: {{ minCount }}
+            storageGb: {{ storageGb }}
     - name: createTime
       value: "{{ createTime }}"
       description: |
@@ -564,6 +564,10 @@ response
       value: "{{ labels }}"
       description: |
         Optional. User-defined labels for this environment. The labels map can contain no more than 64 entries. Entries of the labels map are UTF8 strings that comply with the following restrictions: * Keys must conform to regexp: p{Ll}p{Lo}{0,62} * Values must conform to regexp: [p{Ll}p{Lo}p{N}_-]{0,63} * Both keys and values are additionally constrained to be <= 128 bytes in size.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the environment, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}" EnvironmentId must start with a lowercase letter followed by up to 63 lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
     - name: state
       value: "{{ state }}"
       description: |
@@ -574,10 +578,6 @@ response
         Optional. Storage configuration for this environment.
       value:
         bucket: "{{ bucket }}"
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the environment, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}" EnvironmentId must start with a lowercase letter followed by up to 63 lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
     - name: updateTime
       value: "{{ updateTime }}"
       description: |
@@ -610,9 +610,9 @@ SET
 data__config = '{{ config }}',
 data__createTime = '{{ createTime }}',
 data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__state = '{{ state }}',
 data__storageConfig = '{{ storageConfig }}',
-data__name = '{{ name }}',
 data__updateTime = '{{ updateTime }}',
 data__uuid = '{{ uuid }}'
 WHERE 
@@ -657,83 +657,18 @@ AND environmentsId = '{{ environmentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="save_snapshot"
+    defaultValue="check_upgrade"
     values={[
-        { label: 'save_snapshot', value: 'save_snapshot' },
-        { label: 'restart_web_server', value: 'restart_web_server' },
-        { label: 'execute_airflow_command', value: 'execute_airflow_command' },
-        { label: 'poll_airflow_command', value: 'poll_airflow_command' },
         { label: 'check_upgrade', value: 'check_upgrade' },
         { label: 'database_failover', value: 'database_failover' },
-        { label: 'stop_airflow_command', value: 'stop_airflow_command' },
-        { label: 'load_snapshot', value: 'load_snapshot' }
+        { label: 'execute_airflow_command', value: 'execute_airflow_command' },
+        { label: 'load_snapshot', value: 'load_snapshot' },
+        { label: 'poll_airflow_command', value: 'poll_airflow_command' },
+        { label: 'restart_web_server', value: 'restart_web_server' },
+        { label: 'save_snapshot', value: 'save_snapshot' },
+        { label: 'stop_airflow_command', value: 'stop_airflow_command' }
     ]}
 >
-<TabItem value="save_snapshot">
-
-Creates a snapshots of a Cloud Composer environment. As a result of this operation, snapshot of environment's state is stored in a location specified in the SaveSnapshotRequest.
-
-```sql
-EXEC google.composer.environments.save_snapshot 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required 
-@@json=
-'{
-"snapshotLocation": "{{ snapshotLocation }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="restart_web_server">
-
-Restart Airflow web server.
-
-```sql
-EXEC google.composer.environments.restart_web_server 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="execute_airflow_command">
-
-Executes Airflow CLI command.
-
-```sql
-EXEC google.composer.environments.execute_airflow_command 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required 
-@@json=
-'{
-"parameters": "{{ parameters }}", 
-"subcommand": "{{ subcommand }}", 
-"command": "{{ command }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="poll_airflow_command">
-
-Polls Airflow CLI command execution and fetches logs.
-
-```sql
-EXEC google.composer.environments.poll_airflow_command 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required 
-@@json=
-'{
-"nextLineNumber": {{ nextLineNumber }}, 
-"podNamespace": "{{ podNamespace }}", 
-"executionId": "{{ executionId }}", 
-"pod": "{{ pod }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="check_upgrade">
 
 Check if an upgrade operation on the environment will succeed. In case of problems detailed info can be found in the returned Operation.
@@ -762,21 +697,20 @@ EXEC google.composer.environments.database_failover
 ;
 ```
 </TabItem>
-<TabItem value="stop_airflow_command">
+<TabItem value="execute_airflow_command">
 
-Stops Airflow CLI command execution.
+Executes Airflow CLI command.
 
 ```sql
-EXEC google.composer.environments.stop_airflow_command 
+EXEC google.composer.environments.execute_airflow_command 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"executionId": "{{ executionId }}", 
-"pod": "{{ pod }}", 
-"force": {{ force }}, 
-"podNamespace": "{{ podNamespace }}"
+"command": "{{ command }}", 
+"parameters": "{{ parameters }}", 
+"subcommand": "{{ subcommand }}"
 }'
 ;
 ```
@@ -792,11 +726,77 @@ EXEC google.composer.environments.load_snapshot
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"snapshotPath": "{{ snapshotPath }}", 
-"skipPypiPackagesInstallation": {{ skipPypiPackagesInstallation }}, 
-"skipGcsDataCopying": {{ skipGcsDataCopying }}, 
 "skipAirflowOverridesSetting": {{ skipAirflowOverridesSetting }}, 
-"skipEnvironmentVariablesSetting": {{ skipEnvironmentVariablesSetting }}
+"skipEnvironmentVariablesSetting": {{ skipEnvironmentVariablesSetting }}, 
+"skipGcsDataCopying": {{ skipGcsDataCopying }}, 
+"skipPypiPackagesInstallation": {{ skipPypiPackagesInstallation }}, 
+"snapshotPath": "{{ snapshotPath }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="poll_airflow_command">
+
+Polls Airflow CLI command execution and fetches logs.
+
+```sql
+EXEC google.composer.environments.poll_airflow_command 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required 
+@@json=
+'{
+"executionId": "{{ executionId }}", 
+"nextLineNumber": {{ nextLineNumber }}, 
+"pod": "{{ pod }}", 
+"podNamespace": "{{ podNamespace }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restart_web_server">
+
+Restart Airflow web server.
+
+```sql
+EXEC google.composer.environments.restart_web_server 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="save_snapshot">
+
+Creates a snapshots of a Cloud Composer environment. As a result of this operation, snapshot of environment's state is stored in a location specified in the SaveSnapshotRequest.
+
+```sql
+EXEC google.composer.environments.save_snapshot 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required 
+@@json=
+'{
+"snapshotLocation": "{{ snapshotLocation }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="stop_airflow_command">
+
+Stops Airflow CLI command execution.
+
+```sql
+EXEC google.composer.environments.stop_airflow_command 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required 
+@@json=
+'{
+"executionId": "{{ executionId }}", 
+"force": {{ force }}, 
+"pod": "{{ pod }}", 
+"podNamespace": "{{ podNamespace }}"
 }'
 ;
 ```

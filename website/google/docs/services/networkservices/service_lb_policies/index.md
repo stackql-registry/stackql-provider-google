@@ -335,25 +335,25 @@ Creates a new ServiceLbPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.service_lb_policies (
-data__name,
-data__labels,
-data__description,
-data__loadBalancingAlgorithm,
 data__autoCapacityDrain,
+data__description,
 data__failoverConfig,
 data__isolationConfig,
+data__labels,
+data__loadBalancingAlgorithm,
+data__name,
 projectsId,
 locationsId,
 serviceLbPolicyId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ description }}',
-'{{ loadBalancingAlgorithm }}',
 '{{ autoCapacityDrain }}',
+'{{ description }}',
 '{{ failoverConfig }}',
 '{{ isolationConfig }}',
+'{{ labels }}',
+'{{ loadBalancingAlgorithm }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceLbPolicyId }}'
@@ -377,28 +377,15 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the service_lb_policies resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the ServiceLbPolicy resource. It matches pattern \`projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy_name}\`.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. Set of label tags associated with the ServiceLbPolicy resource.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. A free-text description of the resource. Max length 1024 characters.
-    - name: loadBalancingAlgorithm
-      value: "{{ loadBalancingAlgorithm }}"
-      description: |
-        Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION.
-      valid_values: ['LOAD_BALANCING_ALGORITHM_UNSPECIFIED', 'SPRAY_TO_WORLD', 'SPRAY_TO_REGION', 'WATERFALL_BY_REGION', 'WATERFALL_BY_ZONE']
     - name: autoCapacityDrain
       description: |
         Optional. Configuration to automatically move traffic away for unhealthy IG/NEG for the associated Backend Service.
       value:
         enable: {{ enable }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A free-text description of the resource. Max length 1024 characters.
     - name: failoverConfig
       description: |
         Optional. Configuration related to health based failover.
@@ -410,6 +397,19 @@ response
       value:
         isolationGranularity: "{{ isolationGranularity }}"
         isolationMode: "{{ isolationMode }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the ServiceLbPolicy resource.
+    - name: loadBalancingAlgorithm
+      value: "{{ loadBalancingAlgorithm }}"
+      description: |
+        Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION.
+      valid_values: ['LOAD_BALANCING_ALGORITHM_UNSPECIFIED', 'SPRAY_TO_WORLD', 'SPRAY_TO_REGION', 'WATERFALL_BY_REGION', 'WATERFALL_BY_ZONE']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the ServiceLbPolicy resource. It matches pattern \`projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy_name}\`.
     - name: serviceLbPolicyId
       value: "{{ serviceLbPolicyId }}"
 `}</CodeBlock>
@@ -433,13 +433,13 @@ Updates the parameters of a single ServiceLbPolicy.
 ```sql
 UPDATE google.networkservices.service_lb_policies
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__loadBalancingAlgorithm = '{{ loadBalancingAlgorithm }}',
 data__autoCapacityDrain = '{{ autoCapacityDrain }}',
+data__description = '{{ description }}',
 data__failoverConfig = '{{ failoverConfig }}',
-data__isolationConfig = '{{ isolationConfig }}'
+data__isolationConfig = '{{ isolationConfig }}',
+data__labels = '{{ labels }}',
+data__loadBalancingAlgorithm = '{{ loadBalancingAlgorithm }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

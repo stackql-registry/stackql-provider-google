@@ -62,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="distanceUnit" /></td>
     <td><code>string</code></td>
-    <td>Optional. The measurement unit defined in the user's account settings. Updates to this field are currently not supported. (DISTANCE_UNIT_UNSPECIFIED, DISTANCE_UNIT_MILES, DISTANCE_UNIT_KILOMETERS)</td>
+    <td>Optional. The measurement unit defined in the user's account settings. (DISTANCE_UNIT_UNSPECIFIED, DISTANCE_UNIT_MILES, DISTANCE_UNIT_KILOMETERS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="foodLanguageCode" /></td>
@@ -239,20 +239,20 @@ Updates the user's settings details.
 ```sql
 UPDATE google.health.users_settings
 SET 
-data__strideLengthRunningType = '{{ strideLengthRunningType }}',
-data__glucoseUnit = '{{ glucoseUnit }}',
-data__distanceUnit = '{{ distanceUnit }}',
 data__autoStrideEnabled = {{ autoStrideEnabled }},
-data__languageLocale = '{{ languageLocale }}',
+data__distanceUnit = '{{ distanceUnit }}',
+data__glucoseUnit = '{{ glucoseUnit }}',
 data__heightUnit = '{{ heightUnit }}',
-data__strideLengthWalkingType = '{{ strideLengthWalkingType }}',
-data__timeZone = '{{ timeZone }}',
-data__waterUnit = '{{ waterUnit }}',
-data__temperatureUnit = '{{ temperatureUnit }}',
-data__utcOffset = '{{ utcOffset }}',
-data__weightUnit = '{{ weightUnit }}',
+data__languageLocale = '{{ languageLocale }}',
 data__name = '{{ name }}',
-data__swimUnit = '{{ swimUnit }}'
+data__strideLengthRunningType = '{{ strideLengthRunningType }}',
+data__strideLengthWalkingType = '{{ strideLengthWalkingType }}',
+data__swimUnit = '{{ swimUnit }}',
+data__temperatureUnit = '{{ temperatureUnit }}',
+data__timeZone = '{{ timeZone }}',
+data__utcOffset = '{{ utcOffset }}',
+data__waterUnit = '{{ waterUnit }}',
+data__weightUnit = '{{ weightUnit }}'
 WHERE 
 usersId = '{{ usersId }}' --required
 AND updateMask = '{{ updateMask}}'

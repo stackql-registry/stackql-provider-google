@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_transfer_configs_runs_get"
     values={[
         { label: 'projects_locations_transfer_configs_runs_get', value: 'projects_locations_transfer_configs_runs_get' },
-        { label: 'projects_transfer_configs_runs_get', value: 'projects_transfer_configs_runs_get' },
         { label: 'projects_locations_transfer_configs_runs_list', value: 'projects_locations_transfer_configs_runs_list' },
+        { label: 'projects_transfer_configs_runs_get', value: 'projects_transfer_configs_runs_get' },
         { label: 'projects_transfer_configs_runs_list', value: 'projects_transfer_configs_runs_list' }
     ]}
 >
@@ -130,7 +130,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_transfer_configs_runs_get">
+<TabItem value="projects_locations_transfer_configs_runs_list">
 
 <table>
 <thead>
@@ -219,7 +219,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_transfer_configs_runs_list">
+<TabItem value="projects_transfer_configs_runs_get">
 
 <table>
 <thead>
@@ -422,6 +422,13 @@ The following methods are available for this resource:
     <td>Returns information about the particular transfer run.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_transfer_configs_runs_list"><CopyableCode code="projects_locations_transfer_configs_runs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-runAttempt"><code>runAttempt</code></a>, <a href="#parameter-states"><code>states</code></a></td>
+    <td>Returns information about running and completed transfer runs.</td>
+</tr>
+<tr>
     <td><a href="#projects_transfer_configs_runs_get"><CopyableCode code="projects_transfer_configs_runs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a></td>
@@ -429,17 +436,10 @@ The following methods are available for this resource:
     <td>Returns information about the particular transfer run.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_transfer_configs_runs_list"><CopyableCode code="projects_locations_transfer_configs_runs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-runAttempt"><code>runAttempt</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-states"><code>states</code></a></td>
-    <td>Returns information about running and completed transfer runs.</td>
-</tr>
-<tr>
     <td><a href="#projects_transfer_configs_runs_list"><CopyableCode code="projects_transfer_configs_runs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-states"><code>states</code></a>, <a href="#parameter-runAttempt"><code>runAttempt</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-runAttempt"><code>runAttempt</code></a>, <a href="#parameter-states"><code>states</code></a></td>
     <td>Returns information about running and completed transfer runs.</td>
 </tr>
 <tr>
@@ -521,8 +521,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_transfer_configs_runs_get"
     values={[
         { label: 'projects_locations_transfer_configs_runs_get', value: 'projects_locations_transfer_configs_runs_get' },
-        { label: 'projects_transfer_configs_runs_get', value: 'projects_transfer_configs_runs_get' },
         { label: 'projects_locations_transfer_configs_runs_list', value: 'projects_locations_transfer_configs_runs_list' },
+        { label: 'projects_transfer_configs_runs_get', value: 'projects_transfer_configs_runs_get' },
         { label: 'projects_transfer_configs_runs_list', value: 'projects_transfer_configs_runs_list' }
     ]}
 >
@@ -555,6 +555,38 @@ AND runsId = '{{ runsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_transfer_configs_runs_list">
+
+Returns information about running and completed transfer runs.
+
+```sql
+SELECT
+name,
+dataSourceId,
+destinationDatasetId,
+emailPreferences,
+endTime,
+errorStatus,
+notificationPubsubTopic,
+params,
+runTime,
+schedule,
+scheduleTime,
+startTime,
+state,
+updateTime,
+userId
+FROM google.bigquerydatatransfer.runs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND transferConfigsId = '{{ transferConfigsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND runAttempt = '{{ runAttempt }}'
+AND states = '{{ states }}'
+;
+```
+</TabItem>
 <TabItem value="projects_transfer_configs_runs_get">
 
 Returns information about the particular transfer run.
@@ -583,38 +615,6 @@ AND runsId = '{{ runsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_transfer_configs_runs_list">
-
-Returns information about running and completed transfer runs.
-
-```sql
-SELECT
-name,
-dataSourceId,
-destinationDatasetId,
-emailPreferences,
-endTime,
-errorStatus,
-notificationPubsubTopic,
-params,
-runTime,
-schedule,
-scheduleTime,
-startTime,
-state,
-updateTime,
-userId
-FROM google.bigquerydatatransfer.runs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND transferConfigsId = '{{ transferConfigsId }}' -- required
-AND runAttempt = '{{ runAttempt }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND states = '{{ states }}'
-;
-```
-</TabItem>
 <TabItem value="projects_transfer_configs_runs_list">
 
 Returns information about running and completed transfer runs.
@@ -639,10 +639,10 @@ userId
 FROM google.bigquerydatatransfer.runs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND transferConfigsId = '{{ transferConfigsId }}' -- required
-AND states = '{{ states }}'
-AND runAttempt = '{{ runAttempt }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND runAttempt = '{{ runAttempt }}'
+AND states = '{{ states }}'
 ;
 ```
 </TabItem>

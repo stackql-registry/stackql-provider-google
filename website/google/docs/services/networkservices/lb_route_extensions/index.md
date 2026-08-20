@@ -185,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists `LbRouteExtension` resources in a given project and location.</td>
 </tr>
 <tr>
@@ -199,7 +199,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lbRouteExtensionsId"><code>lbRouteExtensionsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of the specified `LbRouteExtension` resource.</td>
 </tr>
 <tr>
@@ -327,10 +327,10 @@ updateTime
 FROM google.networkservices.lb_route_extensions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -352,26 +352,26 @@ Creates a new `LbRouteExtension` resource in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.lb_route_extensions (
-data__name,
 data__description,
-data__labels,
-data__forwardingRules,
 data__extensionChains,
+data__forwardingRules,
+data__labels,
 data__loadBalancingScheme,
 data__metadata,
+data__name,
 projectsId,
 locationsId,
 lbRouteExtensionId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
-'{{ labels }}',
-'{{ forwardingRules }}',
 '{{ extensionChains }}',
+'{{ forwardingRules }}',
+'{{ labels }}',
 '{{ loadBalancingScheme }}',
 '{{ metadata }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lbRouteExtensionId }}',
@@ -396,31 +396,27 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the lb_route_extensions resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Required. Identifier. Name of the \`LbRouteExtension\` resource in the following format: \`projects/{project}/locations/{location}/lbRouteExtensions/{lb_route_extension}\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A human-readable description of the resource.
-    - name: labels
-      value: "{{ labels }}"
+    - name: extensionChains
       description: |
-        Optional. Set of labels associated with the \`LbRouteExtension\` resource. The format must comply with [the requirements for labels](https://cloud.google.com/compute/docs/labeling-resources#requirements) for Google Cloud resources.
+        Required. A set of ordered extension chains that contain the match conditions and extensions to execute. Match conditions for each extension chain are evaluated in sequence for a given request. The first extension chain that has a condition that matches the request is executed. Any subsequent extension chains do not execute. Limited to 5 extension chains per resource.
+      value:
+        - extensions: "{{ extensions }}"
+          matchCondition:
+            celExpression: "{{ celExpression }}"
+          name: "{{ name }}"
     - name: forwardingRules
       value:
         - "{{ forwardingRules }}"
       description: |
         Required. A list of references to the forwarding rules to which this service extension is attached. At least one forwarding rule is required. Only one \`LbRouteExtension\` resource can be associated with a forwarding rule.
-    - name: extensionChains
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Required. A set of ordered extension chains that contain the match conditions and extensions to execute. Match conditions for each extension chain are evaluated in sequence for a given request. The first extension chain that has a condition that matches the request is executed. Any subsequent extension chains do not execute. Limited to 5 extension chains per resource.
-      value:
-        - name: "{{ name }}"
-          matchCondition:
-            celExpression: "{{ celExpression }}"
-          extensions: "{{ extensions }}"
+        Optional. Set of labels associated with the \`LbRouteExtension\` resource. The format must comply with [the requirements for labels](https://cloud.google.com/compute/docs/labeling-resources#requirements) for Google Cloud resources.
     - name: loadBalancingScheme
       value: "{{ loadBalancingScheme }}"
       description: |
@@ -430,6 +426,10 @@ response
       value: "{{ metadata }}"
       description: |
         Optional. The metadata provided here is included as part of the \`metadata_context\` (of type \`google.protobuf.Struct\`) in the \`ProcessingRequest\` message sent to the extension server. The metadata applies to all extensions in all extensions chains in this resource. The metadata is available under the key \`com.google.lb_route_extension.\`. The following variables are supported in the metadata: \`{forwarding_rule_id}\` - substituted with the forwarding rule's fully qualified resource name. This field must not be set if at least one of the extension chains contains plugin extensions. Setting it results in a validation error. You can set metadata at either the resource level or the extension level. The extension level metadata is recommended because you can pass a different set of metadata through each extension to the backend.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. Name of the \`LbRouteExtension\` resource in the following format: \`projects/{project}/locations/{location}/lbRouteExtensions/{lb_route_extension}\`.
     - name: lbRouteExtensionId
       value: "{{ lbRouteExtensionId }}"
     - name: requestId
@@ -455,19 +455,19 @@ Updates the parameters of the specified `LbRouteExtension` resource.
 ```sql
 UPDATE google.networkservices.lb_route_extensions
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__forwardingRules = '{{ forwardingRules }}',
 data__extensionChains = '{{ extensionChains }}',
+data__forwardingRules = '{{ forwardingRules }}',
+data__labels = '{{ labels }}',
 data__loadBalancingScheme = '{{ loadBalancingScheme }}',
-data__metadata = '{{ metadata }}'
+data__metadata = '{{ metadata }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND lbRouteExtensionsId = '{{ lbRouteExtensionsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

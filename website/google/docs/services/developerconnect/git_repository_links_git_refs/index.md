@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_git_refs"><CopyableCode code="fetch_git_refs" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-gitRepositoryLinksId"><code>gitRepositoryLinksId</code></a></td>
-    <td><a href="#parameter-refType"><code>refType</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-refType"><code>refType</code></a></td>
     <td>Fetch the list of branches or tags for a given repository.</td>
 </tr>
 </tbody>
@@ -161,9 +161,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
 AND gitRepositoryLinksId = '{{ gitRepositoryLinksId }}' -- required
-AND refType = '{{ refType }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND refType = '{{ refType }}'
 ;
 ```
 </TabItem>

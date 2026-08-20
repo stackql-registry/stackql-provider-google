@@ -195,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists HttpRoute in a given project and location.</td>
 </tr>
 <tr>
@@ -339,10 +339,10 @@ updateTime
 FROM google.networkservices.http_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -364,12 +364,12 @@ Creates a new HttpRoute in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.http_routes (
-data__name,
 data__description,
-data__hostnames,
-data__meshes,
 data__gateways,
+data__hostnames,
 data__labels,
+data__meshes,
+data__name,
 data__rules,
 projectsId,
 locationsId,
@@ -377,12 +377,12 @@ httpRouteId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
-'{{ hostnames }}',
-'{{ meshes }}',
 '{{ gateways }}',
+'{{ hostnames }}',
 '{{ labels }}',
+'{{ meshes }}',
+'{{ name }}',
 '{{ rules }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -408,120 +408,120 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the http_routes resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the HttpRoute resource. It matches pattern \`projects/*/locations/*/httpRoutes/http_route_name>\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A free-text description of the resource. Max length 1024 characters.
-    - name: hostnames
-      value:
-        - "{{ hostnames }}"
-      description: |
-        Required. Hostnames define a set of hosts that should match against the HTTP host header to select a HttpRoute to process the request. Hostname is the fully qualified domain name of a network host, as defined by RFC 1123 with the exception that: - IPs are not allowed. - A hostname may be prefixed with a wildcard label (\`*.\`). The wildcard label must appear by itself as the first label. Hostname can be "precise" which is a domain name without the terminating dot of a network host (e.g. \`foo.example.com\`) or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. \`*.example.com\`). Note that as per RFC1035 and RFC1123, a label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. The routes associated with a Mesh or Gateways must have unique hostnames. If you attempt to attach multiple routes with conflicting hostnames, the configuration will be rejected. For example, while it is acceptable for routes for the hostnames \`*.foo.bar.com\` and \`*.bar.com\` to be associated with the same Mesh (or Gateways under the same scope), it is not possible to associate two routes both with \`*.bar.com\` or both with \`bar.com\`.
-    - name: meshes
-      value:
-        - "{{ meshes }}"
-      description: |
-        Optional. Meshes defines a list of meshes this HttpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\` The attached Mesh should be of a type SIDECAR
     - name: gateways
       value:
         - "{{ gateways }}"
       description: |
         Optional. Gateways defines a list of gateways this HttpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: \`projects/*/locations/*/gateways/\`
+    - name: hostnames
+      value:
+        - "{{ hostnames }}"
+      description: |
+        Required. Hostnames define a set of hosts that should match against the HTTP host header to select a HttpRoute to process the request. Hostname is the fully qualified domain name of a network host, as defined by RFC 1123 with the exception that: - IPs are not allowed. - A hostname may be prefixed with a wildcard label (\`*.\`). The wildcard label must appear by itself as the first label. Hostname can be "precise" which is a domain name without the terminating dot of a network host (e.g. \`foo.example.com\`) or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. \`*.example.com\`). Note that as per RFC1035 and RFC1123, a label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. The routes associated with a Mesh or Gateways must have unique hostnames. If you attempt to attach multiple routes with conflicting hostnames, the configuration will be rejected. For example, while it is acceptable for routes for the hostnames \`*.foo.bar.com\` and \`*.bar.com\` to be associated with the same Mesh (or Gateways under the same scope), it is not possible to associate two routes both with \`*.bar.com\` or both with \`bar.com\`.
     - name: labels
       value: "{{ labels }}"
       description: |
         Optional. Set of label tags associated with the HttpRoute resource.
+    - name: meshes
+      value:
+        - "{{ meshes }}"
+      description: |
+        Optional. Meshes defines a list of meshes this HttpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\` The attached Mesh should be of a type SIDECAR
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the HttpRoute resource. It matches pattern \`projects/*/locations/*/httpRoutes/http_route_name>\`.
     - name: rules
       description: |
         Required. Rules that define how traffic is routed and handled. Rules will be matched sequentially based on the RouteMatch specified for the rule.
       value:
-        - matches: "{{ matches }}"
-          action:
-            destinations:
-              - serviceName: "{{ serviceName }}"
-                weight: {{ weight }}
-                requestHeaderModifier:
-                  set: "{{ set }}"
-                  add: "{{ add }}"
-                  remove:
-                    - "{{ remove }}"
-                responseHeaderModifier:
-                  set: "{{ set }}"
-                  add: "{{ add }}"
-                  remove:
-                    - "{{ remove }}"
-            redirect:
-              hostRedirect: "{{ hostRedirect }}"
-              pathRedirect: "{{ pathRedirect }}"
-              prefixRewrite: "{{ prefixRewrite }}"
-              responseCode: "{{ responseCode }}"
-              httpsRedirect: {{ httpsRedirect }}
-              stripQuery: {{ stripQuery }}
-              portRedirect: {{ portRedirect }}
-            faultInjectionPolicy:
-              delay:
-                fixedDelay: "{{ fixedDelay }}"
-                percentage: {{ percentage }}
-              abort:
-                httpStatus: {{ httpStatus }}
-                percentage: {{ percentage }}
-            requestHeaderModifier:
-              set: "{{ set }}"
-              add: "{{ add }}"
-              remove:
-                - "{{ remove }}"
-            responseHeaderModifier:
-              set: "{{ set }}"
-              add: "{{ add }}"
-              remove:
-                - "{{ remove }}"
-            urlRewrite:
-              pathPrefixRewrite: "{{ pathPrefixRewrite }}"
-              hostRewrite: "{{ hostRewrite }}"
-            timeout: "{{ timeout }}"
-            retryPolicy:
-              retryConditions:
-                - "{{ retryConditions }}"
-              numRetries: {{ numRetries }}
-              perTryTimeout: "{{ perTryTimeout }}"
-            requestMirrorPolicy:
-              destination:
-                serviceName: "{{ serviceName }}"
-                weight: {{ weight }}
-                requestHeaderModifier:
-                  set: "{{ set }}"
-                  add: "{{ add }}"
-                  remove: "{{ remove }}"
-                responseHeaderModifier:
-                  set: "{{ set }}"
-                  add: "{{ add }}"
-                  remove: "{{ remove }}"
-              mirrorPercent: {{ mirrorPercent }}
+        - action:
             corsPolicy:
-              allowOrigins:
-                - "{{ allowOrigins }}"
-              allowOriginRegexes:
-                - "{{ allowOriginRegexes }}"
-              allowMethods:
-                - "{{ allowMethods }}"
+              allowCredentials: {{ allowCredentials }}
               allowHeaders:
                 - "{{ allowHeaders }}"
+              allowMethods:
+                - "{{ allowMethods }}"
+              allowOriginRegexes:
+                - "{{ allowOriginRegexes }}"
+              allowOrigins:
+                - "{{ allowOrigins }}"
+              disabled: {{ disabled }}
               exposeHeaders:
                 - "{{ exposeHeaders }}"
               maxAge: "{{ maxAge }}"
-              allowCredentials: {{ allowCredentials }}
-              disabled: {{ disabled }}
-            statefulSessionAffinity:
-              cookieTtl: "{{ cookieTtl }}"
+            destinations:
+              - requestHeaderModifier:
+                  add: "{{ add }}"
+                  remove:
+                    - "{{ remove }}"
+                  set: "{{ set }}"
+                responseHeaderModifier:
+                  add: "{{ add }}"
+                  remove:
+                    - "{{ remove }}"
+                  set: "{{ set }}"
+                serviceName: "{{ serviceName }}"
+                weight: {{ weight }}
             directResponse:
-              stringBody: "{{ stringBody }}"
               bytesBody: "{{ bytesBody }}"
               status: {{ status }}
+              stringBody: "{{ stringBody }}"
+            faultInjectionPolicy:
+              abort:
+                httpStatus: {{ httpStatus }}
+                percentage: {{ percentage }}
+              delay:
+                fixedDelay: "{{ fixedDelay }}"
+                percentage: {{ percentage }}
             idleTimeout: "{{ idleTimeout }}"
+            redirect:
+              hostRedirect: "{{ hostRedirect }}"
+              httpsRedirect: {{ httpsRedirect }}
+              pathRedirect: "{{ pathRedirect }}"
+              portRedirect: {{ portRedirect }}
+              prefixRewrite: "{{ prefixRewrite }}"
+              responseCode: "{{ responseCode }}"
+              stripQuery: {{ stripQuery }}
+            requestHeaderModifier:
+              add: "{{ add }}"
+              remove:
+                - "{{ remove }}"
+              set: "{{ set }}"
+            requestMirrorPolicy:
+              destination:
+                requestHeaderModifier:
+                  add: "{{ add }}"
+                  remove: "{{ remove }}"
+                  set: "{{ set }}"
+                responseHeaderModifier:
+                  add: "{{ add }}"
+                  remove: "{{ remove }}"
+                  set: "{{ set }}"
+                serviceName: "{{ serviceName }}"
+                weight: {{ weight }}
+              mirrorPercent: {{ mirrorPercent }}
+            responseHeaderModifier:
+              add: "{{ add }}"
+              remove:
+                - "{{ remove }}"
+              set: "{{ set }}"
+            retryPolicy:
+              numRetries: {{ numRetries }}
+              perTryTimeout: "{{ perTryTimeout }}"
+              retryConditions:
+                - "{{ retryConditions }}"
+            statefulSessionAffinity:
+              cookieTtl: "{{ cookieTtl }}"
+            timeout: "{{ timeout }}"
+            urlRewrite:
+              hostRewrite: "{{ hostRewrite }}"
+              pathPrefixRewrite: "{{ pathPrefixRewrite }}"
+          matches: "{{ matches }}"
     - name: httpRouteId
       value: "{{ httpRouteId }}"
     - name: requestId
@@ -547,12 +547,12 @@ Updates the parameters of a single HttpRoute.
 ```sql
 UPDATE google.networkservices.http_routes
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__hostnames = '{{ hostnames }}',
-data__meshes = '{{ meshes }}',
 data__gateways = '{{ gateways }}',
+data__hostnames = '{{ hostnames }}',
 data__labels = '{{ labels }}',
+data__meshes = '{{ meshes }}',
+data__name = '{{ name }}',
 data__rules = '{{ rules }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

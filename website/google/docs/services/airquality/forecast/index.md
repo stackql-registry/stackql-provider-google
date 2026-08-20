@@ -92,16 +92,16 @@ Returns air quality forecast for a specific location for a given time range.
 EXEC google.airquality.forecast.lookup 
 @@json=
 '{
-"extraComputations": "{{ extraComputations }}", 
+"customLocalAqis": "{{ customLocalAqis }}", 
 "dateTime": "{{ dateTime }}", 
-"uaqiColorPalette": "{{ uaqiColorPalette }}", 
+"extraComputations": "{{ extraComputations }}", 
+"languageCode": "{{ languageCode }}", 
 "location": "{{ location }}", 
 "pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
-"languageCode": "{{ languageCode }}", 
 "period": "{{ period }}", 
-"universalAqi": {{ universalAqi }}, 
-"customLocalAqis": "{{ customLocalAqis }}"
+"uaqiColorPalette": "{{ uaqiColorPalette }}", 
+"universalAqi": {{ universalAqi }}
 }'
 ;
 ```

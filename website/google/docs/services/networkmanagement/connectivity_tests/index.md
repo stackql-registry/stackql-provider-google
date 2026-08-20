@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all Connectivity Tests owned by a project.</td>
 </tr>
 <tr>
@@ -395,9 +395,9 @@ updateTime
 FROM google.networkmanagement.connectivity_tests
 WHERE projectsId = '{{ projectsId }}' -- required
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -419,26 +419,26 @@ Creates a new Connectivity Test. After you create a test, the reachability analy
 
 ```sql
 INSERT INTO google.networkmanagement.connectivity_tests (
-data__protocol,
-data__labels,
+data__bypassFirewallChecks,
 data__description,
 data__destination,
+data__labels,
 data__name,
+data__protocol,
 data__relatedProjects,
-data__bypassFirewallChecks,
 data__roundTrip,
 data__source,
 projectsId,
 testId
 )
 SELECT 
-'{{ protocol }}',
-'{{ labels }}',
+{{ bypassFirewallChecks }},
 '{{ description }}',
 '{{ destination }}',
+'{{ labels }}',
 '{{ name }}',
+'{{ protocol }}',
 '{{ relatedProjects }}',
-{{ bypassFirewallChecks }},
 {{ roundTrip }},
 '{{ source }}',
 '{{ projectsId }}',
@@ -460,14 +460,10 @@ response
     - name: projectsId
       value: "{{ projectsId }}"
       description: Required parameter for the connectivity_tests resource.
-    - name: protocol
-      value: "{{ protocol }}"
+    - name: bypassFirewallChecks
+      value: {{ bypassFirewallChecks }}
       description: |
-        IP Protocol of the test. When not provided, "TCP" is assumed.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Resource labels to represent user-provided metadata.
+        Whether the analysis should skip firewall checking. Default value is false.
     - name: description
       value: "{{ description }}"
       description: |
@@ -476,44 +472,48 @@ response
       description: |
         Required. Destination specification of the Connectivity Test. You can use a combination of destination IP address, URI of a supported endpoint, project ID, or VPC network to identify the destination location. Reachability analysis proceeds even if the destination location is ambiguous. However, the test result might include endpoints or use a destination that you don't intend to test.
       value:
-        dmsPrivateConnection: "{{ dmsPrivateConnection }}"
-        networkType: "{{ networkType }}"
-        cloudRunRevision:
-          uri: "{{ uri }}"
-          serviceUri: "{{ serviceUri }}"
-        instance: "{{ instance }}"
-        gkeMasterCluster: "{{ gkeMasterCluster }}"
         appEngineVersion:
           uri: "{{ uri }}"
-        cloudSqlInstance: "{{ cloudSqlInstance }}"
         cloudFunction:
           uri: "{{ uri }}"
-        port: {{ port }}
-        gkePod: "{{ gkePod }}"
-        network: "{{ network }}"
+        cloudRunJob: "{{ cloudRunJob }}"
+        cloudRunRevision:
+          serviceUri: "{{ serviceUri }}"
+          uri: "{{ uri }}"
+        cloudSqlInstance: "{{ cloudSqlInstance }}"
+        dmsPrivateConnection: "{{ dmsPrivateConnection }}"
         forwardingRule: "{{ forwardingRule }}"
-        ipAddress: "{{ ipAddress }}"
-        loadBalancerId: "{{ loadBalancerId }}"
-        redisCluster: "{{ redisCluster }}"
-        loadBalancerType: "{{ loadBalancerType }}"
-        redisInstance: "{{ redisInstance }}"
         forwardingRuleTarget: "{{ forwardingRuleTarget }}"
         fqdn: "{{ fqdn }}"
-        cloudRunJob: "{{ cloudRunJob }}"
+        gkeMasterCluster: "{{ gkeMasterCluster }}"
+        gkePod: "{{ gkePod }}"
+        instance: "{{ instance }}"
+        ipAddress: "{{ ipAddress }}"
+        loadBalancerId: "{{ loadBalancerId }}"
+        loadBalancerType: "{{ loadBalancerType }}"
+        network: "{{ network }}"
+        networkType: "{{ networkType }}"
+        port: {{ port }}
         projectId: "{{ projectId }}"
+        redisCluster: "{{ redisCluster }}"
+        redisInstance: "{{ redisInstance }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user-provided metadata.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Unique name of the resource using the form: \`projects/{project_id}/locations/global/connectivityTests/{test_id}\`
+    - name: protocol
+      value: "{{ protocol }}"
+      description: |
+        IP Protocol of the test. When not provided, "TCP" is assumed.
     - name: relatedProjects
       value:
         - "{{ relatedProjects }}"
       description: |
         Other projects that may be relevant for reachability analysis. This is applicable to scenarios where a test can cross project boundaries.
-    - name: bypassFirewallChecks
-      value: {{ bypassFirewallChecks }}
-      description: |
-        Whether the analysis should skip firewall checking. Default value is false.
     - name: roundTrip
       value: {{ roundTrip }}
       description: |
@@ -522,31 +522,31 @@ response
       description: |
         Required. Source specification of the Connectivity Test. You can use a combination of source IP address, URI of a supported endpoint, project ID, or VPC network to identify the source location. Reachability analysis might proceed even if the source location is ambiguous. However, the test result might include endpoints or use a source that you don't intend to test.
       value:
-        dmsPrivateConnection: "{{ dmsPrivateConnection }}"
-        networkType: "{{ networkType }}"
-        cloudRunRevision:
-          uri: "{{ uri }}"
-          serviceUri: "{{ serviceUri }}"
-        instance: "{{ instance }}"
-        gkeMasterCluster: "{{ gkeMasterCluster }}"
         appEngineVersion:
           uri: "{{ uri }}"
-        cloudSqlInstance: "{{ cloudSqlInstance }}"
         cloudFunction:
           uri: "{{ uri }}"
-        port: {{ port }}
-        gkePod: "{{ gkePod }}"
-        network: "{{ network }}"
+        cloudRunJob: "{{ cloudRunJob }}"
+        cloudRunRevision:
+          serviceUri: "{{ serviceUri }}"
+          uri: "{{ uri }}"
+        cloudSqlInstance: "{{ cloudSqlInstance }}"
+        dmsPrivateConnection: "{{ dmsPrivateConnection }}"
         forwardingRule: "{{ forwardingRule }}"
-        ipAddress: "{{ ipAddress }}"
-        loadBalancerId: "{{ loadBalancerId }}"
-        redisCluster: "{{ redisCluster }}"
-        loadBalancerType: "{{ loadBalancerType }}"
-        redisInstance: "{{ redisInstance }}"
         forwardingRuleTarget: "{{ forwardingRuleTarget }}"
         fqdn: "{{ fqdn }}"
-        cloudRunJob: "{{ cloudRunJob }}"
+        gkeMasterCluster: "{{ gkeMasterCluster }}"
+        gkePod: "{{ gkePod }}"
+        instance: "{{ instance }}"
+        ipAddress: "{{ ipAddress }}"
+        loadBalancerId: "{{ loadBalancerId }}"
+        loadBalancerType: "{{ loadBalancerType }}"
+        network: "{{ network }}"
+        networkType: "{{ networkType }}"
+        port: {{ port }}
         projectId: "{{ projectId }}"
+        redisCluster: "{{ redisCluster }}"
+        redisInstance: "{{ redisInstance }}"
     - name: testId
       value: "{{ testId }}"
 `}</CodeBlock>
@@ -570,13 +570,13 @@ Updates the configuration of an existing `ConnectivityTest`. After you update a 
 ```sql
 UPDATE google.networkmanagement.connectivity_tests
 SET 
-data__protocol = '{{ protocol }}',
-data__labels = '{{ labels }}',
+data__bypassFirewallChecks = {{ bypassFirewallChecks }},
 data__description = '{{ description }}',
 data__destination = '{{ destination }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
+data__protocol = '{{ protocol }}',
 data__relatedProjects = '{{ relatedProjects }}',
-data__bypassFirewallChecks = {{ bypassFirewallChecks }},
 data__roundTrip = {{ roundTrip }},
 data__source = '{{ source }}'
 WHERE 

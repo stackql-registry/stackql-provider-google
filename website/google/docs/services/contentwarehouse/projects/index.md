@@ -98,8 +98,8 @@ EXEC google.contentwarehouse.projects.set_acl
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"projectOwner": {{ projectOwner }}, 
 "policy": "{{ policy }}", 
+"projectOwner": {{ projectOwner }}, 
 "requestMetadata": "{{ requestMetadata }}"
 }'
 ;

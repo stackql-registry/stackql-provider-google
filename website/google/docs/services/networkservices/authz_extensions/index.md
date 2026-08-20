@@ -235,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists `AuthzExtension` resources in a given project and location.</td>
 </tr>
 <tr>
@@ -249,7 +249,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authzExtensionsId"><code>authzExtensionsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of the specified `AuthzExtension` resource.</td>
 </tr>
 <tr>
@@ -387,10 +387,10 @@ wireFormat
 FROM google.networkservices.authz_extensions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -412,17 +412,17 @@ Creates a new `AuthzExtension` resource in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.authz_extensions (
-data__name,
+data__authority,
 data__description,
+data__failOpen,
+data__forwardAttributes,
+data__forwardHeaders,
 data__labels,
 data__loadBalancingScheme,
-data__authority,
+data__metadata,
+data__name,
 data__service,
 data__timeout,
-data__failOpen,
-data__metadata,
-data__forwardHeaders,
-data__forwardAttributes,
 data__wireFormat,
 projectsId,
 locationsId,
@@ -430,17 +430,17 @@ authzExtensionId,
 requestId
 )
 SELECT 
-'{{ name }}',
+'{{ authority }}',
 '{{ description }}',
+{{ failOpen }},
+'{{ forwardAttributes }}',
+'{{ forwardHeaders }}',
 '{{ labels }}',
 '{{ loadBalancingScheme }}',
-'{{ authority }}',
+'{{ metadata }}',
+'{{ name }}',
 '{{ service }}',
 '{{ timeout }}',
-{{ failOpen }},
-'{{ metadata }}',
-'{{ forwardHeaders }}',
-'{{ forwardAttributes }}',
 '{{ wireFormat }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -466,14 +466,28 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the authz_extensions resource.
-    - name: name
-      value: "{{ name }}"
+    - name: authority
+      value: "{{ authority }}"
       description: |
-        Required. Identifier. Name of the \`AuthzExtension\` resource in the following format: \`projects/{project}/locations/{location}/authzExtensions/{authz_extension}\`.
+        Optional. The \`:authority\` header in the gRPC request sent from Envoy to the extension service. It is required when the \`service\` field points to a backend service.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A human-readable description of the resource.
+    - name: failOpen
+      value: {{ failOpen }}
+      description: |
+        Optional. Determines how the proxy behaves if the call to the extension fails or times out. When set to \`TRUE\`, request or response processing continues without error. Any subsequent extensions in the extension chain are also executed. When set to \`FALSE\` or the default setting of \`FALSE\` is used, one of the following happens: * If response headers have not been delivered to the downstream client, a generic 500 error is returned to the client. The error response can be tailored by configuring a custom error response in the load balancer. * If response headers have been delivered, then the HTTP stream to the downstream client is reset.
+    - name: forwardAttributes
+      value:
+        - "{{ forwardAttributes }}"
+      description: |
+        Optional. List of the Envoy attributes to forward to the extension server. The attributes provided here are included as part of the \`ProcessingRequest.attributes\` field (of type \`map\`), where the keys are the attribute names. Refer to the [documentation](https://cloud.google.com/service-extensions/docs/cel-matcher-language-reference#attributes) for the names of attributes that can be forwarded. If omitted, no attributes are sent. Each element is a string indicating the attribute name.
+    - name: forwardHeaders
+      value:
+        - "{{ forwardHeaders }}"
+      description: |
+        Optional. List of the HTTP headers to forward to the extension (from the client). If omitted, all headers are sent. Each element is a string indicating the header name.
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -483,10 +497,14 @@ response
       description: |
         Optional. All backend services and forwarding rules referenced by this extension must share the same load balancing scheme. The supported values are \`INTERNAL_MANAGED\` and \`EXTERNAL_MANAGED\`. You can omit this field for \`AuthzExtensions\` resources that don't reference a backend service. For more information, see [Backend services overview](https://cloud.google.com/load-balancing/docs/backend-service).
       valid_values: ['LOAD_BALANCING_SCHEME_UNSPECIFIED', 'INTERNAL_MANAGED', 'EXTERNAL_MANAGED']
-    - name: authority
-      value: "{{ authority }}"
+    - name: metadata
+      value: "{{ metadata }}"
       description: |
-        Optional. The \`:authority\` header in the gRPC request sent from Envoy to the extension service. It is required when the \`service\` field points to a backend service.
+        Optional. The metadata provided here is included as part of the \`metadata_context\` (of type \`google.protobuf.Struct\`) in the \`ProcessingRequest\` message sent to the extension server. The metadata is available under the namespace \`com.google.authz_extension.\`. The following variables are supported in the metadata Struct: \`{forwarding_rule_id}\` - substituted with the forwarding rule's fully qualified resource name.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. Name of the \`AuthzExtension\` resource in the following format: \`projects/{project}/locations/{location}/authzExtensions/{authz_extension}\`.
     - name: service
       value: "{{ service }}"
       description: |
@@ -495,24 +513,6 @@ response
       value: "{{ timeout }}"
       description: |
         Required. Specifies the timeout for each individual message on the stream. The timeout must be between 10-10000 milliseconds.
-    - name: failOpen
-      value: {{ failOpen }}
-      description: |
-        Optional. Determines how the proxy behaves if the call to the extension fails or times out. When set to \`TRUE\`, request or response processing continues without error. Any subsequent extensions in the extension chain are also executed. When set to \`FALSE\` or the default setting of \`FALSE\` is used, one of the following happens: * If response headers have not been delivered to the downstream client, a generic 500 error is returned to the client. The error response can be tailored by configuring a custom error response in the load balancer. * If response headers have been delivered, then the HTTP stream to the downstream client is reset.
-    - name: metadata
-      value: "{{ metadata }}"
-      description: |
-        Optional. The metadata provided here is included as part of the \`metadata_context\` (of type \`google.protobuf.Struct\`) in the \`ProcessingRequest\` message sent to the extension server. The metadata is available under the namespace \`com.google.authz_extension.\`. The following variables are supported in the metadata Struct: \`{forwarding_rule_id}\` - substituted with the forwarding rule's fully qualified resource name.
-    - name: forwardHeaders
-      value:
-        - "{{ forwardHeaders }}"
-      description: |
-        Optional. List of the HTTP headers to forward to the extension (from the client). If omitted, all headers are sent. Each element is a string indicating the header name.
-    - name: forwardAttributes
-      value:
-        - "{{ forwardAttributes }}"
-      description: |
-        Optional. List of the Envoy attributes to forward to the extension server. The attributes provided here are included as part of the \`ProcessingRequest.attributes\` field (of type \`map\`), where the keys are the attribute names. Refer to the [documentation](https://cloud.google.com/service-extensions/docs/cel-matcher-language-reference#attributes) for the names of attributes that can be forwarded. If omitted, no attributes are sent. Each element is a string indicating the attribute name.
     - name: wireFormat
       value: "{{ wireFormat }}"
       description: |
@@ -543,24 +543,24 @@ Updates the parameters of the specified `AuthzExtension` resource.
 ```sql
 UPDATE google.networkservices.authz_extensions
 SET 
-data__name = '{{ name }}',
+data__authority = '{{ authority }}',
 data__description = '{{ description }}',
+data__failOpen = {{ failOpen }},
+data__forwardAttributes = '{{ forwardAttributes }}',
+data__forwardHeaders = '{{ forwardHeaders }}',
 data__labels = '{{ labels }}',
 data__loadBalancingScheme = '{{ loadBalancingScheme }}',
-data__authority = '{{ authority }}',
+data__metadata = '{{ metadata }}',
+data__name = '{{ name }}',
 data__service = '{{ service }}',
 data__timeout = '{{ timeout }}',
-data__failOpen = {{ failOpen }},
-data__metadata = '{{ metadata }}',
-data__forwardHeaders = '{{ forwardHeaders }}',
-data__forwardAttributes = '{{ forwardAttributes }}',
 data__wireFormat = '{{ wireFormat }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND authzExtensionsId = '{{ authzExtensionsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

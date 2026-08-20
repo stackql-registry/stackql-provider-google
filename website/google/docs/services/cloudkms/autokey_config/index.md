@@ -97,14 +97,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_autokey_config"><CopyableCode code="get_autokey_config" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td></td>
     <td>Returns the AutokeyConfig for a folder or project.</td>
 </tr>
 <tr>
     <td><a href="#update_autokey_config"><CopyableCode code="update_autokey_config" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the AutokeyConfig for a folder or a project. The caller must have both `cloudkms.autokeyConfigs.update` permission on the parent folder and `cloudkms.cryptoKeys.setIamPolicy` permission on the provided key project. A KeyHandle creation in the folder's descendant projects will use this configuration to determine where to create the resulting CryptoKey.</td>
 </tr>
@@ -124,8 +124,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-projectsId">
-    <td><CopyableCode code="projectsId" /></td>
+<tr id="parameter-foldersId">
+    <td><CopyableCode code="foldersId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -157,7 +157,7 @@ keyProject,
 keyProjectResolutionMode,
 state
 FROM google.cloudkms.autokey_config
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE foldersId = '{{ foldersId }}' -- required
 ;
 ```
 </TabItem>
@@ -184,7 +184,7 @@ data__keyProject = '{{ keyProject }}',
 data__keyProjectResolutionMode = '{{ keyProjectResolutionMode }}',
 data__name = '{{ name }}'
 WHERE 
-projectsId = '{{ projectsId }}' --required
+foldersId = '{{ foldersId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,

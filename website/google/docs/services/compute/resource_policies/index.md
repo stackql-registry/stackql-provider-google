@@ -285,14 +285,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>A list all the resource policies that have been configured for the<br />specified project in specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of resource policies.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
@@ -448,11 +448,11 @@ warning
 FROM google.compute.resource_policies
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -479,12 +479,12 @@ workloadPolicy
 FROM google.compute.resource_policies
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -506,25 +506,25 @@ Creates a new resource policy.
 
 ```sql
 INSERT INTO google.compute.resource_policies (
-data__instanceSchedulePolicy,
-data__diskConsistencyGroupPolicy,
-data__snapshotSchedulePolicy,
 data__description,
+data__diskConsistencyGroupPolicy,
 data__groupPlacementPolicy,
-data__workloadPolicy,
+data__instanceSchedulePolicy,
 data__name,
+data__snapshotSchedulePolicy,
+data__workloadPolicy,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ instanceSchedulePolicy }}',
-'{{ diskConsistencyGroupPolicy }}',
-'{{ snapshotSchedulePolicy }}',
 '{{ description }}',
+'{{ diskConsistencyGroupPolicy }}',
 '{{ groupPlacementPolicy }}',
-'{{ workloadPolicy }}',
+'{{ instanceSchedulePolicy }}',
 '{{ name }}',
+'{{ snapshotSchedulePolicy }}',
+'{{ workloadPolicy }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -570,67 +570,32 @@ zone
     - name: region
       value: "{{ region }}"
       description: Required parameter for the resource_policies resource.
-    - name: instanceSchedulePolicy
-      description: |
-        Resource policy for scheduling instance operations.
-      value:
-        timeZone: "{{ timeZone }}"
-        vmStartSchedule:
-          schedule: "{{ schedule }}"
-        startTime: "{{ startTime }}"
-        vmStopSchedule:
-          schedule: "{{ schedule }}"
-        expirationTime: "{{ expirationTime }}"
+    - name: description
+      value: "{{ description }}"
     - name: diskConsistencyGroupPolicy
       value: "{{ diskConsistencyGroupPolicy }}"
       description: |
         Resource policy for disk consistency groups.
-    - name: snapshotSchedulePolicy
-      description: |
-        Resource policy for persistent disks for creating snapshots.
-      value:
-        snapshotProperties:
-          chainName: "{{ chainName }}"
-          labels: "{{ labels }}"
-          storageLocations:
-            - "{{ storageLocations }}"
-          guestFlush: {{ guestFlush }}
-        schedule:
-          weeklySchedule:
-            dayOfWeeks:
-              - duration: "{{ duration }}"
-                day: "{{ day }}"
-                startTime: "{{ startTime }}"
-          hourlySchedule:
-            duration: "{{ duration }}"
-            hoursInCycle: {{ hoursInCycle }}
-            startTime: "{{ startTime }}"
-          dailySchedule:
-            startTime: "{{ startTime }}"
-            daysInCycle: {{ daysInCycle }}
-            duration: "{{ duration }}"
-        retentionPolicy:
-          maxRetentionDays: {{ maxRetentionDays }}
-          onSourceDiskDelete: "{{ onSourceDiskDelete }}"
-    - name: description
-      value: "{{ description }}"
     - name: groupPlacementPolicy
       description: |
         Resource policy for instances for placement configuration.
       value:
         acceleratorTopologyMode: "{{ acceleratorTopologyMode }}"
-        gpuTopology: "{{ gpuTopology }}"
         availabilityDomainCount: {{ availabilityDomainCount }}
-        vmCount: {{ vmCount }}
         collocation: "{{ collocation }}"
-    - name: workloadPolicy
+        gpuTopology: "{{ gpuTopology }}"
+        vmCount: {{ vmCount }}
+    - name: instanceSchedulePolicy
       description: |
-        Resource policy for defining instance placement for MIGs.
+        Resource policy for scheduling instance operations.
       value:
-        acceleratorTopologyMode: "{{ acceleratorTopologyMode }}"
-        type: "{{ type }}"
-        maxTopologyDistance: "{{ maxTopologyDistance }}"
-        acceleratorTopology: "{{ acceleratorTopology }}"
+        expirationTime: "{{ expirationTime }}"
+        startTime: "{{ startTime }}"
+        timeZone: "{{ timeZone }}"
+        vmStartSchedule:
+          schedule: "{{ schedule }}"
+        vmStopSchedule:
+          schedule: "{{ schedule }}"
     - name: name
       value: "{{ name }}"
       description: |
@@ -642,6 +607,41 @@ zone
         character must be a lowercase letter, and all following characters must be
         a dash, lowercase letter, or digit, except the last character, which cannot
         be a dash.
+    - name: snapshotSchedulePolicy
+      description: |
+        Resource policy for persistent disks for creating snapshots.
+      value:
+        retentionPolicy:
+          maxRetentionDays: {{ maxRetentionDays }}
+          onSourceDiskDelete: "{{ onSourceDiskDelete }}"
+        schedule:
+          dailySchedule:
+            daysInCycle: {{ daysInCycle }}
+            duration: "{{ duration }}"
+            startTime: "{{ startTime }}"
+          hourlySchedule:
+            duration: "{{ duration }}"
+            hoursInCycle: {{ hoursInCycle }}
+            startTime: "{{ startTime }}"
+          weeklySchedule:
+            dayOfWeeks:
+              - day: "{{ day }}"
+                duration: "{{ duration }}"
+                startTime: "{{ startTime }}"
+        snapshotProperties:
+          chainName: "{{ chainName }}"
+          guestFlush: {{ guestFlush }}
+          labels: "{{ labels }}"
+          storageLocations:
+            - "{{ storageLocations }}"
+    - name: workloadPolicy
+      description: |
+        Resource policy for defining instance placement for MIGs.
+      value:
+        acceleratorTopology: "{{ acceleratorTopology }}"
+        acceleratorTopologyMode: "{{ acceleratorTopologyMode }}"
+        maxTopologyDistance: "{{ maxTopologyDistance }}"
+        type: "{{ type }}"
     - name: requestId
       value: "{{ requestId }}"
 `}</CodeBlock>
@@ -665,13 +665,13 @@ Modify the specified resource policy.
 ```sql
 UPDATE google.compute.resource_policies
 SET 
-data__instanceSchedulePolicy = '{{ instanceSchedulePolicy }}',
-data__diskConsistencyGroupPolicy = '{{ diskConsistencyGroupPolicy }}',
-data__snapshotSchedulePolicy = '{{ snapshotSchedulePolicy }}',
 data__description = '{{ description }}',
+data__diskConsistencyGroupPolicy = '{{ diskConsistencyGroupPolicy }}',
 data__groupPlacementPolicy = '{{ groupPlacementPolicy }}',
-data__workloadPolicy = '{{ workloadPolicy }}',
-data__name = '{{ name }}'
+data__instanceSchedulePolicy = '{{ instanceSchedulePolicy }}',
+data__name = '{{ name }}',
+data__snapshotSchedulePolicy = '{{ snapshotSchedulePolicy }}',
+data__workloadPolicy = '{{ workloadPolicy }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required

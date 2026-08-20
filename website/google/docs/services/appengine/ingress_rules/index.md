@@ -135,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-appsId"><code>appsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-matchingAddress"><code>matchingAddress</code></a></td>
+    <td><a href="#parameter-matchingAddress"><code>matchingAddress</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the firewall rules of an application.</td>
 </tr>
 <tr>
@@ -252,9 +252,9 @@ priority,
 sourceRange
 FROM google.appengine.ingress_rules
 WHERE appsId = '{{ appsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND matchingAddress = '{{ matchingAddress }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -277,16 +277,16 @@ Creates a firewall rule for the application.
 ```sql
 INSERT INTO google.appengine.ingress_rules (
 data__action,
+data__description,
 data__priority,
 data__sourceRange,
-data__description,
 appsId
 )
 SELECT 
 '{{ action }}',
+'{{ description }}',
 {{ priority }},
 '{{ sourceRange }}',
-'{{ description }}',
 '{{ appsId }}'
 RETURNING
 action,
@@ -309,16 +309,16 @@ sourceRange
       description: |
         The action to take on matched requests.
       valid_values: ['UNSPECIFIED_ACTION', 'ALLOW', 'DENY']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional string description of this rule. This field has a maximum length of 400 characters.
     - name: priority
       value: {{ priority }}
     - name: sourceRange
       value: "{{ sourceRange }}"
       description: |
         IP address or range, defined using CIDR notation, of requests that this rule applies to. You can use the wildcard character "*" to match all IPs equivalent to "0/0" and "::/0" together. Examples: 192.168.1.1 or 192.168.0.0/16 or 2001:db8::/32 or 2001:0db8:0000:0042:0000:8a2e:0370:7334. Truncation will be silently performed on addresses which are not properly truncated. For example, 1.2.3.4/24 is accepted as the same address as 1.2.3.0/24. Similarly, for IPv6, 2001:db8::1/32 is accepted as the same address as 2001:db8::/32.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        An optional string description of this rule. This field has a maximum length of 400 characters.
 `}</CodeBlock>
 
 </TabItem>
@@ -342,9 +342,9 @@ Updates the specified firewall rule.
 UPDATE google.appengine.ingress_rules
 SET 
 data__action = '{{ action }}',
+data__description = '{{ description }}',
 data__priority = {{ priority }},
-data__sourceRange = '{{ sourceRange }}',
-data__description = '{{ description }}'
+data__sourceRange = '{{ sourceRange }}'
 WHERE 
 appsId = '{{ appsId }}' --required
 AND ingressRulesId = '{{ ingressRulesId }}' --required

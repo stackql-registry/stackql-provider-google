@@ -144,6 +144,86 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the backup. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/backupVaults/&#123;backup_vault_id&#125;/backups/&#123;backup_id&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backupRegion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Region in which backup is stored. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backupType" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Type of backup, manually created or created by a backup policy. (TYPE_UNSPECIFIED, MANUAL, SCHEDULED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="chainStorageBytes" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total size of all backups in a chain in bytes = baseline backup size + sum(incremental backup size)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the backup was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="enforcedRetentionEndTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time until which the backup is not deletable.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Resource labels to represent user provided metadata.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ontapSource" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Represents source details for ONTAP backups. Either source_volume or ontap_source should be provided. (id: OntapSource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sourceSnapshot" /></td>
+    <td><code>string</code></td>
+    <td>If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/volumes/&#123;volume_id&#125;/snapshots/&#123;snapshot_id&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sourceVolume" /></td>
+    <td><code>string</code></td>
+    <td>The resource name of the volume that this backup belongs to. You must provide either `source_volume` or `ontap_source`. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/volumes/&#123;volume_id&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The backup state. (STATE_UNSPECIFIED, CREATING, UPLOADING, READY, DELETING, ERROR, UPDATING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="volumeRegion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Region of the volume from which the backup was created. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="volumeUsageBytes" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Size of the file system when the backup was created. When creating a new volume from the backup, the volume capacity will have to be at least as big.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -175,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns descriptions of all backups for a backupVault.</td>
 </tr>
 <tr>
@@ -313,15 +393,30 @@ Returns descriptions of all backups for a backupVault.
 
 ```sql
 SELECT
-*
+name,
+backupRegion,
+backupType,
+chainStorageBytes,
+createTime,
+description,
+enforcedRetentionEndTime,
+labels,
+ontapSource,
+satisfiesPzi,
+satisfiesPzs,
+sourceSnapshot,
+sourceVolume,
+state,
+volumeRegion,
+volumeUsageBytes
 FROM google.netapp.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupVaultsId = '{{ backupVaultsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -343,24 +438,24 @@ Creates a backup from the volume specified in the request The backup can be crea
 
 ```sql
 INSERT INTO google.netapp.backups (
-data__name,
-data__sourceSnapshot,
-data__labels,
 data__description,
-data__sourceVolume,
+data__labels,
+data__name,
 data__ontapSource,
+data__sourceSnapshot,
+data__sourceVolume,
 projectsId,
 locationsId,
 backupVaultsId,
 backupId
 )
 SELECT 
-'{{ name }}',
-'{{ sourceSnapshot }}',
-'{{ labels }}',
 '{{ description }}',
-'{{ sourceVolume }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ ontapSource }}',
+'{{ sourceSnapshot }}',
+'{{ sourceVolume }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupVaultsId }}',
@@ -388,33 +483,33 @@ response
     - name: backupVaultsId
       value: "{{ backupVaultsId }}"
       description: Required parameter for the backups resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the backup. Format: \`projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}\`.
-    - name: sourceSnapshot
-      value: "{{ sourceSnapshot }}"
-      description: |
-        If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}\`
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Resource labels to represent user provided metadata.
     - name: description
       value: "{{ description }}"
       description: |
         A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.
-    - name: sourceVolume
-      value: "{{ sourceVolume }}"
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        The resource name of the volume that this backup belongs to. You must provide either \`source_volume\` or \`ontap_source\`. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}\`
+        Resource labels to represent user provided metadata.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the backup. Format: \`projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}\`.
     - name: ontapSource
       description: |
         Optional. Represents source details for ONTAP backups. Either source_volume or ontap_source should be provided.
       value:
-        volumeUuid: "{{ volumeUuid }}"
-        storagePool: "{{ storagePool }}"
         snapshotUuid: "{{ snapshotUuid }}"
+        storagePool: "{{ storagePool }}"
+        volumeUuid: "{{ volumeUuid }}"
+    - name: sourceSnapshot
+      value: "{{ sourceSnapshot }}"
+      description: |
+        If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}\`
+    - name: sourceVolume
+      value: "{{ sourceVolume }}"
+      description: |
+        The resource name of the volume that this backup belongs to. You must provide either \`source_volume\` or \`ontap_source\`. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}\`
     - name: backupId
       value: "{{ backupId }}"
 `}</CodeBlock>
@@ -438,12 +533,12 @@ Update backup with full spec.
 ```sql
 UPDATE google.netapp.backups
 SET 
-data__name = '{{ name }}',
-data__sourceSnapshot = '{{ sourceSnapshot }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__sourceVolume = '{{ sourceVolume }}',
-data__ontapSource = '{{ ontapSource }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__ontapSource = '{{ ontapSource }}',
+data__sourceSnapshot = '{{ sourceSnapshot }}',
+data__sourceVolume = '{{ sourceVolume }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

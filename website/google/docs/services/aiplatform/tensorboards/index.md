@@ -225,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists Tensorboards in a Location.</td>
 </tr>
 <tr>
@@ -250,11 +250,11 @@ The following methods are available for this resource:
     <td>Deletes a Tensorboard.</td>
 </tr>
 <tr>
-    <td><a href="#read_usage"><CopyableCode code="read_usage" /></a></td>
+    <td><a href="#batch_read"><CopyableCode code="batch_read" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a></td>
-    <td></td>
-    <td>Returns a list of monthly active users for a given TensorBoard instance.</td>
+    <td><a href="#parameter-timeSeries"><code>timeSeries</code></a></td>
+    <td>Reads multiple TensorboardTimeSeries' data. The data point number limit is 1000 for scalars, 100 for tensors and blob references. If the number of data points stored is less than the limit, all data is returned. Otherwise, the number limit of data points is randomly selected from this time series and returned.</td>
 </tr>
 <tr>
     <td><a href="#read_size"><CopyableCode code="read_size" /></a></td>
@@ -264,11 +264,11 @@ The following methods are available for this resource:
     <td>Returns the storage size for a given TensorBoard instance.</td>
 </tr>
 <tr>
-    <td><a href="#batch_read"><CopyableCode code="batch_read" /></a></td>
+    <td><a href="#read_usage"><CopyableCode code="read_usage" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a></td>
-    <td><a href="#parameter-timeSeries"><code>timeSeries</code></a></td>
-    <td>Reads multiple TensorboardTimeSeries' data. The data point number limit is 1000 for scalars, 100 for tensors and blob references. If the number of data points stored is less than the limit, all data is returned. Otherwise, the number limit of data points is randomly selected from this time series and returned.</td>
+    <td></td>
+    <td>Returns a list of monthly active users for a given TensorBoard instance.</td>
 </tr>
 </tbody>
 </table>
@@ -396,11 +396,11 @@ updateTime
 FROM google.aiplatform.tensorboards
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND readMask = '{{ readMask }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -424,20 +424,20 @@ Creates a Tensorboard.
 INSERT INTO google.aiplatform.tensorboards (
 data__description,
 data__displayName,
-data__etag,
 data__encryptionSpec,
-data__labels,
+data__etag,
 data__isDefault,
+data__labels,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ description }}',
 '{{ displayName }}',
-'{{ etag }}',
 '{{ encryptionSpec }}',
-'{{ labels }}',
+'{{ etag }}',
 {{ isDefault }},
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -468,23 +468,23 @@ response
       value: "{{ displayName }}"
       description: |
         Required. User provided name of this Tensorboard.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: encryptionSpec
       description: |
         Customer-managed encryption key spec for a Tensorboard. If set, this Tensorboard and all sub-resources of this Tensorboard will be secured by this key.
       value:
         kmsKeyName: "{{ kmsKeyName }}"
-    - name: labels
-      value: "{{ labels }}"
+    - name: etag
+      value: "{{ etag }}"
       description: |
-        The labels with user-defined metadata to organize your Tensorboards. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Tensorboard (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: isDefault
       value: {{ isDefault }}
       description: |
         Used to indicate if the TensorBoard instance is the default one. Each project & region can have at most one default TensorBoard instance. Creation of a default TensorBoard instance and updating an existing TensorBoard instance to be default will mark all other TensorBoard instances (if any) as non default.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your Tensorboards. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Tensorboard (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
 `}</CodeBlock>
 
 </TabItem>
@@ -508,10 +508,10 @@ UPDATE google.aiplatform.tensorboards
 SET 
 data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__etag = '{{ etag }}',
 data__encryptionSpec = '{{ encryptionSpec }}',
-data__labels = '{{ labels }}',
-data__isDefault = {{ isDefault }}
+data__etag = '{{ etag }}',
+data__isDefault = {{ isDefault }},
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -554,22 +554,23 @@ AND tensorboardsId = '{{ tensorboardsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="read_usage"
+    defaultValue="batch_read"
     values={[
-        { label: 'read_usage', value: 'read_usage' },
+        { label: 'batch_read', value: 'batch_read' },
         { label: 'read_size', value: 'read_size' },
-        { label: 'batch_read', value: 'batch_read' }
+        { label: 'read_usage', value: 'read_usage' }
     ]}
 >
-<TabItem value="read_usage">
+<TabItem value="batch_read">
 
-Returns a list of monthly active users for a given TensorBoard instance.
+Reads multiple TensorboardTimeSeries' data. The data point number limit is 1000 for scalars, 100 for tensors and blob references. If the number of data points stored is less than the limit, all data is returned. Otherwise, the number limit of data points is randomly selected from this time series and returned.
 
 ```sql
-EXEC google.aiplatform.tensorboards.read_usage 
+EXEC google.aiplatform.tensorboards.batch_read 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@tensorboardsId='{{ tensorboardsId }}' --required
+@tensorboardsId='{{ tensorboardsId }}' --required, 
+@timeSeries='{{ timeSeries }}'
 ;
 ```
 </TabItem>
@@ -585,16 +586,15 @@ EXEC google.aiplatform.tensorboards.read_size
 ;
 ```
 </TabItem>
-<TabItem value="batch_read">
+<TabItem value="read_usage">
 
-Reads multiple TensorboardTimeSeries' data. The data point number limit is 1000 for scalars, 100 for tensors and blob references. If the number of data points stored is less than the limit, all data is returned. Otherwise, the number limit of data points is randomly selected from this time series and returned.
+Returns a list of monthly active users for a given TensorBoard instance.
 
 ```sql
-EXEC google.aiplatform.tensorboards.batch_read 
+EXEC google.aiplatform.tensorboards.read_usage 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@tensorboardsId='{{ tensorboardsId }}' --required, 
-@timeSeries='{{ timeSeries }}'
+@tensorboardsId='{{ tensorboardsId }}' --required
 ;
 ```
 </TabItem>

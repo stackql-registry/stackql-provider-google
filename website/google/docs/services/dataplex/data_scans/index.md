@@ -325,7 +325,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_scans_list"><CopyableCode code="projects_locations_data_scans_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DataScans.</td>
 </tr>
 <tr>
@@ -521,8 +521,8 @@ FROM google.dataplex.data_scans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -545,34 +545,34 @@ Creates a DataScan resource.
 
 ```sql
 INSERT INTO google.dataplex.data_scans (
-data__unstructuredDataProfileSpec,
-data__description,
-data__dataDocumentationSpec,
-data__dataDiscoverySpec,
-data__executionIdentity,
-data__dataProfileSpec,
-data__labels,
-data__dataQualitySpec,
-data__executionSpec,
 data__data,
+data__dataDiscoverySpec,
+data__dataDocumentationSpec,
+data__dataProfileSpec,
+data__dataQualitySpec,
+data__description,
 data__displayName,
+data__executionIdentity,
+data__executionSpec,
+data__labels,
+data__unstructuredDataProfileSpec,
 projectsId,
 locationsId,
 dataScanId,
 validateOnly
 )
 SELECT 
-'{{ unstructuredDataProfileSpec }}',
-'{{ description }}',
-'{{ dataDocumentationSpec }}',
-'{{ dataDiscoverySpec }}',
-'{{ executionIdentity }}',
-'{{ dataProfileSpec }}',
-'{{ labels }}',
-'{{ dataQualitySpec }}',
-'{{ executionSpec }}',
 '{{ data }}',
+'{{ dataDiscoverySpec }}',
+'{{ dataDocumentationSpec }}',
+'{{ dataProfileSpec }}',
+'{{ dataQualitySpec }}',
+'{{ description }}',
 '{{ displayName }}',
+'{{ executionIdentity }}',
+'{{ executionSpec }}',
+'{{ labels }}',
+'{{ unstructuredDataProfileSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataScanId }}',
@@ -597,17 +597,38 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the data_scans resource.
-    - name: unstructuredDataProfileSpec
+    - name: data
       description: |
-        Optional. Settings for an unstructured data profile scan.
+        Required. The data source for DataScan.
       value:
-        graphProfilePublishingEnabled: {{ graphProfilePublishingEnabled }}
-        customizedPrompt: "{{ customizedPrompt }}"
-        globalEndpointEnabled: {{ globalEndpointEnabled }}
-    - name: description
-      value: "{{ description }}"
+        entity: "{{ entity }}"
+        resource: "{{ resource }}"
+    - name: dataDiscoverySpec
       description: |
-        Optional. Description of the scan. Must be between 1-1024 characters.
+        Settings for a data discovery scan.
+      value:
+        bigqueryPublishingConfig:
+          connection: "{{ connection }}"
+          location: "{{ location }}"
+          project: "{{ project }}"
+          tableType: "{{ tableType }}"
+        storageConfig:
+          csvOptions:
+            delimiter: "{{ delimiter }}"
+            encoding: "{{ encoding }}"
+            headerRows: {{ headerRows }}
+            quote: "{{ quote }}"
+            typeInferenceDisabled: {{ typeInferenceDisabled }}
+          excludePatterns:
+            - "{{ excludePatterns }}"
+          includePatterns:
+            - "{{ includePatterns }}"
+          jsonOptions:
+            encoding: "{{ encoding }}"
+            typeInferenceDisabled: {{ typeInferenceDisabled }}
+          unstructuredDataOptions:
+            globalEndpointEnabled: {{ globalEndpointEnabled }}
+            semanticInferenceEnabled: {{ semanticInferenceEnabled }}
     - name: dataDocumentationSpec
       description: |
         Settings for a data documentation scan.
@@ -615,157 +636,136 @@ response
         catalogPublishingEnabled: {{ catalogPublishingEnabled }}
         generationScopes:
           - "{{ generationScopes }}"
-    - name: dataDiscoverySpec
-      description: |
-        Settings for a data discovery scan.
-      value:
-        bigqueryPublishingConfig:
-          tableType: "{{ tableType }}"
-          location: "{{ location }}"
-          project: "{{ project }}"
-          connection: "{{ connection }}"
-        storageConfig:
-          csvOptions:
-            delimiter: "{{ delimiter }}"
-            quote: "{{ quote }}"
-            headerRows: {{ headerRows }}
-            typeInferenceDisabled: {{ typeInferenceDisabled }}
-            encoding: "{{ encoding }}"
-          unstructuredDataOptions:
-            semanticInferenceEnabled: {{ semanticInferenceEnabled }}
-            globalEndpointEnabled: {{ globalEndpointEnabled }}
-          excludePatterns:
-            - "{{ excludePatterns }}"
-          jsonOptions:
-            encoding: "{{ encoding }}"
-            typeInferenceDisabled: {{ typeInferenceDisabled }}
-          includePatterns:
-            - "{{ includePatterns }}"
-    - name: executionIdentity
-      description: |
-        Optional. Immutable. The identity to run the datascan. If not specified, defaults to the Dataplex Service Agent.
-      value:
-        dataplexServiceAgent: "{{ dataplexServiceAgent }}"
-        userCredential: "{{ userCredential }}"
-        serviceAccount:
-          email: "{{ email }}"
     - name: dataProfileSpec
       description: |
         Settings for a data profile scan.
       value:
-        includeFields:
-          fieldNames:
-            - "{{ fieldNames }}"
         catalogPublishingEnabled: {{ catalogPublishingEnabled }}
-        mode: "{{ mode }}"
-        samplingPercent: {{ samplingPercent }}
-        rowFilter: "{{ rowFilter }}"
-        postScanActions:
-          bigqueryExport:
-            resultsTable: "{{ resultsTable }}"
         excludeFields:
           fieldNames:
             - "{{ fieldNames }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the scan.
+        includeFields:
+          fieldNames:
+            - "{{ fieldNames }}"
+        mode: "{{ mode }}"
+        postScanActions:
+          bigqueryExport:
+            resultsTable: "{{ resultsTable }}"
+        rowFilter: "{{ rowFilter }}"
+        samplingPercent: {{ samplingPercent }}
     - name: dataQualitySpec
       description: |
         Settings for a data quality scan.
       value:
+        catalogPublishingEnabled: {{ catalogPublishingEnabled }}
         enableCatalogBasedRules: {{ enableCatalogBasedRules }}
-        rowFilter: "{{ rowFilter }}"
+        filter: "{{ filter }}"
         postScanActions:
+          bigqueryExport:
+            resultsTable: "{{ resultsTable }}"
           notificationReport:
-            scoreThresholdTrigger:
-              scoreThreshold: {{ scoreThreshold }}
+            jobEndTrigger: "{{ jobEndTrigger }}"
+            jobFailureTrigger: "{{ jobFailureTrigger }}"
             recipients:
               emails:
                 - "{{ emails }}"
-            jobFailureTrigger: "{{ jobFailureTrigger }}"
-            jobEndTrigger: "{{ jobEndTrigger }}"
-          bigqueryExport:
-            resultsTable: "{{ resultsTable }}"
+            scoreThresholdTrigger:
+              scoreThreshold: {{ scoreThreshold }}
+        rowFilter: "{{ rowFilter }}"
         rules:
-          - setExpectation:
-              values:
-                - "{{ values }}"
-            dimension: "{{ dimension }}"
+          - attributes: "{{ attributes }}"
+            column: "{{ column }}"
+            debugQueries: "{{ debugQueries }}"
             description: "{{ description }}"
-            attributes: "{{ attributes }}"
-            templateReference:
-              name: "{{ name }}"
-              resolvedSql: "{{ resolvedSql }}"
-              values: "{{ values }}"
-              ruleTemplate:
-                capabilities:
-                  - "{{ capabilities }}"
-                name: "{{ name }}"
-                dimension: "{{ dimension }}"
-                inputParameters: "{{ inputParameters }}"
-                sqlCollection:
-                  - query: "{{ query }}"
-            threshold: {{ threshold }}
-            rowConditionExpectation:
-              sqlExpression: "{{ sqlExpression }}"
-            sqlAssertion:
-              sqlStatement: "{{ sqlStatement }}"
+            dimension: "{{ dimension }}"
+            ignoreNull: {{ ignoreNull }}
+            name: "{{ name }}"
+            nonNullExpectation: "{{ nonNullExpectation }}"
+            rangeExpectation:
+              maxValue: "{{ maxValue }}"
+              minValue: "{{ minValue }}"
+              strictMaxEnabled: {{ strictMaxEnabled }}
+              strictMinEnabled: {{ strictMinEnabled }}
             regexExpectation:
               regex: "{{ regex }}"
-            statisticRangeExpectation:
-              minValue: "{{ minValue }}"
-              strictMinEnabled: {{ strictMinEnabled }}
-              strictMaxEnabled: {{ strictMaxEnabled }}
-              statistic: "{{ statistic }}"
-              maxValue: "{{ maxValue }}"
+            rowConditionExpectation:
+              sqlExpression: "{{ sqlExpression }}"
             ruleSource:
               rulePathElements:
                 - entryLinkSource:
                     entryLink: "{{ entryLink }}"
                     entryLinkType: "{{ entryLinkType }}"
                   entrySource:
-                    entryType: "{{ entryType }}"
                     displayName: "{{ displayName }}"
                     entry: "{{ entry }}"
-            uniquenessExpectation: "{{ uniquenessExpectation }}"
-            debugQueries: "{{ debugQueries }}"
-            name: "{{ name }}"
-            nonNullExpectation: "{{ nonNullExpectation }}"
-            column: "{{ column }}"
-            ignoreNull: {{ ignoreNull }}
+                    entryType: "{{ entryType }}"
+            setExpectation:
+              values:
+                - "{{ values }}"
+            sqlAssertion:
+              sqlStatement: "{{ sqlStatement }}"
+            statisticRangeExpectation:
+              maxValue: "{{ maxValue }}"
+              minValue: "{{ minValue }}"
+              statistic: "{{ statistic }}"
+              strictMaxEnabled: {{ strictMaxEnabled }}
+              strictMinEnabled: {{ strictMinEnabled }}
             suspended: {{ suspended }}
             tableConditionExpectation:
               sqlExpression: "{{ sqlExpression }}"
-            rangeExpectation:
-              minValue: "{{ minValue }}"
-              strictMinEnabled: {{ strictMinEnabled }}
-              strictMaxEnabled: {{ strictMaxEnabled }}
-              maxValue: "{{ maxValue }}"
-        filter: "{{ filter }}"
-        catalogPublishingEnabled: {{ catalogPublishingEnabled }}
+            templateReference:
+              name: "{{ name }}"
+              resolvedSql: "{{ resolvedSql }}"
+              ruleTemplate:
+                capabilities:
+                  - "{{ capabilities }}"
+                dimension: "{{ dimension }}"
+                inputParameters: "{{ inputParameters }}"
+                name: "{{ name }}"
+                sqlCollection:
+                  - query: "{{ query }}"
+              values: "{{ values }}"
+            threshold: {{ threshold }}
+            uniquenessExpectation: "{{ uniquenessExpectation }}"
         samplingPercent: {{ samplingPercent }}
-    - name: executionSpec
+    - name: description
+      value: "{{ description }}"
       description: |
-        Optional. DataScan execution settings.If not specified, the fields in it will use their default values.
-      value:
-        trigger:
-          schedule:
-            cron: "{{ cron }}"
-          onDemand: "{{ onDemand }}"
-          oneTime:
-            ttlAfterScanCompletion: "{{ ttlAfterScanCompletion }}"
-        field: "{{ field }}"
-    - name: data
-      description: |
-        Required. The data source for DataScan.
-      value:
-        resource: "{{ resource }}"
-        entity: "{{ entity }}"
+        Optional. Description of the scan. Must be between 1-1024 characters.
     - name: displayName
       value: "{{ displayName }}"
       description: |
         Optional. User friendly display name. Must be between 1-256 characters.
+    - name: executionIdentity
+      description: |
+        Optional. Immutable. The identity to run the datascan. If not specified, defaults to the Dataplex Service Agent.
+      value:
+        dataplexServiceAgent: "{{ dataplexServiceAgent }}"
+        serviceAccount:
+          email: "{{ email }}"
+        userCredential: "{{ userCredential }}"
+    - name: executionSpec
+      description: |
+        Optional. DataScan execution settings.If not specified, the fields in it will use their default values.
+      value:
+        field: "{{ field }}"
+        trigger:
+          onDemand: "{{ onDemand }}"
+          oneTime:
+            ttlAfterScanCompletion: "{{ ttlAfterScanCompletion }}"
+          schedule:
+            cron: "{{ cron }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the scan.
+    - name: unstructuredDataProfileSpec
+      description: |
+        Optional. Settings for an unstructured data profile scan.
+      value:
+        customizedPrompt: "{{ customizedPrompt }}"
+        globalEndpointEnabled: {{ globalEndpointEnabled }}
+        graphProfilePublishingEnabled: {{ graphProfilePublishingEnabled }}
     - name: dataScanId
       value: "{{ dataScanId }}"
     - name: validateOnly
@@ -791,17 +791,17 @@ Updates a DataScan resource.
 ```sql
 UPDATE google.dataplex.data_scans
 SET 
-data__unstructuredDataProfileSpec = '{{ unstructuredDataProfileSpec }}',
-data__description = '{{ description }}',
-data__dataDocumentationSpec = '{{ dataDocumentationSpec }}',
-data__dataDiscoverySpec = '{{ dataDiscoverySpec }}',
-data__executionIdentity = '{{ executionIdentity }}',
-data__dataProfileSpec = '{{ dataProfileSpec }}',
-data__labels = '{{ labels }}',
-data__dataQualitySpec = '{{ dataQualitySpec }}',
-data__executionSpec = '{{ executionSpec }}',
 data__data = '{{ data }}',
-data__displayName = '{{ displayName }}'
+data__dataDiscoverySpec = '{{ dataDiscoverySpec }}',
+data__dataDocumentationSpec = '{{ dataDocumentationSpec }}',
+data__dataProfileSpec = '{{ dataProfileSpec }}',
+data__dataQualitySpec = '{{ dataQualitySpec }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__executionIdentity = '{{ executionIdentity }}',
+data__executionSpec = '{{ executionSpec }}',
+data__labels = '{{ labels }}',
+data__unstructuredDataProfileSpec = '{{ unstructuredDataProfileSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

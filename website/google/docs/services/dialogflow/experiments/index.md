@@ -245,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_agents_environments_experiments_list"><CopyableCode code="projects_locations_agents_environments_experiments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td></td>
 </tr>
 <tr>
@@ -407,8 +407,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -430,20 +430,20 @@ No description available.
 
 ```sql
 INSERT INTO google.dialogflow.experiments (
-data__result,
+data__createTime,
+data__definition,
+data__description,
+data__displayName,
 data__endTime,
 data__experimentLength,
-data__rolloutConfig,
-data__name,
 data__lastUpdateTime,
+data__name,
+data__result,
+data__rolloutConfig,
 data__rolloutFailureReason,
-data__createTime,
-data__state,
-data__startTime,
-data__displayName,
-data__description,
 data__rolloutState,
-data__definition,
+data__startTime,
+data__state,
 data__variantsHistory,
 projectsId,
 locationsId,
@@ -451,20 +451,20 @@ agentsId,
 environmentsId
 )
 SELECT 
-'{{ result }}',
+'{{ createTime }}',
+'{{ definition }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ endTime }}',
 '{{ experimentLength }}',
-'{{ rolloutConfig }}',
-'{{ name }}',
 '{{ lastUpdateTime }}',
+'{{ name }}',
+'{{ result }}',
+'{{ rolloutConfig }}',
 '{{ rolloutFailureReason }}',
-'{{ createTime }}',
-'{{ state }}',
-'{{ startTime }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ rolloutState }}',
-'{{ definition }}',
+'{{ startTime }}',
+'{{ state }}',
 '{{ variantsHistory }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -506,63 +506,63 @@ variantsHistory
     - name: environmentsId
       value: "{{ environmentsId }}"
       description: Required parameter for the experiments resource.
-    - name: result
-      value:
-        versionMetrics:
-          - version: "{{ version }}"
-            sessionCount: {{ sessionCount }}
-            metrics: "{{ metrics }}"
-        lastUpdateTime: "{{ lastUpdateTime }}"
-    - name: endTime
-      value: "{{ endTime }}"
-    - name: experimentLength
-      value: "{{ experimentLength }}"
-    - name: rolloutConfig
-      value:
-        rolloutSteps:
-          - trafficPercent: {{ trafficPercent }}
-            minDuration: "{{ minDuration }}"
-            displayName: "{{ displayName }}"
-        rolloutCondition: "{{ rolloutCondition }}"
-        failureCondition: "{{ failureCondition }}"
-    - name: name
-      value: "{{ name }}"
-    - name: lastUpdateTime
-      value: "{{ lastUpdateTime }}"
-    - name: rolloutFailureReason
-      value: "{{ rolloutFailureReason }}"
     - name: createTime
       value: "{{ createTime }}"
-    - name: state
-      value: "{{ state }}"
-      valid_values: ['STATE_UNSPECIFIED', 'DRAFT', 'RUNNING', 'DONE', 'ROLLOUT_FAILED']
-    - name: startTime
-      value: "{{ startTime }}"
-    - name: displayName
-      value: "{{ displayName }}"
-    - name: description
-      value: "{{ description }}"
-    - name: rolloutState
-      value:
-        step: "{{ step }}"
-        stepIndex: {{ stepIndex }}
-        startTime: "{{ startTime }}"
     - name: definition
       value:
         condition: "{{ condition }}"
         versionVariants:
           variants:
-            - trafficAllocation: {{ trafficAllocation }}
+            - isControlGroup: {{ isControlGroup }}
+              trafficAllocation: {{ trafficAllocation }}
               version: "{{ version }}"
-              isControlGroup: {{ isControlGroup }}
+    - name: description
+      value: "{{ description }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: endTime
+      value: "{{ endTime }}"
+    - name: experimentLength
+      value: "{{ experimentLength }}"
+    - name: lastUpdateTime
+      value: "{{ lastUpdateTime }}"
+    - name: name
+      value: "{{ name }}"
+    - name: result
+      value:
+        lastUpdateTime: "{{ lastUpdateTime }}"
+        versionMetrics:
+          - metrics: "{{ metrics }}"
+            sessionCount: {{ sessionCount }}
+            version: "{{ version }}"
+    - name: rolloutConfig
+      value:
+        failureCondition: "{{ failureCondition }}"
+        rolloutCondition: "{{ rolloutCondition }}"
+        rolloutSteps:
+          - displayName: "{{ displayName }}"
+            minDuration: "{{ minDuration }}"
+            trafficPercent: {{ trafficPercent }}
+    - name: rolloutFailureReason
+      value: "{{ rolloutFailureReason }}"
+    - name: rolloutState
+      value:
+        startTime: "{{ startTime }}"
+        step: "{{ step }}"
+        stepIndex: {{ stepIndex }}
+    - name: startTime
+      value: "{{ startTime }}"
+    - name: state
+      value: "{{ state }}"
+      valid_values: ['STATE_UNSPECIFIED', 'DRAFT', 'RUNNING', 'DONE', 'ROLLOUT_FAILED']
     - name: variantsHistory
       value:
         - updateTime: "{{ updateTime }}"
           versionVariants:
             variants:
-              - trafficAllocation: {{ trafficAllocation }}
+              - isControlGroup: {{ isControlGroup }}
+                trafficAllocation: {{ trafficAllocation }}
                 version: "{{ version }}"
-                isControlGroup: {{ isControlGroup }}
 `}</CodeBlock>
 
 </TabItem>
@@ -584,20 +584,20 @@ No description available.
 ```sql
 UPDATE google.dialogflow.experiments
 SET 
-data__result = '{{ result }}',
+data__createTime = '{{ createTime }}',
+data__definition = '{{ definition }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__endTime = '{{ endTime }}',
 data__experimentLength = '{{ experimentLength }}',
-data__rolloutConfig = '{{ rolloutConfig }}',
-data__name = '{{ name }}',
 data__lastUpdateTime = '{{ lastUpdateTime }}',
+data__name = '{{ name }}',
+data__result = '{{ result }}',
+data__rolloutConfig = '{{ rolloutConfig }}',
 data__rolloutFailureReason = '{{ rolloutFailureReason }}',
-data__createTime = '{{ createTime }}',
-data__state = '{{ state }}',
-data__startTime = '{{ startTime }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__rolloutState = '{{ rolloutState }}',
-data__definition = '{{ definition }}',
+data__startTime = '{{ startTime }}',
+data__state = '{{ state }}',
 data__variantsHistory = '{{ variantsHistory }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

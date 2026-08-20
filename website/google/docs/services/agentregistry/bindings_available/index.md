@@ -83,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_available"><CopyableCode code="fetch_available" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-sourceIdentifier"><code>sourceIdentifier</code></a>, <a href="#parameter-targetIdentifier"><code>targetIdentifier</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-sourceIdentifier"><code>sourceIdentifier</code></a>, <a href="#parameter-targetIdentifier"><code>targetIdentifier</code></a></td>
     <td>Fetches available Bindings.</td>
 </tr>
 </tbody>
@@ -154,10 +154,10 @@ nextPageToken
 FROM google.agentregistry.bindings_available
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND sourceIdentifier = '{{ sourceIdentifier }}'
-AND targetIdentifier = '{{ targetIdentifier }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND sourceIdentifier = '{{ sourceIdentifier }}'
+AND targetIdentifier = '{{ targetIdentifier }}'
 ;
 ```
 </TabItem>

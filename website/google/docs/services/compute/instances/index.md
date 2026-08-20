@@ -169,7 +169,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="machineType" /></td>
     <td><code>string</code></td>
-    <td>Full or partial URL of the machine type resource to use for this instance, in the format:zones/zone/machineTypes/machine-type. This is provided by the client when the instance is created. For example, the following is a valid partial url to a predefined machine type:  zones/us-central1-f/machineTypes/n1-standard-1   To create acustom machine type, provide a URL to a machine type in the following format, where CPUS is 1 or an even number up to 32 (2, 4, 6, ... 24, etc), and MEMORY is the total memory for this instance. Memory must be a multiple of 256 MB and must be supplied in MB (e.g. 5 GB of memory is 5120 MB):  zones/zone/machineTypes/custom-CPUS-MEMORY   For example: zones/us-central1-f/machineTypes/custom-4-5120 For a full list of restrictions, read theSpecifications for custom machine types.</td>
+    <td>Full or partial URL of the machine type resource to use for this instance, in the format:zones/zone/machineTypes/machine-type. This is provided by the client when the instance is created. For example, the following is a valid partial url to a predefined machine type:  zones/us-central1-f/machineTypes/n1-standard-1   To create acustom machine type, provide a URL to a machine type in the following format, where CPUS is 1 or an even number up to 32 (2, 4, 6, ... 24, etc), and MEMORY is the total memory for this instance. Memory must be a multiple of 256 MB and must be supplied in MB (e.g. 5 GB of memory is 5120 MB):  zones/zone/machineTypes/custom-CPUS-MEMORY   For example: zones/us-central1-f/machineTypes/custom-4-5120  For a full list of restrictions, read theSpecifications for custom machine types.</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -467,7 +467,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="machineType" /></td>
     <td><code>string</code></td>
-    <td>Full or partial URL of the machine type resource to use for this instance, in the format:zones/zone/machineTypes/machine-type. This is provided by the client when the instance is created. For example, the following is a valid partial url to a predefined machine type:  zones/us-central1-f/machineTypes/n1-standard-1   To create acustom machine type, provide a URL to a machine type in the following format, where CPUS is 1 or an even number up to 32 (2, 4, 6, ... 24, etc), and MEMORY is the total memory for this instance. Memory must be a multiple of 256 MB and must be supplied in MB (e.g. 5 GB of memory is 5120 MB):  zones/zone/machineTypes/custom-CPUS-MEMORY   For example: zones/us-central1-f/machineTypes/custom-4-5120 For a full list of restrictions, read theSpecifications for custom machine types.</td>
+    <td>Full or partial URL of the machine type resource to use for this instance, in the format:zones/zone/machineTypes/machine-type. This is provided by the client when the instance is created. For example, the following is a valid partial url to a predefined machine type:  zones/us-central1-f/machineTypes/n1-standard-1   To create acustom machine type, provide a URL to a machine type in the following format, where CPUS is 1 or an even number up to 32 (2, 4, 6, ... 24, etc), and MEMORY is the total memory for this instance. Memory must be a multiple of 256 MB and must be supplied in MB (e.g. 5 GB of memory is 5120 MB):  zones/zone/machineTypes/custom-CPUS-MEMORY   For example: zones/us-central1-f/machineTypes/custom-4-5120  For a full list of restrictions, read theSpecifications for custom machine types.</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -620,28 +620,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves the list of instances contained within<br />the specified zone.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
     <td>Retrieves an aggregated list of all of the instances in your project<br />across all regions and zones.<br /><br />The performance of this method degrades when a filter is specified on a<br />project that has a very large number of instances.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
-    <td><a href="#parameter-sourceInstanceTemplate"><code>sourceInstanceTemplate</code></a>, <a href="#parameter-sourceMachineImage"><code>sourceMachineImage</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sourceInstanceTemplate"><code>sourceInstanceTemplate</code></a>, <a href="#parameter-sourceMachineImage"><code>sourceMachineImage</code></a></td>
     <td>Creates an instance resource in the specified project using the data<br />included in the request.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-mostDisruptiveAllowedAction"><code>mostDisruptiveAllowedAction</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-minimalAction"><code>minimalAction</code></a>, <a href="#parameter-discardLocalSsd"><code>discardLocalSsd</code></a></td>
+    <td><a href="#parameter-discardLocalSsd"><code>discardLocalSsd</code></a>, <a href="#parameter-minimalAction"><code>minimalAction</code></a>, <a href="#parameter-mostDisruptiveAllowedAction"><code>mostDisruptiveAllowedAction</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates an instance only if the necessary resources are available. This<br />method can update only a specific set of instance properties. See<br />Updating a running instance for a list of updatable instance<br />properties.</td>
 </tr>
 <tr>
@@ -652,25 +652,25 @@ The following methods are available for this resource:
     <td>Deletes the specified Instance resource. For more information, seeDeleting<br />an instance.</td>
 </tr>
 <tr>
+    <td><a href="#attach_disk"><CopyableCode code="attach_disk" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-forceAttach"><code>forceAttach</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Attaches an existing Disk resource to an instance. You must first<br />create the disk before you can attach it. It is not possible to create<br />and attach a disk at the same time. For more information, readAdding a<br />persistent disk to your instance.</td>
+</tr>
+<tr>
     <td><a href="#bulk_insert"><CopyableCode code="bulk_insert" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates multiple instances. Count specifies the number of instances to<br />create. For more information, seeAbout bulk<br />creation of VMs.</td>
+    <td>Creates multiple instances in a given region. Count specifies the number of<br />instances to create.</td>
 </tr>
 <tr>
-    <td><a href="#set_machine_resources"><CopyableCode code="set_machine_resources" /></a></td>
+    <td><a href="#detach_disk"><CopyableCode code="detach_disk" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-deviceName"><code>deviceName</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Changes the number and/or type of accelerator for a stopped instance to the<br />values specified in the request.</td>
-</tr>
-<tr>
-    <td><a href="#set_tags"><CopyableCode code="set_tags" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets network tags<br />for the specified instance to the data included in the request.</td>
+    <td>Detaches a disk from an instance.</td>
 </tr>
 <tr>
     <td><a href="#perform_maintenance"><CopyableCode code="perform_maintenance" /></a></td>
@@ -680,11 +680,46 @@ The following methods are available for this resource:
     <td>Perform a manual maintenance on the instance.</td>
 </tr>
 <tr>
-    <td><a href="#set_scheduling"><CopyableCode code="set_scheduling" /></a></td>
+    <td><a href="#report_host_as_faulty"><CopyableCode code="report_host_as_faulty" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets an instance's scheduling options. You can only call this method on astopped instance,<br />that is, a VM instance that is in a `TERMINATED` state. SeeInstance Life<br />Cycle for more information on the possible instance states.<br />For more information about setting scheduling options for a VM, seeSet<br />VM host maintenance policy.</td>
+    <td>Mark the host as faulty and try to restart the instance on a new host.</td>
+</tr>
+<tr>
+    <td><a href="#reset"><CopyableCode code="reset" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Performs a reset on the instance. This is a hard reset. The VM<br />does not do a graceful shutdown. For more information, seeResetting<br />an instance.</td>
+</tr>
+<tr>
+    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Resumes an instance that was suspended using theinstances().suspend<br />method.</td>
+</tr>
+<tr>
+    <td><a href="#send_diagnostic_interrupt"><CopyableCode code="send_diagnostic_interrupt" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Sends diagnostic interrupt to the instance.</td>
+</tr>
+<tr>
+    <td><a href="#set_deletion_protection"><CopyableCode code="set_deletion_protection" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
+    <td><a href="#parameter-deletionProtection"><code>deletionProtection</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets deletion protection on the instance.</td>
+</tr>
+<tr>
+    <td><a href="#set_disk_auto_delete"><CopyableCode code="set_disk_auto_delete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-autoDelete"><code>autoDelete</code></a>, <a href="#parameter-deviceName"><code>deviceName</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the auto-delete flag for a disk attached to an instance.</td>
 </tr>
 <tr>
     <td><a href="#set_labels"><CopyableCode code="set_labels" /></a></td>
@@ -694,46 +729,18 @@ The following methods are available for this resource:
     <td>Sets labels on an instance.  To learn more about labels, read theLabeling<br />Resources documentation.</td>
 </tr>
 <tr>
-    <td><a href="#set_shielded_instance_integrity_policy"><CopyableCode code="set_shielded_instance_integrity_policy" /></a></td>
+    <td><a href="#set_machine_resources"><CopyableCode code="set_machine_resources" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the Shielded Instance integrity policy for an instance. You can<br />only use this method on a running instance. This method<br />supports PATCH semantics and uses the JSON merge<br />patch format and processing rules.</td>
+    <td>Changes the number and/or type of accelerator for a stopped instance to the<br />values specified in the request.</td>
 </tr>
 <tr>
-    <td><a href="#start_with_encryption_key"><CopyableCode code="start_with_encryption_key" /></a></td>
+    <td><a href="#set_machine_type"><CopyableCode code="set_machine_type" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Starts an instance that was stopped using theinstances().stop<br />method. For more information, seeRestart an<br />instance.</td>
-</tr>
-<tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-noGracefulShutdown"><code>noGracefulShutdown</code></a>, <a href="#parameter-discardLocalSsd"><code>discardLocalSsd</code></a></td>
-    <td>Stops a running instance, shutting it down cleanly, and allows<br />you to restart the instance at a later time. Stopped instances do not incur<br />VM usage charges while they are stopped. However, resources that the VM is<br />using, such as persistent disks and static IP addresses, will continue to<br />be charged until they are deleted. For more information, seeStopping<br />an instance.</td>
-</tr>
-<tr>
-    <td><a href="#report_host_as_faulty"><CopyableCode code="report_host_as_faulty" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Mark the host as faulty and try to restart the instance on a new host.</td>
-</tr>
-<tr>
-    <td><a href="#attach_disk"><CopyableCode code="attach_disk" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-forceAttach"><code>forceAttach</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Attaches an existing Disk resource to an instance. You must first<br />create the disk before you can attach it. It is not possible to create<br />and attach a disk at the same time. For more information, readAdding a<br />persistent disk to your instance.</td>
-</tr>
-<tr>
-    <td><a href="#set_deletion_protection"><CopyableCode code="set_deletion_protection" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-resource"><code>resource</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-deletionProtection"><code>deletionProtection</code></a></td>
-    <td>Sets deletion protection on the instance.</td>
+    <td>Changes the machine type for a stopped instance to the machine<br />type specified in the request.</td>
 </tr>
 <tr>
     <td><a href="#set_metadata"><CopyableCode code="set_metadata" /></a></td>
@@ -750,6 +757,27 @@ The following methods are available for this resource:
     <td>Changes the minimum CPU platform that this instance should use.<br />This method can only<br />be called on a stopped instance. For more information, readSpecifying a<br />Minimum CPU Platform.</td>
 </tr>
 <tr>
+    <td><a href="#set_name"><CopyableCode code="set_name" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets name of an instance.</td>
+</tr>
+<tr>
+    <td><a href="#set_scheduling"><CopyableCode code="set_scheduling" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets an instance's scheduling options. You can only call this method on astopped instance,<br />that is, a VM instance that is in a `TERMINATED` state. SeeInstance Life<br />Cycle for more information on the possible instance states.<br />For more information about setting scheduling options for a VM, seeSet<br />VM host maintenance policy.</td>
+</tr>
+<tr>
+    <td><a href="#set_security_policy"><CopyableCode code="set_security_policy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets the Google Cloud Armor security policy for the specified instance.<br />For more information, seeGoogle<br />Cloud Armor Overview</td>
+</tr>
+<tr>
     <td><a href="#set_service_account"><CopyableCode code="set_service_account" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
@@ -757,32 +785,18 @@ The following methods are available for this resource:
     <td>Sets the service account on the instance. For more information,<br />readChanging<br />the service account and access scopes for an instance.</td>
 </tr>
 <tr>
-    <td><a href="#update_network_interface"><CopyableCode code="update_network_interface" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-networkInterface"><code>networkInterface</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates an instance's network interface. This method can only update an<br />interface's alias IP range and attached network. See Modifying<br />alias IP ranges for an existing instance for instructions on<br />changing alias IP ranges. See Migrating<br />a VM between networks for instructions on migrating an interface.<br />This method follows PATCH semantics.</td>
-</tr>
-<tr>
-    <td><a href="#set_disk_auto_delete"><CopyableCode code="set_disk_auto_delete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-autoDelete"><code>autoDelete</code></a>, <a href="#parameter-deviceName"><code>deviceName</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the auto-delete flag for a disk attached to an instance.</td>
-</tr>
-<tr>
-    <td><a href="#detach_disk"><CopyableCode code="detach_disk" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-deviceName"><code>deviceName</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Detaches a disk from an instance.</td>
-</tr>
-<tr>
-    <td><a href="#update_shielded_instance_config"><CopyableCode code="update_shielded_instance_config" /></a></td>
+    <td><a href="#set_shielded_instance_integrity_policy"><CopyableCode code="set_shielded_instance_integrity_policy" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates the Shielded Instance config for an instance. You can<br />only use this method on a stopped instance. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
+    <td>Sets the Shielded Instance integrity policy for an instance. You can<br />only use this method on a running instance. This method<br />supports PATCH semantics and uses the JSON merge<br />patch format and processing rules.</td>
+</tr>
+<tr>
+    <td><a href="#set_tags"><CopyableCode code="set_tags" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Sets network tags<br />for the specified instance to the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#simulate_maintenance_event"><CopyableCode code="simulate_maintenance_event" /></a></td>
@@ -799,18 +813,25 @@ The following methods are available for this resource:
     <td>Starts an instance that was stopped using theinstances().stop<br />method. For more information, seeRestart an<br />instance.</td>
 </tr>
 <tr>
-    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><a href="#start_with_encryption_key"><CopyableCode code="start_with_encryption_key" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Resumes an instance that was suspended using theinstances().suspend<br />method.</td>
+    <td>Starts an instance that was stopped using theinstances().stop<br />method. For more information, seeRestart an<br />instance.</td>
 </tr>
 <tr>
-    <td><a href="#reset"><CopyableCode code="reset" /></a></td>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Performs a reset on the instance. This is a hard reset. The VM<br />does not do a graceful shutdown. For more information, seeResetting<br />an instance.</td>
+    <td><a href="#parameter-discardLocalSsd"><code>discardLocalSsd</code></a>, <a href="#parameter-noGracefulShutdown"><code>noGracefulShutdown</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Stops a running instance, shutting it down cleanly, and allows<br />you to restart the instance at a later time. Stopped instances do not incur<br />VM usage charges while they are stopped. However, resources that the VM is<br />using, such as persistent disks and static IP addresses, will continue to<br />be charged until they are deleted. For more information, seeStopping<br />an instance.</td>
+</tr>
+<tr>
+    <td><a href="#suspend"><CopyableCode code="suspend" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-discardLocalSsd"><code>discardLocalSsd</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>This method suspends a running instance, saving its state to persistent<br />storage, and allows you to resume the instance at a later time. Suspended<br />instances have no compute costs (cores or RAM), and incur only storage<br />charges for the saved VM memory and localSSD data. Any charged resources<br />the virtual machine was using, such as persistent disks and static IP<br />addresses, will continue to be charged while the instance is suspended.<br />For more information, see<br />Suspending and resuming an instance.</td>
 </tr>
 <tr>
     <td><a href="#update_display_device"><CopyableCode code="update_display_device" /></a></td>
@@ -820,39 +841,18 @@ The following methods are available for this resource:
     <td>Updates the Display config for a VM instance. You can<br />only use this method on a stopped VM instance. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
-    <td><a href="#set_machine_type"><CopyableCode code="set_machine_type" /></a></td>
+    <td><a href="#update_network_interface"><CopyableCode code="update_network_interface" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-networkInterface"><code>networkInterface</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Updates an instance's network interface. This method can only update an<br />interface's alias IP range and attached network. See Modifying<br />alias IP ranges for an existing instance for instructions on<br />changing alias IP ranges. See Migrating<br />a VM between networks for instructions on migrating an interface.<br />This method follows PATCH semantics.</td>
+</tr>
+<tr>
+    <td><a href="#update_shielded_instance_config"><CopyableCode code="update_shielded_instance_config" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Changes the machine type for a stopped instance to the machine<br />type specified in the request.</td>
-</tr>
-<tr>
-    <td><a href="#set_security_policy"><CopyableCode code="set_security_policy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the Google Cloud Armor security policy for the specified instance.<br />For more information, seeGoogle<br />Cloud Armor Overview</td>
-</tr>
-<tr>
-    <td><a href="#send_diagnostic_interrupt"><CopyableCode code="send_diagnostic_interrupt" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Sends diagnostic interrupt to the instance.</td>
-</tr>
-<tr>
-    <td><a href="#set_name"><CopyableCode code="set_name" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets name of an instance.</td>
-</tr>
-<tr>
-    <td><a href="#suspend"><CopyableCode code="suspend" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-discardLocalSsd"><code>discardLocalSsd</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>This method suspends a running instance, saving its state to persistent<br />storage, and allows you to resume the instance at a later time. Suspended<br />instances have no compute costs (cores or RAM), and incur only storage<br />charges for the saved VM memory and localSSD data. Any charged resources<br />the virtual machine was using, such as persistent disks and static IP<br />addresses, will continue to be charged while the instance is suspended.<br />For more information, see<br />Suspending and resuming an instance.</td>
+    <td>Updates the Shielded Instance config for an instance. You can<br />only use this method on a stopped instance. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
 </tr>
 </tbody>
 </table>
@@ -892,6 +892,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-region">
+    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -1079,10 +1084,10 @@ warning
 FROM google.compute.instances
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -1143,13 +1148,13 @@ workloadIdentityConfig,
 zone
 FROM google.compute.instances
 WHERE project = '{{ project }}' -- required
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -1171,84 +1176,84 @@ Creates an instance resource in the specified project using the data<br />includ
 
 ```sql
 INSERT INTO google.compute.instances (
+data__advancedMachineFeatures,
+data__canIpForward,
+data__confidentialInstanceConfig,
+data__deletionProtection,
 data__description,
 data__disks,
-data__metadata,
-data__serviceAccounts,
-data__keyRevocationActionType,
-data__networkInterfaces,
-data__name,
-data__confidentialInstanceConfig,
 data__displayDevice,
-data__localSsdEncryptionMode,
-data__resourcePolicies,
-data__shieldedInstanceConfig,
-data__reservationAffinity,
-data__deletionProtection,
-data__instanceEncryptionKey,
-data__hostname,
-data__labels,
-data__advancedMachineFeatures,
-data__sourceMachineImageEncryptionKey,
-data__labelFingerprint,
-data__workloadIdentityConfig,
-data__params,
-data__minCpuPlatform,
-data__tags,
-data__shieldedInstanceIntegrityPolicy,
-data__canIpForward,
-data__networkPerformanceConfig,
-data__machineType,
-data__sourceMachineImage,
 data__fingerprint,
-data__scheduling,
 data__guestAccelerators,
+data__hostname,
+data__instanceEncryptionKey,
+data__keyRevocationActionType,
+data__labelFingerprint,
+data__labels,
+data__localSsdEncryptionMode,
+data__machineType,
+data__metadata,
+data__minCpuPlatform,
+data__name,
+data__networkInterfaces,
+data__networkPerformanceConfig,
+data__params,
 data__privateIpv6GoogleAccess,
+data__reservationAffinity,
+data__resourcePolicies,
+data__scheduling,
+data__serviceAccounts,
+data__shieldedInstanceConfig,
+data__shieldedInstanceIntegrityPolicy,
+data__sourceMachineImage,
+data__sourceMachineImageEncryptionKey,
+data__tags,
+data__workloadIdentityConfig,
 project,
 zone,
+requestId,
 sourceInstanceTemplate,
-sourceMachineImage,
-requestId
+sourceMachineImage
 )
 SELECT 
+'{{ advancedMachineFeatures }}',
+{{ canIpForward }},
+'{{ confidentialInstanceConfig }}',
+{{ deletionProtection }},
 '{{ description }}',
 '{{ disks }}',
-'{{ metadata }}',
-'{{ serviceAccounts }}',
-'{{ keyRevocationActionType }}',
-'{{ networkInterfaces }}',
-'{{ name }}',
-'{{ confidentialInstanceConfig }}',
 '{{ displayDevice }}',
-'{{ localSsdEncryptionMode }}',
-'{{ resourcePolicies }}',
-'{{ shieldedInstanceConfig }}',
-'{{ reservationAffinity }}',
-{{ deletionProtection }},
-'{{ instanceEncryptionKey }}',
-'{{ hostname }}',
-'{{ labels }}',
-'{{ advancedMachineFeatures }}',
-'{{ sourceMachineImageEncryptionKey }}',
-'{{ labelFingerprint }}',
-'{{ workloadIdentityConfig }}',
-'{{ params }}',
-'{{ minCpuPlatform }}',
-'{{ tags }}',
-'{{ shieldedInstanceIntegrityPolicy }}',
-{{ canIpForward }},
-'{{ networkPerformanceConfig }}',
-'{{ machineType }}',
-'{{ sourceMachineImage }}',
 '{{ fingerprint }}',
-'{{ scheduling }}',
 '{{ guestAccelerators }}',
+'{{ hostname }}',
+'{{ instanceEncryptionKey }}',
+'{{ keyRevocationActionType }}',
+'{{ labelFingerprint }}',
+'{{ labels }}',
+'{{ localSsdEncryptionMode }}',
+'{{ machineType }}',
+'{{ metadata }}',
+'{{ minCpuPlatform }}',
+'{{ name }}',
+'{{ networkInterfaces }}',
+'{{ networkPerformanceConfig }}',
+'{{ params }}',
 '{{ privateIpv6GoogleAccess }}',
+'{{ reservationAffinity }}',
+'{{ resourcePolicies }}',
+'{{ scheduling }}',
+'{{ serviceAccounts }}',
+'{{ shieldedInstanceConfig }}',
+'{{ shieldedInstanceIntegrityPolicy }}',
+'{{ sourceMachineImage }}',
+'{{ sourceMachineImageEncryptionKey }}',
+'{{ tags }}',
+'{{ workloadIdentityConfig }}',
 '{{ project }}',
 '{{ zone }}',
+'{{ requestId }}',
 '{{ sourceInstanceTemplate }}',
-'{{ sourceMachineImage }}',
-'{{ requestId }}'
+'{{ sourceMachineImage }}'
 RETURNING
 id,
 name,
@@ -1291,6 +1296,32 @@ zone
     - name: zone
       value: "{{ zone }}"
       description: Required parameter for the instances resource.
+    - name: advancedMachineFeatures
+      description: |
+        Controls for advanced machine-related behavior features.
+      value:
+        enableNestedVirtualization: {{ enableNestedVirtualization }}
+        enableUefiNetworking: {{ enableUefiNetworking }}
+        performanceMonitoringUnit: "{{ performanceMonitoringUnit }}"
+        threadsPerCore: {{ threadsPerCore }}
+        turboMode: "{{ turboMode }}"
+        visibleCoreCount: {{ visibleCoreCount }}
+    - name: canIpForward
+      value: {{ canIpForward }}
+      description: |
+        Allows this instance to send and receive packets with non-matching
+        destination or source IPs. This is required if you plan to use this
+        instance to forward routes. For more information, seeEnabling IP Forwarding.
+    - name: confidentialInstanceConfig
+      description: |
+        A set of Confidential Instance options.
+      value:
+        confidentialInstanceType: "{{ confidentialInstanceType }}"
+        enableConfidentialCompute: {{ enableConfidentialCompute }}
+    - name: deletionProtection
+      value: {{ deletionProtection }}
+      description: |
+        Whether the resource should be protected against deletion.
     - name: description
       value: "{{ description }}"
       description: |
@@ -1301,182 +1332,101 @@ zone
         Array of disks associated with this instance. Persistent disks must be
         created before you can assign them.
       value:
-        - diskSizeGb: "{{ diskSizeGb }}"
+        - architecture: "{{ architecture }}"
+          autoDelete: {{ autoDelete }}
           boot: {{ boot }}
-          architecture: "{{ architecture }}"
           deviceName: "{{ deviceName }}"
-          savedState: "{{ savedState }}"
           diskEncryptionKey:
-            rawKey: "{{ rawKey }}"
-            kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-            rsaEncryptedKey: "{{ rsaEncryptedKey }}"
             kmsKeyName: "{{ kmsKeyName }}"
+            kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+            rawKey: "{{ rawKey }}"
+            rsaEncryptedKey: "{{ rsaEncryptedKey }}"
             sha256: "{{ sha256 }}"
+          diskSizeGb: "{{ diskSizeGb }}"
+          forceAttach: {{ forceAttach }}
+          guestOsFeatures: "{{ guestOsFeatures }}"
+          index: {{ index }}
+          initializeParams:
+            architecture: "{{ architecture }}"
+            description: "{{ description }}"
+            diskName: "{{ diskName }}"
+            diskSizeGb: "{{ diskSizeGb }}"
+            diskType: "{{ diskType }}"
+            enableConfidentialCompute: {{ enableConfidentialCompute }}
+            labels: "{{ labels }}"
+            licenses:
+              - "{{ licenses }}"
+            onUpdateAction: "{{ onUpdateAction }}"
+            provisionedIops: "{{ provisionedIops }}"
+            provisionedThroughput: "{{ provisionedThroughput }}"
+            replicaZones:
+              - "{{ replicaZones }}"
+            resourceManagerTags: "{{ resourceManagerTags }}"
+            resourcePolicies:
+              - "{{ resourcePolicies }}"
+            sourceImage: "{{ sourceImage }}"
+            sourceImageEncryptionKey:
+              kmsKeyName: "{{ kmsKeyName }}"
+              kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+              rawKey: "{{ rawKey }}"
+              rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+              sha256: "{{ sha256 }}"
+            sourceSnapshot: "{{ sourceSnapshot }}"
+            sourceSnapshotEncryptionKey:
+              kmsKeyName: "{{ kmsKeyName }}"
+              kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+              rawKey: "{{ rawKey }}"
+              rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+              sha256: "{{ sha256 }}"
+            storagePool: "{{ storagePool }}"
           interface: "{{ interface }}"
-          mode: "{{ mode }}"
-          source: "{{ source }}"
           kind: "{{ kind }}"
           licenses: "{{ licenses }}"
+          mode: "{{ mode }}"
+          savedState: "{{ savedState }}"
           shieldedInstanceInitialState:
-            pk:
-              content: "{{ content }}"
-              fileType: "{{ fileType }}"
-            keks:
-              - content: "{{ content }}"
-                fileType: "{{ fileType }}"
             dbs:
               - content: "{{ content }}"
                 fileType: "{{ fileType }}"
             dbxs:
               - content: "{{ content }}"
                 fileType: "{{ fileType }}"
+            keks:
+              - content: "{{ content }}"
+                fileType: "{{ fileType }}"
+            pk:
+              content: "{{ content }}"
+              fileType: "{{ fileType }}"
+          source: "{{ source }}"
           type: "{{ type }}"
-          index: {{ index }}
-          autoDelete: {{ autoDelete }}
-          guestOsFeatures: "{{ guestOsFeatures }}"
-          forceAttach: {{ forceAttach }}
-          initializeParams:
-            resourcePolicies:
-              - "{{ resourcePolicies }}"
-            storagePool: "{{ storagePool }}"
-            replicaZones:
-              - "{{ replicaZones }}"
-            diskSizeGb: "{{ diskSizeGb }}"
-            architecture: "{{ architecture }}"
-            sourceImage: "{{ sourceImage }}"
-            enableConfidentialCompute: {{ enableConfidentialCompute }}
-            sourceImageEncryptionKey:
-              rawKey: "{{ rawKey }}"
-              kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-              rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-              kmsKeyName: "{{ kmsKeyName }}"
-              sha256: "{{ sha256 }}"
-            description: "{{ description }}"
-            provisionedIops: "{{ provisionedIops }}"
-            labels: "{{ labels }}"
-            provisionedThroughput: "{{ provisionedThroughput }}"
-            diskName: "{{ diskName }}"
-            sourceSnapshotEncryptionKey:
-              rawKey: "{{ rawKey }}"
-              kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-              rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-              kmsKeyName: "{{ kmsKeyName }}"
-              sha256: "{{ sha256 }}"
-            resourceManagerTags: "{{ resourceManagerTags }}"
-            diskType: "{{ diskType }}"
-            licenses:
-              - "{{ licenses }}"
-            onUpdateAction: "{{ onUpdateAction }}"
-            sourceSnapshot: "{{ sourceSnapshot }}"
-    - name: metadata
-      description: |
-        The metadata key/value pairs assigned
-        to this instance. This includes metadata keys that were explicitly defined
-        for the instance.
-      value:
-        fingerprint: "{{ fingerprint }}"
-        items:
-          - key: "{{ key }}"
-            value: "{{ value }}"
-        kind: "{{ kind }}"
-    - name: serviceAccounts
-      description: |
-        A list of service accounts, with their specified scopes, authorized for
-        this instance. Only one service account per VM instance is supported.
-        Service accounts generate access tokens that can be accessed
-        through the metadata server and used to authenticate applications on the
-        instance. SeeService Accounts
-        for more information.
-      value:
-        - scopes: "{{ scopes }}"
-          email: "{{ email }}"
-    - name: keyRevocationActionType
-      value: "{{ keyRevocationActionType }}"
-      description: |
-        KeyRevocationActionType of the instance. Supported options are "STOP" and
-        "NONE". The default value is "NONE" if it is not specified.
-      valid_values: ['KEY_REVOCATION_ACTION_TYPE_UNSPECIFIED', 'NONE', 'STOP']
-    - name: networkInterfaces
-      description: |
-        An array of network configurations for this instance. These specify how
-        interfaces are configured to interact with other network services, such as
-        connecting to the internet. Multiple interfaces are supported
-        per instance.
-      value:
-        - ipv6Address: "{{ ipv6Address }}"
-          parentNicName: "{{ parentNicName }}"
-          fingerprint: "{{ fingerprint }}"
-          igmpQuery: "{{ igmpQuery }}"
-          serviceClassId: "{{ serviceClassId }}"
-          subnetwork: "{{ subnetwork }}"
-          network: "{{ network }}"
-          stackType: "{{ stackType }}"
-          ipv6AccessType: "{{ ipv6AccessType }}"
-          accessConfigs: "{{ accessConfigs }}"
-          networkAttachment: "{{ networkAttachment }}"
-          queueCount: {{ queueCount }}
-          name: "{{ name }}"
-          kind: "{{ kind }}"
-          networkIP: "{{ networkIP }}"
-          vlan: {{ vlan }}
-          internalIpv6PrefixLength: {{ internalIpv6PrefixLength }}
-          nicType: "{{ nicType }}"
-          aliasIpRanges: "{{ aliasIpRanges }}"
-          ipv6AccessConfigs: "{{ ipv6AccessConfigs }}"
-          aliasIpv6Ranges: "{{ aliasIpv6Ranges }}"
-          enableVpcScopedDns: {{ enableVpcScopedDns }}
-    - name: name
-      value: "{{ name }}"
-      description: |
-        The name of the resource, provided by the client when initially creating
-        the resource. The resource name must be 1-63 characters long, and comply
-        withRFC1035.
-        Specifically, the name must be 1-63 characters long and match the regular
-        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
-        character must be a lowercase letter, and all following characters must be
-        a dash, lowercase letter, or digit, except the last character, which cannot
-        be a dash.
-    - name: confidentialInstanceConfig
-      description: |
-        A set of Confidential Instance options.
-      value:
-        enableConfidentialCompute: {{ enableConfidentialCompute }}
-        confidentialInstanceType: "{{ confidentialInstanceType }}"
     - name: displayDevice
       description: |
         Enables display device for the instance.
       value:
         enableDisplay: {{ enableDisplay }}
-    - name: localSsdEncryptionMode
-      value: "{{ localSsdEncryptionMode }}"
+    - name: fingerprint
+      value: "{{ fingerprint }}"
       description: |
-        Specifies which method should be used for encrypting the
-        Local SSDs attached to the VM.
-      valid_values: ['EPHEMERAL_KEY_ENCRYPTION', 'LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED', 'STANDARD_ENCRYPTION']
-    - name: resourcePolicies
+        Specifies a fingerprint for this resource, which is essentially a hash of
+        the instance's contents and used for optimistic locking. The
+        fingerprint is initially generated by Compute Engine and changes after
+        every request to modify or update the instance. You must always provide an
+        up-to-date fingerprint hash in order to update the instance.
+        To see the latest fingerprint, make get() request to the
+        instance.
+    - name: guestAccelerators
+      description: |
+        A list of the type and count of accelerator cards attached to the instance.
       value:
-        - "{{ resourcePolicies }}"
+        - acceleratorCount: {{ acceleratorCount }}
+          acceleratorType: "{{ acceleratorType }}"
+    - name: hostname
+      value: "{{ hostname }}"
       description: |
-        Resource policies applied to this instance.
-    - name: shieldedInstanceConfig
-      description: |
-        A set of Shielded Instance options.
-      value:
-        enableSecureBoot: {{ enableSecureBoot }}
-        enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-        enableVtpm: {{ enableVtpm }}
-    - name: reservationAffinity
-      description: |
-        Specifies the reservations that this instance can consume from.
-      value:
-        consumeReservationType: "{{ consumeReservationType }}"
-        key: "{{ key }}"
-        values:
-          - "{{ values }}"
-    - name: deletionProtection
-      value: {{ deletionProtection }}
-      description: |
-        Whether the resource should be protected against deletion.
+        Specifies the hostname of the instance. The specified hostname must be
+        RFC1035 compliant. If hostname is not specified, the default hostname is
+        [INSTANCE_NAME].c.[PROJECT_ID].internal when using the global DNS, and
+        [INSTANCE_NAME].[ZONE].c.[PROJECT_ID].internal when using zonal DNS.
     - name: instanceEncryptionKey
       description: |
         Encrypts suspended data for an instance with acustomer-managed
@@ -1487,43 +1437,17 @@ zone
         the local SSD and in-memory contents will be encrypted using
         an automatically generated key during the suspend operation.
       value:
-        rawKey: "{{ rawKey }}"
-        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
         kmsKeyName: "{{ kmsKeyName }}"
-        sha256: "{{ sha256 }}"
-    - name: hostname
-      value: "{{ hostname }}"
-      description: |
-        Specifies the hostname of the instance. The specified hostname must be
-        RFC1035 compliant. If hostname is not specified, the default hostname is
-        [INSTANCE_NAME].c.[PROJECT_ID].internal when using the global DNS, and
-        [INSTANCE_NAME].[ZONE].c.[PROJECT_ID].internal when using zonal DNS.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Labels to apply to this instance. These can be later modified by
-        the setLabels method.
-    - name: advancedMachineFeatures
-      description: |
-        Controls for advanced machine-related behavior features.
-      value:
-        enableUefiNetworking: {{ enableUefiNetworking }}
-        performanceMonitoringUnit: "{{ performanceMonitoringUnit }}"
-        threadsPerCore: {{ threadsPerCore }}
-        visibleCoreCount: {{ visibleCoreCount }}
-        enableNestedVirtualization: {{ enableNestedVirtualization }}
-        turboMode: "{{ turboMode }}"
-    - name: sourceMachineImageEncryptionKey
-      description: |
-        Source machine image encryption key when creating an instance from a
-        machine image.
-      value:
-        rawKey: "{{ rawKey }}"
         kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
         rsaEncryptedKey: "{{ rsaEncryptedKey }}"
-        kmsKeyName: "{{ kmsKeyName }}"
         sha256: "{{ sha256 }}"
+    - name: keyRevocationActionType
+      value: "{{ keyRevocationActionType }}"
+      description: |
+        KeyRevocationActionType of the instance. Supported options are "STOP" and
+        "NONE". The default value is "NONE" if it is not specified.
+      valid_values: ['KEY_REVOCATION_ACTION_TYPE_UNSPECIFIED', 'NONE', 'STOP']
     - name: labelFingerprint
       value: "{{ labelFingerprint }}"
       description: |
@@ -1534,53 +1458,17 @@ zone
         up-to-date fingerprint hash in order to update or change labels.
         To see the latest fingerprint, make get() request to the
         instance.
-    - name: workloadIdentityConfig
-      value:
-        identityCertificateEnabled: {{ identityCertificateEnabled }}
-        identity: "{{ identity }}"
-    - name: params
+    - name: labels
+      value: "{{ labels }}"
       description: |
-        Input only. [Input Only] Additional params passed with the request, but not persisted
-        as part of resource payload.
-      value:
-        requestValidForDuration:
-          nanos: {{ nanos }}
-          seconds: "{{ seconds }}"
-        resourceManagerTags: "{{ resourceManagerTags }}"
-    - name: minCpuPlatform
-      value: "{{ minCpuPlatform }}"
+        Labels to apply to this instance. These can be later modified by
+        the setLabels method.
+    - name: localSsdEncryptionMode
+      value: "{{ localSsdEncryptionMode }}"
       description: |
-        Specifies aminimum CPU
-        platform for the VM instance. Applicable values are the friendly names
-        of CPU platforms, such as minCpuPlatform: "Intel
-        Haswell" or minCpuPlatform: "Intel Sandy
-        Bridge".
-    - name: tags
-      description: |
-        Tags to apply to this instance. Tags are used to identify valid
-        sources or targets for network firewalls and are specified by the client
-        during instance creation. The tags can be later modified by the setTags
-        method. Each tag within the list must comply withRFC1035.
-        Multiple tags can be specified via the 'tags.items' field.
-      value:
-        items:
-          - "{{ items }}"
-        fingerprint: "{{ fingerprint }}"
-    - name: shieldedInstanceIntegrityPolicy
-      description: |
-        The policy describes the baseline against which
-        Instance boot integrity is measured.
-      value:
-        updateAutoLearnPolicy: {{ updateAutoLearnPolicy }}
-    - name: canIpForward
-      value: {{ canIpForward }}
-      description: |
-        Allows this instance to send and receive packets with non-matching
-        destination or source IPs. This is required if you plan to use this
-        instance to forward routes. For more information, seeEnabling IP Forwarding.
-    - name: networkPerformanceConfig
-      value:
-        totalEgressBandwidthTier: "{{ totalEgressBandwidthTier }}"
+        Specifies which method should be used for encrypting the
+        Local SSDs attached to the VM.
+      valid_values: ['EPHEMERAL_KEY_ENCRYPTION', 'LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED', 'STANDARD_ENCRYPTION']
     - name: machineType
       value: "{{ machineType }}"
       description: |
@@ -1600,73 +1488,190 @@ zone
         For example: zones/us-central1-f/machineTypes/custom-4-5120
         For a full list of restrictions, read theSpecifications
         for custom machine types.
-    - name: sourceMachineImage
-      value: "{{ sourceMachineImage }}"
+    - name: metadata
       description: |
-        Source machine image
-    - name: fingerprint
-      value: "{{ fingerprint }}"
-      description: |
-        Specifies a fingerprint for this resource, which is essentially a hash of
-        the instance's contents and used for optimistic locking. The
-        fingerprint is initially generated by Compute Engine and changes after
-        every request to modify or update the instance. You must always provide an
-        up-to-date fingerprint hash in order to update the instance.
-        To see the latest fingerprint, make get() request to the
-        instance.
-    - name: scheduling
-      description: |
-        Sets the scheduling options for this instance.
+        The metadata key/value pairs assigned
+        to this instance. This includes metadata keys that were explicitly defined
+        for the instance.
       value:
-        onHostMaintenance: "{{ onHostMaintenance }}"
-        hostErrorTimeoutSeconds: {{ hostErrorTimeoutSeconds }}
-        provisioningModel: "{{ provisioningModel }}"
-        availabilityDomain: {{ availabilityDomain }}
-        onInstanceStopAction:
-          discardLocalSsd: {{ discardLocalSsd }}
-        nodeAffinities:
-          - values: "{{ values }}"
-            key: "{{ key }}"
-            operator: "{{ operator }}"
-        maxRunDuration:
-          nanos: {{ nanos }}
-          seconds: "{{ seconds }}"
-        instanceTerminationAction: "{{ instanceTerminationAction }}"
-        preemptionNoticeDuration:
-          nanos: {{ nanos }}
-          seconds: "{{ seconds }}"
-        preemptible: {{ preemptible }}
-        skipGuestOsShutdown: {{ skipGuestOsShutdown }}
-        terminationTime: "{{ terminationTime }}"
-        localSsdRecoveryTimeout:
-          nanos: {{ nanos }}
-          seconds: "{{ seconds }}"
-        minNodeCpus: {{ minNodeCpus }}
-        gracefulShutdown:
-          enabled: {{ enabled }}
-          maxDuration:
-            nanos: {{ nanos }}
-            seconds: "{{ seconds }}"
-        automaticRestart: {{ automaticRestart }}
-        locationHint: "{{ locationHint }}"
-    - name: guestAccelerators
+        fingerprint: "{{ fingerprint }}"
+        items:
+          - key: "{{ key }}"
+            value: "{{ value }}"
+        kind: "{{ kind }}"
+    - name: minCpuPlatform
+      value: "{{ minCpuPlatform }}"
       description: |
-        A list of the type and count of accelerator cards attached to the instance.
+        Specifies aminimum CPU
+        platform for the VM instance. Applicable values are the friendly names
+        of CPU platforms, such as minCpuPlatform: "Intel
+        Haswell" or minCpuPlatform: "Intel Sandy
+        Bridge".
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the resource, provided by the client when initially creating
+        the resource. The resource name must be 1-63 characters long, and comply
+        withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
+    - name: networkInterfaces
+      description: |
+        An array of network configurations for this instance. These specify how
+        interfaces are configured to interact with other network services, such as
+        connecting to the internet. Multiple interfaces are supported
+        per instance.
       value:
-        - acceleratorType: "{{ acceleratorType }}"
-          acceleratorCount: {{ acceleratorCount }}
+        - accessConfigs: "{{ accessConfigs }}"
+          aliasIpRanges: "{{ aliasIpRanges }}"
+          aliasIpv6Ranges: "{{ aliasIpv6Ranges }}"
+          enableVpcScopedDns: {{ enableVpcScopedDns }}
+          fingerprint: "{{ fingerprint }}"
+          igmpQuery: "{{ igmpQuery }}"
+          internalIpv6PrefixLength: {{ internalIpv6PrefixLength }}
+          ipv6AccessConfigs: "{{ ipv6AccessConfigs }}"
+          ipv6AccessType: "{{ ipv6AccessType }}"
+          ipv6Address: "{{ ipv6Address }}"
+          kind: "{{ kind }}"
+          name: "{{ name }}"
+          network: "{{ network }}"
+          networkAttachment: "{{ networkAttachment }}"
+          networkIP: "{{ networkIP }}"
+          nicType: "{{ nicType }}"
+          parentNicName: "{{ parentNicName }}"
+          queueCount: {{ queueCount }}
+          serviceClassId: "{{ serviceClassId }}"
+          stackType: "{{ stackType }}"
+          subnetwork: "{{ subnetwork }}"
+          vlan: {{ vlan }}
+    - name: networkPerformanceConfig
+      value:
+        totalEgressBandwidthTier: "{{ totalEgressBandwidthTier }}"
+    - name: params
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        requestValidForDuration:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+        resourceManagerTags: "{{ resourceManagerTags }}"
     - name: privateIpv6GoogleAccess
       value: "{{ privateIpv6GoogleAccess }}"
       description: |
         The private IPv6 google access type for the VM.
         If not specified, use  INHERIT_FROM_SUBNETWORK as default.
       valid_values: ['ENABLE_BIDIRECTIONAL_ACCESS_TO_GOOGLE', 'ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE', 'INHERIT_FROM_SUBNETWORK']
+    - name: reservationAffinity
+      description: |
+        Specifies the reservations that this instance can consume from.
+      value:
+        consumeReservationType: "{{ consumeReservationType }}"
+        key: "{{ key }}"
+        values:
+          - "{{ values }}"
+    - name: resourcePolicies
+      value:
+        - "{{ resourcePolicies }}"
+      description: |
+        Resource policies applied to this instance.
+    - name: scheduling
+      description: |
+        Sets the scheduling options for this instance.
+      value:
+        automaticRestart: {{ automaticRestart }}
+        availabilityDomain: {{ availabilityDomain }}
+        gracefulShutdown:
+          enabled: {{ enabled }}
+          maxDuration:
+            nanos: {{ nanos }}
+            seconds: "{{ seconds }}"
+        hostErrorTimeoutSeconds: {{ hostErrorTimeoutSeconds }}
+        instanceTerminationAction: "{{ instanceTerminationAction }}"
+        localSsdRecoveryTimeout:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+        locationHint: "{{ locationHint }}"
+        maxRunDuration:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+        minNodeCpus: {{ minNodeCpus }}
+        nodeAffinities:
+          - key: "{{ key }}"
+            operator: "{{ operator }}"
+            values: "{{ values }}"
+        onHostMaintenance: "{{ onHostMaintenance }}"
+        onInstanceStopAction:
+          discardLocalSsd: {{ discardLocalSsd }}
+        preemptible: {{ preemptible }}
+        preemptionNoticeDuration:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+        provisioningModel: "{{ provisioningModel }}"
+        skipGuestOsShutdown: {{ skipGuestOsShutdown }}
+        terminationTime: "{{ terminationTime }}"
+    - name: serviceAccounts
+      description: |
+        A list of service accounts, with their specified scopes, authorized for
+        this instance. Only one service account per VM instance is supported.
+        Service accounts generate access tokens that can be accessed
+        through the metadata server and used to authenticate applications on the
+        instance. SeeService Accounts
+        for more information.
+      value:
+        - email: "{{ email }}"
+          scopes: "{{ scopes }}"
+    - name: shieldedInstanceConfig
+      description: |
+        A set of Shielded Instance options.
+      value:
+        enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+        enableSecureBoot: {{ enableSecureBoot }}
+        enableVtpm: {{ enableVtpm }}
+    - name: shieldedInstanceIntegrityPolicy
+      description: |
+        The policy describes the baseline against which
+        Instance boot integrity is measured.
+      value:
+        updateAutoLearnPolicy: {{ updateAutoLearnPolicy }}
+    - name: sourceMachineImage
+      value: "{{ sourceMachineImage }}"
+      description: |
+        Source machine image
+    - name: sourceMachineImageEncryptionKey
+      description: |
+        Source machine image encryption key when creating an instance from a
+        machine image.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
+        rawKey: "{{ rawKey }}"
+        rsaEncryptedKey: "{{ rsaEncryptedKey }}"
+        sha256: "{{ sha256 }}"
+    - name: tags
+      description: |
+        Tags to apply to this instance. Tags are used to identify valid
+        sources or targets for network firewalls and are specified by the client
+        during instance creation. The tags can be later modified by the setTags
+        method. Each tag within the list must comply withRFC1035.
+        Multiple tags can be specified via the 'tags.items' field.
+      value:
+        fingerprint: "{{ fingerprint }}"
+        items:
+          - "{{ items }}"
+    - name: workloadIdentityConfig
+      value:
+        identity: "{{ identity }}"
+        identityCertificateEnabled: {{ identityCertificateEnabled }}
+    - name: requestId
+      value: "{{ requestId }}"
     - name: sourceInstanceTemplate
       value: "{{ sourceInstanceTemplate }}"
     - name: sourceMachineImage
       value: "{{ sourceMachineImage }}"
-    - name: requestId
-      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -1688,47 +1693,47 @@ Updates an instance only if the necessary resources are available. This<br />met
 ```sql
 REPLACE google.compute.instances
 SET 
+data__advancedMachineFeatures = '{{ advancedMachineFeatures }}',
+data__canIpForward = {{ canIpForward }},
+data__confidentialInstanceConfig = '{{ confidentialInstanceConfig }}',
+data__deletionProtection = {{ deletionProtection }},
 data__description = '{{ description }}',
 data__disks = '{{ disks }}',
-data__metadata = '{{ metadata }}',
-data__serviceAccounts = '{{ serviceAccounts }}',
-data__keyRevocationActionType = '{{ keyRevocationActionType }}',
-data__networkInterfaces = '{{ networkInterfaces }}',
-data__name = '{{ name }}',
-data__confidentialInstanceConfig = '{{ confidentialInstanceConfig }}',
 data__displayDevice = '{{ displayDevice }}',
-data__localSsdEncryptionMode = '{{ localSsdEncryptionMode }}',
-data__resourcePolicies = '{{ resourcePolicies }}',
-data__shieldedInstanceConfig = '{{ shieldedInstanceConfig }}',
-data__reservationAffinity = '{{ reservationAffinity }}',
-data__deletionProtection = {{ deletionProtection }},
-data__instanceEncryptionKey = '{{ instanceEncryptionKey }}',
-data__hostname = '{{ hostname }}',
-data__labels = '{{ labels }}',
-data__advancedMachineFeatures = '{{ advancedMachineFeatures }}',
-data__sourceMachineImageEncryptionKey = '{{ sourceMachineImageEncryptionKey }}',
-data__labelFingerprint = '{{ labelFingerprint }}',
-data__workloadIdentityConfig = '{{ workloadIdentityConfig }}',
-data__params = '{{ params }}',
-data__minCpuPlatform = '{{ minCpuPlatform }}',
-data__tags = '{{ tags }}',
-data__shieldedInstanceIntegrityPolicy = '{{ shieldedInstanceIntegrityPolicy }}',
-data__canIpForward = {{ canIpForward }},
-data__networkPerformanceConfig = '{{ networkPerformanceConfig }}',
-data__machineType = '{{ machineType }}',
-data__sourceMachineImage = '{{ sourceMachineImage }}',
 data__fingerprint = '{{ fingerprint }}',
-data__scheduling = '{{ scheduling }}',
 data__guestAccelerators = '{{ guestAccelerators }}',
-data__privateIpv6GoogleAccess = '{{ privateIpv6GoogleAccess }}'
+data__hostname = '{{ hostname }}',
+data__instanceEncryptionKey = '{{ instanceEncryptionKey }}',
+data__keyRevocationActionType = '{{ keyRevocationActionType }}',
+data__labelFingerprint = '{{ labelFingerprint }}',
+data__labels = '{{ labels }}',
+data__localSsdEncryptionMode = '{{ localSsdEncryptionMode }}',
+data__machineType = '{{ machineType }}',
+data__metadata = '{{ metadata }}',
+data__minCpuPlatform = '{{ minCpuPlatform }}',
+data__name = '{{ name }}',
+data__networkInterfaces = '{{ networkInterfaces }}',
+data__networkPerformanceConfig = '{{ networkPerformanceConfig }}',
+data__params = '{{ params }}',
+data__privateIpv6GoogleAccess = '{{ privateIpv6GoogleAccess }}',
+data__reservationAffinity = '{{ reservationAffinity }}',
+data__resourcePolicies = '{{ resourcePolicies }}',
+data__scheduling = '{{ scheduling }}',
+data__serviceAccounts = '{{ serviceAccounts }}',
+data__shieldedInstanceConfig = '{{ shieldedInstanceConfig }}',
+data__shieldedInstanceIntegrityPolicy = '{{ shieldedInstanceIntegrityPolicy }}',
+data__sourceMachineImage = '{{ sourceMachineImage }}',
+data__sourceMachineImageEncryptionKey = '{{ sourceMachineImageEncryptionKey }}',
+data__tags = '{{ tags }}',
+data__workloadIdentityConfig = '{{ workloadIdentityConfig }}'
 WHERE 
 project = '{{ project }}' --required
 AND zone = '{{ zone }}' --required
 AND instance = '{{ instance }}' --required
+AND discardLocalSsd = {{ discardLocalSsd}}
+AND minimalAction = '{{ minimalAction}}'
 AND mostDisruptiveAllowedAction = '{{ mostDisruptiveAllowedAction}}'
 AND requestId = '{{ requestId}}'
-AND minimalAction = '{{ minimalAction}}'
-AND discardLocalSsd = {{ discardLocalSsd}}
 RETURNING
 id,
 name,
@@ -1790,58 +1795,217 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="bulk_insert"
+    defaultValue="attach_disk"
     values={[
-        { label: 'bulk_insert', value: 'bulk_insert' },
-        { label: 'set_machine_resources', value: 'set_machine_resources' },
-        { label: 'set_tags', value: 'set_tags' },
-        { label: 'perform_maintenance', value: 'perform_maintenance' },
-        { label: 'set_scheduling', value: 'set_scheduling' },
-        { label: 'set_labels', value: 'set_labels' },
-        { label: 'set_shielded_instance_integrity_policy', value: 'set_shielded_instance_integrity_policy' },
-        { label: 'start_with_encryption_key', value: 'start_with_encryption_key' },
-        { label: 'stop', value: 'stop' },
-        { label: 'report_host_as_faulty', value: 'report_host_as_faulty' },
         { label: 'attach_disk', value: 'attach_disk' },
+        { label: 'bulk_insert', value: 'bulk_insert' },
+        { label: 'detach_disk', value: 'detach_disk' },
+        { label: 'perform_maintenance', value: 'perform_maintenance' },
+        { label: 'report_host_as_faulty', value: 'report_host_as_faulty' },
+        { label: 'reset', value: 'reset' },
+        { label: 'resume', value: 'resume' },
+        { label: 'send_diagnostic_interrupt', value: 'send_diagnostic_interrupt' },
         { label: 'set_deletion_protection', value: 'set_deletion_protection' },
+        { label: 'set_disk_auto_delete', value: 'set_disk_auto_delete' },
+        { label: 'set_labels', value: 'set_labels' },
+        { label: 'set_machine_resources', value: 'set_machine_resources' },
+        { label: 'set_machine_type', value: 'set_machine_type' },
         { label: 'set_metadata', value: 'set_metadata' },
         { label: 'set_min_cpu_platform', value: 'set_min_cpu_platform' },
+        { label: 'set_name', value: 'set_name' },
+        { label: 'set_scheduling', value: 'set_scheduling' },
+        { label: 'set_security_policy', value: 'set_security_policy' },
         { label: 'set_service_account', value: 'set_service_account' },
-        { label: 'update_network_interface', value: 'update_network_interface' },
-        { label: 'set_disk_auto_delete', value: 'set_disk_auto_delete' },
-        { label: 'detach_disk', value: 'detach_disk' },
-        { label: 'update_shielded_instance_config', value: 'update_shielded_instance_config' },
+        { label: 'set_shielded_instance_integrity_policy', value: 'set_shielded_instance_integrity_policy' },
+        { label: 'set_tags', value: 'set_tags' },
         { label: 'simulate_maintenance_event', value: 'simulate_maintenance_event' },
         { label: 'start', value: 'start' },
-        { label: 'resume', value: 'resume' },
-        { label: 'reset', value: 'reset' },
+        { label: 'start_with_encryption_key', value: 'start_with_encryption_key' },
+        { label: 'stop', value: 'stop' },
+        { label: 'suspend', value: 'suspend' },
         { label: 'update_display_device', value: 'update_display_device' },
-        { label: 'set_machine_type', value: 'set_machine_type' },
-        { label: 'set_security_policy', value: 'set_security_policy' },
-        { label: 'send_diagnostic_interrupt', value: 'send_diagnostic_interrupt' },
-        { label: 'set_name', value: 'set_name' },
-        { label: 'suspend', value: 'suspend' }
+        { label: 'update_network_interface', value: 'update_network_interface' },
+        { label: 'update_shielded_instance_config', value: 'update_shielded_instance_config' }
     ]}
 >
+<TabItem value="attach_disk">
+
+Attaches an existing Disk resource to an instance. You must first<br />create the disk before you can attach it. It is not possible to create<br />and attach a disk at the same time. For more information, readAdding a<br />persistent disk to your instance.
+
+```sql
+EXEC google.compute.instances.attach_disk 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@forceAttach={{ forceAttach }}, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"autoDelete": {{ autoDelete }}, 
+"boot": {{ boot }}, 
+"deviceName": "{{ deviceName }}", 
+"diskEncryptionKey": "{{ diskEncryptionKey }}", 
+"diskSizeGb": "{{ diskSizeGb }}", 
+"forceAttach": {{ forceAttach }}, 
+"guestOsFeatures": "{{ guestOsFeatures }}", 
+"initializeParams": "{{ initializeParams }}", 
+"interface": "{{ interface }}", 
+"mode": "{{ mode }}", 
+"source": "{{ source }}", 
+"type": "{{ type }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="bulk_insert">
 
-Creates multiple instances. Count specifies the number of instances to<br />create. For more information, seeAbout bulk<br />creation of VMs.
+Creates multiple instances in a given region. Count specifies the number of<br />instances to create.
 
 ```sql
 EXEC google.compute.instances.bulk_insert 
 @project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
+@region='{{ region }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"sourceInstanceTemplate": "{{ sourceInstanceTemplate }}", 
-"instanceProperties": "{{ instanceProperties }}", 
 "count": "{{ count }}", 
+"instanceFlexibilityPolicy": "{{ instanceFlexibilityPolicy }}", 
+"instanceProperties": "{{ instanceProperties }}", 
+"locationPolicy": "{{ locationPolicy }}", 
 "minCount": "{{ minCount }}", 
 "namePattern": "{{ namePattern }}", 
 "perInstanceProperties": "{{ perInstanceProperties }}", 
-"locationPolicy": "{{ locationPolicy }}", 
-"instanceFlexibilityPolicy": "{{ instanceFlexibilityPolicy }}"
+"sourceInstanceTemplate": "{{ sourceInstanceTemplate }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="detach_disk">
+
+Detaches a disk from an instance.
+
+```sql
+EXEC google.compute.instances.detach_disk 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@deviceName='{{ deviceName }}' --required, 
+@requestId='{{ requestId }}'
+;
+```
+</TabItem>
+<TabItem value="perform_maintenance">
+
+Perform a manual maintenance on the instance.
+
+```sql
+EXEC google.compute.instances.perform_maintenance 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}'
+;
+```
+</TabItem>
+<TabItem value="report_host_as_faulty">
+
+Mark the host as faulty and try to restart the instance on a new host.
+
+```sql
+EXEC google.compute.instances.report_host_as_faulty 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"disruptionSchedule": "{{ disruptionSchedule }}", 
+"faultReasons": "{{ faultReasons }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reset">
+
+Performs a reset on the instance. This is a hard reset. The VM<br />does not do a graceful shutdown. For more information, seeResetting<br />an instance.
+
+```sql
+EXEC google.compute.instances.reset 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}'
+;
+```
+</TabItem>
+<TabItem value="resume">
+
+Resumes an instance that was suspended using theinstances().suspend<br />method.
+
+```sql
+EXEC google.compute.instances.resume 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}'
+;
+```
+</TabItem>
+<TabItem value="send_diagnostic_interrupt">
+
+Sends diagnostic interrupt to the instance.
+
+```sql
+EXEC google.compute.instances.send_diagnostic_interrupt 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required
+;
+```
+</TabItem>
+<TabItem value="set_deletion_protection">
+
+Sets deletion protection on the instance.
+
+```sql
+EXEC google.compute.instances.set_deletion_protection 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@resource='{{ resource }}' --required, 
+@deletionProtection={{ deletionProtection }}, 
+@requestId='{{ requestId }}'
+;
+```
+</TabItem>
+<TabItem value="set_disk_auto_delete">
+
+Sets the auto-delete flag for a disk attached to an instance.
+
+```sql
+EXEC google.compute.instances.set_disk_auto_delete 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@autoDelete='{{ autoDelete }}' --required, 
+@deviceName='{{ deviceName }}' --required, 
+@requestId='{{ requestId }}'
+;
+```
+</TabItem>
+<TabItem value="set_labels">
+
+Sets labels on an instance.  To learn more about labels, read theLabeling<br />Resources documentation.
+
+```sql
+EXEC google.compute.instances.set_labels 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"labelFingerprint": "{{ labelFingerprint }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```
@@ -1863,195 +2027,20 @@ EXEC google.compute.instances.set_machine_resources
 ;
 ```
 </TabItem>
-<TabItem value="set_tags">
+<TabItem value="set_machine_type">
 
-Sets network tags<br />for the specified instance to the data included in the request.
+Changes the machine type for a stopped instance to the machine<br />type specified in the request.
 
 ```sql
-EXEC google.compute.instances.set_tags 
+EXEC google.compute.instances.set_machine_type 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
 @instance='{{ instance }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"items": "{{ items }}", 
-"fingerprint": "{{ fingerprint }}"
+"machineType": "{{ machineType }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="perform_maintenance">
-
-Perform a manual maintenance on the instance.
-
-```sql
-EXEC google.compute.instances.perform_maintenance 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}'
-;
-```
-</TabItem>
-<TabItem value="set_scheduling">
-
-Sets an instance's scheduling options. You can only call this method on astopped instance,<br />that is, a VM instance that is in a `TERMINATED` state. SeeInstance Life<br />Cycle for more information on the possible instance states.<br />For more information about setting scheduling options for a VM, seeSet<br />VM host maintenance policy.
-
-```sql
-EXEC google.compute.instances.set_scheduling 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"onHostMaintenance": "{{ onHostMaintenance }}", 
-"hostErrorTimeoutSeconds": {{ hostErrorTimeoutSeconds }}, 
-"provisioningModel": "{{ provisioningModel }}", 
-"availabilityDomain": {{ availabilityDomain }}, 
-"onInstanceStopAction": "{{ onInstanceStopAction }}", 
-"nodeAffinities": "{{ nodeAffinities }}", 
-"maxRunDuration": "{{ maxRunDuration }}", 
-"instanceTerminationAction": "{{ instanceTerminationAction }}", 
-"preemptionNoticeDuration": "{{ preemptionNoticeDuration }}", 
-"preemptible": {{ preemptible }}, 
-"skipGuestOsShutdown": {{ skipGuestOsShutdown }}, 
-"terminationTime": "{{ terminationTime }}", 
-"localSsdRecoveryTimeout": "{{ localSsdRecoveryTimeout }}", 
-"minNodeCpus": {{ minNodeCpus }}, 
-"gracefulShutdown": "{{ gracefulShutdown }}", 
-"automaticRestart": {{ automaticRestart }}, 
-"locationHint": "{{ locationHint }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_labels">
-
-Sets labels on an instance.  To learn more about labels, read theLabeling<br />Resources documentation.
-
-```sql
-EXEC google.compute.instances.set_labels 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"labels": "{{ labels }}", 
-"labelFingerprint": "{{ labelFingerprint }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_shielded_instance_integrity_policy">
-
-Sets the Shielded Instance integrity policy for an instance. You can<br />only use this method on a running instance. This method<br />supports PATCH semantics and uses the JSON merge<br />patch format and processing rules.
-
-```sql
-EXEC google.compute.instances.set_shielded_instance_integrity_policy 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"updateAutoLearnPolicy": {{ updateAutoLearnPolicy }}
-}'
-;
-```
-</TabItem>
-<TabItem value="start_with_encryption_key">
-
-Starts an instance that was stopped using theinstances().stop<br />method. For more information, seeRestart an<br />instance.
-
-```sql
-EXEC google.compute.instances.start_with_encryption_key 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"disks": "{{ disks }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="stop">
-
-Stops a running instance, shutting it down cleanly, and allows<br />you to restart the instance at a later time. Stopped instances do not incur<br />VM usage charges while they are stopped. However, resources that the VM is<br />using, such as persistent disks and static IP addresses, will continue to<br />be charged until they are deleted. For more information, seeStopping<br />an instance.
-
-```sql
-EXEC google.compute.instances.stop 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}', 
-@noGracefulShutdown={{ noGracefulShutdown }}, 
-@discardLocalSsd={{ discardLocalSsd }}
-;
-```
-</TabItem>
-<TabItem value="report_host_as_faulty">
-
-Mark the host as faulty and try to restart the instance on a new host.
-
-```sql
-EXEC google.compute.instances.report_host_as_faulty 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"faultReasons": "{{ faultReasons }}", 
-"disruptionSchedule": "{{ disruptionSchedule }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="attach_disk">
-
-Attaches an existing Disk resource to an instance. You must first<br />create the disk before you can attach it. It is not possible to create<br />and attach a disk at the same time. For more information, readAdding a<br />persistent disk to your instance.
-
-```sql
-EXEC google.compute.instances.attach_disk 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@forceAttach={{ forceAttach }}, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"diskSizeGb": "{{ diskSizeGb }}", 
-"boot": {{ boot }}, 
-"deviceName": "{{ deviceName }}", 
-"diskEncryptionKey": "{{ diskEncryptionKey }}", 
-"interface": "{{ interface }}", 
-"mode": "{{ mode }}", 
-"source": "{{ source }}", 
-"type": "{{ type }}", 
-"autoDelete": {{ autoDelete }}, 
-"guestOsFeatures": "{{ guestOsFeatures }}", 
-"forceAttach": {{ forceAttach }}, 
-"initializeParams": "{{ initializeParams }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_deletion_protection">
-
-Sets deletion protection on the instance.
-
-```sql
-EXEC google.compute.instances.set_deletion_protection 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@resource='{{ resource }}' --required, 
-@requestId='{{ requestId }}', 
-@deletionProtection={{ deletionProtection }}
 ;
 ```
 </TabItem>
@@ -2090,6 +2079,75 @@ EXEC google.compute.instances.set_min_cpu_platform
 ;
 ```
 </TabItem>
+<TabItem value="set_name">
+
+Sets name of an instance.
+
+```sql
+EXEC google.compute.instances.set_name 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"currentName": "{{ currentName }}", 
+"name": "{{ name }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_scheduling">
+
+Sets an instance's scheduling options. You can only call this method on astopped instance,<br />that is, a VM instance that is in a `TERMINATED` state. SeeInstance Life<br />Cycle for more information on the possible instance states.<br />For more information about setting scheduling options for a VM, seeSet<br />VM host maintenance policy.
+
+```sql
+EXEC google.compute.instances.set_scheduling 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"automaticRestart": {{ automaticRestart }}, 
+"availabilityDomain": {{ availabilityDomain }}, 
+"gracefulShutdown": "{{ gracefulShutdown }}", 
+"hostErrorTimeoutSeconds": {{ hostErrorTimeoutSeconds }}, 
+"instanceTerminationAction": "{{ instanceTerminationAction }}", 
+"localSsdRecoveryTimeout": "{{ localSsdRecoveryTimeout }}", 
+"locationHint": "{{ locationHint }}", 
+"maxRunDuration": "{{ maxRunDuration }}", 
+"minNodeCpus": {{ minNodeCpus }}, 
+"nodeAffinities": "{{ nodeAffinities }}", 
+"onHostMaintenance": "{{ onHostMaintenance }}", 
+"onInstanceStopAction": "{{ onInstanceStopAction }}", 
+"preemptible": {{ preemptible }}, 
+"preemptionNoticeDuration": "{{ preemptionNoticeDuration }}", 
+"provisioningModel": "{{ provisioningModel }}", 
+"skipGuestOsShutdown": {{ skipGuestOsShutdown }}, 
+"terminationTime": "{{ terminationTime }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_security_policy">
+
+Sets the Google Cloud Armor security policy for the specified instance.<br />For more information, seeGoogle<br />Cloud Armor Overview
+
+```sql
+EXEC google.compute.instances.set_security_policy 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"networkInterfaces": "{{ networkInterfaces }}", 
+"securityPolicy": "{{ securityPolicy }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="set_service_account">
 
 Sets the service account on the instance. For more information,<br />readChanging<br />the service account and access scopes for an instance.
@@ -2102,93 +2160,43 @@ EXEC google.compute.instances.set_service_account
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"scopes": "{{ scopes }}", 
-"email": "{{ email }}"
+"email": "{{ email }}", 
+"scopes": "{{ scopes }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="update_network_interface">
+<TabItem value="set_shielded_instance_integrity_policy">
 
-Updates an instance's network interface. This method can only update an<br />interface's alias IP range and attached network. See Modifying<br />alias IP ranges for an existing instance for instructions on<br />changing alias IP ranges. See Migrating<br />a VM between networks for instructions on migrating an interface.<br />This method follows PATCH semantics.
+Sets the Shielded Instance integrity policy for an instance. You can<br />only use this method on a running instance. This method<br />supports PATCH semantics and uses the JSON merge<br />patch format and processing rules.
 
 ```sql
-EXEC google.compute.instances.update_network_interface 
+EXEC google.compute.instances.set_shielded_instance_integrity_policy 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
 @instance='{{ instance }}' --required, 
-@networkInterface='{{ networkInterface }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"ipv6Address": "{{ ipv6Address }}", 
-"parentNicName": "{{ parentNicName }}", 
+"updateAutoLearnPolicy": {{ updateAutoLearnPolicy }}
+}'
+;
+```
+</TabItem>
+<TabItem value="set_tags">
+
+Sets network tags<br />for the specified instance to the data included in the request.
+
+```sql
+EXEC google.compute.instances.set_tags 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
 "fingerprint": "{{ fingerprint }}", 
-"igmpQuery": "{{ igmpQuery }}", 
-"serviceClassId": "{{ serviceClassId }}", 
-"subnetwork": "{{ subnetwork }}", 
-"network": "{{ network }}", 
-"stackType": "{{ stackType }}", 
-"accessConfigs": "{{ accessConfigs }}", 
-"networkAttachment": "{{ networkAttachment }}", 
-"queueCount": {{ queueCount }}, 
-"name": "{{ name }}", 
-"networkIP": "{{ networkIP }}", 
-"vlan": {{ vlan }}, 
-"internalIpv6PrefixLength": {{ internalIpv6PrefixLength }}, 
-"nicType": "{{ nicType }}", 
-"aliasIpRanges": "{{ aliasIpRanges }}", 
-"ipv6AccessConfigs": "{{ ipv6AccessConfigs }}", 
-"aliasIpv6Ranges": "{{ aliasIpv6Ranges }}", 
-"enableVpcScopedDns": {{ enableVpcScopedDns }}
-}'
-;
-```
-</TabItem>
-<TabItem value="set_disk_auto_delete">
-
-Sets the auto-delete flag for a disk attached to an instance.
-
-```sql
-EXEC google.compute.instances.set_disk_auto_delete 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@autoDelete='{{ autoDelete }}' --required, 
-@deviceName='{{ deviceName }}' --required, 
-@requestId='{{ requestId }}'
-;
-```
-</TabItem>
-<TabItem value="detach_disk">
-
-Detaches a disk from an instance.
-
-```sql
-EXEC google.compute.instances.detach_disk 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@deviceName='{{ deviceName }}' --required, 
-@requestId='{{ requestId }}'
-;
-```
-</TabItem>
-<TabItem value="update_shielded_instance_config">
-
-Updates the Shielded Instance config for an instance. You can<br />only use this method on a stopped instance. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.
-
-```sql
-EXEC google.compute.instances.update_shielded_instance_config 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"enableSecureBoot": {{ enableSecureBoot }}, 
-"enableIntegrityMonitoring": {{ enableIntegrityMonitoring }}, 
-"enableVtpm": {{ enableVtpm }}
+"items": "{{ items }}"
 }'
 ;
 ```
@@ -2220,28 +2228,48 @@ EXEC google.compute.instances.start
 ;
 ```
 </TabItem>
-<TabItem value="resume">
+<TabItem value="start_with_encryption_key">
 
-Resumes an instance that was suspended using theinstances().suspend<br />method.
+Starts an instance that was stopped using theinstances().stop<br />method. For more information, seeRestart an<br />instance.
 
 ```sql
-EXEC google.compute.instances.resume 
+EXEC google.compute.instances.start_with_encryption_key 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
 @instance='{{ instance }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"disks": "{{ disks }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="stop">
+
+Stops a running instance, shutting it down cleanly, and allows<br />you to restart the instance at a later time. Stopped instances do not incur<br />VM usage charges while they are stopped. However, resources that the VM is<br />using, such as persistent disks and static IP addresses, will continue to<br />be charged until they are deleted. For more information, seeStopping<br />an instance.
+
+```sql
+EXEC google.compute.instances.stop 
+@project='{{ project }}' --required, 
+@zone='{{ zone }}' --required, 
+@instance='{{ instance }}' --required, 
+@discardLocalSsd={{ discardLocalSsd }}, 
+@noGracefulShutdown={{ noGracefulShutdown }}, 
 @requestId='{{ requestId }}'
 ;
 ```
 </TabItem>
-<TabItem value="reset">
+<TabItem value="suspend">
 
-Performs a reset on the instance. This is a hard reset. The VM<br />does not do a graceful shutdown. For more information, seeResetting<br />an instance.
+This method suspends a running instance, saving its state to persistent<br />storage, and allows you to resume the instance at a later time. Suspended<br />instances have no compute costs (cores or RAM), and incur only storage<br />charges for the saved VM memory and localSSD data. Any charged resources<br />the virtual machine was using, such as persistent disks and static IP<br />addresses, will continue to be charged while the instance is suspended.<br />For more information, see<br />Suspending and resuming an instance.
 
 ```sql
-EXEC google.compute.instances.reset 
+EXEC google.compute.instances.suspend 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
 @instance='{{ instance }}' --required, 
+@discardLocalSsd={{ discardLocalSsd }}, 
 @requestId='{{ requestId }}'
 ;
 ```
@@ -2263,82 +2291,59 @@ EXEC google.compute.instances.update_display_device
 ;
 ```
 </TabItem>
-<TabItem value="set_machine_type">
+<TabItem value="update_network_interface">
 
-Changes the machine type for a stopped instance to the machine<br />type specified in the request.
+Updates an instance's network interface. This method can only update an<br />interface's alias IP range and attached network. See Modifying<br />alias IP ranges for an existing instance for instructions on<br />changing alias IP ranges. See Migrating<br />a VM between networks for instructions on migrating an interface.<br />This method follows PATCH semantics.
 
 ```sql
-EXEC google.compute.instances.set_machine_type 
+EXEC google.compute.instances.update_network_interface 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
 @instance='{{ instance }}' --required, 
+@networkInterface='{{ networkInterface }}' --required, 
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"machineType": "{{ machineType }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_security_policy">
-
-Sets the Google Cloud Armor security policy for the specified instance.<br />For more information, seeGoogle<br />Cloud Armor Overview
-
-```sql
-EXEC google.compute.instances.set_security_policy 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"securityPolicy": "{{ securityPolicy }}", 
-"networkInterfaces": "{{ networkInterfaces }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="send_diagnostic_interrupt">
-
-Sends diagnostic interrupt to the instance.
-
-```sql
-EXEC google.compute.instances.send_diagnostic_interrupt 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required
-;
-```
-</TabItem>
-<TabItem value="set_name">
-
-Sets name of an instance.
-
-```sql
-EXEC google.compute.instances.set_name 
-@project='{{ project }}' --required, 
-@zone='{{ zone }}' --required, 
-@instance='{{ instance }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
+"accessConfigs": "{{ accessConfigs }}", 
+"aliasIpRanges": "{{ aliasIpRanges }}", 
+"aliasIpv6Ranges": "{{ aliasIpv6Ranges }}", 
+"enableVpcScopedDns": {{ enableVpcScopedDns }}, 
+"fingerprint": "{{ fingerprint }}", 
+"igmpQuery": "{{ igmpQuery }}", 
+"internalIpv6PrefixLength": {{ internalIpv6PrefixLength }}, 
+"ipv6AccessConfigs": "{{ ipv6AccessConfigs }}", 
+"ipv6Address": "{{ ipv6Address }}", 
 "name": "{{ name }}", 
-"currentName": "{{ currentName }}"
+"network": "{{ network }}", 
+"networkAttachment": "{{ networkAttachment }}", 
+"networkIP": "{{ networkIP }}", 
+"nicType": "{{ nicType }}", 
+"parentNicName": "{{ parentNicName }}", 
+"queueCount": {{ queueCount }}, 
+"serviceClassId": "{{ serviceClassId }}", 
+"stackType": "{{ stackType }}", 
+"subnetwork": "{{ subnetwork }}", 
+"vlan": {{ vlan }}
 }'
 ;
 ```
 </TabItem>
-<TabItem value="suspend">
+<TabItem value="update_shielded_instance_config">
 
-This method suspends a running instance, saving its state to persistent<br />storage, and allows you to resume the instance at a later time. Suspended<br />instances have no compute costs (cores or RAM), and incur only storage<br />charges for the saved VM memory and localSSD data. Any charged resources<br />the virtual machine was using, such as persistent disks and static IP<br />addresses, will continue to be charged while the instance is suspended.<br />For more information, see<br />Suspending and resuming an instance.
+Updates the Shielded Instance config for an instance. You can<br />only use this method on a stopped instance. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.
 
 ```sql
-EXEC google.compute.instances.suspend 
+EXEC google.compute.instances.update_shielded_instance_config 
 @project='{{ project }}' --required, 
 @zone='{{ zone }}' --required, 
 @instance='{{ instance }}' --required, 
-@discardLocalSsd={{ discardLocalSsd }}, 
-@requestId='{{ requestId }}'
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"enableIntegrityMonitoring": {{ enableIntegrityMonitoring }}, 
+"enableSecureBoot": {{ enableSecureBoot }}, 
+"enableVtpm": {{ enableVtpm }}
+}'
 ;
 ```
 </TabItem>

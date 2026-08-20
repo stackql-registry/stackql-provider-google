@@ -289,9 +289,9 @@ Create a new link.
 
 ```sql
 INSERT INTO google.observability.links (
-data__name,
-data__displayName,
 data__description,
+data__displayName,
+data__name,
 projectsId,
 locationsId,
 bucketsId,
@@ -299,9 +299,9 @@ datasetsId,
 linkId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ bucketsId }}',
@@ -333,18 +333,18 @@ response
     - name: datasetsId
       value: "{{ datasetsId }}"
       description: Required parameter for the links resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the link. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID]/links/[LINK_ID]
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. A user friendly display name.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. Description of the link.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. A user friendly display name.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the link. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID]/links/[LINK_ID]
     - name: linkId
       value: "{{ linkId }}"
 `}</CodeBlock>
@@ -368,9 +368,9 @@ Update a link.
 ```sql
 UPDATE google.observability.links
 SET 
-data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

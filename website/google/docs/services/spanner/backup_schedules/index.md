@@ -318,24 +318,24 @@ Creates a new backup schedule.
 
 ```sql
 INSERT INTO google.spanner.backup_schedules (
-data__name,
-data__spec,
-data__retentionDuration,
 data__encryptionConfig,
 data__fullBackupSpec,
 data__incrementalBackupSpec,
+data__name,
+data__retentionDuration,
+data__spec,
 projectsId,
 instancesId,
 databasesId,
 backupScheduleId
 )
 SELECT 
-'{{ name }}',
-'{{ spec }}',
-'{{ retentionDuration }}',
 '{{ encryptionConfig }}',
 '{{ fullBackupSpec }}',
 '{{ incrementalBackupSpec }}',
+'{{ name }}',
+'{{ retentionDuration }}',
+'{{ spec }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ databasesId }}',
@@ -365,22 +365,6 @@ updateTime
     - name: databasesId
       value: "{{ databasesId }}"
       description: Required parameter for the backup_schedules resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Output only for the CreateBackupSchedule operation. Required for the UpdateBackupSchedule operation. A globally unique identifier for the backup schedule which cannot be changed. Values are of the form \`projects//instances//databases//backupSchedules/a-z*[a-z0-9]\` The final segment of the name must be between 2 and 60 characters in length.
-    - name: spec
-      description: |
-        Optional. The schedule specification based on which the backup creations are triggered.
-      value:
-        cronSpec:
-          text: "{{ text }}"
-          timeZone: "{{ timeZone }}"
-          creationWindow: "{{ creationWindow }}"
-    - name: retentionDuration
-      value: "{{ retentionDuration }}"
-      description: |
-        Optional. The retention duration of a backup that must be at least 6 hours and at most 366 days. The backup is eligible to be automatically deleted once the retention period has elapsed.
     - name: encryptionConfig
       description: |
         Optional. The encryption configuration that is used to encrypt the backup. If this field is not specified, the backup uses the same encryption configuration as the database.
@@ -397,6 +381,22 @@ updateTime
       value: "{{ incrementalBackupSpec }}"
       description: |
         The schedule creates incremental backup chains.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Output only for the CreateBackupSchedule operation. Required for the UpdateBackupSchedule operation. A globally unique identifier for the backup schedule which cannot be changed. Values are of the form \`projects//instances//databases//backupSchedules/a-z*[a-z0-9]\` The final segment of the name must be between 2 and 60 characters in length.
+    - name: retentionDuration
+      value: "{{ retentionDuration }}"
+      description: |
+        Optional. The retention duration of a backup that must be at least 6 hours and at most 366 days. The backup is eligible to be automatically deleted once the retention period has elapsed.
+    - name: spec
+      description: |
+        Optional. The schedule specification based on which the backup creations are triggered.
+      value:
+        cronSpec:
+          creationWindow: "{{ creationWindow }}"
+          text: "{{ text }}"
+          timeZone: "{{ timeZone }}"
     - name: backupScheduleId
       value: "{{ backupScheduleId }}"
 `}</CodeBlock>
@@ -420,12 +420,12 @@ Updates a backup schedule.
 ```sql
 UPDATE google.spanner.backup_schedules
 SET 
-data__name = '{{ name }}',
-data__spec = '{{ spec }}',
-data__retentionDuration = '{{ retentionDuration }}',
 data__encryptionConfig = '{{ encryptionConfig }}',
 data__fullBackupSpec = '{{ fullBackupSpec }}',
-data__incrementalBackupSpec = '{{ incrementalBackupSpec }}'
+data__incrementalBackupSpec = '{{ incrementalBackupSpec }}',
+data__name = '{{ name }}',
+data__retentionDuration = '{{ retentionDuration }}',
+data__spec = '{{ spec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

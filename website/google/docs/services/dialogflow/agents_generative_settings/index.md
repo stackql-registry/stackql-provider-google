@@ -203,11 +203,11 @@ No description available.
 ```sql
 UPDATE google.dialogflow.agents_generative_settings
 SET 
-data__knowledgeConnectorSettings = '{{ knowledgeConnectorSettings }}',
-data__generativeSafetySettings = '{{ generativeSafetySettings }}',
 data__fallbackSettings = '{{ fallbackSettings }}',
-data__llmModelSettings = '{{ llmModelSettings }}',
+data__generativeSafetySettings = '{{ generativeSafetySettings }}',
+data__knowledgeConnectorSettings = '{{ knowledgeConnectorSettings }}',
 data__languageCode = '{{ languageCode }}',
+data__llmModelSettings = '{{ llmModelSettings }}',
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

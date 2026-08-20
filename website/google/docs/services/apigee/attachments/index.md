@@ -202,7 +202,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_envgroups_attachments_list"><CopyableCode code="organizations_envgroups_attachments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-envgroupsId"><code>envgroupsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all attachments of an environment group.</td>
 </tr>
 <tr>
@@ -346,8 +346,8 @@ environmentGroupId
 FROM google.apigee.attachments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND envgroupsId = '{{ envgroupsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

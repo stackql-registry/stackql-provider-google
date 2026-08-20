@@ -33,60 +33,16 @@ Creates, updates, deletes, gets or lists a <code>contacts</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_contacts_get"
+    defaultValue="folders_contacts_get"
     values={[
-        { label: 'projects_contacts_get', value: 'projects_contacts_get' },
         { label: 'folders_contacts_get', value: 'folders_contacts_get' },
         { label: 'organizations_contacts_get', value: 'organizations_contacts_get' },
-        { label: 'projects_contacts_list', value: 'projects_contacts_list' },
+        { label: 'projects_contacts_get', value: 'projects_contacts_get' },
         { label: 'folders_contacts_list', value: 'folders_contacts_list' },
-        { label: 'organizations_contacts_list', value: 'organizations_contacts_list' }
+        { label: 'organizations_contacts_list', value: 'organizations_contacts_list' },
+        { label: 'projects_contacts_list', value: 'projects_contacts_list' }
     ]}
 >
-<TabItem value="projects_contacts_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The identifier for the contact. Format: &#123;resource_type&#125;/&#123;resource_id&#125;/contacts/&#123;contact_id&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="email" /></td>
-    <td><code>string</code></td>
-    <td>Required. The email address to send notifications to. The email address does not need to be a Google Account.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="languageTag" /></td>
-    <td><code>string</code></td>
-    <td>Required. The preferred language for notifications, as a ISO 639-1 language code. See [Supported languages](https://cloud.google.com/resource-manager/docs/managing-notification-contacts#supported-languages) for a list of supported languages.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="notificationCategorySubscriptions" /></td>
-    <td><code>array</code></td>
-    <td>Required. The categories of notifications that the contact will receive communications for.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="validateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last time the validation_state was updated, either manually or automatically. A contact is considered stale if its validation state was updated more than 1 year ago.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="validationState" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The validity of the contact. A contact is considered valid if it is the correct recipient for notifications for a particular resource. (VALIDATION_STATE_UNSPECIFIED, VALID, INVALID)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="folders_contacts_get">
 
 <table>
@@ -175,7 +131,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_contacts_list">
+<TabItem value="projects_contacts_get">
 
 <table>
 <thead>
@@ -307,6 +263,50 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="projects_contacts_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The identifier for the contact. Format: &#123;resource_type&#125;/&#123;resource_id&#125;/contacts/&#123;contact_id&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="email" /></td>
+    <td><code>string</code></td>
+    <td>Required. The email address to send notifications to. The email address does not need to be a Google Account.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="languageTag" /></td>
+    <td><code>string</code></td>
+    <td>Required. The preferred language for notifications, as a ISO 639-1 language code. See [Supported languages](https://cloud.google.com/resource-manager/docs/managing-notification-contacts#supported-languages) for a list of supported languages.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="notificationCategorySubscriptions" /></td>
+    <td><code>array</code></td>
+    <td>Required. The categories of notifications that the contact will receive communications for.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="validateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last time the validation_state was updated, either manually or automatically. A contact is considered stale if its validation state was updated more than 1 year ago.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="validationState" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The validity of the contact. A contact is considered valid if it is the correct recipient for notifications for a particular resource. (VALIDATION_STATE_UNSPECIFIED, VALID, INVALID)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 </Tabs>
 
 ## Methods
@@ -325,13 +325,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_contacts_get"><CopyableCode code="projects_contacts_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-contactsId"><code>contactsId</code></a></td>
-    <td></td>
-    <td>Gets a single contact.</td>
-</tr>
-<tr>
     <td><a href="#folders_contacts_get"><CopyableCode code="folders_contacts_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-contactsId"><code>contactsId</code></a></td>
@@ -346,11 +339,11 @@ The following methods are available for this resource:
     <td>Gets a single contact.</td>
 </tr>
 <tr>
-    <td><a href="#projects_contacts_list"><CopyableCode code="projects_contacts_list" /></a></td>
+    <td><a href="#projects_contacts_get"><CopyableCode code="projects_contacts_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists the contacts that have been set on a resource.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-contactsId"><code>contactsId</code></a></td>
+    <td></td>
+    <td>Gets a single contact.</td>
 </tr>
 <tr>
     <td><a href="#folders_contacts_list"><CopyableCode code="folders_contacts_list" /></a></td>
@@ -367,11 +360,11 @@ The following methods are available for this resource:
     <td>Lists the contacts that have been set on a resource.</td>
 </tr>
 <tr>
-    <td><a href="#projects_contacts_create"><CopyableCode code="projects_contacts_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
+    <td><a href="#projects_contacts_list"><CopyableCode code="projects_contacts_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Adds a new contact for a resource.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the contacts that have been set on a resource.</td>
 </tr>
 <tr>
     <td><a href="#folders_contacts_create"><CopyableCode code="folders_contacts_create" /></a></td>
@@ -388,11 +381,11 @@ The following methods are available for this resource:
     <td>Adds a new contact for a resource.</td>
 </tr>
 <tr>
-    <td><a href="#projects_contacts_patch"><CopyableCode code="projects_contacts_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-contactsId"><code>contactsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a contact. Note: A contact's email address cannot be changed.</td>
+    <td><a href="#projects_contacts_create"><CopyableCode code="projects_contacts_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Adds a new contact for a resource.</td>
 </tr>
 <tr>
     <td><a href="#folders_contacts_patch"><CopyableCode code="folders_contacts_patch" /></a></td>
@@ -409,11 +402,11 @@ The following methods are available for this resource:
     <td>Updates a contact. Note: A contact's email address cannot be changed.</td>
 </tr>
 <tr>
-    <td><a href="#projects_contacts_delete"><CopyableCode code="projects_contacts_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_contacts_patch"><CopyableCode code="projects_contacts_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-contactsId"><code>contactsId</code></a></td>
-    <td></td>
-    <td>Deletes a contact.</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates a contact. Note: A contact's email address cannot be changed.</td>
 </tr>
 <tr>
     <td><a href="#folders_contacts_delete"><CopyableCode code="folders_contacts_delete" /></a></td>
@@ -430,18 +423,11 @@ The following methods are available for this resource:
     <td>Deletes a contact.</td>
 </tr>
 <tr>
-    <td><a href="#projects_contacts_compute"><CopyableCode code="projects_contacts_compute" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-notificationCategories"><code>notificationCategories</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists all contacts for the resource that are subscribed to the specified notification categories, including contacts inherited from any parent resources.</td>
-</tr>
-<tr>
-    <td><a href="#projects_contacts_send_test_message"><CopyableCode code="projects_contacts_send_test_message" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#projects_contacts_delete"><CopyableCode code="projects_contacts_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-contactsId"><code>contactsId</code></a></td>
     <td></td>
-    <td>Allows a contact admin to send a test message to contact to verify that it has been configured correctly.</td>
+    <td>Deletes a contact.</td>
 </tr>
 <tr>
     <td><a href="#folders_contacts_compute"><CopyableCode code="folders_contacts_compute" /></a></td>
@@ -468,6 +454,20 @@ The following methods are available for this resource:
     <td><a href="#organizations_contacts_send_test_message"><CopyableCode code="organizations_contacts_send_test_message" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td></td>
+    <td>Allows a contact admin to send a test message to contact to verify that it has been configured correctly.</td>
+</tr>
+<tr>
+    <td><a href="#projects_contacts_compute"><CopyableCode code="projects_contacts_compute" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-notificationCategories"><code>notificationCategories</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all contacts for the resource that are subscribed to the specified notification categories, including contacts inherited from any parent resources.</td>
+</tr>
+<tr>
+    <td><a href="#projects_contacts_send_test_message"><CopyableCode code="projects_contacts_send_test_message" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Allows a contact admin to send a test message to contact to verify that it has been configured correctly.</td>
 </tr>
@@ -533,34 +533,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_contacts_get"
+    defaultValue="folders_contacts_get"
     values={[
-        { label: 'projects_contacts_get', value: 'projects_contacts_get' },
         { label: 'folders_contacts_get', value: 'folders_contacts_get' },
         { label: 'organizations_contacts_get', value: 'organizations_contacts_get' },
-        { label: 'projects_contacts_list', value: 'projects_contacts_list' },
+        { label: 'projects_contacts_get', value: 'projects_contacts_get' },
         { label: 'folders_contacts_list', value: 'folders_contacts_list' },
-        { label: 'organizations_contacts_list', value: 'organizations_contacts_list' }
+        { label: 'organizations_contacts_list', value: 'organizations_contacts_list' },
+        { label: 'projects_contacts_list', value: 'projects_contacts_list' }
     ]}
 >
-<TabItem value="projects_contacts_get">
-
-Gets a single contact.
-
-```sql
-SELECT
-name,
-email,
-languageTag,
-notificationCategorySubscriptions,
-validateTime,
-validationState
-FROM google.essentialcontacts.contacts
-WHERE projectsId = '{{ projectsId }}' -- required
-AND contactsId = '{{ contactsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="folders_contacts_get">
 
 Gets a single contact.
@@ -597,9 +579,9 @@ AND contactsId = '{{ contactsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_contacts_list">
+<TabItem value="projects_contacts_get">
 
-Lists the contacts that have been set on a resource.
+Gets a single contact.
 
 ```sql
 SELECT
@@ -611,8 +593,7 @@ validateTime,
 validationState
 FROM google.essentialcontacts.contacts
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND contactsId = '{{ contactsId }}' -- required
 ;
 ```
 </TabItem>
@@ -654,46 +635,39 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-</Tabs>
+<TabItem value="projects_contacts_list">
 
-
-## `INSERT` examples
-
-<Tabs
-    defaultValue="projects_contacts_create"
-    values={[
-        { label: 'projects_contacts_create', value: 'projects_contacts_create' },
-        { label: 'folders_contacts_create', value: 'folders_contacts_create' },
-        { label: 'organizations_contacts_create', value: 'organizations_contacts_create' },
-        { label: 'Manifest', value: 'manifest' }
-    ]}
->
-<TabItem value="projects_contacts_create">
-
-Adds a new contact for a resource.
+Lists the contacts that have been set on a resource.
 
 ```sql
-INSERT INTO google.essentialcontacts.contacts (
-data__email,
-data__notificationCategorySubscriptions,
-data__languageTag,
-projectsId
-)
-SELECT 
-'{{ email }}',
-'{{ notificationCategorySubscriptions }}',
-'{{ languageTag }}',
-'{{ projectsId }}'
-RETURNING
+SELECT
 name,
 email,
 languageTag,
 notificationCategorySubscriptions,
 validateTime,
 validationState
+FROM google.essentialcontacts.contacts
+WHERE projectsId = '{{ projectsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
+</Tabs>
+
+
+## `INSERT` examples
+
+<Tabs
+    defaultValue="folders_contacts_create"
+    values={[
+        { label: 'folders_contacts_create', value: 'folders_contacts_create' },
+        { label: 'organizations_contacts_create', value: 'organizations_contacts_create' },
+        { label: 'projects_contacts_create', value: 'projects_contacts_create' },
+        { label: 'Manifest', value: 'manifest' }
+    ]}
+>
 <TabItem value="folders_contacts_create">
 
 Adds a new contact for a resource.
@@ -701,14 +675,14 @@ Adds a new contact for a resource.
 ```sql
 INSERT INTO google.essentialcontacts.contacts (
 data__email,
-data__notificationCategorySubscriptions,
 data__languageTag,
+data__notificationCategorySubscriptions,
 foldersId
 )
 SELECT 
 '{{ email }}',
-'{{ notificationCategorySubscriptions }}',
 '{{ languageTag }}',
+'{{ notificationCategorySubscriptions }}',
 '{{ foldersId }}'
 RETURNING
 name,
@@ -727,15 +701,41 @@ Adds a new contact for a resource.
 ```sql
 INSERT INTO google.essentialcontacts.contacts (
 data__email,
-data__notificationCategorySubscriptions,
 data__languageTag,
+data__notificationCategorySubscriptions,
 organizationsId
 )
 SELECT 
 '{{ email }}',
-'{{ notificationCategorySubscriptions }}',
 '{{ languageTag }}',
+'{{ notificationCategorySubscriptions }}',
 '{{ organizationsId }}'
+RETURNING
+name,
+email,
+languageTag,
+notificationCategorySubscriptions,
+validateTime,
+validationState
+;
+```
+</TabItem>
+<TabItem value="projects_contacts_create">
+
+Adds a new contact for a resource.
+
+```sql
+INSERT INTO google.essentialcontacts.contacts (
+data__email,
+data__languageTag,
+data__notificationCategorySubscriptions,
+projectsId
+)
+SELECT 
+'{{ email }}',
+'{{ languageTag }}',
+'{{ notificationCategorySubscriptions }}',
+'{{ projectsId }}'
 RETURNING
 name,
 email,
@@ -751,28 +751,28 @@ validationState
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: contacts
   props:
-    - name: projectsId
-      value: "{{ projectsId }}"
-      description: Required parameter for the contacts resource.
     - name: foldersId
       value: "{{ foldersId }}"
       description: Required parameter for the contacts resource.
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the contacts resource.
+    - name: projectsId
+      value: "{{ projectsId }}"
+      description: Required parameter for the contacts resource.
     - name: email
       value: "{{ email }}"
       description: |
         Required. The email address to send notifications to. The email address does not need to be a Google Account.
+    - name: languageTag
+      value: "{{ languageTag }}"
+      description: |
+        Required. The preferred language for notifications, as a ISO 639-1 language code. See [Supported languages](https://cloud.google.com/resource-manager/docs/managing-notification-contacts#supported-languages) for a list of supported languages.
     - name: notificationCategorySubscriptions
       value:
         - "{{ notificationCategorySubscriptions }}"
       description: |
         Required. The categories of notifications that the contact will receive communications for.
-    - name: languageTag
-      value: "{{ languageTag }}"
-      description: |
-        Required. The preferred language for notifications, as a ISO 639-1 language code. See [Supported languages](https://cloud.google.com/resource-manager/docs/managing-notification-contacts#supported-languages) for a list of supported languages.
 `}</CodeBlock>
 
 </TabItem>
@@ -782,36 +782,13 @@ validationState
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_contacts_patch"
+    defaultValue="folders_contacts_patch"
     values={[
-        { label: 'projects_contacts_patch', value: 'projects_contacts_patch' },
         { label: 'folders_contacts_patch', value: 'folders_contacts_patch' },
-        { label: 'organizations_contacts_patch', value: 'organizations_contacts_patch' }
+        { label: 'organizations_contacts_patch', value: 'organizations_contacts_patch' },
+        { label: 'projects_contacts_patch', value: 'projects_contacts_patch' }
     ]}
 >
-<TabItem value="projects_contacts_patch">
-
-Updates a contact. Note: A contact's email address cannot be changed.
-
-```sql
-UPDATE google.essentialcontacts.contacts
-SET 
-data__email = '{{ email }}',
-data__notificationCategorySubscriptions = '{{ notificationCategorySubscriptions }}',
-data__languageTag = '{{ languageTag }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND contactsId = '{{ contactsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-email,
-languageTag,
-notificationCategorySubscriptions,
-validateTime,
-validationState;
-```
-</TabItem>
 <TabItem value="folders_contacts_patch">
 
 Updates a contact. Note: A contact's email address cannot be changed.
@@ -820,8 +797,8 @@ Updates a contact. Note: A contact's email address cannot be changed.
 UPDATE google.essentialcontacts.contacts
 SET 
 data__email = '{{ email }}',
-data__notificationCategorySubscriptions = '{{ notificationCategorySubscriptions }}',
-data__languageTag = '{{ languageTag }}'
+data__languageTag = '{{ languageTag }}',
+data__notificationCategorySubscriptions = '{{ notificationCategorySubscriptions }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
 AND contactsId = '{{ contactsId }}' --required
@@ -843,10 +820,33 @@ Updates a contact. Note: A contact's email address cannot be changed.
 UPDATE google.essentialcontacts.contacts
 SET 
 data__email = '{{ email }}',
-data__notificationCategorySubscriptions = '{{ notificationCategorySubscriptions }}',
-data__languageTag = '{{ languageTag }}'
+data__languageTag = '{{ languageTag }}',
+data__notificationCategorySubscriptions = '{{ notificationCategorySubscriptions }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
+AND contactsId = '{{ contactsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+email,
+languageTag,
+notificationCategorySubscriptions,
+validateTime,
+validationState;
+```
+</TabItem>
+<TabItem value="projects_contacts_patch">
+
+Updates a contact. Note: A contact's email address cannot be changed.
+
+```sql
+UPDATE google.essentialcontacts.contacts
+SET 
+data__email = '{{ email }}',
+data__languageTag = '{{ languageTag }}',
+data__notificationCategorySubscriptions = '{{ notificationCategorySubscriptions }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
 AND contactsId = '{{ contactsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -864,24 +864,13 @@ validationState;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_contacts_delete"
+    defaultValue="folders_contacts_delete"
     values={[
-        { label: 'projects_contacts_delete', value: 'projects_contacts_delete' },
         { label: 'folders_contacts_delete', value: 'folders_contacts_delete' },
-        { label: 'organizations_contacts_delete', value: 'organizations_contacts_delete' }
+        { label: 'organizations_contacts_delete', value: 'organizations_contacts_delete' },
+        { label: 'projects_contacts_delete', value: 'projects_contacts_delete' }
     ]}
 >
-<TabItem value="projects_contacts_delete">
-
-Deletes a contact.
-
-```sql
-DELETE FROM google.essentialcontacts.contacts
-WHERE projectsId = '{{ projectsId }}' --required
-AND contactsId = '{{ contactsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="folders_contacts_delete">
 
 Deletes a contact.
@@ -904,50 +893,33 @@ AND contactsId = '{{ contactsId }}' --required
 ;
 ```
 </TabItem>
+<TabItem value="projects_contacts_delete">
+
+Deletes a contact.
+
+```sql
+DELETE FROM google.essentialcontacts.contacts
+WHERE projectsId = '{{ projectsId }}' --required
+AND contactsId = '{{ contactsId }}' --required
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_contacts_compute"
+    defaultValue="folders_contacts_compute"
     values={[
-        { label: 'projects_contacts_compute', value: 'projects_contacts_compute' },
-        { label: 'projects_contacts_send_test_message', value: 'projects_contacts_send_test_message' },
         { label: 'folders_contacts_compute', value: 'folders_contacts_compute' },
         { label: 'folders_contacts_send_test_message', value: 'folders_contacts_send_test_message' },
         { label: 'organizations_contacts_compute', value: 'organizations_contacts_compute' },
-        { label: 'organizations_contacts_send_test_message', value: 'organizations_contacts_send_test_message' }
+        { label: 'organizations_contacts_send_test_message', value: 'organizations_contacts_send_test_message' },
+        { label: 'projects_contacts_compute', value: 'projects_contacts_compute' },
+        { label: 'projects_contacts_send_test_message', value: 'projects_contacts_send_test_message' }
     ]}
 >
-<TabItem value="projects_contacts_compute">
-
-Lists all contacts for the resource that are subscribed to the specified notification categories, including contacts inherited from any parent resources.
-
-```sql
-EXEC google.essentialcontacts.contacts.projects_contacts_compute 
-@projectsId='{{ projectsId }}' --required, 
-@notificationCategories='{{ notificationCategories }}', 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_contacts_send_test_message">
-
-Allows a contact admin to send a test message to contact to verify that it has been configured correctly.
-
-```sql
-EXEC google.essentialcontacts.contacts.projects_contacts_send_test_message 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"contacts": "{{ contacts }}", 
-"notificationCategory": "{{ notificationCategory }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="folders_contacts_compute">
 
 Lists all contacts for the resource that are subscribed to the specified notification categories, including contacts inherited from any parent resources.
@@ -996,6 +968,34 @@ Allows a contact admin to send a test message to contact to verify that it has b
 ```sql
 EXEC google.essentialcontacts.contacts.organizations_contacts_send_test_message 
 @organizationsId='{{ organizationsId }}' --required 
+@@json=
+'{
+"contacts": "{{ contacts }}", 
+"notificationCategory": "{{ notificationCategory }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_contacts_compute">
+
+Lists all contacts for the resource that are subscribed to the specified notification categories, including contacts inherited from any parent resources.
+
+```sql
+EXEC google.essentialcontacts.contacts.projects_contacts_compute 
+@projectsId='{{ projectsId }}' --required, 
+@notificationCategories='{{ notificationCategories }}', 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_contacts_send_test_message">
+
+Allows a contact admin to send a test message to contact to verify that it has been configured correctly.
+
+```sql
+EXEC google.essentialcontacts.contacts.projects_contacts_send_test_message 
+@projectsId='{{ projectsId }}' --required 
 @@json=
 '{
 "contacts": "{{ contacts }}", 

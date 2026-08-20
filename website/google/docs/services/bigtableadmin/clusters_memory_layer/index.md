@@ -96,6 +96,13 @@ The following methods are available for this resource:
     <td></td>
     <td>Gets information about the memory layer of a cluster.</td>
 </tr>
+<tr>
+    <td><a href="#update_memory_layer"><CopyableCode code="update_memory_layer" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates the memory layer of a cluster. To enable the memory layer, set the memory_config. To disable the memory layer, unset the memory_config.</td>
+</tr>
 </tbody>
 </table>
 
@@ -127,6 +134,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-updateMask">
+    <td><CopyableCode code="updateMask" /></td>
+    <td><code>string (google-fieldmask)</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -153,6 +165,40 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
 ;
+```
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="update_memory_layer"
+    values={[
+        { label: 'update_memory_layer', value: 'update_memory_layer' }
+    ]}
+>
+<TabItem value="update_memory_layer">
+
+Updates the memory layer of a cluster. To enable the memory layer, set the memory_config. To disable the memory layer, unset the memory_config.
+
+```sql
+UPDATE google.bigtableadmin.clusters_memory_layer
+SET 
+data__etag = '{{ etag }}',
+data__memoryConfig = '{{ memoryConfig }}',
+data__name = '{{ name }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND instancesId = '{{ instancesId }}' --required
+AND clustersId = '{{ clustersId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
 ```
 </TabItem>
 </Tabs>

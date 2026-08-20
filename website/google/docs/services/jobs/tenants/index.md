@@ -115,7 +115,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all tenants associated with the project.</td>
 </tr>
 <tr>
@@ -143,7 +143,7 @@ The following methods are available for this resource:
     <td><a href="#complete_query"><CopyableCode code="complete_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
-    <td><a href="#parameter-scope"><code>scope</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-company"><code>company</code></a>, <a href="#parameter-languageCodes"><code>languageCodes</code></a>, <a href="#parameter-type"><code>type</code></a></td>
+    <td><a href="#parameter-company"><code>company</code></a>, <a href="#parameter-languageCodes"><code>languageCodes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-scope"><code>scope</code></a>, <a href="#parameter-type"><code>type</code></a></td>
     <td>Completes the specified prefix with keyword suggestions. Intended for use by a job search auto-complete search box.</td>
 </tr>
 </tbody>
@@ -248,8 +248,8 @@ name,
 externalId
 FROM google.jobs.tenants
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -374,11 +374,11 @@ Completes the specified prefix with keyword suggestions. Intended for use by a j
 EXEC google.jobs.tenants.complete_query 
 @projectsId='{{ projectsId }}' --required, 
 @tenantsId='{{ tenantsId }}' --required, 
-@scope='{{ scope }}', 
-@query='{{ query }}', 
-@pageSize='{{ pageSize }}', 
 @company='{{ company }}', 
 @languageCodes='{{ languageCodes }}', 
+@pageSize='{{ pageSize }}', 
+@query='{{ query }}', 
+@scope='{{ scope }}', 
 @type='{{ type }}'
 ;
 ```

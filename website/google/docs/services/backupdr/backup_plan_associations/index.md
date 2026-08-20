@@ -235,21 +235,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists BackupPlanAssociations in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-backupPlanAssociationId"><code>backupPlanAssociationId</code></a></td>
+    <td><a href="#parameter-backupPlanAssociationId"><code>backupPlanAssociationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a BackupPlanAssociation</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupPlanAssociationsId"><code>backupPlanAssociationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a BackupPlanAssociation.</td>
 </tr>
 <tr>
@@ -263,7 +263,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_for_resource_type"><CopyableCode code="fetch_for_resource_type" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-resourceType"><code>resourceType</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-resourceType"><code>resourceType</code></a></td>
     <td>List BackupPlanAssociations for a given resource type.</td>
 </tr>
 <tr>
@@ -406,9 +406,9 @@ updateTime
 FROM google.backupdr.backup_plan_associations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -431,21 +431,21 @@ Create a BackupPlanAssociation
 ```sql
 INSERT INTO google.backupdr.backup_plan_associations (
 data__backupPlan,
-data__resourceType,
 data__resource,
+data__resourceType,
 projectsId,
 locationsId,
-requestId,
-backupPlanAssociationId
+backupPlanAssociationId,
+requestId
 )
 SELECT 
 '{{ backupPlan }}',
-'{{ resourceType }}',
 '{{ resource }}',
+'{{ resourceType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ backupPlanAssociationId }}'
+'{{ backupPlanAssociationId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -470,18 +470,18 @@ response
       value: "{{ backupPlan }}"
       description: |
         Required. Resource name of backup plan which needs to be applied on workload. Format: projects/{project}/locations/{location}/backupPlans/{backupPlanId}
-    - name: resourceType
-      value: "{{ resourceType }}"
-      description: |
-        Required. Immutable. Resource type of workload on which backupplan is applied
     - name: resource
       value: "{{ resource }}"
       description: |
         Required. Immutable. Resource name of workload on which the backup plan is applied. The format can either be the resource name (e.g., "projects/my-project/zones/us-central1-a/instances/my-instance") or the full resource URI (e.g., "https://www.googleapis.com/compute/v1/projects/my-project/zones/us-central1-a/instances/my-instance").
-    - name: requestId
-      value: "{{ requestId }}"
+    - name: resourceType
+      value: "{{ resourceType }}"
+      description: |
+        Required. Immutable. Resource type of workload on which backupplan is applied
     - name: backupPlanAssociationId
       value: "{{ backupPlanAssociationId }}"
+    - name: requestId
+      value: "{{ requestId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -504,14 +504,14 @@ Update a BackupPlanAssociation.
 UPDATE google.backupdr.backup_plan_associations
 SET 
 data__backupPlan = '{{ backupPlan }}',
-data__resourceType = '{{ resourceType }}',
-data__resource = '{{ resource }}'
+data__resource = '{{ resource }}',
+data__resourceType = '{{ resourceType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupPlanAssociationsId = '{{ backupPlanAssociationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -564,11 +564,11 @@ List BackupPlanAssociations for a given resource type.
 EXEC google.backupdr.backup_plan_associations.fetch_for_resource_type 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@resourceType='{{ resourceType }}', 
+@filter='{{ filter }}', 
 @orderBy='{{ orderBy }}', 
 @pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@filter='{{ filter }}'
+@resourceType='{{ resourceType }}'
 ;
 ```
 </TabItem>
@@ -583,10 +583,10 @@ EXEC google.backupdr.backup_plan_associations.trigger_backup
 @backupPlanAssociationsId='{{ backupPlanAssociationsId }}' --required 
 @@json=
 '{
-"ruleId": "{{ ruleId }}", 
-"requestId": "{{ requestId }}", 
+"customRetentionDays": {{ customRetentionDays }}, 
 "labels": "{{ labels }}", 
-"customRetentionDays": {{ customRetentionDays }}
+"requestId": "{{ requestId }}", 
+"ruleId": "{{ ruleId }}"
 }'
 ;
 ```

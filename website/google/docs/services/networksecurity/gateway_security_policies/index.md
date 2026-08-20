@@ -287,17 +287,17 @@ Creates a new GatewaySecurityPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.gateway_security_policies (
+data__description,
 data__name,
 data__tlsInspectionPolicy,
-data__description,
 projectsId,
 locationsId,
 gatewaySecurityPolicyId
 )
 SELECT 
+'{{ description }}',
 '{{ name }}',
 '{{ tlsInspectionPolicy }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewaySecurityPolicyId }}'
@@ -321,6 +321,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the gateway_security_policies resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Free-text description of the resource.
     - name: name
       value: "{{ name }}"
       description: |
@@ -329,10 +333,6 @@ response
       value: "{{ tlsInspectionPolicy }}"
       description: |
         Optional. Name of a TLS Inspection Policy resource that defines how TLS inspection will be performed for any rule(s) which enables it.
-    - name: description
-      value: "{{ description }}"
-      description: |
-        Optional. Free-text description of the resource.
     - name: gatewaySecurityPolicyId
       value: "{{ gatewaySecurityPolicyId }}"
 `}</CodeBlock>
@@ -356,9 +356,9 @@ Updates the parameters of a single GatewaySecurityPolicy.
 ```sql
 UPDATE google.networksecurity.gateway_security_policies
 SET 
+data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__tlsInspectionPolicy = '{{ tlsInspectionPolicy }}',
-data__description = '{{ description }}'
+data__tlsInspectionPolicy = '{{ tlsInspectionPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

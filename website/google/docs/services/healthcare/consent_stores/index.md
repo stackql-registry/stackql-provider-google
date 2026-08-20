@@ -135,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the consent stores in the specified dataset.</td>
 </tr>
 <tr>
@@ -160,13 +160,6 @@ The following methods are available for this resource:
     <td>Deletes the specified consent store and removes all the consent store's data.</td>
 </tr>
 <tr>
-    <td><a href="#query_accessible_data"><CopyableCode code="query_accessible_data" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
-    <td></td>
-    <td>Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. If the request is successful, a detailed response is returned of type QueryAccessibleDataResponse, contained in the response field when the operation finishes. The metadata field type is OperationMetadata. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/consentStores/&#123;consent_store_id&#125;`. ```json jsonPayload: &#123; @type: "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry" error: &#123; code: 9 message: "failed to evaluate consent policy" &#125; resourceName: "projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/consentStores/&#123;consent_store_id&#125;/consents/&#123;consent_id&#125;" &#125; logName: "projects/&#123;project_id&#125;/logs/healthcare.googleapis.com%2Fquery_accessible_data" operation: &#123; id: "projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/operations/&#123;operation_id&#125;" producer: "healthcare.googleapis.com/QueryAccessibleData" &#125; receiveTimestamp: "TIMESTAMP" resource: &#123; labels: &#123; consent_store_id: "&#123;consent_store_id&#125;" dataset_id: "&#123;dataset_id&#125;" location: "&#123;location_id&#125;" project_id: "&#123;project_id&#125;" &#125; type: "healthcare_consent_store" &#125; severity: "ERROR" timestamp: "TIMESTAMP" ```</td>
-</tr>
-<tr>
     <td><a href="#check_data_access"><CopyableCode code="check_data_access" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
@@ -179,6 +172,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
     <td></td>
     <td>Evaluates the user's Consents for all matching User data mappings. Note: User data mappings are indexed asynchronously, which can cause a slight delay between the time mappings are created or updated and when they are included in EvaluateUserConsents results.</td>
+</tr>
+<tr>
+    <td><a href="#query_accessible_data"><CopyableCode code="query_accessible_data" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
+    <td></td>
+    <td>Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. If the request is successful, a detailed response is returned of type QueryAccessibleDataResponse, contained in the response field when the operation finishes. The metadata field type is OperationMetadata. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/consentStores/&#123;consent_store_id&#125;`. ```json jsonPayload: &#123; @type: "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry" error: &#123; code: 9 message: "failed to evaluate consent policy" &#125; resourceName: "projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/consentStores/&#123;consent_store_id&#125;/consents/&#123;consent_id&#125;" &#125; logName: "projects/&#123;project_id&#125;/logs/healthcare.googleapis.com%2Fquery_accessible_data" operation: &#123; id: "projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/operations/&#123;operation_id&#125;" producer: "healthcare.googleapis.com/QueryAccessibleData" &#125; receiveTimestamp: "TIMESTAMP" resource: &#123; labels: &#123; consent_store_id: "&#123;consent_store_id&#125;" dataset_id: "&#123;dataset_id&#125;" location: "&#123;location_id&#125;" project_id: "&#123;project_id&#125;" &#125; type: "healthcare_consent_store" &#125; severity: "ERROR" timestamp: "TIMESTAMP" ```</td>
 </tr>
 </tbody>
 </table>
@@ -285,9 +285,9 @@ FROM google.healthcare.consent_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -310,9 +310,9 @@ Creates a new consent store in the parent dataset. Attempting to create a consen
 ```sql
 INSERT INTO google.healthcare.consent_stores (
 data__defaultConsentTtl,
-data__name,
-data__labels,
 data__enableConsentCreateOnUpdate,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 datasetsId,
@@ -320,9 +320,9 @@ consentStoreId
 )
 SELECT 
 '{{ defaultConsentTtl }}',
-'{{ name }}',
-'{{ labels }}',
 {{ enableConsentCreateOnUpdate }},
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -353,18 +353,18 @@ labels
       value: "{{ defaultConsentTtl }}"
       description: |
         Optional. Default time to live for Consents created in this store. Must be at least 24 hours. Updating this field will not affect the expiration time of existing consents.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Resource name of the consent store, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}\`. Cannot be changed after creation.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-supplied key-value pairs used to organize consent stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: p{Ll}p{Lo}{0,62}. Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [p{Ll}p{Lo}p{N}_-]{0,63}. No more than 64 labels can be associated with a given store. For more information: https://cloud.google.com/healthcare/docs/how-tos/labeling-resources
     - name: enableConsentCreateOnUpdate
       value: {{ enableConsentCreateOnUpdate }}
       description: |
         Optional. If \`true\`, UpdateConsent creates the Consent if it does not already exist. If unspecified, defaults to \`false\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-supplied key-value pairs used to organize consent stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: p{Ll}p{Lo}{0,62}. Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [p{Ll}p{Lo}p{N}_-]{0,63}. No more than 64 labels can be associated with a given store. For more information: https://cloud.google.com/healthcare/docs/how-tos/labeling-resources
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the consent store, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}\`. Cannot be changed after creation.
     - name: consentStoreId
       value: "{{ consentStoreId }}"
 `}</CodeBlock>
@@ -389,9 +389,9 @@ Updates the specified consent store.
 UPDATE google.healthcare.consent_stores
 SET 
 data__defaultConsentTtl = '{{ defaultConsentTtl }}',
-data__name = '{{ name }}',
+data__enableConsentCreateOnUpdate = {{ enableConsentCreateOnUpdate }},
 data__labels = '{{ labels }}',
-data__enableConsentCreateOnUpdate = {{ enableConsentCreateOnUpdate }}
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -435,32 +435,13 @@ AND consentStoresId = '{{ consentStoresId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="query_accessible_data"
+    defaultValue="check_data_access"
     values={[
-        { label: 'query_accessible_data', value: 'query_accessible_data' },
         { label: 'check_data_access', value: 'check_data_access' },
-        { label: 'evaluate_user_consents', value: 'evaluate_user_consents' }
+        { label: 'evaluate_user_consents', value: 'evaluate_user_consents' },
+        { label: 'query_accessible_data', value: 'query_accessible_data' }
     ]}
 >
-<TabItem value="query_accessible_data">
-
-Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. If the request is successful, a detailed response is returned of type QueryAccessibleDataResponse, contained in the response field when the operation finishes. The metadata field type is OperationMetadata. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/consentStores/&#123;consent_store_id&#125;`. ```json jsonPayload: &#123; @type: "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry" error: &#123; code: 9 message: "failed to evaluate consent policy" &#125; resourceName: "projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/consentStores/&#123;consent_store_id&#125;/consents/&#123;consent_id&#125;" &#125; logName: "projects/&#123;project_id&#125;/logs/healthcare.googleapis.com%2Fquery_accessible_data" operation: &#123; id: "projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/operations/&#123;operation_id&#125;" producer: "healthcare.googleapis.com/QueryAccessibleData" &#125; receiveTimestamp: "TIMESTAMP" resource: &#123; labels: &#123; consent_store_id: "&#123;consent_store_id&#125;" dataset_id: "&#123;dataset_id&#125;" location: "&#123;location_id&#125;" project_id: "&#123;project_id&#125;" &#125; type: "healthcare_consent_store" &#125; severity: "ERROR" timestamp: "TIMESTAMP" ```
-
-```sql
-EXEC google.healthcare.consent_stores.query_accessible_data 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required, 
-@consentStoresId='{{ consentStoresId }}' --required 
-@@json=
-'{
-"requestAttributes": "{{ requestAttributes }}", 
-"gcsDestination": "{{ gcsDestination }}", 
-"resourceAttributes": "{{ resourceAttributes }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="check_data_access">
 
 Checks if a particular data_id of a User data mapping in the specified consent store is consented for the specified use.
@@ -473,9 +454,9 @@ EXEC google.healthcare.consent_stores.check_data_access
 @consentStoresId='{{ consentStoresId }}' --required 
 @@json=
 '{
-"requestAttributes": "{{ requestAttributes }}", 
-"dataId": "{{ dataId }}", 
 "consentList": "{{ consentList }}", 
+"dataId": "{{ dataId }}", 
+"requestAttributes": "{{ requestAttributes }}", 
 "responseView": "{{ responseView }}"
 }'
 ;
@@ -493,13 +474,32 @@ EXEC google.healthcare.consent_stores.evaluate_user_consents
 @consentStoresId='{{ consentStoresId }}' --required 
 @@json=
 '{
-"resourceAttributes": "{{ resourceAttributes }}", 
-"userId": "{{ userId }}", 
-"requestAttributes": "{{ requestAttributes }}", 
-"pageToken": "{{ pageToken }}", 
 "consentList": "{{ consentList }}", 
 "pageSize": {{ pageSize }}, 
-"responseView": "{{ responseView }}"
+"pageToken": "{{ pageToken }}", 
+"requestAttributes": "{{ requestAttributes }}", 
+"resourceAttributes": "{{ resourceAttributes }}", 
+"responseView": "{{ responseView }}", 
+"userId": "{{ userId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="query_accessible_data">
+
+Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. If the request is successful, a detailed response is returned of type QueryAccessibleDataResponse, contained in the response field when the operation finishes. The metadata field type is OperationMetadata. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/consentStores/&#123;consent_store_id&#125;`. ```json jsonPayload: &#123; @type: "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry" error: &#123; code: 9 message: "failed to evaluate consent policy" &#125; resourceName: "projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/consentStores/&#123;consent_store_id&#125;/consents/&#123;consent_id&#125;" &#125; logName: "projects/&#123;project_id&#125;/logs/healthcare.googleapis.com%2Fquery_accessible_data" operation: &#123; id: "projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/datasets/&#123;dataset_id&#125;/operations/&#123;operation_id&#125;" producer: "healthcare.googleapis.com/QueryAccessibleData" &#125; receiveTimestamp: "TIMESTAMP" resource: &#123; labels: &#123; consent_store_id: "&#123;consent_store_id&#125;" dataset_id: "&#123;dataset_id&#125;" location: "&#123;location_id&#125;" project_id: "&#123;project_id&#125;" &#125; type: "healthcare_consent_store" &#125; severity: "ERROR" timestamp: "TIMESTAMP" ```
+
+```sql
+EXEC google.healthcare.consent_stores.query_accessible_data 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required, 
+@consentStoresId='{{ consentStoresId }}' --required 
+@@json=
+'{
+"gcsDestination": "{{ gcsDestination }}", 
+"requestAttributes": "{{ requestAttributes }}", 
+"resourceAttributes": "{{ resourceAttributes }}"
 }'
 ;
 ```

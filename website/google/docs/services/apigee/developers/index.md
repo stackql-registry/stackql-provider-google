@@ -170,7 +170,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_developers_list"><CopyableCode code="organizations_developers_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-ids"><code>ids</code></a>, <a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-count"><code>count</code></a>, <a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-app"><code>app</code></a>, <a href="#parameter-includeCompany"><code>includeCompany</code></a></td>
+    <td><a href="#parameter-app"><code>app</code></a>, <a href="#parameter-count"><code>count</code></a>, <a href="#parameter-expand"><code>expand</code></a>, <a href="#parameter-ids"><code>ids</code></a>, <a href="#parameter-includeCompany"><code>includeCompany</code></a>, <a href="#parameter-startKey"><code>startKey</code></a></td>
     <td>Lists all developers in an organization by email address. By default, the response does not include company developers. Set the `includeCompany` query parameter to `true` to include company developers. **Note**: A maximum of 1000 developers are returned in the response. You paginate the list of developers returned using the `startKey` and `count` query parameters.</td>
 </tr>
 <tr>
@@ -317,12 +317,12 @@ SELECT
 developer
 FROM google.apigee.developers
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND ids = '{{ ids }}'
-AND expand = '{{ expand }}'
-AND count = '{{ count }}'
-AND startKey = '{{ startKey }}'
 AND app = '{{ app }}'
+AND count = '{{ count }}'
+AND expand = '{{ expand }}'
+AND ids = '{{ ids }}'
 AND includeCompany = '{{ includeCompany }}'
+AND startKey = '{{ startKey }}'
 ;
 ```
 </TabItem>
@@ -344,29 +344,29 @@ Creates a developer. Once created, the developer can register an app and obtain 
 
 ```sql
 INSERT INTO google.apigee.developers (
-data__appFamily,
 data__accessType,
-data__developerId,
-data__firstName,
-data__userName,
-data__lastName,
-data__attributes,
-data__email,
-data__companies,
+data__appFamily,
 data__apps,
+data__attributes,
+data__companies,
+data__developerId,
+data__email,
+data__firstName,
+data__lastName,
+data__userName,
 organizationsId
 )
 SELECT 
-'{{ appFamily }}',
 '{{ accessType }}',
-'{{ developerId }}',
-'{{ firstName }}',
-'{{ userName }}',
-'{{ lastName }}',
-'{{ attributes }}',
-'{{ email }}',
-'{{ companies }}',
+'{{ appFamily }}',
 '{{ apps }}',
+'{{ attributes }}',
+'{{ companies }}',
+'{{ developerId }}',
+'{{ email }}',
+'{{ firstName }}',
+'{{ lastName }}',
+'{{ userName }}',
 '{{ organizationsId }}'
 RETURNING
 accessType,
@@ -394,50 +394,50 @@ userName
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the developers resource.
-    - name: appFamily
-      value: "{{ appFamily }}"
-      description: |
-        Developer app family.
     - name: accessType
       value: "{{ accessType }}"
       description: |
         Access type.
-    - name: developerId
-      value: "{{ developerId }}"
+    - name: appFamily
+      value: "{{ appFamily }}"
       description: |
-        ID of the developer. **Note**: IDs are generated internally by Apigee and are not guaranteed to stay the same over time.
-    - name: firstName
-      value: "{{ firstName }}"
+        Developer app family.
+    - name: apps
+      value:
+        - "{{ apps }}"
       description: |
-        Required. First name of the developer.
-    - name: userName
-      value: "{{ userName }}"
-      description: |
-        Required. User name of the developer. Not used by Apigee hybrid.
-    - name: lastName
-      value: "{{ lastName }}"
-      description: |
-        Required. Last name of the developer.
+        List of apps associated with the developer.
     - name: attributes
       description: |
         Optional. Developer attributes (name/value pairs). The custom attribute limit is 18.
       value:
         - name: "{{ name }}"
           value: "{{ value }}"
-    - name: email
-      value: "{{ email }}"
-      description: |
-        Required. Email address of the developer. This value is used to uniquely identify the developer in Apigee hybrid. Note that the email address has to be in lowercase only.
     - name: companies
       value:
         - "{{ companies }}"
       description: |
         List of companies associated with the developer.
-    - name: apps
-      value:
-        - "{{ apps }}"
+    - name: developerId
+      value: "{{ developerId }}"
       description: |
-        List of apps associated with the developer.
+        ID of the developer. **Note**: IDs are generated internally by Apigee and are not guaranteed to stay the same over time.
+    - name: email
+      value: "{{ email }}"
+      description: |
+        Required. Email address of the developer. This value is used to uniquely identify the developer in Apigee hybrid. Note that the email address has to be in lowercase only.
+    - name: firstName
+      value: "{{ firstName }}"
+      description: |
+        Required. First name of the developer.
+    - name: lastName
+      value: "{{ lastName }}"
+      description: |
+        Required. Last name of the developer.
+    - name: userName
+      value: "{{ userName }}"
+      description: |
+        Required. User name of the developer. Not used by Apigee hybrid.
 `}</CodeBlock>
 
 </TabItem>
@@ -459,16 +459,16 @@ Updates a developer. This API replaces the existing developer details with those
 ```sql
 REPLACE google.apigee.developers
 SET 
-data__appFamily = '{{ appFamily }}',
 data__accessType = '{{ accessType }}',
-data__developerId = '{{ developerId }}',
-data__firstName = '{{ firstName }}',
-data__userName = '{{ userName }}',
-data__lastName = '{{ lastName }}',
+data__appFamily = '{{ appFamily }}',
+data__apps = '{{ apps }}',
 data__attributes = '{{ attributes }}',
-data__email = '{{ email }}',
 data__companies = '{{ companies }}',
-data__apps = '{{ apps }}'
+data__developerId = '{{ developerId }}',
+data__email = '{{ email }}',
+data__firstName = '{{ firstName }}',
+data__lastName = '{{ lastName }}',
+data__userName = '{{ userName }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND developersId = '{{ developersId }}' --required

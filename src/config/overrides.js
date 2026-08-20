@@ -610,6 +610,11 @@ export const resourceNameOverridesByOperationId = {
     servicenetworking: {
         'servicenetworking.services.dnsRecordSets.get' : 'dns_record_set',
     },
+    storage: {
+        // synthesised media (object content) methods - see config/media.js
+        'storage.objects.download': 'objects_content',
+        'storage.objects.upload': 'objects_content',
+    },
     videointelligence: {
         'videointelligence.operations.projects.locations.operations.cancel' : 'long_running_operations',
         'videointelligence.operations.projects.locations.operations.delete' : 'long_running_operations',
@@ -974,8 +979,20 @@ export const sqlVerbOverrides = {
     osconfig: {
         'osconfig.projects.locations.instances.inventories.get' : 'exec',
     },
+    serviceusage: {
+        // batchGet would otherwise tie with list on required params
+        // (parent, parentType) and shadow it in select routing; its `names`
+        // query param is effectively mandatory, so it belongs behind EXEC
+        'serviceusage.services.batchGet': 'exec',
+    },
     spanner: {
         'spanner.projects.instances.databases.dropDatabase' : 'delete',
+    },
+    storage: {
+        // synthesised media (object content) methods - see config/media.js
+        // (upload additionally serves REPLACE via mediaMethodEntryOverrides)
+        'storage.objects.download': 'select',
+        'storage.objects.upload': 'insert',
     },
 };
 

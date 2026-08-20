@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_collections_data_stores_site_search_engine_target_sites_get"
     values={[
         { label: 'projects_locations_collections_data_stores_site_search_engine_target_sites_get', value: 'projects_locations_collections_data_stores_site_search_engine_target_sites_get' },
-        { label: 'projects_locations_data_stores_site_search_engine_target_sites_get', value: 'projects_locations_data_stores_site_search_engine_target_sites_get' },
         { label: 'projects_locations_collections_data_stores_site_search_engine_target_sites_list', value: 'projects_locations_collections_data_stores_site_search_engine_target_sites_list' },
+        { label: 'projects_locations_data_stores_site_search_engine_target_sites_get', value: 'projects_locations_data_stores_site_search_engine_target_sites_get' },
         { label: 'projects_locations_data_stores_site_search_engine_target_sites_list', value: 'projects_locations_data_stores_site_search_engine_target_sites_list' }
     ]}
 >
@@ -105,7 +105,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_data_stores_site_search_engine_target_sites_get">
+<TabItem value="projects_locations_collections_data_stores_site_search_engine_target_sites_list">
 
 <table>
 <thead>
@@ -169,7 +169,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_collections_data_stores_site_search_engine_target_sites_list">
+<TabItem value="projects_locations_data_stores_site_search_engine_target_sites_get">
 
 <table>
 <thead>
@@ -322,6 +322,13 @@ The following methods are available for this resource:
     <td>Gets a TargetSite.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_collections_data_stores_site_search_engine_target_sites_list"><CopyableCode code="projects_locations_collections_data_stores_site_search_engine_target_sites_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Gets a list of TargetSites.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_data_stores_site_search_engine_target_sites_get"><CopyableCode code="projects_locations_data_stores_site_search_engine_target_sites_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-targetSitesId"><code>targetSitesId</code></a></td>
@@ -329,17 +336,10 @@ The following methods are available for this resource:
     <td>Gets a TargetSite.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_site_search_engine_target_sites_list"><CopyableCode code="projects_locations_collections_data_stores_site_search_engine_target_sites_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Gets a list of TargetSites.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_stores_site_search_engine_target_sites_list"><CopyableCode code="projects_locations_data_stores_site_search_engine_target_sites_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Gets a list of TargetSites.</td>
 </tr>
 <tr>
@@ -357,18 +357,18 @@ The following methods are available for this resource:
     <td>Creates a TargetSite.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_site_search_engine_target_sites_create"><CopyableCode code="projects_locations_data_stores_site_search_engine_target_sites_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td></td>
-    <td>Creates a TargetSite.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_stores_site_search_engine_target_sites_batch_create"><CopyableCode code="projects_locations_data_stores_site_search_engine_target_sites_batch_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
     <td></td>
     <td>Creates TargetSite in a batch.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_site_search_engine_target_sites_create"><CopyableCode code="projects_locations_data_stores_site_search_engine_target_sites_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td></td>
+    <td>Creates a TargetSite.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_collections_data_stores_site_search_engine_target_sites_patch"><CopyableCode code="projects_locations_collections_data_stores_site_search_engine_target_sites_patch" /></a></td>
@@ -458,8 +458,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_collections_data_stores_site_search_engine_target_sites_get"
     values={[
         { label: 'projects_locations_collections_data_stores_site_search_engine_target_sites_get', value: 'projects_locations_collections_data_stores_site_search_engine_target_sites_get' },
-        { label: 'projects_locations_data_stores_site_search_engine_target_sites_get', value: 'projects_locations_data_stores_site_search_engine_target_sites_get' },
         { label: 'projects_locations_collections_data_stores_site_search_engine_target_sites_list', value: 'projects_locations_collections_data_stores_site_search_engine_target_sites_list' },
+        { label: 'projects_locations_data_stores_site_search_engine_target_sites_get', value: 'projects_locations_data_stores_site_search_engine_target_sites_get' },
         { label: 'projects_locations_data_stores_site_search_engine_target_sites_list', value: 'projects_locations_data_stores_site_search_engine_target_sites_list' }
     ]}
 >
@@ -488,6 +488,32 @@ AND targetSitesId = '{{ targetSitesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_collections_data_stores_site_search_engine_target_sites_list">
+
+Gets a list of TargetSites.
+
+```sql
+SELECT
+name,
+exactMatch,
+failureReason,
+generatedUriPattern,
+indexingStatus,
+providedUriPattern,
+rootDomainUri,
+siteVerificationInfo,
+type,
+updateTime
+FROM google.discoveryengine.target_sites
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_data_stores_site_search_engine_target_sites_get">
 
 Gets a TargetSite.
@@ -512,32 +538,6 @@ AND targetSitesId = '{{ targetSitesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_data_stores_site_search_engine_target_sites_list">
-
-Gets a list of TargetSites.
-
-```sql
-SELECT
-name,
-exactMatch,
-failureReason,
-generatedUriPattern,
-indexingStatus,
-providedUriPattern,
-rootDomainUri,
-siteVerificationInfo,
-type,
-updateTime
-FROM google.discoveryengine.target_sites
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND collectionsId = '{{ collectionsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_data_stores_site_search_engine_target_sites_list">
 
 Gets a list of TargetSites.
@@ -558,8 +558,8 @@ FROM google.discoveryengine.target_sites
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -573,8 +573,8 @@ AND pageSize = '{{ pageSize }}'
     values={[
         { label: 'projects_locations_collections_data_stores_site_search_engine_target_sites_batch_create', value: 'projects_locations_collections_data_stores_site_search_engine_target_sites_batch_create' },
         { label: 'projects_locations_collections_data_stores_site_search_engine_target_sites_create', value: 'projects_locations_collections_data_stores_site_search_engine_target_sites_create' },
-        { label: 'projects_locations_data_stores_site_search_engine_target_sites_create', value: 'projects_locations_data_stores_site_search_engine_target_sites_create' },
         { label: 'projects_locations_data_stores_site_search_engine_target_sites_batch_create', value: 'projects_locations_data_stores_site_search_engine_target_sites_batch_create' },
+        { label: 'projects_locations_data_stores_site_search_engine_target_sites_create', value: 'projects_locations_data_stores_site_search_engine_target_sites_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
@@ -611,8 +611,8 @@ Creates a TargetSite.
 
 ```sql
 INSERT INTO google.discoveryengine.target_sites (
-data__providedUriPattern,
 data__exactMatch,
+data__providedUriPattern,
 data__type,
 projectsId,
 locationsId,
@@ -620,41 +620,12 @@ collectionsId,
 dataStoresId
 )
 SELECT 
-'{{ providedUriPattern }}',
 {{ exactMatch }},
+'{{ providedUriPattern }}',
 '{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
-'{{ dataStoresId }}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_site_search_engine_target_sites_create">
-
-Creates a TargetSite.
-
-```sql
-INSERT INTO google.discoveryengine.target_sites (
-data__providedUriPattern,
-data__exactMatch,
-data__type,
-projectsId,
-locationsId,
-dataStoresId
-)
-SELECT 
-'{{ providedUriPattern }}',
-{{ exactMatch }},
-'{{ type }}',
-'{{ projectsId }}',
-'{{ locationsId }}',
 '{{ dataStoresId }}'
 RETURNING
 name,
@@ -690,6 +661,35 @@ response
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_data_stores_site_search_engine_target_sites_create">
+
+Creates a TargetSite.
+
+```sql
+INSERT INTO google.discoveryengine.target_sites (
+data__exactMatch,
+data__providedUriPattern,
+data__type,
+projectsId,
+locationsId,
+dataStoresId
+)
+SELECT 
+{{ exactMatch }},
+'{{ providedUriPattern }}',
+'{{ type }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
+'{{ dataStoresId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
@@ -713,28 +713,28 @@ response
       value:
         - parent: "{{ parent }}"
           targetSite:
-            name: "{{ name }}"
-            siteVerificationInfo:
-              verifyTime: "{{ verifyTime }}"
-              siteVerificationState: "{{ siteVerificationState }}"
-            indexingStatus: "{{ indexingStatus }}"
-            providedUriPattern: "{{ providedUriPattern }}"
-            rootDomainUri: "{{ rootDomainUri }}"
-            updateTime: "{{ updateTime }}"
+            exactMatch: {{ exactMatch }}
             failureReason:
               quotaFailure:
                 totalRequiredQuota: "{{ totalRequiredQuota }}"
-            exactMatch: {{ exactMatch }}
-            type: "{{ type }}"
             generatedUriPattern: "{{ generatedUriPattern }}"
-    - name: providedUriPattern
-      value: "{{ providedUriPattern }}"
-      description: |
-        Required. Input only. The user provided URI pattern from which the \`generated_uri_pattern\` is generated.
+            indexingStatus: "{{ indexingStatus }}"
+            name: "{{ name }}"
+            providedUriPattern: "{{ providedUriPattern }}"
+            rootDomainUri: "{{ rootDomainUri }}"
+            siteVerificationInfo:
+              siteVerificationState: "{{ siteVerificationState }}"
+              verifyTime: "{{ verifyTime }}"
+            type: "{{ type }}"
+            updateTime: "{{ updateTime }}"
     - name: exactMatch
       value: {{ exactMatch }}
       description: |
         Immutable. If set to false, a uri_pattern is generated to include all pages whose address contains the provided_uri_pattern. If set to true, an uri_pattern is generated to try to be an exact match of the provided_uri_pattern or just the specific page if the provided_uri_pattern is a specific one. provided_uri_pattern is always normalized to generate the URI pattern to be used by the search engine.
+    - name: providedUriPattern
+      value: "{{ providedUriPattern }}"
+      description: |
+        Required. Input only. The user provided URI pattern from which the \`generated_uri_pattern\` is generated.
     - name: type
       value: "{{ type }}"
       description: |
@@ -762,8 +762,8 @@ Updates a TargetSite.
 ```sql
 UPDATE google.discoveryengine.target_sites
 SET 
-data__providedUriPattern = '{{ providedUriPattern }}',
 data__exactMatch = {{ exactMatch }},
+data__providedUriPattern = '{{ providedUriPattern }}',
 data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -786,8 +786,8 @@ Updates a TargetSite.
 ```sql
 UPDATE google.discoveryengine.target_sites
 SET 
-data__providedUriPattern = '{{ providedUriPattern }}',
 data__exactMatch = {{ exactMatch }},
+data__providedUriPattern = '{{ providedUriPattern }}',
 data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

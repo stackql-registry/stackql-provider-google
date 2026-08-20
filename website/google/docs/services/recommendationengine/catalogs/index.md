@@ -196,10 +196,10 @@ Updates the catalog configuration.
 ```sql
 UPDATE google.recommendationengine.catalogs
 SET 
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}',
+data__catalogItemLevelConfig = '{{ catalogItemLevelConfig }}',
 data__defaultEventStoreId = '{{ defaultEventStoreId }}',
-data__catalogItemLevelConfig = '{{ catalogItemLevelConfig }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

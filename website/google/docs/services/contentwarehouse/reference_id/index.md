@@ -290,9 +290,9 @@ Updates a document. Returns INVALID_ARGUMENT if the name of the document is non-
 UPDATE google.contentwarehouse.reference_id
 SET 
 data__cloudAiDocumentOption = '{{ cloudAiDocumentOption }}',
+data__document = '{{ document }}',
 data__requestMetadata = '{{ requestMetadata }}',
-data__updateOptions = '{{ updateOptions }}',
-data__document = '{{ document }}'
+data__updateOptions = '{{ updateOptions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

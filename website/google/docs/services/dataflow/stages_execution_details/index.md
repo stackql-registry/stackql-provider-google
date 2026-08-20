@@ -83,8 +83,8 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_jobs_stages_get_execution_details"><CopyableCode code="projects_locations_jobs_stages_get_execution_details" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a>, <a href="#parameter-stageId"><code>stageId</code></a></td>
-    <td><a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-endTime"><code>endTime</code></a></td>
-    <td>Request detailed information about the execution status of a stage of the job. EXPERIMENTAL. This API is subject to change or removal without notice.</td>
+    <td><a href="#parameter-endTime"><code>endTime</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
+    <td>Request detailed information about the execution status of a stage of the job. EXPERIMENTAL. This API is subject to change or removal without notice. # IAM Permissions Requires the `dataflow.metrics.get` permission on the job.</td>
 </tr>
 </tbody>
 </table>
@@ -155,7 +155,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_jobs_stages_get_execution_details">
 
-Request detailed information about the execution status of a stage of the job. EXPERIMENTAL. This API is subject to change or removal without notice.
+Request detailed information about the execution status of a stage of the job. EXPERIMENTAL. This API is subject to change or removal without notice. # IAM Permissions Requires the `dataflow.metrics.get` permission on the job.
 
 ```sql
 SELECT
@@ -166,10 +166,10 @@ WHERE projectId = '{{ projectId }}' -- required
 AND location = '{{ location }}' -- required
 AND jobId = '{{ jobId }}' -- required
 AND stageId = '{{ stageId }}' -- required
-AND startTime = '{{ startTime }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND endTime = '{{ endTime }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND startTime = '{{ startTime }}'
 ;
 ```
 </TabItem>

@@ -197,42 +197,42 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a></td>
     <td></td>
     <td>Gets details of a single Feature.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-latestStatsCount"><code>latestStatsCount</code></a></td>
-    <td>Lists Features in a given FeatureGroup.</td>
-</tr>
-<tr>
-    <td><a href="#create"><CopyableCode code="create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a></td>
-    <td><a href="#parameter-featureId"><code>featureId</code></a></td>
-    <td>Creates a new Feature in a given FeatureGroup.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-latestStatsCount"><code>latestStatsCount</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td>Lists Features in a given EntityType.</td>
 </tr>
 <tr>
     <td><a href="#batch_create"><CopyableCode code="batch_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
     <td></td>
-    <td>Creates a batch of Features in a given FeatureGroup.</td>
+    <td>Creates a batch of Features in a given EntityType.</td>
+</tr>
+<tr>
+    <td><a href="#create"><CopyableCode code="create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a></td>
+    <td><a href="#parameter-featureId"><code>featureId</code></a></td>
+    <td>Creates a new Feature in a given EntityType.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Feature.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featurestoresId"><code>featurestoresId</code></a>, <a href="#parameter-entityTypesId"><code>entityTypesId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a></td>
     <td></td>
     <td>Deletes a single Feature.</td>
 </tr>
@@ -252,13 +252,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-featureGroupsId">
-    <td><CopyableCode code="featureGroupsId" /></td>
+<tr id="parameter-entityTypesId">
+    <td><CopyableCode code="entityTypesId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
 <tr id="parameter-featuresId">
     <td><CopyableCode code="featuresId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-featurestoresId">
+    <td><CopyableCode code="featurestoresId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -344,14 +349,15 @@ versionColumnName
 FROM google.aiplatform.features
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND featureGroupsId = '{{ featureGroupsId }}' -- required
+AND featurestoresId = '{{ featurestoresId }}' -- required
+AND entityTypesId = '{{ entityTypesId }}' -- required
 AND featuresId = '{{ featuresId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-Lists Features in a given FeatureGroup.
+Lists Features in a given EntityType.
 
 ```sql
 SELECT
@@ -369,13 +375,14 @@ versionColumnName
 FROM google.aiplatform.features
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND featureGroupsId = '{{ featureGroupsId }}' -- required
-AND readMask = '{{ readMask }}'
+AND featurestoresId = '{{ featurestoresId }}' -- required
+AND entityTypesId = '{{ entityTypesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+AND latestStatsCount = '{{ latestStatsCount }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND latestStatsCount = '{{ latestStatsCount }}'
+AND pageToken = '{{ pageToken }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -385,45 +392,31 @@ AND latestStatsCount = '{{ latestStatsCount }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="create"
+    defaultValue="batch_create"
     values={[
-        { label: 'create', value: 'create' },
         { label: 'batch_create', value: 'batch_create' },
+        { label: 'create', value: 'create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="create">
+<TabItem value="batch_create">
 
-Creates a new Feature in a given FeatureGroup.
+Creates a batch of Features in a given EntityType.
 
 ```sql
 INSERT INTO google.aiplatform.features (
-data__etag,
-data__versionColumnName,
-data__valueType,
-data__labels,
-data__name,
-data__disableMonitoring,
-data__pointOfContact,
-data__description,
+data__requests,
 projectsId,
 locationsId,
-featureGroupsId,
-featureId
+featurestoresId,
+entityTypesId
 )
 SELECT 
-'{{ etag }}',
-'{{ versionColumnName }}',
-'{{ valueType }}',
-'{{ labels }}',
-'{{ name }}',
-{{ disableMonitoring }},
-'{{ pointOfContact }}',
-'{{ description }}',
+'{{ requests }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ featureGroupsId }}',
-'{{ featureId }}'
+'{{ featurestoresId }}',
+'{{ entityTypesId }}'
 RETURNING
 name,
 done,
@@ -433,22 +426,40 @@ response
 ;
 ```
 </TabItem>
-<TabItem value="batch_create">
+<TabItem value="create">
 
-Creates a batch of Features in a given FeatureGroup.
+Creates a new Feature in a given EntityType.
 
 ```sql
 INSERT INTO google.aiplatform.features (
-data__requests,
+data__description,
+data__disableMonitoring,
+data__etag,
+data__labels,
+data__name,
+data__pointOfContact,
+data__valueType,
+data__versionColumnName,
 projectsId,
 locationsId,
-featureGroupsId
+featurestoresId,
+entityTypesId,
+featureId
 )
 SELECT 
-'{{ requests }}',
+'{{ description }}',
+{{ disableMonitoring }},
+'{{ etag }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ pointOfContact }}',
+'{{ valueType }}',
+'{{ versionColumnName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ featureGroupsId }}'
+'{{ featurestoresId }}',
+'{{ entityTypesId }}',
+'{{ featureId }}'
 RETURNING
 name,
 done,
@@ -469,22 +480,51 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the features resource.
-    - name: featureGroupsId
-      value: "{{ featureGroupsId }}"
+    - name: featurestoresId
+      value: "{{ featurestoresId }}"
       description: Required parameter for the features resource.
+    - name: entityTypesId
+      value: "{{ entityTypesId }}"
+      description: Required parameter for the features resource.
+    - name: requests
+      description: |
+        Required. The request message specifying the Features to create. All Features must be created under the same parent EntityType / FeatureGroup. The \`parent\` field in each child request message can be omitted. If \`parent\` is set in a child request, then the value must match the \`parent\` value in this request message.
+      value:
+        - feature:
+            createTime: "{{ createTime }}"
+            description: "{{ description }}"
+            disableMonitoring: {{ disableMonitoring }}
+            etag: "{{ etag }}"
+            labels: "{{ labels }}"
+            monitoringStatsAnomalies:
+              - featureStatsAnomaly:
+                  anomalyDetectionThreshold: {{ anomalyDetectionThreshold }}
+                  anomalyUri: "{{ anomalyUri }}"
+                  distributionDeviation: {{ distributionDeviation }}
+                  endTime: "{{ endTime }}"
+                  score: {{ score }}
+                  startTime: "{{ startTime }}"
+                  statsUri: "{{ statsUri }}"
+                objective: "{{ objective }}"
+            name: "{{ name }}"
+            pointOfContact: "{{ pointOfContact }}"
+            updateTime: "{{ updateTime }}"
+            valueType: "{{ valueType }}"
+            versionColumnName: "{{ versionColumnName }}"
+          featureId: "{{ featureId }}"
+          parent: "{{ parent }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the Feature.
+    - name: disableMonitoring
+      value: {{ disableMonitoring }}
+      description: |
+        Optional. Only applicable for Vertex AI Feature Store (Legacy). If not set, use the monitoring_config defined for the EntityType this Feature belongs to. Only Features with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable monitoring. If set to true, all types of data monitoring are disabled despite the config on EntityType.
     - name: etag
       value: "{{ etag }}"
       description: |
         Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-    - name: versionColumnName
-      value: "{{ versionColumnName }}"
-      description: |
-        Only applicable for Vertex AI Feature Store. The name of the BigQuery Table/View column hosting data for this version. If no value is provided, will use feature_id.
-    - name: valueType
-      value: "{{ valueType }}"
-      description: |
-        Immutable. Only applicable for Vertex AI Feature Store (Legacy). Type of Feature value.
-      valid_values: ['VALUE_TYPE_UNSPECIFIED', 'BOOL', 'BOOL_ARRAY', 'DOUBLE', 'DOUBLE_ARRAY', 'INT64', 'INT64_ARRAY', 'STRING', 'STRING_ARRAY', 'BYTES', 'STRUCT']
     - name: labels
       value: "{{ labels }}"
       description: |
@@ -493,45 +533,19 @@ response
       value: "{{ name }}"
       description: |
         Immutable. Name of the Feature. Format: \`projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}\` \`projects/{project}/locations/{location}/featureGroups/{feature_group}/features/{feature}\` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.
-    - name: disableMonitoring
-      value: {{ disableMonitoring }}
-      description: |
-        Optional. Only applicable for Vertex AI Feature Store (Legacy). If not set, use the monitoring_config defined for the EntityType this Feature belongs to. Only Features with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable monitoring. If set to true, all types of data monitoring are disabled despite the config on EntityType.
     - name: pointOfContact
       value: "{{ pointOfContact }}"
       description: |
         Entity responsible for maintaining this feature. Can be comma separated list of email addresses or URIs.
-    - name: description
-      value: "{{ description }}"
+    - name: valueType
+      value: "{{ valueType }}"
       description: |
-        Description of the Feature.
-    - name: requests
+        Immutable. Only applicable for Vertex AI Feature Store (Legacy). Type of Feature value.
+      valid_values: ['VALUE_TYPE_UNSPECIFIED', 'BOOL', 'BOOL_ARRAY', 'DOUBLE', 'DOUBLE_ARRAY', 'INT64', 'INT64_ARRAY', 'STRING', 'STRING_ARRAY', 'BYTES', 'STRUCT']
+    - name: versionColumnName
+      value: "{{ versionColumnName }}"
       description: |
-        Required. The request message specifying the Features to create. All Features must be created under the same parent EntityType / FeatureGroup. The \`parent\` field in each child request message can be omitted. If \`parent\` is set in a child request, then the value must match the \`parent\` value in this request message.
-      value:
-        - parent: "{{ parent }}"
-          feature:
-            updateTime: "{{ updateTime }}"
-            etag: "{{ etag }}"
-            createTime: "{{ createTime }}"
-            versionColumnName: "{{ versionColumnName }}"
-            monitoringStatsAnomalies:
-              - objective: "{{ objective }}"
-                featureStatsAnomaly:
-                  distributionDeviation: {{ distributionDeviation }}
-                  score: {{ score }}
-                  startTime: "{{ startTime }}"
-                  statsUri: "{{ statsUri }}"
-                  anomalyDetectionThreshold: {{ anomalyDetectionThreshold }}
-                  endTime: "{{ endTime }}"
-                  anomalyUri: "{{ anomalyUri }}"
-            valueType: "{{ valueType }}"
-            labels: "{{ labels }}"
-            name: "{{ name }}"
-            disableMonitoring: {{ disableMonitoring }}
-            pointOfContact: "{{ pointOfContact }}"
-            description: "{{ description }}"
-          featureId: "{{ featureId }}"
+        Only applicable for Vertex AI Feature Store. The name of the BigQuery Table/View column hosting data for this version. If no value is provided, will use feature_id.
     - name: featureId
       value: "{{ featureId }}"
 `}</CodeBlock>
@@ -555,26 +569,33 @@ Updates the parameters of a single Feature.
 ```sql
 UPDATE google.aiplatform.features
 SET 
+data__description = '{{ description }}',
+data__disableMonitoring = {{ disableMonitoring }},
 data__etag = '{{ etag }}',
-data__versionColumnName = '{{ versionColumnName }}',
-data__valueType = '{{ valueType }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__disableMonitoring = {{ disableMonitoring }},
 data__pointOfContact = '{{ pointOfContact }}',
-data__description = '{{ description }}'
+data__valueType = '{{ valueType }}',
+data__versionColumnName = '{{ versionColumnName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND featureGroupsId = '{{ featureGroupsId }}' --required
+AND featurestoresId = '{{ featurestoresId }}' --required
+AND entityTypesId = '{{ entityTypesId }}' --required
 AND featuresId = '{{ featuresId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
-done,
-error,
-metadata,
-response;
+createTime,
+description,
+disableMonitoring,
+etag,
+labels,
+monitoringStatsAnomalies,
+pointOfContact,
+updateTime,
+valueType,
+versionColumnName;
 ```
 </TabItem>
 </Tabs>
@@ -596,7 +617,8 @@ Deletes a single Feature.
 DELETE FROM google.aiplatform.features
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND featureGroupsId = '{{ featureGroupsId }}' --required
+AND featurestoresId = '{{ featurestoresId }}' --required
+AND entityTypesId = '{{ entityTypesId }}' --required
 AND featuresId = '{{ featuresId }}' --required
 ;
 ```

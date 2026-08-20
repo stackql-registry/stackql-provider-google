@@ -78,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="restrictedClientApplications" /></td>
     <td><code>array</code></td>
-    <td>Optional. Deprecated: use scoped_access_settings instead. A list of applications that are subject to this binding's restrictions. If the list is empty, the binding restrictions will universally apply to all applications.</td>
+    <td>Optional. Deprecated: Use `scoped_access_settings` instead. A list of applications that are subject to this binding's restrictions. If the list is empty, the binding restrictions will universally apply to all applications.</td>
 </tr>
 <tr>
     <td><CopyableCode code="scopedAccessSettings" /></td>
@@ -132,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="restrictedClientApplications" /></td>
     <td><code>array</code></td>
-    <td>Optional. Deprecated: use scoped_access_settings instead. A list of applications that are subject to this binding's restrictions. If the list is empty, the binding restrictions will universally apply to all applications.</td>
+    <td>Optional. Deprecated: Use `scoped_access_settings` instead. A list of applications that are subject to this binding's restrictions. If the list is empty, the binding restrictions will universally apply to all applications.</td>
 </tr>
 <tr>
     <td><CopyableCode code="scopedAccessSettings" /></td>
@@ -175,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all GcpUserAccessBindings for a Google Cloud organization.</td>
 </tr>
 <tr>
@@ -189,7 +189,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-gcpUserAccessBindingsId"><code>gcpUserAccessBindingsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-append"><code>append</code></a></td>
+    <td><a href="#parameter-append"><code>append</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a GcpUserAccessBinding. Completion of this long-running operation does not necessarily signify that the changed binding is deployed onto all affected users, which may take more time.</td>
 </tr>
 <tr>
@@ -228,6 +228,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-append">
     <td><CopyableCode code="append" /></td>
     <td><code>boolean</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-filter">
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
     <td></td>
 </tr>
 <tr id="parameter-pageSize">
@@ -293,6 +298,7 @@ scopedAccessSettings,
 sessionSettings
 FROM google.accesscontextmanager.gcp_user_access_bindings
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -316,25 +322,25 @@ Creates a GcpUserAccessBinding. If the client specifies a name, the server ignor
 
 ```sql
 INSERT INTO google.accesscontextmanager.gcp_user_access_bindings (
-data__name,
-data__scopedAccessSettings,
-data__groupKey,
-data__principal,
-data__dryRunAccessLevels,
-data__restrictedClientApplications,
-data__sessionSettings,
 data__accessLevels,
+data__dryRunAccessLevels,
+data__groupKey,
+data__name,
+data__principal,
+data__restrictedClientApplications,
+data__scopedAccessSettings,
+data__sessionSettings,
 organizationsId
 )
 SELECT 
-'{{ name }}',
-'{{ scopedAccessSettings }}',
-'{{ groupKey }}',
-'{{ principal }}',
-'{{ dryRunAccessLevels }}',
-'{{ restrictedClientApplications }}',
-'{{ sessionSettings }}',
 '{{ accessLevels }}',
+'{{ dryRunAccessLevels }}',
+'{{ groupKey }}',
+'{{ name }}',
+'{{ principal }}',
+'{{ restrictedClientApplications }}',
+'{{ scopedAccessSettings }}',
+'{{ sessionSettings }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -353,72 +359,75 @@ response
     - name: organizationsId
       value: "{{ organizationsId }}"
       description: Required parameter for the gcp_user_access_bindings resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Immutable. Assigned by the server during creation. The last segment has an arbitrary length and has only URI unreserved characters (as defined by [RFC 3986 Section 2.3](https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be specified by the client during creation. Example: "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
-    - name: scopedAccessSettings
-      description: |
-        Optional. A list of scoped access settings that set this binding's restrictions on a subset of applications. This field cannot be set if restricted_client_applications is set.
-      value:
-        - scope:
-            clientScope:
-              restrictedClientApplication:
-                clientId: "{{ clientId }}"
-                name: "{{ name }}"
-          activeSettings:
-            sessionSettings:
-              sessionReauthMethod: "{{ sessionReauthMethod }}"
-              sessionLengthEnabled: {{ sessionLengthEnabled }}
-              useOidcMaxAge: {{ useOidcMaxAge }}
-              sessionLength: "{{ sessionLength }}"
-              maxInactivity: "{{ maxInactivity }}"
-            accessLevels:
-              - "{{ accessLevels }}"
-          dryRunSettings:
-            sessionSettings:
-              sessionReauthMethod: "{{ sessionReauthMethod }}"
-              sessionLengthEnabled: {{ sessionLengthEnabled }}
-              useOidcMaxAge: {{ useOidcMaxAge }}
-              sessionLength: "{{ sessionLength }}"
-              maxInactivity: "{{ maxInactivity }}"
-            accessLevels:
-              - "{{ accessLevels }}"
-    - name: groupKey
-      value: "{{ groupKey }}"
-      description: |
-        Optional. Immutable. Google Group id whose users are subject to this binding's restrictions. See "id" in the [Google Workspace Directory API's Group Resource] (https://developers.google.com/admin-sdk/directory/v1/reference/groups#resource). If a group's email address/alias is changed, this resource will continue to point at the changed group. This field does not accept group email addresses or aliases. Example: "01d520gv4vjcrht"
-    - name: principal
-      description: |
-        Optional. Immutable. The principal that is subject to the access policies in this policy binding.
-      value:
-        serviceAccountProjectNumber: "{{ serviceAccountProjectNumber }}"
-        serviceAccount: "{{ serviceAccount }}"
-    - name: dryRunAccessLevels
-      value:
-        - "{{ dryRunAccessLevels }}"
-      description: |
-        Optional. Dry run access level that will be evaluated but will not be enforced. The access denial based on dry run policy will be logged. Only one access level is supported, not multiple. This list must have exactly one element. Example: "accessPolicies/9522/accessLevels/device_trusted"
-    - name: restrictedClientApplications
-      description: |
-        Optional. Deprecated: use scoped_access_settings instead. A list of applications that are subject to this binding's restrictions. If the list is empty, the binding restrictions will universally apply to all applications.
-      value:
-        - clientId: "{{ clientId }}"
-          name: "{{ name }}"
-    - name: sessionSettings
-      description: |
-        Optional. The Google Cloud session length (GCSL) policy for the group key.
-      value:
-        sessionReauthMethod: "{{ sessionReauthMethod }}"
-        sessionLengthEnabled: {{ sessionLengthEnabled }}
-        useOidcMaxAge: {{ useOidcMaxAge }}
-        sessionLength: "{{ sessionLength }}"
-        maxInactivity: "{{ maxInactivity }}"
     - name: accessLevels
       value:
         - "{{ accessLevels }}"
       description: |
         Optional. Access level that a user must have to be granted access. Only one access level is supported, not multiple. This repeated field must have exactly one element. Example: "accessPolicies/9522/accessLevels/device_trusted"
+    - name: dryRunAccessLevels
+      value:
+        - "{{ dryRunAccessLevels }}"
+      description: |
+        Optional. Dry run access level that will be evaluated but will not be enforced. The access denial based on dry run policy will be logged. Only one access level is supported, not multiple. This list must have exactly one element. Example: "accessPolicies/9522/accessLevels/device_trusted"
+    - name: groupKey
+      value: "{{ groupKey }}"
+      description: |
+        Optional. Immutable. Google Group id whose users are subject to this binding's restrictions. See "id" in the [Google Workspace Directory API's Group Resource] (https://developers.google.com/admin-sdk/directory/v1/reference/groups#resource). If a group's email address/alias is changed, this resource will continue to point at the changed group. This field does not accept group email addresses or aliases. Example: "01d520gv4vjcrht"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Assigned by the server during creation. The last segment has an arbitrary length and has only URI unreserved characters (as defined by [RFC 3986 Section 2.3](https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be specified by the client during creation. Example: "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
+    - name: principal
+      description: |
+        Optional. Immutable. The principal that is subject to the access policies in this policy binding.
+      value:
+        federatedPrincipal: "{{ federatedPrincipal }}"
+        serviceAccount: "{{ serviceAccount }}"
+        serviceAccountProjectNumber: "{{ serviceAccountProjectNumber }}"
+    - name: restrictedClientApplications
+      description: |
+        Optional. Deprecated: Use \`scoped_access_settings\` instead. A list of applications that are subject to this binding's restrictions. If the list is empty, the binding restrictions will universally apply to all applications.
+      value:
+        - clientId: "{{ clientId }}"
+          name: "{{ name }}"
+    - name: scopedAccessSettings
+      description: |
+        Optional. A list of scoped access settings that set this binding's restrictions on a subset of applications. This field cannot be set if restricted_client_applications is set.
+      value:
+        - activeSettings:
+            accessLevels:
+              - "{{ accessLevels }}"
+            sessionSettings:
+              maxInactivity: "{{ maxInactivity }}"
+              sessionLength: "{{ sessionLength }}"
+              sessionLengthEnabled: {{ sessionLengthEnabled }}
+              sessionReauthMethod: "{{ sessionReauthMethod }}"
+              useOidcMaxAge: {{ useOidcMaxAge }}
+          dryRunSettings:
+            accessLevels:
+              - "{{ accessLevels }}"
+            sessionSettings:
+              maxInactivity: "{{ maxInactivity }}"
+              sessionLength: "{{ sessionLength }}"
+              sessionLengthEnabled: {{ sessionLengthEnabled }}
+              sessionReauthMethod: "{{ sessionReauthMethod }}"
+              useOidcMaxAge: {{ useOidcMaxAge }}
+          scope:
+            clientScope:
+              restrictedClientApplication:
+                clientId: "{{ clientId }}"
+                name: "{{ name }}"
+              restrictedProject:
+                name: "{{ name }}"
+    - name: sessionSettings
+      description: |
+        Optional. The Google Cloud session length (GCSL) policy for the group key.
+      value:
+        maxInactivity: "{{ maxInactivity }}"
+        sessionLength: "{{ sessionLength }}"
+        sessionLengthEnabled: {{ sessionLengthEnabled }}
+        sessionReauthMethod: "{{ sessionReauthMethod }}"
+        useOidcMaxAge: {{ useOidcMaxAge }}
 `}</CodeBlock>
 
 </TabItem>
@@ -440,19 +449,19 @@ Updates a GcpUserAccessBinding. Completion of this long-running operation does n
 ```sql
 UPDATE google.accesscontextmanager.gcp_user_access_bindings
 SET 
-data__name = '{{ name }}',
-data__scopedAccessSettings = '{{ scopedAccessSettings }}',
-data__groupKey = '{{ groupKey }}',
-data__principal = '{{ principal }}',
+data__accessLevels = '{{ accessLevels }}',
 data__dryRunAccessLevels = '{{ dryRunAccessLevels }}',
+data__groupKey = '{{ groupKey }}',
+data__name = '{{ name }}',
+data__principal = '{{ principal }}',
 data__restrictedClientApplications = '{{ restrictedClientApplications }}',
-data__sessionSettings = '{{ sessionSettings }}',
-data__accessLevels = '{{ accessLevels }}'
+data__scopedAccessSettings = '{{ scopedAccessSettings }}',
+data__sessionSettings = '{{ sessionSettings }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND gcpUserAccessBindingsId = '{{ gcpUserAccessBindingsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND append = {{ append}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

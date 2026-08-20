@@ -114,6 +114,56 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Identifier. The resource name of the Glossary. Format: projects/&#123;project_id_or_number&#125;/locations/&#123;location_id&#125;/glossaries/&#123;glossary_id&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="categoryCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The number of GlossaryCategories in the Glossary.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the Glossary was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The user-mutable description of the Glossary.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. User friendly display name of the Glossary. This is user-mutable. This will be same as the GlossaryId, if not specified.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Needed for resource freshness validation. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. User-defined labels for the Glossary.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="termCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The number of GlossaryTerms in the Glossary.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. System generated unique id for the Glossary. This ID will be different if the Glossary is deleted and re-created with the same name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the Glossary was last updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -145,14 +195,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_glossaries_list"><CopyableCode code="projects_locations_glossaries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Glossary resources in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_glossaries_create"><CopyableCode code="projects_locations_glossaries_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-glossaryId"><code>glossaryId</code></a></td>
+    <td><a href="#parameter-glossaryId"><code>glossaryId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new Glossary resource.</td>
 </tr>
 <tr>
@@ -281,13 +331,22 @@ Lists Glossary resources in a project and location.
 
 ```sql
 SELECT
-*
+name,
+categoryCount,
+createTime,
+description,
+displayName,
+etag,
+labels,
+termCount,
+uid,
+updateTime
 FROM google.dataplex.glossaries
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -310,24 +369,24 @@ Creates a new Glossary resource.
 
 ```sql
 INSERT INTO google.dataplex.glossaries (
-data__displayName,
-data__labels,
 data__description,
+data__displayName,
 data__etag,
+data__labels,
 projectsId,
 locationsId,
-validateOnly,
-glossaryId
+glossaryId,
+validateOnly
 )
 SELECT 
-'{{ displayName }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ etag }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ glossaryId }}'
+'{{ glossaryId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -348,26 +407,26 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the glossaries resource.
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. User friendly display name of the Glossary. This is user-mutable. This will be same as the GlossaryId, if not specified.
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. User-defined labels for the Glossary.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. The user-mutable description of the Glossary.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name of the Glossary. This is user-mutable. This will be same as the GlossaryId, if not specified.
     - name: etag
       value: "{{ etag }}"
       description: |
         Optional. Needed for resource freshness validation. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-    - name: validateOnly
-      value: {{ validateOnly }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the Glossary.
     - name: glossaryId
       value: "{{ glossaryId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
 `}</CodeBlock>
 
 </TabItem>
@@ -389,10 +448,10 @@ Updates a Glossary resource.
 ```sql
 UPDATE google.dataplex.glossaries
 SET 
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__etag = '{{ etag }}'
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

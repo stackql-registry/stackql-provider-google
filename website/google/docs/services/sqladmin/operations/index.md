@@ -288,21 +288,21 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-operation"><code>operation</code></a></td>
-    <td></td>
+    <td><a href="#parameter-location"><code>location</code></a></td>
     <td>Retrieves an instance operation that has been performed on an instance.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all instance operations that have been performed on the given Cloud SQL instance in the reverse chronological order of the start time.</td>
 </tr>
 <tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-operation"><code>operation</code></a></td>
-    <td></td>
+    <td><a href="#parameter-location"><code>location</code></a></td>
     <td>Cancels an instance operation that has been performed on an instance.</td>
 </tr>
 </tbody>
@@ -333,6 +333,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-instance">
     <td><CopyableCode code="instance" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-location">
+    <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -387,6 +392,7 @@ user
 FROM google.sqladmin.operations
 WHERE project = '{{ project }}' -- required
 AND operation = '{{ operation }}' -- required
+AND location = '{{ location }}'
 ;
 ```
 </TabItem>
@@ -419,6 +425,7 @@ user
 FROM google.sqladmin.operations
 WHERE project = '{{ project }}' -- required
 AND instance = '{{ instance }}'
+AND location = '{{ location }}'
 AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -442,7 +449,8 @@ Cancels an instance operation that has been performed on an instance.
 ```sql
 EXEC google.sqladmin.operations.cancel 
 @project='{{ project }}' --required, 
-@operation='{{ operation }}' --required
+@operation='{{ operation }}' --required, 
+@location='{{ location }}'
 ;
 ```
 </TabItem>

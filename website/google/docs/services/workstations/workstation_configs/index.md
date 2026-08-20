@@ -168,7 +168,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="runningTimeout" /></td>
     <td><code>string (google-duration)</code></td>
-    <td>Optional. Number of seconds that a workstation can run until it is automatically shut down. We recommend that workstations be shut down daily to reduce costs and so that security updates can be applied upon restart. The idle_timeout and running_timeout fields are independent of each other. Note that the running_timeout field shuts down VMs after the specified time, regardless of whether or not the VMs are idle. Provide duration terminated by `s` for seconds—for example, `"54000s"` (15 hours). Defaults to `"43200s"` (12 hours). A value of `"0s"` indicates that workstations using this configuration should never time out. If encryption_key is set, it must be greater than `"0s"` and less than `"86400s"` (24 hours). Warning: A value of `"0s"` indicates that Cloud Workstations VMs created with this configuration have no maximum running time. This is strongly discouraged because you incur costs and will not pick up security updates.</td>
+    <td>Optional. Number of seconds to wait before automatically stopping a workstation. We recommend that workstations be stopped daily so that security updates can be applied upon restart. The idle_timeout and running_timeout fields are independent of each other. Note that the running_timeout field stops workstations after the specified time, regardless of whether or not the workstations are idle. Provide duration terminated by `s` for seconds—for example, `"54000s"` (15 hours). Defaults to `"43200s"` (12 hours). A value of `"0s"` indicates that workstations using this configuration should never time out. If encryption_key is set, it must be greater than `"0s"` and less than `"86400s"` (24 hours). Warning: A value of `"0s"` indicates that Cloud Workstations VMs created with this configuration have no maximum running time. This is strongly discouraged because you incur costs and will not pick up security updates.</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -312,7 +312,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="runningTimeout" /></td>
     <td><code>string (google-duration)</code></td>
-    <td>Optional. Number of seconds that a workstation can run until it is automatically shut down. We recommend that workstations be shut down daily to reduce costs and so that security updates can be applied upon restart. The idle_timeout and running_timeout fields are independent of each other. Note that the running_timeout field shuts down VMs after the specified time, regardless of whether or not the VMs are idle. Provide duration terminated by `s` for seconds—for example, `"54000s"` (15 hours). Defaults to `"43200s"` (12 hours). A value of `"0s"` indicates that workstations using this configuration should never time out. If encryption_key is set, it must be greater than `"0s"` and less than `"86400s"` (24 hours). Warning: A value of `"0s"` indicates that Cloud Workstations VMs created with this configuration have no maximum running time. This is strongly discouraged because you incur costs and will not pick up security updates.</td>
+    <td>Optional. Number of seconds to wait before automatically stopping a workstation. We recommend that workstations be stopped daily so that security updates can be applied upon restart. The idle_timeout and running_timeout fields are independent of each other. Note that the running_timeout field stops workstations after the specified time, regardless of whether or not the workstations are idle. Provide duration terminated by `s` for seconds—for example, `"54000s"` (15 hours). Defaults to `"43200s"` (12 hours). A value of `"0s"` indicates that workstations using this configuration should never time out. If encryption_key is set, it must be greater than `"0s"` and less than `"86400s"` (24 hours). Warning: A value of `"0s"` indicates that Cloud Workstations VMs created with this configuration have no maximum running time. This is strongly discouraged because you incur costs and will not pick up security updates.</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -355,28 +355,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns all workstation configurations in the specified cluster.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a></td>
-    <td><a href="#parameter-workstationConfigId"><code>workstationConfigId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-workstationConfigId"><code>workstationConfigId</code></a></td>
     <td>Creates a new workstation configuration.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates an existing workstation configuration.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workstationClustersId"><code>workstationClustersId</code></a>, <a href="#parameter-workstationConfigsId"><code>workstationConfigsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes the specified workstation configuration.</td>
 </tr>
 </tbody>
@@ -548,9 +548,9 @@ FROM google.workstations.workstation_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workstationClustersId = '{{ workstationClustersId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -572,56 +572,56 @@ Creates a new workstation configuration.
 
 ```sql
 INSERT INTO google.workstations.workstation_configs (
-data__maxUsableWorkstations,
-data__host,
-data__displayName,
-data__ephemeralDirectories,
-data__grantWorkstationAdminRoleOnCreate,
-data__readinessChecks,
-data__idleTimeout,
-data__runningTimeout,
-data__annotations,
-data__persistentDirectories,
-data__labels,
-data__replicaZones,
-data__etag,
-data__container,
-data__encryptionKey,
-data__enableAuditAgent,
-data__name,
 data__allowedPorts,
+data__annotations,
+data__container,
 data__disableTcpConnections,
+data__displayName,
+data__enableAuditAgent,
+data__encryptionKey,
+data__ephemeralDirectories,
+data__etag,
+data__grantWorkstationAdminRoleOnCreate,
+data__host,
+data__idleTimeout,
+data__labels,
+data__maxUsableWorkstations,
+data__name,
+data__persistentDirectories,
+data__readinessChecks,
+data__replicaZones,
+data__runningTimeout,
 projectsId,
 locationsId,
 workstationClustersId,
-workstationConfigId,
-validateOnly
+validateOnly,
+workstationConfigId
 )
 SELECT 
-{{ maxUsableWorkstations }},
-'{{ host }}',
-'{{ displayName }}',
-'{{ ephemeralDirectories }}',
-{{ grantWorkstationAdminRoleOnCreate }},
-'{{ readinessChecks }}',
-'{{ idleTimeout }}',
-'{{ runningTimeout }}',
-'{{ annotations }}',
-'{{ persistentDirectories }}',
-'{{ labels }}',
-'{{ replicaZones }}',
-'{{ etag }}',
-'{{ container }}',
-'{{ encryptionKey }}',
-{{ enableAuditAgent }},
-'{{ name }}',
 '{{ allowedPorts }}',
+'{{ annotations }}',
+'{{ container }}',
 {{ disableTcpConnections }},
+'{{ displayName }}',
+{{ enableAuditAgent }},
+'{{ encryptionKey }}',
+'{{ ephemeralDirectories }}',
+'{{ etag }}',
+{{ grantWorkstationAdminRoleOnCreate }},
+'{{ host }}',
+'{{ idleTimeout }}',
+'{{ labels }}',
+{{ maxUsableWorkstations }},
+'{{ name }}',
+'{{ persistentDirectories }}',
+'{{ readinessChecks }}',
+'{{ replicaZones }}',
+'{{ runningTimeout }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workstationClustersId }}',
-'{{ workstationConfigId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ workstationConfigId }}'
 RETURNING
 name,
 done,
@@ -645,154 +645,154 @@ response
     - name: workstationClustersId
       value: "{{ workstationClustersId }}"
       description: Required parameter for the workstation_configs resource.
-    - name: maxUsableWorkstations
-      value: {{ maxUsableWorkstations }}
+    - name: allowedPorts
       description: |
-        Optional. Maximum number of workstations under this configuration a user can have \`workstations.workstation.use\` permission on. Only enforced on CreateWorkstation API calls on the user issuing the API request. Can be overridden by: - granting a user workstations.workstationConfigs.exemptMaxUsableWorkstationLimit permission, or - having a user with that permission create a workstation and granting another user \`workstations.workstation.use\` permission on that workstation. If not specified, defaults to \`0\`, which indicates unlimited.
-    - name: host
-      description: |
-        Optional. Runtime host for the workstation.
+        Optional. A list of PortRanges specifying single ports or ranges of ports that are externally accessible in the workstation. Allowed ports must be one of 22, 80, or within range 1024-65535. If not specified defaults to ports 22, 80, and ports 1024-65535.
       value:
-        gceInstance:
-          bootDiskSizeGb: {{ bootDiskSizeGb }}
-          confidentialInstanceConfig:
-            enableConfidentialCompute: {{ enableConfidentialCompute }}
-          shieldedInstanceConfig:
-            enableSecureBoot: {{ enableSecureBoot }}
-            enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
-            enableVtpm: {{ enableVtpm }}
-          boostConfigs:
-            - accelerators: "{{ accelerators }}"
-              bootDiskSizeGb: {{ bootDiskSizeGb }}
-              poolSize: {{ poolSize }}
-              machineType: "{{ machineType }}"
-              id: "{{ id }}"
-              enableNestedVirtualization: {{ enableNestedVirtualization }}
-          serviceAccountScopes:
-            - "{{ serviceAccountScopes }}"
-          disablePublicIpAddresses: {{ disablePublicIpAddresses }}
-          accelerators:
-            - type: "{{ type }}"
-              count: {{ count }}
-          machineType: "{{ machineType }}"
-          poolSize: {{ poolSize }}
-          pooledInstances: {{ pooledInstances }}
-          startupScriptUri: "{{ startupScriptUri }}"
-          serviceAccount: "{{ serviceAccount }}"
-          instanceMetadata: "{{ instanceMetadata }}"
-          tags:
-            - "{{ tags }}"
-          enableNestedVirtualization: {{ enableNestedVirtualization }}
-          disableSsh: {{ disableSsh }}
-          vmTags: "{{ vmTags }}"
-    - name: displayName
-      value: "{{ displayName }}"
-      description: |
-        Optional. Human-readable name for this workstation configuration.
-    - name: ephemeralDirectories
-      description: |
-        Optional. Ephemeral directories which won't persist across workstation sessions.
-      value:
-        - gcePd:
-            sourceSnapshot: "{{ sourceSnapshot }}"
-            sourceImage: "{{ sourceImage }}"
-            diskType: "{{ diskType }}"
-            readOnly: {{ readOnly }}
-          mountPath: "{{ mountPath }}"
-    - name: grantWorkstationAdminRoleOnCreate
-      value: {{ grantWorkstationAdminRoleOnCreate }}
-      description: |
-        Optional. Grant creator of a workstation \`roles/workstations.policyAdmin\` role along with \`roles/workstations.user\` role on the workstation created by them. This allows workstation users to share access to either their entire workstation, or individual ports. Defaults to false.
-    - name: readinessChecks
-      description: |
-        Optional. Readiness checks to perform when starting a workstation using this workstation configuration. Mark a workstation as running only after all specified readiness checks return 200 status codes.
-      value:
-        - path: "{{ path }}"
-          port: {{ port }}
-    - name: idleTimeout
-      value: "{{ idleTimeout }}"
-      description: |
-        Optional. Number of seconds to wait before automatically stopping a workstation after it last received user traffic. A value of \`"0s"\` indicates that Cloud Workstations VMs created with this configuration should never time out due to idleness. Provide [duration](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration) terminated by \`s\` for seconds—for example, \`"7200s"\` (2 hours). The default is \`"1200s"\` (20 minutes).
-    - name: runningTimeout
-      value: "{{ runningTimeout }}"
-      description: |
-        Optional. Number of seconds that a workstation can run until it is automatically shut down. We recommend that workstations be shut down daily to reduce costs and so that security updates can be applied upon restart. The idle_timeout and running_timeout fields are independent of each other. Note that the running_timeout field shuts down VMs after the specified time, regardless of whether or not the VMs are idle. Provide duration terminated by \`s\` for seconds—for example, \`"54000s"\` (15 hours). Defaults to \`"43200s"\` (12 hours). A value of \`"0s"\` indicates that workstations using this configuration should never time out. If encryption_key is set, it must be greater than \`"0s"\` and less than \`"86400s"\` (24 hours). Warning: A value of \`"0s"\` indicates that Cloud Workstations VMs created with this configuration have no maximum running time. This is strongly discouraged because you incur costs and will not pick up security updates.
+        - first: {{ first }}
+          last: {{ last }}
     - name: annotations
       value: "{{ annotations }}"
       description: |
         Optional. Client-specified annotations.
-    - name: persistentDirectories
-      description: |
-        Optional. Directories to persist across workstation sessions.
-      value:
-        - gcePd:
-            reclaimPolicy: "{{ reclaimPolicy }}"
-            sizeGb: {{ sizeGb }}
-            maxSizeGb: {{ maxSizeGb }}
-            sourceSnapshot: "{{ sourceSnapshot }}"
-            diskType: "{{ diskType }}"
-            fsType: "{{ fsType }}"
-            archiveTimeout: "{{ archiveTimeout }}"
-          gceHd:
-            reclaimPolicy: "{{ reclaimPolicy }}"
-            sizeGb: {{ sizeGb }}
-            maxSizeGb: {{ maxSizeGb }}
-            sourceSnapshot: "{{ sourceSnapshot }}"
-            archiveTimeout: "{{ archiveTimeout }}"
-          mountPath: "{{ mountPath }}"
-    - name: labels
-      value: "{{ labels }}"
-      description: |
-        Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation configuration and that are also propagated to the underlying Compute Engine resources.
-    - name: replicaZones
-      value:
-        - "{{ replicaZones }}"
-      description: |
-        Optional. Immutable. Specifies the zones used to replicate the VM and disk resources within the region. If set, exactly two zones within the workstation cluster's region must be specified—for example, \`['us-central1-a', 'us-central1-f']\`. If this field is empty, two default zones within the region are used. Immutable after the workstation configuration is created.
-    - name: etag
-      value: "{{ etag }}"
-      description: |
-        Optional. Checksum computed by the server. May be sent on update and delete requests to make sure that the client has an up-to-date value before proceeding.
     - name: container
       description: |
         Optional. Container that runs upon startup for each workstation using this workstation configuration.
       value:
-        image: "{{ image }}"
-        command:
-          - "{{ command }}"
-        workingDir: "{{ workingDir }}"
-        runAsUser: {{ runAsUser }}
         args:
           - "{{ args }}"
+        command:
+          - "{{ command }}"
         env: "{{ env }}"
+        image: "{{ image }}"
+        runAsUser: {{ runAsUser }}
+        workingDir: "{{ workingDir }}"
+    - name: disableTcpConnections
+      value: {{ disableTcpConnections }}
+      description: |
+        Optional. Disables support for plain TCP connections in the workstation. By default the service supports TCP connections through a websocket relay. Setting this option to true disables that relay, which prevents the usage of services that require plain TCP connections, such as SSH. When enabled, all communication must occur over HTTPS or WSS.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Human-readable name for this workstation configuration.
+    - name: enableAuditAgent
+      value: {{ enableAuditAgent }}
+      description: |
+        Optional. Whether to enable Linux \`auditd\` logging on the workstation. When enabled, a service_account must also be specified that has \`roles/logging.logWriter\` and \`roles/monitoring.metricWriter\` on the project. Operating system audit logging is distinct from [Cloud Audit Logs](https://cloud.google.com/workstations/docs/audit-logging) and [Container output logging](https://cloud.google.com/workstations/docs/container-output-logging#overview). Operating system audit logs are available in the [Cloud Logging](https://cloud.google.com/logging/docs) console by querying: resource.type="gce_instance" log_name:"/logs/linux-auditd"
     - name: encryptionKey
       description: |
         Immutable. Encrypts resources of this workstation configuration using a customer-managed encryption key (CMEK). If specified, the boot disk of the Compute Engine instance and the persistent disk are encrypted using this encryption key. If this field is not set, the disks are encrypted using a generated key. Customer-managed encryption keys do not protect disk metadata. If the customer-managed encryption key is rotated, when the workstation instance is stopped, the system attempts to recreate the persistent disk with the new version of the key. Be sure to keep older versions of the key until the persistent disk is recreated. Otherwise, data on the persistent disk might be lost. If the encryption key is revoked, the workstation session automatically stops within 7 hours. Immutable after the workstation configuration is created.
       value:
         kmsKey: "{{ kmsKey }}"
         kmsKeyServiceAccount: "{{ kmsKeyServiceAccount }}"
-    - name: enableAuditAgent
-      value: {{ enableAuditAgent }}
+    - name: ephemeralDirectories
       description: |
-        Optional. Whether to enable Linux \`auditd\` logging on the workstation. When enabled, a service_account must also be specified that has \`roles/logging.logWriter\` and \`roles/monitoring.metricWriter\` on the project. Operating system audit logging is distinct from [Cloud Audit Logs](https://cloud.google.com/workstations/docs/audit-logging) and [Container output logging](https://cloud.google.com/workstations/docs/container-output-logging#overview). Operating system audit logs are available in the [Cloud Logging](https://cloud.google.com/logging/docs) console by querying: resource.type="gce_instance" log_name:"/logs/linux-auditd"
+        Optional. Ephemeral directories which won't persist across workstation sessions.
+      value:
+        - gcePd:
+            diskType: "{{ diskType }}"
+            readOnly: {{ readOnly }}
+            sourceImage: "{{ sourceImage }}"
+            sourceSnapshot: "{{ sourceSnapshot }}"
+          mountPath: "{{ mountPath }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Checksum computed by the server. May be sent on update and delete requests to make sure that the client has an up-to-date value before proceeding.
+    - name: grantWorkstationAdminRoleOnCreate
+      value: {{ grantWorkstationAdminRoleOnCreate }}
+      description: |
+        Optional. Grant creator of a workstation \`roles/workstations.policyAdmin\` role along with \`roles/workstations.user\` role on the workstation created by them. This allows workstation users to share access to either their entire workstation, or individual ports. Defaults to false.
+    - name: host
+      description: |
+        Optional. Runtime host for the workstation.
+      value:
+        gceInstance:
+          accelerators:
+            - count: {{ count }}
+              type: "{{ type }}"
+          boostConfigs:
+            - accelerators: "{{ accelerators }}"
+              bootDiskSizeGb: {{ bootDiskSizeGb }}
+              enableNestedVirtualization: {{ enableNestedVirtualization }}
+              id: "{{ id }}"
+              machineType: "{{ machineType }}"
+              poolSize: {{ poolSize }}
+          bootDiskSizeGb: {{ bootDiskSizeGb }}
+          confidentialInstanceConfig:
+            enableConfidentialCompute: {{ enableConfidentialCompute }}
+          disablePublicIpAddresses: {{ disablePublicIpAddresses }}
+          disableSsh: {{ disableSsh }}
+          enableNestedVirtualization: {{ enableNestedVirtualization }}
+          instanceMetadata: "{{ instanceMetadata }}"
+          machineType: "{{ machineType }}"
+          poolSize: {{ poolSize }}
+          pooledInstances: {{ pooledInstances }}
+          serviceAccount: "{{ serviceAccount }}"
+          serviceAccountScopes:
+            - "{{ serviceAccountScopes }}"
+          shieldedInstanceConfig:
+            enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+            enableSecureBoot: {{ enableSecureBoot }}
+            enableVtpm: {{ enableVtpm }}
+          startupScriptUri: "{{ startupScriptUri }}"
+          tags:
+            - "{{ tags }}"
+          vmTags: "{{ vmTags }}"
+    - name: idleTimeout
+      value: "{{ idleTimeout }}"
+      description: |
+        Optional. Number of seconds to wait before automatically stopping a workstation after it last received user traffic. A value of \`"0s"\` indicates that Cloud Workstations VMs created with this configuration should never time out due to idleness. Provide [duration](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration) terminated by \`s\` for seconds—for example, \`"7200s"\` (2 hours). The default is \`"1200s"\` (20 minutes).
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation configuration and that are also propagated to the underlying Compute Engine resources.
+    - name: maxUsableWorkstations
+      value: {{ maxUsableWorkstations }}
+      description: |
+        Optional. Maximum number of workstations under this configuration a user can have \`workstations.workstation.use\` permission on. Only enforced on CreateWorkstation API calls on the user issuing the API request. Can be overridden by: - granting a user workstations.workstationConfigs.exemptMaxUsableWorkstationLimit permission, or - having a user with that permission create a workstation and granting another user \`workstations.workstation.use\` permission on that workstation. If not specified, defaults to \`0\`, which indicates unlimited.
     - name: name
       value: "{{ name }}"
       description: |
         Identifier. Full name of this workstation configuration.
-    - name: allowedPorts
+    - name: persistentDirectories
       description: |
-        Optional. A list of PortRanges specifying single ports or ranges of ports that are externally accessible in the workstation. Allowed ports must be one of 22, 80, or within range 1024-65535. If not specified defaults to ports 22, 80, and ports 1024-65535.
+        Optional. Directories to persist across workstation sessions.
       value:
-        - last: {{ last }}
-          first: {{ first }}
-    - name: disableTcpConnections
-      value: {{ disableTcpConnections }}
+        - gceHd:
+            archiveTimeout: "{{ archiveTimeout }}"
+            maxSizeGb: {{ maxSizeGb }}
+            reclaimPolicy: "{{ reclaimPolicy }}"
+            sizeGb: {{ sizeGb }}
+            sourceSnapshot: "{{ sourceSnapshot }}"
+          gcePd:
+            archiveTimeout: "{{ archiveTimeout }}"
+            diskType: "{{ diskType }}"
+            fsType: "{{ fsType }}"
+            maxSizeGb: {{ maxSizeGb }}
+            reclaimPolicy: "{{ reclaimPolicy }}"
+            sizeGb: {{ sizeGb }}
+            sourceSnapshot: "{{ sourceSnapshot }}"
+          mountPath: "{{ mountPath }}"
+    - name: readinessChecks
       description: |
-        Optional. Disables support for plain TCP connections in the workstation. By default the service supports TCP connections through a websocket relay. Setting this option to true disables that relay, which prevents the usage of services that require plain TCP connections, such as SSH. When enabled, all communication must occur over HTTPS or WSS.
-    - name: workstationConfigId
-      value: "{{ workstationConfigId }}"
+        Optional. Readiness checks to perform when starting a workstation using this workstation configuration. Mark a workstation as running only after all specified readiness checks return 200 status codes.
+      value:
+        - path: "{{ path }}"
+          port: {{ port }}
+    - name: replicaZones
+      value:
+        - "{{ replicaZones }}"
+      description: |
+        Optional. Immutable. Specifies the zones used to replicate the VM and disk resources within the region. If set, exactly two zones within the workstation cluster's region must be specified—for example, \`['us-central1-a', 'us-central1-f']\`. If this field is empty, two default zones within the region are used. Immutable after the workstation configuration is created.
+    - name: runningTimeout
+      value: "{{ runningTimeout }}"
+      description: |
+        Optional. Number of seconds to wait before automatically stopping a workstation. We recommend that workstations be stopped daily so that security updates can be applied upon restart. The idle_timeout and running_timeout fields are independent of each other. Note that the running_timeout field stops workstations after the specified time, regardless of whether or not the workstations are idle. Provide duration terminated by \`s\` for seconds—for example, \`"54000s"\` (15 hours). Defaults to \`"43200s"\` (12 hours). A value of \`"0s"\` indicates that workstations using this configuration should never time out. If encryption_key is set, it must be greater than \`"0s"\` and less than \`"86400s"\` (24 hours). Warning: A value of \`"0s"\` indicates that Cloud Workstations VMs created with this configuration have no maximum running time. This is strongly discouraged because you incur costs and will not pick up security updates.
     - name: validateOnly
       value: {{ validateOnly }}
+    - name: workstationConfigId
+      value: "{{ workstationConfigId }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -814,33 +814,33 @@ Updates an existing workstation configuration.
 ```sql
 UPDATE google.workstations.workstation_configs
 SET 
-data__maxUsableWorkstations = {{ maxUsableWorkstations }},
-data__host = '{{ host }}',
-data__displayName = '{{ displayName }}',
-data__ephemeralDirectories = '{{ ephemeralDirectories }}',
-data__grantWorkstationAdminRoleOnCreate = {{ grantWorkstationAdminRoleOnCreate }},
-data__readinessChecks = '{{ readinessChecks }}',
-data__idleTimeout = '{{ idleTimeout }}',
-data__runningTimeout = '{{ runningTimeout }}',
-data__annotations = '{{ annotations }}',
-data__persistentDirectories = '{{ persistentDirectories }}',
-data__labels = '{{ labels }}',
-data__replicaZones = '{{ replicaZones }}',
-data__etag = '{{ etag }}',
-data__container = '{{ container }}',
-data__encryptionKey = '{{ encryptionKey }}',
-data__enableAuditAgent = {{ enableAuditAgent }},
-data__name = '{{ name }}',
 data__allowedPorts = '{{ allowedPorts }}',
-data__disableTcpConnections = {{ disableTcpConnections }}
+data__annotations = '{{ annotations }}',
+data__container = '{{ container }}',
+data__disableTcpConnections = {{ disableTcpConnections }},
+data__displayName = '{{ displayName }}',
+data__enableAuditAgent = {{ enableAuditAgent }},
+data__encryptionKey = '{{ encryptionKey }}',
+data__ephemeralDirectories = '{{ ephemeralDirectories }}',
+data__etag = '{{ etag }}',
+data__grantWorkstationAdminRoleOnCreate = {{ grantWorkstationAdminRoleOnCreate }},
+data__host = '{{ host }}',
+data__idleTimeout = '{{ idleTimeout }}',
+data__labels = '{{ labels }}',
+data__maxUsableWorkstations = {{ maxUsableWorkstations }},
+data__name = '{{ name }}',
+data__persistentDirectories = '{{ persistentDirectories }}',
+data__readinessChecks = '{{ readinessChecks }}',
+data__replicaZones = '{{ replicaZones }}',
+data__runningTimeout = '{{ runningTimeout }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND workstationClustersId = '{{ workstationClustersId }}' --required
 AND workstationConfigsId = '{{ workstationConfigsId }}' --required
-AND validateOnly = {{ validateOnly}}
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -870,9 +870,9 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND workstationClustersId = '{{ workstationClustersId }}' --required
 AND workstationConfigsId = '{{ workstationConfigsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
 AND force = '{{ force }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

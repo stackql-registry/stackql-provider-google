@@ -248,15 +248,15 @@ Creates a user workloads ConfigMap. This method is supported for Cloud Composer 
 
 ```sql
 INSERT INTO google.composer.user_workloads_config_maps (
-data__name,
 data__data,
+data__name,
 projectsId,
 locationsId,
 environmentsId
 )
 SELECT 
-'{{ name }}',
 '{{ data }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ environmentsId }}'
@@ -280,14 +280,14 @@ data
     - name: environmentsId
       value: "{{ environmentsId }}"
       description: Required parameter for the user_workloads_config_maps resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. The resource name of the ConfigMap, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
     - name: data
       value: "{{ data }}"
       description: |
         Optional. The "data" field of Kubernetes ConfigMap, organized in key-value pairs. For details see: https://kubernetes.io/docs/concepts/configuration/configmap/ Example: { "example_key": "example_value", "another_key": "another_value" }
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the ConfigMap, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
 `}</CodeBlock>
 
 </TabItem>
@@ -309,8 +309,8 @@ Updates a user workloads ConfigMap. This method is supported for Cloud Composer 
 ```sql
 REPLACE google.composer.user_workloads_config_maps
 SET 
-data__name = '{{ name }}',
-data__data = '{{ data }}'
+data__data = '{{ data }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

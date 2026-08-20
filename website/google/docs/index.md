@@ -22,8 +22,8 @@ Cloud services from Google.
 
 :::info[Provider Summary] 
 
-total services: __187__  
-total resources: __2370__  
+total services: __186__  
+total resources: __2357__  
 
 :::
 
@@ -225,7 +225,6 @@ EXEC google.compute.instances.start
 <a href="/services/analyticshub/">analyticshub</a><br />
 <a href="/services/apigateway/">apigateway</a><br />
 <a href="/services/apigee/">apigee</a><br />
-<a href="/services/apigeeregistry/">apigeeregistry</a><br />
 <a href="/services/apihub/">apihub</a><br />
 <a href="/services/apikeys/">apikeys</a><br />
 <a href="/services/apim/">apim</a><br />

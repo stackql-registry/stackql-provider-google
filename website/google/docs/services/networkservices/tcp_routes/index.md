@@ -341,23 +341,23 @@ Creates a new TcpRoute in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.tcp_routes (
-data__name,
 data__description,
-data__rules,
-data__meshes,
 data__gateways,
 data__labels,
+data__meshes,
+data__name,
+data__rules,
 projectsId,
 locationsId,
 tcpRouteId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
-'{{ rules }}',
-'{{ meshes }}',
 '{{ gateways }}',
 '{{ labels }}',
+'{{ meshes }}',
+'{{ name }}',
+'{{ rules }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tcpRouteId }}'
@@ -381,30 +381,10 @@ response
     - name: locationsId
       value: "{{ locationsId }}"
       description: Required parameter for the tcp_routes resource.
-    - name: name
-      value: "{{ name }}"
-      description: |
-        Identifier. Name of the TcpRoute resource. It matches pattern \`projects/*/locations/*/tcpRoutes/tcp_route_name>\`.
     - name: description
       value: "{{ description }}"
       description: |
         Optional. A free-text description of the resource. Max length 1024 characters.
-    - name: rules
-      description: |
-        Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.
-      value:
-        - matches: "{{ matches }}"
-          action:
-            destinations:
-              - serviceName: "{{ serviceName }}"
-                weight: {{ weight }}
-            originalDestination: {{ originalDestination }}
-            idleTimeout: "{{ idleTimeout }}"
-    - name: meshes
-      value:
-        - "{{ meshes }}"
-      description: |
-        Optional. Meshes defines a list of meshes this TcpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\` The attached Mesh should be of a type SIDECAR
     - name: gateways
       value:
         - "{{ gateways }}"
@@ -414,6 +394,26 @@ response
       value: "{{ labels }}"
       description: |
         Optional. Set of label tags associated with the TcpRoute resource.
+    - name: meshes
+      value:
+        - "{{ meshes }}"
+      description: |
+        Optional. Meshes defines a list of meshes this TcpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\` The attached Mesh should be of a type SIDECAR
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the TcpRoute resource. It matches pattern \`projects/*/locations/*/tcpRoutes/tcp_route_name>\`.
+    - name: rules
+      description: |
+        Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.
+      value:
+        - action:
+            destinations:
+              - serviceName: "{{ serviceName }}"
+                weight: {{ weight }}
+            idleTimeout: "{{ idleTimeout }}"
+            originalDestination: {{ originalDestination }}
+          matches: "{{ matches }}"
     - name: tcpRouteId
       value: "{{ tcpRouteId }}"
 `}</CodeBlock>
@@ -437,12 +437,12 @@ Updates the parameters of a single TcpRoute.
 ```sql
 UPDATE google.networkservices.tcp_routes
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__rules = '{{ rules }}',
-data__meshes = '{{ meshes }}',
 data__gateways = '{{ gateways }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__meshes = '{{ meshes }}',
+data__name = '{{ name }}',
+data__rules = '{{ rules }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -104,16 +104,16 @@ EXEC google.run.builds.submit
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"releaseTrack": "{{ releaseTrack }}", 
 "buildpackBuild": "{{ buildpackBuild }}", 
-"serviceAccount": "{{ serviceAccount }}", 
-"machineType": "{{ machineType }}", 
-"workerPool": "{{ workerPool }}", 
-"dockerBuild": "{{ dockerBuild }}", 
-"tags": "{{ tags }}", 
 "client": "{{ client }}", 
+"dockerBuild": "{{ dockerBuild }}", 
 "imageUri": "{{ imageUri }}", 
-"storageSource": "{{ storageSource }}"
+"machineType": "{{ machineType }}", 
+"releaseTrack": "{{ releaseTrack }}", 
+"serviceAccount": "{{ serviceAccount }}", 
+"storageSource": "{{ storageSource }}", 
+"tags": "{{ tags }}", 
+"workerPool": "{{ workerPool }}"
 }'
 ;
 ```
